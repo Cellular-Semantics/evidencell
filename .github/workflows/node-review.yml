@@ -1,0 +1,138 @@
+# Renders KB node files with quote text filled in, and posts the result as a
+# single sticky PR comment.
+#
+# Why: KB YAML cites evidence by quote_key only, so a reviewer reading the diff
+# sees bare hashes. Dereferencing them by hand against references/{region}/ is
+# the main friction in reviewing an ingest PR.
+#
+# Two ways in:
+#   * automatically, when a PR touches kb/graphs/** or references/**
+#   * on demand, by commenting `/node-review` on the PR (re-renders in place)
+name: Node review
+
+on:
+  pull_request:
+    branches: ["main", "*refactor*"]
+    paths:
+      - "kb/graphs/**/*.yaml"
+      - "references/**"
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  render:
+    # On a comment: only on PRs, only for `/node-review`, and only from someone
+    # with write access. issue_comment fires for anyone who can comment, so
+    # without the association check any passer-by could spend CI minutes.
+    if: >
+      github.event_name == 'pull_request' ||
+      (github.event.issue.pull_request != null &&
+       startsWith(github.event.comment.body, '/node-review') &&
+       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'),
+                github.event.comment.author_association))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Acknowledge the command
+        if: github.event_name == 'issue_comment'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              ...context.repo, comment_id: context.payload.comment.id,
+              content: 'eyes',
+            });
+
+      # issue_comment always runs against the default branch and checks it out
+      # by default, so the PR head has to be resolved explicitly.
+      - name: Resolve the PR
+        id: pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const n = context.eventName === 'pull_request'
+              ? context.payload.pull_request.number
+              : context.issue.number;
+            const {data: pr} = await github.rest.pulls.get(
+              {...context.repo, pull_number: n});
+            core.setOutput('number', String(n));
+            core.setOutput('head_sha', pr.head.sha);
+            core.setOutput('base_ref', pr.base.ref);
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr.outputs.head_sha }}
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --all-groups
+
+      - name: Render changed node files
+        id: render
+        env:
+          BASE_REF: ${{ steps.pr.outputs.base_ref }}
+        run: |
+          set -euo pipefail
+          # checkout already used fetch-depth: 0; this just guarantees the
+          # base ref is present. (`--depth=0` is fatal: "not a positive number".)
+          git fetch --no-tags origin "$BASE_REF"
+          # Added/modified only: a deleted file cannot be rendered.
+          git diff --name-only --diff-filter=AM \
+            "origin/${BASE_REF}...HEAD" -- 'kb/graphs/**/*.yaml' > changed.txt || true
+          if [ ! -s changed.txt ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "No changed KB node files; nothing to render."
+            exit 0
+          fi
+          echo "Rendering $(wc -l < changed.txt) changed node file(s)."
+          xargs -a changed.txt uv run python -m evidencell.render_review \
+            --out node_review.md
+          # GitHub caps a comment at 65536 characters.
+          if [ "$(wc -c < node_review.md)" -gt 60000 ]; then
+            head -c 60000 node_review.md > truncated.md
+            printf '\n\n---\n\n*Truncated at 60 kB — full render in the workflow artifact, or run `just node-review <file>` locally.*\n' >> truncated.md
+            mv truncated.md node_review.md
+          fi
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+
+      - name: Upload the full render as an artifact
+        if: steps.render.outputs.skip == 'false'
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-review
+          path: node_review.md
+
+      - name: Post or update the PR comment
+        if: steps.render.outputs.skip == 'false'
+        uses: actions/github-script@v7
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- evidencell:node-review -->';
+            const body = marker
+              + '\n\n<details><summary><b>Node review — quotes filled in</b> '
+              + '(re-run by commenting <code>/node-review</code>)</summary>\n\n'
+              + fs.readFileSync('node_review.md', 'utf8')
+              + '\n\n</details>';
+            const {owner, repo} = context.repo;
+            const issue_number = Number(process.env.PR_NUMBER);
+            const comments = await github.paginate(
+              github.rest.issues.listComments, {owner, repo, issue_number});
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment(
+                {owner, repo, comment_id: existing.id, body});
+            } else {
+              await github.rest.issues.createComment(
+                {owner, repo, issue_number, body});
+            }

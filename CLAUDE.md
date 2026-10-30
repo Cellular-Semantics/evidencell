@@ -248,10 +248,10 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 | Orchestrator | Location | Phase | Status | When to run |
 |---|---|---|---|---|
 | `ingest-taxonomy` | `workflows/ingest-taxonomy.md` | Discovery | **Ready** | Ingest a taxonomy table → atlas cluster CellTypeNode stubs |
-| `asta-report-ingest` | `workflows/asta-report-ingest.md` | Literature | **Ready** | Start here when you have an ASTA deep research PDF — proposes classical nodes + initial evidence |
+| `asta-report-ingest` | `workflows/asta-report-ingest.md` | Literature | **Ready** | Start here when you have an ASTA deep research PDF — writes one classical CellTypeNode file per proposed type into `kb/graphs/{region}/`. Review by PR; `gate: true` adds in-session sign-off. Hands off to `survey` |
 | `survey` | `workflows/survey.md` | Literature | **Ready** | Broad snippet scan of ASTA corpus for a region → all_summaries.json; no synthesis, no KB write |
 | `lit-review` | `workflows/lit-review.md` | Literature | **Experimental stub** | Seed discovery when starting without a report; may be revived; do not use in regular workflows |
-| `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Ready** | Citation traversal + synthesis; call as a skill for targeted follow-up, not primary discovery |
+| `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Needs re-engineering** | Citation traversal + synthesis. Removed from the `asta-report-ingest` handoff (2026-10-27) — it is not in the regular path. May be folded back in later; do not wire new workflows to it |
 | `evidence-extraction` | `workflows/evidence-extraction.md` | Literature | **Ready** | After survey or asta-report-ingest — writes PropertySource entries with quote_key to KB YAML |
 | `map-cell-type` | `workflows/map-cell-type.md` | Mapping | **Ready** | Discovery mode: queries taxonomy DB at multiple ranks (0=leaf, 1, 2…) for candidate atlas matches; hypothesis mode: tests curator's proposed mapping. Uses `just find-candidates` with rank parameter. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
 | `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Single agentic session does filter (top-K → ≤ 3 survivors via evidence-hierarchy rubric) + AT-pooling decisions + paper-style report on survivors. Writes verdicts back for ALL top-K edges (survivors get SSSOM trio + caveats + proposed_experiments; cuts get confidence + tier:CUT rationale). LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook + post-write structured-claims check). Reports open with an Introduction section surfacing `cl_mapping` + `proposed_cl_term`. |
@@ -332,9 +332,10 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 ```
 ── Discovery ──────────────────────────────────────────────────────────────────
 
-1a. just ingest-report {region} {pdf_file}      # ASTA report → classical CellTypeNode
-    → workflows/asta-report-ingest.md            # stubs + initial asta_report evidence
-    [GATE] approve proposed nodes + CL mappings
+1a. just ingest-report {region} {pdf_file}      # ASTA report → one classical
+    → workflows/asta-report-ingest.md            # CellTypeNode file per proposed type,
+                                                 # written straight to kb/graphs/{region}/
+    review as a PR (default), or pass gate: true for in-session sign-off
 
 1b. just ingest-taxonomy-db {taxonomy_file} {taxonomy_id}  # full taxonomy → YAML + SQLite
     → workflows/ingest-taxonomy.md                         # (run in parallel with 1a)
