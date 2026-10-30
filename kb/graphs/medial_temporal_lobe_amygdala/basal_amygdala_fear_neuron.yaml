@@ -1,0 +1,891 @@
+name: Basal amygdala fear neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Basal amygdala fear neuron. Ported from
+  the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest graph and split by component.
+  Mappings are single-edge, pre-top-K Stage B output — weak, pending further ASTA runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002887
+  label: basal amygdaloid nucleus
+  name_in_source: basolateral amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: basal_amygdala_fear_neuron
+  name: Basal amygdala fear neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: glutamatergic
+    sources:
+    - ref: PMID:27053114
+      method: asta_report
+      scope: mouse BLA principal neuron synthesis — BLA enriched in glutamatergic principal neurons
+      quote_key: 3103554_aec310ea
+    - ref: PMID:40961182
+      method: asta_snippet — snRNA-seq of primate basolateral complex resolves distinct classes of glutamatergic
+        neurons across BLC subdivisions
+      scope: human/macaque/baboon amygdala snRNA-seq, basolateral complex
+      quote_key: 281382725_21119bdb
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: glutamatergic
+  electrophysiology:
+    description: Functionally defined by activity timing during Pavlovian conditioning — fear neurons
+      among BLA principal cells are activated by the conditioned stimulus and form a non-overlapping population
+      with extinction neurons; single-cell transcriptomics confirms that only a subset of amygdalar neuronal
+      types is transcriptionally responsive to fear learning and retrieval.
+    sources:
+    - ref: PMID:31193505
+      method: asta_report
+      scope: BLA principal neuron fear/extinction circuit synthesis (mouse)
+      quote_key: 4940771_cb8fa215
+    - ref: PMID:37884748
+      method: asta_report
+      scope: mouse whole-amygdala scRNA-seq across naive and fear-conditioned mice
+      quote_key: 264517392_cf983fc0
+    - ref: PMID:28453642
+      method: europepmc_fulltext
+      scope: mouse BLA, contextual fear extinction, retrograde tracing + immunofluorescence
+      quote_key: 17860491_748a5fb1
+    - ref: PMID:27767183
+      method: europepmc_fulltext
+      scope: mouse BLA, Thy1-eYFP FACS + RNA-seq, NTSR1/2 pharmacology
+      quote_key: 104297085_b77db2a2
+  anatomical_location:
+  - id: UBERON:0002887
+    sources:
+    - ref: PMID:25852499
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 14375617_d7af88e4
+    - ref: PMID:31193505
+      method: asta_report
+      scope: review of BLA fear/extinction neuron circuit
+      quote_key: 4940771_cb8fa215
+    label: basal amygdaloid nucleus
+    name_in_source: basal amygdala
+    compartment: SOMA
+  morphology:
+    description: Functionally defined ensemble within the basal amygdala active during fear states; not
+      defined by markers or morphology in the report.
+    sources:
+    - ref: PMID:25852499
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 14375617_d7af88e4
+    - ref: https://doi.org/10.1101/2022.10.25.513733
+      method: asta_snippet — scRNA-seq across naive and fear-conditioned mouse amygdala shows only a fraction
+        of cells within a subset of neuronal types are transcriptionally fear-responsive
+      scope: mouse whole amygdala scRNA-seq, fear conditioning
+      quote_key: 253206255_0f335719
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:25852499
+  is_terminal: false
+  notes: Paired with extinction neurons as opposing functional populations within the same nucleus.
+- id: CS20230722_CLUS_0245
+  name: 0245 LA-BLA-BMA-PA Glut_5
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0245
+- id: CS20230722_CLUS_0247
+  name: 0247 LA-BLA-BMA-PA Glut_5
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0247
+- id: CS20230722_CLUS_0142
+  name: 0142 L2/3 IT PIR-ENTl Glut_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0142
+- id: CS20230722_CLUS_0201
+  name: 0201 MEA Slc17a7 Glut_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0201
+- id: CS20230722_CLUS_0230
+  name: 0230 LA-BLA-BMA-PA Glut_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0230
+- id: CS20230722_SUPT_0064
+  name: 0064 LA-BLA-BMA-PA Glut_5
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0064
+- id: CS20230722_SUPT_0065
+  name: 0065 LA-BLA-BMA-PA Glut_6
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0065
+- id: CS20230722_SUPT_0063
+  name: 0063 LA-BLA-BMA-PA Glut_4
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0063
+- id: CS20230722_SUPT_0061
+  name: 0061 LA-BLA-BMA-PA Glut_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0061
+- id: CS20230722_SUPT_0007
+  name: 0007 L5/6 IT TPE-ENT Glut_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0007
+edges:
+- id: edge_basal_amygdala_fear_neuron_to_CS20230722_CLUS_0245
+  lit_type: basal_amygdala_fear_neuron
+  taxonomy_type: CS20230722_CLUS_0245
+  relationship: skos:closeMatch
+  mapping_justification: semapv:CompositeMatching
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0245 LA-BLA-BMA-PA Glut_5; region_fraction_100um=0.703; strict region_fraction=0.421.
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    source_cluster_label: VGLUT1-2-Rspo2_Sema3e
+    target_atlas: WMBv1
+    method: MapMyCells (via at_metrics.compute_edge_metrics)
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 01 IT-ET Glut
+      best_target_accession: CS20230722_CLAS_01
+      coverage: 1.0
+      purity: 0.10870202168180486
+      f1_score: 0.19608879492600423
+      n_cells_mapped: 371
+      median_bootstrap: 1.0
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 014 LA-BLA-BMA-PA Glut
+      best_target_accession: CS20230722_SUBC_014
+      coverage: 1.0
+      purity: 0.2501694915254237
+      f1_score: 0.4002169197396963
+      n_cells_mapped: 369
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0064 LA-BLA-BMA-PA Glut_5
+      best_target_accession: CS20230722_SUPT_0064
+      coverage: 0.9239766081871345
+      purity: 0.8657534246575342
+      f1_score: 0.8939179632248939
+      n_cells_mapped: 316
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0245 LA-BLA-BMA-PA Glut_5
+      best_target_accession: CS20230722_CLUS_0245
+      coverage: 0.7318007662835249
+      purity: 0.9646464646464646
+      f1_score: 0.8322440087145969
+      n_cells_mapped: 191
+      median_bootstrap: 1.0
+    explanation: AT transfer of VGLUT1-2-Rspo2_Sema3e to CS20230722_CLUS_0245 — best F1 0.894 at supertype
+      level; per-level metrics populated programmatically from at_results.yaml.
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+    notes: Stage A NT prefix-match passed.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=1253 [painted]; Striatum [MBA:477] count_100um=1135
+      [painted]; Basolateral amygdalar nucleus [MBA:295] count_100um=1122 [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.703; strict region_fraction: 0.421; region_evidence: SELF'
+  caveats:
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: 'Coverage=0.73 at cluster level indicates ~27% of source cells scatter into sibling clusters
+      within 0064, primarily 0247. The primary mapping is to 0245 but the classical type likely spans
+      multiple children of 0064.
+
+      '
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'Source label VGLUT1-2-Rspo2_Sema3e is not confirmed as specifically fear neurons; direct
+      activity-based targeting of fear neurons required for cluster-level confirmation.
+
+      '
+  discovery_score:
+    score: 6
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail: []
+    region_fraction: 0.421
+    region_fraction_100um: 0.703
+    region_evidence: SELF
+    at_signal:
+      f1: 0.8322440087145969
+      n_cells: 191
+      target_level: cluster
+      target_name: 0245 LA-BLA-BMA-PA Glut_5
+      score: 3
+  confidence: MODERATE
+  confidence_score: 0.68
+  rationale: '[tier:NEXT] AT transfer of Hochgerner 2023 VGLUT1-2-Rspo2_Sema3e to cluster CS20230722_CLUS_0245
+    yields F1=0.83 (Purity=0.96, Coverage=0.73, n=191 cells, run_ref at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1);
+    this is the best cluster-level match within supertype 0064. NT aligns (Glut, CONSISTENT). region_fraction_100um=0.703
+    is in boundary band but consistent with BLA location. Coverage of 0.73 indicates scatter into sibling
+    clusters (chiefly 0247), expected for a supertype pattern. Functional identity caveat applies as for
+    supertype.
+
+    '
+  reconciliation_note: 'Best cluster within supertype CS20230722_SUPT_0064 (paired supertype edge: edge_basal_amygdala_fear_neuron_to_CS20230722_SUPT_0064,
+    HIGH confidence, broadMatch). Cluster 0247 receives secondary scatter — not sufficient for a parallel
+    closeMatch call.
+
+    '
+  mapping_cardinality: '1:1'
+  proposed_experiments:
+  - 'Activity-dependent single-cell profiling (Fos-seq or MERFISH in fear-conditioned animals) targeted
+    at verifying enrichment of CS-responsive cells in cluster 0245 vs. sibling clusters within 0064.
+
+    '
+  - 'Cluster 0245 vs. 0247 marker gene comparison to identify discriminating features testable in fear-conditioned
+    tissue.
+
+    '
+  rationale_generated_at: '2026-06-16T13:51:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
+  unresolved_questions:
+  - 'Whether cluster 0245 specifically enriches for fear neurons relative to extinction neurons, or whether
+    both functional types co-reside in this cluster.
+
+    '
+  - 'Whether the secondary scatter into cluster 0247 represents a biologically distinct subpopulation
+    or technical noise.
+
+    '
+  rationale_source_hash: 73540c06
+- id: edge_basal_amygdala_fear_neuron_to_CS20230722_CLUS_0247
+  lit_type: basal_amygdala_fear_neuron
+  taxonomy_type: CS20230722_CLUS_0247
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:UnspecifiedMatching
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0247 LA-BLA-BMA-PA Glut_5; region_fraction_100um=0.926; strict region_fraction=0.767.
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    source_cluster_label: VGLUT1-2-Rspo2_Sema3e
+    target_atlas: WMBv1
+    method: MapMyCells (via at_metrics.compute_edge_metrics)
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 01 IT-ET Glut
+      best_target_accession: CS20230722_CLAS_01
+      coverage: 1.0
+      purity: 0.10870202168180486
+      f1_score: 0.19608879492600423
+      n_cells_mapped: 371
+      median_bootstrap: 1.0
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 014 LA-BLA-BMA-PA Glut
+      best_target_accession: CS20230722_SUBC_014
+      coverage: 1.0
+      purity: 0.2501694915254237
+      f1_score: 0.4002169197396963
+      n_cells_mapped: 369
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0064 LA-BLA-BMA-PA Glut_5
+      best_target_accession: CS20230722_SUPT_0064
+      coverage: 0.9239766081871345
+      purity: 0.8657534246575342
+      f1_score: 0.8939179632248939
+      n_cells_mapped: 316
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0247 LA-BLA-BMA-PA Glut_5
+      best_target_accession: CS20230722_CLUS_0247
+      coverage: 0.16475095785440613
+      purity: 0.7818181818181819
+      f1_score: 0.2721518987341772
+      n_cells_mapped: 43
+      median_bootstrap: 0.97
+    explanation: AT transfer of VGLUT1-2-Rspo2_Sema3e to CS20230722_CLUS_0247 — best F1 0.894 at supertype
+      level; per-level metrics populated programmatically from at_results.yaml.
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+    notes: Stage A NT prefix-match passed.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=445 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=414 [painted]; Basolateral amygdalar nucleus, anterior part [MBA:303] count_100um=403
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.926; strict region_fraction: 0.767; region_evidence: SELF'
+  caveats:
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: AT cluster-level F1 = 0.272 is below the 0.5 threshold — source cells are scattered across
+      multiple atlas clusters rather than concentrated here. Cleaner AT signal may live at a coarser taxonomy
+      level.
+  discovery_score:
+    score: 4
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail: []
+    region_fraction: 0.767
+    region_fraction_100um: 0.926
+    region_evidence: SELF
+    at_signal:
+      f1: 0.2721518987341772
+      n_cells: 43
+      target_level: cluster
+      target_name: 0247 LA-BLA-BMA-PA Glut_5
+      score: 1
+  confidence: LOW
+  confidence_score: 0.22
+  rationale: '[tier:CUT] AT cluster-level F1=0.27 (Purity=0.78, Coverage=0.16, n=43 cells, run_ref at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1)
+    is below the 0.5 threshold; this cluster receives secondary scatter from the same source label as
+    the primary candidate (CLUS_0245). Region concordance is high (region_fraction_100um=0.926) but AT
+    signal is insufficient to support a distinct mapping. Eliminated as secondary scatter within supertype
+    0064.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
+  rationale_source_hash: b949f727
+- id: edge_basal_amygdala_fear_neuron_to_CS20230722_CLUS_0142
+  lit_type: basal_amygdala_fear_neuron
+  taxonomy_type: CS20230722_CLUS_0142
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:UnspecifiedMatching
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0142 L2/3 IT PIR-ENTl Glut_1; region_fraction_100um=0.646; strict region_fraction=0.384.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+    notes: Stage A NT prefix-match passed.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=431 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=350 [painted]; Basolateral amygdalar nucleus, ventral part [MBA:451] count_100um=346
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.646; strict region_fraction: 0.384; region_evidence: SELF'
+  caveats: []
+  discovery_score:
+    score: 3
+    rank_in_cohort: 3
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail: []
+    region_fraction: 0.384
+    region_fraction_100um: 0.646
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.08
+  rationale: '[tier:CUT] Atlas metadata only; no AT evidence. Piriform/entorhinal type (L2/3 IT PIR-ENTl)
+    not consistent with BLA basal nucleus classical definition. Eliminated (piriform/entorhinal type,
+    no AT).
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
+  rationale_source_hash: 36d32ea2
+- id: edge_basal_amygdala_fear_neuron_to_CS20230722_CLUS_0201
+  lit_type: basal_amygdala_fear_neuron
+  taxonomy_type: CS20230722_CLUS_0201
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:UnspecifiedMatching
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0201 MEA Slc17a7 Glut_2; region_fraction_100um=0.621; strict region_fraction=0.345.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+    notes: Stage A NT prefix-match passed.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=108 [painted]; Basomedial amygdalar nucleus
+      [MBA:319] count_100um=86 [painted]; Basomedial amygdalar nucleus, anterior part [MBA:327] count_100um=79
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.621; strict region_fraction: 0.345; region_evidence: SELF'
+  caveats: []
+  discovery_score:
+    score: 3
+    rank_in_cohort: 4
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail: []
+    region_fraction: 0.345
+    region_fraction_100um: 0.621
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.06
+  rationale: '[tier:CUT] Atlas metadata only; no AT evidence. MEA Slc17a7 Glut_2 — medial amygdalar nucleus
+    type, wrong nucleus for basal amygdala fear neurons. Eliminated (MEA type, wrong nucleus).
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
+  rationale_source_hash: f097f9c1
+- id: edge_basal_amygdala_fear_neuron_to_CS20230722_CLUS_0230
+  lit_type: basal_amygdala_fear_neuron
+  taxonomy_type: CS20230722_CLUS_0230
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:UnspecifiedMatching
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0230 LA-BLA-BMA-PA Glut_2; region_fraction_100um=0.532; strict region_fraction=0.331.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+    notes: Stage A NT prefix-match passed.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=565 [painted]; Olfactory areas [MBA:698] count_100um=374
+      [painted]; Basolateral amygdalar nucleus [MBA:295] count_100um=356 [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.532; strict region_fraction: 0.331; region_evidence: SELF'
+  caveats: []
+  discovery_score:
+    score: 3
+    rank_in_cohort: 5
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail: []
+    region_fraction: 0.331
+    region_fraction_100um: 0.532
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.06
+  rationale: '[tier:CUT] Atlas metadata only; no AT evidence. LA-BLA-BMA-PA Glut_2 subtype with lower
+    region_fraction_100um=0.532 vs. primary candidate supertype (0.881). Different Glut supertype (0061)
+    from primary mapping (0064). Eliminated (no AT; different Glut subtype, lower region signal).
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
+  rationale_source_hash: 325bf0ef
+- id: edge_basal_amygdala_fear_neuron_to_CS20230722_SUPT_0064
+  lit_type: basal_amygdala_fear_neuron
+  taxonomy_type: CS20230722_SUPT_0064
+  relationship: skos:broadMatch
+  mapping_justification: semapv:CompositeMatching
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0064 LA-BLA-BMA-PA Glut_5; region_fraction_100um=0.881; strict region_fraction=0.716.
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    source_cluster_label: VGLUT1-2-Rspo2_Sema3e
+    target_atlas: WMBv1
+    method: MapMyCells (via at_metrics.compute_edge_metrics)
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 01 IT-ET Glut
+      best_target_accession: CS20230722_CLAS_01
+      coverage: 1.0
+      purity: 0.10870202168180486
+      f1_score: 0.19608879492600423
+      n_cells_mapped: 371
+      median_bootstrap: 1.0
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 014 LA-BLA-BMA-PA Glut
+      best_target_accession: CS20230722_SUBC_014
+      coverage: 1.0
+      purity: 0.2501694915254237
+      f1_score: 0.4002169197396963
+      n_cells_mapped: 369
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0064 LA-BLA-BMA-PA Glut_5
+      best_target_accession: CS20230722_SUPT_0064
+      coverage: 0.9239766081871345
+      purity: 0.8657534246575342
+      f1_score: 0.8939179632248939
+      n_cells_mapped: 316
+      median_bootstrap: 1.0
+    explanation: AT transfer of VGLUT1-2-Rspo2_Sema3e to CS20230722_SUPT_0064 — best F1 0.894 at supertype
+      level; per-level metrics populated programmatically from at_results.yaml.
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=1827 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=1652 [painted]; Basolateral amygdalar nucleus, anterior part [MBA:303] count_100um=1380
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.881; strict region_fraction: 0.716; region_evidence: SELF'
+  caveats:
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'Hochgerner 2023 VGLUT1-2-Rspo2_Sema3e is a transcriptomic type; no direct evidence links
+      it specifically to fear-conditioned neurons vs. the broader BLA glutamatergic principal neuron pool
+      including extinction neurons.
+
+      '
+  - caveat_type: NT_PREDICTION_UNCERTAIN
+    description: 'NT type is not asserted at supertype level in CCN20230722; cluster-level children carry
+      Glut designation, consistent with classical glutamatergic identity.
+
+      '
+  discovery_score:
+    score: 6
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 3
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail: []
+    region_fraction: 0.716
+    region_fraction_100um: 0.881
+    region_evidence: SELF
+    at_signal:
+      f1: 0.8939179632248939
+      n_cells: 316
+      target_level: supertype
+      target_name: 0064 LA-BLA-BMA-PA Glut_5
+      score: 3
+  confidence: HIGH
+  confidence_score: 0.82
+  rationale: '[tier:STRONGEST] AT transfer of Hochgerner 2023 VGLUT1-2-Rspo2_Sema3e to supertype CS20230722_SUPT_0064
+    yields F1=0.89 (Purity=0.87, Coverage=0.92, n=316 cells, run_ref at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1);
+    region_fraction_100um=0.881 confirms BLA/cortical subplate location concordant with classical basal
+    amygdala fear neuron definition. NT class aligns (Glut). Mapped at supertype level (broadMatch, 1:n)
+    because AT distributes across supertype children; best cluster is CS20230722_CLUS_0245. Source cell
+    functional identity as specifically fear neurons is not established by Hochgerner 2023; the Rspo2/Sema3e
+    label may include both fear and extinction neurons.
+
+    '
+  reconciliation_note: 'Paired with cluster-level edge edge_basal_amygdala_fear_neuron_to_CS20230722_CLUS_0245
+    (closeMatch, 1:1) as part of supertype+best-child two-survivor pattern. Activity-dependent scRNA-seq
+    required to confirm fear-neuron-specific residence within 0064.
+
+    '
+  mapping_cardinality: 1:n
+  proposed_experiments:
+  - 'Activity-dependent MERFISH or Fos-seq of fear-conditioned animals to identify which WMBv1 cluster(s)
+    within 0064 are enriched for CS-responsive cells.
+
+    '
+  - 'Single-cell sequencing of electrophysiologically characterised fear and extinction neurons to directly
+    assign cluster-level identity.
+
+    '
+  - 'smFISH for Rspo2/Sema3e + Fos immunostaining in fear-conditioned tissue to establish whether Rspo2/Sema3e
+    labels CS-responsive BLA principal neurons.
+
+    '
+  rationale_generated_at: '2026-06-16T13:51:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
+  unresolved_questions:
+  - 'Whether VGLUT1-2-Rspo2_Sema3e captures both fear and extinction neurons or primarily fear neurons
+    within the BLA principal neuron pool.
+
+    '
+  - 'Molecular discriminator between fear and extinction neuron subpopulations within supertype 0064.
+
+    '
+  rationale_source_hash: e19578d9
+- id: edge_basal_amygdala_fear_neuron_to_CS20230722_SUPT_0065
+  lit_type: basal_amygdala_fear_neuron
+  taxonomy_type: CS20230722_SUPT_0065
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:UnspecifiedMatching
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0065 LA-BLA-BMA-PA Glut_6; region_fraction_100um=0.719; strict region_fraction=0.485.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=832 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=607 [painted]; Lateral amygdalar nucleus [MBA:131] count_100um=567 [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.719; strict region_fraction: 0.485; region_evidence: SELF'
+  caveats: []
+  discovery_score:
+    score: 3
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 3
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail: []
+    region_fraction: 0.485
+    region_fraction_100um: 0.719
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.09
+  rationale: '[tier:CUT] No AT evidence on this edge. Adjacent Glut_6 supertype is inconsistent with the
+    primary mapping to Glut_5 supertype 0064, and no supporting AT signal for this node. Eliminated.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
+  rationale_source_hash: 098c2c56
+- id: edge_basal_amygdala_fear_neuron_to_CS20230722_SUPT_0063
+  lit_type: basal_amygdala_fear_neuron
+  taxonomy_type: CS20230722_SUPT_0063
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:UnspecifiedMatching
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0063 LA-BLA-BMA-PA Glut_4; region_fraction_100um=0.634; strict region_fraction=0.328.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=1657 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=1129 [painted]; Basomedial amygdalar nucleus [MBA:319] count_100um=1033 [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.634; strict region_fraction: 0.328; region_evidence: SELF'
+  caveats: []
+  discovery_score:
+    score: 3
+    rank_in_cohort: 3
+    cohort_size: 5
+    next_best_score: 3
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail: []
+    region_fraction: 0.328
+    region_fraction_100um: 0.634
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.07
+  rationale: '[tier:CUT] No AT evidence on this edge. Glut_4 supertype without supporting AT signal. Eliminated.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
+  rationale_source_hash: 41493cc0
+- id: edge_basal_amygdala_fear_neuron_to_CS20230722_SUPT_0061
+  lit_type: basal_amygdala_fear_neuron
+  taxonomy_type: CS20230722_SUPT_0061
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:UnspecifiedMatching
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0061 LA-BLA-BMA-PA Glut_2; region_fraction_100um=0.766; strict region_fraction=0.541.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=3336 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=2755 [painted]; Basolateral amygdalar nucleus, posterior part [MBA:311] count_100um=2256
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.766; strict region_fraction: 0.541; region_evidence: SELF'
+  caveats: []
+  discovery_score:
+    score: 3
+    rank_in_cohort: 4
+    cohort_size: 5
+    next_best_score: 3
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail: []
+    region_fraction: 0.541
+    region_fraction_100um: 0.766
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.07
+  rationale: '[tier:CUT] Atlas metadata only; no AT evidence. Glut_2 supertype; no AT signal detected
+    for VGLUT1-2-Rspo2_Sema3e mapping to this supertype. Eliminated (no AT; Glut_2 supertype without supporting
+    AT signal).
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
+  rationale_source_hash: df89c2d8
+- id: edge_basal_amygdala_fear_neuron_to_CS20230722_SUPT_0007
+  lit_type: basal_amygdala_fear_neuron
+  taxonomy_type: CS20230722_SUPT_0007
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:UnspecifiedMatching
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0007 L5/6 IT TPE-ENT Glut_1; region_fraction_100um=0.112; strict region_fraction=0.080.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Isocortex [MBA:315] count_100um=3529 [painted]; Hippocampal formation [MBA:1089] count_100um=920
+      [painted]; Entorhinal area, lateral part [MBA:918] count_100um=879 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.112; strict region_fraction: 0.080; region_evidence: SELF'
+  caveats: []
+  discovery_score:
+    score: 2
+    rank_in_cohort: 5
+    cohort_size: 5
+    next_best_score: 3
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail: []
+    region_fraction: 0.08
+    region_fraction_100um: 0.112
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.03
+  rationale: '[tier:CUT] Atlas metadata only; no AT evidence. region_fraction_100um=0.112 — isocortex/entorhinal
+    region type with APPROXIMATE location alignment. Eliminated (wrong region; low region_fraction; isocortex/entorhinal
+    type).
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
+  rationale_source_hash: c286af99

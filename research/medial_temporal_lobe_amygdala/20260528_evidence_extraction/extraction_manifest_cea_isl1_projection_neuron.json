@@ -1,0 +1,31 @@
+{
+  "node_id": "cea_isl1_projection_neuron",
+  "run_date": "2026-06-03",
+  "summaries_read": 80,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 1,
+  "skipped_low_relevance": 0,
+  "entries_written": 1,
+  "fields_populated": [
+    "defining_markers.Isl1.sources"
+  ],
+  "fields_with_no_evidence": [
+    "anatomical_location.sources (existing)",
+    "nt_type.sources (existing)",
+    "morphology.sources",
+    "electrophysiology.sources"
+  ],
+  "sources_added": [
+    {
+      "corpus_id": "10856039",
+      "pmid": "PMID:25309337",
+      "ref": "Vicario et al. 2014, Genetic identification of CEA components in chicken",
+      "quote_key": "10856039_51074be7",
+      "field": "defining_markers.Isl1.sources",
+      "added_by": "evidence_extraction_cea_isl1_projection_neuron_2026-06-03"
+    }
+  ],
+  "synonyms_found": [],
+  "refs_file": "/Users/ar38/Documents/GitHub/evidencell/references/medial_temporal_lobe_amygdala/references.json",
+  "notes": "Second pass (2026-06-03): Added Vicario et al. 2014 (PMID:25309337) introduction passage establishing that mammalian CeA cells derived from LGEv express Islet1 and locate in lateral and medial CeA subdivisions \u2014 supporting the Isl1-defining marker on this node. Prior run (entries_written=0) missed this because it was referenced in a developmental-comparative context. Hochgerner 2023 (264517392) covers CEA inhibitory types but does not resolve Isl1+ specifically."
+}

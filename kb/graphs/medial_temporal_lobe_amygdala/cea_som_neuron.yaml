@@ -1,0 +1,321 @@
+name: Central amygdala somatostatin-positive neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Central amygdala somatostatin-positive
+  neuron. Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest graph
+  and split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further ASTA
+  runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002883
+  label: central amygdaloid nucleus
+  name_in_source: central amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: cea_som_neuron
+  name: Central amygdala somatostatin-positive neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:23354330
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10650261_1cb6c2e3
+    - ref: PMID:25433901
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 442779_deea5502
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  anatomical_location:
+  - id: UBERON:0002883
+    sources:
+    - ref: PMID:23354330
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10650261_1cb6c2e3
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_0bccee6a
+    - ref: PMID:40780965
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 280558687_e43f631e
+    - ref: PMID:25309337
+      method: asta_snippet — Vicario et al. 2014 developmental tracing of MGE-derived Nkx2.1+/SST+ cells
+        in medial CeA
+      scope: chicken/comparative central extended amygdala development
+      quote_key: 10856039_29ceb834
+    label: central amygdaloid nucleus
+    name_in_source: central amygdala
+    compartment: SOMA
+  negative_markers:
+  - symbol: Prkcd
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_0bccee6a
+      marker_type: PROTEIN
+  neuropeptides:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:23354330
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10650261_1cb6c2e3
+      marker_type: PROTEIN
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_0bccee6a
+      marker_type: PROTEIN
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_daaf5612
+      marker_type: PROTEIN
+    - ref: PMID:36425768
+      method: asta_snippet — O'Leary et al. 2022 scRNA-seq of CeA reveals Sst as canonical marker with
+        mixed cluster expression
+      scope: mouse central amygdala scRNA-seq
+      quote_key: 253356112_39b8cae2
+      marker_type: TRANSCRIPT
+  morphology:
+    description: GABAergic somatostatin-expressing neuron of CeL/CeC; receives potentiated excitatory
+      input from lateral amygdala during fear conditioning and inhibits CeL output to disinhibit CeM and
+      drive fear expression (CeL-ON-like role).
+    sources:
+    - ref: PMID:23354330
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10650261_1cb6c2e3
+  electrophysiology:
+    description: Late-firing or regular-spiking.
+    sources:
+    - ref: PMID:40780965
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 280558687_8db1d30e
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:23354330
+  - PMID:25433901
+  - PMID:33188006
+  - PMID:38419794
+  - PMID:40780965
+  is_terminal: false
+  notes: Largely non-overlapping with PKC-delta neurons; constitutes a large share of lateral CeA neurons.
+- id: CS20230722_CLUS_0823
+  name: 0823 Sst Gaba_17
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0823
+edges:
+- id: edge_cea_som_neuron_to_cs20230722_clus_0823
+  lit_type: cea_som_neuron
+  taxonomy_type: CS20230722_CLUS_0823
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: 1:n
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002883 central amygdala
+    node_b_value: MBA:536 CeA present; discovery region_fraction 0.067 (cohort rank 2 of 5). Parent supertype
+      SUPT_0230 (Sst Gaba_17).
+    alignment: CONSISTENT
+  - property: neuropeptide_Sst
+    node_a_value: Sst — neuropeptide (PMID:23354330, PMID:33188006, PMID:38419794)
+    node_b_value: Sst precomputed mean_expression 10.36 (CeA GABAergic cohort 95.1th pct; tier 2; applied_score
+      2.0). Cluster "0823 Sst Gaba_17".
+    alignment: CONSISTENT
+  - property: negative_marker_Prkcd
+    node_a_value: Prkcd — negative marker (SST neurons are Prkcd-negative; PMID:33188006)
+    node_b_value: '-Prkcd: precomputed val 0.0 (0th pct; tier 1 unreliable). Prkcd effectively absent
+      — consistent with Prkcd-negativity criterion.'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:23354330
+    explanation: Ciocchi et al. 2010 identifies CeL SST+ neurons (CeL-ON) that increase firing during
+      fear conditioning; SST is the primary neuropeptide marker defining this population opposite to the
+      PKC-delta CeL-OFF class.
+    snippet: The amygdala is essential for fear learning and expression. The central amygdala (CeA), once
+      viewed as a passive relay between the amygdala complex and downstream fear effectors, has emerged
+      as an active participant in fear conditioning. However, the mechanism by which CeA contributes to
+      the learning and expression of fear is unclear. We found that fear conditioning in mice induced
+      robust plasticity of excitatory synapses onto inhibitory neurons in the lateral subdivision of the
+      CeA (CeL). This experience-dependent plasticity was cell specific, bidirectional and expressed presynaptically
+      by inputs from the lateral amygdala. In particular, preventing synaptic potentiation onto somatostatin-positive
+      neurons impaired fear memory formation. Furthermore, activation of these neurons was necessary for
+      fear memory recall and was sufficient to drive fear responses. Our findings support a model in which
+      fear conditioning–induced synaptic modifications in CeL favor the activation of somatostatin-positive
+      neurons, which inhibit CeL output, thereby disinhibiting the medial subdivision of CeA and releasing
+      fear expression.
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:33188006
+    explanation: Confirms SST+ CeL neurons as the classical CeL-ON population non-overlapping with PKC-delta
+      cells; SST and Prkcd jointly define the two major CeL classes.
+    snippet: This diverse span of function is mirrored by the genetic, physiological and morphologic heterogeneity
+      in CeA neuron subtypes (Martina et al., 1999;Schiess et al., 1999;Janak and Tye, 2015). Two genetically
+      identified cell types, protein kinase Cdexpressing (PKCd⁺) neurons and somatostatin-expressing (Som⁺)
+      neurons, constitute most CeLC neurons and are largely non-overlapping (Li et al., 2013;Kim et al.,
+      2017;Wilson et al., 2019).
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: CLUS_0823 "Sst Gaba_17" (WMBv1) expresses Sst at 95.1th pct of CeA GABAergic cohort (tier-2
+      reliable) with Prkcd effectively absent (0th pct). CeA region_fraction 0.067. Selected over CLUS_0765
+      (already used for bla_som_dendrite_targeting_interneuron) and CLUS_0860 (Sst Chodl — Chodl co-expression
+      may not characterise typical CeA SST neurons).
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: GABA-39-Sst-Nek7
+    n_cells_total: 23
+    best_f1_score: 0.552
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 07 CTX-MGE GABA
+      best_target_accession: CS20230722_CLAS_07
+      coverage: 0.6153846153846154
+      purity: 0.02867383512544803
+      f1_score: 0.054794520547945195
+      n_cells_mapped: 8
+      median_bootstrap: 0.985
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 053 Sst Gaba
+      best_target_accession: CS20230722_SUBC_053
+      coverage: 0.5652173913043478
+      purity: 0.10743801652892562
+      f1_score: 0.18055555555555555
+      n_cells_mapped: 13
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0230 Sst Gaba_17
+      best_target_accession: CS20230722_SUPT_0230
+      coverage: 0.6190476190476191
+      purity: 0.30952380952380953
+      f1_score: 0.41269841269841273
+      n_cells_mapped: 13
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0823 Sst Gaba_17
+      best_target_accession: CS20230722_CLUS_0823
+      coverage: 0.6153846153846154
+      purity: 0.5
+      f1_score: 0.5517241379310345
+      n_cells_mapped: 8
+      median_bootstrap: 1.0
+    f1_source_relpath: at_results.yaml
+    explanation: AT transfer of GABA-39-Sst-Nek7.
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260617_wang2023_cea_mmc_wmbv1
+    supports: REFUTE
+    explanation: 'Wang 2023 Sst+Pdyn+ CeA cells (n=100) map to SUPT_0386 (CEA-BST Ebf1 Pdyn Gaba_3; F1=0.495
+      at supertype; CLASS_11 CNU-HYa GABA), not to CLUS_0823 (CLASS_07 CTX-MGE GABA). Different WMBv1
+      classes — Wang Sst_Pdyn cells are a striatal-lineage CeA population, not MGE-derived Sst interneurons.
+
+      '
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.2, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE213828
+    source_cluster_label: MC-03_Sst_Pdyn
+    n_cells_total: 100
+    best_f1_score: 0.495
+    best_mapping_rank: 1
+  caveats:
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: Five Sst Gaba clusters score equally (score 4). CLUS_0765 (already used for BLA SST DTI),
+      CLUS_0823, CLUS_0850, CLUS_0860, and CLUS_1312 all match. CeA SST neurons likely span multiple clusters.
+  - caveat_type: SINGLE_DATASET
+    description: CeA SST neurons overlap with BLA SST dendrite-targeting neurons in the discovery pool;
+      anatomical restriction to CeA (MBA:536) is the primary discriminator but multiple clusters span
+      both regions.
+  unresolved_questions:
+  - Which Sst Gaba cluster is most specific to CeA vs BLA? CLUS_0860 (Sst Chodl) has a higher CeA fraction
+    (0.084) than CLUS_0823 (0.067) but carries the Chodl designation.
+  - Does the CeA SST+ CeL-ON population correspond to a single WMBv1 cluster or is it heterogeneous across
+    multiple Sst Gaba supertypes?
+  - Which Sst Gaba cluster is most specific to CeA vs BLA? CLUS_0860 (Sst Chodl) has a higher CeA fraction
+    (0.084) than CS20230722_CLUS_0823 (0.067) but carries the Chodl designation.
+  proposed_experiments:
+  - scRNA-seq of CeA-targeted SST-Cre+ neurons in mouse with WMBv1 cluster assignment to resolve 1:n cardinality.
+  - MapMyCells on published CeA SST scRNA-seq data to identify the primary WMBv1 cluster.
+  discovery_score:
+    score: 4
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:536
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Sst
+      val: 10.36
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.951
+    - gene: -Prkcd
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    region_fraction: 0.067
+    region_evidence: SELF
+  confidence: LOW
+  confidence_score: 0.35
+  rationale: 'skos:broadMatch 1:n: CS20230722_CLUS_0823 ("0823 Sst Gaba_17", CS20230722_SUPT_0230) aligns
+    on neuropeptide_Sst CONSISTENT (precomputed mean 10.36, 95.1th pct of CeA GABAergic cohort of 5) and
+    negative_marker_Prkcd CONSISTENT (Prkcd val 0.0, 0th pct). NT type and soma location (MBA:536, region_fraction
+    0.067) are both CONSISTENT. AT evidence from at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1 (scRNA-seq
+    source GABA-39-Sst-Nek7, n=23 cells) yields F1=0.55 at CLUSTER level (CS20230722_CLUS_0823), purity
+    0.50, median bootstrap 1.0; supertype CS20230722_SUPT_0230 F1=0.41. LOW confidence because 5 Sst Gaba
+    clusters are tied at discovery score 4 in the CeA GABAergic cohort (cohort_size 5, next_best_score
+    4), AT F1=0.55 is below MODERATE threshold, and source cohort is small (n=23); 2 of 2 marker-prefixed
+    comparisons are CONSISTENT but cluster specificity within the supertype is unresolved.
+
+    '
+  rationale_generated_at: '2026-06-11T10:21:23+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/cea_som_neuron_summary.md
+  rationale_source_hash: 560ceda2
+  reconciliation_note: ''

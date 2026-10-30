@@ -1,0 +1,286 @@
+name: Central amygdala GABAergic projection neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Central amygdala GABAergic projection neuron.
+  Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest graph and
+  split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further ASTA
+  runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002883
+  label: central amygdaloid nucleus
+  name_in_source: central amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: central_amygdala_gabaergic_projection_neuron
+  name: Central amygdala GABAergic projection neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:25309888
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 1229611_70584dfd
+    - ref: PMID:27920666
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 18703800_715e9b7d
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 271240390_b54d0b91
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  anatomical_location:
+  - id: UBERON:0002883
+    sources:
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 271240390_a9790f35
+    - ref: PMID:33015518
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 222092617_b027389d
+    - ref: PMID:25309888
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 1229611_e14a19cf
+    label: central amygdaloid nucleus
+    name_in_source: central amygdala
+    compartment: SOMA
+  morphology:
+    description: Spiny GABAergic projection neurons; the central nucleus contains predominantly/exclusively
+      GABAergic principal neurons; comparison to striatum is repeatedly drawn. Central amygdala serves
+      as a major amygdaloid output nucleus.
+    sources:
+    - ref: PMID:27920666
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 18703800_715e9b7d
+    - ref: PMID:35645737
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 248700803_7a2cdc78
+    - ref: PMID:37884748
+      method: asta_snippet — scRNA-seq identifies CEA as major amygdala output region; most CEA cells
+        (GABA-5 to GABA-21) express Six3, Ano3, Epha4, Zfhx3/4
+      scope: mouse amygdala scRNA-seq
+      quote_key: 264517392_45f945cc
+    - ref: PMID:8158266
+      method: asta_snippet — paradoxically high terminal density in central nucleus despite low GABA-immunoreactive
+        cell body count, indicating dense GABAergic local circuitry
+      scope: macaque amygdala, GABA immunohistochemistry + GAD ISH
+      quote_key: 14068807_37f4132d
+    - ref: PMID:36425768
+      method: asta_snippet — scRNA-seq identifies an Isl1-expressing medial CEA cell type that accounts
+        for many long-range CEA projections
+      scope: mouse CeA scRNA-seq
+      quote_key: 253356112_b1233c79
+    - ref: PMID:25309337
+      method: asta_snippet — MGE-derived Nkx2.1+/somatostatin+ cells concentrate in medial subdivision
+        of central nucleus
+      scope: comparative developmental analysis of central extended amygdala
+      quote_key: 10856039_29ceb834
+    - ref: PMID:38419794
+      method: asta_snippet — CeA neurons defined by markers including PKC-δ, CRF, Calcrl, SOM, Htr2a,
+        Tac2
+      scope: review of CeA molecular cell types
+      quote_key: 267685584_183ae7aa
+    - ref: PMID:21068836
+      method: asta_snippet — PKC-δ+ CeL neurons inhibit CEm output neurons and form reciprocal inhibitory
+        synapses with PKC-δ− neurons
+      scope: mouse central amygdala, optogenetics + electrophysiology
+      quote_key: 2270983_5801e191
+  electrophysiology:
+    description: 'CeLC neurons fall into two largely non-overlapping populations: PKC-δ+ (predominantly
+      late-firing, CeL-OFF, inhibited by CS after fear conditioning) and SST+ (later-firing or regular-spiking,
+      activated by CS).'
+    sources:
+    - ref: PMID:33188006
+      method: asta_snippet — PKCd+ and Som+ neurons constitute most CeLC neurons and are largely non-overlapping
+      scope: mouse CeLC, electrophysiology + transgenic labeling
+      quote_key: 209598438_067ede44
+    - ref: PMID:40780965
+      method: asta_snippet — PKC-δ+ CeL OFF neurons are predominantly late-firing and respond to fear-conditioned
+        stimuli with reduced activity
+      scope: mouse CeL, electrophysiology
+      quote_key: 280558687_a3cf6200
+  cl_mapping:
+    cl_term:
+      id: CL:0011005
+      label: GABAergic interneuron
+      name_in_source: GABAergic interneuron
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
+  proposed_cl_term: null
+  definition_references:
+  - PMID:25309888
+  - PMID:27920666
+  - PMID:33015518
+  - PMID:35645737
+  - PMID:36831071
+  - PMID:37265841
+  - PMID:39012795
+  - PMID:39130512
+  - PMID:9364666
+  is_terminal: false
+  notes: CeA further splits into medial (CeM), lateral (CeL), and central (CeC) sections.
+- id: CS20230722_SUPT_0249
+  name: 0249 NDB-SI-MA-STRv Lhx8 Gaba_6
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0249
+edges:
+- id: edge_central_amygdala_gabaergic_projection_neuron_to_cs20230722_supt_0249
+  lit_type: central_amygdala_gabaergic_projection_neuron
+  taxonomy_type: CS20230722_SUPT_0249
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  confidence: LOW
+  confidence_score: 0.25
+  rationale: 'AT (GABA-25-Lhx8-Th, `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) yields F1=0.57
+    at SUPERTYPE (CS20230722_SUPT_0249) with coverage=0.40; subclass anchor is strong (F1=0.86). MERFISH
+    places 85 cells at MBA:536 (region_fraction=0.14), confirming a genuine CeA subpopulation but the
+    supertype spans NDB/SI/STRv/Pallidum. NT is CONSISTENT; 0 of 3 markers CONSISTENT (marker_GBX1, marker_TH,
+    marker_NR4A2 all NOT_ASSESSED: no defining markers on classical node). broadMatch reflects the 1:n
+    spatial scope mismatch and absence of molecular discriminators.
+
+    '
+  rationale_generated_at: '2026-06-10T15:44:19+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/central_amygdala_gabaergic_projection_neuron_summary.md
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA (inferred from label NDB-SI-MA-STRv Lhx8 Gaba_6; nt_type field null)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002883 central amygdala
+    node_b_value: MBA:536 Central amygdalar nucleus (33 cells/0.073 Yao 2024; 85 cells/0.150 Zhuang 2023);
+      dominant locations NDB, SI, Striatum, Pallidum (region_fraction 0.14 for CeA)
+    alignment: APPROXIMATE
+    notes: CeA is represented but is only ~14% of this supertype. Supertype spans NDB/SI/STRv/Pallidum
+      — much broader than the CeA-specific classical node.
+  - property: marker_GBX1
+    node_a_value: not assessed (no defining_markers on classical node)
+    node_b_value: Gbx1 DEFINING marker on SUPT_0249
+    alignment: NOT_ASSESSED
+  - property: marker_TH
+    node_a_value: not assessed
+    node_b_value: Th DEFINING marker on SUPT_0249
+    alignment: NOT_ASSESSED
+    notes: TH is unusual for a CeA GABAergic projection neuron. May reflect non-CeA majority of supertype
+      cells. Requires scrutiny.
+  - property: marker_NR4A2
+    node_a_value: not assessed
+    node_b_value: Nr4a2 DEFINING and DEFINING_SCOPED on SUPT_0249
+    alignment: NOT_ASSESSED
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: MERFISH (Zhuang 2023) places SUPT_0249 cells at MBA:536 CeA (85 cells, ratio 0.150),
+      confirming a CeA-located subpopulation. GABAergic label consistent with classical CeA identity.
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: GABA-25-Lhx8-Th
+    n_cells_total: 50
+    best_f1_score: 0.862
+    best_mapping_rank: 2
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 08 CNU-MGE GABA
+      best_target_accession: CS20230722_CLAS_08
+      coverage: 0.8545454545454545
+      purity: 0.29936305732484075
+      f1_score: 0.44339622641509435
+      n_cells_mapped: 47
+      median_bootstrap: 1.0
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 057 NDB-SI-MA-STRv Lhx8 Gaba
+      best_target_accession: CS20230722_SUBC_057
+      coverage: 0.8333333333333334
+      purity: 0.8928571428571429
+      f1_score: 0.8620689655172413
+      n_cells_mapped: 50
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0249 NDB-SI-MA-STRv Lhx8 Gaba_6
+      best_target_accession: CS20230722_SUPT_0249
+      coverage: 0.39622641509433965
+      purity: 1.0
+      f1_score: 0.5675675675675675
+      n_cells_mapped: 21
+      median_bootstrap: 1.0
+    f1_source_relpath: at_results.yaml
+    explanation: AT transfer of GABA-25-Lhx8-Th.
+  caveats:
+  - caveat_type: TAXONOMY_LEVEL_MISMATCH
+    description: '[legacy caveat type BROAD_ATLAS_TYPE] SUPT_0249 (NDB-SI-MA-STRv Lhx8 Gaba_6) is distributed
+      across NDB, SI, STRv, Pallidum, Hypothalamus. CeA accounts for only ~14% of cells. Supertype label
+      does not designate CeA as primary region.'
+  - caveat_type: MARKER_NOT_SPECIFIC
+    description: '[legacy caveat type ATLAS_MARKER_MISMATCH_RISK] Defining marker Th (tyrosine hydroxylase)
+      is unusual for CeA GABAergic projection neurons. Th enrichment may be driven by non-CeA fraction
+      of cells. Verify with spatial filtering.'
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: '[legacy caveat type MULTIPLE_CANDIDATES] Five GABAergic supertypes at MBA:536 scored
+      equally (all score=1). SUPT_0249 ranked first by cohort order only. SUPT_0255, 0252, 0238, 0235
+      remain equally viable.'
+  unresolved_questions:
+  - Which of the 5 ranked CeA GABAergic supertypes best captures the classical molecular profile? Canonical
+    CeA markers (Prkcd, Sst, Crh, Calcrl, Htr2a, Tac2, Isl1) not in defining markers of any candidate.
+  - Does Th expression in SUPT_0249 reflect genuine TH co-expression in CeA neurons, or is it driven by
+    the non-CeA majority?
+  - Can GBX1, TH, or NR4A2 expression be confirmed in CS20230722_SUPT_0249 from precomputed stats or in-situ
+    data?
+  - Does GABA-25-Lhx8-Th specifically capture long-range CeA projection neurons, or does it mix with local
+    CeA interneurons?
+  - Which of the 5 ranked CeA GABAergic supertypes best captures the classical molecular profile? Query
+    CCN20230722 for Prkcd, Sst, Crh, Isl1, Calcrl, Htr2a, Tac2 at supertype rank across CS20230722_SUPT_0249,
+    SUPT_0255, SUPT_0252, SUPT_0238, SUPT_0235.
+  - Does Th expression in CS20230722_SUPT_0249 reflect genuine TH co-expression in CeA neurons, or is
+    it driven by the non-CeA majority (NDB/SI/STRv)?
+  proposed_experiments:
+  - Query CCN20230722 for supertype-level expression of Prkcd, Sst, Crh, Isl1 across all 5 MBA:536 GABAergic
+    supertype candidates.
+  - Apply MERFISH spatial filtering to restrict SUPT_0249 to MBA:536 cells and compare marker profile
+    to the full supertype.
+  discovery_score:
+    score: 1
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 1
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:536
+      - nt_type=GABAergic
+    expression_detail: []
+    region_fraction: 0.14
+    region_evidence: SELF
+  mapping_cardinality: 1:n
+  rationale_source_hash: b7247204
+  reconciliation_note: 'Five equally-scored CeA GABAergic supertypes (score=1 each, cohort_size=5); CS20230722_SUPT_0249
+    ranked first by cohort order only. SUPT_0255, SUPT_0252, SUPT_0238, SUPT_0235 remain equally viable
+    until canonical CeA markers (Prkcd, Sst, Crh, Isl1) are queried at supertype rank.
+
+    '

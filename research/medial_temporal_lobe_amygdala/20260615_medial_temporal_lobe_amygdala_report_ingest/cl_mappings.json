@@ -1,0 +1,74 @@
+{
+  "bla_fear_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for BLA fear-conditioning glutamatergic principal neuron. Functional identity (CS-responsive, projects to mPFC) not represented in CL. Potential CL contribution as a subtype of glutamatergic neuron or BLA principal neuron."
+  },
+  "bla_extinction_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for BLA extinction (Fear-Off) glutamatergic neuron. Ntsr2/Dkk3/Rspo2 molecular identity and mPFC reciprocal connectivity not represented in CL. Potential CL contribution as functionally distinct BLA principal neuron subtype."
+  },
+  "bla_npy_neurogliaform_interneuron": {
+    "cl_term_id": "CL:4072016",
+    "label": "NPY interneuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "LOW",
+    "definition_references": [],
+    "note": "CL:4072016 (NPY interneuron) captures NPY expression and GABAergic interneuron identity but does not specify neurogliaform morphology or amygdala location. CL:0000693 (neurogliaform cell) captures the morphological class but does not specify NPY expression or amygdala location. The combined identity (NPY-expressing neurogliaform in BLA) has no dedicated CL term. CL:4072016 chosen as primary BROAD match on molecular marker; CL:0000693 noted as morphological BROAD alternative.",
+    "alternative_matches": [
+      {
+        "cl_term_id": "CL:0000693",
+        "label": "neurogliaform cell",
+        "mapping_type": "BROAD",
+        "note": "Morphological class match — neurogliaform soma/dendrite/axon pattern; not NPY-specific or amygdala-specific."
+      }
+    ]
+  },
+  "bla_calbindin_dendrite_targeting_interneuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for calbindin-positive dendrite-targeting GABAergic interneuron in BLA. Calbindin interneurons not represented as a named class in CL (searches for calbindin interneuron, CB1 dendrite-targeting, and related terms all returned no hits). Potential CL contribution."
+  },
+  "cea_large_aspiny_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for CeA large aspiny GABAergic neuron. Central amygdala neurons are not represented as named classes in CL. Aspiny GABAergic projection neurons of the CeA (large subtype) lack a dedicated CL term. Potential CL contribution."
+  },
+  "cea_small_aspiny_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for CeA small aspiny GABAergic neuron. Central amygdala neurons are not represented as named classes in CL. Aspiny GABAergic projection neurons of the CeA (small subtype) lack a dedicated CL term. Potential CL contribution."
+  },
+  "pl_immature_excitatory_neuron": {
+    "cl_term_id": "CL:4042028",
+    "label": "immature neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "LOW",
+    "definition_references": [],
+    "note": "CL:4042028 (immature neuron) captures the developmental immaturity and CNS location. However, it does not specify glutamatergic/excitatory identity, amygdaloid paralaminar nucleus location, or the protracted postnatal maturation timeline characteristic of this type. CL:4042029 (cortical immature neuron) is a closer developmental parallel but explicitly cortex-specific and therefore less appropriate for a paralaminar nucleus cell. BROAD match to CL:4042028 on developmental state; amygdala-specific immature excitatory neuron class absent from CL. Potential CL contribution.",
+    "alternative_matches": [
+      {
+        "cl_term_id": "CL:4042029",
+        "label": "cortical immature neuron",
+        "mapping_type": "RELATED",
+        "note": "Developmental profile (prenatal origin, persists immature through lifespan) is analogous, but term is explicitly cortex-restricted and not applicable to paralaminar nucleus."
+      }
+    ]
+  }
+}

@@ -1,0 +1,287 @@
+name: Basolateral amygdala GABAergic projection neuron (SST/nNOS) — classical type
+description: 'Single classical cell type (one-file-one-class): Basolateral amygdala GABAergic projection
+  neuron (SST/nNOS). Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest
+  graph and split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further
+  ASTA runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002887
+  label: basal amygdaloid nucleus
+  name_in_source: basolateral amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: bla_gabaergic_projection_neuron
+  name: Basolateral amygdala GABAergic projection neuron (SST/nNOS)
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:26876924
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 3460849_57002ff6
+    - ref: PMID:33837051
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 232283078_d4238834
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  anatomical_location:
+  - id: UBERON:0002887
+    sources:
+    - ref: PMID:33837051
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 232283078_d4238834
+    - ref: PMID:22837739
+      method: asta_snippet — SOM+ long-range non-pyramidal neurons (LRNP) located in external capsule,
+        basolateral amygdala, and cortical/medial amygdalar nuclei project to basal forebrain
+      scope: rat amygdala-to-basal forebrain retrograde tracing + SOM immunolabeling
+      quote_key: 11544073_bef58c1f
+    label: basal amygdaloid nucleus
+    name_in_source: basolateral amygdala
+    compartment: SOMA
+  defining_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33837051
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 232283078_d4238834
+      marker_type: PROTEIN
+  - symbol: Nos1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33837051
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 232283078_d4238834
+      marker_type: PROTEIN
+  neuropeptides:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33837051
+      method: asta_report
+      scope: neuropeptide synthesis from ASTA report
+      quote_key: 232283078_d4238834
+      marker_type: PROTEIN
+  negative_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33837051
+      method: asta_snippet — Vereczki 2021 census establishes PVALB+ and non-PVALB cells as distinct non-overlapping
+        GABAergic populations in mouse BLA
+      scope: mouse lateral and basal amygdala, stereological quantification
+      quote_key: 232283078_d4238834
+      marker_type: TRANSCRIPT
+  morphology:
+    description: Long-range GABAergic projection neurons (not local interneurons) co-expressing somatostatin
+      and neuronal nitric oxide synthase; estimated at ~5.5-8% of BLA GABAergic cells.
+    sources:
+    - ref: PMID:33837051
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 232283078_d4238834
+    - ref: PMID:22837739
+      method: asta_snippet — virtually all amygdala-to-basal-forebrain LRNP neurons expressed SOM, identifying
+        SOM+ non-pyramidal cells as the projection neuron class
+      scope: rat amygdala-to-basal forebrain retrograde tracing
+      quote_key: 11544073_d420981d
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:26876924
+  - PMID:33837051
+  is_terminal: false
+  notes: Distinct from local SOM dendrite-targeting interneurons by virtue of projection axon and nNOS
+    co-expression.
+- id: CS20230722_CLUS_0850
+  name: 0850 Sst Chodl Gaba_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0850
+edges:
+- id: edge_bla_gabaergic_projection_neuron_to_cs20230722_clus_0850
+  lit_type: bla_gabaergic_projection_neuron
+  taxonomy_type: CS20230722_CLUS_0850
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: 1:n
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002887 basolateral amygdala
+    node_b_value: MBA:295 BLA present; region_fraction 0.015.
+    alignment: CONSISTENT
+  - property: marker_Sst
+    node_a_value: Sst — defining marker
+    node_b_value: Sst precomputed mean 12.23 (99.6th pct; tier 2). Cluster "0850 Sst Chodl Gaba_2".
+    alignment: CONSISTENT
+  - property: marker_Nos1
+    node_a_value: Nos1 — defining marker (nNOS)
+    node_b_value: Nos1 precomputed mean 12.1 (tier 2). Sst Chodl clusters are the canonical Sst+/Nos1+
+      family.
+    alignment: CONSISTENT
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — negative marker
+    node_b_value: Pvalb val 0.0 (0th pct; effectively absent). CONSISTENT.
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:33837051
+    explanation: 'Vereczki et al. 2021: SST+/nNOS+ GABAergic projection neurons estimated 5.5-8% of BLA
+      GABAergic cells; long-range projecting.'
+    snippet: 'we estimated that the following cell types together compose the vast majority of GABAergic
+      cells in the LA and BA: axo-axonic cells (5.5%-6%), basket cells expressing parvalbumin (17%-20%)
+      or cholecystokinin (7%-9%), dendrite-targeting inhibitory cells expressing somatostatin (10%-16%),
+      NPY-containing neurogliaform cells (14%-15%), VIP and/or calretinin-expressing interneuron-selective
+      interneurons (29%-38%), and GABAergic projection neurons expressing somatostatin and neuronal nitric
+      oxide synthase (5.5%-8%). Our results show that these amygdalar nuclei contain all major GABAergic
+      neuron types as found in other cortical regions.'
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'CLUS_0850 "Sst Chodl Gaba_2": Sst 99.6th pct, Nos1 tier-2, Pvalb 0.0 — all three property
+      comparisons CONSISTENT. Three Sst Chodl clusters (0850/0858/0860) score equally (score 6).'
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: GABA-37-Sst-Npy
+    n_cells_total: 22
+    best_f1_score: 0.917
+    best_mapping_rank: 2
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 08 CNU-MGE GABA
+      best_target_accession: CS20230722_CLAS_08
+      coverage: 0.9545454545454546
+      purity: 0.1337579617834395
+      f1_score: 0.23463687150837992
+      n_cells_mapped: 21
+      median_bootstrap: 0.99
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 056 Sst Chodl Gaba
+      best_target_accession: CS20230722_SUBC_056
+      coverage: 0.9166666666666666
+      purity: 0.9166666666666666
+      f1_score: 0.9166666666666666
+      n_cells_mapped: 22
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0239 Sst Chodl Gaba_2
+      best_target_accession: CS20230722_SUPT_0239
+      coverage: 0.23809523809523808
+      purity: 1.0
+      f1_score: 0.3846153846153846
+      n_cells_mapped: 5
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0850 Sst Chodl Gaba_2
+      best_target_accession: CS20230722_CLUS_0850
+      coverage: 0.125
+      purity: 1.0
+      f1_score: 0.2222222222222222
+      n_cells_mapped: 2
+      median_bootstrap: 0.9550000000000001
+    f1_source_relpath: at_results.yaml
+    explanation: AT transfer of GABA-37-Sst-Npy.
+  caveats:
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: CLUS_0850, 0858, 0860 all score 6/6 on Sst+Nos1. Three Sst Chodl clusters, 1:n cardinality.
+  - caveat_type: OTHER
+    description: No AT evidence.
+  unresolved_questions:
+  - Do Sst Chodl clusters in BLA correspond to the long-range projecting SST/nNOS population?
+  - Which of CLUS_0850, CLUS_0858, CLUS_0860 best represents the BLA long-range SST/nNOS projection neuron
+    — retrograde tracing plus atlas cross-reference needed to discriminate.
+  - Is CS20230722_CLUS_0850 specifically the long-range projection subtype, or does GABA-37-Sst-Npy include
+    multiple functional subtypes?
+  - Can Nos1 expression be confirmed at protein level in the target cluster from atlas precomputed data?
+  - Does the Hochgerner 2023 GABA-37-Sst-Npy label (Npy+) primarily correspond to the SST/nNOS projection
+    neuron population or capture a different BLA Sst+ subtype?
+  proposed_experiments:
+  - Retrograde tracing + SST/NOS1 intersectional labelling to confirm projection identity.
+  discovery_score:
+    score: 6
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 6
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Sst
+      val: 12.23
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.996
+    - gene: Nos1
+      val: 12.1
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.996
+    - gene: -Pvalb
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    region_fraction: 0.035
+    region_evidence: SELF
+  confidence: LOW
+  confidence_score: 0.3
+  rationale: 'scRNA-seq annotation transfer (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) maps
+    Hochgerner 2023 GABA-37-Sst-Npy to Sst Chodl Gaba subclass with F1=0.92 at SUBCLASS but F1=0.22 at
+    CLUSTER for CS20230722_CLUS_0850; 3 of 3 markers CONSISTENT (marker_Sst, marker_Nos1, negative_marker_Pvalb).
+    skos:broadMatch reflects 1:n cardinality: CS20230722_CLUS_0850, 0858, and 0860 score identically on
+    the Sst/Nos1/Pvalb panel and no discriminating property has been identified.
+
+    '
+  reconciliation_note: 'Three Sst Chodl clusters (CS20230722_CLUS_0850, 0858 Sst Chodl Gaba_4, 0860 Sst
+    Chodl Gaba_5) score identically on the Sst/Nos1/Pvalb panel; no discriminating property available
+    in current evidence. broadMatch predicate and LOW confidence appropriate until retrograde tracing
+    or higher-resolution AT resolves the 1:n cardinality.
+
+    '
+  rationale_generated_at: '2026-06-10T15:44:17+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_gabaergic_projection_neuron_summary.md
+  rationale_source_hash: 1c466245

@@ -1,0 +1,207 @@
+name: Medial amygdala GABAergic principal neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Medial amygdala GABAergic principal neuron.
+  Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest graph and
+  split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further ASTA
+  runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002892
+  label: medial amygdaloid nucleus
+  name_in_source: medial amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: medial_amygdala_gabaergic_neuron
+  name: Medial amygdala GABAergic principal neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 271240390_b54d0b91
+    - ref: PMID:33515290
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 231758452_9fd699d1
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  anatomical_location:
+  - id: UBERON:0002892
+    sources:
+    - ref: PMID:27160258
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 11582390_8b546b82
+    - ref: PMID:33015518
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 222092617_b027389d
+    - ref: PMID:25309888
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 1229611_e14a19cf
+    label: medial amygdaloid nucleus
+    name_in_source: medial amygdala
+    compartment: SOMA
+  morphology:
+    description: Predominantly GABAergic subpallial-derived principal population; medial amygdala described
+      as a mosaic of GABAergic subpallial cells from pallidal, preoptic, hypothalamic, and prethalamic
+      eminence origins, complemented by extrinsic glutamatergic input cell types.
+    sources:
+    - ref: PMID:27160258
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 11582390_8b546b82
+    - ref: PMID:33515290
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 231758452_9fd699d1
+    - ref: PMID:25309337
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 10856039_b6486f17
+    - ref: PMID:37884748
+      method: asta_snippet — scRNA-seq identifies Lhx6+ MEA-projecting inhibitory cell types rich in neuropeptides
+        (galanin, vasopressin, SST, NPY)
+      scope: mouse amygdala scRNA-seq
+      quote_key: 264517392_0ef3e300
+    - ref: PMID:8158266
+      method: asta_snippet — prominent GABA-ir fibers/terminals throughout medial nucleus in macaque amygdala
+      scope: macaque amygdala, GABA immunohistochemistry
+      quote_key: 14068807_386fc859
+    - ref: PMID:20507551
+      method: asta_snippet — MeA efferent projections regulating reproductive vs defensive behaviors differentially
+        marked by Lhx6 and Lhx9
+      scope: mouse medial amygdala, fate mapping
+      quote_key: 627853_c6aafc07
+  cl_mapping:
+    cl_term:
+      id: CL:0011005
+      label: GABAergic interneuron
+      name_in_source: GABAergic interneuron
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
+  proposed_cl_term: null
+  definition_references:
+  - PMID:25309337
+  - PMID:25309888
+  - PMID:27160258
+  - PMID:33015518
+  - PMID:33240050
+  - PMID:33515290
+  - PMID:35645737
+  - PMID:36831071
+  - PMID:37265841
+  - PMID:39012795
+  - PMID:39130512
+  is_terminal: false
+  notes: 'Multiple lineage-defined subpopulations: pallidal-, preoptic-, hypothalamic-, and prethalamic-eminence-derived
+    cells; TOH-domain (Otp+) and SPV core (Sim1+) lineages distribute distinctly across medial and central
+    extended amygdala.'
+- id: CS20230722_SUPT_0256
+  name: 0256 NDB-SI-MA-STRv Lhx8 Gaba_13
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0256
+edges:
+- id: edge_medial_amygdala_gabaergic_neuron_to_cs20230722_supt_0256
+  lit_type: medial_amygdala_gabaergic_neuron
+  taxonomy_type: CS20230722_SUPT_0256
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  confidence: LOW
+  confidence_score: 0.15
+  rationale: 'NT type CONSISTENT (GABAergic label on CS20230722_SUPT_0256); location APPROXIMATE (region_fraction
+    0.06 at MBA:403; dominant distribution striatopallidal MBA:477/803; 1 of 1 property comparisons assessed
+    CONSISTENT, 1 APPROXIMATE, 1 NOT_ASSESSED). No defining markers on classical node; 5 equally-scoring
+    MeA GABAergic supertypes in discovery cohort (score 1, cohort_size 5, next_best_score 1) — SUPT_0256
+    ranked first by cohort order only. BROAD_CLASSICAL_NODE caveat applies.
+
+    '
+  rationale_generated_at: '2026-06-10T15:44:20+00:00'
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA (subclass NDB-SI-MA-STRv Lhx8 Gaba; inferred from label)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002892 medial amygdala
+    node_b_value: 'MBA:403 Medial amygdalar nucleus (4 cells Zhuang 2023; 0 soma Yao 2024; region_fraction
+      0.06); dominant: Striatum MBA:477, Pallidum MBA:803'
+    alignment: APPROXIMATE
+    notes: MeA is only ~6% of this supertype. Dominant distribution is striatopallidal. Supertype label
+      (NDB-SI-MA-STRv) includes MA but MeA is peripheral.
+  - property: marker_LHX8
+    node_a_value: not assessed (no defining_markers on classical node)
+    node_b_value: Lhx8 DEFINING marker on SUPT_0256
+    alignment: NOT_ASSESSED
+    notes: Classical MeA GABAergic node has no formal markers. ASTA report describes Lhx6+ MeA cells but
+      Lhx6 and Lhx8 are distinct paralogous genes with different expression patterns.
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: MERFISH (Zhuang 2023) places 4 SUPT_0256 cells in Medial amygdalar nucleus (MBA:403;
+      cell_ratio 0.074), confirming minor MeA presence. Subclass NDB-SI-MA-STRv includes MA in its label.
+      GABAergic assignment consistent with classical node NT type.
+    atlas: WMBv1
+  caveats:
+  - caveat_type: TAXONOMY_LEVEL_MISMATCH
+    description: '[legacy caveat type BROAD_CLASSICAL_NODE] medial_amygdala_gabaergic_neuron is poorly
+      characterised — no formal markers, defined only by NT type and location. Encompasses a heterogeneous
+      population (pallidal, preoptic, hypothalamic, prethalamic origins). Likely corresponds to multiple
+      atlas supertypes simultaneously.'
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: '[legacy caveat type DISTRIBUTED_ACROSS_SUPERTYPES] Five GABAergic supertypes at MBA:403
+      scored equally in discovery cohort. SUPT_0256 ranked first by cohort order only. SUPT_0249 and SUPT_0230
+      may have stronger MeA representation and are equally viable candidates.'
+  unresolved_questions:
+  - Which of the 5 MeA GABAergic supertypes best represents the multiple MeA subpopulations (galanin+,
+    vasopressin+, SST+, NPY+ populations)?
+  - Does Lhx8 expression in SUPT_0256 indicate a genuine Lhx8-expressing MeA subpopulation, or is this
+    a striatopallidal signal in non-MeA cells?
+  - 'Which of the 5 MeA GABAergic supertypes (CS20230722_SUPT_0256, SUPT_0249, SUPT_0233, SUPT_0230, SUPT_0286)
+    best represents each neuropeptide-defined subpopulation (Gal+, Avp+, Sst+, Npy+)? Neuropeptide markers
+    should be extracted from ASTA corpus and added to the classical node before re-running discovery.
+
+    '
+  - 'Does Lhx8 on CS20230722_SUPT_0256 reflect genuine MeA-resident Lhx8+ cells or striatopallidal contamination?
+    Targeted Lhx8/Lhx6 literature check needed.
+
+    '
+  - Cardinality recorded as n:m in the 20260528 run; schema allows only 1:1/1:n/n:1 — re-assess on re-mapping.
+  proposed_experiments:
+  - Extract neuropeptide markers (Gal, Avp, Sst, Npy) from ASTA snippets and add to classical node, then
+    re-run discovery to assess which MeA supertypes best match each neuropeptide subtype.
+  discovery_score:
+    score: 1
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 1
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:403
+      - nt_type=GABAergic
+    expression_detail: []
+    region_fraction: 0.06
+    region_evidence: SELF
+  reconciliation_note: 'skos:broadMatch is appropriate: the classical node spans multiple developmental
+    lineages (pallidal, preoptic, hypothalamic, prethalamic) likely distributed across several supertypes.
+    The mapping is speculative until neuropeptide subtype markers are added and Stage A re-run.
+
+    '
+  report_path: reports/medial_temporal_lobe_amygdala/medial_amygdala_gabaergic_neuron_summary.md
+  rationale_source_hash: f14020a8
