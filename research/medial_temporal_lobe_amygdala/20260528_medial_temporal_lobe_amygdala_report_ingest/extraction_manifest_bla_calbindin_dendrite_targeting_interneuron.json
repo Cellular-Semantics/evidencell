@@ -1,0 +1,36 @@
+{
+  "node_id": "bla_calbindin_dendrite_targeting_interneuron",
+  "added_by": "evidence_extraction_bla_calbindin_dendrite_targeting_interneuron_20260612",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest/uncertain_all_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "excluded_existing_pmids": ["PMID:22726836", "PMID:32144495"],
+  "extracted": [
+    {
+      "source_corpus_id": "17860491",
+      "pmid": "PMID:28453642",
+      "field": "defining_markers[Calb1].sources",
+      "marker_type": "PROTEIN",
+      "quote_key": "17860491_f1ffddb9",
+      "relevance": "HIGH",
+      "rationale": "Direct evidence for calbindin-positive, parvalbumin-negative GABAergic interneurons in basolateral amygdala, activated during fear extinction. Confirms defining marker identity (Calb1+, Pvalb-) and extinction-linked recruitment."
+    }
+  ],
+  "skipped": [
+    {"source_corpus_id": "232283078", "reason": "GABAergic cell-type counts; calbindin dendrite-targeting class not specifically identified"},
+    {"source_corpus_id": "264517392", "reason": "general mouse amygdala atlas; no calbindin-specific evidence"},
+    {"source_corpus_id": "221366115", "reason": "general BLA glutamatergic vs GABAergic composition; node not mentioned"},
+    {"source_corpus_id": "17223544", "reason": "developmental origin of LA/BLA neurons; node not mentioned"},
+    {"source_corpus_id": "3103554", "reason": "BLA principal neurons / CeA medium spiny; node not mentioned"},
+    {"source_corpus_id": "280092907", "reason": "LA/BLA glutamatergic composition; node not mentioned"},
+    {"source_corpus_id": "281382725", "reason": "PV and SST GABAergic neurons across primates; calbindin dendrite-targeting class not addressed"},
+    {"source_corpus_id": "4940771", "reason": "BLA principal fear/extinction neurons, not interneuron"},
+    {"source_corpus_id": "104297085", "reason": "Thy1 fear-inhibiting principal neurons; node not mentioned"},
+    {"source_corpus_id": "250411527", "reason": "paralaminar immature excitatory neurons; node not mentioned"}
+  ],
+  "gaps": [
+    "No new evidence for dendrite-targeting morphology beyond existing refs",
+    "No new electrophysiology evidence",
+    "No transcriptomic (CALB1/Calb1 mRNA) confirmation in this corpus"
+  ]
+}

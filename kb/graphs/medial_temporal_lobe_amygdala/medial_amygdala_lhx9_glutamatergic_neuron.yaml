@@ -1,0 +1,217 @@
+name: Medial amygdala Lhx9+ ventral pallial-derived glutamatergic neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Medial amygdala Lhx9+ ventral pallial-derived
+  glutamatergic neuron. Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest
+  graph and split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further
+  ASTA runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002892
+  label: medial amygdaloid nucleus
+  name_in_source: medial amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: medial_amygdala_lhx9_glutamatergic_neuron
+  name: Medial amygdala Lhx9+ ventral pallial-derived glutamatergic neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: Glutamatergic
+    sources:
+    - ref: PMID:33515290
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 231758452_9fd699d1
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 271240390_b54d0b91
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: Glutamatergic
+  anatomical_location:
+  - id: UBERON:0002892
+    sources:
+    - ref: PMID:27160258
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 11582390_e268c719
+    label: medial amygdaloid nucleus
+    name_in_source: medial amygdala
+    compartment: SOMA
+  defining_markers:
+  - symbol: Lhx9
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27160258
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 11582390_e268c719
+      marker_type: PROTEIN
+    - ref: PMID:20507551
+      method: asta_snippet — Lhx9 (with Lhx6) differentially marks MeA efferent projections regulating
+        reproductive vs defensive behaviors
+      scope: mouse medial amygdala, fate mapping with Shh-Cre lineage tracing
+      quote_key: 627853_c6aafc07
+      marker_type: TRANSCRIPT
+  morphology:
+    description: Minor subpopulation of Lhx9+ neurons of ventral pallial origin within the medial amygdala;
+      part of the extrinsic glutamatergic complement that joins the predominantly GABAergic mosaic.
+    sources:
+    - ref: PMID:27160258
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 11582390_e268c719
+    - ref: PMID:38419794
+      method: asta_snippet — MeA derives from both ventral pallial and subpallial origins, yielding a
+        diverse neuronal population
+      scope: review of amygdala molecular cell types
+      quote_key: 267685584_c9abe6b1
+  cl_mapping:
+    cl_term:
+      id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: glutamatergic neuron
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
+  proposed_cl_term: null
+  definition_references:
+  - PMID:27160258
+  - PMID:33515290
+  - PMID:39012795
+  is_terminal: false
+  notes: One of several extrinsic glutamatergic populations (ventral pallium, SPV, EmT-derived) contributing
+    to medial/extended amygdala.
+- id: CS20230722_SUPT_0057
+  name: 0057 MEA Slc17a7 Glut_3
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0057
+edges:
+- id: edge_medial_amygdala_lhx9_glutamatergic_neuron_to_cs20230722_supt_0057
+  lit_type: medial_amygdala_lhx9_glutamatergic_neuron
+  taxonomy_type: CS20230722_SUPT_0057
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  confidence: LOW
+  confidence_score: 0.25
+  rationale: 'AT (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) maps VGLUT1-25-Plcxd3_Reln to CS20230722_SUPT_0057
+    at supertype level (F1=0.60); nt_type CONSISTENT and location_medial_amygdala CONSISTENT (MBA:403;
+    two independent MERFISH registrations). 0 of 1 markers CONSISTENT: marker_LHX9 is NOT_ASSESSED (Lhx9
+    absent from atlas metadata; no precomputed scRNA-seq expression). broadMatch reflects 5-member MEA
+    Glut cohort ambiguity; confidence ceiling is LOW until Lhx9 expression data resolves the supertype
+    assignment.
+
+    '
+  rationale_generated_at: '2026-06-10T15:44:19+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/medial_amygdala_lhx9_glutamatergic_neuron_summary.md
+  property_comparisons:
+  - property: nt_type
+    node_a_value: Glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+  - property: location_medial_amygdala
+    node_a_value: UBERON:0002892 medial amygdala
+    node_b_value: MBA:403 Medial amygdalar nucleus (region_fraction 0.588; SELF evidence; both Zhuang
+      2023 and Yao 2024 MERFISH)
+    alignment: CONSISTENT
+  - property: marker_LHX9
+    node_a_value: LHX9 defining marker (TRANSCRIPT; fate-mapping Shh-Cre lineage tracing)
+    node_b_value: not present in atlas node defining markers (Trabd2b, Zic5, Dab1, Ntf3, Rassf3, Krt12)
+    alignment: NOT_ASSESSED
+    notes: LHX9 absent from SUPT_0057 metadata; no precomputed expression data available (local_stats
+      None). Among 5 MEA Slc17a7 Glut supertypes SUPT_0057 has highest region_fraction (0.588).
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: MERFISH spatial data (Zhuang 2023) places CS20230722_SUPT_0057 predominantly in Medial
+      amygdalar nucleus (MBA:403; cell_ratio 0.399), consistent with the classical medial amygdala location.
+      Slc17a7 subclass confirms glutamatergic identity.
+    atlas: WMBv1
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: Corroborating MERFISH data (Yao 2024) confirms SUPT_0057 in Medial amygdalar nucleus
+      (MBA:403; cell_ratio 0.619). Glutamatergic assignment consistent with classical NT type.
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: VGLUT1-25-Plcxd3_Reln
+    n_cells_total: 164
+    best_f1_score: 0.843
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 01 IT-ET Glut
+      best_target_accession: CS20230722_CLAS_01
+      coverage: 1.0
+      purity: 0.067975388221506
+      f1_score: 0.12729766803840878
+      n_cells_mapped: 232
+      median_bootstrap: 1.0
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 012 MEA Slc17a7 Glut
+      best_target_accession: CS20230722_SUBC_012
+      coverage: 0.8631578947368421
+      purity: 0.20971867007672634
+      f1_score: 0.33744855967078186
+      n_cells_mapped: 164
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0057 MEA Slc17a7 Glut_3
+      best_target_accession: CS20230722_SUPT_0057
+      coverage: 0.6538461538461539
+      purity: 0.5483870967741935
+      f1_score: 0.5964912280701755
+      n_cells_mapped: 136
+      median_bootstrap: 1.0
+    f1_source_relpath: at_results.yaml
+    explanation: AT transfer of VGLUT1-25-Plcxd3_Reln.
+  caveats:
+  - caveat_type: NO_DISCRIMINATING_MARKER
+    description: '[legacy caveat type MARKER_NOT_ASSESSED] Classical defining marker LHX9 absent from
+      atlas metadata; no precomputed expression data. Mapping rests on region and NT concordance only.
+      Expression data across 5 MEA Glut supertypes would resolve which best hosts Lhx9+ neurons.'
+  unresolved_questions:
+  - Which of 5 MEA Slc17a7 Glut supertypes (SUPT_0055-0057 and siblings) specifically corresponds to Lhx9+
+    ventral pallial-derived neurons? LHX9 expression data is needed.
+  - Can LHX9 expression be confirmed in CS20230722_SUPT_0057 from RNA-seq or in-situ data?
+  - Does VGLUT1-25-Plcxd3_Reln specifically correspond to Lhx9+ MEA neurons, or is it a broader MEA glutamatergic
+    cluster?
+  - Query CCN20230722 precomputed stats for Lhx9 across all MEA Slc17a7 Glut supertypes to determine which
+    supertype hosts Lhx9+ neurons and resolve the broadMatch ambiguity.
+  proposed_experiments:
+  - Run Lhx9-ISH co-stained with MERFISH probes for SUPT_0057 defining markers (Trabd2b, Zic5, Dab1, Ntf3)
+    in mouse medial amygdala to directly test co-expression.
+  - Obtain precomputed expression for CCN20230722 and query LHX9 across all 5 MEA Slc17a7 Glut supertypes.
+  discovery_score:
+    score: 1
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 1
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:403
+      - nt_type=Glutamatergic
+    expression_detail: []
+    region_fraction: 0.588
+    region_evidence: SELF
+  mapping_cardinality: 1:n
+  reconciliation_note: ''
+  rationale_source_hash: 9eaaf084

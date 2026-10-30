@@ -1,0 +1,46 @@
+{
+  "node_id": "cea_small_aspiny_neuron",
+  "added_by": "evidence_extraction_cea_small_aspiny_neuron_20260612",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest/uncertain_all_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "excluded_pmids": ["PMID:8778291"],
+  "extracted": [
+    {
+      "source_corpus_id": "221366115",
+      "pmid": "PMID:32858950",
+      "field": "nt_type",
+      "quote_key": "221366115_197a5821",
+      "quote": "The majority of BLA neurons are spiny glutamatergic neurons (with a minority of GABAergic interneurons) (Spampanato et al., 2011). CEl and CEm mainly contain GABAergic neurons.",
+      "rationale": "CEl/CEm (central amygdala subnuclei) mainly contain GABAergic neurons; supports inferred GABAergic identity of the CeA small aspiny morphological class."
+    },
+    {
+      "source_corpus_id": "17223544",
+      "pmid": "PMID:20484636",
+      "field": "nt_type",
+      "quote_key": "17223544_4fda1404",
+      "quote": "The LA and BLA represent the input to the amygdala and exhibit cortex-like characteristics with a majority of glutamatergic projection neurons (Davis et al., 2000). Conversely, the CA contains striatum-like GABAergic projection neurons and represents the major output of the amygdala (McDonald, 1982)(Davis et al., 2000).",
+      "rationale": "Central amygdala (CA) contains striatum-like GABAergic projection neurons; supports GABAergic identity of CeA cell types including the small aspiny class."
+    },
+    {
+      "source_corpus_id": "280092907",
+      "pmid": "PMID:40686779",
+      "field": "nt_type",
+      "quote_key": "280092907_397d9bdc",
+      "quote": "While the CeA consists of mostly inhibitory neurons (McDonald, 2003). A recent study reported that all the analyzed CeA neurons robustly clustered to GABA markers.",
+      "rationale": "All analyzed CeA neurons clustered to GABA markers; supports inferred GABAergic identity. Reused existing quote_key shared with cea_large_aspiny_neuron."
+    }
+  ],
+  "skipped": [
+    {"source_corpus_id": "232283078", "pmid": "PMID:33837051", "reason": "LA/BA GABAergic cell-type counts; not specific to CeA or a small aspiny morphological class."},
+    {"source_corpus_id": "264517392", "pmid": "PMID:37884748", "reason": "Mouse amygdala transcriptomic atlas; no morphological small-aspiny CeA class; generic."},
+    {"source_corpus_id": "3103554", "pmid": "PMID:27053114", "reason": "Describes CeA medium spiny GABAergic neurons specifically, not the small aspiny class."},
+    {"source_corpus_id": "281382725", "pmid": "PMID:40961182", "reason": "Primate basolateral complex PV/SST GABAergic neurons; not CeA small aspiny."},
+    {"source_corpus_id": "4940771", "pmid": "PMID:31193505", "reason": "BLA fear/extinction principal neurons; not CeA."},
+    {"source_corpus_id": "104297085", "pmid": "PMID:27767183", "reason": "BLA Thy1/Ntsr2 fear-off neurons; not CeA."},
+    {"source_corpus_id": "17860491", "pmid": "PMID:28453642", "reason": "BLA calbindin interneurons; not CeA small aspiny."},
+    {"source_corpus_id": "250411527", "pmid": "PMID:35841648", "reason": "Paralaminar nucleus immature excitatory neurons; not CeA."}
+  ],
+  "fields_written": ["nt_type"],
+  "gaps": ["morphology (small aspiny soma - no new corpus evidence beyond existing PMID:32751957)", "markers (none in corpus)", "electrophysiology (no new CeA small-aspiny-specific evidence)"]
+}

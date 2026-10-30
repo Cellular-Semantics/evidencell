@@ -1,0 +1,393 @@
+name: Paralaminar/ventral amygdala immature excitatory neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Paralaminar/ventral amygdala immature excitatory
+  neuron. Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest graph
+  and split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further ASTA
+  runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002887
+  label: basal amygdaloid nucleus
+  name_in_source: basolateral amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: paralaminar_immature_neuron
+  name: Paralaminar/ventral amygdala immature excitatory neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0002887
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 195246702_dd079f9e
+    - ref: PMID:34206571
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 235715856_1045f5c1
+    - ref: PMID:37337377
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 259201574_70036ef8
+    - ref: PMID:35841648
+      method: asta_report
+      scope: human paralaminar nucleus immature excitatory neuron development across puberty
+      quote_key: '250411527_03961399'
+    label: basal amygdaloid nucleus
+    name_in_source: paralaminar nucleus
+    compartment: SOMA
+  defining_markers:
+  - symbol: Dcx
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  - symbol: Bcl2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  - symbol: Ncam1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  - symbol: Rbfox3
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  - symbol: Tubb3
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  - symbol: Vim
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  - symbol: Nes
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  - symbol: Mki67
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  - symbol: Sp8
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  - symbol: Nr2f2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  - symbol: Prox1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_dd079f9e
+      marker_type: PROTEIN
+    - ref: PMID:31227709
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+    - ref: PMID:34206571
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+      marker_type: PROTEIN
+  negative_markers:
+  - symbol: Nkx2-1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31227709
+      method: asta_report
+      scope: negative marker synthesis
+      quote_key: 195246702_302eefd5
+      marker_type: PROTEIN
+  morphology:
+    description: Persistent immature-appearing neurons co-expressing DCX, PSA-NCAM, Bcl-2, beta-tubulin-III
+      and NeuN; extend as a stream from the lateral ventricle SVZ into the paralaminar nucleus and adjacent
+      medial temporal cortical areas. In humans, develop during adolescence (Sorrells et al., 2019); CGE-linked
+      progenitor markers (SP8+, COUP-TFII+, few NKX2.1+) are co-detected in dense progenitor fields.
+    sources:
+    - ref: PMID:34206571
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 235715856_1045f5c1
+    - ref: PMID:9502809
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 15638357_aee0d974
+    - ref: PMID:36788214
+      method: asta_snippet — cross-species snRNA-seq identifies a primate-enriched neuronal cluster with
+        high SOX11 and BCL2 expression derived from the paralaminar nucleus
+      scope: cross-species amygdala snRNA-seq (human/macaque/mouse/chicken)
+      quote_key: 256832817_58d7b193
+    - ref: PMID:35841648
+      method: asta_report
+      scope: characterisation of PL immature excitatory neurons across postnatal development
+      quote_key: '250411527_03961399'
+  cl_mapping:
+    cl_term:
+      id: CL:4042028
+      label: immature neuron
+      name_in_source: immature neuron
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
+  proposed_cl_term: null
+  definition_references:
+  - PMID:24155945
+  - PMID:31227709
+  - PMID:34206571
+  - PMID:37337377
+  - PMID:9502809
+  is_terminal: false
+  notes: Spans a continuum from progenitor-like (Ki-67+ vimentin+ nestin+) to postmitotic immature neurons
+    (DCX+ Bcl-2+ NeuN+); also includes a clustered Bcl-2+ population in piriform cortex.
+- id: CS20230722_SUPT_0005
+  name: 0005 IT EP-CLA Glut_3
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0005
+edges:
+- id: edge_paralaminar_immature_neuron_to_cs20230722_supt_0005
+  lit_type: paralaminar_immature_neuron
+  taxonomy_type: CS20230722_SUPT_0005
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.05
+  rationale: '[tier:CUT] Paralaminar/ventral amygdala immature excitatory neurons are a primate-enriched
+    population with defining immaturity markers (DCX, BCL2, VIM, NES, MKI67) absent from adult mouse transcriptomic
+    types; ATLAS_METADATA evidence explicitly argues against biological equivalence to any WMBv1 type.
+    CS20230722_SUPT_0005 was the only candidate retrieved from MBA:295 proximity filter (score 1, cohort_size
+    5, rank 1 in a tie) and carries DISCORDANT location_soma (cortical subplate / EP-CLA territory) and
+    DISCORDANT marker_DCX alignment. No annotation transfer evidence exists. This is a species-barrier
+    null result, not a mapping failure.
+
+    '
+  rationale_generated_at: '2026-06-15T11:56:55+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/paralaminar_immature_neuron_summary.md
+  reconciliation_note: 'No WMBv1 cluster constitutes a biologically supported homolog. The UNCERTAIN verdict
+    reflects a species-barrier gap rather than insufficient evidence about the candidate itself. A future
+    annotation transfer from human paralaminar snRNA-seq data may reveal a partial transcriptomic signature
+    landing on CS20230722_SUPT_0005 or a related EP-CLA type, which could upgrade to LOW confidence with
+    a closeMatch predicate.
+
+    '
+  property_comparisons:
+  - property: nt_type
+    node_a_value: Glutamatergic (inferred; no explicit nt_type block; cl_mapping CL:4042028)
+    node_b_value: Glut (inferred from parent subclass label IT EP-CLA Glut)
+    alignment: APPROXIMATE
+    notes: Both inferred from context rather than explicit recorded NT type.
+  - property: location_soma
+    node_a_value: Paralaminar nucleus (UBERON:0002887 annotated as paralaminar nucleus; primate-specific
+      zone adjacent to amygdala)
+    node_b_value: Cortical subplate MBA:703 dominant (~55%); minor BLA-adjacent presence (MBA:295 region_fraction
+      0.042)
+    alignment: DISCORDANT
+    notes: Paralaminar nucleus is a primate-specific anatomical structure with no direct MBA CCF equivalent.
+      Atlas type distributed in EP/CLA/cortical subplate territory, not a paralaminar zone.
+  - property: marker_DCX
+    node_a_value: DCX defining marker (PROTEIN; neuroblast immaturity marker)
+    node_b_value: not present in atlas metadata; absent from adult mouse transcriptomic types by definition
+    alignment: DISCORDANT
+    notes: DCX marks immature/migrating neurons; not expressed in adult mouse IT EP-CLA Glut neurons.
+  - property: marker_BCL2
+    node_a_value: BCL2 defining marker (anti-apoptotic; marks paralaminar immature state)
+    node_b_value: not present in atlas metadata
+    alignment: NOT_ASSESSED
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    explanation: Cross-species snRNA-seq (Tosches 2023 / Bhattacharyya et al.) identifies paralaminar
+      neurons as a primate-enriched cluster with high SOX11 and BCL2 expression, explicitly absent from
+      mouse datasets. This evidence actively argues against a biological equivalence to any adult mouse
+      atlas type.
+    atlas: WMBv1
+  caveats:
+  - caveat_type: CROSS_SPECIES_EXTRAPOLATION
+    description: Paralaminar immature neurons are a primate-enriched type with no established mouse homolog.
+      WMBv1 is derived from adult mouse brain. This mapping has no biological support and records only
+      the closest type by regional/NT filter in the absence of a true homolog.
+  - caveat_type: OTHER
+    description: Classical defining markers (DCX, VIM, NES, MKI67, BCL2) are immaturity/progenitor-state
+      markers absent from adult mouse transcriptomic atlases. No precomputed expression comparison is
+      possible against WMBv1 cluster data.
+  unresolved_questions:
+  - Does any cross-species scRNA-seq dataset contain a mouse cluster partially matching the DCX+/BCL2+/PROX1+
+    paralaminar population?
+  - Would targeted re-analysis of WMBv1 in endopiriform nucleus (MBA:942) reveal a closer candidate?
+  - Should this population be submitted as a new CL term distinct from CL:4042028 (immature neuron)?
+  proposed_experiments:
+  - Map human paralaminar nucleus snRNA-seq data (Sorrells et al. 2019 or Caglayan et al. 2023) to WMBv1
+    using cell type assignment tools to determine whether any mouse atlas type captures a partial transcriptomic
+    signature; would add AnnotationTransferEvidence to this edge.
+  - Perform targeted fluorescence labeling for DCX, BCL2, and NES in adult mouse amygdala to formally
+    confirm absence of a paralaminar-equivalent population in rodent; would add LiteratureEvidence with
+    REFUTE support formalising the species barrier.
+  - Re-run find-candidates restricted to MBA:942 (endopiriform nucleus) to assess whether a closer WMBv1
+    candidate exists at either rank 0 or rank 1.
+  discovery_score:
+    score: 1
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 1
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+    expression_detail: []
+    region_fraction: 0.042
+    region_evidence: SELF
+  rationale_source_hash: 2bc9a212

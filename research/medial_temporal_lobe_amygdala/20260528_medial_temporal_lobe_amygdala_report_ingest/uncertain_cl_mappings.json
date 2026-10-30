@@ -1,0 +1,58 @@
+{
+  "basal_amygdala_fear_neuron": {
+    "cl_term_id": "CL:4023110",
+    "label": "amygdala pyramidal neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MODERATE",
+    "definition_references": [],
+    "note": "The fear neuron is a functionally defined subpopulation of glutamatergic BLA principal cells; no CL term encodes the fear-specific functional identity. CL:4023110 (amygdala pyramidal neuron) is the nearest supertype — definition: 'A pyramidal neuron with soma located in the amygdala.' BROAD is appropriate; EXACT would require a dedicated CL term for the fear-conditioning circuit identity. Potential CL contribution."
+  },
+  "basal_amygdala_extinction_neuron": {
+    "cl_term_id": "CL:4023110",
+    "label": "amygdala pyramidal neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MODERATE",
+    "definition_references": [],
+    "note": "The extinction neuron is a functionally and molecularly enriched (Ntsr2/Rspo2/Wnt7a) subpopulation of glutamatergic BLA principal cells; no CL term encodes fear-extinction circuit identity. CL:4023110 (amygdala pyramidal neuron) is the nearest supertype — same reasoning as basal_amygdala_fear_neuron. BROAD mapping; potential CL contribution for a Ntsr2+ BLA fear-extinction subtype."
+  },
+  "bla_npy_neurogliaform_cell": {
+    "cl_term_id": "CL:4072016",
+    "label": "NPY interneuron",
+    "mapping_type": "RELATED",
+    "mapping_confidence": "MODERATE",
+    "definition_references": [],
+    "note": "Two partial parent terms exist in CL: CL:4072016 (NPY interneuron — 'an interneuron that expresses neuropeptide Y; physiologically diverse, cortical layers II-III and VI') and CL:0000693 (neurogliaform cell — 'interneuron with spider-like appearance, small round soma, 7-10 short smooth dendrites, dense axonal mesh'). No single CL term unifies NPY expression with neurogliaform morphology in the BLA. CL:4072016 is chosen as the primary RELATED match because NPY is the defining marker; neurogliaform morphology adds specificity not captured. Potential CL contribution for a BLA NPY+ neurogliaform type."
+  },
+  "bla_calbindin_dendrite_targeting_interneuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for a calbindin-positive (CALB1+), dendrite-targeting GABAergic interneuron of the BLA. Searches for 'calbindin interneuron', 'calbindin positive interneuron', 'calbindin dendrite targeting', and 'CB1 interneuron dendrite targeting' all returned no results in CL. This cell type is defined by calbindin immunoreactivity with a dendrite-targeting innervation pattern in the basolateral amygdala — a distinct inhibitory class not yet represented in CL. Potential CL contribution."
+  },
+  "cea_large_aspiny_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for a large aspiny GABAergic neuron of the central amygdala. Searches for 'central amygdala neuron', 'central amygdaloid nucleus neuron', 'aspiny neuron', and 'aspiny interneuron' returned no CL matches. The large vs. small aspiny distinction in CeA is morphology-based and not yet represented in CL. CeA neurons are predominantly GABAergic with medium-spiny-like (striatal) character but the large aspiny subtype has no dedicated term. Potential CL contribution."
+  },
+  "cea_small_aspiny_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for a small aspiny GABAergic neuron of the central amygdala. Same search strategy and outcome as cea_large_aspiny_neuron. The size-based morphological distinction within CeA aspiny neurons is not represented in CL. Potential CL contribution."
+  },
+  "paralaminar_immature_neuron": {
+    "cl_term_id": "CL:4042028",
+    "label": "immature neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MODERATE",
+    "definition_references": [],
+    "note": "CL:4042028 (immature neuron) is the closest CL supertype — definition: 'A neuron in the central nervous system that is not committed to a differentiated fate, has not been newly derived from neurogenesis, and does not integrate into any circuit.' The paralaminar nucleus type is an immature excitatory (glutamatergic) neuron with protracted postnatal maturation specifically in the amygdala paralaminar nucleus; some may derive from local progenitors persisting early postnatally. BROAD mapping is appropriate; the region-specific identity, excitatory neurotransmitter type, and protracted developmental timeline distinguish this from the generic CL term. Potential CL contribution for a paralaminar-specific immature excitatory neuron."
+  }
+}

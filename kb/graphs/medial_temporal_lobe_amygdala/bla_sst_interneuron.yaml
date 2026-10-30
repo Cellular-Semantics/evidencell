@@ -1,0 +1,339 @@
+name: Basolateral amygdala somatostatin interneuron — classical type
+description: 'Single classical cell type (one-file-one-class): Basolateral amygdala somatostatin interneuron.
+  Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest graph and
+  split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further ASTA
+  runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002887
+  label: basal amygdaloid nucleus
+  name_in_source: basolateral amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: bla_sst_interneuron
+  name: Basolateral amygdala somatostatin interneuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 11544073_ea8d2bb3
+    - ref: PMID:33837051
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 232283078_d4238834
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  anatomical_location:
+  - id: UBERON:0002887
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 11544073_ea8d2bb3
+    - ref: PMID:33837051
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 232283078_d4238834
+    label: basal amygdaloid nucleus
+    name_in_source: basolateral amygdala
+    compartment: SOMA
+  defining_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 11544073_ea8d2bb3
+      marker_type: PROTEIN
+    - ref: PMID:17234587
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 161407_eb8bfaf0
+      marker_type: PROTEIN
+    - ref: PMID:32144495
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 212579559_d2c2762c
+      marker_type: PROTEIN
+    - ref: PMID:37884748
+      method: asta_snippet — scRNA-seq identifies SST-expressing MGE-derived interneurons and neuropeptide-rich
+        SST+ projecting cells
+      scope: mouse amygdala scRNA-seq
+      quote_key: 264517392_0ef3e300
+      marker_type: TRANSCRIPT
+  - symbol: Calb1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 11544073_ea8d2bb3
+      marker_type: PROTEIN
+    - ref: PMID:17234587
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 161407_eb8bfaf0
+      marker_type: PROTEIN
+    - ref: PMID:32144495
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 212579559_d2c2762c
+      marker_type: PROTEIN
+  neuropeptides:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: neuropeptide synthesis from ASTA report
+      quote_key: 11544073_ea8d2bb3
+      marker_type: PROTEIN
+    - ref: PMID:33837051
+      method: asta_report
+      scope: neuropeptide synthesis from ASTA report
+      quote_key: 232283078_d4238834
+      marker_type: PROTEIN
+  negative_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33837051
+      method: asta_snippet — Vereczki 2021 census establishes PVALB+ and non-PVALB cells as distinct non-overlapping
+        GABAergic populations in mouse BLA
+      scope: mouse lateral and basal amygdala, stereological quantification
+      quote_key: 232283078_d4238834
+      marker_type: TRANSCRIPT
+  morphology:
+    description: Dendrite-targeting inhibitory cells expressing somatostatin; ~10-16% of GABAergic neurons
+      in LA and BA. SOM+/CB+ co-expression noted in older immunolabeling studies.
+    sources:
+    - ref: PMID:33837051
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 232283078_d4238834
+    - ref: PMID:32802405
+      method: asta_snippet — SOM is one of two main interneuron families in BLA, with distinct dendrite-targeting
+        role
+      scope: mouse BLA, optogenetics/electrophysiology
+      quote_key: 220930580_51e23fbe
+    - ref: PMID:34177472
+      method: asta_snippet — BLA GABAergic interneuron diversity comparable to hippocampus and neocortex
+      scope: review of BLA GABAergic interneuron circuitry
+      quote_key: 235382885_9df5362b
+  electrophysiology:
+    description: Inhibitory interneurons; one cited study (Unal et al., 2020) characterizes low-threshold
+      spiking interneurons performing feedback inhibition in lateral amygdala.
+    sources:
+    - ref: PMID:32144495
+      method: asta_report
+      scope: electrophysiology synthesis from ASTA report
+      quote_key: 212579559_51e7dd2b
+    - ref: PMID:33994955
+      method: asta_snippet — driving SST+ interneurons during CS+ reduced fear learning (opposite effect
+        to PV+ activation)
+      scope: rodent BLA fear-learning, optogenetics
+      quote_key: 233450033_6def067a
+  cl_mapping:
+    cl_term:
+      id: CL:0011005
+      label: GABAergic interneuron
+      name_in_source: GABAergic interneuron
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
+  proposed_cl_term: null
+  definition_references:
+  - PMID:17234587
+  - PMID:22837739
+  - PMID:32144495
+  - PMID:33837051
+  is_terminal: false
+  notes: Closely related GABAergic projection neurons expressing both somatostatin and neuronal nitric
+    oxide synthase (~5.5-8% of GABAergic cells) are listed separately as projection rather than local
+    interneurons.
+- id: CS20230722_CLUS_0765
+  name: 0765 Sst Gaba_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0765
+edges:
+- id: edge_bla_sst_interneuron_to_cs20230722_clus_0765
+  lit_type: bla_sst_interneuron
+  taxonomy_type: CS20230722_CLUS_0765
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: 1:n
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002887 basolateral amygdala
+    node_b_value: 'MBA:295 BLA: region_fraction 0.289 — dominant BLA presence.'
+    alignment: CONSISTENT
+  - property: neuropeptide_Sst
+    node_a_value: Sst — neuropeptide
+    node_b_value: Sst precomputed mean 11.92 (96.7th pct; tier 2). Cluster "0765 Sst Gaba_2".
+    alignment: CONSISTENT
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: Calb1 precomputed mean 9.57 (96.5th pct; tier 2).
+    alignment: CONSISTENT
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — negative marker
+    node_b_value: NOT_ASSESSED.
+    alignment: NOT_ASSESSED
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:33837051
+    explanation: 'Vereczki et al. 2021: SST+/Calb1+ BLA interneurons estimated 10-16% of GABAergic cells;
+      dendrite-targeting class distinct from PV and CCK types.'
+    snippet: SST+ inhibitory cells target predominantly the dendritic shaft and to a lesser extent, the
+      spines of principal cells
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'CLUS_0765 "Sst Gaba_2" (WMBv1): Sst 96.7th pct, Calb1 96.5th pct; dominant BLA fraction
+      0.289.'
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: GABA-38-Sst-Tmtc4
+    n_cells_total: 59
+    best_f1_score: 0.762
+    best_mapping_rank: 1
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 07 CTX-MGE GABA
+      best_target_accession: CS20230722_CLAS_07
+      coverage: 0.9636363636363636
+      purity: 0.18996415770609318
+      f1_score: 0.31736526946107785
+      n_cells_mapped: 53
+      median_bootstrap: 0.98
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 053 Sst Gaba
+      best_target_accession: CS20230722_SUBC_053
+      coverage: 0.9672131147540983
+      purity: 0.48760330578512395
+      f1_score: 0.6483516483516484
+      n_cells_mapped: 59
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0215 Sst Gaba_2
+      best_target_accession: CS20230722_SUPT_0215
+      coverage: 0.8571428571428571
+      purity: 0.6857142857142857
+      f1_score: 0.7619047619047619
+      n_cells_mapped: 48
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0765 Sst Gaba_2
+      best_target_accession: CS20230722_CLUS_0765
+      coverage: 0.1951219512195122
+      purity: 0.6153846153846154
+      f1_score: 0.29629629629629634
+      n_cells_mapped: 8
+      median_bootstrap: 0.905
+    f1_source_relpath: at_results.yaml
+    explanation: AT transfer of GABA-38-Sst-Tmtc4.
+  caveats:
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: CLUS_0765 and CLUS_0774 both score equally. Parallel edge to CLUS_0774 may be needed.
+  - caveat_type: OTHER
+    description: No AT evidence.
+  unresolved_questions:
+  - Do CLUS_0765 and CLUS_0774 represent distinct SST subtypes in BLA?
+  - Do CLUS_0765 and CLUS_0774 represent distinct SST subtypes in BLA? A parallel edge to CLUS_0774 may
+    be warranted.
+  - Run annotation transfer on a mouse BLA SST+ source dataset to confirm cluster assignment and resolve
+    CLUS_0765 vs CLUS_0774 ambiguity.
+  - Is CS20230722_CLUS_0765 specifically the dendrite-targeting SST subtype, or does GABA-38-Sst-Tmtc4
+    span multiple Sst+ subtypes in the BLA?
+  - Can Pvalb absence be confirmed in CS20230722_CLUS_0765 from precomputed stats?
+  - 'Confirm Pvalb near-zero expression in CS20230722_CLUS_0765 from taxonomy reference YAML — NOT_ASSESSED
+    at present.
+
+    '
+  - 'Determine whether a sibling cluster within CS20230722_SUPT_0215 is a better primary cluster anchor
+    by auditing Calb1 expression and BLA region_fraction; a parallel edge may be warranted.
+
+    '
+  proposed_experiments:
+  - smFISH with Sst+Calb1 in mouse BLA.
+  discovery_score:
+    score: 5
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Sst
+      val: 11.92
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.967
+    - gene: Calb1
+      val: 9.57
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.965
+    region_fraction: 0.289
+    region_evidence: SELF
+  confidence: LOW
+  confidence_score: 0.35
+  rationale: 'Sst (neuropeptide_Sst CONSISTENT; precomputed mean 11.92, 96.7th pct) and Calb1 (marker_Calb1
+    CONSISTENT; precomputed mean 9.57, 96.5th pct) anchor the match to CS20230722_SUPT_0215; 2 of 3 markers
+    CONSISTENT (negative_marker_Pvalb NOT_ASSESSED). AT (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`,
+    scRNA-seq source GABA-38-Sst-Tmtc4) gives F1=0.76 at SUPERTYPE but only F1=0.30 at CLUSTER for CS20230722_CLUS_0765;
+    AT cells disperse across siblings within CS20230722_SUPT_0215. BLA region_fraction = 0.289 is in the
+    boundary band. Cluster-level dispersion and boundary-band region_fraction jointly prevent confidence
+    above LOW.
+
+    '
+  reconciliation_note: 'Pool-candidate scan flagged CLASS-level AT overlap with bla_pv_basket_cell (shared
+    target CS20230722_CLAS_07; F1=0.32 SST vs 0.34 PV). This is Case B (AT-only, CLASS level only): at
+    SUBCLASS and finer the types diverge entirely (SST to CS20230722_SUBC_053; PV to Pvalb subclasses
+    — inference from WMBv1 taxonomy structure; bla_pv_basket_cell AT metrics not in these facts). Defining
+    markers (Sst/Calb1 vs Pvalb) are mutually exclusive. No lit_to_lit_edges warranted.
+
+    '
+  rationale_generated_at: '2026-06-10T15:44:16+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_sst_interneuron_summary.md
+  rationale_source_hash: 56fc322d
