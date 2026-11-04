@@ -605,6 +605,16 @@ gen-at-figure RUN_ID *ARGS:
 pool-candidates GRAPH_FILE *ARGS:
     uv run python -m evidencell.pool_candidates {{GRAPH_FILE}} {{ARGS}}
 
+# Render KB node files for review, with quote text filled in. Read-only.
+# KB YAML cites evidence by quote_key only, so a diff shows bare hashes; this
+# dereferences them against the region's reference store. Takes files or a
+# region directory. Prints to stdout unless --out is given.
+# Usage: just node-review kb/graphs/locus_coeruleus
+#        just node-review kb/graphs/hippocampus/olm_cell_ca1.yaml --out review.md
+[group('reports')]
+node-review *ARGS:
+    uv run python -m evidencell.render_review {{ARGS}}
+
 # Parse Phase 3 verdict blocks from a report and write the holistic
 # verdict + currency hash back to the matching MappingEdge YAML.
 # Pass --dry-run to verify without editing the YAML.

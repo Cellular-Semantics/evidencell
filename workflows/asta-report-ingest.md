@@ -3,9 +3,9 @@
 You are an ASTA deep research report ingestion coordinator. You parse a pre-generated
 ASTA AI2 deep research PDF, propose classical CellTypeNode stubs with property metadata,
 and resolve all references. Quotes are stored in a shared per-region reference store
-with content-hashed keys — they are **not** promoted to KB evidence items. A validation
-round matches quotes to node properties and flags ambiguities for downstream
-`cite-traverse` to resolve against primary literature.
+with content-hashed keys — they are **not** promoted to KB evidence items. Each proposed
+node is written as its own file under `kb/graphs/{region}/`, matching the
+one-component-per-file layout the KB uses.
 
 Entry point: user asks Claude to run `just ingest-report {region} {pdf_file}`.
 Claude runs the recipe (validates inputs, shows existing nodes), then reads and
@@ -25,7 +25,13 @@ PARAMS:
   pdf_file: ""           # required — path from repo root (inputs/deepsearch/...)
   model: "sonnet"        # mechanical subagents
   thinking_model: "opus" # parsing + KB proposal subagent
+  gate: false            # optional — pause for sign-off before writing nodes
 ```
+
+**Branch handling is the operator's.** This orchestrator writes files; it does
+not create branches, commit, or open pull requests. Whether the run happens on
+a branch and whether review is a PR is the runner's call — see
+"Review" below for the recommended default.
 
 Output directory: `research/{region}/{YYYYMMDD}_{region}_report_ingest/`
 
@@ -36,10 +42,10 @@ Output directory: `research/{region}/{YYYYMMDD}_{region}_report_ingest/`
 ```
 PDF
  ├─ Step 1:   parse → extracted_quotes.json  (temp, keyed by author_key)
- │                   → proposed_types.json    (proposed node summaries)
  │                   → reference_list.json    (author_keys + titles)
+ │                   → pdf_corpus_ids.json    (S2 corpus IDs from PDF links)
  │
- ├─ Step 1b:  hyperlinks → pdf_corpus_ids.json (S2 corpus IDs from PDF links)
+ ├─ Step 1b:  LLM read → proposed_types.json  (proposed node summaries)
  │
  ├─ Step 2:   batch resolve + merge quotes
  │            → references/{region}/  (shared, keyed by corpus_id)
@@ -47,13 +53,12 @@ PDF
  │
  ├─ Step 3:   CL lookup → cl_mappings.json
  │
- ├─ Step 3b:  quote validation (Round 1)
- │            → proposed_kb_{region}.yaml     (nodes with metadata, quote_keys on assertions)
- │            → validation_notes.json         (ambiguities, contradictions, gaps)
+ ├─ Step 3b:  quote → property matching, one file per node
+ │            → kb/graphs/{region}/{node_id}.yaml
  │
- ├─ Step 4:   [GATE] human review
+ ├─ Step 4:   review (PR by default; in-session gate if gate: true)
  │
- └─ Step 5:   handoff to cite-traverse (Round 2 targets ambiguities + gaps)
+ └─ Step 5:   handoff to survey
 ```
 
 Quotes live in the region's reference store, never in the KB YAML. The KB references
@@ -454,29 +459,37 @@ DO NOT:
 ```
 
 ---
-
-## Step 3b: Quote validation and KB proposal (Round 1)
+## Step 3b: Quote matching and node authoring
 
 Spawn a **single subagent** that matches quotes from the reference store to node
-property fields, writes the draft KB YAML (nodes with metadata + quote_keys on
-assertions), and flags ambiguities for Round 2.
+property fields and writes **one KB file per proposed node**, directly into
+`kb/graphs/{region}/`.
 
 This is the key filtering step: quotes are evaluated for relevance to specific
 properties, not dumped in bulk.
 
+**Why direct writes.** The pre-edit validation hook is a PreToolUse hook on
+`Write`/`Edit`. A draft written to `research/` is not covered by it, so the
+former flow was *write unvalidated → review → validate on promotion*, and the
+promotion step was a `cp` away from writing wholly unvalidated YAML into the KB
+(that is how an unresolvable `taxonomy_id` once reached 44 nodes across six
+files). Writing each node straight to its destination inverts the order: the
+hook fires on every write, and a malformed node fails at the point of
+authorship, where the subagent still has the context to fix it.
+
 **Subagent config:** `subagent_type: "general-purpose"`, `model: {thinking_model}`
 
 ```
-You are a quote validation and KB proposal agent. You match quotes from the
-shared reference store to node property fields and produce a clean draft KB.
+You are a quote matching and node authoring agent. You match quotes from the
+shared reference store to node property fields and write one KB file per node.
 You perform ONLY the steps listed below.
 
 OUTPUT DIRECTORY: {output_dir}
 REGION: {region}
 
 INPUT FILES:
-- {output_dir}/proposed_types.json                (node summaries from Step 1)
-- references/{region}/               (shared quote store)
+- {output_dir}/proposed_types.json                (node summaries from Step 1b)
+- references/{region}/                            (shared quote store)
 - {output_dir}/cl_mappings.json                   (CL term matches)
 
 PROPERTY CATEGORIES:
@@ -494,19 +507,12 @@ Quotes can validate these node property fields:
 
 1. Read all input files.
 
-2. For each proposed node in proposed_types.json, scan quotes in
-   the reference store for claims about specific properties:
-
-   For each quote, determine:
-   a. Which property category does it address? (morphology, ephys, markers, etc.)
-      A quote may address multiple categories.
-   b. Does it SUPPORT, REFINE, or CONTRADICT the proposed node's summary
-      for that property?
-   c. Relevance: HIGH (directly characterises this specific cell type),
-      MODERATE (characterises the broader class or a related type),
-      LOW (tangential mention, generic statement, or mostly about other types)
-
-   Keep only HIGH and MODERATE relevance quotes. Discard LOW.
+2. For each proposed node in proposed_types.json, scan quotes in the reference
+   store for claims about specific properties. For each quote, decide:
+   a. Which property category it addresses (a quote may address several).
+   b. Whether it is relevant enough to cite for that property. Keep quotes that
+      characterise this specific cell type or its immediate broader class;
+      discard tangential mentions and generic statements.
 
 3. For each kept quote, update its "claims" list with the property categories
    it addresses (e.g. ["soma_location_so", "sst_positive"]). Quotes live in
@@ -524,34 +530,38 @@ Quotes can validate these node property fields:
    - Prefer: direct characterisation > review > tangential mention
    - Prefer: resolved references (with PMID/DOI) > UNRESOLVED
 
-5. Flag validation issues in a structured list:
-   - CONTRADICTION: quotes from different papers disagree on a property
-     (e.g. spiny vs aspinous dendrites)
-   - AMBIGUITY: a property claim is qualified or species-dependent
-   - GAP: a property mentioned in proposed_types.json has no supporting quotes
-   - HETEROGENEITY: quotes suggest the proposed type may contain distinct
-     subtypes that need separate nodes
+## Part B: Write one file per node
 
-## Part B: Write draft KB YAML
+5. For each proposed node, write `kb/graphs/{region}/{node_id}.yaml` with the
+   **Write** tool. One node per file — this is the KB's one-component-per-file
+   layout, and it is what makes each node independently reviewable in a diff.
 
-6. Write {output_dir}/proposed_kb_{region}.yaml — the draft KB file.
+   `{node_id}` is the node's `id`. Filename and id must match.
 
-   Structure (CellTypeMappingGraph):
-   - One CellTypeNode per proposed classical type
-   - For each node, populate property fields from proposed_types.json summaries:
-     - id, name, definition_basis
-     - species: null (to be confirmed from primary literature)
-     - anatomical_location: from synthesis context if unambiguous
-     - nt_type.name_in_source
-     - defining_markers: symbol only; ncbi_gene_id: null
-     - negative_markers, neuropeptides: as identified
-     - morphology: {description: "...", sources: [...]}
-     - electrophysiology: {description: "...", sources: [...]}
-     - anatomical_location: [{..., sources: [...]}]  (sources nested per location)
-     - cl_mapping: from cl_mappings.json (if matched)
-     - definition_references: the top 3-5 most informative resolved refs overall
-     - is_terminal: false
-     - notes: any important caveats from validation
+   Each file is a `CellTypeMappingGraph` containing exactly one CellTypeNode
+   and no edges:
+   - id, name, definition_basis
+   - species: null (to be confirmed from primary literature)
+   - anatomical_location: from synthesis context if unambiguous
+   - nt_type.name_in_source — always attempt to resolve NT type, inferring from
+     well-established facts where the report does not state it (BNST CRF
+     neurons are GABAergic, for example). If it is genuinely unresolvable, say
+     so in `notes`: find-candidates scores on NT type, and a silently missing
+     value weakens candidate retrieval with no signal to the mapper.
+   - defining_markers: symbol only; ncbi_gene_id: null
+   - negative_markers, neuropeptides: as identified
+   - morphology: {description: "...", sources: [...]}
+   - electrophysiology: {description: "...", sources: [...]}
+   - anatomical_location: [{..., sources: [...]}]  (sources nested per location)
+   - cl_mapping: from cl_mappings.json (if matched)
+   - definition_references: the top 3-5 most informative resolved refs
+   - is_terminal: false
+   - notes: caveats worth carrying — contradictions between sources,
+     species-dependent claims, suspected heterogeneity that may warrant
+     splitting the node later, or a provisional MBA term where no child term
+     exists for the subnucleus.
+
+   Edges: leave empty — mapping relationships require primary literature.
 
    For nested sources entries, use this pattern:
    ```yaml
@@ -564,202 +574,151 @@ Quotes can validate these node property fields:
          quote_key: "12345678_a3f2c1d0"  # → lookup in the reference store
    ```
 
-   The quote_key references a specific quote in the reference store. Reports
-   can dereference to include the snippet text, or omit it for compact output.
-
    Do NOT inline quote text in the KB YAML. Use quote_keys only.
-
-   Edges: leave empty — mapping relationships require primary literature.
 
    Header comment block:
    ```yaml
-   # Draft KB — {region}
+   # {node_name} — {region}
    # Source: ASTA deep research report — {pdf_file}
    # Ingestion date: {date}
    # Status: DRAFT — node metadata from ASTA report, pending primary verification
    # Property assertions reference quotes in references/{region}/
-   # Classical nodes proposed by: asta-report-ingest
+   # Proposed by: asta-report-ingest
    ```
 
-## Part C: Write validation notes
-
-7. Write {output_dir}/validation_notes.json:
-   {
-     "nodes": {
-       "olm_ca1": {
-         "property_support": {
-           "morphology_notes": {
-             "status": "SUPPORTED",
-             "quote_keys": ["12345678_a3f2c1d0", "87654321_c2e1b4a5"],
-             "issues": []
-           },
-           "defining_markers": {
-             "status": "PARTIAL",
-             "quote_keys": ["11111111_d4f5e6a7"],
-             "issues": [
-               {
-                 "type": "AMBIGUITY",
-                 "description": "TRPV1 reported in OLM cells by Hurtado-Zavala 2017
-                   but not confirmed by other sources — may be subpopulation-specific",
-                 "quote_keys": ["28722015_f8a9b0c1"]
-               }
-             ]
-           }
-         },
-         "gaps": ["colocated_types — no quotes address spatial relationships"],
-         "overall_confidence": "HIGH"
-       }
-     },
-     "round2_targets": [
-       {
-         "node_id": "olm_ca1",
-         "property": "defining_markers",
-         "issue": "TRPV1 expression ambiguity",
-         "quote_keys": ["28722015_f8a9b0c1"],
-         "action": "Read primary source to confirm scope of TRPV1 expression"
-       }
-     ]
-   }
-
-   The round2_targets list feeds directly into cite-traverse as prioritised
-   retrieval targets. cite-traverse reads the quote_keys, looks up the paper
-   in the reference store, fetches the primary text, and adds verified quotes.
+6. If the pre-edit hook blocks a write, fix the reported problem and retry.
+   Never work around a block by writing through a shell command — `cp`, `cat >`
+   and `sed -i` are not intercepted by the hook, and a write that bypasses it
+   is unvalidated KB content.
 
 RETURN:
-"Validated {N} node(s). Properties supported: {S}, partial: {P}, gaps: {G}.
-Issues flagged: {I} (contradictions: {C}, ambiguities: {A}).
-Round 2 targets: {T}. Written proposed_kb_{region}.yaml and validation_notes.json."
+"Wrote {N} node file(s) to kb/graphs/{region}/: {filenames}.
+Properties cited: {P}. Quotes used: {Q}.
+Nodes with no quote support for any property: {G}."
 
 DO NOT:
 - Put quote text in the KB YAML (use quote_keys only)
 - Invent property values not supported by quotes or synthesis context
-- Mark LOW-relevance quotes as supporting refs
-- Skip writing validation_notes.json even if no issues are found
+- Write more than one node per file
+- Write a combined/draft KB file anywhere
 ```
 
 ---
 
-## Step 4: [GATE] Human review
+## Step 4: Review
 
-Present to the user for review and approval before writing to the canonical KB location.
+Two paths. The default is a pull request; `gate: true` adds an in-session
+sign-off before the run finishes.
 
-1. Show resolution quality:
-   ```
-   cat {output_dir}/resolution_report.md
-   ```
+### Default — review as a pull request
 
-2. Show proposed nodes + CL mappings:
-   ```
-   cat {output_dir}/proposed_types.json
-   cat {output_dir}/cl_mappings.json
-   ```
+The node files are already written and hook-validated. Summarise the run and
+hand review to the operator:
 
-3. Show validation summary — for each node, list:
-   - Properties with support status (SUPPORTED / PARTIAL / GAP)
-   - Issues flagged (contradictions, ambiguities)
-   - Round 2 targets count
+```
+Wrote {N} node(s) to kb/graphs/{region}/:
+  {node_id}.yaml — {name} — CL: {term or "none"} — {P} properties cited
+  ...
 
-4. Show the draft KB file summary:
-   - Node names and definition_basis
-   - Supporting refs per property (count)
-   - Any UNRESOLVED references remaining
+References: {R} papers, {Q} quotes ({U} UNRESOLVED)
+Run artifacts: {output_dir}/
 
-5. Ask:
-   > "Proposed {N} node(s): {names}. CL mapped: {X}.
-   > Properties: {S} supported, {P} partial, {G} gaps.
-   > Issues: {I} flagged for Round 2.
+Review these as a diff. Each node is its own file, so a node you do not want
+is a file you delete.
+```
+
+Then run the structural check and show the result:
+
+```bash
+just validate-all
+```
+
+Branch, commit and PR are the operator's to run. A PR gives line-level comment
+on each node, and CI runs the same validation on every push.
+
+**Reviewer note:** KB YAML carries `quote_key` values, not quote text. To read
+the evidence behind an assertion, dereference the key against
+`references/{region}/quotes/{corpus_id}.json`.
+
+### `gate: true` — in-session sign-off
+
+Use when a reviewer should sign off on new KB content before the session ends.
+
+1. Show the same summary as above.
+2. Show per-node detail — name, CL mapping, properties cited, and any node
+   with no quote support.
+3. Ask:
+   > "Wrote {N} node(s): {names}. CL mapped: {X}. {U} references UNRESOLVED.
    >
-   > Please review {output_dir}/proposed_kb_{region}.yaml.
-   > Edit directly if needed (correct node names, adjust markers,
-   > add missing refs). Then confirm to write to kb/graphs/{region}/."
+   > Review the files in kb/graphs/{region}/. Edit directly if needed
+   > (correct names, adjust markers, add refs), or tell me which nodes to
+   > delete."
+4. Apply any requested deletions or edits, then re-run `just validate-all`.
 
-6. After confirmation, write the approved file.
-
-   **Use the Write tool, not `cp`.** The pre-edit validation hook is a
-   PreToolUse hook on `Write`/`Edit`; a shell `cp` is not intercepted, so
-   copying the draft into `kb/graphs/` writes it entirely unvalidated. Past
-   ingest rounds used `cp` here, and that is how an unresolvable
-   `taxonomy_id` reached 44 nodes across six files without the hook firing
-   once.
-
-   - Read `{output_dir}/proposed_kb_{region}.yaml`.
-   - Write its contents with the **Write** tool to
-     `kb/graphs/{region}/{YYYYMMDD}_{region}_report_ingest.yaml`
-     (create `kb/graphs/{region}/` first with `mkdir -p` if absent).
-   - If the hook blocks the write, fix the reported problem in the draft and
-     retry. Never work around a block by writing through a shell command.
-
-   Then confirm the file validates:
-   ```bash
-   just validate kb/graphs/{region}/{YYYYMMDD}_{region}_report_ingest.yaml
-   ```
+The gate changes *when* a human looks, not *what* was written — the files and
+their validation are identical either way.
 
 ---
 
 ## Step 5: Handoff
 
-After the draft KB is written, present the handoff options:
-
 ```
 INGEST COMPLETE
 ===============
 Region: {region}
-Draft KB: kb/graphs/{region}/{kb_file}
-Nodes written: {N}
+Nodes written: {N} files in kb/graphs/{region}/
 References: references/{region}/ ({R} papers, {Q} quotes)
-Output dir: {output_dir}/
+Run artifacts: {output_dir}/
 
-Validation: {S} properties supported, {P} partial, {G} gaps
-Round 2 targets: {T} issues flagged for primary literature verification
-CL seeds available: {CL} papers from CL definition references
+NEXT STEP — primary literature retrieval:
+  Hand workflows/survey.md to Claude Code with:
+    region: {region}
+    corpus_ids_file: {output_dir}/pdf_corpus_ids.json
+    output_dir: research/{region}/survey_{date}/
 
-NEXT STEPS
-==========
+  Then workflows/evidence-extraction.md per node, which writes
+  PropertySource entries with quote_key into the node files.
 
-Option A — Targeted primary literature retrieval (recommended):
-  Hand workflows/cite-traverse.md to Claude Code with:
-    node_ids: {list of node IDs}
-    reference_store: references/{region}/
-    round2_targets: {output_dir}/validation_notes.json  ← prioritised issues
-    output_dir: {output_dir}
-    max_depth: 1    ← recommended when coming from an ASTA report; the report
-                       already provides broad coverage — one level of traversal
-                       targets ambiguities and fills primary-source gaps without
-                       duplicating the ASTA discovery work
-
-  cite-traverse will:
-  1. Prioritise Round 2 targets (ambiguities, contradictions, gaps)
-  2. Fetch primary literature for flagged papers
-  3. Verify ASTA quotes (flip status: pending → verified or superseded)
-  4. Add new quotes with source_method: "primary" and status: "verified"
-  5. Surface new claims the ASTA report missed
-
-Option B — Run taxonomy ingestion in parallel:
-  Place taxonomy table in inputs/taxonomies/
-  Hand workflows/ingest-taxonomy.md to Claude Code
-  (can run concurrently with Option A in a separate session)
+Taxonomy ingestion (workflows/ingest-taxonomy.md) is independent and can run
+concurrently in a separate session.
 ```
 
-Ask: "Which option would you like to proceed with?"
-
 ---
-
 ## Rules
 
 - **Classical nodes emerge here.** Do not require pre-existing KB nodes.
-- **Quotes live in the reference store.** Content-hashed keys (`{corpus_id}_{hash8}`)
-  ensure dedup across ingests. The KB YAML references quotes by key only —
-  never inline text.
-- **The reference store is shared.** Multiple workflows append to it
-  per region. Always read-merge-write, never overwrite.
-- **No evidence items at ingest.** The draft KB has nodes with property fields
-  and `*_sources` entries pointing to quote_keys. Actual LiteratureEvidence
-  items are created by `evidence-extraction` after primary verification.
-- **Two rounds.** Round 1 (Step 3b) validates against ASTA quotes — cheap,
-  no API calls. Round 2 (cite-traverse) goes to primary literature for
-  ambiguities, contradictions, and gaps — expensive, targeted.
-- **One gate.** Review nodes + validation notes together.
-  Do not proceed to kb/graphs/ without human confirmation.
-- **Validation hook fires on write.** Fix any validation errors before confirming
-  to the user that the file was written successfully.
+- **One node per file.** `kb/graphs/{region}/{node_id}.yaml`, filename matching
+  the node id. Never write a combined draft.
+- **Write with the Write tool, always.** The pre-edit hook is a PreToolUse hook
+  on `Write`/`Edit`; `cp`, `cat >` and `sed -i` bypass it silently. A write
+  that bypasses the hook is unvalidated KB content.
+- **Quotes live in the reference store.** Content-hashed keys
+  (`{corpus_id}_{hash8}`) ensure dedup across ingests. The KB YAML references
+  quotes by key only — never inline text.
+- **The reference store is shared.** Multiple workflows append to it per
+  region. Go through `write_quote_to_refs()`; never hand-merge.
+- **No evidence items at ingest.** Nodes carry property fields with `sources`
+  entries pointing at quote_keys. `LiteratureEvidence` items are created by
+  `evidence-extraction` after primary verification.
+- **Nodes are DRAFT until verified.** Property assertions come from ASTA report
+  quotes, which are paraphrase until `survey` / `evidence-extraction` confirms
+  them against primary text. Say so in the node header comment.
+- **The gate is optional; the validation is not.** `gate: true` changes when a
+  human looks, not what was written. Every node passes the hook on write and
+  `just validate-all` before the run reports complete.
+- **Branches and PRs belong to the operator.** This orchestrator writes files
+  and stops.
 - **Subagent prompts are contracts.** Pass verbatim with variables filled in.
+
+## Known gap: cross-report node identity
+
+Step 1b mints `proposed_id` from the PDF in isolation and is never shown the
+existing KB, so two reports describing the same cell type will propose two
+nodes under different ids. The only existing-node signal is the id list printed
+by `just ingest-report`, before this orchestrator is read.
+
+Until index-backed reconciliation lands (#163 "Not in scope", depends on the
+KB index), **review is the net**: check proposed ids against the list the
+recipe printed, and against `kb/graphs/{region}/` filenames, before accepting.
+See #116 for what this has already cost — 7 stranded ingest stubs in
+hippocampus, 4 duplicating a mapping node under a different id.

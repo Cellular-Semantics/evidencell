@@ -1,0 +1,548 @@
+# Locus coeruleus noradrenergic (A6) neuron — locus_coeruleus
+# Source: ASTA deep research report — inputs/deepsearch/LCN_neuron.pdf
+# Ingestion date: 2026-10-28
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/locus_coeruleus/
+# Proposed by: asta-report-ingest
+
+name: "Locus Coeruleus Noradrenergic (A6) Neuron"
+description: >
+  Evidence graph component for the principal noradrenergic projection neuron
+  of the locus coeruleus (A6 cell group) — the classical cell type proposed
+  from the ASTA deep research report on locus coeruleus neurons.
+brain_region:
+  id: UBERON:0002148
+  label: "locus ceruleus"
+  name_in_source: "locus coeruleus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-10-28"
+nodes:
+  - id: lc_noradrenergic_neuron
+    name: "Locus coeruleus noradrenergic (A6) neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:       # To be confirmed from primary literature — mouse, rat and human sources pooled
+    anatomical_location:
+      - id: UBERON:0002148
+        label: "locus ceruleus"
+        name_in_source: "locus coeruleus (A6 noradrenergic cell group)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:25183958"
+            method: "review (anatomy)"
+            scope: "mammalian locus coeruleus"
+            quote_key: "16354027_a407f0bd"
+          - ref: "PMID:38459766"
+            method: "IHC (TH, DBH)"
+            scope: "adult mouse pons"
+            quote_key: "268288590_ea7dcacc"
+          - ref: "PMID:34827485"
+            method: "comparative IHC (TH, DBH) across ~80 mammal species"
+            scope: "mammalian rostral hindbrain — A4/A6 periventricular grey"
+            quote_key: "244083383_88c4d5a5"
+      - id: UBERON:0003023
+        label: "pontine tegmentum"
+        name_in_source: "dorsal/dorsolateral pontine tegmentum, lateral floor of the fourth ventricle"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:39592731"
+            method: "review (anatomy)"
+            scope: "upper dorsolateral pontine tegmentum"
+            quote_key: "274305131_0078d752"
+          - ref: "PMID:25206534"
+            method: "review (anatomy)"
+            scope: "rostral pons, lateral floor of the fourth ventricle"
+            quote_key: "18658674_657d360c"
+          - ref: "PMID:37719465"
+            method: "review + slice electrophysiology"
+            scope: "mouse/rat rostral pons"
+            quote_key: "261468837_3a2dfc19"
+    nt_type:
+      name_in_source: "noradrenergic"
+      cl_terms:
+        - id: CL:0008025
+          label: "noradrenergic neuron"
+          name_in_source: "noradrenergic"
+      sources:
+        - ref: "PMID:32019605"
+          method: "IHC (TH, DBH)"
+          scope: "human locus coeruleus — >95% of LC neurons noradrenergic"
+          quote_key: "211027973_ca185601"
+        - ref: "PMID:25206534"
+          method: "review (anatomy/neurochemistry)"
+          scope: "rodent locus coeruleus"
+          quote_key: "18658674_657d360c"
+        - ref: "PMID:39427811"
+          method: "review (NE synthesis and signalling)"
+          scope: "LC vs peri-LC"
+          quote_key: "273433369_45bcf7fc"
+    defining_markers:
+      - symbol: Th
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:29791834"
+            method: "bacTRAP translational profiling"
+            scope: "adult mouse LC translatome"
+            quote_key: "44089056_03c032a1"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:33725122"
+            method: "IHC (TH, DBH)"
+            scope: "human locus coeruleus"
+            quote_key: "232263466_1a98ef2e"
+            marker_type: PROTEIN
+          - ref: "PMID:35409327"
+            method: "IHC (TH)"
+            scope: "locus coeruleus — TH as a noradrenergic LC marker"
+            quote_key: "247944827_82efb1ad"
+            marker_type: PROTEIN
+      - symbol: Dbh
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:29791834"
+            method: "bacTRAP translational profiling"
+            scope: "adult mouse LC translatome"
+            quote_key: "44089056_03c032a1"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:29791834"
+            method: "IHC (DBH) on Th-EGFP-L10a sections"
+            scope: "adult mouse LC — 100% co-expression in TH+/DBH+ neurons"
+            quote_key: "44089056_ebe9fa62"
+            marker_type: PROTEIN
+          - ref: "PMID:30907876"
+            method: "IHC protocol (DBH, TH)"
+            scope: "adult mouse LC localisation protocol"
+            quote_key: "85497448_778eda88"
+            marker_type: PROTEIN
+      - symbol: Slc6a2
+        modifier: ENRICHED
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:29791834"
+            method: "bacTRAP translational profiling"
+            scope: "adult mouse LC translatome"
+            quote_key: "44089056_03c032a1"
+            marker_type: TRANSCRIPT
+      - symbol: Slc18a2
+        modifier: ENRICHED
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:29791834"
+            method: "bacTRAP translational profiling"
+            scope: "adult mouse LC translatome"
+            quote_key: "44089056_03c032a1"
+            marker_type: TRANSCRIPT
+      - symbol: Gch1
+        modifier: ENRICHED
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:29791834"
+            method: "bacTRAP translational profiling"
+            scope: "adult mouse LC translatome"
+            quote_key: "44089056_03c032a1"
+            marker_type: TRANSCRIPT
+      - symbol: Phox2a
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:38364691"
+            method: "IHC (Phox2a)"
+            scope: "adult mouse locus coeruleus"
+            quote_key: "267366284_a1c0674b"
+            marker_type: PROTEIN
+          - ref: "PMID:38364691"
+            method: "IHC (Phox2a, TH)"
+            scope: "rostral LC — Phox2a+/TH- 'resting noradrenergic' neurons"
+            quote_key: "267366284_bb2513d7"
+            marker_type: PROTEIN
+      - symbol: Gal
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:37487094"
+            method: "single-cell RNA-seq + electrophysiology"
+            scope: "adult mouse LC NE neurons"
+            quote_key: "260132993_b5ef6670"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:39427811"
+            method: "review (LC neurochemistry)"
+            scope: "LC NE cells — GAL/NPY/CRF co-secretion"
+            quote_key: "273433369_78752938"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: Npy
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:37487094"
+            method: "single-cell RNA-seq"
+            scope: "adult mouse LC NE neurons — Npy transcript absent"
+            quote_key: "260132993_b5ef6670"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:39427811"
+            method: "review (LC neurochemistry)"
+            scope: "mouse — NPY exclusively in peri-LC GABAergic cells"
+            quote_key: "273433369_78752938"
+            marker_type: PROTEIN
+    neuropeptides:
+      - symbol: Gal
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:37487094"
+            method: "single-cell RNA-seq + electrophysiology"
+            scope: "adult mouse LC — galanin and GalR1 map"
+            quote_key: "260132993_b5ef6670"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:25183958"
+            method: "review (LC neuropeptide content)"
+            scope: "LC cell bodies"
+            quote_key: "16354027_26800417"
+            marker_type: PROTEIN
+      - symbol: Crh
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:39427811"
+            method: "review (LC neurochemistry)"
+            scope: "LC NE cells co-secrete GAL, NPY and CRF"
+            quote_key: "273433369_78752938"
+            marker_type: PROTEIN
+          - ref: "PMID:25183958"
+            method: "review (LC neuropeptide content)"
+            scope: "LC cell bodies"
+            quote_key: "16354027_26800417"
+            marker_type: PROTEIN
+    morphology:
+      description: >
+        Medium-to-large multipolar neuron with a plump soma (35-45 µm) and
+        relatively short dendrites; in the caudal LC and subcoeruleus these are
+        interspersed with smaller fusiform noradrenergic neurons (~15 µm) having
+        triangular somata and two tufts of long dendrites. Somata form a highly
+        compact nuclear core (~1500 neurons per side in mouse; ~25% of
+        noradrenergic neurons have a neighbour within 25 µm), while dendrites
+        extend into the pericoerulear surround. Axons arborise across nearly the
+        whole neuraxis — cortex, hippocampus, amygdala, thalamus, hypothalamus,
+        cerebellum, brainstem and spinal cord.
+      sources:
+        - ref: "PMID:33725122"
+          method: "review (LC cytoarchitecture, soma size measurements)"
+          scope: "human locus coeruleus, rostro-caudal gradient"
+          quote_key: "232263466_959af3b0"
+        - ref: "PMID:35741613"
+          method: "tissue clearing + 3D soma position mapping"
+          scope: "adult mouse brainstem LC core"
+          quote_key: "248497638_cda0a069"
+        - ref: "PMID:25183958"
+          method: "review (projection anatomy)"
+          scope: "LC noradrenergic projections across the neuraxis"
+          quote_key: "16354027_79a2e68e"
+    electrophysiology:
+      description: >
+        Slow spontaneous pacemaker firing (~1-2 Hz in slice; ~1-5 Hz across
+        preparations) with broad action potentials and a pronounced subthreshold
+        membrane-potential oscillation. Standard slice identification combines
+        tonic spontaneous firing with absence of Ih and little or no
+        hyperpolarising membrane-potential sag. Neurons switch from tonic to
+        phasic burst discharge in response to salient stimuli, and are inhibited
+        by somatodendritic α2 autoreceptor activation (inhibition is stronger in
+        hippocampus-projecting than in mPFC-projecting cells). Neighbouring
+        same-type neurons are electrically coupled via dendritic gap junctions.
+        LC neurons additionally show intrinsic CO2/H+ sensitivity and
+        compartment-specific glutamatergic drive (GluA1 with VGLUT2 on somata;
+        GluA1-GluA4 with VGLUT1 on distal dendrites).
+      sources:
+        - ref: "PMID:18940593"
+          method: "whole-cell patch clamp, acute coronal slice"
+          scope: "adult mouse LC — pacemaker 1-2 Hz, no Ih, no sag"
+          quote_key: "1659738_1755f0e3"
+        - ref: "PMID:31430399"
+          method: "review + in vitro slice recording of retrogradely labelled LC neurons"
+          scope: "adult C57Bl6/N mouse LC"
+          quote_key: "201115485_fb3ee02c"
+        - ref: "PMID:37719465"
+          method: "review + slice electrophysiology"
+          scope: "mouse/rat LC — gap-junction coupling, subthreshold oscillation"
+          quote_key: "261468837_3a2dfc19"
+    colocated_types:
+      - neighboring_type: "peri_lc_gabaergic_neuron"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          The densely packed noradrenergic core is embedded within a
+          heterogeneous surround of non-noradrenergic (TH-negative) cells, among
+          them the peri-LC GABAergic population; TH-negative cells are also found
+          intermingled with the core itself. Supporting quotes:
+          270489273_f3c96847 (Zouridis et al., 2024; PMID:38872397) and
+          273433369_45bcf7fc (Slavova et al., 2024; PMID:39427811).
+    cl_mapping:
+      cl_term:
+        id: CL:0008025
+        label: "noradrenergic neuron"
+        name_in_source: "noradrenergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:0008025 (a neuron that releases noradrenaline as a neurotransmitter)
+        is the closest available term, but it is a parent class: CL has no
+        locus-coeruleus-specific noradrenergic neuron term. CL:3000002
+        (sympathetic noradrenergic neuron) does not apply. Mapping confidence
+        MEDIUM. A CL new-term request for an LC (A6) noradrenergic neuron child
+        of CL:0008025 would be a reasonable contribution.
+    definition_references:
+      - "PMID:33725122"
+      - "PMID:29791834"
+      - "PMID:31430399"
+      - "PMID:37719465"
+      - "PMID:37487094"
+    is_terminal: false
+    notes: >
+      NPY CONTRADICTION (carry forward to mapping): Caramia et al., 2023
+      (PMID:37487094) report by single-cell RNA-seq that mouse LC NE neurons
+      express transcripts for galanin and >19 other neuropeptides but NOT Npy,
+      and Slavova et al., 2024 (PMID:39427811) state that in mice NPY is
+      secreted exclusively by GABAergic cells of the peri-LC. An older review,
+      Carvalho et al., 2014 (PMID:25183958), nevertheless lists neuropeptide Y
+      among the peptides secreted by LC cell bodies (alongside vasopressin,
+      somatostatin, enkephalin, neurotensin, CRH and galanin). Npy is recorded
+      here as a negative marker on the strength of the two recent,
+      species-explicit, method-explicit sources; the older review claim may
+      reflect pooled LC/peri-LC tissue or a species difference and should not be
+      treated as settled. The same Slavova review is the source for CRF
+      co-secretion, so the Crh neuropeptide entry rests partly on a source whose
+      NPY claim is contradicted elsewhere.
+
+      SPECIES: species is deliberately left null. Soma-size and cell-number
+      figures come from human (Holland et al., 2021) and mouse (Baral et al.,
+      2022; Carvalho et al., 2014) sources; LC cell counts differ by roughly an
+      order of magnitude between them (~1500-3000 per side in rodent vs
+      10,000-50,000 in human). Electrophysiology is mouse/rat slice work.
+
+      SUSPECTED HETEROGENEITY (may warrant splitting later): the report treats
+      LC-NE as one internally heterogeneous classical type rather than discrete
+      subtypes. Documented axes are (i) two major morpho-electric types with gap
+      junction coupling preferentially within type (McKinney et al., 2023;
+      PMID:36734517); (ii) projection-defined subgroups differing in α2
+      autoreceptor inhibition (Wagner-Altendorf et al., 2019; PMID:31430399) and
+      in cortical-module-specific signalling (Breton-Provencher et al., 2022;
+      PMID:35650441); (iii) graded dorsal-vs-ventral molecular and positional
+      gradients tied to projection bias and task coding (Su et al., 2026;
+      PMID:41993290, PMID:42749800); (iv) a developmental partition — >99%
+      En1-derived, r0-derived dorsal vs r1-derived ventral, mostly Pax7+
+      alar-plate origin with a smaller Pax7-negative subpopulation having sparse
+      thalamic projections (Plummer et al., 2017, PMID:28775681; Chandler et
+      al., 2019, PMID:31619493); (v) four genetically separable mature NE
+      subpopulations across the rostral hindbrain, one projecting to cortex from
+      outside LC proper (Robertson et al., 2013; PMID:23852112); (vi) Phox2a+/
+      TH-negative 'resting noradrenergic' cells in rostral LC (Terrier et al.,
+      2024; PMID:38364691) — these are TH-negative yet noradrenergic-lineage and
+      sit awkwardly inside a Th-positive node definition.
+
+      BOUNDARY: the node describes LC proper (A6). The LC complex forms a
+      continuum with the subcoeruleus and A7 nuclei (Plummer et al., 2017;
+      Manger et al., 2021, PMID:34827485), so the boundary of this type against
+      SubC/A7 noradrenergic neurons is not sharp.
+
+      ANATOMY TERM: UBERON:0002148 (locus ceruleus) is used as the primary term;
+      no MBA/DHBA term was resolved during ingest. The second location entry
+      (UBERON:0003023 pontine tegmentum) is the containing structure, recorded
+      because several sources localise the nucleus only to that level — it is
+      not a second soma territory.
+
+  # Atlas target stub — thin pointer only. Canonical atlas properties live in
+  # kb/taxonomy/CCN20230722/ (see CLAUDE.md § "Taxonomy reference YAML is
+  # canonical for atlas properties").
+  - id: CS20230722_CLUS_4548
+    name: 4548 NTS Dbh Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_4548
+
+edges:
+  - id: edge_lc_noradrenergic_neuron_to_CS20230722_CLUS_4548
+    lit_type: lc_noradrenergic_neuron
+    taxonomy_type: CS20230722_CLUS_4548
+    relationship: skos:closeMatch
+    mapping_cardinality: '1:1'
+    mapping_justification: semapv:ManualMappingCuration
+    confidence: MODERATE
+    curator: do12@sanger.ac.uk
+    creation_date: '2026-10-28'
+
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        atlas: WMBv1 (Yao et al. 2023, CCN20230722)
+        cell_set_accession: CS20230722_CLUS_4548
+        nt_consistent_with_classical: true
+        nt_type:
+          name_in_source: Nora
+        defining_markers:
+          - symbol: Slc6a2
+          - symbol: Chrnb3
+        merfish_markers:
+          - symbol: Dbh
+          - symbol: Chrnb3
+          - symbol: Calcr
+        neuropeptides:
+          - symbol: Gal
+          - symbol: Calca
+          - symbol: Adcyap1
+        ccf_distribution: >
+          Of the 12 noradrenergic (nt_type Nora) clusters in WMBv1, this is the
+          only one with any cells assigned to Locus ceruleus (MBA:147). It holds
+          25.0% of all LC-assigned cells in the taxonomy (20/80), 33.9% of
+          Barrington's nucleus (41/121) and 16.5% of sublaterodorsal nucleus
+          (35/212), against 2.9% of laterodorsal tegmental, 2.2% of pontine
+          central gray and 1.8% of parabrachial. The ~10x step between the first
+          three structures and the rest localises it to the immediate LC complex
+          rather than the wider dorsal pons.
+        explanation: >
+          Transcriptomic identity and anatomical assignment agree. The cluster is
+          typed noradrenergic and carries the noradrenaline transporter Slc6a2
+          plus Dbh, matching the classical node's defining markers; its
+          neuropeptide profile includes galanin, which the classical node also
+          records. It is Hox-negative and En1-positive, unlike the caudal
+          Nora clusters (4530/4539 Hoxb8, 4533 Hoxb5) that correspond to the
+          medullary A1/A2 groups — consistent with a rostral r0/r1 origin.
+
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:29791834
+        study_type: bacTRAP translational profiling, adult mouse LC
+        snippet: >-
+          .We note that genes required for NE synthesis and release, including
+          Gch1, Slc6a2, Slc18a2, Dbh, and Th, are highly enriched in the LC
+          translatome, and therefore constitute useful markers for this neuronal
+          population.
+        explanation: >
+          Establishes Slc6a2 and Dbh as LC markers independently of the atlas.
+          Both are present on this cluster (Slc6a2 as a defining marker, Dbh as a
+          MERFISH marker), so the marker correspondence does not rest on the
+          atlas's own annotation.
+
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:31619493
+        study_type: developmental lineage tracing, mouse
+        snippet: >-
+          .Greater than 99% of LC-NE neurons are derived from the embryonic
+          hindbrain progenitor domain defined by En1 expression.
+        explanation: >
+          En1 is a transcription-factor marker of this cluster. A developmental
+          marker is independent of the mature neurochemical phenotype, so this
+          corroborates LC identity on an axis the atlas metadata and the marker
+          evidence do not share.
+
+    property_comparisons:
+      - property: nt_type
+        node_a_value: noradrenergic
+        node_b_value: Nora
+        alignment: CONSISTENT
+      - property: defining_markers
+        node_a_value: Th, Dbh, Slc6a2, Slc18a2, Gch1, Phox2a, Gal
+        node_b_value: Slc6a2, Chrnb3 (defining); Dbh, Chrnb3, Calcr (MERFISH); Phox2a, En1, Meis2 (TF)
+        alignment: CONSISTENT
+        notes: >
+          Slc6a2, Dbh and Phox2a are shared. Th is not listed for this cluster,
+          but the atlas marker fields are top-N discriminative lists rather than
+          presence/absence assays, so this is not evidence of Th-negativity.
+          Chrnb3, Calcr and Meis2 are atlas-side markers the classical node does
+          not record.
+      - property: neuropeptides
+        node_a_value: Gal, Crh
+        node_b_value: Calca 7.6, Gal 6.5, Adcyap1 5.8, Uts2b 4.1, Pomc 3.5
+        alignment: APPROXIMATE
+        notes: >
+          Galanin is shared. Crh is not present atlas-side. Calca (CGRP) is the
+          highest-scoring atlas neuropeptide and is not a classical LC marker —
+          it is characteristic of parabrachial neurons, and 22% of this cluster's
+          cells are assigned to parabrachial nucleus, so it may indicate
+          admixture rather than LC biology.
+      - property: anatomical_location
+        node_a_value: locus coeruleus (UBERON:0002148), dorsal pontine tegmentum
+        node_b_value: Locus ceruleus (MBA:147) plus Barrington's nucleus and sublaterodorsal nucleus
+        alignment: APPROXIMATE
+        notes: >
+          See ccf_distribution. The sublaterodorsal share is plausibly genuine
+          rather than registration error — the classical node records small
+          fusiform noradrenergic neurons in caudal LC and subcoeruleus.
+      - property: developmental_origin
+        node_a_value: '>99% En1-derived; r0/r1; mostly Pax7+ alar plate'
+        node_b_value: En1 (TF marker); Hox-negative
+        alignment: CONSISTENT
+        notes: Pax7 is not recorded atlas-side, so only the En1 axis is comparable.
+      - property: soma_diameter
+        node_a_value: 35-45 um plump multipolar; ~15 um fusiform in caudal LC/subcoeruleus
+        node_b_value: not recorded
+        alignment: NOT_ASSESSED
+        notes: >
+          The taxonomy store holds no morphometric field. The classical figure is
+          also human (Holland et al. 2021), so it would not transfer to a mouse
+          atlas without correction. See proposed_experiments.
+
+    caveats:
+      - caveat_type: LOW_CELL_COUNT
+        description: >
+          The cluster has 22 10x cells, and Locus ceruleus is the 634th of 653
+          CCF regions by cell count (80 cells total). LC is under-sampled in
+          WMBv1 relative to its true size — its neighbour parabrachial nucleus
+          has 75x more cells. The mapping rests on a small sample on both sides.
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: >
+          80 LC-assigned cells are spread over 103 clusters, 86 of which hold one
+          cell or fewer. That tail is registration scatter around a small nucleus.
+          This cluster's 33.9% share of Barrington's nucleus — a CRH+
+          glutamatergic population with no resident noradrenergic neurons — is
+          most likely misregistration rather than biology.
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          Sibling cluster CS20230722_CLUS_4547 sits in the same supertype
+          (1007 NTS Dbh Glut_4), is also LC-assigned, and shares Phox2a, En1 and
+          Dbh, but is typed Glut and lacks Slc6a2. Its relationship to this node
+          is unresolved — see unresolved_questions.
+      - caveat_type: CROSS_SPECIES_EXTRAPOLATION
+        description: >
+          Several classical properties (soma size, cell number) derive from human
+          LC; the atlas is mouse. The classical node leaves species null for this
+          reason.
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: >
+          The classical type is internally heterogeneous along six documented
+          axes (see the node's notes). WMBv1 resolves LC into at most two
+          clusters at 22 and 59 cells, so the atlas is coarser than the
+          literature and this edge cannot express that substructure.
+
+    unresolved_questions:
+      - >
+        Is CS20230722_CLUS_4547 a second LC population or the same type? It is
+        Dbh+/Phox2a+/En1+ but typed Glut and lacks Slc6a2, which is the profile
+        Terrier et al. 2024 (PMID:38364691) describe for Phox2a+/TH-negative
+        "resting noradrenergic" cells in rostral LC. Testing this needs Th and
+        Slc6a2 expression values, which the current node_expression table does
+        not carry (it holds a 35-gene hippocampal panel with no catecholaminergic
+        genes). Run `just fetch-mapmycells CCN20230722` then `just add-expression`
+        to make it answerable.
+      - >
+        Does this cluster contain subcoeruleus/A7 noradrenergic neurons as well
+        as LC proper? If so the relationship is closer to PartialOverlapMatch
+        than closeMatch.
+      - >
+        Npy: the classical node records it as a negative marker, but this cluster
+        has mean Npy 0.51 (80th percentile across clusters, though only ~4% of
+        the corpus maximum) while neighbouring clusters are at 0.00. This may be
+        peri-LC admixture rather than LC expression.
+
+    proposed_experiments:
+      - >
+        Segmentation-area test of the two-morphology hypothesis. The classical
+        node records two soma populations — 35-45 um plump multipolar cells, and
+        ~15 um fusiform cells concentrated in caudal LC and subcoeruleus. If this
+        cluster spans both, its LC-assigned cells should be systematically larger
+        than its sublaterodorsal-assigned cells. Testable from ABC Atlas MERFISH
+        cell-level metadata (segmented cell area per cell, grouped by CCF
+        assignment within cluster 4548) — not from the taxonomy summary in
+        kb/taxonomy, which holds no morphometric field. Caveats: a 2D section
+        gives a chord rather than a maximum diameter; LC is densely packed, which
+        is where segmentation is least reliable; and n=22 is almost certainly
+        underpowered. Of the six heterogeneity axes this is the only one spatial
+        transcriptomics could adjudicate.
+      - >
+        Annotation transfer from a dedicated LC dataset. WMBv1 dissection tags
+        cannot carry this mapping alone at n=80 region-wide. An AT run against an
+        LC-targeted dataset (e.g. Luskin et al. 2025, already in the region's
+        reference store) would give a direct F1 anchor and could raise this edge
+        above MODERATE.
