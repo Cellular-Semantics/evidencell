@@ -1,0 +1,1058 @@
+name: Basolateral amygdala calbindin-positive dendrite-targeting interneuron — classical type
+description: 'Single classical cell type (one-file-one-class): Basolateral amygdala calbindin-positive
+  dendrite-targeting interneuron. Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528
+  report-ingest graph and split by component. Mappings are single-edge, pre-top-K Stage B output — weak,
+  pending further ASTA runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002887
+  label: basal amygdaloid nucleus
+  name_in_source: basolateral amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: bla_calbindin_dendrite_targeting_interneuron
+  name: Basolateral amygdala calbindin-positive dendrite-targeting interneuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:22726836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10647550_0e5ce349
+    - ref: PMID:28453642
+      method: asta_report
+      scope: GABAergic interneurons expressing calbindin in BLA
+      quote_key: 17860491_f1ffddb9
+    - ref: PMID:33837051
+      method: asta_report
+      scope: full abstract — nt_type inferred from GABAergic census context
+      quote_key: 232283078_00bb8003
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  species: null
+  negative_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:28453642
+      method: asta_report
+      scope: calbindin+ but not PV+ BLA interneurons activated by OX1R blockade
+      quote_key: 17860491_f1ffddb9
+      marker_type: PROTEIN
+  defining_markers:
+  - symbol: Calb1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22726836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10647550_48ea3c0f
+      marker_type: PROTEIN
+    - ref: PMID:32144495
+      method: asta_snippet
+      scope: mouse LA interneuron review
+      quote_key: 212579559_81debee5
+      marker_type: PROTEIN
+    - ref: PMID:28453642
+      method: asta_report
+      scope: mouse BLA, immunolabeling during fear extinction
+      quote_key: 17860491_f1ffddb9
+      marker_type: PROTEIN
+    - ref: PMID:31193505
+      method: europepmc_fulltext
+      scope: mouse BLA, immunostaining for interneuron markers
+      quote_key: 4940771_ef80657d
+      marker_type: PROTEIN
+  morphology:
+    description: Calbindin-positive interneurons targeting dendrites of BLA principal cells; characterized
+      in vivo as a distinct dendrite-targeting class separable by marker content from somatostatin dendrite-targeting
+      cells.
+    sources:
+    - ref: PMID:22726836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10647550_48ea3c0f
+    - ref: PMID:32144495
+      method: asta_snippet
+      scope: mouse LA in vitro/in vivo electrophysiology
+      quote_key: 212579559_e47ad3e6
+    - ref: PMID:40686779
+      method: europepmc_fulltext
+      scope: mouse/rat BLA, review of interneuron physiology
+      quote_key: 280092907_59d9ef89
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:22726836
+  is_terminal: false
+  notes: Overlaps partially with SOM/CB+ interneurons in older marker schemes; distinguished by CALB1
+    positivity without SST co-expression.
+  anatomical_location:
+  - id: UBERON:0002887
+    sources:
+    - ref: PMID:22726836
+      method: asta_report
+      scope: BLA interneuron classification
+      quote_key: 10647550_48ea3c0f
+    label: basal amygdaloid nucleus
+    name_in_source: basolateral amygdala
+    compartment: SOMA
+  electrophysiology:
+    description: Fires synchronously with hippocampal theta oscillations in vivo; distinguished from PV+
+      basket cells by theta coupling rather than noxious-stimulus recruitment.
+    sources:
+    - ref: PMID:22726836
+      method: asta_snippet
+      scope: mouse BLA, in vivo juxtacellular recording
+      quote_key: 10647550_86aa283c
+- id: CS20230722_CLUS_0625
+  name: 0625 Vip Gaba_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0625
+- id: CS20230722_CLUS_0634
+  name: 0634 Vip Gaba_3
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0634
+- id: CS20230722_CLUS_0636
+  name: 0636 Vip Gaba_4
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0636
+- id: CS20230722_CLUS_0656
+  name: 0656 Vip Gaba_9
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0656
+- id: CS20230722_CLUS_0657
+  name: 0657 Vip Gaba_9
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0657
+- id: CS20230722_SUPT_0233
+  name: 0233 STR Prox1 Lhx6 Gaba_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0233
+- id: CS20230722_SUPT_0289
+  name: 0289 STR-PAL Chst9 Gaba_5
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0289
+- id: CS20230722_SUPT_0292
+  name: 0292 IA Mgp Gaba_3
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0292
+- id: CS20230722_SUPT_0291
+  name: 0291 IA Mgp Gaba_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0291
+- id: CS20230722_SUPT_0288
+  name: 0288 STR-PAL Chst9 Gaba_4
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0288
+edges:
+- id: edge_bla_calbindin_dendrite_targeting_interneuron_to_CS20230722_CLUS_0625
+  lit_type: bla_calbindin_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_CLUS_0625
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0625 Vip Gaba_1; region_fraction_100um=0.158; strict region_fraction=0.095.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+    notes: Both classical and atlas annotated GABAergic.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=180 [painted]; Isocortex [MBA:315] count_100um=167
+      [painted]; Hippocampal formation [MBA:1089] count_100um=145 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.158; strict region_fraction: 0.095; region_evidence: SELF'
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: 'Calb1: 0.44; cohort_pct 0.113'
+    alignment: APPROXIMATE
+    notes: val=0.44; cohort percentile 0.113
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — ABSENT (classical negative marker)
+    node_b_value: 'Pvalb: 0.06; cohort_pct 0.543'
+    alignment: CONSISTENT
+    notes: val=0.06; below MIN_DETECTABLE (0.1); cohort percentile 0.543
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 0.44
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.113
+    - gene: -Pvalb
+      val: 0.06
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.543
+    region_fraction: 0.095
+    region_fraction_100um: 0.158
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.08
+  rationale: '[tier:CUT] 0625 Vip Gaba_1 [CS20230722_CLUS_0625] has Calb1=0.44 (cohort pct 0.113), below
+    the cohort median for a classically CALB1-defining type; region_fraction_100um=0.158 but Cortical
+    subplate leads over amygdala-specific regions; no AT data; UNCERTAIN.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:50+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_calbindin_dendrite_targeting_interneuron_summary.md
+  rationale_source_hash: c0c2e47b
+- id: edge_bla_calbindin_dendrite_targeting_interneuron_to_CS20230722_CLUS_0634
+  lit_type: bla_calbindin_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_CLUS_0634
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0634 Vip Gaba_3; region_fraction_100um=0.109; strict region_fraction=0.072.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+    notes: Both classical and atlas annotated GABAergic.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Olfactory areas [MBA:698] count_100um=158 [painted]; Cortical subplate [MBA:703] count_100um=130
+      [painted]; Isocortex [MBA:315] count_100um=129 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.109; strict region_fraction: 0.072; region_evidence: SELF'
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: 'Calb1: 0.42; cohort_pct 0.093'
+    alignment: CONSISTENT
+    notes: val=0.42; cohort percentile 0.093
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — ABSENT (classical negative marker)
+    node_b_value: 'Pvalb: 0.05; cohort_pct 0.503'
+    alignment: CONSISTENT
+    notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.503
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 0.42
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.093
+    - gene: -Pvalb
+      val: 0.05
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.503
+    region_fraction: 0.072
+    region_fraction_100um: 0.109
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.07
+  rationale: '[tier:CUT] 0634 Vip Gaba_3 [CS20230722_CLUS_0634] has Calb1=0.42 (cohort pct 0.093), the
+    lowest among Calb1-scoring cluster candidates; Olfactory areas [MBA:698] leads its distribution; region_fraction_100um=0.109;
+    UNCERTAIN.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:50+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_calbindin_dendrite_targeting_interneuron_summary.md
+  rationale_source_hash: '36544263'
+- id: edge_bla_calbindin_dendrite_targeting_interneuron_to_CS20230722_CLUS_0636
+  lit_type: bla_calbindin_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_CLUS_0636
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0636 Vip Gaba_4; region_fraction_100um=0.142; strict region_fraction=0.089.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+    notes: Both classical and atlas annotated GABAergic.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=140 [painted]; Olfactory areas [MBA:698] count_100um=81
+      [painted]; Isocortex [MBA:315] count_100um=79 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.142; strict region_fraction: 0.089; region_evidence: SELF'
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: 'Calb1: 0.41; cohort_pct 0.086'
+    alignment: CONSISTENT
+    notes: val=0.41; cohort percentile 0.086
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — ABSENT (classical negative marker)
+    node_b_value: 'Pvalb: 0.06; cohort_pct 0.543'
+    alignment: CONSISTENT
+    notes: val=0.06; below MIN_DETECTABLE (0.1); cohort percentile 0.543
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 3
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 0.41
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.086
+    - gene: -Pvalb
+      val: 0.06
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.543
+    region_fraction: 0.089
+    region_fraction_100um: 0.142
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.07
+  rationale: '[tier:CUT] 0636 Vip Gaba_4 [CS20230722_CLUS_0636] has the lowest Calb1 cohort percentile
+    among cluster candidates (val=0.41, pct 0.086); Cortical subplate leads over BLA regions; region_fraction_100um=0.142;
+    UNCERTAIN.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:50+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_calbindin_dendrite_targeting_interneuron_summary.md
+  rationale_source_hash: 749e65e7
+- id: edge_bla_calbindin_dendrite_targeting_interneuron_to_CS20230722_CLUS_0656
+  lit_type: bla_calbindin_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_CLUS_0656
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0656 Vip Gaba_9; region_fraction_100um=0.119; strict region_fraction=0.084.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+    notes: Both classical and atlas annotated GABAergic.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Hippocampal formation [MBA:1089] count_100um=36 [painted]; Cortical subplate [MBA:703]
+      count_100um=36 [painted]; Olfactory areas [MBA:698] count_100um=25 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.119; strict region_fraction: 0.084; region_evidence: SELF'
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: 'Calb1: 0.74; cohort_pct 0.238'
+    alignment: APPROXIMATE
+    notes: val=0.74; cohort percentile 0.238
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — ABSENT (classical negative marker)
+    node_b_value: 'Pvalb: 0.00; cohort_pct 0.000'
+    alignment: CONSISTENT
+    notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 4
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 0.74
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.238
+    - gene: -Pvalb
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    region_fraction: 0.084
+    region_fraction_100um: 0.119
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.1
+  rationale: '[tier:CUT] 0656 Vip Gaba_9 [CS20230722_CLUS_0656] shares supertype 0181 with the stronger
+    sibling 0657 but is smaller (192 cells) with lower Calb1 expression (val=0.74, pct 0.238) and lower
+    region_fraction_100um (0.119); dominated by 0657 on all relevant metrics; UNCERTAIN.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:50+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_calbindin_dendrite_targeting_interneuron_summary.md
+  rationale_source_hash: 8acac750
+- id: edge_bla_calbindin_dendrite_targeting_interneuron_to_CS20230722_CLUS_0657
+  lit_type: bla_calbindin_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_CLUS_0657
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0657 Vip Gaba_9; region_fraction_100um=0.172; strict region_fraction=0.089.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+    notes: Both classical and atlas annotated GABAergic.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=82 [painted]; Hippocampal formation [MBA:1089]
+      count_100um=52 [painted]; Olfactory areas [MBA:698] count_100um=42 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.172; strict region_fraction: 0.089; region_evidence: SELF'
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: 'Calb1: 1.42; cohort_pct 0.404'
+    alignment: APPROXIMATE
+    notes: val=1.42; cohort percentile 0.404
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — ABSENT (classical negative marker)
+    node_b_value: 'Pvalb: 0.07; cohort_pct 0.563'
+    alignment: CONSISTENT
+    notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.563
+  caveats:
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'Calb1 expression (1.42, cohort pct 0.404) is in the moderate range by atlas cohort standards;
+      the classical CALB1-defining criterion based on antibody-based protein detection implies a higher
+      expression level than is observed here.
+
+      '
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'Strict region fraction of 0.089 indicates most cells in this cluster do not spatially
+      co-localise with the BLA region queried (MBA:295).
+
+      '
+  discovery_score:
+    score: 4
+    rank_in_cohort: 5
+    cohort_size: 5
+    next_best_score: 4
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 1.42
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.404
+    - gene: -Pvalb
+      val: 0.07
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.563
+    region_fraction: 0.089
+    region_fraction_100um: 0.172
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.2
+  rationale: '[tier:STRONGEST] 0657 Vip Gaba_9 [CS20230722_CLUS_0657] is the strongest cluster-level candidate
+    by Calb1 expression (mean=1.42, cohort percentile 0.404) and region_fraction_100um=0.172, but Calb1
+    expression is well below the level expected for a classically CALB1-defining interneuron, the strict
+    region fraction is 0.089, and no annotation transfer data exist; confidence is UNCERTAIN.
+
+    '
+  reconciliation_note: 'The classical type''s soma location field is unresolved (UBERON:0002887 without
+    atlas region specificity), making it impossible to compute a strict anatomical match score. Resolving
+    the location to an MBA region code and performing annotation transfer would be required to upgrade
+    this to even MODERATE confidence.
+
+    '
+  mapping_cardinality: '1:1'
+  proposed_experiments:
+  - 'Annotation transfer from a CALB1-reporter or immunostained BLA single-cell dataset to determine whether
+    CALB1+ dendrite-targeting interneurons sort into this cluster or an alternative transcriptomic group.
+
+    '
+  - 'Paired single-cell sequencing and post-hoc CALB1 antibody staining of BLA CALB1+ interneurons to
+    identify their WMBv1 cluster assignment.
+
+    '
+  rationale_generated_at: '2026-06-16T13:51:50+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_calbindin_dendrite_targeting_interneuron_summary.md
+  unresolved_questions:
+  - 'Do BLA CALB1+ dendrite-targeting interneurons transcriptomically resemble VIP-class (Vip Gaba supertype)
+    cells or STR-PAL class cells?
+
+    '
+  - 'What is the specific atlas region (MBA code) of the soma of this classical type?
+
+    '
+  rationale_source_hash: 0330e396
+- id: edge_bla_calbindin_dendrite_targeting_interneuron_to_CS20230722_SUPT_0233
+  lit_type: bla_calbindin_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_SUPT_0233
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0233 STR Prox1 Lhx6 Gaba_1; region_fraction_100um=0.060; strict region_fraction=0.039.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Striatum [MBA:477] count_100um=173 [painted]; Medial amygdalar nucleus [MBA:403] count_100um=136
+      [painted]; Cortical subplate [MBA:703] count_100um=74 [painted]
+    alignment: DISCORDANT
+    notes: 'region_fraction_100um: 0.060; strict region_fraction: 0.039; region_evidence: SELF'
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: 'Calb1: 9.20; cohort_pct 0.963; child-coverage 1.000'
+    alignment: CONSISTENT
+    notes: val=9.20; cohort percentile 0.963; child-cluster coverage 1.000
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — ABSENT (classical negative marker)
+    node_b_value: 'Pvalb: 0.08; cohort_pct 0.488'
+    alignment: CONSISTENT
+    notes: val=0.08; below MIN_DETECTABLE (0.1); cohort percentile 0.488
+  caveats:
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'DISCORDANT location comparison: Striatum and Medial amygdalar nucleus are the leading
+      enriched regions; these are anatomically distinct from the basolateral amygdala complex.
+
+      '
+  discovery_score:
+    score: 4
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 9.2
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.963
+      coverage: 1.0
+    - gene: -Pvalb
+      val: 0.08
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.488
+    region_fraction: 0.039
+    region_fraction_100um: 0.06
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.12
+  rationale: '[tier:CUT] 0233 STR Prox1 Lhx6 Gaba_1 [CS20230722_SUPT_0233] has the highest Calb1 expression
+    in the cohort (mean=9.20, pct 0.963, child-coverage=1.000) but its location is DISCORDANT — primary
+    enrichment in Striatum [MBA:477] and Medial amygdalar nucleus [MBA:403], not basolateral amygdala;
+    strict region_fraction=0.039; UNCERTAIN.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:50+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_calbindin_dendrite_targeting_interneuron_summary.md
+  rationale_source_hash: 7ce0cb23
+- id: edge_bla_calbindin_dendrite_targeting_interneuron_to_CS20230722_SUPT_0289
+  lit_type: bla_calbindin_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_SUPT_0289
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0289 STR-PAL Chst9 Gaba_5; region_fraction_100um=0.262; strict region_fraction=0.122.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Striatum [MBA:477] count_100um=612 [painted]; Cortical subplate [MBA:703] count_100um=515
+      [painted]; Basomedial amygdalar nucleus, anterior part [MBA:327] count_100um=315 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.262; strict region_fraction: 0.122; region_evidence: SELF'
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: 'Calb1: 6.13; cohort_pct 0.768; child-coverage 1.000'
+    alignment: CONSISTENT
+    notes: val=6.13; cohort percentile 0.768; child-cluster coverage 1.000
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — ABSENT (classical negative marker)
+    node_b_value: 'Pvalb: 0.03; cohort_pct 0.280'
+    alignment: CONSISTENT
+    notes: val=0.03; below MIN_DETECTABLE (0.1); cohort percentile 0.280
+  caveats:
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'STR-PAL class identity indicates primary striatal-pallidal origin; Basomedial amygdalar
+      nucleus [MBA:327] is present but not the leading enrichment region.
+
+      '
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'Neurotransmitter type not asserted in atlas metadata for this supertype; cannot directly
+      confirm GABAergic identity.
+
+      '
+  discovery_score:
+    score: 4
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 6.13
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.768
+      coverage: 1.0
+    - gene: -Pvalb
+      val: 0.03
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.28
+    region_fraction: 0.122
+    region_fraction_100um: 0.262
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.18
+  rationale: '[tier:NEXT] 0289 STR-PAL Chst9 Gaba_5 [CS20230722_SUPT_0289] has strong Calb1 expression
+    (mean=6.13, cohort pct 0.768, child-coverage=1.000) and Pvalb near-absent (0.03), but its primary
+    anatomical distribution is striatal (Striatum [MBA:477]) rather than basolateral amygdalar; NT type
+    is not asserted; confidence is UNCERTAIN.
+
+    '
+  mapping_cardinality: '1:1'
+  proposed_experiments:
+  - 'Annotation transfer from a validated BLA CALB1+ interneuron dataset to test whether BLA CALB1+ cells
+    transcriptomically cluster with STR-PAL supertypes.
+
+    '
+  - 'In situ hybridisation panel combining Calb1, Chst9, and BLA-specific markers to determine the regional
+    boundaries of the Chst9+/Calb1+ population.
+
+    '
+  rationale_generated_at: '2026-06-16T13:51:50+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_calbindin_dendrite_targeting_interneuron_summary.md
+  unresolved_questions:
+  - 'Is the high Calb1 expression in STR-PAL supertypes a shared property extending into the BLA, or a
+    striatal-specific phenomenon?
+
+    '
+  rationale_source_hash: a2027ad2
+- id: edge_bla_calbindin_dendrite_targeting_interneuron_to_CS20230722_SUPT_0292
+  lit_type: bla_calbindin_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_SUPT_0292
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0292 IA Mgp Gaba_3; region_fraction_100um=0.152; strict region_fraction=0.056.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=123 [painted]; Striatum [MBA:477] count_100um=106
+      [painted]; Endopiriform nucleus, ventral part [MBA:966] count_100um=68 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.152; strict region_fraction: 0.056; region_evidence: SELF'
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: 'Calb1: 0.75; cohort_pct 0.207; child-coverage 1.000'
+    alignment: APPROXIMATE
+    notes: val=0.75; cohort percentile 0.207; child-cluster coverage 1.000
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — ABSENT (classical negative marker)
+    node_b_value: 'Pvalb: 0.00; cohort_pct 0.000'
+    alignment: CONSISTENT
+    notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 3
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 0.75
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.207
+      coverage: 1.0
+    - gene: -Pvalb
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    region_fraction: 0.056
+    region_fraction_100um: 0.152
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.08
+  rationale: '[tier:CUT] 0292 IA Mgp Gaba_3 [CS20230722_SUPT_0292] has Calb1=0.75 (cohort pct 0.207) and
+    a distribution centred on Cortical subplate and Endopiriform nucleus; IA (intercalated amygdala) identity
+    is inconsistent with basolateral amygdala; strict region_fraction=0.056; UNCERTAIN.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:50+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_calbindin_dendrite_targeting_interneuron_summary.md
+  rationale_source_hash: b9f717ae
+- id: edge_bla_calbindin_dendrite_targeting_interneuron_to_CS20230722_SUPT_0291
+  lit_type: bla_calbindin_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_SUPT_0291
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0291 IA Mgp Gaba_2; region_fraction_100um=0.143; strict region_fraction=0.023.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=139 [painted]; Striatum [MBA:477] count_100um=95
+      [painted]; Endopiriform nucleus, ventral part [MBA:966] count_100um=86 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.143; strict region_fraction: 0.023; region_evidence: SELF'
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: 'Calb1: 0.63; cohort_pct 0.183; child-coverage 1.000'
+    alignment: APPROXIMATE
+    notes: val=0.63; cohort percentile 0.183; child-cluster coverage 1.000
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — ABSENT (classical negative marker)
+    node_b_value: 'Pvalb: 0.08; cohort_pct 0.488'
+    alignment: CONSISTENT
+    notes: val=0.08; below MIN_DETECTABLE (0.1); cohort percentile 0.488
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 4
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 0.63
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.183
+      coverage: 1.0
+    - gene: -Pvalb
+      val: 0.08
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.488
+    region_fraction: 0.023
+    region_fraction_100um: 0.143
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.07
+  rationale: '[tier:CUT] 0291 IA Mgp Gaba_2 [CS20230722_SUPT_0291] has the lowest strict region fraction
+    of all candidates (0.023), Calb1=0.63 (cohort pct 0.183), and a distribution centred on Cortical subplate
+    and Endopiriform nucleus; dominated by 0292 on all metrics and has weaker amygdala relevance; UNCERTAIN.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:51:50+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_calbindin_dendrite_targeting_interneuron_summary.md
+  rationale_source_hash: 4fd1e4ba
+- id: edge_bla_calbindin_dendrite_targeting_interneuron_to_CS20230722_SUPT_0288
+  lit_type: bla_calbindin_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_SUPT_0288
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0288 STR-PAL Chst9 Gaba_4; region_fraction_100um=0.117; strict region_fraction=0.065.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Striatum [MBA:477] count_100um=4354 [painted]; Cortical subplate [MBA:703] count_100um=2393
+      [painted]; Central amygdalar nucleus [MBA:536] count_100um=2052 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.117; strict region_fraction: 0.065; region_evidence: SELF'
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: 'Calb1: 3.39; cohort_pct 0.549; child-coverage 1.000; atlas category: DEFINING'
+    alignment: CONSISTENT
+    notes: val=3.39; cohort percentile 0.549; child-cluster coverage 1.000
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — ABSENT (classical negative marker)
+    node_b_value: 'Pvalb: 0.01; cohort_pct 0.110'
+    alignment: CONSISTENT
+    notes: val=0.01; below MIN_DETECTABLE (0.1); cohort percentile 0.110
+  caveats:
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'Overwhelmingly striatal primary distribution; Central amygdalar nucleus [MBA:536] (not
+      basolateral amygdala) is the third enriched region.
+
+      '
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'NT type not asserted in atlas metadata; GABAergic identity cannot be confirmed from
+      available evidence.
+
+      '
+  discovery_score:
+    score: 4
+    rank_in_cohort: 5
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 3.39
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.549
+      coverage: 1.0
+    - gene: -Pvalb
+      val: 0.01
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.11
+    region_fraction: 0.065
+    region_fraction_100um: 0.117
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.15
+  rationale: '[tier:WEAKEST] 0288 STR-PAL Chst9 Gaba_4 [CS20230722_SUPT_0288] carries an atlas DEFINING
+    annotation for Calb1 (mean=3.39, child-coverage=1.000) and near-absent Pvalb (0.01), but its distribution
+    is overwhelmingly striatal (Striatum [MBA:477] leads with 4,354 cells/100µm), the NT type is not asserted,
+    and region_fraction_100um=0.117 at this BLA query is low; confidence is UNCERTAIN.
+
+    '
+  mapping_cardinality: '1:1'
+  proposed_experiments:
+  - 'Multiplexed FISH with Calb1, Chst9, and BLA principal cell markers to determine the extent of Chst9+/Calb1+
+    cells in the BLA versus striatum.
+
+    '
+  rationale_generated_at: '2026-06-16T13:51:50+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_calbindin_dendrite_targeting_interneuron_summary.md
+  unresolved_questions:
+  - 'Does the atlas DEFINING Calb1 annotation for this STR-PAL supertype reflect convergent evolution
+    of Calb1 expression in striatal and amygdaloid interneurons or a shared transcriptomic ancestry?
+
+    '
+  rationale_source_hash: e1a237a1

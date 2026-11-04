@@ -1,0 +1,28 @@
+{
+  "node_id": "bla_npy_neurogliaform_cell",
+  "summaries_read": 21,
+  "skipped_excluded": 4,
+  "skipped_duplicate_ref": 7,
+  "skipped_low_relevance": 1,
+  "entries_written": 0,
+  "fields_populated": [],
+  "fields_with_no_evidence": [
+    "nt_type.sources",
+    "anatomical_location[].sources",
+    "defining_markers[Npy].sources",
+    "negative_markers.sources",
+    "morphology.sources",
+    "electrophysiology.sources"
+  ],
+  "synonyms_found": [],
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "excluded_corpus_ids": ["221366115", "252477669", "17223544"],
+  "existing_refs": [
+    "PMID:31193505",
+    "PMID:31636080",
+    "PMID:32144495",
+    "PMID:33837051",
+    "PMID:40686779"
+  ],
+  "notes": "Run 20260615 (existing refs = PMID:31193505, 31636080, 32144495, 33837051, 40686779; excluded = 221366115, 252477669, 17223544). No new PropertySource entries warranted. Breakdown of 21 summary entries: (a) skipped_excluded=4: 221366115 x1, 252477669 x1, 17223544 x2. (b) skipped_duplicate_ref=7: 232283078 x5 -> PMID:33837051 (already existing ref; this is the sole source of all node-specific evidence — NPY expression, neurogliaform morphology, weak nNOS, PV-/CB-/SST- negativity, 14-15% abundance), 104297085 x1 -> PMID:31193505 (existing ref), 280092907 x1 -> PMID:40686779 (existing ref). (c) skipped_low_relevance=1: 17860491 x1 (LOW, IP3K-A; no NPY/neurogliaform mention). (d) remaining 9 HIGH-relevance entries evaluated but no node-specific evidence: 264517392 x4 (mouse amygdala scRNA-seq taxonomy; NPY neurogliaform cell not specifically named), 250411527 x2 (paralaminar immature neurons), 281382725 x1 (primate atlas; PV/SST focus), 3103554 x1 (calbindin extinction), 4940771 x1 (Thy1 fear-inhibiting neurons). NOTE: A prior extraction run (recorded in this file before this run) wrote 2 PropertySource entries already present in the KB node — morphology.sources from CorpusId:280092907 (PMID:40686779, quote_key 280092907_04cf3e53) and defining_markers[Npy].sources from CorpusId:4940771 (PMID:31193505, quote_key 4940771_a33e9b67). Under this run's parameters both PMID:40686779 and PMID:31193505 are existing refs, so those entries are duplicate-ref and were not re-added; they remain in the KB from the prior run. No KB edits made this run."
+}

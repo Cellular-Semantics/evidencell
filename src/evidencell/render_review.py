@@ -26,6 +26,7 @@ import yaml
 
 from evidencell.paths import refs_dir_for_graph
 from evidencell.references import load_papers, load_quotes, store_exists
+from evidencell.split_graph import is_stub
 
 # Property blocks rendered as prose + sources, in reading order.
 _PROSE_PROPS = (("morphology", "Morphology"), ("electrophysiology", "Electrophysiology"))
@@ -212,13 +213,17 @@ def render_file(graph_file: Path) -> str:
         print(f"WARNING: no reference store at {refs_dir}; quotes cannot be "
               "dereferenced and every cited key will render as NOT FOUND.",
               file=sys.stderr)
-    parts = [render_node(n, quotes, papers) for n in (doc.get("nodes") or [])
-             if isinstance(n, dict)]
+    nodes = [n for n in (doc.get("nodes") or []) if isinstance(n, dict)]
+    # Stubs exist only so edge endpoints resolve; with edges not rendered they
+    # are noise, and in a mapped file they outnumber the canonical node.
+    stubs = [n for n in nodes if is_stub(n)]
+    parts = [render_node(n, quotes, papers) for n in nodes if not is_stub(n)]
     edges = doc.get("edges") or []
     body = "\n\n---\n\n".join(parts)
-    if edges:
-        body += (f"\n\n---\n\n*{len(edges)} mapping edge(s) in this file are not "
-                 "rendered here — use `just gen-report` for mapping review.*\n")
+    if edges or stubs:
+        body += (f"\n\n---\n\n*{len(edges)} mapping edge(s) and {len(stubs)} "
+                 "reference stub(s) in this file are not rendered here — use "
+                 "`just gen-report` for mapping review.*\n")
     return body
 
 

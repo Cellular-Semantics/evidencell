@@ -1,0 +1,229 @@
+name: Medial amygdala glutamatergic projection neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Medial amygdala glutamatergic projection
+  neuron. Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest graph
+  and split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further ASTA
+  runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002892
+  label: medial amygdaloid nucleus
+  name_in_source: medial amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: mea_glutamatergic_projection_neuron
+  name: Medial amygdala glutamatergic projection neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: Glutamatergic
+    sources:
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 271240390_159f2413
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: Glutamatergic
+  anatomical_location:
+  - id: UBERON:0002892
+    sources:
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 271240390_159f2413
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_678b0ee4
+    - ref: PMID:20507551
+      method: asta_snippet — Carney et al. 2010 MeA posterior subdivisions (MePD, MePV) delineated by
+        Lhx6/Lhx9
+      scope: mouse medial amygdala development
+      quote_key: 627853_76bae8ef
+    - ref: PMID:37884748
+      method: europepmc_fulltext — Hochgerner et al. 2023 scRNA-seq identifies VGLUT2 and GABA classes
+        intermixed in MEA
+      scope: mouse whole amygdala scRNA-seq, spatial correlation with Allen Brain Atlas
+      quote_key: 264517392_684518d7
+    label: medial amygdaloid nucleus
+    name_in_source: medial amygdala
+    compartment: SOMA
+  morphology:
+    description: Pyramidal-like glutamatergic projection neuron of rodent medial amygdala; derived from
+      third-ventricle neuroepithelium and also populates the BST and hypothalamus.
+    sources:
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 271240390_159f2413
+    - ref: PMID:22960119
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15738241_fe94a85e
+    - ref: PMID:33515290
+      method: asta_snippet — Biechl et al. 2021 review of MeA glutamatergic neurons migrating tangentially
+        from VP/SPV/EmT
+      scope: comparative analysis of mouse medial amygdala development
+      quote_key: 231758452_d035e2d6
+  electrophysiology:
+    description: Heterogeneous slice ephys reported in MeA (pyramidal-like, late-firing, first-firing
+      classes — Niimi et al., 2012); explicit ephys for the glutamatergic subset not isolated.
+    sources:
+    - ref: PMID:22960119
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15738241_4dcb9d77
+    - ref: PMID:22960119
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15738241_bb7f3c79
+    - ref: PMID:22960119
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15738241_fe94a85e
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:22960119
+  - PMID:38419794
+  - PMID:39012795
+  is_terminal: false
+  notes: Minority class — MeA is predominantly GABAergic but contains this distinct glutamatergic projection
+    population.
+- id: CS20230722_CLUS_0195
+  name: 0195 MEA Slc17a7 Glut_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0195
+edges:
+- id: edge_mea_glutamatergic_projection_neuron_to_cs20230722_clus_0195
+  lit_type: mea_glutamatergic_projection_neuron
+  taxonomy_type: CS20230722_CLUS_0195
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: 1:n
+  property_comparisons:
+  - property: nt_type
+    node_a_value: Glutamatergic
+    node_b_value: Glut (Slc17a7/VGLUT1)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002892 medial amygdala
+    node_b_value: MBA:403 medial amygdalar nucleus present; discovery region_fraction 0.401. Cluster label
+      "MEA Slc17a7 Glut_1" directly confirms medial amygdala identity.
+    alignment: CONSISTENT
+  - property: morphology_projection
+    node_a_value: Pyramidal-like glutamatergic projection neuron; MeA principal cell projecting to BST
+      and hypothalamus
+    node_b_value: NOT_ASSESSED — morphological information not available from WMBv1. "MEA Slc17a7 Glut_1"
+      cluster label confirms MeA glutamatergic identity consistent with projection neuron class.
+    alignment: NOT_ASSESSED
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:39012795
+    explanation: Confirms MeA contains glutamatergic projection neurons distributing to BST and hypothalamus;
+      establishes the glutamatergic identity of the MeA principal cell class.
+    snippet: .Within the amygdala nuclei, PNs are exclusively glutamatergic in BLA, CoA, BMA, exclusively
+      GABAergic in CeA, and predominantly GABAergic in MeA and BST.In rodents, there is also a population
+      of glutamatergic pyramidal neurons (GLU PNs, derived from third ventricle neuroepithelium) that
+      populates the BST, MeA, and hypothalamus (García-Moreno et al., 2010)(Huilgol et al., 2016).
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: CLUS_0195 "MEA Slc17a7 Glut_1" (WMBv1) is explicitly labeled medial amygdala; MeA region_fraction
+      0.401 (second-highest among rank0 candidates; CLUS_0197 highest at 0.451 but extreme sex bias male_female_ratio
+      10.11). Three sibling MEA Slc17a7 clusters (0194/0195/0196) under same parent SUPT_0055 all selected
+      over region ordering. CLUS_0195 chosen as most balanced sex ratio (1.27) representative of the general
+      MeA glutamatergic projection population.
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: PARTIAL
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: VGLUT2-42-Otp_Sema3c
+    n_cells_total: 48
+    best_f1_score: 0.804
+    best_mapping_rank: 0
+    metrics_by_level: []
+    f1_source_relpath: at_results.yaml
+    explanation: AT transfer of VGLUT2-42-Otp_Sema3c.
+  caveats:
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: Four MEA Slc17a7 Glut_1 clusters (CLUS_0194/0195/0196/0197) all under SUPT_0055 score
+      equally (1/1); all have dominant MeA fractions (0.21-0.45). Classical type spans this cluster family;
+      1:n cardinality at rank0.
+  - caveat_type: OTHER
+    description: No molecular markers defined for mea_glutamatergic_projection_neuron; score 1 reflects
+      region+NT filter only. CLUS_0195 is selected by highest balanced-sex-ratio MeA fraction among siblings;
+      selection is not discriminating.
+  - caveat_type: OTHER
+    description: Sibling clusters CLUS_0196 (male_female_ratio 4.88) and CLUS_0197 (ratio 10.11) are strongly
+      male-biased, consistent with the MeA role in pheromone sensing and sex behaviour. The sexually dimorphic
+      MeA subpopulation may correspond preferentially to CLUS_0196/0197.
+  unresolved_questions:
+  - Do the four MEA Slc17a7 Glut_1 siblings (0194-0197) correspond to anatomical subdivisions of MeA (MePD
+    vs MePV vs anterior vs posterior)?
+  - Which cluster(s) specifically represent the BST/hypothalamus projection population vs local MeA interneurons?
+  - Do the four MEA Slc17a7 Glut_1 siblings (CLUS_0194–0197) correspond to anatomical subdivisions of
+    MeA (MePD vs MePV vs anterior vs posterior)?
+  - Which cluster(s) specifically represent the BST/hypothalamus projection population vs local MeA glutamatergic
+    interneurons or non-projection cells?
+  - 'Do the four MEA Slc17a7 Glut_1 siblings (CS20230722_CLUS_0195 and siblings CLUS_0194/0196/0197) correspond
+    to anatomical subdivisions of the MeA (MePD vs MePV vs anterior vs posterior)?
+
+    '
+  - 'Which sibling cluster(s) specifically represent the BST/hypothalamus projection population vs local
+    MeA glutamatergic interneurons or non-projection cells?
+
+    '
+  proposed_experiments:
+  - Retrograde tracing from BST + hypothalamus combined with scRNA-seq of retrogradely-labelled MeA neurons
+    to identify which MEA Slc17a7 cluster(s) are projection neurons.
+  - smFISH with Lhx9 + Slc17a7 probes to map MeA glutamatergic clusters to MeP subdivisions.
+  discovery_score:
+    score: 1
+    rank_in_cohort: 3
+    cohort_size: 5
+    next_best_score: 1
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:403
+      - nt_type=Glutamatergic
+    expression_detail: []
+    region_fraction: 0.401
+    region_evidence: SELF
+  confidence: MODERATE
+  confidence_score: 0.55
+  rationale: 'NT type CONSISTENT (Glutamatergic vs Slc17a7/VGLUT1 Glut) and soma location CONSISTENT (UBERON:0002892
+    vs MBA:403; region_fraction 0.401 in boundary band, SELF evidence). Literature [PMID:39012795] establishes
+    MeA GLU PN identity and BST/hypothalamic projection targets. AT run at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    maps Hochgerner VGLUT2-42-Otp_Sema3c to CS20230722_CLUS_0195 (best_mapping_rank 0, n=48 cells, best_f1_score
+    0.80). No molecular markers defined on classical node; 0 of 0 markers CONSISTENT. Confidence capped
+    at MODERATE: 1:n cardinality across four MEA Slc17a7 Glut_1 siblings (CS20230722_CLUS_0195 selected
+    by sex-ratio balance heuristic only), and AT source cluster is transcriptomically defined rather than
+    morpho-electrophysiologically confirmed as a projection neuron.
+
+    '
+  reconciliation_note: 'skos:broadMatch reflects 1:n cardinality — four MEA Slc17a7 Glut_1 siblings (CS20230722_CLUS_0195
+    and siblings CLUS_0194/0196/0197) are all equally scored at discovery; CS20230722_CLUS_0195 selected
+    by balanced sex-ratio criterion only. Relationship type is consistent with region_fraction 0.401 (boundary
+    band) and absence of discriminating markers. Resolution to 1:1 requires retrograde tracing data or
+    marker-based smFISH to assign projection identity to specific siblings.
+
+    '
+  rationale_generated_at: '2026-06-11T10:19:16+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/mea_glutamatergic_projection_neuron_summary.md
+  rationale_source_hash: 34b20662

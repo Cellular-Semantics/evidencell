@@ -1,0 +1,337 @@
+name: Basolateral amygdala cholecystokinin basket cell — classical type
+description: 'Single classical cell type (one-file-one-class): Basolateral amygdala cholecystokinin basket
+  cell. Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest graph
+  and split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further ASTA
+  runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002887
+  label: basal amygdaloid nucleus
+  name_in_source: basolateral amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: bla_cck_basket_cell
+  name: Basolateral amygdala cholecystokinin basket cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 11544073_ea8d2bb3
+    - ref: PMID:33837051
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 232283078_d4238834
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  anatomical_location:
+  - id: UBERON:0002887
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 11544073_ea8d2bb3
+    - ref: PMID:33837051
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 232283078_d4238834
+    label: basal amygdaloid nucleus
+    name_in_source: basolateral amygdala
+    compartment: SOMA
+  defining_markers:
+  - symbol: Cck
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 11544073_ea8d2bb3
+      marker_type: PROTEIN
+    - ref: PMID:17234587
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 161407_eb8bfaf0
+      marker_type: PROTEIN
+    - ref: PMID:33837051
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 232283078_d4238834
+      marker_type: PROTEIN
+    - ref: PMID:39463931
+      method: asta_snippet — primate snRNA-seq identifies a CCK+/CNR1+ cluster homologous to mouse CCK+
+        basket cells targeting principal cell soma/proximal dendrites
+      scope: human/macaque/baboon amygdala snRNA-seq
+      quote_key: 273531817_26309a28
+      marker_type: TRANSCRIPT
+  - symbol: Calb1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 11544073_ea8d2bb3
+      marker_type: PROTEIN
+    - ref: PMID:17234587
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 161407_eb8bfaf0
+      marker_type: PROTEIN
+    - ref: PMID:33837051
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 232283078_d4238834
+      marker_type: PROTEIN
+  - symbol: Cnr1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27013983
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 16327247_9b5e6962
+      marker_type: PROTEIN
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_91ea43a5
+      marker_type: PROTEIN
+    - ref: PMID:17234587
+      method: asta_snippet — Woodruff & Sah 2007 review; CCK+/CB1R subpopulation described
+      scope: rat/mouse basolateral amygdala
+      quote_key: 161407_e34026c5
+      marker_type: PROTEIN
+  neuropeptides:
+  - symbol: Cck
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: neuropeptide synthesis from ASTA report
+      quote_key: 11544073_ea8d2bb3
+      marker_type: PROTEIN
+    - ref: PMID:33837051
+      method: asta_report
+      scope: neuropeptide synthesis from ASTA report
+      quote_key: 232283078_d4238834
+      marker_type: PROTEIN
+  negative_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33837051
+      method: asta_snippet — Vereczki 2021 census establishes PVALB+ and non-PVALB cells as distinct non-overlapping
+        GABAergic populations in mouse BLA
+      scope: mouse lateral and basal amygdala, stereological quantification
+      quote_key: 232283078_d4238834
+      marker_type: TRANSCRIPT
+  morphology:
+    description: CCK-expressing basket cells; ~7-9% of GABAergic cells in LA and BA. Older descriptions
+      also note large multipolar CCK+ neurons, often CB+.
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 11544073_ea8d2bb3
+    - ref: PMID:33837051
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 232283078_d4238834
+    - ref: PMID:31636080
+      method: asta_snippet — intersectional CCK-Cre;Dlx5/6-Flpe identifies CCK/CB1R basket cells as one
+        of four CCK-targeted IN types in BA
+      scope: mouse basal amygdala, intersectional genetic targeting
+      quote_key: 204835327_f07c04cf
+    - ref: PMID:28542195
+      method: asta_snippet — two parallel basket-cell networks (PV+ and CCK+) interconnected within type
+        but not across; both contact axo-axonic cells
+      scope: mouse basal amygdala, paired patch-clamp
+      quote_key: 13486665_27b7ca7e
+  electrophysiology:
+    description: Inhibitory interneurons; ephys not specified in the report.
+    sources:
+    - ref: PMID:32144495
+      method: asta_report
+      scope: electrophysiology synthesis from ASTA report
+      quote_key: 212579559_51e7dd2b
+  cl_mapping:
+    cl_term:
+      id: CL:0000118
+      label: basket cell
+      name_in_source: basket cell
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
+  proposed_cl_term: null
+  definition_references:
+  - PMID:17234587
+  - PMID:22837739
+  - PMID:32144495
+  - PMID:33837051
+  is_terminal: false
+  notes: Large multipolar CCK+/CB+ neurons (McDonald et al., 2012) and CCK basket cells (Vereczki et al.,
+    2021) may represent overlapping or distinct populations.
+- id: CS20230722_CLUS_0664
+  name: 0664 Sncg Gaba_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0664
+edges:
+- id: edge_bla_cck_basket_cell_to_cs20230722_clus_0664
+  lit_type: bla_cck_basket_cell
+  taxonomy_type: CS20230722_CLUS_0664
+  relationship: skos:closeMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: 1:n
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002887 basolateral amygdala
+    node_b_value: MBA:295 BLA present; region_fraction 0.031.
+    alignment: CONSISTENT
+  - property: neuropeptide_Cck
+    node_a_value: Cck — neuropeptide
+    node_b_value: Cck precomputed mean 11.15 (98.3rd pct; tier 2). Sncg supertype = canonical CCK co-expression.
+    alignment: CONSISTENT
+  - property: negative_marker_Pvalb
+    node_a_value: Pvalb — negative marker
+    node_b_value: NOT_ASSESSED — Sncg lineage is circumstantially consistent with Pvalb-negativity.
+    alignment: NOT_ASSESSED
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:33837051
+    explanation: 'Vereczki et al. 2021: 71.1% of CCK+ interneurons in mouse LA/BA confirmed as CCK+/CB1+
+      basket cells.'
+    snippet: the vast majority of GFP-expressing interneurons was CCK+/CB1+ basket cell (71.1 %, n = 38
+      recorded green neurons) as these interneurons had axon terminals immunoreactive for CB1
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'CLUS_0664 "Sncg Gaba_1" (WMBv1): Cnr1 mean 12.36 (98.5th pct), Cck mean 11.15 (98.3rd
+      pct) — both tier-2 reliable.'
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: PARTIAL
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: GABA-54-Scng-Kcnc2
+    n_cells_total: 70
+    best_f1_score: 0.589
+    best_mapping_rank: 2
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 06 CTX-CGE GABA
+      best_target_accession: CS20230722_CLAS_06
+      coverage: 1.0
+      purity: 0.12844036697247707
+      f1_score: 0.22764227642276422
+      n_cells_mapped: 70
+      median_bootstrap: 1.0
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 047 Sncg Gaba
+      best_target_accession: CS20230722_SUBC_047
+      coverage: 0.9180327868852459
+      purity: 0.43410852713178294
+      f1_score: 0.5894736842105263
+      n_cells_mapped: 56
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0185 Sncg Gaba_1
+      best_target_accession: CS20230722_SUPT_0185
+      coverage: 0.22641509433962265
+      purity: 0.2926829268292683
+      f1_score: 0.2553191489361702
+      n_cells_mapped: 12
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0664 Sncg Gaba_1
+      best_target_accession: CS20230722_CLUS_0664
+      coverage: 0.03333333333333333
+      purity: 0.5
+      f1_score: 0.0625
+      n_cells_mapped: 1
+      median_bootstrap: 1.0
+    f1_source_relpath: at_results.yaml
+    explanation: AT transfer of GABA-54-Scng-Kcnc2.
+  caveats:
+  - caveat_type: OTHER
+    description: No AT evidence.
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: Five Sncg Gaba_1 clusters all score equally on Cnr1+Cck.
+  unresolved_questions:
+  - Which Sncg Gaba_1 sibling cluster is the most BLA-enriched?
+  - Which Sncg Gaba_1 sibling cluster is the most BLA-enriched once AT evidence is available?
+  - Do bla_cck_basket_cell and bla_cck_cb1_basket_cell represent overlapping populations that should be
+    merged?
+  - Is CS20230722_CLUS_0664 the correct cluster target, or does the CCK basket cell correspond to a broader
+    subclass/supertype in CCN20230722?
+  - Can Pvalb absence be confirmed in CS20230722_CLUS_0664 from precomputed stats?
+  - Which Sncg Gaba_1 sibling cluster has the highest BLA (MBA:295) region_fraction?
+  - Confirm Calb1 expression in CS20230722_CLUS_0664 from precomputed stats — no marker_Calb1 property
+    comparison present.
+  - Confirm Pvalb absence in CS20230722_CLUS_0664 from precomputed stats — negative_marker_Pvalb currently
+    NOT_ASSESSED.
+  proposed_experiments:
+  - MapMyCells AT on BLA CCK basket cell transcriptomes to resolve 1:N.
+  discovery_score:
+    score: 5
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Cck
+      val: 11.15
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.983
+    region_fraction: 0.031
+    region_evidence: SELF
+  confidence: LOW
+  confidence_score: 0.25
+  rationale: 'Sncg Gaba subclass confirmed by scRNA-seq annotation transfer (F1=0.59 at SUBCLASS level
+    in at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1; CS20230722_SUBC_047); neuropeptide_Cck CONSISTENT
+    (precomputed mean 11.15, 98.3rd pct, tier-2 reliable) and nt_type CONSISTENT (GABA). 1 of 2 marker-property
+    comparisons CONSISTENT (neuropeptide_Cck CONSISTENT; negative_marker_Pvalb NOT_ASSESSED). CLUSTER-level
+    F1=0.06 for CS20230722_CLUS_0664 reflects dispersal across 5 Sncg Gaba_1 sibling clusters; cluster
+    nomination is speculative pending BLA-specific targeted annotation-transfer from CCK basket cell-enriched
+    source data.
+
+    '
+  reconciliation_note: 'CLASS-level AT overlap with bla_vip_calretinin_interneuron (CS20230722_CLAS_06
+    F1=0.23 for both source groups); panels assessed: anat and nt only (Case B — insufficient evidence
+    for indistinguishability call; CCK basket cells and VIP/CR interneurons are molecularly distinct by
+    marker profile: Cck/Cnr1 vs Vip/Calb2).
+
+    '
+  rationale_generated_at: '2026-06-11T10:19:16+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_cck_basket_cell_summary.md
+  rationale_source_hash: cce47640

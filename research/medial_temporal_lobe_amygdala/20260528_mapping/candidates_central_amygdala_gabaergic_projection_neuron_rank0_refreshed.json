@@ -1,0 +1,5 @@
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml central_amygdala_gabaergic_projection_neuron CCN20230722 0 5
+ERROR: taxonomy DB is stale — rebuild before find-candidates:
+  YAML newer than DB (newest YAML 2026-06-03T13:48:28+00:00, DB 2026-06-03T13:30:55+00:00) — re-ingest happened after last build
+  Run: just build-taxonomy-db CCN20230722
+error: Recipe `find-candidates` failed on line 372 with exit code 1

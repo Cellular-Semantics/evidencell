@@ -1,0 +1,336 @@
+name: Basolateral amygdala parvalbumin basket cell — classical type
+description: 'Single classical cell type (one-file-one-class): Basolateral amygdala parvalbumin basket
+  cell. Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest graph
+  and split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further ASTA
+  runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002887
+  label: basal amygdaloid nucleus
+  name_in_source: basolateral amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: bla_pv_basket_cell
+  name: Basolateral amygdala parvalbumin basket cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 11544073_ea8d2bb3
+    - ref: PMID:33837051
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 232283078_d4238834
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  anatomical_location:
+  - id: UBERON:0002887
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 11544073_ea8d2bb3
+    - ref: PMID:33837051
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 232283078_d4238834
+    label: basal amygdaloid nucleus
+    name_in_source: basolateral amygdala
+    compartment: SOMA
+  defining_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 11544073_ea8d2bb3
+      marker_type: PROTEIN
+    - ref: PMID:17234587
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 161407_eb8bfaf0
+      marker_type: PROTEIN
+    - ref: PMID:32144495
+      method: asta_report
+      scope: marker synthesis from ASTA report
+      quote_key: 212579559_d2c2762c
+      marker_type: PROTEIN
+    - ref: PMID:37884748
+      method: asta_snippet — scRNA-seq identifies Pvalb-expressing MGE-derived interneuron types in mouse
+        amygdala
+      scope: mouse amygdala scRNA-seq
+      quote_key: null
+      marker_type: TRANSCRIPT
+    - ref: PMID:39463931
+      method: asta_snippet — primate snRNA-seq identifies PVALB+ interneuron class
+      scope: human/macaque/baboon amygdala snRNA-seq
+      quote_key: 273531817_5ef8d3f9
+      marker_type: TRANSCRIPT
+  morphology:
+    description: Perisomatic-targeting inhibitory interneuron innervating principal-cell somata and proximal
+      dendrites; estimated at ~17-20% of GABAergic cells in lateral and basal nuclei. Among the clearest
+      parallels between BLA and neocortical inhibitory organization. Mutually interconnected via synapses
+      and gap junctions within the PV basket-cell network; avoids innervating CCK basket cells but contacts
+      axo-axonic cells.
+    sources:
+    - ref: PMID:33837051
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 232283078_d4238834
+    - ref: PMID:28542195
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 13486665_3f24b68d
+    - ref: PMID:27013983
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 16327247_9b5e6962
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_91ea43a5
+    - ref: PMID:22726836
+      method: asta_snippet — in vivo classification of BLA interneurons identifies PV-expressing basket
+        cells as one of four GABAergic types
+      scope: mouse BLA, in vivo juxtacellular labeling
+      quote_key: 10647550_efe8c373
+    - ref: PMID:32802405
+      method: asta_snippet — PV and SOM identified as the two main interneuron families in BLA
+      scope: mouse BLA, optogenetics/electrophysiology
+      quote_key: 220930580_51e23fbe
+    - ref: PMID:34177472
+      method: asta_snippet — review noting BLA GABAergic cells (~20%) provide essential control of network
+        operation
+      scope: review of BLA GABAergic interneuron diversity
+      quote_key: 235382885_602443bc
+  negative_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33837051
+      method: asta_snippet — Vereczki 2021 census establishes SST+ and non-SST cells as distinct non-overlapping
+        GABAergic populations in mouse BLA
+      scope: mouse lateral and basal amygdala, stereological quantification
+      quote_key: 232283078_d4238834
+      marker_type: TRANSCRIPT
+  electrophysiology:
+    description: Fast-spiking firing pattern characteristic of cortical PV basket cells; provides powerful
+      perisomatic inhibition controlling principal-neuron spiking.
+    sources:
+    - ref: PMID:32144495
+      method: asta_report
+      scope: electrophysiology synthesis from ASTA report
+      quote_key: 212579559_51e7dd2b
+    - ref: PMID:1403101
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 6078957_d8ca2bac
+    - ref: PMID:33994955
+      method: asta_snippet — PV+ basket cells provide strong somatic inhibition and tightly control principal-neuron
+        spike discharge
+      scope: rodent BLA fear-learning circuit review
+      quote_key: 233450033_2f3f1d53
+  cl_mapping:
+    cl_term:
+      id: CL:0000118
+      label: basket cell
+      name_in_source: basket cell
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
+  proposed_cl_term: null
+  definition_references:
+  - PMID:17234587
+  - PMID:22837739
+  - PMID:27013983
+  - PMID:28542195
+  - PMID:31636080
+  - PMID:32144495
+  - PMID:33837051
+  is_terminal: false
+  notes: PV+/CB+ population includes both basket cells and axo-axonic (chandelier) cells. Forms one of
+    two parallel basket-cell networks alongside CCK basket cells.
+- id: CS20230722_CLUS_0738
+  name: 0738 Pvalb Gaba_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0738
+edges:
+- id: edge_bla_pv_basket_cell_to_cs20230722_clus_0738
+  lit_type: bla_pv_basket_cell
+  taxonomy_type: CS20230722_CLUS_0738
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: 1:n
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002887 basolateral amygdala
+    node_b_value: MBA:295 BLA present; region_fraction 0.178 — highest among Pvalb clusters in BLA GABAergic
+      cohort.
+    alignment: CONSISTENT
+  - property: marker_Pvalb
+    node_a_value: Pvalb — defining marker
+    node_b_value: Pvalb precomputed mean 10.86 (99.8th pct; tier 2). Cluster "0738 Pvalb Gaba_2" — non-chandelier
+      Pvalb type.
+    alignment: CONSISTENT
+  - property: atlas_label_basket
+    node_a_value: perisomatic basket cell — soma-targeting
+    node_b_value: Cluster "0738 Pvalb Gaba_2" — no explicit chandelier label; selected over CLUS_0733
+      (chandelier) for basket cell identity.
+    alignment: APPROXIMATE
+  - property: negative_marker_Sst
+    node_a_value: Sst — negative marker
+    node_b_value: NOT_ASSESSED.
+    alignment: NOT_ASSESSED
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:33837051
+    explanation: 'Vereczki et al. 2021: PV+ basket cells constitute 17-20% of BLA GABAergic cells — dominant
+      perisomatic inhibitory class.'
+    snippet: 'we estimated that the following cell types together compose the vast majority of GABAergic
+      cells in the LA and BA: axo-axonic cells (5.5%-6%), basket cells expressing parvalbumin (17%-20%)
+      or cholecystokinin (7%-9%), dendrite-targeting inhibitory cells expressing somatostatin (10%-16%),
+      NPY-containing neurogliaform cells (14%-15%), VIP and/or calretinin-expressing interneuron-selective
+      interneurons (29%-38%), and GABAergic projection neurons expressing somatostatin and neuronal nitric
+      oxide synthase (5.5%-8%). Our results show that these amygdalar nuclei contain all major GABAergic
+      neuron types as found in other cortical regions.'
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'CLUS_0738 "Pvalb Gaba_2" (WMBv1): Pvalb 99.8th pct in BLA GABAergic cohort; region_fraction
+      0.178 highest among Pvalb clusters in BLA. Selected over CLUS_0733 (chandelier) for basket cell
+      identity.'
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: GABA-41-Moxd1-Pvalb
+    n_cells_total: 58
+    best_f1_score: 0.735
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 07 CTX-MGE GABA
+      best_target_accession: CS20230722_CLAS_07
+      coverage: 1.0
+      purity: 0.2078853046594982
+      f1_score: 0.34421364985163205
+      n_cells_mapped: 58
+      median_bootstrap: 0.99
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 052 Pvalb Gaba
+      best_target_accession: CS20230722_SUBC_052
+      coverage: 0.7142857142857143
+      purity: 0.5384615384615384
+      f1_score: 0.6140350877192982
+      n_cells_mapped: 35
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0206 Pvalb Gaba_2
+      best_target_accession: CS20230722_SUPT_0206
+      coverage: 0.5254237288135594
+      purity: 0.9393939393939394
+      f1_score: 0.673913043478261
+      n_cells_mapped: 31
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0738 Pvalb Gaba_2
+      best_target_accession: CS20230722_CLUS_0738
+      coverage: 0.5952380952380952
+      purity: 0.9615384615384616
+      f1_score: 0.7352941176470588
+      n_cells_mapped: 25
+      median_bootstrap: 1.0
+    f1_source_relpath: at_results.yaml
+    explanation: AT transfer of GABA-41-Moxd1-Pvalb.
+  caveats:
+  - caveat_type: OTHER
+    description: No AT evidence. Basket vs axo-axonic identity not confirmable from transcriptomics alone.
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: Multiple Pvalb Gaba_2 clusters may contain basket cells. 1:n cardinality expected.
+  unresolved_questions:
+  - Does CLUS_0738 contain predominantly basket cells vs axo-axonic cells?
+  - Does CS20230722_CLUS_0738 contain predominantly basket cells vs axo-axonic cells in BLA? AnkG co-staining
+    needed to confirm soma-targeting (CLUS_0738) vs AIS-targeting (CLUS_0733) identity in tissue.
+  - Sst precomputed mean for CS20230722_CLUS_0738 is NOT_ASSESSED — retrieve from taxonomy reference store
+    to evaluate negative-marker alignment.
+  - Do additional Pvalb clusters in CCN20230722 contribute to the basket-cell population in BLA? AT evidence
+    needed to resolve the 1:n cardinality call.
+  - Can Sst absence be confirmed in CS20230722_CLUS_0738 from precomputed stats, distinguishing PV basket
+    from PV+ chandelier cells in BLA?
+  - Is the BLA component (~4%?) of CS20230722_CLUS_0738 specifically perisomatic-targeting basket cells
+    or does it include chandelier cells?
+  - Sst precomputed mean for CS20230722_CLUS_0738 NOT_ASSESSED — retrieve from taxonomy reference store.
+  - Does CLUS_0738 contain predominantly basket vs. axo-axonic cells in BLA? AnkG co-staining needed.
+  proposed_experiments:
+  - AnkG co-staining in mouse BLA to distinguish AIS-targeting (CLUS_0733) vs soma-targeting (CLUS_0738)
+    Pvalb cells.
+  discovery_score:
+    score: 3
+    rank_in_cohort: 3
+    cohort_size: 5
+    next_best_score: 3
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Pvalb
+      val: 10.86
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.998
+    region_fraction: 0.178
+    region_evidence: SELF
+  confidence: LOW
+  confidence_score: 0.35
+  rationale: 'MapMyCells AT (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) maps Hochgerner 2023
+    GABA-41-Moxd1-Pvalb to CS20230722_CLUS_0738 at F1=0.74 (CLUSTER level; Purity=0.96, Coverage=0.60);
+    `marker_Pvalb` CONSISTENT (precomputed mean 10.86, 99.8th pct BLA GABAergic cohort); 1 of 2 markers
+    CONSISTENT (`negative_marker_Sst` NOT_ASSESSED). Coverage=0.60 and Sst-cluster leakage indicate source-label
+    heterogeneity or basket/axo-axonic co-segregation; basket-cell identity vs. axo-axonic not resolvable
+    from scRNA-seq alone — AnkG co-staining required.
+
+    '
+  reconciliation_note: 'Pool-candidates pass flagged shared CLASS-level target 07 CTX-MGE GABA with bla_sst_interneuron
+    (F1 0.34 vs 0.32 at CLASS level; within 5% tolerance). This is a CLASS-level artefact — both Pvalb
+    and Sst BLA interneurons are MGE-derived GABAergic cells sharing the same atlas class. At SUBCLASS
+    level bla_pv_basket_cell maps to 052 Pvalb Gaba (F1=0.61) while bla_sst_interneuron maps to Sst subclass
+    clusters; markers (Pvalb vs Sst) are distinguishing. Case B (AT-only sharing at CLASS level; markers
+    and subclass AT distinguish); no lit_to_lit_edges emitted.
+
+    '
+  rationale_generated_at: '2026-06-10T15:44:16+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_pv_basket_cell_summary.md
+  rationale_source_hash: f28afaf0

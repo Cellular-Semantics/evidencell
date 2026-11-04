@@ -94,3 +94,23 @@ def test_edges_are_flagged_as_not_rendered(tmp_path, monkeypatch):
     monkeypatch.setattr(rr, "load_quotes", lambda p: {})
     monkeypatch.setattr(rr, "load_papers", lambda p: {})
     assert "not" in render_file(g).lower() and "gen-report" in render_file(g)
+
+
+def test_stubs_are_not_rendered(tmp_path, monkeypatch):
+    import evidencell.render_review as rr
+    g = tmp_path / "n1.yaml"
+    g.write_text(
+        "nodes:\n  - id: n1\n    name: Lit neuron\n"
+        "  - id: CS_CLUS_1\n    name: Atlas cluster\n"
+        "    definition_basis: ATLAS_TRANSCRIPTOMIC\n"
+        "  - id: n2\n    name: Other lit type\n    reference_stub: LIT_TYPE\n"
+        "edges:\n  - id: e1\n    lit_type: n1\n    taxonomy_type: CS_CLUS_1\n"
+    )
+    monkeypatch.setattr(rr, "refs_dir_for_graph", lambda p: tmp_path / "nope")
+    monkeypatch.setattr(rr, "store_exists", lambda p: True)
+    monkeypatch.setattr(rr, "load_quotes", lambda p: {})
+    monkeypatch.setattr(rr, "load_papers", lambda p: {})
+    out = render_file(g)
+    assert "Lit neuron" in out
+    assert "Atlas cluster" not in out and "Other lit type" not in out
+    assert "2 reference stub(s)" in out

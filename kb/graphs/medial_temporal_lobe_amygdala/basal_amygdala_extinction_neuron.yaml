@@ -1,0 +1,1151 @@
+name: Basal amygdala extinction neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Basal amygdala extinction neuron. Ported
+  from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest graph and split by
+  component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further ASTA runs and
+  re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002887
+  label: basal amygdaloid nucleus
+  name_in_source: basolateral amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: basal_amygdala_extinction_neuron
+  name: Basal amygdala extinction neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: glutamatergic
+    sources:
+    - ref: PMID:37884748
+      method: asta_snippet
+      scope: mouse amygdala scRNA-seq taxonomy; BLA principal neurons are VGLUT1 (Slc17a7) glutamatergic
+        — population-level NT identity, not extinction-neuron-specific
+      quote_key: '264517392_46510341'
+    - ref: PMID:40961182
+      method: asta_snippet
+      scope: primate (human/macaque/baboon) basolateral complex snRNA-seq; distinct classes of glutamatergic
+        neurons — cross-species NT identity context for BA principal/extinction population
+      quote_key: 281382725_21119bdb
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: glutamatergic
+  defining_markers:
+  - symbol: Ntsr2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: mouse BLA, Thy1-eYFP/Cre RNA-seq + behavioural characterisation of 'Fear-Off' population
+      quote_key: 104297085_20a79f85
+      marker_type: TRANSCRIPT
+    - ref: PMID:27767183
+      method: asta_report
+      scope: RNA-seq of Thy1-labelled Fear-Off neurons in BLA
+      quote_key: 104297085_710ab8bc
+      marker_type: TRANSCRIPT
+  - symbol: Dkk3
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: RNA-seq of Thy1-labelled Fear-Off neurons in BLA
+      quote_key: 104297085_710ab8bc
+      marker_type: TRANSCRIPT
+  - symbol: Rspo2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: RNA-seq of Thy1-labelled Fear-Off neurons in BLA
+      quote_key: 104297085_710ab8bc
+      marker_type: TRANSCRIPT
+  - symbol: Wnt7a
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: RNA-seq of Thy1-labelled Fear-Off neurons in BLA
+      quote_key: 104297085_710ab8bc
+      marker_type: TRANSCRIPT
+  - symbol: Thy1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: Thy1-Cre/eYFP/eNpHR labelling of Fear-Off population
+      quote_key: 104297085_cb656278
+      marker_type: PROTEIN
+  electrophysiology:
+    description: Functionally defined by activity timing during Pavlovian conditioning — extinction neurons
+      become active only after repeated unreinforced presentations of the conditioned stimulus and uniquely
+      receive reciprocal mPFC input, distinguishing them from the non-overlapping fear neuron population
+      among BLA principal cells.
+    sources:
+    - ref: PMID:31193505
+      method: asta_report
+      scope: BLA principal neuron fear/extinction circuit synthesis (mouse)
+      quote_key: 4940771_cb8fa215
+    - ref: PMID:28453642
+      method: europepmc_fulltext
+      scope: mouse BLA, contextual fear extinction, retrograde tracing + immunofluorescence
+      quote_key: 17860491_748a5fb1
+  anatomical_location:
+  - id: UBERON:0002887
+    sources:
+    - ref: PMID:25852499
+      method: asta_report
+      scope: amygdala/hippocampus literature synthesis
+      quote_key: 14375617_d7af88e4
+    - ref: PMID:31193505
+      method: asta_report
+      scope: review of BLA fear/extinction neuron circuit
+      quote_key: 4940771_cb8fa215
+    - ref: PMID:27767183
+      method: asta_report
+      scope: Thy1-labelled Fear-Off neurons localised to BLA
+      quote_key: 104297085_cb656278
+    label: basal amygdaloid nucleus
+    name_in_source: basal amygdala
+    compartment: SOMA
+  morphology:
+    description: Functionally defined ensemble within the basal amygdala active during extinction of conditioned
+      fear; not defined by markers or morphology in the report.
+    sources:
+    - ref: PMID:25852499
+      method: asta_report
+      scope: morphology synthesis from ASTA report
+      quote_key: 14375617_d7af88e4
+    - ref: PMID:31636080
+      method: asta_snippet — circuit-level context — CCK interneurons in BA exert strong modulatory effects
+        on extinction when activated, implicating a distributed extinction circuit in basal amygdala
+      scope: mouse basal amygdala, CCK-Cre;Dlx5/6-Flpe optogenetics
+      quote_key: 204835327_df0cf3d4
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:25852499
+  is_terminal: false
+  notes: Counterpart to fear neurons in the same nucleus.
+- id: CS20230722_CLUS_0245
+  name: 0245 LA-BLA-BMA-PA Glut_5
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0245
+- id: CS20230722_CLUS_0248
+  name: 0248 LA-BLA-BMA-PA Glut_5
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0248
+- id: CS20230722_CLUS_0250
+  name: 0250 LA-BLA-BMA-PA Glut_6
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0250
+- id: CS20230722_CLUS_0142
+  name: 0142 L2/3 IT PIR-ENTl Glut_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0142
+- id: CS20230722_CLUS_0201
+  name: 0201 MEA Slc17a7 Glut_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0201
+- id: CS20230722_SUPT_0065
+  name: 0065 LA-BLA-BMA-PA Glut_6
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0065
+- id: CS20230722_SUPT_0064
+  name: 0064 LA-BLA-BMA-PA Glut_5
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0064
+- id: CS20230722_SUPT_0063
+  name: 0063 LA-BLA-BMA-PA Glut_4
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0063
+- id: CS20230722_SUPT_0061
+  name: 0061 LA-BLA-BMA-PA Glut_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0061
+- id: CS20230722_SUPT_0007
+  name: 0007 L5/6 IT TPE-ENT Glut_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0007
+edges:
+- id: edge_basal_amygdala_extinction_neuron_to_CS20230722_CLUS_0245
+  lit_type: basal_amygdala_extinction_neuron
+  taxonomy_type: CS20230722_CLUS_0245
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0245 LA-BLA-BMA-PA Glut_5; region_fraction_100um=0.703; strict region_fraction=0.421.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+    notes: Stage A NT prefix-match passed.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=1253 [painted]; Striatum [MBA:477] count_100um=1135
+      [painted]; Basolateral amygdalar nucleus [MBA:295] count_100um=1122 [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.703; strict region_fraction: 0.421; region_evidence: SELF'
+  - property: marker_Ntsr2
+    node_a_value: Ntsr2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Dkk3
+    node_a_value: Dkk3 — defining marker
+    node_b_value: 'Dkk3: 7.78; cohort_pct 0.968'
+    alignment: CONSISTENT
+    notes: val=7.78; cohort percentile 0.968
+  - property: marker_Rspo2
+    node_a_value: Rspo2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Wnt7a
+    node_a_value: Wnt7a — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Thy1
+    node_a_value: Thy1 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  caveats:
+  - caveat_type: NO_DISCRIMINATING_MARKER
+    description: 'Four of five defining markers (Ntsr2, Rspo2, Wnt7a, Thy1) are absent from WMBv1 precomputed
+      expression for this cluster; the mapping rests on Dkk3 alone.
+
+      '
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'Strict region fraction is 0.421; fewer than half of cluster cells fall within the canonical
+      basolateral amygdala annotation boundary.
+
+      '
+  discovery_score:
+    score: 6
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Dkk3
+      val: 7.78
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.968
+    - gene: Rspo2
+      val: null
+      reliable: null
+      raw_tier: 1
+      applied_score: 1.0
+      source: METADATA
+      percentiles: []
+    region_fraction: 0.421
+    region_fraction_100um: 0.703
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.25
+  rationale: '[tier:STRONGEST] Cluster 0245 LA-BLA-BMA-PA Glut_5 [CS20230722_CLUS_0245] is the top-ranked
+    BLA glutamatergic cluster; Dkk3 expression is at the 96.8th cohort percentile (val=7.78) and region_fraction_100um=0.703
+    is consistent with the basal amygdala location of the classical type. However, only 1 of 5 defining
+    markers is assessable in the atlas; Ntsr2, Rspo2, Wnt7a, and Thy1 all lack precomputed expression
+    data, precluding a confident mapping at this time.
+
+    '
+  reconciliation_note: 'Annotation transfer against Thy1-Cre or Ntsr2-Cre BLA Fear-Off neuron data is
+    the primary path to upgrading confidence. Adding Ntsr2 precomputed expression to the taxonomy reference
+    store would allow direct marker cross-check against all candidate clusters.
+
+    '
+  mapping_cardinality: '1:1'
+  proposed_experiments:
+  - Annotation transfer using Thy1-Cre or Ntsr2-Cre BLA Fear-Off neuron source data to assess F1 against
+    cluster 0245 [CS20230722_CLUS_0245].
+  - Add Ntsr2, Rspo2, Wnt7a, Thy1 precomputed expression to WMBv1 reference store using just add-expression,
+    then re-score this edge.
+  - Multiplexed FISH for Ntsr2 + Dkk3 + Rspo2 in basal amygdala to confirm co-expression in cells at the
+    0245 spatial locus.
+  rationale_generated_at: '2026-06-16T13:44:34+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_extinction_neuron_summary.md
+  unresolved_questions:
+  - Whether the extinction neuron maps to a single cluster (0245) or is distributed across multiple Glut_5
+    child clusters within supertype 0064.
+  - Whether Ntsr2 expression in WMBv1 is enriched in the Glut_5 vs. Glut_6 supertype.
+  rationale_source_hash: 7d58be73
+- id: edge_basal_amygdala_extinction_neuron_to_CS20230722_CLUS_0248
+  lit_type: basal_amygdala_extinction_neuron
+  taxonomy_type: CS20230722_CLUS_0248
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0248 LA-BLA-BMA-PA Glut_5; region_fraction_100um=0.828; strict region_fraction=0.588.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+    notes: Stage A NT prefix-match passed.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=557 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=477 [painted]; Basolateral amygdalar nucleus, posterior part [MBA:311] count_100um=270
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.828; strict region_fraction: 0.588; region_evidence: SELF'
+  - property: marker_Ntsr2
+    node_a_value: Ntsr2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Dkk3
+    node_a_value: Dkk3 — defining marker
+    node_b_value: 'Dkk3: 4.98; cohort_pct 0.677'
+    alignment: CONSISTENT
+    notes: val=4.98; cohort percentile 0.677
+  - property: marker_Rspo2
+    node_a_value: Rspo2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Wnt7a
+    node_a_value: Wnt7a — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Thy1
+    node_a_value: Thy1 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  caveats: []
+  discovery_score:
+    score: 5
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Dkk3
+      val: 4.98
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.677
+    - gene: Rspo2
+      val: null
+      reliable: null
+      raw_tier: 1
+      applied_score: 1.0
+      source: METADATA
+      percentiles: []
+    region_fraction: 0.588
+    region_fraction_100um: 0.828
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.15
+  rationale: '[tier:CUT] Cluster 0248 LA-BLA-BMA-PA Glut_5 [CS20230722_CLUS_0248] shows consistent BLA
+    localisation (region_fraction_100um=0.828) and Dkk3 expression at the 67.7th cohort percentile (val=4.98),
+    but is ranked below 0245 and 0250 on both Dkk3 enrichment and discovery score; insufficient to warrant
+    a distinct full assessment.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:44:34+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_extinction_neuron_summary.md
+  rationale_source_hash: 648855a3
+- id: edge_basal_amygdala_extinction_neuron_to_CS20230722_CLUS_0250
+  lit_type: basal_amygdala_extinction_neuron
+  taxonomy_type: CS20230722_CLUS_0250
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0250 LA-BLA-BMA-PA Glut_6; region_fraction_100um=0.764; strict region_fraction=0.620.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+    notes: Stage A NT prefix-match passed.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=293 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=233 [painted]; Basolateral amygdalar nucleus, anterior part [MBA:303] count_100um=232
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.764; strict region_fraction: 0.620; region_evidence: SELF'
+  - property: marker_Ntsr2
+    node_a_value: Ntsr2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Dkk3
+    node_a_value: Dkk3 — defining marker
+    node_b_value: 'Dkk3: 8.81; cohort_pct 0.989'
+    alignment: CONSISTENT
+    notes: val=8.81; cohort percentile 0.989
+  - property: marker_Rspo2
+    node_a_value: Rspo2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Wnt7a
+    node_a_value: Wnt7a — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Thy1
+    node_a_value: Thy1 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  caveats:
+  - caveat_type: LOW_CELL_COUNT
+    description: 'Only 96 cells; may represent a rare cell state or technical artefact rather than a discrete
+      cell type.
+
+      '
+  - caveat_type: TAXONOMY_LEVEL_MISMATCH
+    description: 'Belongs to Glut_6 supertype rather than Glut_5; whether both supertypes could represent
+      the same classical type is unresolved.
+
+      '
+  - caveat_type: NO_DISCRIMINATING_MARKER
+    description: 'Ntsr2, Rspo2, Wnt7a, and Thy1 absent from precomputed expression for this cluster.
+
+      '
+  discovery_score:
+    score: 5
+    rank_in_cohort: 3
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Dkk3
+      val: 8.81
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.989
+    region_fraction: 0.62
+    region_fraction_100um: 0.764
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.23
+  rationale: '[tier:NEXT] Cluster 0250 LA-BLA-BMA-PA Glut_6 [CS20230722_CLUS_0250] has the highest Dkk3
+    expression of any surveyed BLA glutamatergic cluster (val=8.81; cohort percentile 0.989) and a consistent
+    BLA location (region_fraction_100um=0.764). Its small cell count (n=96) and membership in a different
+    supertype (Glut_6 vs. Glut_5) from the primary candidate 0245 introduce uncertainty; all four remaining
+    defining markers are not assessable.
+
+    '
+  mapping_cardinality: '1:1'
+  proposed_experiments:
+  - Annotation transfer using Fear-Off neuron source data to compare F1 between clusters 0245 and 0250
+    at cluster resolution.
+  - Spatial transcriptomics to determine whether Ntsr2+ Dkk3+ cells at the basal amygdala locus align
+    with the 0250 cluster spatial footprint.
+  rationale_generated_at: '2026-06-16T13:44:34+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_extinction_neuron_summary.md
+  unresolved_questions:
+  - Whether Glut_5 and Glut_6 supertypes represent genuinely distinct cell populations or a continuum
+    within the basal amygdala glutamatergic compartment.
+  rationale_source_hash: eccc1b12
+- id: edge_basal_amygdala_extinction_neuron_to_CS20230722_CLUS_0142
+  lit_type: basal_amygdala_extinction_neuron
+  taxonomy_type: CS20230722_CLUS_0142
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0142 L2/3 IT PIR-ENTl Glut_1; region_fraction_100um=0.646; strict region_fraction=0.384.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+    notes: Stage A NT prefix-match passed.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=431 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=350 [painted]; Basolateral amygdalar nucleus, ventral part [MBA:451] count_100um=346
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.646; strict region_fraction: 0.384; region_evidence: SELF'
+  - property: marker_Ntsr2
+    node_a_value: Ntsr2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Dkk3
+    node_a_value: Dkk3 — defining marker
+    node_b_value: 'Dkk3: 4.08; cohort_pct 0.591'
+    alignment: CONSISTENT
+    notes: val=4.08; cohort percentile 0.591
+  - property: marker_Rspo2
+    node_a_value: Rspo2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Wnt7a
+    node_a_value: Wnt7a — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Thy1
+    node_a_value: Thy1 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 4
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Dkk3
+      val: 4.08
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.591
+    region_fraction: 0.384
+    region_fraction_100um: 0.646
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.05
+  rationale: '[tier:CUT] Cluster 0142 L2/3 IT PIR-ENTl Glut_1 [CS20230722_CLUS_0142] localises primarily
+    to piriform cortex and entorhinal cortex (strict region_fraction=0.384 in basolateral amygdala), not
+    the basal nucleus; anatomical context is incompatible with the classical type definition.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:44:34+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_extinction_neuron_summary.md
+  rationale_source_hash: ac01f62a
+- id: edge_basal_amygdala_extinction_neuron_to_CS20230722_CLUS_0201
+  lit_type: basal_amygdala_extinction_neuron
+  taxonomy_type: CS20230722_CLUS_0201
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0201 MEA Slc17a7 Glut_2; region_fraction_100um=0.621; strict region_fraction=0.345.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: Glut
+    alignment: CONSISTENT
+    notes: Stage A NT prefix-match passed.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=108 [painted]; Basomedial amygdalar nucleus
+      [MBA:319] count_100um=86 [painted]; Basomedial amygdalar nucleus, anterior part [MBA:327] count_100um=79
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.621; strict region_fraction: 0.345; region_evidence: SELF'
+  - property: marker_Ntsr2
+    node_a_value: Ntsr2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Dkk3
+    node_a_value: Dkk3 — defining marker
+    node_b_value: 'Dkk3: 0.59; cohort_pct 0.054'
+    alignment: CONSISTENT
+    notes: val=0.59; cohort percentile 0.054
+  - property: marker_Rspo2
+    node_a_value: Rspo2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Wnt7a
+    node_a_value: Wnt7a — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Thy1
+    node_a_value: Thy1 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 5
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Dkk3
+      val: 0.59
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.054
+    region_fraction: 0.345
+    region_fraction_100um: 0.621
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.03
+  rationale: '[tier:CUT] Cluster 0201 MEA Slc17a7 Glut_2 [CS20230722_CLUS_0201] is a medial amygdalar
+    nucleus cluster; Dkk3 expression is at the 5.4th cohort percentile (val=0.59), and strict region_fraction
+    in BLA is only 0.345. Incompatible with the basal amygdala location and marker profile of the classical
+    type.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:44:34+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_extinction_neuron_summary.md
+  rationale_source_hash: 6246f60b
+- id: edge_basal_amygdala_extinction_neuron_to_CS20230722_SUPT_0065
+  lit_type: basal_amygdala_extinction_neuron
+  taxonomy_type: CS20230722_SUPT_0065
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0065 LA-BLA-BMA-PA Glut_6; region_fraction_100um=0.719; strict region_fraction=0.485.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=832 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=607 [painted]; Lateral amygdalar nucleus [MBA:131] count_100um=567 [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.719; strict region_fraction: 0.485; region_evidence: SELF'
+  - property: marker_Ntsr2
+    node_a_value: Ntsr2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Dkk3
+    node_a_value: Dkk3 — defining marker
+    node_b_value: 'Dkk3: 7.14; cohort_pct 0.868; child-coverage 1.000'
+    alignment: CONSISTENT
+    notes: val=7.14; cohort percentile 0.868; child-cluster coverage 1.000
+  - property: marker_Rspo2
+    node_a_value: Rspo2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Wnt7a
+    node_a_value: Wnt7a — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Thy1
+    node_a_value: Thy1 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Dkk3
+      val: 7.14
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.868
+      coverage: 1.0
+    region_fraction: 0.485
+    region_fraction_100um: 0.719
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.15
+  rationale: '[tier:CUT] Supertype 0065 LA-BLA-BMA-PA Glut_6 [CS20230722_SUPT_0065] contains cluster 0250
+    as its best child; a supertype-level edge is less specific and not preferred over the cluster-level
+    0250 edge given no additional evidence at supertype resolution. NT not asserted at supertype level.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:44:34+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_extinction_neuron_summary.md
+  rationale_source_hash: 216a058d
+- id: edge_basal_amygdala_extinction_neuron_to_CS20230722_SUPT_0064
+  lit_type: basal_amygdala_extinction_neuron
+  taxonomy_type: CS20230722_SUPT_0064
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0064 LA-BLA-BMA-PA Glut_5; region_fraction_100um=0.881; strict region_fraction=0.716.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=1827 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=1652 [painted]; Basolateral amygdalar nucleus, anterior part [MBA:303] count_100um=1380
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.881; strict region_fraction: 0.716; region_evidence: SELF'
+  - property: marker_Ntsr2
+    node_a_value: Ntsr2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Dkk3
+    node_a_value: Dkk3 — defining marker
+    node_b_value: 'Dkk3: 5.47; cohort_pct 0.816; child-coverage 1.000'
+    alignment: CONSISTENT
+    notes: val=5.47; cohort percentile 0.816; child-cluster coverage 1.000
+  - property: marker_Rspo2
+    node_a_value: Rspo2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Wnt7a
+    node_a_value: Wnt7a — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Thy1
+    node_a_value: Thy1 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  caveats:
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: 'The supertype encompasses clusters with substantially different Dkk3 enrichment (0245
+      at pct 0.968 vs. 0248 at pct 0.677), suggesting internal heterogeneity.
+
+      '
+  - caveat_type: NT_PREDICTION_UNCERTAIN
+    description: 'NT identity is not formally asserted at supertype level in CCN20230722.
+
+      '
+  - caveat_type: NO_DISCRIMINATING_MARKER
+    description: 'Ntsr2, Rspo2, Wnt7a, and Thy1 absent from precomputed expression at supertype level.
+
+      '
+  discovery_score:
+    score: 4
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Dkk3
+      val: 5.47
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.816
+      coverage: 1.0
+    region_fraction: 0.716
+    region_fraction_100um: 0.881
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.2
+  rationale: '[tier:WEAKEST] Supertype 0064 LA-BLA-BMA-PA Glut_5 [CS20230722_SUPT_0064] has the highest
+    BLA region fraction of all candidates (region_fraction_100um=0.881) and uniform Dkk3 enrichment across
+    all child clusters (val=5.47; cohort percentile 0.816; child-cluster coverage 1.000), consistent with
+    the extinction neuron marker profile. A broadMatch relationship is more appropriate than exactMatch
+    because the supertype encompasses at least two child clusters with distinct Dkk3 levels, and NT is
+    not asserted at supertype level.
+
+    '
+  reconciliation_note: 'If annotation transfer resolves the extinction neuron to a specific child cluster
+    within this supertype (most likely 0245), this supertype edge should be demoted to a secondary record.
+
+    '
+  mapping_cardinality: 1:n
+  proposed_experiments:
+  - Annotation transfer to resolve cluster-level identity within this supertype.
+  - Add Ntsr2 precomputed expression to supertype-level taxonomy nodes to enable marker cross-check.
+  rationale_generated_at: '2026-06-16T13:44:34+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_extinction_neuron_summary.md
+  unresolved_questions:
+  - Whether the extinction neuron corresponds to one (0245) or multiple child clusters within this supertype.
+  rationale_source_hash: c593ca32
+- id: edge_basal_amygdala_extinction_neuron_to_CS20230722_SUPT_0063
+  lit_type: basal_amygdala_extinction_neuron
+  taxonomy_type: CS20230722_SUPT_0063
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0063 LA-BLA-BMA-PA Glut_4; region_fraction_100um=0.634; strict region_fraction=0.328.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=1657 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=1129 [painted]; Basomedial amygdalar nucleus [MBA:319] count_100um=1033 [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.634; strict region_fraction: 0.328; region_evidence: SELF'
+  - property: marker_Ntsr2
+    node_a_value: Ntsr2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Dkk3
+    node_a_value: Dkk3 — defining marker
+    node_b_value: 'Dkk3: 2.01; cohort_pct 0.316; child-coverage 1.000'
+    alignment: APPROXIMATE
+    notes: val=2.01; cohort percentile 0.316; child-cluster coverage 1.000
+  - property: marker_Rspo2
+    node_a_value: Rspo2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Wnt7a
+    node_a_value: Wnt7a — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Thy1
+    node_a_value: Thy1 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 3
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Dkk3
+      val: 2.01
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.316
+      coverage: 1.0
+    region_fraction: 0.328
+    region_fraction_100um: 0.634
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.05
+  rationale: '[tier:CUT] Supertype 0063 LA-BLA-BMA-PA Glut_4 [CS20230722_SUPT_0063] shows only APPROXIMATE
+    Dkk3 alignment (val=2.01; cohort percentile 0.316) and a low strict region fraction (0.328); inconsistent
+    with the extinction neuron marker profile.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:44:34+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_extinction_neuron_summary.md
+  rationale_source_hash: 7ad89ccc
+- id: edge_basal_amygdala_extinction_neuron_to_CS20230722_SUPT_0061
+  lit_type: basal_amygdala_extinction_neuron
+  taxonomy_type: CS20230722_SUPT_0061
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0061 LA-BLA-BMA-PA Glut_2; region_fraction_100um=0.766; strict region_fraction=0.541.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Cortical subplate [MBA:703] count_100um=3336 [painted]; Basolateral amygdalar nucleus
+      [MBA:295] count_100um=2755 [painted]; Basolateral amygdalar nucleus, posterior part [MBA:311] count_100um=2256
+      [painted]
+    alignment: CONSISTENT
+    notes: 'region_fraction_100um: 0.766; strict region_fraction: 0.541; region_evidence: SELF'
+  - property: marker_Ntsr2
+    node_a_value: Ntsr2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Dkk3
+    node_a_value: Dkk3 — defining marker
+    node_b_value: 'Dkk3: 4.46; cohort_pct 0.632; child-coverage 1.000'
+    alignment: CONSISTENT
+    notes: val=4.46; cohort percentile 0.632; child-cluster coverage 1.000
+  - property: marker_Rspo2
+    node_a_value: Rspo2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Wnt7a
+    node_a_value: Wnt7a — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Thy1
+    node_a_value: Thy1 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  caveats: []
+  discovery_score:
+    score: 4
+    rank_in_cohort: 4
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Dkk3
+      val: 4.46
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.632
+      coverage: 1.0
+    region_fraction: 0.541
+    region_fraction_100um: 0.766
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.08
+  rationale: '[tier:CUT] Supertype 0061 LA-BLA-BMA-PA Glut_2 [CS20230722_SUPT_0061] is a large, broad
+    supertype (n=6,385) with moderate Dkk3 enrichment (cohort percentile 0.632); no specificity advantage
+    over cluster-level candidates 0245 or 0250, and NT is not asserted at supertype level.
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:44:34+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_extinction_neuron_summary.md
+  rationale_source_hash: 7909ebb8
+- id: edge_basal_amygdala_extinction_neuron_to_CS20230722_SUPT_0007
+  lit_type: basal_amygdala_extinction_neuron
+  taxonomy_type: CS20230722_SUPT_0007
+  relationship: evidencell:UncertainRelationship
+  mapping_justification: semapv:ManualMappingCuration
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: Atlas node 0007 L5/6 IT TPE-ENT Glut_1; region_fraction_100um=0.112; strict region_fraction=0.080.
+    atlas: WMBv1
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: not asserted
+    alignment: NOT_ASSESSED
+    notes: NT data missing on one side.
+  - property: location
+    node_a_value: '? [UBERON:0002887]'
+    node_b_value: Isocortex [MBA:315] count_100um=3529 [painted]; Hippocampal formation [MBA:1089] count_100um=920
+      [painted]; Entorhinal area, lateral part [MBA:918] count_100um=879 [painted]
+    alignment: APPROXIMATE
+    notes: 'region_fraction_100um: 0.112; strict region_fraction: 0.080; region_evidence: SELF'
+  - property: marker_Ntsr2
+    node_a_value: Ntsr2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Dkk3
+    node_a_value: Dkk3 — defining marker
+    node_b_value: 'Dkk3: 7.50; cohort_pct 0.895; child-coverage 1.000'
+    alignment: CONSISTENT
+    notes: val=7.50; cohort percentile 0.895; child-cluster coverage 1.000
+  - property: marker_Rspo2
+    node_a_value: Rspo2 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Wnt7a
+    node_a_value: Wnt7a — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  - property: marker_Thy1
+    node_a_value: Thy1 — defining marker
+    node_b_value: no atlas expression data
+    alignment: NOT_ASSESSED
+    notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+  caveats: []
+  discovery_score:
+    score: 3
+    rank_in_cohort: 5
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Dkk3
+      val: 7.5
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.895
+      coverage: 1.0
+    region_fraction: 0.08
+    region_fraction_100um: 0.112
+    region_evidence: SELF
+  confidence: UNCERTAIN
+  confidence_score: 0.02
+  rationale: '[tier:CUT] Supertype 0007 L5/6 IT TPE-ENT Glut_1 [CS20230722_SUPT_0007] localises predominantly
+    to isocortex and entorhinal cortex (region_fraction_100um=0.112 in the BLA region); anatomical context
+    is incompatible with the basal amygdala classical type despite elevated Dkk3 expression (cohort percentile
+    0.895 in its own regional context).
+
+    '
+  mapping_cardinality: '1:1'
+  rationale_generated_at: '2026-06-16T13:44:34+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_extinction_neuron_summary.md
+  rationale_source_hash: 7649a41d

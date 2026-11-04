@@ -1,0 +1,270 @@
+# Draft KB — medial_temporal_lobe_amygdala (UNCERTAIN nodes supplement)
+# Source: inputs/deepsearch/Amygdala Cell Types, Molecular Identity, and Transcriptomic Characterization.pdf
+# Ingestion date: 2026-06-12
+# Status: DRAFT — review only; nodes already exist in kb/graphs/; DO NOT copy to kb/graphs/
+# New quotes reference references/medial_temporal_lobe_amygdala/references.json
+
+nodes:
+  - id: basal_amygdala_fear_neuron
+    name: Basal amygdala fear neuron
+    category: CLASSICAL
+    nt_type:
+      name: glutamatergic
+    morphology:
+      description: >-
+        Glutamatergic principal (projection) neuron of the BLA/BA; one of two
+        functionally distinct, non-overlapping BLA principal-cell populations.
+        Projects to medial prefrontal cortex (mPFC).
+      sources:
+        - ref: "DOI:10.1016/j.ynstr.2019.100163"
+          method: review
+          scope: "BLA principal neuron populations (fear vs extinction)"
+          quote_key: "4940771_cb8fa215"
+    electrophysiology:
+      description: >-
+        Functionally defined: 'fear' neurons are activated by the conditioned
+        stimulus during fear expression; a distinct, non-overlapping population
+        from extinction neurons.
+      sources:
+        - ref: "DOI:10.1016/j.ynstr.2019.100163"
+          method: review
+          scope: "fear vs extinction neuron activity profiles"
+          quote_key: "4940771_cb8fa215"
+    anatomical_location:
+      - name: basal nucleus of amygdala
+        sources:
+          - ref: "DOI:10.1016/j.ynstr.2019.100163"
+            method: review
+            scope: "BLA principal neurons projecting to mPFC"
+            quote_key: "4940771_cb8fa215"
+
+  - id: basal_amygdala_extinction_neuron
+    name: Basal amygdala extinction neuron
+    category: CLASSICAL
+    nt_type:
+      name: glutamatergic
+    defining_markers:
+      - name: Ntsr2
+        sources:
+          - ref: "DOI:10.1038/ncomms13149"
+            method: "activity-guided RNA-seq + validation"
+            scope: "Fear-Off/extinction-like BLA population"
+            quote_key: "104297085_710ab8bc"
+          - ref: "DOI:10.1038/ncomms13149"
+            method: "Ntsr2 reporter validation"
+            scope: "Ntsr2+ BLA neurons as putative Fear-Off population"
+            quote_key: "104297085_20a79f85"
+      - name: Dkk3
+        sources:
+          - ref: "DOI:10.1038/ncomms13149"
+            method: "activity-guided RNA-seq"
+            scope: "genes upregulated in Fear-Off population"
+            quote_key: "104297085_710ab8bc"
+      - name: Rspo2
+        sources:
+          - ref: "DOI:10.1038/ncomms13149"
+            method: "activity-guided RNA-seq"
+            scope: "genes upregulated in Fear-Off population"
+            quote_key: "104297085_710ab8bc"
+      - name: Wnt7a
+        sources:
+          - ref: "DOI:10.1038/ncomms13149"
+            method: "activity-guided RNA-seq"
+            scope: "genes upregulated in Fear-Off population"
+            quote_key: "104297085_710ab8bc"
+    morphology:
+      description: >-
+        Glutamatergic principal (projection) neuron of the BLA/BA; projects to
+        mPFC and uniquely receives reciprocal input from mPFC, providing a
+        circuit basis for top-down control of extinction. Thy1-labeled
+        fear-inhibiting ('Fear-Off') population.
+      sources:
+        - ref: "DOI:10.1016/j.ynstr.2019.100163"
+          method: review
+          scope: "extinction neurons project to and receive reciprocal mPFC input"
+          quote_key: "4940771_cb8fa215"
+    electrophysiology:
+      description: >-
+        Functionally defined: 'extinction' neurons become active only after
+        repetitive conditioned-stimulus presentations not followed by the
+        unconditioned stimulus. Thy1-labeled neurons act as fear-inhibiting /
+        'Fear-Off' cells during behavior.
+      sources:
+        - ref: "DOI:10.1016/j.ynstr.2019.100163"
+          method: review
+          scope: "extinction neuron activity profile"
+          quote_key: "4940771_cb8fa215"
+        - ref: "DOI:10.1038/ncomms13149"
+          method: "optogenetic behavioral characterization"
+          scope: "Thy1-labeled BLA neurons act as Fear-Off cells"
+          quote_key: "104297085_cb656278"
+    anatomical_location:
+      - name: basal nucleus of amygdala
+        sources:
+          - ref: "DOI:10.1016/j.ynstr.2019.100163"
+            method: review
+            scope: "BLA principal neurons projecting to mPFC"
+            quote_key: "4940771_cb8fa215"
+
+  - id: bla_npy_neurogliaform_cell
+    name: BLA NPY neurogliaform cell
+    category: CLASSICAL
+    nt_type:
+      name: GABAergic
+      sources:
+        - ref: "DOI:10.1101/2021.03.15.435365"
+          method: "stereology + immunocytochemistry"
+          scope: "GABAergic cell-type ratios in LA/BA"
+          quote_key: "232283078_00bb8003"
+    neuropeptides:
+      - name: NPY
+        sources:
+          - ref: "DOI:10.1101/2021.03.15.435365"
+            method: "stereology + immunocytochemistry"
+            scope: "NPY-containing neurogliaform cells, 14-15% of LA/BA GABAergic"
+            quote_key: "232283078_00bb8003"
+    morphology:
+      description: >-
+        Local GABAergic interneuron with neurogliaform-like morphology,
+        expressing NPY. NPY-containing neurogliaform cells estimated at
+        14-15% of LA/BA GABAergic cells.
+      sources:
+        - ref: "DOI:10.1101/2021.03.15.435365"
+          method: "stereology + immunocytochemistry"
+          scope: "NPY-containing neurogliaform cells in LA/BA"
+          quote_key: "232283078_00bb8003"
+    anatomical_location:
+      - name: basolateral amygdala
+        sources:
+          - ref: "DOI:10.1101/2021.03.15.435365"
+            method: "stereology + immunocytochemistry"
+            scope: "lateral and basal amygdala GABAergic cell types"
+            quote_key: "232283078_00bb8003"
+
+  - id: bla_calbindin_dendrite_targeting_interneuron
+    name: BLA calbindin-positive dendrite-targeting interneuron
+    category: CLASSICAL
+    nt_type:
+      name: GABAergic
+      sources:
+        - ref: "DOI:10.1101/2021.03.15.435365"
+          method: "stereology + immunocytochemistry"
+          scope: "GABAergic interneuron types in LA/BA"
+          quote_key: "232283078_00bb8003"
+    defining_markers:
+      - name: calbindin
+        sources:
+          - ref: "DOI:10.1093/ijnp/pyx029"
+            method: "activity mapping (orexin-1 antagonism during extinction)"
+            scope: "calbindin-expressing BLA interneurons activated in extinction"
+            quote_key: "17860491_f1ffddb9"
+    negative_markers:
+      - name: parvalbumin
+        sources:
+          - ref: "DOI:10.1093/ijnp/pyx029"
+            method: "activity mapping (orexin-1 antagonism during extinction)"
+            scope: "calbindin+ but NOT parvalbumin+ interneurons activated"
+            quote_key: "17860491_f1ffddb9"
+    electrophysiology:
+      description: >-
+        Activity-dependent recruitment: during fear extinction, orexin-1
+        receptor antagonism (SB334867) activated calbindin-expressing (but not
+        parvalbumin-expressing) GABAergic interneurons in the BLA, supporting
+        recruitment during extinction-related network states.
+      sources:
+        - ref: "DOI:10.1093/ijnp/pyx029"
+          method: "activity mapping (orexin-1 antagonism during extinction)"
+          scope: "calbindin+ interneuron activation during fear extinction"
+          quote_key: "17860491_f1ffddb9"
+
+  - id: cea_large_aspiny_neuron
+    name: Central amygdala large aspiny neuron
+    category: CLASSICAL
+    nt_type:
+      name: GABAergic
+      sources:
+        - ref: "DOI:10.1016/j.ynpai.2025.100190"
+          method: review (citing single-cell transcriptomics)
+          scope: "CeA neurons cluster robustly to GABA markers"
+          quote_key: "280092907_110b0323"
+        - ref: "DOI:10.1523/JNEUROSCI.5772-09.2010"
+          method: review
+          scope: "CA contains striatum-like GABAergic projection neurons"
+          quote_key: "17223544_4fda1404"
+    morphology:
+      description: >-
+        Classical morphological class of CeA inhibitory neuron, distinguished by
+        large soma and aspiny dendrites. CeA is striatum-like and the main
+        output side of the amygdala; neurons are predominantly GABAergic
+        projection / medium spiny neurons. The Hochgerner et al. 2023 atlas
+        (130 neuronal types) provides a framework for future molecular anchoring.
+      sources:
+        - ref: "DOI:10.1038/srep23757"
+          method: review
+          scope: "CeA consists of GABAergic medium spiny neurons"
+          quote_key: "3103554_aec310ea"
+        - ref: "DOI:10.1523/JNEUROSCI.5772-09.2010"
+          method: review
+          scope: "CA striatum-like GABAergic projection neurons"
+          quote_key: "17223544_4fda1404"
+
+  - id: cea_small_aspiny_neuron
+    name: Central amygdala small aspiny neuron
+    category: CLASSICAL
+    nt_type:
+      name: GABAergic
+      sources:
+        - ref: "DOI:10.1016/j.ynpai.2025.100190"
+          method: review (citing single-cell transcriptomics)
+          scope: "CeA neurons cluster robustly to GABA markers"
+          quote_key: "280092907_110b0323"
+        - ref: "DOI:10.1523/JNEUROSCI.5772-09.2010"
+          method: review
+          scope: "CA contains striatum-like GABAergic projection neurons"
+          quote_key: "17223544_4fda1404"
+    morphology:
+      description: >-
+        Classical morphological class of CeA inhibitory neuron, distinguished by
+        small soma and aspiny dendrites. CeA is striatum-like and the main
+        output side of the amygdala; neurons are predominantly GABAergic
+        projection / medium spiny neurons. The Hochgerner et al. 2023 atlas
+        (130 neuronal types) provides a framework for future molecular anchoring.
+      sources:
+        - ref: "DOI:10.1038/srep23757"
+          method: review
+          scope: "CeA consists of GABAergic medium spiny neurons"
+          quote_key: "3103554_aec310ea"
+        - ref: "DOI:10.1523/JNEUROSCI.5772-09.2010"
+          method: review
+          scope: "CA striatum-like GABAergic projection neurons"
+          quote_key: "17223544_4fda1404"
+
+  - id: paralaminar_immature_neuron
+    name: Paralaminar nucleus immature excitatory neuron
+    category: CLASSICAL
+    nt_type:
+      name: glutamatergic
+    morphology:
+      description: >-
+        Immature excitatory neuron of the paralaminar nucleus (PL); not a mature
+        glutamatergic principal cell nor a GABAergic class. A large population of
+        immature excitatory neurons is present at birth, some of which may
+        continue to be born from local progenitors that disappear rapidly in
+        infancy; the immature neurons persist through childhood and adolescence
+        on a protracted maturation timeline.
+      sources:
+        - ref: "DOI:10.1016/j.dcn.2022.101133"
+          method: "histology / developmental characterization"
+          scope: "PL immature excitatory neuron population and maturation timeline"
+          quote_key: "250411527_03961399"
+    electrophysiology:
+      description: >-
+        Not characterized as a mature electrophysiological type. Defining feature
+        is developmental state: neurons remain immature on a protracted timeline.
+      sources:
+        - ref: "DOI:10.1016/j.dcn.2022.101133"
+          method: "developmental characterization"
+          scope: "protracted maturation of PL immature neurons"
+          quote_key: "250411527_03961399"
+
+edges: []

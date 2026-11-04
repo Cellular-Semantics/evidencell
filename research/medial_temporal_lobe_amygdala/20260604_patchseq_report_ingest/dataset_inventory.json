@@ -1,0 +1,202 @@
+[
+  {
+    "author_key": "Hochgerner et al., 2023",
+    "region": "amygdala (medial amygdala MEA, basomedial amygdala BMA, and broader mouse amygdala)",
+    "species": "mouse",
+    "n_cells_approx": null,
+    "cell_types_covered": ["VGLUT2-class (glutamatergic) neurons", "GABA-class (GABAergic) neurons"],
+    "atlas_mapping": "partial",
+    "accession": null,
+    "notes": "Title: 'Neuronal types in the mouse amygdala and their transcriptional response to fear conditioning'. This is the ONLY explicit amygdala-subregion reference in the document. States that in MEA and BMA, VGLUT2 and GABA classes intermix. Cited as a transcriptomic amygdala typing study; the document does NOT state this study used Patch-seq (it is the amygdala region anchor, not a Patch-seq dataset per se). No per-type markers/ephys/morphology given."
+  },
+  {
+    "author_key": "Bomkamp et al., 2019",
+    "region": "mouse forebrain interneurons; includes novel hippocampal CA1 dataset (MTL-relevant)",
+    "species": "mouse",
+    "n_cells_approx": 19,
+    "cell_types_covered": ["Pvalb-Cre positive interneurons (CA1)", "forebrain interneurons (via 4 reused datasets)"],
+    "atlas_mapping": "no",
+    "accession": null,
+    "notes": "Title: 'Transcriptomic correlates of electrophysiological and morphological diversity within and across excitatory and inhibitory neuron classes'. Reused four prior Patch-seq datasets (Cadwell 2015, Foldy 2016, Fuzik 2015, Munoz-Manchado 2018) plus a NOVEL dataset of 19 Pvalb-Cre+ interneurons from mouse hippocampal CA1 (core MTL structure). The CA1 cells are the most MTL-relevant Patch-seq cells in the document. No per-type detail beyond Pvalb-Cre identity."
+  },
+  {
+    "author_key": "Arbabi et al., 2022",
+    "region": "human middle temporal gyrus (MTG) / medial temporal gyrus (temporal cortex, MTL-adjacent)",
+    "species": "human",
+    "n_cells_approx": 278,
+    "cell_types_covered": ["supragranular glutamatergic neurons (MTG)"],
+    "atlas_mapping": "yes",
+    "accession": null,
+    "notes": "Title: 'Investigating microglia-neuron crosstalk by characterizing microglial contamination in human and mouse patch-seq datasets'. Analyzed human Patch-seq data from the Allen Institute: 278 supragranular glutamatergic neurons from MTG across N=48 subjects (37.1+/-14.3 yr; 18 female). Transcriptomes mapped to a reference taxonomy from human medial temporal gyrus snRNA-seq (Berg et al., 2021; Hodge et al., 2019). RNA-seq metadata/counts downloaded 05/10/2021. Strongest human temporal-lobe Patch-seq dataset in the document."
+  },
+  {
+    "author_key": "Berg et al., 2021",
+    "region": "human neocortex / temporal cortex (neurosurgically resected tissue)",
+    "species": "human",
+    "n_cells_approx": null,
+    "cell_types_covered": ["glutamatergic (pyramidal) neurons", "supragranular neurons"],
+    "atlas_mapping": "yes",
+    "accession": null,
+    "notes": "Title: 'Human neocortical expansion involves glutamatergic neuron diversification'. Allen Institute platform combining patch-clamp recording, biocytin staining, and single-cell RNA-seq on neurosurgically resected human tissue. Provides the human MTG reference taxonomy used by other Patch-seq studies. Multimodal (ephys + morphology via biocytin + transcriptomics)."
+  },
+  {
+    "author_key": "Hodge et al., 2019",
+    "region": "human middle temporal gyrus (MTG)",
+    "species": "human",
+    "n_cells_approx": null,
+    "cell_types_covered": ["excitatory (glutamatergic) neuron types", "inhibitory (GABAergic) neuron types"],
+    "atlas_mapping": "yes",
+    "accession": null,
+    "notes": "Title: 'Conserved cell types with divergent features in human versus mouse cortex'. snRNA-seq study of human MTG defining diverse excitatory/inhibitory neuron types. NOT itself a Patch-seq dataset - it is the REFERENCE TAXONOMY to which several human MTG Patch-seq studies (Arbabi 2022, Miller 2025) map their cells. Key reference atlas for human temporal cortex."
+  },
+  {
+    "author_key": "Miller et al., 2025",
+    "region": "human MTG (data-integration / annotation comparison across studies)",
+    "species": "human",
+    "n_cells_approx": null,
+    "cell_types_covered": ["MTG cell types (cross-study, health + Alzheimer's)"],
+    "atlas_mapping": "yes",
+    "accession": null,
+    "notes": "Title: 'Annotation Comparison Explorer (ACE): connecting brain cell types across studies of health and Alzheimer's Disease'. Describes a 'Middle temporal gyrus (MTG) (initial studies)' table linking the Hodge et al. 2019 MTG taxonomy to the SEA-AD MTG taxonomy (Gabitto et al., 2024) via MapMyCells. Includes annotation tables from two Patch-seq studies (Gouwens et al., 2020; Scala et al., 2020). A label-transfer / cross-study integration resource, not a primary Patch-seq dataset."
+  },
+  {
+    "author_key": "Fuzik et al., 2015",
+    "region": "mouse neocortex (somatosensory)",
+    "species": "mouse",
+    "n_cells_approx": null,
+    "cell_types_covered": ["neocortical pyramidal cells", "interneurons"],
+    "atlas_mapping": "no",
+    "accession": null,
+    "notes": "Title: 'Integration of electrophysiological recordings with single-cell RNA-seq data identifies novel neuronal subtypes'. Original Patch-seq method paper (paired patch-clamp + full transcriptome from neocortical pyramidal cells and interneurons). Not amygdala/MTL; included as foundational/forebrain interneuron resource."
+  },
+  {
+    "author_key": "Munoz-Manchado et al., 2018",
+    "region": "mouse dorsal striatum",
+    "species": "mouse",
+    "n_cells_approx": null,
+    "cell_types_covered": ["GABAergic striatal interneurons (Sst/Npy, Th, Npy w/o Sst, Chat, Cck+/-Vip)", "Pvalb/Pthlh continuum cells"],
+    "atlas_mapping": "no",
+    "accession": null,
+    "notes": "Title: 'Diversity of Interneurons in the Dorsal Striatum Revealed by Single-Cell RNA Sequencing and PatchSeq'. Seven interneuron types (six GABAergic). Pvalb-expressing cells form a continuum within a Pthlh+ group with a spatial Pvalb gradient; Patch-seq shows ephys continuum correlated with Pvalb. Striatum, not amygdala/MTL; sets expectations for inhibitory-class Patch-seq coverage."
+  },
+  {
+    "author_key": "Gouwens et al., 2020",
+    "region": "mouse primary visual cortex (V1)",
+    "species": "mouse",
+    "n_cells_approx": 4200,
+    "cell_types_covered": ["GABAergic interneurons (28 met-types; t-types incl. Pvalb, Sst, Vip families)"],
+    "atlas_mapping": "yes",
+    "accession": null,
+    "notes": "Title: 'Integrated Morphoelectric and Transcriptomic Classification of Cortical GABAergic Cells'. >4,200 mouse V1 GABAergic interneurons profiled; 517 with reconstructed local morphology. Defines 28 met-types (congruent morpho-electric-transcriptomic). Largest mouse cortical GABAergic Patch-seq reference. Not amygdala/MTL but a strong inhibitory-neuron reference atlas. Annotation table also reused by Miller et al. 2025."
+  },
+  {
+    "author_key": "Scala et al., 2020",
+    "region": "adult mouse motor cortex (M1)",
+    "species": "mouse",
+    "n_cells_approx": 1300,
+    "cell_types_covered": ["excitatory and inhibitory transcriptomic types (Vip, Pvalb, Sst families)"],
+    "atlas_mapping": "yes",
+    "accession": null,
+    "notes": "Title: 'Phenotypic variation within and across transcriptomic cell types in mouse motor cortex'. >1,300 neurons via Patch-seq (patch-clamp + biocytin + scRNA-seq), spanning nearly all major cortical classes. Families have distinct non-overlapping morpho-electric phenotypes; within-family types form continua. Large multimodal reference; not amygdala/MTL. Annotation table reused by Miller et al. 2025."
+  },
+  {
+    "author_key": "Gliko et al., 2024",
+    "region": "mouse visual cortex",
+    "species": "mouse",
+    "n_cells_approx": null,
+    "cell_types_covered": ["GABAergic visual cortical neurons"],
+    "atlas_mapping": "no",
+    "accession": null,
+    "notes": "Title: 'High-throughput analysis of dendrite and axonal arbors reveals transcriptomic correlates of neuroanatomy'. Profiles local morphology + transcriptome of GABAergic mouse visual cortical neurons; generated from the Gouwens et al. 2020 Patch-seq recordings. Morphology-focused reanalysis of a cortical dataset; not amygdala/MTL."
+  },
+  {
+    "author_key": "Lee et al., 2023",
+    "region": "human neocortex (incl. temporal vs frontal cortex comparison)",
+    "species": "human",
+    "n_cells_approx": 778,
+    "cell_types_covered": ["GABAergic interneurons across 44/45 transcriptomic types: LAMP5/PAX6, VIP, SST, PVALB subclasses; double-bouquet cells (DBC); SST FRZB; SST CALB1; SST ADGRG6"],
+    "atlas_mapping": "yes",
+    "accession": null,
+    "notes": "Title: 'Signature morphoelectric properties of diverse GABAergic interneurons in the human neocortex'. 778 human neurons (layers 2-6) via viral-labeling + Patch-seq, across 44 of 45 GABAergic transcriptomic types. SST FRZB sits on a PVALB-SST continuum but aligns morpho-electrically with PVALB; SST CALB1 has multiple discrete morphologies (possible split); DBCs map to SST CALB1 and SST ADGRG6 with temporal>frontal enrichment. Human cortex, MTL-adjacent (temporal cortex enrichment noted), not amygdala. Rich open-access multimodal dataset."
+  },
+  {
+    "author_key": "Kalmbach et al., 2021",
+    "region": "human neocortex (layer 5)",
+    "species": "human (+ rodent comparison)",
+    "n_cells_approx": null,
+    "cell_types_covered": ["layer 5 extratelencephalic-projecting (ET) pyramidal neurons"],
+    "atlas_mapping": "yes",
+    "accession": null,
+    "notes": "Title: 'Signature morpho-electric, transcriptomic, and dendritic properties of human layer 5 neocortical pyramidal neurons'. Patch-seq (transcriptome + physiology + morphology) of human L5 ET neurons from neurosurgical slices; many morpho-electric properties conserved vs rodent. Neocortex, not amygdala/MTL."
+  },
+  {
+    "author_key": "Bakken et al., 2021",
+    "region": "primary motor cortex (M1)",
+    "species": "human, marmoset, mouse",
+    "n_cells_approx": null,
+    "cell_types_covered": ["corticospinal Betz cells (layer 5 ET)", "GABAergic chandelier cells (noted)", "cross-species consensus cell types"],
+    "atlas_mapping": "yes",
+    "accession": null,
+    "notes": "Title: 'Comparative cellular analysis of motor cortex in human, marmoset and mouse'. >450,000 single nuclei profiled; cross-species consensus classification. Used Patch-seq to identify corticospinal Betz cells (L5) in non-human primates and humans. Motor cortex, not amygdala/MTL; cross-species reference."
+  },
+  {
+    "author_key": "Lee et al., 2021",
+    "region": "multiple (human and macaque brain slices; protocol/method paper)",
+    "species": "human, macaque",
+    "n_cells_approx": null,
+    "cell_types_covered": ["not type-specific (protocol demonstration)"],
+    "atlas_mapping": "no",
+    "accession": null,
+    "notes": "Title: 'Scaled, high fidelity electrophysiological, morphological, and transcriptomic cell characterization'. Patch-seq protocol paper; method generalizable across species and brain regions, demonstrated on human and macaque slices. Method resource, no region-specific cell types."
+  },
+  {
+    "author_key": "Shen et al., 2024",
+    "region": "primate brain (multimodal atlas review/resource)",
+    "species": "primate (incl. human, non-human primate), rodent",
+    "n_cells_approx": null,
+    "cell_types_covered": ["not type-specific (multimodal atlas overview)"],
+    "atlas_mapping": "no",
+    "accession": null,
+    "notes": "Title: 'Multimodal Nature of the Single-cell Primate Brain Atlas: Morphology, Transcriptome, Electrophysiology, and Connectivity'. Overview describing Patch-seq across rodent and adult human/NHP slices. Cross-species reference, not amygdala/MTL-specific."
+  },
+  {
+    "author_key": "Radaelli et al., 2025",
+    "region": "non-human primate neocortex (supragranular)",
+    "species": "New-World monkey (Saimiri sciureus), Old-World monkey (Macaca mulatta, Macaca nemestrina)",
+    "n_cells_approx": null,
+    "cell_types_covered": ["supragranular pyramidal neurons"],
+    "atlas_mapping": "no",
+    "accession": null,
+    "notes": "Title: 'HCN channels reveal conserved and divergent physiology in supragranular pyramidal neurons in primate species'. Patch-seq from acute and cultured slices; HCN-dependent physiology in supragranular pyramidal neurons across three primate species. Cortex, not amygdala/MTL; expanding NHP comparative coverage."
+  },
+  {
+    "author_key": "Tripathy et al., 2018",
+    "region": "mouse acute slices + human stem-cell-derived (in vitro)",
+    "species": "mouse, human (iPSC-derived)",
+    "n_cells_approx": null,
+    "cell_types_covered": ["mixed (benchmark of Cadwell, Foldy, Fuzik mouse datasets; Bardy, Chen in vitro human datasets)"],
+    "atlas_mapping": "no",
+    "accession": null,
+    "notes": "Title: 'Assessing Transcriptome Quality in Patch-Seq Datasets'. QC/benchmarking paper. Cadwell, Foldy, Fuzik = adult/juvenile mouse acute slices; Bardy, Chen = human stem-cell-derived neurons/astrocytes in culture. Not region-resolved brain tissue; method/QC resource."
+  },
+  {
+    "author_key": "Dalley et al., 2026",
+    "region": "human neocortex, primarily temporal lobe (MTL-adjacent)",
+    "species": "human",
+    "n_cells_approx": 1491,
+    "cell_types_covered": ["glutamatergic (pyramidal) neurons"],
+    "atlas_mapping": "no",
+    "accession": null,
+    "notes": "Title: 'Human Neocortical Glutamatergic Neurons Revealed Through Multimodal Profiling'. Profiled 1491 neurons 'primarily in temporal lobe' - the most direct temporal-lobe region statement in the document. Newer temporal-lobe-heavy human dataset; promising for MTL-adjacent searches. No per-type detail given."
+  },
+  {
+    "author_key": "Covert et al., 2022",
+    "region": "Allen Institute Patch-seq data (cortex; data-availability reference)",
+    "species": "mouse/human (Allen Institute resources)",
+    "n_cells_approx": null,
+    "cell_types_covered": ["not type-specific (data resource pointer)"],
+    "atlas_mapping": "no",
+    "accession": "https://github.com/AllenInstitute/coupledAE-patchseq",
+    "notes": "Title: 'Predictive and robust gene selection for spatial transcriptomics'. The clearest explicit data-access lead in the document: Patch-seq data available at the Allen Institute coupledAE-patchseq GitHub repo. Use as a starting point for data format / metadata-field inspection and to locate region labels (temporal lobe, MTG, hippocampus, amygdala)."
+  }
+]

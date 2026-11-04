@@ -1,0 +1,382 @@
+name: Central amygdala protein kinase C-delta (PKC-delta) neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Central amygdala protein kinase C-delta
+  (PKC-delta) neuron. Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest
+  graph and split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further
+  ASTA runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002883
+  label: central amygdaloid nucleus
+  name_in_source: central amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: cea_pkc_delta_neuron
+  name: Central amygdala protein kinase C-delta (PKC-delta) neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:21068836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 2270983_0fa016d1
+    - ref: PMID:25433901
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 442779_deea5502
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  anatomical_location:
+  - id: UBERON:0002883
+    sources:
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_0bccee6a
+    - ref: PMID:21068836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 2270983_0fa016d1
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_daaf5612
+    label: central amygdaloid nucleus
+    name_in_source: central amygdala
+    compartment: SOMA
+  defining_markers:
+  - symbol: Prkcd
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_0bccee6a
+      marker_type: PROTEIN
+    - ref: PMID:21068836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 2270983_0fa016d1
+      marker_type: PROTEIN
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_daaf5612
+      marker_type: PROTEIN
+    - ref: PMID:39463931
+      method: asta_snippet — Yu et al. 2024 primate snRNA-seq identifies PKRCD+/SST- interneuron cluster
+        in primate central nucleus
+      scope: human, macaque, baboon central amygdala snRNA-seq
+      quote_key: 273531817_c6221e42
+      marker_type: TRANSCRIPT
+    - ref: PMID:36425768
+      method: asta_snippet
+      scope: mouse CeA scRNA-seq
+      quote_key: 253356112_39b8cae2
+      marker_type: TRANSCRIPT
+  negative_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_0bccee6a
+      marker_type: PROTEIN
+    - ref: PMID:21068836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 2270983_0fa016d1
+      marker_type: PROTEIN
+  electrophysiology:
+    description: Predominantly late-firing; corresponds to the physiologically defined CeL-OFF population
+      that reduces firing to fear-conditioned stimuli.
+    sources:
+    - ref: PMID:21068836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 2270983_0fa016d1
+    - ref: PMID:40780965
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 280558687_8db1d30e
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:21068836
+  - PMID:25433901
+  - PMID:33188006
+  - PMID:38419794
+  - PMID:39463931
+  - PMID:40780965
+  is_terminal: false
+  notes: Largely non-overlapping with SOM+ CeL neurons; together with SOM cells these account for most
+    CeL neurons.
+- id: CS20230722_CLUS_1333
+  name: 1333 CEA-BST Six3 Cyp26b1 Gaba_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_1333
+edges:
+- id: edge_cea_pkc_delta_neuron_to_cs20230722_clus_1333
+  lit_type: cea_pkc_delta_neuron
+  taxonomy_type: CS20230722_CLUS_1333
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: 1:n
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002883 central amygdala
+    node_b_value: MBA:536 CeA present; discovery region_fraction 0.567 (cohort rank 12 of 20; GABA-only
+      ranks 1-3 in CEA-BST group). Cluster label "CEA-BST Six3 Cyp26b1 Gaba_2" directly confirms central
+      amygdala identity.
+    alignment: CONSISTENT
+  - property: marker_Prkcd
+    node_a_value: Prkcd — defining marker (PROTEIN/TRANSCRIPT; PMID:21068836, PMID:33188006, PMID:38419794)
+    node_b_value: Prkcd precomputed mean_expression 7.44 (CeA GABAergic cohort 99.1th pct; tier 2; applied_score
+      2.0). Highest Prkcd expression among all CEA-BST candidates.
+    alignment: CONSISTENT
+  - property: negative_marker_Sst
+    node_a_value: Sst — negative marker (PKC-delta CeL neurons are Sst-negative; PMID:21068836)
+    node_b_value: Sst precomputed mean_expression 1.21 (CeA GABAergic cohort 57.5th pct; tier 2 — ABOVE
+      threshold). Scored raw_tier -1 (penalty applied) by discovery.
+    alignment: DISCORDANT
+    notes: Sst is detectably expressed at the cluster average level. This conflicts with the Sst-negativity
+      criterion. The conflict may reflect population-level averaging — the cluster may contain both Prkcd+/Sst-
+      and Sst+ cells — rather than universal co-expression. Individual-cell validation needed.
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:21068836
+    explanation: Haubensak et al. 2010 identifies PKC-delta+ CeL neurons as the CeL-OFF population; defines
+      Prkcd and Sst negativity as the canonical marker pair. Strongly supports mapping to a Prkcd-high
+      CeA cluster.
+    snippet: The role of different amygdala nuclei (neuroanatomical subdivisions) in processing Pavlovian
+      conditioned fear has been studied extensively, but the function of the heterogeneous neuronal subtypes
+      within these nuclei remains poorly understood. Here we use molecular genetic approaches to map the
+      functional connectivity of a subpopulation of GABA-containing neurons, located in the lateral subdivision
+      of the central amygdala (CEl), which express protein kinase C-δ (PKC-δ). Channelrhodopsin-2-assisted
+      circuit mapping in amygdala slices and cell-specific viral tracing indicate that PKC-δ+ neurons
+      inhibit output neurons in the medial central amygdala (CEm), and also make reciprocal inhibitory
+      synapses with PKC-δ− neurons in CEl. Electrical silencing of PKC-δ+ neurons in vivo suggests that
+      they correspond to physiologically identified units that are inhibited by the conditioned stimulus,
+      called CEloff units. This correspondence, together with behavioural data, defines an inhibitory
+      microcircuit in CEl that gates CEm output to control the level of conditioned freezing.
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:33188006
+    explanation: CeA circuit study confirms PKC-delta+ neurons as a major CeL class non-overlapping with
+      SST+ cells.
+    snippet: This diverse span of function is mirrored by the genetic, physiological and morphologic heterogeneity
+      in CeA neuron subtypes (Martina et al., 1999;Schiess et al., 1999;Janak and Tye, 2015). Two genetically
+      identified cell types, protein kinase Cdexpressing (PKCd⁺) neurons and somatostatin-expressing (Som⁺)
+      neurons, constitute most CeLC neurons and are largely non-overlapping (Li et al., 2013;Kim et al.,
+      2017;Wilson et al., 2019).
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:36425768
+    explanation: O'Leary et al. 2022 CeA scRNA-seq confirms the CEA-BST Six3 Cyp26b1 cluster family as
+      the dominant CeA transcriptomic family, consistent with PKC-delta neuron lineage.
+    snippet: Prkcd and Sst each exhibited mixed expression across multiple scRNA-seq-clusters
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: CLUS_1333 "CEA-BST Six3 Cyp26b1 Gaba_2" (WMBv1) is explicitly labeled central amygdala;
+      56.7% of cluster cells are in CeA (MBA:536). Prkcd mean expression 7.44 (99.1th pct CeA GABAergic
+      cohort) is the highest among all CEA-BST GABA candidates. This cluster belongs to the dominant CeA
+      transcriptomic family (Six3/Cyp26b1 lineage) and is the best available match for the PKC-delta CeL
+      neuron despite the Sst caveat.
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: GABA-9-Prkcd-Ezr
+    n_cells_total: 181
+    best_f1_score: 0.914
+    best_mapping_rank: 1
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 11 CNU-HYa GABA
+      best_target_accession: CS20230722_CLAS_11
+      coverage: 1.0
+      purity: 0.12736535662299855
+      f1_score: 0.22595222724338282
+      n_cells_mapped: 175
+      median_bootstrap: 1.0
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 079 CEA-BST Six3 Cyp26b1 Gaba
+      best_target_accession: CS20230722_SUBC_079
+      coverage: 1.0
+      purity: 0.48257372654155495
+      f1_score: 0.650994575045208
+      n_cells_mapped: 180
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0368 CEA-BST Six3 Cyp26b1 Gaba_2
+      best_target_accession: CS20230722_SUPT_0368
+      coverage: 1.0
+      purity: 0.8411214953271028
+      f1_score: 0.9137055837563453
+      n_cells_mapped: 180
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 1333 CEA-BST Six3 Cyp26b1 Gaba_2
+      best_target_accession: CS20230722_CLUS_1333
+      coverage: 0.07407407407407407
+      purity: 0.47619047619047616
+      f1_score: 0.1282051282051282
+      n_cells_mapped: 10
+      median_bootstrap: 0.995
+    f1_source_relpath: at_results.yaml
+    explanation: AT transfer of GABA-9-Prkcd-Ezr.
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260617_wang2023_cea_mmc_wmbv1
+    supports: SUPPORT
+    explanation: 'Wang 2023 PKCδ+/CART+ CeA cells (n=105) map to SUPT_0368 (CEA-BST Six3 Cyp26b1 Gaba_2;
+      F1=0.624 at supertype), the same supertype family as CLUS_1333 (edge target). Corroborates the Hochgerner
+      2023 AT result at the same supertype level.
+
+      '
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.2, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE213828
+    source_cluster_label: MC-06_PKCd_Cartpt
+    n_cells_total: 105
+    best_f1_score: 0.624
+    best_mapping_rank: 1
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 11 CNU-HYa GABA
+      best_target_accession: CS20230722_CLAS_11
+      coverage: 0.9797979797979798
+      purity: 0.07661927330173776
+      f1_score: 0.14212454212454212
+      n_cells_mapped: 97
+      median_bootstrap: 0.99
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 079 CEA-BST Six3 Cyp26b1 Gaba
+      best_target_accession: CS20230722_SUBC_079
+      coverage: 0.9423076923076923
+      purity: 0.21350762527233116
+      f1_score: 0.3481349911190053
+      n_cells_mapped: 98
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0368 CEA-BST Six3 Cyp26b1 Gaba_2
+      best_target_accession: CS20230722_SUPT_0368
+      coverage: 0.8942307692307693
+      purity: 0.4793814432989691
+      f1_score: 0.6241610738255035
+      n_cells_mapped: 93
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 1333 CEA-BST Six3 Cyp26b1 Gaba_2
+      best_target_accession: CS20230722_CLUS_1333
+      coverage: 0.14102564102564102
+      purity: 0.3548387096774194
+      f1_score: 0.20183486238532108
+      n_cells_mapped: 11
+      median_bootstrap: 0.99
+    f1_source_relpath: at_results.yaml
+  caveats:
+  - caveat_type: OTHER
+    description: Sst expression at cluster average level (1.21, 57.5th pct) conflicts with the Sst-negativity
+      criterion. The CLUS_1333 mean may reflect population heterogeneity — some cells expressing Sst and
+      others not — rather than universal co-expression in all PKC-delta neurons.
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: Multiple CEA-BST Six3 Cyp26b1 clusters (CLUS_1331-1335 under SUPT_0368; CLUS_1342-1343
+      under SUPT_0370) all have high Prkcd expression and CeA fractions 0.37-0.65. Classical type likely
+      spans multiple Cyp26b1 Gaba_2/4 clusters; 1:n cardinality.
+  unresolved_questions:
+  - Does CLUS_1333 contain a Sst-negative subpopulation identifiable by sub-cluster re-clustering? Are
+    the Prkcd-high cells the Sst-negative ones?
+  - Is the CEA-BST Six3 Cyp26b1 Gaba_2 family the correct WMBv1 cluster for CeL PKC-delta-OFF neurons,
+    or is there a more specific Prkcd+/Sst- cluster at higher resolution?
+  - Trawl literature for Sst heterogeneity within PKC-delta+ CeL neurons — the cluster-average Sst expression
+    may reflect a real subpopulation signal; O'Leary et al. 2022 documents mixed expression but does not
+    quantify the Prkcd+/Sst+ fraction.
+  - Sub-cluster CLUS_1333 and neighbouring CEA-BST Cyp26b1 clusters (CLUS_1331–1335, CLUS_1342–1343) to
+    identify a Prkcd-high/Sst-low subgroup; 1:n cardinality likely across the Gaba_2/4 family.
+  - Sub-cluster CS20230722_CLUS_1333 and neighbouring CEA-BST Cyp26b1 clusters (CLUS_1331–1335, CLUS_1342–1343)
+    to identify a Prkcd-high/Sst-low subgroup; 1:n cardinality likely across the Gaba_2/4 family.
+  proposed_experiments:
+  - Sub-cluster CLUS_1333 and neighbouring Cyp26b1 clusters to identify a Prkcd-high/Sst-low subgroup
+    corresponding to the classical CeL-OFF population.
+  - RNAscope with Prkcd + Sst co-staining in mouse CeL to confirm mutual exclusivity and check which WMBv1
+    cluster(s) are Prkcd+/Sst-.
+  discovery_score:
+    score: 2
+    rank_in_cohort: 12
+    cohort_size: 20
+    next_best_score: 3
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 20
+      filters:
+      - region=MBA:536
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Prkcd
+      val: 7.44
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.991
+    - gene: -Sst
+      val: 1.21
+      reliable: true
+      raw_tier: -1
+      applied_score: -1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.575
+    region_fraction: 0.567
+    region_evidence: SELF
+  confidence: MODERATE
+  confidence_score: 0.72
+  rationale: '1 of 2 markers CONSISTENT: `marker_Prkcd` CONSISTENT — precomputed mean_expression 7.44
+    (CeA GABAergic cohort 99.1th percentile; tier 2; applied_score 2.0), highest among all CEA-BST candidates.
+    `location_soma` CONSISTENT — region_fraction 0.567 (boundary-band; informs broadMatch). `nt_type`
+    CONSISTENT — GABA label confirmed. ANNOTATION_TRANSFER (run `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`):
+    Hochgerner 2023 GABA-9-Prkcd-Ezr (n=181 naive cells; ArrayExpress:E-MTAB-12096) maps to CS20230722_SUPT_0368
+    at F1=0.91 (coverage=1.0, purity=0.84); cluster-level F1=0.13 against CS20230722_CLUS_1333 (consistent
+    with 1:n dispersal across the Cyp26b1 Gaba_2 family). Primary concern: `negative_marker_Sst` DISCORDANT
+    — Sst mean_expression 1.21 (57.5th pct CeA GABAergic cohort), above minimum-detectable threshold,
+    conflicting with canonical Sst-negativity criterion (PMID:21068836); O''Leary et al. 2022 scRNA-seq
+    (PMID:36425768) documents mixed Prkcd and Sst expression across clusters, providing a plausible population-averaging
+    mechanism. MODERATE reflects SUPT-level AT anchor (F1=0.91) with documented marker contradiction and
+    1:n cardinality caveat.
+
+    '
+  rationale_generated_at: '2026-06-11T10:22:01+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/cea_pkc_delta_neuron_summary.md
+  rationale_source_hash: cbbdec46

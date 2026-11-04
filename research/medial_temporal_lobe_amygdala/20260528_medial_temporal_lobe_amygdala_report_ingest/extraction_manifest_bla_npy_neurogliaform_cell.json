@@ -1,0 +1,95 @@
+{
+  "node_id": "bla_npy_neurogliaform_cell",
+  "added_by": "evidence_extraction_bla_npy_neurogliaform_cell_20260612",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest/uncertain_all_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "excluded_pmids": ["PMID:29439199"],
+  "entries": [
+    {
+      "source_corpus_id": "232283078",
+      "pmid": "PMID:33837051",
+      "title": "Total Number and Ratio of GABAergic Neuron Types in the Mouse Lateral and Basal Amygdala",
+      "relevance": "HIGH",
+      "decision": "no_new_source",
+      "reason": "Directly relevant — names 'NPY-containing neurogliaform cells (14%-15%)' in LA/BA, GABAergic. However the exact verbatim sub-claim is already captured by quote_key 232283078_d4238834, which is already attached to this node's nt_type, anatomical_location, defining_markers (Npy), and morphology fields. Adding the full abstract as a new quote_key would duplicate existing evidence with no new field or distinct claim to attach."
+    },
+    {
+      "source_corpus_id": "264517392",
+      "pmid": "PMID:37884748",
+      "relevance": "LOW",
+      "decision": "skip",
+      "reason": "Mouse amygdala molecular atlas (130 neuronal types); quote does not mention NPY, neurogliaform morphology, or this specific interneuron class."
+    },
+    {
+      "source_corpus_id": "221366115",
+      "pmid": "PMID:32858950",
+      "relevance": "LOW",
+      "decision": "skip",
+      "reason": "Generic statement: BLA mostly glutamatergic with minority GABAergic interneurons. No NPY/neurogliaform specificity."
+    },
+    {
+      "source_corpus_id": "17223544",
+      "pmid": "PMID:20484636",
+      "relevance": "LOW",
+      "decision": "skip",
+      "reason": "LA/BLA glutamatergic projection neurons vs CA GABAergic; no NPY/neurogliaform reference."
+    },
+    {
+      "source_corpus_id": "3103554",
+      "pmid": "PMID:27053114",
+      "relevance": "LOW",
+      "decision": "skip",
+      "reason": "BLA glutamatergic principal neurons vs CeA GABAergic medium spiny neurons; no NPY/neurogliaform reference."
+    },
+    {
+      "source_corpus_id": "280092907",
+      "pmid": "PMID:40686779",
+      "relevance": "LOW",
+      "decision": "skip",
+      "reason": "LA/BLA 80-85% glutamatergic; no NPY/neurogliaform interneuron detail."
+    },
+    {
+      "source_corpus_id": "281382725",
+      "pmid": "PMID:40961182",
+      "relevance": "LOW",
+      "decision": "skip",
+      "reason": "Describes parvalbumin and somatostatin GABAergic neurons in primate basolateral complex; no NPY/neurogliaform reference."
+    },
+    {
+      "source_corpus_id": "4940771",
+      "pmid": "PMID:31193505",
+      "relevance": "LOW",
+      "decision": "skip",
+      "reason": "BLA principal neuron fear/extinction populations; not relevant to NPY interneuron."
+    },
+    {
+      "source_corpus_id": "104297085",
+      "pmid": "PMID:27767183",
+      "relevance": "LOW",
+      "decision": "skip",
+      "reason": "Thy1+ 'Fear-Off' / Ntsr2 neurons; not an NPY neurogliaform interneuron."
+    },
+    {
+      "source_corpus_id": "17860491",
+      "pmid": "PMID:28453642",
+      "relevance": "LOW",
+      "decision": "skip",
+      "reason": "Calbindin and parvalbumin GABAergic interneurons; explicitly not NPY/neurogliaform."
+    },
+    {
+      "source_corpus_id": "250411527",
+      "pmid": "PMID:35841648",
+      "relevance": "LOW",
+      "decision": "skip",
+      "reason": "Paralaminar nucleus immature excitatory neurons; not relevant."
+    }
+  ],
+  "extracted_count": 0,
+  "fields_written": [],
+  "gaps": [
+    "No NPY/neurogliaform-specific electrophysiology (e.g. late-spiking) in this corpus.",
+    "No LAMP5 co-expression evidence.",
+    "No dendrite-targeting / volume-transmission evidence.",
+    "Strongest evidence (Vereczki 2021, NPY-containing neurogliaform cells 14-15%) already extracted on node via quote_key 232283078_d4238834."
+  ]
+}

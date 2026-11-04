@@ -1,0 +1,52 @@
+id: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "ArrayExpress:E-MTAB-12096"
+source_cluster_label: >
+  Hochgerner 2023 celltype labels (144 types: 56 GABA, 32 VGLUT1, 42 VGLUT2,
+  14 non-neuronal). Non-neuronal types excluded. Fear-conditioned cells
+  (FC time != 0) excluded. Naive cells only (FC time = 0). Labels are
+  Zeisel-style: NT_class-N-MarkerGene1-MarkerGene2 (e.g. GABA-8-Prkcd-Oprk1).
+  Annotation column: celltype. Source DOI: 10.1038/s41593-023-01469-3.
+  Processed UMI table from figshare: 10.6084/m9.figshare.20412573.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.1, default parameters,
+  raw normalization, 100 bootstrap iterations). Input h5ad built from
+  Hochgerner 2023 figshare UMI count table: genes x cells TSV converted to
+  cells x genes h5ad, filtered to naive neuronal cells. Gene names are
+  gene symbols as in source file. F1 scoring against celltype source labels.
+tool_version: "cell_type_mapper v1.7.1"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.7
+n_cells_total: 55514
+n_cells_after_filter: 7777
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.11"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "(see git log at run time)"
+
+output:
+  relpath: "../../../../research/medial_temporal_lobe_amygdala/annotation_transfer/hochgerner2023_amygdala/mapping_result.csv"
+  format: csv
+
+caveats: >
+  Source labels are transcriptomically-defined types, not classical
+  morpho-electrophysiological types. Matching to KB classical nodes requires
+  a mapping step (Hochgerner type -> classical node) based on shared
+  molecular markers. Fear-conditioned cells excluded to avoid
+  transcriptional-state confounds. Non-neuronal cells excluded.
+  Gene symbols used (not Ensembl IDs); matched against WMBv1 marker genes.

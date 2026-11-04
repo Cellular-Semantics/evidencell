@@ -1,0 +1,86 @@
+{
+  "node_id": "cea_small_aspiny_neuron",
+  "added_by": "evidence_extraction_cea_small_aspiny_neuron_20260615",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260615_medial_temporal_lobe_amygdala_cite_traverse/depth_0_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "excluded_corpus_ids": ["221366115", "252477669", "17223544", "232283078"],
+  "existing_refs": [
+    "PMID:20484636",
+    "PMID:32751957",
+    "PMID:32858950",
+    "PMID:38419794",
+    "PMID:40686779"
+  ],
+  "entries_processed": [
+    {
+      "source_corpus_id": "280092907",
+      "decision": "SKIP",
+      "reason": "PMID:40686779 is already in existing refs for this node"
+    },
+    {
+      "source_corpus_id": "281382725",
+      "decision": "SKIP",
+      "reason": "HIGH relevance flag was for ITC aspiny morphology (TSHZ1+ intercalated cells), not CeA small aspiny neurons. No quotes distinguish small aspiny morphology in CeA specifically."
+    },
+    {
+      "source_corpus_id": "4940771",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for BLA interneuron markers (CB, PV, SST, NPY). No content on CeA aspiny cell morphology."
+    },
+    {
+      "source_corpus_id": "17860491",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for calbindin+ BLA interneurons in extinction circuits. No content on CeA small aspiny morphology."
+    },
+    {
+      "source_corpus_id": "250411527",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for paralaminar_immature_neuron. Not relevant to cea_small_aspiny_neuron."
+    },
+    {
+      "source_corpus_id": "104297085",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for Thy1+/NTSR2+ BLA fear-inhibiting neurons. No content on CeA small aspiny morphology."
+    },
+    {
+      "source_corpus_id": "264517392",
+      "decision": "SKIP",
+      "reason": "scRNA-seq CeA types (GABA-5 to GABA-21) are flagged as relevant, but no quotes specifically address small aspiny morphology or distinguish small from large aspiny neurons. General CeA GABAergic identity already covered by existing refs."
+    },
+    {
+      "source_corpus_id": "3103554",
+      "decision": "SKIP",
+      "reason": "MODERATE relevance — CeA GABAergic context (IP3K-A colocalises with GAD67+ neurons). No morphological data on aspiny subtypes; does not distinguish small aspiny from large aspiny. Relevance reason explicitly notes no direct morphological data on aspiny subtypes."
+    },
+    {
+      "source_corpus_id": "221366115",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "252477669",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "17223544",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "232283078",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    }
+  ],
+  "propertysource_entries_written": 0,
+  "fields_updated": [],
+  "gaps": [
+    "morphology.sources — no eligible summary specifically addresses small aspiny soma/dendrite morphology or distinguishes it from large aspiny neurons",
+    "markers (positive/negative) — none recorded; no eligible summary provides CeA small aspiny-specific marker data",
+    "electrophysiology.sources — no eligible summary distinguishes small aspiny electrophysiology from large aspiny",
+    "anatomical_location[].sources — general CeA GABAergic context available (CorpusId:3103554) but insufficient to add without aspiny-specific distinction",
+    "nt_type.sources — already well covered by existing refs"
+  ]
+}

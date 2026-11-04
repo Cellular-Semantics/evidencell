@@ -1,0 +1,114 @@
+[
+  {
+    "step": "fetch_depth_0",
+    "asta_snippets_returned": 35,
+    "asta_snippets_filtered_title": 2,
+    "asta_snippets_filtered_peer_review": 0,
+    "asta_snippets_used": 33,
+    "gap_papers_count": 29,
+    "fallback_attempted": 8,
+    "fallback_success": 0,
+    "fallback_notes": "Gap paper IDs are Semantic Scholar corpus IDs (not PMIDs); EuropePMC lookup by these numeric IDs returns irrelevant records (Medicare, hepatic cirrhosis, diabetes, oncology articles). No PMC full text retrievable for any gap paper via this route. All 29 gap papers recorded as no_pmc.",
+    "report_summaries_merged": 0,
+    "total_summaries": 33,
+    "paper_ids_queried": 44,
+    "papers_with_snippets": 15,
+    "papers_source_list": [
+      "10856039",
+      "212579559",
+      "15449738",
+      "11544073",
+      "220930580",
+      "1229611",
+      "14068807",
+      "195246702",
+      "161407",
+      "264517392",
+      "233450033",
+      "232283078",
+      "248700803",
+      "231758452",
+      "271240390"
+    ],
+    "node_relevance_breakdown": {
+      "HIGH": 25,
+      "MODERATE": 6,
+      "LOW": 2
+    }
+  },
+  {
+    "step": "selection_depth_0",
+    "candidates_evaluated": 15,
+    "selected": 7,
+    "deselected": 8
+  },
+  {
+    "step": "fetch_depth_1",
+    "asta_snippets_returned": 20,
+    "asta_snippets_filtered_title": 1,
+    "asta_snippets_filtered_peer_review": 0,
+    "asta_snippets_used": 19,
+    "gap_papers_count": 1,
+    "gap_paper_ids": ["271240390"],
+    "fallback_attempted": 1,
+    "fallback_success": 1,
+    "fallback_notes": "271240390 (Raudales et al. 2024 eLife, 'Specific and comprehensive genetic targeting reveals brain-wide distribution and synaptic input patterns of GABAergic axo-axonic interneurons') resolved via Semantic Scholar to PMC11251723 and full text retrieved via EuropePMC. 3 relevant passages extracted covering BLA AAC distribution, morphology, and GLU PN correlation.",
+    "report_summaries_merged": 0,
+    "total_summaries": 20,
+    "paper_ids_queried": 7,
+    "papers_with_snippets": 6,
+    "papers_source_list": [
+      "10856039",
+      "11544073",
+      "14068807",
+      "195246702",
+      "232283078",
+      "264517392"
+    ],
+    "node_relevance_breakdown": {
+      "HIGH": 14,
+      "MODERATE": 6,
+      "LOW": 0
+    }
+  },
+  {
+    "step": "synthesis",
+    "summaries_read": 58,
+    "papers_in_catalogue": 44,
+    "themes_identified": [
+      "BLA interneuron census and the seven cardinal GABAergic cell types",
+      "SST+ interneurons and the SST/nNOS GABAergic projection neuron",
+      "Axo-axonic (chandelier) cells: amygdala-wide distribution and PN dependence",
+      "NPY neurogliaform, CCK basket, and VIP/calretinin interneurons",
+      "Single-cell transcriptomic taxonomy of mouse amygdala",
+      "Functional roles in fear learning, expression, and extinction",
+      "Intercalated, central, and medial amygdala GABAergic neuron landscape (primate + comparative)",
+      "Paralaminar nucleus and immature excitatory neurons in primate amygdala"
+    ],
+    "papers_cited_in_report": 15,
+    "quotes_used_in_report": 78,
+    "schema_gaps": [
+      "defining_markers (medial_amygdala_lhx9_glutamatergic_neuron: LHX9 not mentioned)",
+      "defining_markers (basal_amygdala_fear_neuron: no marker)",
+      "defining_markers (basal_amygdala_extinction_neuron: no marker)",
+      "defining_markers (central_amygdala_gabaergic_projection_neuron: partial — Six3/Ano3/Epha4/Ppp1r1b only via mouse scRNA-seq)",
+      "defining_markers (bla_glutamatergic_principal_neuron: only Grp subtype mentioned)",
+      "electrophysiology (quantitative biophysics absent)",
+      "morphology (per-node morphometry absent)",
+      "human BLA interneuron census (no primary human data)"
+    ],
+    "new_types_encountered": [
+      "PV+ AStria cells (amygdalostriatal transition)",
+      "CEA Ppp1r1b/DARPP-32 lateral striatal MSN-like neurons",
+      "MEA-projecting Lhx6+ neuropeptide-rich (galanin/vasopressin) inhibitory cells",
+      "CEA enkephalinergic (LGEd Pax6+) cells",
+      "CEA CRF+/dynorphin+/calbindin+ (LGEv Islet1+) cells",
+      "CEA MGE-derived Nkx2.1+/SST+ cells (medial subdivision)",
+      "LA-Grp pyramidal neurons (Cyp26b1/Neurod6/Satb1; BLA-Rspo2 type 2 VGLUT1)",
+      "Grpr-expressing LA interneuron subset (VIP-GABA-50/51, Pvalb-GABA-41)",
+      "M2 muscarinic receptor-expressing minor BLA GABAergic type",
+      "PV+/CB+, SOM+/CB+ marker-defined subpopulations"
+    ],
+    "note_report_md": "Harness blocked Write to report.md (subagent restriction); report content returned in final assistant message instead. paper_catalogue.json, all_summaries.json, run_config.json (completed_at), and run_manifest.json successfully written."
+  }
+]

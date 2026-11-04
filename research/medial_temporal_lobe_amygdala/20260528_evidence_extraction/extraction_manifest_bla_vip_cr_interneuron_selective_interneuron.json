@@ -1,0 +1,56 @@
+{
+  "node_id": "bla_vip_cr_interneuron_selective_interneuron",
+  "run_date": "2026-06-03",
+  "summaries_read": 80,
+  "skipped_excluded": 4,
+  "skipped_duplicate_ref": 3,
+  "skipped_low_relevance": 4,
+  "entries_written": 4,
+  "fields_populated": [
+    "morphology.sources",
+    "defining_markers.Calb2.sources"
+  ],
+  "sources_added": [
+    {
+      "corpus_id": "232283078",
+      "pmid": "PMID:33837051",
+      "quote_key": "232283078_08e867ee",
+      "field": "morphology.sources",
+      "note": "Added in prior run (2026-05-28): Vereczki et al. 2021 quantifies VIP/calretinin IS interneurons as 29-38% of GABAergic cells in LA/BA"
+    },
+    {
+      "corpus_id": "273531817",
+      "pmid": "PMID:39463931",
+      "quote_key": "273531817_447a3097",
+      "field": "morphology.sources",
+      "note": "Added in prior run (2026-05-28): Yu et al. 2024 primate snRNA-seq confirms VIP+ IS interneuron co-expression of CALB2/CCK/CRH/CNR1"
+    },
+    {
+      "corpus_id": "233450033",
+      "pmid": "PMID:33994955",
+      "quote_key": "233450033_a39dd55b",
+      "quote_text": "VIP cells drive disinhibitory circuit operations in the BLA in the fear conditioning paradigm",
+      "field": "morphology.sources",
+      "section": "FUNCTIONAL ROLE OF GABAERGIC CELL TYPES IN FEAR MEMORY",
+      "note": "New 2026-06-03: VIP interneurons drive disinhibitory circuits = interneuron-selective targeting"
+    },
+    {
+      "corpus_id": "264517392",
+      "pmid": "PMID:37884748",
+      "quote_key": "264517392_e4968477",
+      "quote_text": "Local/interneuron markers Nfib, Nfix, Tcf4, Satb1 and Prox1 were expressed among canonical medial ganglionic eminences (MGE)- and caudal ganglionic eminences (CGE)-derived interneuron types (for example, Sst, Pvalb, Vip or Sncg)",
+      "field": "defining_markers.Calb2.sources",
+      "section": "Inhibitory cells mirror projection type and subregion",
+      "marker_type": "TRANSCRIPT",
+      "note": "New 2026-06-03: scRNA-seq confirms Vip as CGE-derived interneuron class in mouse amygdala"
+    }
+  ],
+  "fields_with_no_evidence": [
+    "anatomical_location.sources (existing via PMID:22837739)",
+    "electrophysiology.sources",
+    "nt_type.sources (existing via PMID:22837739)"
+  ],
+  "refs_file": "/Users/ar38/Documents/GitHub/evidencell/references/medial_temporal_lobe_amygdala/references.json",
+  "kb_file": "/Users/ar38/Documents/GitHub/evidencell/kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml",
+  "added_by": "evidence_extraction_bla_vip_cr_interneuron_selective_interneuron_2026-06-03"
+}

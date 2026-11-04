@@ -1,0 +1,264 @@
+name: Central amygdala ISL1-expressing long-range projection neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Central amygdala ISL1-expressing long-range
+  projection neuron. Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest
+  graph and split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further
+  ASTA runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002883
+  label: central amygdaloid nucleus
+  name_in_source: central amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: cea_isl1_projection_neuron
+  name: Central amygdala ISL1-expressing long-range projection neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:36425768
+      method: cite_traverse
+      scope: amygdala literature synthesis
+      quote_key: 253356112_2fc294b0
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  anatomical_location:
+  - id: UBERON:0002883
+    sources:
+    - ref: PMID:36425768
+      method: cite_traverse
+      scope: amygdala literature synthesis
+      quote_key: 253356112_2fc294b0
+    label: central amygdaloid nucleus
+    name_in_source: central amygdala
+    compartment: SOMA
+  defining_markers:
+  - symbol: Isl1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:36425768
+      method: cite_traverse
+      scope: amygdala literature synthesis
+      quote_key: 253356112_2fc294b0
+      marker_type: PROTEIN
+    - ref: PMID:25309337
+      method: europepmc_fulltext — Vicario et al. 2014 mammalian CeA LGEv-derived Islet1+ neurons
+      scope: mammalian central amygdala, comparative avian/rodent developmental study
+      quote_key: 10856039_2cd068c1
+      marker_type: PROTEIN
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:36425768
+  is_terminal: false
+  notes: Identified by O'Leary et al. 2022 (iScience) as an Isl1-expressing medial-CeA cell type accounting
+    for many long-range CEA projections; constitutes approximately one-third of all CEA neurons together
+    with an Nr2f2+ non-canonical subdomain. Prkcd and Sst exhibit mixed expression across multiple scRNA-seq
+    clusters, suggesting these canonical markers alone do not resolve all CeA projection cell types. STUB
+    — pending primary evidence extraction.
+- id: CS20230722_CLUS_1385
+  name: 1385 CEA-BST Ebf1 Pdyn Gaba_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_1385
+edges:
+- id: edge_cea_isl1_projection_neuron_to_cs20230722_clus_1385
+  lit_type: cea_isl1_projection_neuron
+  taxonomy_type: CS20230722_CLUS_1385
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: 1:n
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002883 central amygdala
+    node_b_value: MBA:536 CeA present; discovery region_fraction 0.489 (highest among rank0 candidates).
+      Cluster label "CEA-BST Ebf1 Pdyn Gaba_1" confirms CEA-BST lineage.
+    alignment: CONSISTENT
+  - property: marker_Isl1
+    node_a_value: Isl1 — defining marker (PMID:36425768)
+    node_b_value: Isl1 precomputed mean_expression 6.62 (CeA GABAergic cohort 96.4th pct; tier 2; applied_score
+      2.0). Cluster "1385 CEA-BST Ebf1 Pdyn Gaba_1".
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:36425768
+    explanation: O'Leary et al. 2022 identifies Isl1-expressing neurons as a major medial CeA class responsible
+      for a large fraction of CEA long-range projections; ISL1 marks developmentally distinct LGEv-derived
+      CeA neurons.
+    snippet: Such work has typically defined molecular cell types by classical inhibitory marker genes;
+      consequently, whether marker-gene- defined cell types exhaustively cover the CEA and co-vary with
+      connectivity remains unresolved. Here, we combined single-cell RNA sequencing, multiplexed fluorescent
+      in situ hybridization, immunohistochemistry, and long-range projection mapping to derive a "bottom-up"
+      understanding of CEA cell types. In doing so, we identify two major cell types, encompassing one-third
+      of all CEA neurons, that have gone unresolved in previous studies. In spatially mapping these novel
+      types, we identify a non-canonical CEA subdomain associated with Nr2f2 expression and uncover an
+      Isl1-expressing medial cell type that accounts for many long-range CEA projections.
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: CLUS_1385 "CEA-BST Ebf1 Pdyn Gaba_1" (WMBv1) expresses Isl1 at 96.4th pct of CeA GABAergic
+      cohort (tier-2 reliable) with CeA region_fraction 0.489 — highest among all rank0 candidates. The
+      CEA-BST label directly confirms central amygdala identity. Four of five rank0 candidates are CEA-BST
+      clusters, providing a coherent transcriptomic family for the ISL1 projection neuron class.
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: PARTIAL
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: GABA-18-Isl1-Tac1
+    n_cells_total: 27
+    best_f1_score: 0.88
+    best_mapping_rank: 1
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 11 CNU-HYa GABA
+      best_target_accession: CS20230722_CLAS_11
+      coverage: 1.0
+      purity: 0.016739446870451237
+      f1_score: 0.0329277022190408
+      n_cells_mapped: 23
+      median_bootstrap: 1.0
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 082 CEA-BST Ebf1 Pdyn Gaba
+      best_target_accession: CS20230722_SUBC_082
+      coverage: 0.8888888888888888
+      purity: 0.09561752988047809
+      f1_score: 0.1726618705035971
+      n_cells_mapped: 24
+      median_bootstrap: 1.0
+    f1_source_relpath: at_results.yaml
+    explanation: AT transfer of GABA-18-Isl1-Tac1.
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260617_wang2023_cea_mmc_wmbv1
+    supports: PARTIAL
+    explanation: 'Wang 2023 Isl1+ CeA cells (n=195) map at weak F1 to CLUS_1385 (CEA-BST Ebf1 Pdyn Gaba_1;
+      F1=0.236), consistent with the edge target family (SUPT_0384). The low F1 reflects 1:n distribution
+      of Isl1+ cells across CEA-BST Ebf1 Pdyn Gaba_1 clusters; correct supertype family is confirmed.
+
+      '
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.2, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE213828
+    source_cluster_label: MC-Isl1
+    n_cells_total: 195
+    best_f1_score: 0.236
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 11 CNU-HYa GABA
+      best_target_accession: CS20230722_CLAS_11
+      coverage: 0.9521276595744681
+      purity: 0.14139020537124802
+      f1_score: 0.24621733149931221
+      n_cells_mapped: 179
+      median_bootstrap: 0.99
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 082 CEA-BST Ebf1 Pdyn Gaba
+      best_target_accession: CS20230722_SUBC_082
+      coverage: 0.786096256684492
+      purity: 0.2073342736248237
+      f1_score: 0.328125
+      n_cells_mapped: 147
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0384 CEA-BST Ebf1 Pdyn Gaba_1
+      best_target_accession: CS20230722_SUPT_0384
+      coverage: 0.2080536912751678
+      purity: 0.22962962962962963
+      f1_score: 0.21830985915492956
+      n_cells_mapped: 31
+      median_bootstrap: 0.97
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 1385 CEA-BST Ebf1 Pdyn Gaba_1
+      best_target_accession: CS20230722_CLUS_1385
+      coverage: 0.01680672268907563
+      purity: 0.2222222222222222
+      f1_score: 0.03125
+      n_cells_mapped: 2
+      median_bootstrap: 0.98
+    f1_source_relpath: at_results.yaml
+  caveats:
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: Five CEA-BST clusters all score 3/3 on Isl1 alone (CLUS_1316/1385/1386/1395/1397). Classical
+      type spans multiple CEA-BST cluster subtypes; 1:n cardinality at rank0.
+  - caveat_type: OTHER
+    description: ISL1 is a developmental transcription factor widely expressed during amygdala neurogenesis;
+      adult expression may be restricted but is not atlas-confirmed at single-cell level.
+  unresolved_questions:
+  - Which CEA-BST Ebf1 Pdyn cluster (CLUS_1385 vs 1386 vs 1395 vs 1397) best represents the ISL1 long-range
+    projection neuron?
+  - Is ISL1 expression maintained in adult CeA neurons, or does the atlas capture a developmental remnant?
+  - Which CEA-BST Ebf1 Pdyn cluster (CLUS_1385 vs 1386 vs 1395 vs 1397 vs 1316) best represents the ISL1
+    long-range projection neuron? Five rank0 clusters score identically on Isl1 alone.
+  - Is ISL1 expression maintained in adult CeA neurons, or does the atlas capture a developmental remnant
+    of LGEv neurogenesis?
+  - Which CEA-BST Ebf1 Pdyn cluster (CS20230722_CLUS_1385 vs 1386 vs 1395 vs 1397 vs 1316) best represents
+    the ISL1 long-range projection neuron? Five rank-0 clusters score identically on Isl1 alone; AT from
+    Hochgerner 2023 GABA-18-Isl1-Tac1 resolves subclass but not rank-0 cardinality.
+  proposed_experiments:
+  - ISL1 IHC in adult mouse CeA to confirm sustained expression in mature neurons.
+  - MapMyCells on ISL1-lineage traced CeA neurons to resolve 1:n cardinality among CEA-BST clusters.
+  discovery_score:
+    score: 3
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 3
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:536
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Isl1
+      val: 6.62
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.964
+    region_fraction: 0.489
+    region_evidence: SELF
+  confidence: MODERATE
+  confidence_score: 0.52
+  rationale: 'marker_Isl1 CONSISTENT (precomputed mean_expression 6.62, CeA GABAergic cohort 96.4th pct;
+    tier 2 reliable; EXPRESSION source); location_soma CONSISTENT (region_fraction 0.489 at MBA:536; CEA-BST
+    label confirms lineage); nt_type CONSISTENT (GABAergic/GABA). 1 of 1 markers CONSISTENT. AT evidence
+    (at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1; source GABA-18-Isl1-Tac1, n=27 cells) provides
+    partial support: F1=0.17 at SUBCLASS (CS20230722_SUBC_082 "082 CEA-BST Ebf1 Pdyn Gaba"; coverage 0.89,
+    purity 0.10) confirms correct subclass family but does not resolve rank-0 cardinality. Five rank-0
+    CEA-BST clusters score identically on Isl1 alone (DISTRIBUTED_ACROSS_CLUSTERS; discovery score = 3,
+    next_best_score = 3, cohort_size = 5); skos:broadMatch 1:n is the appropriate predicate. Confidence
+    is MODERATE on basis of LITERATURE + ATLAS_METADATA + PARTIAL AT converging on CEA-BST Ebf1 Pdyn family,
+    with 1:n cardinality as primary unresolved caveat.
+
+    '
+  rationale_generated_at: '2026-06-11T09:53:16+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/cea_isl1_projection_neuron_summary.md
+  rationale_source_hash: 10ac0aa0
+  reconciliation_note: null

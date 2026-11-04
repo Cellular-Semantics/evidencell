@@ -1,0 +1,107 @@
+{
+  "run_id": "at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "/Users/andrea/Documents/GitHub/evidencell/research/medial_temporal_lobe_amygdala/annotation_transfer/hochgerner2023_amygdala/f1_matrix.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "GABA-13-Adora2a-Crh"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "GABA-13-Adora2a-Crh": {
+      "class": [
+        {
+          "target_name": "09 CNU-LGE GABA",
+          "node_id": "CS20230722_CLAS_09",
+          "n_cells": 16,
+          "f1": 0.0727,
+          "purity": 0.0377,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "062 STR D2 Gaba",
+          "node_id": "CS20230722_SUBC_062",
+          "n_cells": 15,
+          "f1": 0.229,
+          "purity": 0.1304,
+          "coverage": 0.9375
+        },
+        {
+          "target_name": "061 STR D1 Gaba",
+          "node_id": "CS20230722_SUBC_061",
+          "n_cells": 1,
+          "f1": 0.0392,
+          "purity": 0.0286,
+          "coverage": 0.0625
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0278 STR D2 Gaba_5",
+          "node_id": "CS20230722_SUPT_0278",
+          "n_cells": 10,
+          "f1": 0.8,
+          "purity": 0.8333,
+          "coverage": 0.7692
+        },
+        {
+          "target_name": "0269 STR D1 Gaba_5",
+          "node_id": "CS20230722_SUPT_0269",
+          "n_cells": 1,
+          "f1": 0.0606,
+          "purity": 0.05,
+          "coverage": 0.0769
+        },
+        {
+          "target_name": "0274 STR D2 Gaba_1",
+          "node_id": "CS20230722_SUPT_0274",
+          "n_cells": 2,
+          "f1": 0.0506,
+          "purity": 0.0303,
+          "coverage": 0.1538
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0983 STR D2 Gaba_5",
+          "node_id": "CS20230722_CLUS_0983",
+          "n_cells": 5,
+          "f1": 0.5882,
+          "purity": 0.7143,
+          "coverage": 0.5
+        },
+        {
+          "target_name": "0984 STR D2 Gaba_5",
+          "node_id": "CS20230722_CLUS_0984",
+          "n_cells": 3,
+          "f1": 0.4615,
+          "purity": 1.0,
+          "coverage": 0.3
+        },
+        {
+          "target_name": "0966 STR D2 Gaba_1",
+          "node_id": "CS20230722_CLUS_0966",
+          "n_cells": 1,
+          "f1": 0.1667,
+          "purity": 0.5,
+          "coverage": 0.1
+        },
+        {
+          "target_name": "0957 STR D1 Gaba_5",
+          "node_id": "CS20230722_CLUS_0957",
+          "n_cells": 1,
+          "f1": 0.1,
+          "purity": 0.1,
+          "coverage": 0.1
+        }
+      ]
+    }
+  }
+}

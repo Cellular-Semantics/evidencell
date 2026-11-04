@@ -1,0 +1,548 @@
+{
+  "classical_node_id": "bla_vip_calretinin_interneuron",
+  "classical_node_name": "Basolateral amygdala VIP/calretinin interneuron-selective interneuron",
+  "taxonomy_id": "CCN20230722",
+  "rank": 1,
+  "n_candidates": 5,
+  "candidates": [
+    {
+      "node_id": "CS20230722_SUPT_0175",
+      "label": "0175 Vip Gaba_3",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_046",
+      "discovery_score": {
+        "score": 7,
+        "rank_in_cohort": 1,
+        "cohort_size": 5,
+        "next_best_score": 6,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Vip",
+            "val": 10.23,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.952
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Calb2",
+            "val": 4.19,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.831
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Cck",
+            "val": 6.81,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.867
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.09,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.518
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 1.0,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.265
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.043,
+        "region_fraction_100um": 0.065,
+        "region_evidence": "SELF",
+        "at_signal": {
+          "f1": 0.44444444444444453,
+          "n_cells": 16,
+          "target_level": "supertype",
+          "target_name": "0175 Vip Gaba_3",
+          "score": 2
+        }
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0174",
+      "label": "0174 Vip Gaba_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_046",
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 6,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Vip",
+            "val": 10.55,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.964
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Calb2",
+            "val": 5.63,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.904
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Cck",
+            "val": 1.5,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.446
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.58,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.795
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.87,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.145
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.034,
+        "region_fraction_100um": 0.052,
+        "region_evidence": "SELF",
+        "at_signal": {
+          "f1": 0.5714285714285715,
+          "n_cells": 22,
+          "target_level": "supertype",
+          "target_name": "0174 Vip Gaba_2",
+          "score": 3
+        }
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0179",
+      "label": "0179 Vip Gaba_7",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_046",
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 3,
+        "cohort_size": 5,
+        "next_best_score": 6,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Vip",
+            "val": 6.82,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.928
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Calb2",
+            "val": 6.78,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.952
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Cck",
+            "val": 1.36,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.398
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.09,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.518
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 1.04,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.301
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.004,
+        "region_fraction_100um": 0.016,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0181",
+      "label": "0181 Vip Gaba_9",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_046",
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 4,
+        "cohort_size": 5,
+        "next_best_score": 6,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Vip",
+            "val": 3.03,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.904
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Calb2",
+            "val": 6.96,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.964
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Cck",
+            "val": 3.85,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.711
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.04,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.337
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.99,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.229
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.053,
+        "region_fraction_100um": 0.095,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0292",
+      "label": "0292 IA Mgp Gaba_3",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_065",
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 5,
+        "cohort_size": 5,
+        "next_best_score": 6,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Vip",
+            "val": 0.26,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.627
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Calb2",
+            "val": 0.39,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.289
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Cck",
+            "val": 6.38,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.843
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 3.14,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.711
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.056,
+        "region_fraction_100um": 0.152,
+        "region_evidence": "SELF"
+      }
+    }
+  ]
+}

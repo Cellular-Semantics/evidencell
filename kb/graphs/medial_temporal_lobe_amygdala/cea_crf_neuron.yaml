@@ -1,0 +1,209 @@
+name: Central amygdala corticotropin-releasing factor (CRF) neuron — classical type
+description: 'Single classical cell type (one-file-one-class): Central amygdala corticotropin-releasing
+  factor (CRF) neuron. Ported from the medial_temporal_lobe_amygdala branch''s monolithic 20260528 report-ingest
+  graph and split by component. Mappings are single-edge, pre-top-K Stage B output — weak, pending further
+  ASTA runs and re-mapping.'
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002883
+  label: central amygdaloid nucleus
+  name_in_source: central amygdala
+species: null
+creation_date: '2026-05-28'
+notes: Reshaped from 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml (definition_basis CLASSICAL
+  → CLASSICAL_MULTIMODAL; anatomical_location name → label + name_in_source; marker_type added to marker
+  sources; nt_type cl_terms and cl_mapping labels populated; LITERATURE evidence quote_key → snippet;
+  ATLAS_METADATA reference → atlas; legacy caveat types mapped to current enum with original kept in description).
+nodes:
+- id: cea_crf_neuron
+  name: Central amygdala corticotropin-releasing factor (CRF) neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_678b0ee4
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  species: null
+  neuropeptides:
+  - symbol: Crh
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_daaf5612
+      marker_type: PROTEIN
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:38419794
+  is_terminal: false
+  notes: Often partially overlaps with other neuropeptide-defined CeA populations; not exhaustively characterized
+    here.
+  anatomical_location:
+  - id: UBERON:0002883
+    sources:
+    - ref: PMID:38419794
+      method: asta_report
+      scope: CeA neuropeptide neuron classification
+      quote_key: 267685584_daaf5612
+    label: central amygdaloid nucleus
+    name_in_source: central amygdala
+    compartment: SOMA
+- id: CS20230722_SUPT_0393
+  name: SUPT_0393 CEA-BST Rai14 Pdyn Crh Gaba_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0393
+edges:
+- id: edge_cea_crf_neuron_to_cs20230722_supt_0393
+  lit_type: cea_crf_neuron
+  taxonomy_type: CS20230722_SUPT_0393
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: 1:n
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002883 central amygdala
+    node_b_value: MBA:536 CeA present; SUPT_0393 "CEA-BST Rai14 Pdyn Crh Gaba_2" region_fraction 0.034
+      at supertype level (rank-1 cohort). CEA-BST lineage confirms amygdalar context.
+    alignment: CONSISTENT
+    notes: The CEA-BST label encompasses both CeA and BST; WMBv1 spatial data may primarily sample BST
+      for this supertype. CeA fraction is lower than SUPT_0249 alternatives but CEA-BST lineage is more
+      specific to amygdalar cell identity.
+  - property: neuropeptide_Crh
+    node_a_value: Crh — neuropeptide (PMID:38419794)
+    node_b_value: Crh is an explicit defining marker in the supertype label "CEA-BST Rai14 Pdyn Crh Gaba_2";
+      precomputed mean_expression 7.96 (CeA GABAergic rank-1 cohort 99.4th pct; tier 2; highest Crh expression
+      among all candidates).
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:38419794
+    explanation: Provides primary evidence for CRF/CRH as the neuropeptide marker of CeA output neurons;
+      CRF neurons drive fear and stress responses via CeM projections.
+    snippet: .It revealed distinct PKC-δ, SOM, and CRF neuronal populations similar to those in mice.
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: SUPT_0393 "CEA-BST Rai14 Pdyn Crh Gaba_2" (WMBv1) carries Crh as a named defining feature;
+      mean_expression 7.96 at 99.4th percentile of CeA GABAergic rank-1 cohort — highest Crh expression
+      of any candidate. CEA-BST lineage is the correct anatomical context. Pdyn (dynorphin) co-expression
+      is consistent with CeA lateral subdivision CRF neurons that co-express dynorphin.
+    atlas: WMBv1
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+    supports: REFUTE
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: ArrayExpress:E-MTAB-12096
+    source_cluster_label: GABA-13-Adora2a-Crh
+    n_cells_total: 16
+    best_f1_score: 0.8
+    best_mapping_rank: 1
+    metrics_by_level: []
+    f1_source_relpath: at_results.yaml
+    explanation: AT maps to SUPT_0278 "STR D2 Gaba_5" (F1=0.800 at supertype level), not to SUPT_0393.
+      GABA-13 co-expresses Adora2a (D2 MSN marker), driving the STR D2 mapping; this may reflect a D2-lineage
+      subset of CeA CRF neurons rather than the canonical Crh-defined population.
+  - evidence_type: ANNOTATION_TRANSFER
+    run_ref: at_run_20260617_wang2023_cea_mmc_wmbv1
+    supports: REFUTE
+    explanation: 'Wang 2023 Sst+Pdyn+Crh CeA cells (n=20) map to CLUS_1391 (CEA-BST Ebf1 Pdyn Gaba_3;
+      F1=0.318), not to SUPT_0393 (CEA-BST Rai14 Pdyn Crh Gaba_2; SUBC_083). Small cell count limits interpretation;
+      Sst co-expression may confound mapping toward the Ebf1 Pdyn Gaba family rather than the Rai14 Pdyn
+      Crh family.
+
+      '
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.2, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE213828
+    source_cluster_label: MC-02_Sst_Pdyn_Crh
+    n_cells_total: 20
+    best_f1_score: 0.318
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 11 CNU-HYa GABA
+      best_target_accession: CS20230722_CLAS_11
+      coverage: 0.95
+      purity: 0.015007898894154818
+      f1_score: 0.029548989113530325
+      n_cells_mapped: 19
+      median_bootstrap: 1.0
+    f1_source_relpath: at_results.yaml
+  caveats:
+  - caveat_type: TAXONOMY_LEVEL_MISMATCH
+    description: SUPT_0393 CeA region_fraction is 0.034 (rank-1 cohort); the supertype label "CEA-BST"
+      includes BST as a primary location. WMBv1 may not sample CeA-specific SUPT_0393 cells densely. Specific
+      clusters within SUPT_0393 and their CeA fractions are unassessed.
+  - caveat_type: OTHER
+    description: AT evidence is AGAINST — GABA-13-Adora2a-Crh cells map to STR D2 Gaba_5 (SUPT_0278, F1=0.800
+      at supertype), not to SUPT_0393. Adora2a co-expression in GABA-13 may not represent the Crh-only
+      CeA CRF population; an Adora2a-negative Crh+ population matching SUPT_0393 may exist but is not
+      captured by available Hochgerner source types.
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: Mapping is at supertype level; individual cluster distribution within SUPT_0393 is not
+      assessed. CeM vs CeL CRF subtypes may correspond to different clusters.
+  unresolved_questions:
+  - Does the canonical (Adora2a-negative) CeA CRF population correspond to SUPT_0393 or a sibling CEA-BST
+    supertype?
+  - Which WMBv1 cluster(s) within SUPT_0393 correspond to CeM CRF projection neurons vs CeL CRF interneurons?
+  proposed_experiments:
+  - Cre-dependent scRNA-seq of CRH-Cre+ CeA neurons mapped to WMBv1 to confirm SUPT_0393 identity and
+    resolve 1:n cardinality.
+  - Dual ISH for Crh + Pdyn in mouse CeA to confirm co-expression expected from SUPT_0393 label.
+  discovery_score:
+    score: 3
+    rank_in_cohort: 5
+    cohort_size: 5
+    next_best_score: 3
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:536
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Crh
+      val: 7.96
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.994
+    region_fraction: 0.034
+    region_evidence: SELF
+  confidence: LOW
+  confidence_score: 0.2
+  rationale: 'skos:broadMatch to CS20230722_SUPT_0393 "CEA-BST Rai14 Pdyn Crh Gaba_2": neuropeptide_Crh
+    CONSISTENT (mean_expression 7.96; 99.4th pct of CeA GABAergic rank-1 cohort of 5 — highest Crh of
+    any candidate; applied_score 2.0 from cohort-pct 0.994). NT type (GABA) and soma location (MBA:536,
+    region_fraction 0.034, CEA-BST lineage) are both CONSISTENT. However, ANNOTATION_TRANSFER is AGAINST:
+    GABA-13-Adora2a-Crh (source_cluster_label in at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1) maps
+    to SUPT_0278 STR D2 Gaba_5, not SUPT_0393. Adora2a co-expression in GABA-13 likely drives the STR
+    D2 signal; the canonical Adora2a-negative Crh+ CeA population is not captured by the available Hochgerner
+    source types. No defining markers beyond Crh are recorded; mapping assessed at supertype level only.
+    LOW confidence: single neuropeptide marker alignment with AGAINST AT evidence from a confounded source
+    type.
+
+    '
+  rationale_generated_at: '2026-06-11T09:51:13+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/cea_crf_neuron_summary.md
+  rationale_source_hash: 36f3d546

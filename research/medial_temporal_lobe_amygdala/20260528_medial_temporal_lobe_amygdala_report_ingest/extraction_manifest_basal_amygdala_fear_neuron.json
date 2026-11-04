@@ -1,0 +1,41 @@
+{
+  "node_id": "basal_amygdala_fear_neuron",
+  "added_by": "evidence_extraction_basal_amygdala_fear_neuron_20260612",
+  "extraction_date": "2026-06-12",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest/uncertain_all_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "extracted": [
+    {
+      "source_corpus_id": "3103554",
+      "pmid": "PMID:27053114",
+      "field": "nt_type",
+      "quote_key": "3103554_aec310ea",
+      "rationale": "BLA highly enriched in glutamatergic principal neurons; fear neurons are a functional subset of BLA principal cells, establishing glutamatergic identity."
+    },
+    {
+      "source_corpus_id": "4940771",
+      "pmid": "PMID:31193505",
+      "field": "electrophysiology",
+      "quote_key": "4940771_cb8fa215",
+      "rationale": "Directly defines BLA fear neurons as a functional population activated by the conditioned stimulus, non-overlapping with extinction neurons."
+    },
+    {
+      "source_corpus_id": "264517392",
+      "pmid": "PMID:37884748",
+      "field": "electrophysiology",
+      "quote_key": "264517392_cf983fc0",
+      "rationale": "scRNA-seq confirms only a subset of amygdalar neuronal types is transcriptionally fear-responsive, supporting the engram/activity-defined nature of the fear neuron population."
+    }
+  ],
+  "considered_not_extracted": [
+    {"source_corpus_id": "232283078", "reason": "GABAergic interneuron census of LA/BA; fear neurons are glutamatergic principal cells, not interneurons."},
+    {"source_corpus_id": "221366115", "reason": "Glutamatergic identity of BLA already covered by Chung (3103554); avoid redundant nt_type source."},
+    {"source_corpus_id": "17223544", "reason": "Glutamatergic projection neuron identity redundant with Chung (3103554)."},
+    {"source_corpus_id": "280092907", "reason": "80-85% glutamatergic figure redundant with nt_type source already added."},
+    {"source_corpus_id": "281382725", "reason": "Cross-species (primate) basolateral glutamatergic composition; not specific to the fear-ON neuron functional identity."},
+    {"source_corpus_id": "104297085", "reason": "Thy1/Ntsr2/Rspo2/Wnt7a describe the 'Fear-Off' (extinction) population, NOT fear-ON neurons; already used on basal_amygdala_extinction_neuron."},
+    {"source_corpus_id": "17860491", "reason": "Calbindin interneurons activated during fear extinction; not the fear-ON principal neuron population."},
+    {"source_corpus_id": "250411527", "reason": "Paralaminar nucleus immature excitatory neurons; unrelated to fear neuron."}
+  ]
+}
