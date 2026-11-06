@@ -1278,19 +1278,88 @@ def _compute_schema_hash() -> str:
 _SCHEMA_HASH = _compute_schema_hash()
 
 
+# ── Availability (fail closed) ────────────────────────────────────────────────
+# Atlas-side properties (n_cells, parent supertype, taxonomy_level, expression,
+# anatomy) live only in the taxonomy DB now that mapping-graph stubs are thin.
+# DB files are gitignored, so a fresh worktree has none until
+# `just build-taxonomy-db` runs. A missing DB must therefore raise, not read as
+# "this node has no such properties".
+#
+# Read-only / preview paths may opt out with ALLOW_MISSING_DB_ENV=1, and get a
+# loud stderr warning per taxonomy. Paths that write KB content never accept
+# the opt-out: they call require_taxonomy_db directly.
+
+ALLOW_MISSING_DB_ENV = "EVIDENCELL_ALLOW_MISSING_TAXONOMY_DB"
+
+_MISSING_WARNED: set[str] = set()
+
+
+class TaxonomyDBUnavailable(RuntimeError):
+    """The taxonomy DB a lookup needs is missing or empty."""
+
+
+def require_taxonomy_db(taxonomy_id: str) -> Path:
+    """Return the path of a usable taxonomy DB, or raise TaxonomyDBUnavailable.
+
+    "Usable" is kb_io.usable_sqlite -- not `exists()`, which a 0-byte file left
+    behind by an earlier sqlite3.connect() would pass.
+    """
+    from evidencell.kb_io import usable_sqlite
+    from evidencell.paths import taxonomy_db_path
+
+    db_path = taxonomy_db_path(taxonomy_id)
+    if usable_sqlite(db_path):
+        return db_path
+    state = "is empty (0 bytes)" if db_path.is_file() else "does not exist"
+    raise TaxonomyDBUnavailable(
+        f"Taxonomy DB for {taxonomy_id} {state}: {db_path}. "
+        f"Run: just build-taxonomy-db {taxonomy_id}. "
+        f"Read-only previews may proceed without atlas-side fields by setting "
+        f"{ALLOW_MISSING_DB_ENV}=1."
+    )
+
+
+def missing_db_allowed() -> bool:
+    import os
+    return os.environ.get(ALLOW_MISSING_DB_ENV) == "1"
+
+
+def taxonomy_db_or_none(taxonomy_id: str) -> Path | None:
+    """require_taxonomy_db for read-only paths that honour the opt-out.
+
+    Raises unless ALLOW_MISSING_DB_ENV=1; with it set, warns once per taxonomy
+    on stderr and returns None.
+    """
+    try:
+        return require_taxonomy_db(taxonomy_id)
+    except TaxonomyDBUnavailable as exc:
+        if not missing_db_allowed():
+            raise
+        if taxonomy_id not in _MISSING_WARNED:
+            _MISSING_WARNED.add(taxonomy_id)
+            print(
+                f"WARNING: {ALLOW_MISSING_DB_ENV}=1 -- proceeding WITHOUT atlas-side "
+                f"fields for {taxonomy_id}. {exc}",
+                file=sys.stderr,
+            )
+        return None
+
+
 def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
     """Path-explicit freshness check (testable).
 
     Returns (is_stale, reasons). See `taxonomy_db_freshness` for semantics.
     """
-    if not db_path.exists():
-        return True, [f"DB not found at {db_path}"]
+    from evidencell.kb_io import usable_sqlite
+
+    if not usable_sqlite(db_path):
+        return True, [f"DB not found or empty at {db_path}"]
 
     reasons: list[str] = []
 
     # 1. Schema hash check
     try:
-        con = sqlite3.connect(db_path)
+        con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
         try:
             row = con.execute(
                 "SELECT value FROM _meta WHERE key = 'schema_hash'"
@@ -1640,11 +1709,7 @@ def load_expression_data(
     ``reingest`` still write into the YAML; ``just build-taxonomy-db``
     propagates those writes into the ``node_expression`` DB table.
     """
-    from evidencell.paths import taxonomy_db_path
-    db_path = taxonomy_db_path(taxonomy_id)
-    if not db_path.exists():
-        return {}
-    db = TaxonomyDB(db_path)
+    db = TaxonomyDB(require_taxonomy_db(taxonomy_id))
     return db.get_expression_for_level(level, symbols=symbols)
 
 
@@ -1860,7 +1925,11 @@ class TaxonomyDB:
             )
 
     def _connect(self) -> sqlite3.Connection:
-        con = sqlite3.connect(self.db_path)
+        # mode=rw, not a plain connect(): a plain connect() on a missing path
+        # silently creates an empty DB, which every later exists() guard then
+        # passes. rw opens an existing file and raises otherwise. Builds open
+        # their own connection, which may create.
+        con = sqlite3.connect(f"file:{self.db_path}?mode=rw", uri=True)
         con.row_factory = sqlite3.Row
         return con
 
@@ -3044,11 +3113,11 @@ def _cmd_fetch_mba(dest: str) -> None:
 
 
 def _cmd_build_closure(taxonomy_id: str, mba_json: str) -> None:
-    from evidencell.paths import taxonomy_db_path
-    db_path = taxonomy_db_path(taxonomy_id)
     mba_path = Path(mba_json)
-    if not db_path.exists():
-        print(f"ERROR: DB not found at {db_path} — run build-db first")
+    try:
+        db_path = require_taxonomy_db(taxonomy_id)
+    except TaxonomyDBUnavailable as exc:
+        print(f"ERROR: {exc}")
         raise SystemExit(1)
     if not mba_path.exists():
         print(f"ERROR: MBA JSON not found at {mba_path} — run fetch-mba-ontology first")
@@ -3152,19 +3221,16 @@ def _cmd_find_candidates(
 
     Outputs a JSON candidate list to stdout.
     """
-    from evidencell.paths import taxonomy_db_path
 
     graph_path = Path(graph_file)
     if not graph_path.exists():
         print(f"ERROR: graph file not found: {graph_path}", file=sys.stderr)
         sys.exit(1)
 
-    db_path = taxonomy_db_path(taxonomy_id)
-    if not db_path.exists():
-        print(
-            f"ERROR: DB not found at {db_path} — run: just build-taxonomy-db {taxonomy_id}",
-            file=sys.stderr,
-        )
+    try:
+        db_path = require_taxonomy_db(taxonomy_id)
+    except TaxonomyDBUnavailable as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
         sys.exit(1)
 
     # Preflight: warn (and abort) if DB is stale relative to YAML source

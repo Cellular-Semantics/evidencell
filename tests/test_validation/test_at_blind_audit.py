@@ -317,7 +317,7 @@ def test_audit_preflight_fails_on_missing_db(tmp_path, monkeypatch):
         lambda tid: tmp_path / "no_such_db.db",
     )
     audit = ATBlindAudit(taxonomy_id="MISSING", top_k=10, f1_floor=0.0)
-    with pytest.raises(AuditAssertion, match="Taxonomy DB not found"):
+    with pytest.raises(AuditAssertion, match="Taxonomy DB for MISSING does not exist"):
         audit.run()
 
 

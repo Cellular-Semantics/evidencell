@@ -23,7 +23,7 @@ def _write(path: Path, content: str) -> None:
 @pytest.fixture
 def fake_taxonomy_db(tmp_path: Path, monkeypatch) -> Path:
     """Build a minimal CCN20230722 taxonomy SQLite DB at tmp_path and
-    monkeypatch ``at_metrics._taxonomy_db_path`` to return it.
+    monkeypatch ``paths.taxonomy_db_path`` to return it.
 
     Covers the lineage relationships needed by the AT-metric tests
     (OLM Sst-OLM ancestry, AAC chandelier-vs-basket divergence, BIC
@@ -85,7 +85,8 @@ def fake_taxonomy_db(tmp_path: Path, monkeypatch) -> Path:
     finally:
         conn.close()
 
-    monkeypatch.setattr(at_metrics, "_taxonomy_db_path", lambda tid: db_path)
+    from evidencell import paths
+    monkeypatch.setattr(paths, "taxonomy_db_path", lambda tid: db_path)
     return db_path
 
 
@@ -431,7 +432,7 @@ def test_compute_edge_metrics_noise_floor_demotes_partial_to_no_evidence(
     assert payload["supports_default"] == "NO_EVIDENCE"
 
 
-def test_compute_edge_metrics_partial_band(migrated_shape_a, tmp_path):
+def test_compute_edge_metrics_partial_band(migrated_shape_a, fake_taxonomy_db, tmp_path):
     """BC → CLUS_0739 best F1 = 0.826 → SUPPORT. Move target to one with
     F1 between 0.10 and 0.60 by using AAC's class row F1=0.146."""
     payload = at_metrics.compute_edge_metrics(
@@ -445,7 +446,7 @@ def test_compute_edge_metrics_partial_band(migrated_shape_a, tmp_path):
 
 
 def test_compute_edge_metrics_variant_selects_correct_yaml(
-    shape_b_run_variants, tmp_path
+    shape_b_run_variants, fake_taxonomy_db, tmp_path
 ):
     """Multiple at_results files → must pass variant= to pick one."""
     at_metrics.migrate_run(shape_b_run_variants)
@@ -492,7 +493,7 @@ def test_load_result_set_unknown_variant_raises(
 
 
 def test_refresh_kb_dry_run_does_not_write(
-    tmp_path, shape_b_run, monkeypatch
+    tmp_path, shape_b_run, fake_taxonomy_db, monkeypatch
 ):
     """refresh_kb in dry_run mode does not modify edge YAMLs."""
     at_metrics.migrate_run(shape_b_run)

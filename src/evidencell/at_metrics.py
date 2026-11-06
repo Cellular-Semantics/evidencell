@@ -61,10 +61,6 @@ from .paths import repo_root
 # ─── Taxonomy ancestry lookup (lineage-aware mode) ────────────────────
 
 
-def _taxonomy_db_path(taxonomy_id: str) -> Path:
-    return repo_root() / "kb" / "taxonomy" / taxonomy_id / f"{taxonomy_id}.db"
-
-
 def ancestor_accession_by_level(
     edge_target: str, taxonomy_id: str
 ) -> dict[str, str]:
@@ -79,13 +75,13 @@ def ancestor_accession_by_level(
     with F1 of (source, ancestor) at each rank.
     """
     from evidencell.kb_io import connect_readonly
+    from evidencell.taxonomy_db import require_taxonomy_db
 
-    # connect_readonly, not sqlite3.connect: a plain connect() creates an empty
-    # DB on a miss, and the `is_file()` guard then passes forever after -- so a
-    # graceful skip turns into "no such table: nodes" on every later call.
-    conn = connect_readonly(_taxonomy_db_path(taxonomy_id))
-    if conn is None:
-        return {}
+    # Raises when the DB is missing: an empty result here would fill
+    # metrics_by_level with nothing and read as "no ancestors".
+    conn = connect_readonly(require_taxonomy_db(taxonomy_id))
+    if conn is None:  # removed between the check and the open
+        raise RuntimeError(f"Taxonomy DB for {taxonomy_id} became unavailable")
     try:
         out: dict[str, str] = {}
         # The taxonomy DB keys nodes by either `node_id` (CURIE-style)

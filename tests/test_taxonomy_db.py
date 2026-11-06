@@ -1516,7 +1516,8 @@ def _make_focused_db(tmp_path: Path) -> TaxonomyDB:
     """
     db = TaxonomyDB(tmp_path / "PROX_TAX.db")
     from evidencell.taxonomy_db import _DDL
-    with db._connect() as con:
+    # A build, so a creating connect -- db._connect() refuses a missing file.
+    with sqlite3.connect(db.db_path) as con:
         con.executescript(_DDL)
         con.commit()
     return db
