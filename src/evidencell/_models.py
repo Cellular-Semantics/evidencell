@@ -1270,7 +1270,7 @@ class CellTypeNode(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
-    id: str = Field(default=..., description="""Locally unique ID within this graph. Suggested format: lowercase_underscored, e.g. \"lugaro\", \"pli3_osorno\", \"wmb_1145\"
+    id: str = Field(default=..., description="""Node ID. A non-atlas node's ID is lowercase_underscored and unique across the KB, e.g. \"lugaro\", \"pli3_osorno\". An atlas node (definition_basis ATLAS_TRANSCRIPTOMIC) MUST use its cell_set_accession verbatim as its ID, e.g. \"CS20230722_SUPT_1145\", never a local alias: the accession is the atlas node's identity across every file that references it.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
                        'DiscoveryContext',
@@ -1281,7 +1281,7 @@ class CellTypeNode(ConfiguredBaseModel):
                        'CorrelationContrast',
                        'AnnotationTransferRunSummary',
                        'AnnotationTransferRun']} })
-    name: str = Field(default=..., description="""Human-readable name, e.g. \"Lugaro cell\", \"CB PLI Gly-Gaba_2 (supertype 1145)\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['HierarchyNode', 'CellTypeNode', 'CellTypeMappingGraph']} })
+    name: str = Field(default=..., description="""Human-readable name, e.g. \"Lugaro cell\", \"1145 CB PLI Gly-Gaba_2\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['HierarchyNode', 'CellTypeNode', 'CellTypeMappingGraph']} })
     reference_stub: Optional[ReferenceStubKind] = Field(default=None, description="""Present when this node is a placeholder for a type defined elsewhere, not a definition in its own right. Carry only id, name, definition_basis and (for taxonomy references) taxonomy_id and cell_set_accession; everything else belongs on the canonical record. Absent means this node is canonical.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     synonyms: Optional[list[TypeSynonym]] = Field(default=None, description="""Alternative names and abbreviations for this cell type, with evidence provenance. Populated during literature mining — synonym extraction is the first processing step for each paper (both survey and targeted paths). Used to expand queries in subsequent searches.
@@ -2141,7 +2141,7 @@ class MappingEdge(ConfiguredBaseModel):
     An evidenced mapping assertion between two CellTypeNodes. Edges are directional (lit_type → taxonomy_type) but the relationship field describes the nature of the correspondence, not a hierarchy.
     Transitivity: edges can be chained. E.g.:
       classical_lugaro --[skos:exactMatch, Osorno 2022]--> pli3_osorno
-      pli3_osorno --[skos:exactMatch, MapMyCells]--> wmb_supertype_1145
+      pli3_osorno --[skos:exactMatch, MapMyCells]--> CS20230722_SUPT_1145
 
     Cross-cutting: use multiple edges, all pointing at the same taxonomy_type:
       classical_basket   --[evidencell:CrossCuttingMatch]--> mli1_kozareva
