@@ -48,7 +48,7 @@ nodes:
 In cerebellum they form the middle of a three-step chain:
 
 ```
-classical_candelabrum  ──exactMatch──▶  pli1_osorno  ──exactMatch──▶  wmb_cluster_5178
+classical_candelabrum  ──exactMatch──▶  pli1_osorno  ──exactMatch──▶  CS20230722_CLUS_5178
  CLASSICAL_MORPHOLOGICAL                PRIOR_TRANSCRIPTOMIC           ATLAS_TRANSCRIPTOMIC
  (Osorno et al. T-type, not in a reference taxonomy)
 ```

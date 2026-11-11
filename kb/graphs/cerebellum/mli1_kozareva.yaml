@@ -17,8 +17,8 @@
 #                       ──[PARTIAL_OVERLAP, Kozareva 2021]───┘
 #   classical_stellate ─(also)──[PARTIAL_OVERLAP, Kozareva 2021]──► mli2_kozareva
 #
-#   mli1_kozareva ──[EQUIVALENT, F1≈0.999, MapMyCells]──► wmb_cluster_5188  (terminal)
-#   mli2_kozareva ──[EQUIVALENT, F1≈0.996, MapMyCells]──► wmb_cluster_5192  (terminal)
+#   mli1_kozareva ──[EQUIVALENT, F1≈0.999, MapMyCells]──► CS20230722_CLUS_5188  (terminal)
+#   mli2_kozareva ──[EQUIVALENT, F1≈0.996, MapMyCells]──► CS20230722_CLUS_5192  (terminal)
 #
 # Note: The transcriptomic types MLI1 and MLI2 are MORE FUNDAMENTAL than the
 # classical basket/stellate distinction. The schema records this correctly —
@@ -77,7 +77,7 @@ nodes:
     synonyms:
       - term: "MLI1 (Kozareva 2021)"
         synonym_type: HISTORICAL
-  - id: wmb_cluster_5188
+  - id: CS20230722_CLUS_5188
     name: "5188 CBX MLI Megf11 Gaba_1"
     definition_basis: ATLAS_TRANSCRIPTOMIC
     taxonomy_id: CCN20230722
@@ -85,7 +85,7 @@ nodes:
 edges:
   - id: edge_mli1_to_wmb5188
     lit_type: mli1_kozareva
-    taxonomy_type: wmb_cluster_5188
+    taxonomy_type: CS20230722_CLUS_5188
     relationship: skos:exactMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER

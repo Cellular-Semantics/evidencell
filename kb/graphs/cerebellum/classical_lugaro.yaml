@@ -13,15 +13,15 @@
 #   classical_globular    ──[EQUIVALENT, Osorno 2022]──► pli2_osorno
 #   classical_lugaro      ──[EQUIVALENT, Osorno 2022]──► pli3_osorno
 #                                                            │
-#   pli1_osorno ──[EQUIVALENT, F1≈0.94, MapMyCells]────► wmb_cluster_5178   (terminal)
-#   pli2_osorno ──[PARTIAL_OVERLAP, F1≈0.87, MapMyCells]► wmb_cluster_5177  (terminal)
-#   pli3_osorno ──[EQUIVALENT, F1≈0.96, MapMyCells]────► wmb_supertype_1145 (terminal)
+#   pli1_osorno ──[EQUIVALENT, F1≈0.94, MapMyCells]────► CS20230722_CLUS_5178   (terminal)
+#   pli2_osorno ──[PARTIAL_OVERLAP, F1≈0.87, MapMyCells]► CS20230722_CLUS_5177  (terminal)
+#   pli3_osorno ──[EQUIVALENT, F1≈0.96, MapMyCells]────► CS20230722_SUPT_1145 (terminal)
 #
 # Cross-Allen-taxonomy transfer (future / illustrative):
 # If a BICAN or other Allen taxonomy with CCN accessions existed for cerebellum,
 # a direct cross-atlas edge could be added, e.g.:
 #
-#   wmb_supertype_1145 ──[EQUIVALENT, cross-atlas MapMyCells]──► bican_cb_cluster_X  (terminal)
+#   CS20230722_SUPT_1145 ──[EQUIVALENT, cross-atlas MapMyCells]──► bican_cb_cluster_X  (terminal)
 #   (source_cell_set_accession: CS20230722_SUPT_1145,
 #    target_cell_set_accession: CS20250101_CLUS_XXXX)
 ##
@@ -129,7 +129,7 @@ nodes:
     synonyms:
       - term: "PLI3 (Osorno 2022 / Lugaro)"
         synonym_type: HISTORICAL
-  - id: wmb_supertype_1145
+  - id: CS20230722_SUPT_1145
     name: "CB PLI Gly-Gaba_2 (supertype 1145)"
     definition_basis: ATLAS_TRANSCRIPTOMIC
     taxonomy_id: CCN20230722
@@ -159,7 +159,7 @@ edges:
     mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_pli3_to_wmb1145
     lit_type: pli3_osorno
-    taxonomy_type: wmb_supertype_1145
+    taxonomy_type: CS20230722_SUPT_1145
     relationship: skos:exactMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -220,7 +220,7 @@ edges:
           is not yet characterised.
       - caveat_type: OTHER
         description: |-
-          [Relocated from the wmb_supertype_1145 atlas stub] PLI3/Lugaro maps best at supertype level (F1=0.96). Individual clusters 5180-5182 within this supertype may reflect further biological heterogeneity not yet explained by classical taxonomy.
+          [Relocated from the CS20230722_SUPT_1145 atlas stub] PLI3/Lugaro maps best at supertype level (F1=0.96). Individual clusters 5180-5182 within this supertype may reflect further biological heterogeneity not yet explained by classical taxonomy.
     proposed_experiments:
       - >
         Sub-cluster analysis of supertype 1145 with additional markers (particularly

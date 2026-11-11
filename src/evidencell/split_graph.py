@@ -5,7 +5,7 @@ lit-to-lit edges form one indivisible unit: in cerebellum a classical type maps
 to a PRIOR_TRANSCRIPTOMIC node (a T-type from a published study that is not one
 of our reference taxonomies), which in turn maps to an atlas cluster, e.g.
 
-    classical_candelabrum -> pli1_osorno -> wmb_cluster_5178
+    classical_candelabrum -> pli1_osorno -> CS20230722_CLUS_5178
 
 Splitting per classical type would break that chain, because
 `validate.structural_checks` requires both endpoints of every edge to resolve to
