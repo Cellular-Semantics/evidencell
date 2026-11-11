@@ -305,6 +305,23 @@ def check_flat_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
 
 # ── Quote-key integrity ───────────────────────────────────────────────────────
 
+def _quote_key_errors(corpus_id: str, quote_key: str, quote: object) -> list[str]:
+    """Integrity errors for one quote: its key must hash its own text."""
+    text = quote.get("text") if isinstance(quote, dict) else quote
+    if not isinstance(text, str) or not text:
+        return [f"quote '{quote_key}' has no text — the key cannot attest anything."]
+    expected = compute_quote_key(str(corpus_id), text)
+    if expected != quote_key:
+        return [
+            f"quote_key '{quote_key}' does not match its text "
+            f"(text hashes to '{expected}'). The key is a content hash, so "
+            f"either the text was altered after the key was minted or the key "
+            f"was not derived from it. Re-add the quote via "
+            f"references.write_quote_to_refs()."
+        ]
+    return []
+
+
 def check_quote_key_integrity(store: dict) -> list[str]:
     """Verify every quote_key is the content hash of the text it indexes.
 
@@ -320,28 +337,17 @@ def check_quote_key_integrity(store: dict) -> list[str]:
     from quotes stops a quote write corrupting *paper identity*; only this check
     stops it corrupting *other quotes*.
 
-    Takes a parsed references store. Returns a list of error strings; empty = OK.
+    Takes a parsed whole-region store (the `load_store()` shape). Per-file
+    callers — the pre-edit hook — use `check_quote_set()` on a single
+    ``quotes/{cid}.json`` payload instead. Returns a list of error strings;
+    empty = OK.
     """
     errors: list[str] = []
     for corpus_id, entry in store.items():
         if corpus_id.startswith("_") or not isinstance(entry, dict):
             continue
         for quote_key, quote in (entry.get("quotes") or {}).items():
-            text = quote.get("text") if isinstance(quote, dict) else quote
-            if not isinstance(text, str) or not text:
-                errors.append(
-                    f"quote '{quote_key}' has no text — the key cannot attest anything."
-                )
-                continue
-            expected = compute_quote_key(str(corpus_id), text)
-            if expected != quote_key:
-                errors.append(
-                    f"quote_key '{quote_key}' does not match its text "
-                    f"(text hashes to '{expected}'). The key is a content hash, so "
-                    f"either the text was altered after the key was minted or the key "
-                    f"was not derived from it. Re-add the quote via "
-                    f"references.write_quote_to_refs()."
-                )
+            errors += _quote_key_errors(str(corpus_id), quote_key, quote)
     return errors
 
 
@@ -356,37 +362,86 @@ SOURCE_METHODS = frozenset({
 })
 
 
-def check_store_records(store: dict) -> list[str]:
-    """Validate paper and quote records against schema/references.yaml.
+def check_paper_record(corpus_id: str, record: dict) -> list[str]:
+    """Validate one ``papers/{cid}.json`` payload as a `Paper`.
+
+    The split store keeps paper identity and quotes in separate files with
+    separate schema classes. Validating each file against its own class is what
+    lets the hook judge a quotes write on the quotes alone (issue #168): the old
+    approach rebuilt the retired monolith shape from a quotes file and then
+    failed every write for the paper fields the quotes file never carried.
 
     Uses the generated pydantic models, in process: linkml-validate costs ~1.5s
     per subprocess, which across 540 store files would be minutes per sweep.
     """
     from pydantic import ValidationError
 
-    from evidencell._refs_models import Paper, Quote
+    from evidencell._refs_models import Paper
 
+    if not isinstance(record, dict):
+        return [f"paper '{corpus_id}': not an object"]
+    try:
+        Paper.model_validate(record)
+    except ValidationError as exc:
+        return [
+            f"paper '{corpus_id}': {'.'.join(str(x) for x in e['loc'])}: {e['msg']}"
+            for e in exc.errors()
+        ]
+    return []
+
+
+def _quote_schema_errors(quote_key: str, quote: object) -> list[str]:
+    from pydantic import ValidationError
+
+    from evidencell._refs_models import Quote
+
+    if not isinstance(quote, dict):
+        return [f"quote '{quote_key}': not an object"]
+    try:
+        Quote.model_validate(quote)
+    except ValidationError as exc:
+        return [
+            f"quote '{quote_key}': {'.'.join(str(x) for x in e['loc'])}: {e['msg']}"
+            for e in exc.errors()
+        ]
+    return []
+
+
+def check_quote_set(corpus_id: str, quotes: dict) -> list[str]:
+    """Validate one ``quotes/{cid}.json`` payload: ``{quote_key: Quote}``.
+
+    Each value must conform to `Quote` and each key must equal
+    ``compute_quote_key(corpus_id, text)``. This is the complete per-file
+    contract for a quotes file; nothing about the owning paper is needed to
+    judge it, which is the point — see `check_paper_record`.
+    """
+    if not isinstance(quotes, dict):
+        return [f"quotes file for '{corpus_id}' must be a JSON object keyed by quote_key"]
+    errors: list[str] = []
+    for quote_key, quote in quotes.items():
+        schema = _quote_schema_errors(quote_key, quote)
+        errors += schema
+        if not schema:
+            errors += _quote_key_errors(corpus_id, quote_key, quote)
+    return errors
+
+
+def check_store_records(store: dict) -> list[str]:
+    """Validate paper and quote records against schema/references.yaml.
+
+    Whole-region form over the `load_store()` shape, used by the `qc-content`
+    sweep. Thin wrapper over `check_paper_record` and the per-quote schema check;
+    key integrity is reported separately by `check_quote_key_integrity` so the
+    sweep's finding categories stay distinct.
+    """
     errors: list[str] = []
     for corpus_id, entry in store.items():
         if corpus_id.startswith("_") or not isinstance(entry, dict):
             continue
         paper = {k: v for k, v in entry.items() if k != "quotes"}
-        try:
-            Paper.model_validate(paper)
-        except ValidationError as exc:
-            for e in exc.errors():
-                loc = ".".join(str(x) for x in e["loc"])
-                errors.append(f"paper '{corpus_id}': {loc}: {e['msg']}")
+        errors += check_paper_record(str(corpus_id), paper)
         for quote_key, quote in (entry.get("quotes") or {}).items():
-            if not isinstance(quote, dict):
-                errors.append(f"quote '{quote_key}': not an object")
-                continue
-            try:
-                Quote.model_validate(quote)
-            except ValidationError as exc:
-                for e in exc.errors():
-                    loc = ".".join(str(x) for x in e["loc"])
-                    errors.append(f"quote '{quote_key}': {loc}: {e['msg']}")
+            errors += _quote_schema_errors(quote_key, quote)
     return errors
 
 
@@ -464,11 +519,64 @@ def check_source_documents(store: dict, known_sources: set[str]) -> list[str]:
 # Paper fields that identify *which* paper an entry is. A quote-adding write has
 # no business touching these; changing one silently re-points every citation
 # that resolves through this entry.
-_IDENTITY_FIELDS = ("corpus_id", "pmid", "doi", "title", "year")
+_IDENTITY_FIELDS = ("corpus_id", "pmid", "doi", "title", "year", "authors")
+
+
+def check_paper_append_only(corpus_id: str, old: dict, new: dict) -> list[str]:
+    """Verify a ``papers/{cid}.json`` rewrite leaves identity untouched.
+
+    Identity is set once at ingest. Changing a set field is rejected; filling a
+    field that was previously absent or empty is allowed — that is exactly what
+    repairing an incomplete record (the hook's advisory warning on a quotes
+    write) needs to do.
+    """
+    errors: list[str] = []
+    if not isinstance(new, dict):
+        return [f"paper '{corpus_id}' would be replaced by a non-object."]
+    for fld in _IDENTITY_FIELDS:
+        before, after = old.get(fld), new.get(fld)
+        if before and before != after:
+            errors.append(
+                f"paper '{corpus_id}': identity field '{fld}' would change "
+                f"from {before!r} to {after!r}. Identity is set once at ingest; "
+                f"a correction needs its own reviewed change, not a quote write."
+            )
+    return errors
+
+
+def check_quote_set_append_only(old: dict, new: dict, corpus_id: str = "") -> list[str]:
+    """Verify a ``quotes/{cid}.json`` rewrite only adds.
+
+    No key may be dropped, and the ``text`` of a surviving key may not change:
+    the key hashes the text, so a text edit under the same key is a quote
+    silently replaced. Other fields (``claims``, ``status``, hints) are curation
+    state and may be edited freely.
+    """
+    errors: list[str] = []
+    label = f"paper '{corpus_id}': " if corpus_id else ""
+    if not isinstance(new, dict):
+        return [f"{label}quotes would be replaced by a non-object."]
+    for qk, old_quote in old.items():
+        if qk not in new:
+            errors.append(
+                f"{label}quote '{qk}' would be removed. "
+                f"Quotes accumulate; they are not replaced."
+            )
+            continue
+        new_quote = new[qk]
+        old_text = old_quote.get("text") if isinstance(old_quote, dict) else old_quote
+        new_text = new_quote.get("text") if isinstance(new_quote, dict) else new_quote
+        if old_text and old_text != new_text:
+            errors.append(
+                f"{label}quote '{qk}': text would change. The key hashes the text, "
+                f"so this replaces the quote. Add a corrected quote via "
+                f"references.write_quote_to_refs() instead of editing this one."
+            )
+    return errors
 
 
 def check_store_append_only(old: dict, new: dict) -> list[str]:
-    """Verify a references.json write only adds — never drops or rewrites.
+    """Verify a whole-store write only adds — never drops or rewrites.
 
     The reference store is append-only by design: papers are ingested once and
     quotes accumulate as successive deepsearches surface them. Nothing in that
@@ -478,7 +586,9 @@ def check_store_append_only(old: dict, new: dict) -> list[str]:
     use, so a hand-edit or a careless whole-file rewrite could quietly discard
     content. This makes the append-only contract enforceable at write time.
 
-    Returns a list of error strings; empty = OK.
+    Whole-region form over the `load_store()` shape; thin wrapper over
+    `check_paper_append_only` and `check_quote_set_append_only`. Returns a list
+    of error strings; empty = OK.
     """
     errors: list[str] = []
 
@@ -497,23 +607,11 @@ def check_store_append_only(old: dict, new: dict) -> list[str]:
             errors.append(f"paper '{corpus_id}' would be replaced by a non-object.")
             continue
 
-        for fld in _IDENTITY_FIELDS:
-            before, after = old_entry.get(fld), new_entry.get(fld)
-            if before and before != after:
-                errors.append(
-                    f"paper '{corpus_id}': identity field '{fld}' would change "
-                    f"from {before!r} to {after!r}. Identity is set once at ingest; "
-                    f"a correction needs its own reviewed change, not a quote write."
-                )
-
-        old_quotes = old_entry.get("quotes") or {}
-        new_quotes = new_entry.get("quotes") or {}
-        for qk in old_quotes:
-            if qk not in new_quotes:
-                errors.append(
-                    f"paper '{corpus_id}': quote '{qk}' would be removed. "
-                    f"Quotes accumulate; they are not replaced."
-                )
+        errors += check_paper_append_only(str(corpus_id), old_entry, new_entry)
+        errors += check_quote_set_append_only(
+            old_entry.get("quotes") or {}, new_entry.get("quotes") or {},
+            corpus_id=str(corpus_id),
+        )
 
     return errors
 
