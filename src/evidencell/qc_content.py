@@ -420,6 +420,27 @@ THIN_STUB_FIELDS = frozenset({
 })
 
 
+def _atlas_stub_problem(node: dict, tax_root: Path) -> str | None:
+    """Why an atlas stub does not resolve, or None if it does."""
+    from evidencell.taxonomy_db import taxonomy_accessions
+
+    accession = node.get("cell_set_accession")
+    tax_id = node.get("taxonomy_id")
+    if not accession:
+        return "has no cell_set_accession, so it points at nothing."
+    if node["id"] != accession:
+        return (f"has id different from its cell_set_accession '{accession}'. "
+                "An atlas node's id is its accession.")
+    if not tax_id:
+        return "has no taxonomy_id, so its accession cannot be checked."
+    if not (tax_root / str(tax_id)).is_dir():
+        return (f"references taxonomy_id '{tax_id}', which has no store under "
+                "kb/taxonomy/.")
+    if accession not in taxonomy_accessions(tax_root / str(tax_id)):
+        return f"has accession '{accession}', which taxonomy '{tax_id}' does not define."
+    return None
+
+
 def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
     """Checks that no single-file pass can make.
 
@@ -430,7 +451,6 @@ def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
     """
     findings: list[Finding] = []
     canonical: dict[str, list[str]] = {}
-    taxonomy_ids: dict[str, set[str]] = {}
     per_file: list[tuple[str, dict, list[dict], list[dict]]] = []
 
     for path in kb_paths:
@@ -457,9 +477,6 @@ def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
                 and not node.get("reference_stub")
             ):
                 canonical.setdefault(node_id, []).append(rel)
-            tax_id = node.get("taxonomy_id")
-            if tax_id:
-                taxonomy_ids.setdefault(str(tax_id), set()).add(rel)
 
     # 1. A node id canonically defined in more than one file. Which copy is
     #    authoritative is a curator decision, so this is an ERROR, not a merge.
@@ -471,45 +488,44 @@ def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
                 f"{', '.join(sorted(files))}",
             ))
 
-    # 2. A taxonomy_id with no directory under kb/taxonomy/. Every DB lookup for
-    #    such a node raises (taxonomy_db.require_taxonomy_db), so this surfaces
-    #    the gap at QC time rather than at the first render that touches it.
-    tax_root = root / "kb" / "taxonomy"
-    for tax_id, files in sorted(taxonomy_ids.items()):
-        if not (tax_root / tax_id).is_dir():
-            findings.append(Finding(
-                sorted(files)[0], ERROR, "unknown_taxonomy_id",
-                f"taxonomy_id '{tax_id}' has no directory under kb/taxonomy/ "
-                f"(referenced in {len(files)} file(s): {', '.join(sorted(files))})",
-            ))
-
-    # 3. A lit stub pointing at nothing. Lit stubs let a lit-to-lit edge span
-    #    two files -- each type keeps its own file and the stub satisfies the
-    #    in-document endpoint rule. Nothing in that rule checks the stub
-    #    resolves to a real definition, so a renamed or deleted node leaves the
-    #    stub silently pointing at a type that no longer exists. This is the
-    #    only check standing between a lit stub and a dangling reference.
+    # 2. Every reference stub resolves to what it points at -- the foreign-key
+    #    constraint behind the in-document endpoint rule. structural_checks
+    #    makes each edge endpoint name a node in its own file; for a stub, this
+    #    makes that node name something real.
     #
-    #    Atlas stubs are out of scope: they resolve against kb/taxonomy/, not
-    #    against kb/graphs, and unknown_taxonomy_id covers the directory side.
+    #    Lit stub: exactly one canonical definition in some KB file. A renamed
+    #    or deleted type otherwise leaves the stub pointing at nothing.
+    #
+    #    Atlas stub: its id is its cell_set_accession (atlas identity is the
+    #    accession; local aliases made one cluster appear as two nodes), its
+    #    taxonomy_id has a store under kb/taxonomy/, and that store's YAML
+    #    defines the accession. The YAML is read directly, not the DB, so this
+    #    runs where no DB is built (CI).
+    tax_root = root / "kb" / "taxonomy"
     for rel, _doc, nodes, _edges in per_file:
         for node in nodes:
-            if node.get("reference_stub") != "LIT_TYPE":
-                continue
-            homes = canonical.get(node["id"]) or []
-            if not homes:
-                findings.append(Finding(
-                    rel, ERROR, "dangling_endpoint",
-                    f"Lit stub '{node['id']}' has no canonical definition in any "
-                    "KB file. Either the type was renamed or removed, or the "
-                    "stub was authored against an id that never existed.",
-                ))
-            elif len(homes) > 1:
-                findings.append(Finding(
-                    rel, ERROR, "dangling_endpoint",
-                    f"Lit stub '{node['id']}' resolves to {len(homes)} canonical "
-                    f"definitions: {', '.join(sorted(homes))}. Ambiguous reference.",
-                ))
+            if node.get("reference_stub") == "LIT_TYPE":
+                homes = canonical.get(node["id"]) or []
+                if not homes:
+                    findings.append(Finding(
+                        rel, ERROR, "dangling_endpoint",
+                        f"Lit stub '{node['id']}' has no canonical definition in any "
+                        "KB file. Either the type was renamed or removed, or the "
+                        "stub was authored against an id that never existed.",
+                    ))
+                elif len(homes) > 1:
+                    findings.append(Finding(
+                        rel, ERROR, "dangling_endpoint",
+                        f"Lit stub '{node['id']}' resolves to {len(homes)} canonical "
+                        f"definitions: {', '.join(sorted(homes))}. Ambiguous reference.",
+                    ))
+            elif node.get("definition_basis") == ATLAS_BASIS:
+                problem = _atlas_stub_problem(node, tax_root)
+                if problem:
+                    findings.append(Finding(
+                        rel, ERROR, "dangling_endpoint",
+                        f"Atlas stub '{node['id']}' {problem}",
+                    ))
 
     # 4. An atlas stub carrying more than identity.
     #
@@ -657,9 +673,8 @@ _SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
     "structural":          (r"'([^']+)'",),
     "ontology_term":       (r"Ontology term '([^']+)'",),
     "duplicate_node_id":   (r"Node '([^']+)'",),
-    "unknown_taxonomy_id": (r"taxonomy_id '([^']+)'",),
     "orphan_node":         (r"'([^']+)' is referenced by no edge",),
-    "dangling_endpoint":   (r"Lit stub '([^']+)'",),
+    "dangling_endpoint":   (r"(?:Lit|Atlas) stub '([^']+)'",),
     "possible_duplicate_name": (r"Name '([^']+)'",),
     "stub_shape":          (r"Atlas stub '([^']+)'",),
     "orphan_quotes":       (r"quotes/([^ ]+\.json) has no paper record",),

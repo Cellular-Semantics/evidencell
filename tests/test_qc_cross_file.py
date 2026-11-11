@@ -54,23 +54,75 @@ def test_repeated_atlas_stub_is_not_a_duplicate(tmp_path):
     assert _checks(sweep_cross_file(tmp_path, [a, b]), "duplicate_node_id") == []
 
 
-def test_unknown_taxonomy_id_detected(tmp_path):
+def _taxonomy(root, taxonomy_id="CCN20230722", accessions=("CS_1",)):
+    """A minimal taxonomy store whose YAML defines `accessions`."""
+    return _write(root, f"kb/taxonomy/{taxonomy_id}/cluster.yaml", {
+        "taxonomy_id": taxonomy_id,
+        "nodes": [{"id": f"X:{a}", "cell_set_accession": a} for a in accessions],
+    })
+
+
+def _atlas_stub(accession, taxonomy_id="CCN20230722"):
+    return _atlas(accession, taxonomy_id=taxonomy_id, cell_set_accession=accession)
+
+
+def _dangling_for(tmp_path, stub):
+    path = _write(tmp_path, "kb/graphs/r/a.yaml", {
+        "nodes": [_classical("c"), stub],
+        "edges": [{"id": "e1", "lit_type": "c", "taxonomy_type": stub["id"]}],
+    })
+    return _checks(sweep_cross_file(tmp_path, [path]), "dangling_endpoint")
+
+
+def test_resolving_atlas_stub_is_clean(tmp_path):
+    _taxonomy(tmp_path)
+    assert _dangling_for(tmp_path, _atlas_stub("CS_1")) == []
+
+
+def test_atlas_stub_with_unknown_taxonomy_detected(tmp_path):
     """The CCN202307220 defect class: a trailing zero made 44 nodes resolve to
     no taxonomy, and every DB lookup for them failed silently."""
-    (tmp_path / "kb" / "taxonomy" / "CCN20230722").mkdir(parents=True)
-    path = _write(tmp_path, "kb/graphs/r/a.yaml",
-                  {"nodes": [_atlas("s", taxonomy_id="CCN202307220")], "edges": []})
-    hits = _checks(sweep_cross_file(tmp_path, [path]), "unknown_taxonomy_id")
+    _taxonomy(tmp_path)
+    hits = _dangling_for(tmp_path, _atlas_stub("CS_1", taxonomy_id="CCN202307220"))
     assert len(hits) == 1
     assert hits[0].severity == ERROR
-    assert "CCN202307220" in hits[0].message
+    assert "CCN202307220" in hits[0].message and "no store" in hits[0].message
 
 
-def test_known_taxonomy_id_is_clean(tmp_path):
-    (tmp_path / "kb" / "taxonomy" / "CCN20230722").mkdir(parents=True)
-    path = _write(tmp_path, "kb/graphs/r/a.yaml",
-                  {"nodes": [_atlas("s")], "edges": []})
-    assert _checks(sweep_cross_file(tmp_path, [path]), "unknown_taxonomy_id") == []
+def test_atlas_stub_accession_absent_from_taxonomy_detected(tmp_path):
+    """The case no check covered before: a real store that lacks the accession."""
+    _taxonomy(tmp_path)
+    hits = _dangling_for(tmp_path, _atlas_stub("CS_9"))
+    assert len(hits) == 1 and "does not define" in hits[0].message
+
+
+def test_parent_hierarchy_accessions_are_not_definitions(tmp_path):
+    """Cluster nodes name their parents' accessions; a reference is not a node."""
+    _write(tmp_path, "kb/taxonomy/CCN20230722/cluster.yaml", {"nodes": [{
+        "id": "X:CS_1", "cell_set_accession": "CS_1",
+        "parent_hierarchy": [{"level": "SUPERTYPE", "cell_set_accession": "CS_P"}],
+    }]})
+    assert len(_dangling_for(tmp_path, _atlas_stub("CS_P"))) == 1
+
+
+def test_atlas_stub_id_must_be_its_accession(tmp_path):
+    """Local aliases made one cluster appear as two nodes (#174)."""
+    _taxonomy(tmp_path)
+    stub = _atlas("wmb_cluster_1", cell_set_accession="CS_1")
+    hits = _dangling_for(tmp_path, stub)
+    assert len(hits) == 1 and "An atlas node's id is its accession" in hits[0].message
+
+
+def test_atlas_stub_without_taxonomy_id_detected(tmp_path):
+    _taxonomy(tmp_path)
+    stub = _atlas_stub("CS_1")
+    del stub["taxonomy_id"]
+    assert len(_dangling_for(tmp_path, stub)) == 1
+
+
+def test_atlas_stub_without_accession_detected(tmp_path):
+    _taxonomy(tmp_path)
+    assert len(_dangling_for(tmp_path, _atlas("s"))) == 1
 
 
 def test_orphan_node_is_scoped_per_file(tmp_path):
@@ -114,7 +166,7 @@ def test_every_new_check_has_a_fingerprint_rule():
     so rewording it reads as one finding fixed and one new finding appeared."""
     from evidencell.qc_content import _SUBJECTLESS_CHECKS, _SUBJECT_PATTERNS
 
-    for name in ("duplicate_node_id", "unknown_taxonomy_id", "orphan_node"):
+    for name in ("duplicate_node_id", "dangling_endpoint", "orphan_node"):
         assert name in _SUBJECT_PATTERNS or name in _SUBJECTLESS_CHECKS
 
 

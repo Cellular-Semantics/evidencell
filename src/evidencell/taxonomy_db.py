@@ -1345,6 +1345,90 @@ def taxonomy_db_or_none(taxonomy_id: str) -> Path | None:
         return None
 
 
+class UnknownTaxonomyError(TaxonomyDBUnavailable):
+    """A taxonomy_id has no store under kb/taxonomy/ -- nothing to build a DB from."""
+
+
+# ── Accession key set (no DB) ─────────────────────────────────────────────────
+# The set of node accessions a taxonomy defines, read straight from its YAML --
+# the source of record -- so referential-integrity checks run where no DB is
+# built (CI, fresh worktrees). A libyaml event scan takes ~12 s for WMBv1
+# against ~135 s for a full pure-Python parse.
+
+# tax_dir -> (stamp, accessions); stamp is (path, mtime_ns) over the level files.
+_ACCESSION_CACHE: dict[Path, tuple[tuple, frozenset[str]]] = {}
+
+
+def _node_accessions(stream) -> Iterator[str]:
+    """Yield each top-level node's own cell_set_accession from a level file.
+
+    Only `nodes[*].cell_set_accession` counts: cluster nodes also carry
+    accessions inside `parent_hierarchy`, and those are references, not
+    definitions.
+    """
+    # Frames: [is_mapping, expecting_key, last_key]
+    stack: list[list] = []
+    for ev in yaml.parse(stream, Loader=yaml.CSafeLoader):
+        if isinstance(ev, (yaml.MappingEndEvent, yaml.SequenceEndEvent)):
+            stack.pop()
+            continue
+        if not isinstance(ev, (yaml.ScalarEvent, yaml.AliasEvent,
+                               yaml.MappingStartEvent, yaml.SequenceStartEvent)):
+            continue
+        parent = stack[-1] if stack else None
+        in_mapping = parent is not None and parent[0]
+        if in_mapping and parent[1]:
+            # A key. Complex (non-scalar) keys do not occur in level files.
+            parent[2] = ev.value if isinstance(ev, yaml.ScalarEvent) else None
+            parent[1] = False
+        elif in_mapping:
+            if (
+                isinstance(ev, yaml.ScalarEvent)
+                and parent[2] == "cell_set_accession"
+                and len(stack) == 3
+                and stack[0][2] == "nodes"
+            ):
+                yield ev.value
+            parent[1] = True
+        if isinstance(ev, yaml.MappingStartEvent):
+            stack.append([True, True, None])
+        elif isinstance(ev, yaml.SequenceStartEvent):
+            stack.append([False, False, None])
+
+
+def taxonomy_accessions(tax_dir: Path) -> frozenset[str]:
+    """Return every node accession the taxonomy at `tax_dir` defines.
+
+    Raises UnknownTaxonomyError if `tax_dir` does not exist, and RuntimeError
+    if PyYAML lacks libyaml -- the pure-Python fallback takes minutes, and a
+    check that silently takes minutes gets skipped.
+    """
+    from evidencell.paths import iter_taxonomy_level_files, open_taxonomy_yaml
+
+    if not tax_dir.is_dir():
+        raise UnknownTaxonomyError(
+            f"Taxonomy '{tax_dir.name}' has no store at {tax_dir}; ingest it "
+            "(workflows/ingest-taxonomy.md) before anything can reference it."
+        )
+    if not hasattr(yaml, "CSafeLoader"):
+        raise RuntimeError(
+            "PyYAML was built without libyaml; taxonomy_accessions needs "
+            "yaml.CSafeLoader. Reinstall PyYAML from a wheel."
+        )
+    files = list(iter_taxonomy_level_files(tax_dir))
+    stamp = tuple((str(f), f.stat().st_mtime_ns) for f in files)
+    cached = _ACCESSION_CACHE.get(tax_dir)
+    if cached is not None and cached[0] == stamp:
+        return cached[1]
+    accessions: set[str] = set()
+    for level_file in files:
+        with open_taxonomy_yaml(level_file) as fh:
+            accessions.update(_node_accessions(fh))
+    result = frozenset(accessions)
+    _ACCESSION_CACHE[tax_dir] = (stamp, result)
+    return result
+
+
 def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
     """Path-explicit freshness check (testable).
 
