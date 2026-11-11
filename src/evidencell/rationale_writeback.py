@@ -59,10 +59,10 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from ruamel.yaml import YAML
 from ruamel.yaml.scalarstring import DoubleQuotedScalarString
 
 from . import _rationale_hash
+from .kb_io import roundtrip_yaml
 
 
 # YAML 1.1's sexagesimal interpretation would parse `1:1` (and `n:1`)
@@ -830,10 +830,7 @@ def _now_iso() -> str:
 
 
 def _load_yaml_rt(path: Path):
-    yaml_rt = YAML(typ="rt")
-    yaml_rt.preserve_quotes = True
-    yaml_rt.width = 4096
-    yaml_rt.indent(mapping=2, sequence=4, offset=2)
+    yaml_rt = roundtrip_yaml()
     return yaml_rt, yaml_rt.load(path)
 
 

@@ -43,11 +43,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from ruamel.yaml import YAML
 
 # Protein → gene alias map lives in :mod:`marker_aliases`. Import the
 # canonical mapping so the two refreshers (this module and
 # stage_b_emit) stay in sync.
+from .kb_io import roundtrip_yaml
 from .marker_aliases import PROTEIN_TO_GENE_ALIASES as _PROTEIN_TO_GENE_ALIASES
 from .paths import repo_root
 
@@ -224,10 +224,7 @@ def refresh_graph(
     dry_run: bool = False,
 ) -> dict[str, Any]:
     """Refresh expression PCs in a single KB graph file."""
-    yaml_rt = YAML(typ="rt")
-    yaml_rt.preserve_quotes = True
-    yaml_rt.width = 4096
-    yaml_rt.indent(mapping=2, sequence=4, offset=2)
+    yaml_rt = roundtrip_yaml()
     doc = yaml_rt.load(path)
     if doc is None:
         return {"file": str(path), "edges_seen": 0, "pcs_updated": 0,

@@ -32,6 +32,7 @@ from evidencell.at_metrics import (
     load_run_manifest,
     resolve_run_for_source,
 )
+from evidencell.kb_io import roundtrip_yaml
 from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
 from evidencell.paths import repo_root
 from evidencell.taxonomy_db import MIN_DETECTABLE
@@ -41,11 +42,7 @@ def _yaml_rt() -> YAML:
     """Round-trip YAML config matching rationale_writeback — preserves
     quotes so quote_keys like `1015389_e9028538` don't get YAML-coerced
     to float on load + dump."""
-    y = YAML(typ="rt")
-    y.preserve_quotes = True
-    y.width = 4096
-    y.indent(mapping=2, sequence=4, offset=2)
-    return y
+    return roundtrip_yaml()
 
 
 # Region-fraction tiers for LOCATION alignment, from

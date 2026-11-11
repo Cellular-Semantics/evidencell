@@ -43,6 +43,7 @@ from typing import Iterable
 from ruamel.yaml import YAML
 from ruamel.yaml.scalarstring import DoubleQuotedScalarString
 
+from .kb_io import roundtrip_yaml
 from .paths import repo_root
 
 
@@ -51,11 +52,7 @@ _F1_GATE = 0.75
 
 
 def _yaml() -> YAML:
-    yaml = YAML()
-    yaml.preserve_quotes = True
-    yaml.indent(mapping=2, sequence=4, offset=2)
-    yaml.width = 4096
-    return yaml
+    return roundtrip_yaml()
 
 
 def _safe_cardinality(value: str) -> DoubleQuotedScalarString:

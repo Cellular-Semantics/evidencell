@@ -1062,13 +1062,10 @@ def refresh_kb(
     Returns a summary dict ``{file: [{edge_id, evidence_index, diff,
     old_supports, suggested_supports}]}``.
     """
-    from ruamel.yaml import YAML
+    from evidencell.kb_io import roundtrip_yaml
 
     def _load_rt(p: Path):
-        y = YAML(typ="rt")
-        y.preserve_quotes = True
-        y.width = 4096
-        y.indent(mapping=2, sequence=4, offset=2)
+        y = roundtrip_yaml()
         with p.open("r", encoding="utf-8") as fh:
             return y, y.load(fh)
 
