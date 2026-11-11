@@ -116,6 +116,47 @@ def write_kb_yaml(
     return path
 
 
+_FLOAT_TAG = "tag:yaml.org,2002:float"
+
+
+def _pyyaml_float_regexp():
+    for ch_resolvers in yaml.resolver.Resolver.yaml_implicit_resolvers.values():
+        for tag, regexp in ch_resolvers:
+            if tag == _FLOAT_TAG:
+                return regexp
+    raise RuntimeError("PyYAML exposes no implicit float resolver")  # pragma: no cover
+
+
+def roundtrip_yaml():
+    """ruamel round-trip handle for in-place edits of PyYAML-written KB files.
+
+    ruamel resolves plain scalars by YAML 1.2 rules, under which a mantissa
+    needs no dot: `0330e396` loads as `inf` and a quote_key like
+    `1015389_e9028538` as a float. PyYAML (YAML 1.1) reads both as strings and
+    writes them unquoted, so a ruamel load-and-dump silently rewrote them
+    (#172). The float rule here is PyYAML's own regex, so the two readers agree
+    by construction. `version = (1, 1)` is not a substitute -- ruamel's 1.1
+    float rule still accepts a dotless mantissa, and it coerces yes/no too.
+    """
+    from ruamel.yaml import YAML
+    from ruamel.yaml.resolver import VersionedResolver
+
+    float_re = _pyyaml_float_regexp()
+
+    class _KbResolver(VersionedResolver):
+        def add_version_implicit_resolver(self, version, tag, regexp, first):
+            if tag == _FLOAT_TAG:
+                regexp = float_re
+            super().add_version_implicit_resolver(version, tag, regexp, first)
+
+    y = YAML(typ="rt")
+    y.Resolver = _KbResolver
+    y.preserve_quotes = True
+    y.width = 4096
+    y.indent(mapping=2, sequence=4, offset=2)
+    return y
+
+
 def usable_sqlite(db_path: Path) -> bool:
     """True if `db_path` is a non-empty file that sqlite can read.
 

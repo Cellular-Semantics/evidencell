@@ -35,6 +35,8 @@ from pathlib import Path
 from ruamel.yaml import YAML
 from ruamel.yaml.comments import CommentedMap, CommentedSeq
 
+from evidencell.kb_io import roundtrip_yaml
+
 ATLAS_BASIS = "ATLAS_TRANSCRIPTOMIC"
 
 # Relations that order two lit types by breadth. `A --broadMatch--> B` means B is
@@ -75,11 +77,7 @@ DOC_KEYS = (
 
 
 def _yaml() -> YAML:
-    y = YAML()
-    y.preserve_quotes = True
-    y.indent(mapping=2, sequence=4, offset=2)
-    y.width = 4096
-    return y
+    return roundtrip_yaml()
 
 
 @dataclass

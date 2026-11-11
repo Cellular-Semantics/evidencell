@@ -187,6 +187,29 @@ def test_split_preserves_comments(tmp_path):
     assert "# curatorial header" in (tmp_path / "b.yaml").read_text(encoding="utf-8")
 
 
+def test_split_does_not_coerce_hex_like_scalars(tmp_path):
+    """#172: a rationale hash `0330e396` came out of a split as `.inf`."""
+    source = tmp_path / "src.yaml"
+    source.write_text(
+        "name: test\n"
+        "target_atlas: WMBv1\n"
+        "nodes:\n"
+        "  - id: a\n"
+        "    name: a\n"
+        "    definition_basis: CLASSICAL_MULTIMODAL\n"
+        "    notes: 0330e396\n"
+        "  - id: b\n"
+        "    name: b\n"
+        "    definition_basis: CLASSICAL_MULTIMODAL\n"
+        "edges: []\n",
+        encoding="utf-8",
+    )
+    split_file(source, dry_run=False, out_dir=tmp_path)
+    out = (tmp_path / "a.yaml").read_text(encoding="utf-8")
+    assert "inf" not in out
+    assert yaml.safe_load(out)["nodes"][0]["notes"] == "0330e396"
+
+
 def test_split_refuses_to_overwrite(tmp_path):
     source = tmp_path / "src.yaml"
     y = YAML()

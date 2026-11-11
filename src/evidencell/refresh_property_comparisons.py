@@ -46,6 +46,7 @@ from typing import Any
 
 from ruamel.yaml import YAML
 
+from evidencell.kb_io import roundtrip_yaml
 from evidencell.stage_b_emit import emit_stage_b
 
 
@@ -53,11 +54,7 @@ def _yaml_rt() -> YAML:
     """Match the rt config used elsewhere in evidencell so quote-style
     is preserved across the file (avoids the underscore-float coercion
     bug on quote_keys)."""
-    y = YAML(typ="rt")
-    y.preserve_quotes = True
-    y.width = 4096
-    y.indent(mapping=2, sequence=4, offset=2)
-    return y
+    return roundtrip_yaml()
 
 
 def refresh_property_comparisons(

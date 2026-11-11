@@ -7,6 +7,7 @@ from evidencell.kb_io import (
     KbValidationError,
     canonical_yaml,
     connect_readonly,
+    roundtrip_yaml,
     usable_sqlite,
     validate_kb_doc,
     write_kb_yaml,
@@ -97,3 +98,31 @@ def test_connect_readonly_never_creates_a_file(tmp_path):
     missing = tmp_path / "nope.db"
     assert connect_readonly(missing) is None
     assert not missing.exists(), "connect_readonly created the database"
+
+
+# Digit-and-`e` strings that YAML 1.2 reads as floats and PyYAML (1.1) as str.
+HEX_LIKE = ["0330e396", "1015389_e9028538", "227098358010e190"]
+
+
+@pytest.mark.parametrize("value", HEX_LIKE)
+def test_roundtrip_yaml_reads_hex_like_scalars_as_pyyaml_does(value):
+    """#172: ruamel's default resolver turned `0330e396` into inf."""
+    src = f"h: {value}\n"
+    assert yaml.safe_load(src)["h"] == value
+    assert roundtrip_yaml().load(src)["h"] == value
+
+
+@pytest.mark.parametrize("value", HEX_LIKE)
+def test_roundtrip_yaml_dump_of_pyyaml_output_is_unchanged(value):
+    import io
+
+    src = yaml.safe_dump({"h": value, "f": 1.5})
+    y = roundtrip_yaml()
+    buf = io.StringIO()
+    y.dump(y.load(src), buf)
+    assert buf.getvalue() == src
+
+
+def test_roundtrip_yaml_still_reads_real_floats():
+    doc = roundtrip_yaml().load("a: 1.5\nb: 1.0e+3\nc: .inf\n")
+    assert doc == yaml.safe_load("a: 1.5\nb: 1.0e+3\nc: .inf\n")
