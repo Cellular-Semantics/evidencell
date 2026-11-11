@@ -472,9 +472,8 @@ def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
             ))
 
     # 2. A taxonomy_id with no directory under kb/taxonomy/. Every DB lookup for
-    #    such a node fails, and the failures are swallowed (render._node_b_info
-    #    catches broadly so a missing DB never blocks a report), so nothing
-    #    surfaces without this check.
+    #    such a node raises (taxonomy_db.require_taxonomy_db), so this surfaces
+    #    the gap at QC time rather than at the first render that touches it.
     tax_root = root / "kb" / "taxonomy"
     for tax_id, files in sorted(taxonomy_ids.items()):
         if not (tax_root / tax_id).is_dir():

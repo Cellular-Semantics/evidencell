@@ -64,13 +64,13 @@ def test_lit_to_lit_edge_keeps_component_whole():
         [
             _classical("classical_candelabrum"),
             _classical("pli1_osorno", "PRIOR_TRANSCRIPTOMIC"),
-            _atlas("wmb_cluster_5178"),
+            _atlas("CS20230722_CLUS_5178"),
         ],
         [
             # exactMatch: Osorno asserts PLI1 *is* the candelabrum cell. Settled
             # structure, so the two stay in one file.
             _rel_edge("e1", "classical_candelabrum", "pli1_osorno", "skos:exactMatch"),
-            _edge("e2", "pli1_osorno", "wmb_cluster_5178"),
+            _edge("e2", "pli1_osorno", "CS20230722_CLUS_5178"),
         ],
     )
     plan = plan_split(doc, Path("t.yaml"))

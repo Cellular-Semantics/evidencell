@@ -13,15 +13,15 @@
 #   classical_globular    ──[EQUIVALENT, Osorno 2022]──► pli2_osorno
 #   classical_lugaro      ──[EQUIVALENT, Osorno 2022]──► pli3_osorno
 #                                                            │
-#   pli1_osorno ──[EQUIVALENT, F1≈0.94, MapMyCells]────► wmb_cluster_5178   (terminal)
-#   pli2_osorno ──[PARTIAL_OVERLAP, F1≈0.87, MapMyCells]► wmb_cluster_5177  (terminal)
-#   pli3_osorno ──[EQUIVALENT, F1≈0.96, MapMyCells]────► wmb_supertype_1145 (terminal)
+#   pli1_osorno ──[EQUIVALENT, F1≈0.94, MapMyCells]────► CS20230722_CLUS_5178   (terminal)
+#   pli2_osorno ──[PARTIAL_OVERLAP, F1≈0.87, MapMyCells]► CS20230722_CLUS_5177  (terminal)
+#   pli3_osorno ──[EQUIVALENT, F1≈0.96, MapMyCells]────► CS20230722_SUPT_1145 (terminal)
 #
 # Cross-Allen-taxonomy transfer (future / illustrative):
 # If a BICAN or other Allen taxonomy with CCN accessions existed for cerebellum,
 # a direct cross-atlas edge could be added, e.g.:
 #
-#   wmb_supertype_1145 ──[EQUIVALENT, cross-atlas MapMyCells]──► bican_cb_cluster_X  (terminal)
+#   CS20230722_SUPT_1145 ──[EQUIVALENT, cross-atlas MapMyCells]──► bican_cb_cluster_X  (terminal)
 #   (source_cell_set_accession: CS20230722_SUPT_1145,
 #    target_cell_set_accession: CS20250101_CLUS_XXXX)
 ##
@@ -105,7 +105,7 @@ nodes:
     synonyms:
       - term: "PLI2 (Osorno 2022 / Globular)"
         synonym_type: HISTORICAL
-  - id: wmb_cluster_5177
+  - id: CS20230722_CLUS_5177
     name: "5177 CB PLI Gly-Gaba_1"
     definition_basis: ATLAS_TRANSCRIPTOMIC
     taxonomy_id: CCN20230722
@@ -137,7 +137,7 @@ edges:
     mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_pli2_to_wmb5177
     lit_type: pli2_osorno
-    taxonomy_type: wmb_cluster_5177
+    taxonomy_type: CS20230722_CLUS_5177
     relationship: skos:closeMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER

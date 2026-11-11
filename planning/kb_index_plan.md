@@ -249,10 +249,10 @@ Three hard preconditions, all new since `3014944`:
 > re-synthesis.
 >
 > **(b) Prove the taxonomy store can supply every stripped field.** It currently
-> cannot. `wmb_supertype_1145` keeps `n_cells=254` because the taxonomy lacks it
+> cannot. `CS20230722_SUPT_1145` keeps `n_cells=254` because the taxonomy lacks it
 > — and it is not a one-off: **18 of 1201 supertypes, 10 of 338 subclasses, 3 of
-> 34 classes** have no `n_cells`. `hmba_gpi_shell_group` has `taxonomy_id` null
-> and no store at all. Phase 4 needs a preflight that every stub field is
+> 34 classes** have no `n_cells`. `CS20250428_GROUP_0016` (HMBA BG,
+> `CCN20250428`) has no store at all until that taxonomy is ingested. Phase 4 needs a preflight that every stub field is
 > recoverable, and a decision for those that are not.
 >
 > **(c) Taxonomy DB fail-closed (Phase 0).** Once atlas nodes resolve only

@@ -10,7 +10,7 @@
 #
 # Evidence graph:
 #
-#   classical_gpi_shell_mmus ──[EQUIVALENT, atlas metadata + cross-species transfer]──► wmb_supt_0504  (terminal)
+#   classical_gpi_shell_mmus ──[EQUIVALENT, atlas metadata + cross-species transfer]──► CS20230722_SUPT_0504  (terminal)
 #
 # Cross-species context:
 #   Primate HMBA BG GPi Shell group (CS20250428_GROUP_0016) was mapped to WMBv1
@@ -129,7 +129,7 @@ nodes:
         - https://doi.org/10.1523/ENEURO.0208-22.2022
       status: DRAFT
 
-  - id: wmb_supt_0504
+  - id: CS20230722_SUPT_0504
     name: "Supertype:0504 GPi Tbr1 Cngb3 Gaba-Glut_1 (WMBv1)"
     definition_basis: ATLAS_TRANSCRIPTOMIC
     taxonomy_id: CCN20230722
@@ -138,7 +138,7 @@ edges:
 
   - id: edge_gpi_shell_mmus_to_wmb_0504
     lit_type: classical_gpi_shell_mmus
-    taxonomy_type: wmb_supt_0504
+    taxonomy_type: CS20230722_SUPT_0504
     relationship: skos:exactMatch
     evidence:
 
@@ -214,7 +214,7 @@ edges:
 
       - caveat_type: OTHER
         description: |-
-          [Relocated from the wmb_supt_0504 atlas stub] Supertype contains 3 clusters: 1995, 1996, 1997 (CCN accessions CS20230722_CLUS_1995, _1996, _1997). Sst confirmed in neuropeptide markers for 2/3 clusters (Sst:8.5 and 9.1), validating somatostatin expression in the classical shell description. NT label "Glut-GABA" follows WMBv1 convention (dominant NT listed first; cf. primate atlas "GABA-Glut" — same dual-transmitter biology, different ordering convention). Class "CNU-HYa Glut" reflects the glutamatergic co-transmitter being dominant at the class level; dual NT is captured in nt_type_combo_label "Glut-GABA". Neighborhood: HY-EA-Glut-GABA (hypothalamus / extended amygdala). NCBIGene ID for Cngb3 (Mus musculus) to be verified before publishing.
+          [Relocated from the CS20230722_SUPT_0504 atlas stub] Supertype contains 3 clusters: 1995, 1996, 1997 (CCN accessions CS20230722_CLUS_1995, _1996, _1997). Sst confirmed in neuropeptide markers for 2/3 clusters (Sst:8.5 and 9.1), validating somatostatin expression in the classical shell description. NT label "Glut-GABA" follows WMBv1 convention (dominant NT listed first; cf. primate atlas "GABA-Glut" — same dual-transmitter biology, different ordering convention). Class "CNU-HYa Glut" reflects the glutamatergic co-transmitter being dominant at the class level; dual NT is captured in nt_type_combo_label "Glut-GABA". Neighborhood: HY-EA-Glut-GABA (hypothalamus / extended amygdala). NCBIGene ID for Cngb3 (Mus musculus) to be verified before publishing.
     unresolved_questions:
       - >
         Verify NCBIGene ID for Cngb3 (Mus musculus) — ID not populated; confirm from

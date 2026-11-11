@@ -1437,11 +1437,15 @@ classes:
         required: true
         identifier: true
         description: >
-          Locally unique ID within this graph.
-          Suggested format: lowercase_underscored, e.g. "lugaro", "pli3_osorno", "wmb_1145"
+          Node ID. A non-atlas node's ID is lowercase_underscored and unique across
+          the KB, e.g. "lugaro", "pli3_osorno". An atlas node
+          (definition_basis ATLAS_TRANSCRIPTOMIC) MUST use its cell_set_accession
+          verbatim as its ID, e.g. "CS20230722_SUPT_1145", never a local alias:
+          the accession is the atlas node's identity across every file that
+          references it.
       name:
         required: true
-        description: Human-readable name, e.g. "Lugaro cell", "CB PLI Gly-Gaba_2 (supertype 1145)"
+        description: Human-readable name, e.g. "Lugaro cell", "1145 CB PLI Gly-Gaba_2"
       reference_stub:
         range: ReferenceStubKind
         description: >
@@ -2729,7 +2733,7 @@ classes:
 
       Transitivity: edges can be chained. E.g.:
         classical_lugaro --[skos:exactMatch, Osorno 2022]--> pli3_osorno
-        pli3_osorno --[skos:exactMatch, MapMyCells]--> wmb_supertype_1145
+        pli3_osorno --[skos:exactMatch, MapMyCells]--> CS20230722_SUPT_1145
 
       Cross-cutting: use multiple edges, all pointing at the same taxonomy_type:
         classical_basket   --[evidencell:CrossCuttingMatch]--> mli1_kozareva

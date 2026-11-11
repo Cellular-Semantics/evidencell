@@ -13,7 +13,7 @@
 #
 # Evidence graph:
 #
-#   classical_gpi_shell ──[EQUIVALENT, atlas metadata + lit]──► hmba_gpi_shell_group  (terminal)
+#   classical_gpi_shell ──[EQUIVALENT, atlas metadata + lit]──► CS20250428_GROUP_0016  (terminal)
 ##
 
 name: "GPi Shell Neuron — HMBA Basal Ganglia Consensus Taxonomy"
@@ -120,9 +120,10 @@ nodes:
         - https://doi.org/10.1523/ENEURO.0208-22.2022
       status: ACCEPTED
 
-  - id: hmba_gpi_shell_group
+  - id: CS20250428_GROUP_0016
     name: "Group:GPi Shell (HMBA Basal Ganglia Consensus Taxonomy)"
     definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20250428
     cell_set_accession: CS20250428_GROUP_0016
     atlas: HMBA_BG_Consensus
     taxonomy_level: GROUP
@@ -158,7 +159,7 @@ edges:
 
   - id: edge_gpi_shell_to_hmba
     lit_type: classical_gpi_shell
-    taxonomy_type: hmba_gpi_shell_group
+    taxonomy_type: CS20250428_GROUP_0016
     relationship: skos:exactMatch
     evidence:
 
@@ -244,7 +245,7 @@ edges:
 
       - caveat_type: OTHER
         description: |-
-          [Relocated from the hmba_gpi_shell_group atlas stub] "Group" level is below Class in the HMBA BG taxonomy hierarchy (Class > Group). CCN accession confirmed: CS20250428_GROUP_0016.
+          [Relocated from the CS20250428_GROUP_0016 atlas stub] "Group" level is below Class in the HMBA BG taxonomy hierarchy (Class > Group). CCN accession confirmed: CS20250428_GROUP_0016.
     unresolved_questions:
       - >
         Are there finer-grained HMBA clusters within the GPi Shell group
