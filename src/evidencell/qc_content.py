@@ -348,6 +348,23 @@ def sweep_reference_store(path: Path, root: Path) -> list[Finding]:
         Finding(rel, ERROR, "source_method", msg)
         for msg in check_source_methods(store)
     ]
+    # Orphans: a quotes/{cid}.json with no papers/{cid}.json. load_store()
+    # enumerates papers/, so these quotes are on disk yet never loaded, and
+    # every quote_key in them reports "not found". The pre-edit hook only
+    # *warns* about a missing paper record on a quotes write (issue #168) —
+    # blocking there left valid quote curation stuck behind a separate defect —
+    # so this sweep is where an orphan left unrepaired becomes an error.
+    papers_dir = path / "papers"
+    for quote_file in sorted((path / "quotes").glob("*.json")):
+        if not (papers_dir / quote_file.name).exists():
+            findings.append(Finding(
+                rel, ERROR, "orphan_quotes",
+                f"quotes/{quote_file.name} has no paper record at "
+                f"papers/{quote_file.name}; its quotes are never loaded. "
+                f"Resolve with `just fetch-reference CorpusId:{quote_file.stem}` "
+                f"and write the paper record.",
+            ))
+
     sources_dir = path if path.is_dir() else path.parent
     known = {p.stem for p in (sources_dir / "sources").glob("*.json")}
     for msg in check_source_documents(store, known):
@@ -646,6 +663,7 @@ _SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
     "dangling_endpoint":   (r"Lit stub '([^']+)'",),
     "possible_duplicate_name": (r"Name '([^']+)'",),
     "stub_shape":          (r"Atlas stub '([^']+)'",),
+    "orphan_quotes":       (r"quotes/([^ ]+\.json) has no paper record",),
     "markdown": (
         r"(?:Atlas accession|PMID|quote_key) '([^']+)'",
         # Unannotated blockquote: the quoted line itself is the subject.

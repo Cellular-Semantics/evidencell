@@ -553,3 +553,80 @@ def test_migration_refuses_a_partially_split_region(tmp_path):
     r = migrate_region(d / "references.json")
     assert "partially split" in r.skipped
     assert (d / "quotes" / "999.json").exists(), "pre-existing data must survive"
+
+
+# ── per-file helpers (split layout; issue #168) ───────────────────────────────
+
+def _good_paper(**over):
+    base = {"corpus_id": "11290620", "title": "T", "year": 2012,
+            "authors": ["A. Author"], "author_keys": ["Author, 2012"],
+            "resolution_confidence": "HIGH"}
+    base.update(over)
+    return base
+
+
+def test_check_paper_record_valid():
+    from evidencell.validate import check_paper_record
+    assert check_paper_record("11290620", _good_paper()) == []
+
+
+def test_check_paper_record_names_missing_field():
+    from evidencell.validate import check_paper_record
+    errors = check_paper_record("11290620", _good_paper(year=None))
+    assert errors and all("year" in e for e in errors)
+
+
+def test_check_paper_record_non_object():
+    from evidencell.validate import check_paper_record
+    assert check_paper_record("11290620", "nope")  # type: ignore[arg-type]
+
+
+def test_check_quote_set_valid_needs_no_paper():
+    """The whole point of #168: a quotes file validates on its own."""
+    from evidencell.validate import check_quote_set
+    k, q = _quote("A passage.")
+    assert check_quote_set("11290620", {k: q}) == []
+
+
+def test_check_quote_set_catches_bad_key_and_bad_schema():
+    from evidencell.validate import check_quote_set
+    k, q = _quote("A passage.")
+    errors = check_quote_set("11290620", {"11290620_deadbeef": q, k: {"section": "x"}})
+    assert any("does not match its text" in e for e in errors)
+    assert any("text" in e and k in e for e in errors)
+
+
+def test_check_quote_set_rejects_non_object():
+    from evidencell.validate import check_quote_set
+    assert check_quote_set("11290620", [])  # type: ignore[arg-type]
+
+
+def test_quote_set_append_only_allows_claims_edit():
+    from evidencell.validate import check_quote_set_append_only
+    k, q = _quote("A passage.")
+    assert check_quote_set_append_only({k: q}, {k: {**q, "claims": ["x"]}}) == []
+
+
+def test_quote_set_append_only_blocks_drop_and_text_change():
+    from evidencell.validate import check_quote_set_append_only
+    k1, q1 = _quote("First.")
+    k2, q2 = _quote("Second.")
+    errors = check_quote_set_append_only({k1: q1, k2: q2}, {k1: {**q1, "text": "Altered."}})
+    assert any("would be removed" in e and k2 in e for e in errors)
+    assert any("text would change" in e and k1 in e for e in errors)
+
+
+def test_paper_append_only_allows_filling_absent_field_blocks_change():
+    from evidencell.validate import check_paper_append_only
+    old = _good_paper()
+    del old["year"]
+    assert check_paper_append_only("11290620", old, _good_paper()) == []
+    errors = check_paper_append_only("11290620", _good_paper(), _good_paper(authors=["Z"]))
+    assert errors and "identity field 'authors'" in errors[0]
+
+
+def test_store_append_only_now_guards_text_change():
+    k, q = _quote("A passage.")
+    old = _store(**{k: q})
+    new = _store(**{k: {**q, "text": "Altered."}})
+    assert any("text would change" in e for e in check_store_append_only(old, new))

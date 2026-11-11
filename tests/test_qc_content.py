@@ -619,3 +619,27 @@ def test_sweep_state_can_be_reset_outside_run_sweep(tmp_path):
     assert _KB_NODES_CACHE
     reset_sweep_state()
     assert not _KB_NODES_CACHE
+
+
+# ── orphan quotes (issue #168) ────────────────────────────────────────────────
+
+def test_orphan_quotes_file_is_an_error(tmp_path):
+    """A quotes/{cid}.json with no papers/{cid}.json is never loaded. The hook
+    only warns on such a write, so the sweep is where it becomes an error."""
+    import json as _json
+    from evidencell.qc_content import ERROR, _fingerprint, sweep_reference_store
+    d = _store_with_asta_quote(tmp_path, source_document="ghost")
+    (d / "quotes" / "22.json").write_text(_json.dumps(
+        {"22_aaaaaaaa": {"text": "orphaned passage"}}))
+    f = [x for x in sweep_reference_store(d, tmp_path) if x.check == "orphan_quotes"]
+    assert len(f) == 1
+    assert f[0].severity == ERROR
+    assert "22.json" in f[0].message
+    assert "fetch-reference CorpusId:22" in f[0].message
+    assert _fingerprint(f[0]).endswith("\t22.json")
+
+
+def test_no_orphan_finding_when_paper_exists(tmp_path):
+    from evidencell.qc_content import sweep_reference_store
+    d = _store_with_asta_quote(tmp_path, source_document="ghost")
+    assert not [x for x in sweep_reference_store(d, tmp_path) if x.check == "orphan_quotes"]

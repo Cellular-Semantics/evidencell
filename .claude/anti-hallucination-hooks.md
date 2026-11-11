@@ -279,12 +279,23 @@ currently means.
 
 These rules apply during any agentic curation or synthesis session:
 
-**`references.json`**
+**Reference store (`references/{region}/papers/*.json` + `quotes/*.json`)**
 - READ freely from any agent or tool.
-- WRITE only through the validated ingest path. Direct edits to `references.json` are
-  prohibited — the ingest path enforces content-hash keying and metadata consistency.
-- During report synthesis (`render.py`, `gen-report.md` orchestrator), `references.json`
-  must not be modified. If a quote key is missing, the correct fix is to add the quote
+- ADD quotes and papers only through `references.write_quote_to_refs()`, which derives
+  the key from the text and is idempotent.
+- The pre-edit hook validates each file against its own schema class (issue #168):
+  - `quotes/{cid}.json` — every value must be a valid `Quote` and every key must equal
+    `compute_quote_key(cid, text)`. Against the on-disk file: no key may be dropped and
+    no surviving key's `text` may change. Editing `claims`, `status`, or hints on an
+    existing quote is allowed. A missing or invalid `papers/{cid}.json` is a **warning,
+    not a block**: the quotes are not loaded by `load_store()` until the paper record
+    is repaired (`just fetch-reference CorpusId:{cid}`), and `just qc-content` reports
+    the orphan as an error until then.
+  - `papers/{cid}.json` — must validate as a `Paper`; `corpus_id` must match the file
+    stem. Identity fields (`corpus_id`, `title`, `year`, `authors`, `doi`, `pmid`) may be
+    filled when previously absent but never changed once set.
+- During report synthesis (`render.py`, `gen-report.md` orchestrator), the store must
+  not be modified. If a quote key is missing, the correct fix is to add the quote
   through ingest, then re-run `just gen-facts`.
 
 **OAK local DB snapshots**

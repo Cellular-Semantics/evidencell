@@ -40,6 +40,10 @@ from evidencell.validate import (  # noqa: E402
     check_quote_key_integrity,
     check_store_records,
     check_store_append_only,
+    check_paper_record,
+    check_paper_append_only,
+    check_quote_set,
+    check_quote_set_append_only,
     check_quote_keys,
     check_flat_ref_pmids,
     check_ref_pmids,
@@ -221,66 +225,123 @@ def main():
                       file=sys.stderr)
                 _emit_block()
 
-        # A quotes file with no matching paper record is invisible to
-        # load_store(), which enumerates papers/. The curator would see the
-        # file on disk while every quote_key in it reports "not found".
-        if file_path.parent.name == "quotes":
-            paper_file = file_path.parent.parent / "papers" / file_path.name
-            if not paper_file.exists():
-                print(f"No paper record at {paper_file}.", file=sys.stderr)
-                print("Quotes are attached to papers by corpus_id; a quotes file "
-                      "with no papers/ entry is never loaded. Ingest the paper "
-                      "first (references.save_paper).", file=sys.stderr)
+        # Each file kind is validated against its own schema class. The split
+        # store has no file that carries both paper identity and quotes, so
+        # reconstructing the retired monolith shape here and validating that
+        # meant every quotes write failed on paper fields the quotes file never
+        # held — five "Field required" errors on a no-op rewrite (issue #168).
+        kind = file_path.parent.name
+        cid = file_path.stem
+
+        if kind == "quotes":
+            errors = check_quote_set(cid, payload)
+            if errors:
+                print("Quote errors (schema/references.yaml + key integrity):",
+                      file=sys.stderr)
+                for e in errors:
+                    print(f"  - {e}", file=sys.stderr)
                 _emit_block()
 
-        # Normalise all three file shapes to the store shape the checks expect:
-        #   quotes/{cid}.json  {quote_key: quote}        -> {cid: {"quotes": ...}}
-        #   papers/{cid}.json  one identity record       -> {cid: record}
-        #   references.json    the legacy monolith       -> itself
-        kind = file_path.parent.name
-        if kind in ("papers", "quotes"):
-            cid = file_path.stem
-            if kind == "quotes":
-                new_store = {cid: {"corpus_id": cid, "quotes": payload}}
-                old_store = ({cid: {"corpus_id": cid, "quotes": on_disk}}
-                             if isinstance(on_disk, dict) else {})
+            if isinstance(on_disk, dict):
+                losses = check_quote_set_append_only(on_disk, payload, corpus_id=cid)
+                if losses:
+                    print("Append-only violations:", file=sys.stderr)
+                    for e in losses:
+                        print(f"  - {e}", file=sys.stderr)
+                    print("", file=sys.stderr)
+                    print("Add quotes via references.append_quote() / write_quote_to_refs(),",
+                          file=sys.stderr)
+                    print("which derive the key from the text and never disturb existing",
+                          file=sys.stderr)
+                    print("entries. Editing claims/status on an existing quote is fine;",
+                          file=sys.stderr)
+                    print("dropping a quote or changing its text is not.", file=sys.stderr)
+                    _emit_block()
+
+            # The owning paper record is advisory for a quotes write. The
+            # quotes are judged on their own; a missing or malformed paper
+            # record is a separate defect the agent can repair afterwards, and
+            # blocking here would leave valid quote curation stuck behind it.
+            # It still matters: load_store() enumerates papers/, so until the
+            # record exists and validates these quotes are never loaded.
+            paper_file = file_path.parent.parent / "papers" / file_path.name
+            paper_problems: list[str] = []
+            if not paper_file.exists():
+                paper_problems.append(f"no paper record at {paper_file}")
             else:
-                new_store = {cid: dict(payload, quotes={})}
-                old_store = ({cid: dict(on_disk, quotes={})}
-                             if isinstance(on_disk, dict) else {})
+                try:
+                    paper_record = json.loads(paper_file.read_text(encoding="utf-8"))
+                except (json.JSONDecodeError, OSError) as exc:
+                    paper_problems.append(f"{paper_file} is unreadable ({exc})")
+                else:
+                    paper_problems += check_paper_record(cid, paper_record)
+            if paper_problems:
+                print("", file=sys.stderr)
+                print(f"WARNING: paper record for corpus_id {cid} is missing or invalid:",
+                      file=sys.stderr)
+                for e in paper_problems:
+                    print(f"  - {e}", file=sys.stderr)
+                print(f"The quotes in {file_path.name} will NOT be loaded by load_store()",
+                      file=sys.stderr)
+                print("until papers/{cid}.json exists and validates as a Paper "
+                      "(title, year, authors, author_keys, resolution_confidence).",
+                      file=sys.stderr)
+                print(f"Repair: `just fetch-reference CorpusId:{cid}` to resolve the "
+                      f"metadata, then write/fix {paper_file.name} under papers/.",
+                      file=sys.stderr)
+                print("This edit is allowed; the warning is advisory.", file=sys.stderr)
+
+        elif kind == "papers":
+            errors = check_paper_record(cid, payload)
+            if errors:
+                print("Schema conformance errors (schema/references.yaml):", file=sys.stderr)
+                for e in errors:
+                    print(f"  - {e}", file=sys.stderr)
+                _emit_block()
+            if str(payload.get("corpus_id", cid)) != cid:
+                print(f"corpus_id {payload.get('corpus_id')!r} does not match the file "
+                      f"stem {cid!r}.", file=sys.stderr)
+                _emit_block()
+
+            if isinstance(on_disk, dict):
+                losses = check_paper_append_only(cid, on_disk, payload)
+                if losses:
+                    print("Append-only violations:", file=sys.stderr)
+                    for e in losses:
+                        print(f"  - {e}", file=sys.stderr)
+                    print("", file=sys.stderr)
+                    print("Paper identity is write-once. Filling a previously absent",
+                          file=sys.stderr)
+                    print("field is allowed; changing a set one is not.", file=sys.stderr)
+                    _emit_block()
+
         else:
+            # Legacy monolith references.json. No region uses this layout any
+            # more; the checks are kept only so a stray write is still guarded.
             new_store = payload
             old_store = on_disk if isinstance(on_disk, dict) else {}
 
-        schema_errors = check_store_records(new_store)
-        if schema_errors:
-            print("Schema conformance errors (schema/references.yaml):", file=sys.stderr)
-            for e in schema_errors:
-                print(f"  - {e}", file=sys.stderr)
-            _emit_block()
-
-        errors = check_quote_key_integrity(new_store)
-        if errors:
-            print("Quote-key integrity errors:", file=sys.stderr)
-            for e in errors:
-                print(f"  - {e}", file=sys.stderr)
-            _emit_block()
-
-        # Append-only: a write that drops a paper or quote, or edits a paper's
-        # identity, is rejected regardless of internal consistency.
-        if old_store:
-            losses = check_store_append_only(old_store, new_store)
-            if losses:
-                print("Append-only violations:", file=sys.stderr)
-                for e in losses:
+            schema_errors = check_store_records(new_store)
+            if schema_errors:
+                print("Schema conformance errors (schema/references.yaml):", file=sys.stderr)
+                for e in schema_errors:
                     print(f"  - {e}", file=sys.stderr)
-                print("", file=sys.stderr)
-                print("Add quotes via references.append_quote() / write_quote_to_refs(),",
-                      file=sys.stderr)
-                print("which derive the key from the text and never disturb existing",
-                      file=sys.stderr)
-                print("entries. Paper identity is write-once.", file=sys.stderr)
                 _emit_block()
+
+            errors = check_quote_key_integrity(new_store)
+            if errors:
+                print("Quote-key integrity errors:", file=sys.stderr)
+                for e in errors:
+                    print(f"  - {e}", file=sys.stderr)
+                _emit_block()
+
+            if old_store:
+                losses = check_store_append_only(old_store, new_store)
+                if losses:
+                    print("Append-only violations:", file=sys.stderr)
+                    for e in losses:
+                        print(f"  - {e}", file=sys.stderr)
+                    _emit_block()
 
         print("Validation passed (integrity + append-only) - allowing edit", file=sys.stderr)
         print("=" * 60 + "\n", file=sys.stderr)

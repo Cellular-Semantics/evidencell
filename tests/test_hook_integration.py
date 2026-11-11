@@ -622,3 +622,170 @@ def test_term_check_rejects_label_mismatch():
     assert "Label mismatch" in r.stderr or "label" in r.stderr.lower(), (
         f"Expected stderr to mention label mismatch, got:\n{r.stderr}"
     )
+
+
+# ── Reference-store writes: split layout (issue #168) ─────────────────────────
+#
+# Each file under references/{region}/{papers,quotes}/ is validated against its
+# own schema class. The regression this guards: the hook used to rebuild the
+# retired monolith shape from a quotes file alone and then fail every quotes
+# write on the paper fields the quotes file never carried.
+
+from evidencell.references import compute_quote_key  # noqa: E402
+
+_CID = "10060696"
+_PAPER = {
+    "corpus_id": _CID,
+    "title": "A paper",
+    "year": 2015,
+    "authors": ["A. Author", "B. Author"],
+    "author_keys": ["Author et al., 2015"],
+    "doi": "10.1000/x",
+    "pmid": "12345678",
+    "resolution_confidence": "HIGH",
+}
+
+
+def _quote(text: str, **over) -> tuple[str, dict]:
+    q = {"text": text, "section": "Results", "claims": [], "status": "pending"}
+    q.update(over)
+    return compute_quote_key(_CID, text), q
+
+
+def _refs_region(tmp_path: Path, *, paper: dict | None = _PAPER, quotes: dict | None = None):
+    """Create references/{region}/ with an optional paper + quotes file for _CID."""
+    region_dir = tmp_path / "references" / "test_region"
+    (region_dir / "papers").mkdir(parents=True)
+    (region_dir / "quotes").mkdir(parents=True)
+    if paper is not None:
+        (region_dir / "papers" / f"{_CID}.json").write_text(json.dumps(paper))
+    if quotes is None:
+        k, q = _quote("These cells express parvalbumin.")
+        quotes = {k: q}
+    (region_dir / "quotes" / f"{_CID}.json").write_text(json.dumps(quotes))
+    return region_dir, quotes
+
+
+def _hook_write(path: Path, payload: dict) -> subprocess.CompletedProcess:
+    return _run_hook(_write_payload(json.dumps(payload, indent=2), file_path=str(path)))
+
+
+def test_refs_unchanged_quotes_rewrite_passes(tmp_path: Path):
+    """Regression for #168: a no-op rewrite of quotes/{cid}.json must pass clean."""
+    region_dir, quotes = _refs_region(tmp_path)
+    r = _hook_write(region_dir / "quotes" / f"{_CID}.json", quotes)
+    assert r.returncode == 0, r.stderr
+    assert "Field required" not in r.stderr
+    assert "WARNING" not in r.stderr
+
+
+def test_refs_claims_only_edit_passes(tmp_path: Path):
+    region_dir, quotes = _refs_region(tmp_path)
+    new = json.loads(json.dumps(quotes))
+    next(iter(new.values()))["claims"] = ["defining_markers"]
+    r = _hook_write(region_dir / "quotes" / f"{_CID}.json", new)
+    assert r.returncode == 0, r.stderr
+    assert "WARNING" not in r.stderr
+
+
+def test_refs_quotes_write_with_missing_paper_warns_but_passes(tmp_path: Path):
+    region_dir, quotes = _refs_region(tmp_path, paper=None)
+    r = _hook_write(region_dir / "quotes" / f"{_CID}.json", quotes)
+    assert r.returncode == 0, r.stderr
+    assert "WARNING" in r.stderr
+    assert "no paper record" in r.stderr
+    assert "load_store()" in r.stderr
+    assert f"just fetch-reference CorpusId:{_CID}" in r.stderr
+
+
+def test_refs_quotes_write_with_invalid_paper_warns_naming_field(tmp_path: Path):
+    bad_paper = dict(_PAPER, year=None)
+    region_dir, quotes = _refs_region(tmp_path, paper=bad_paper)
+    r = _hook_write(region_dir / "quotes" / f"{_CID}.json", quotes)
+    assert r.returncode == 0, r.stderr
+    assert "WARNING" in r.stderr
+    assert "year" in r.stderr
+    assert f"just fetch-reference CorpusId:{_CID}" in r.stderr
+
+
+def test_refs_quotes_text_change_without_rekey_blocked(tmp_path: Path):
+    region_dir, quotes = _refs_region(tmp_path)
+    new = json.loads(json.dumps(quotes))
+    next(iter(new.values()))["text"] = "These cells express somatostatin."
+    r = _hook_write(region_dir / "quotes" / f"{_CID}.json", new)
+    assert r.returncode == 2
+    assert "does not match its text" in r.stderr
+
+
+def test_refs_quotes_text_change_with_rekey_blocked_as_removal(tmp_path: Path):
+    """Re-keying is just drop + add; the drop is what the guard sees."""
+    region_dir, quotes = _refs_region(tmp_path)
+    k, q = _quote("These cells express somatostatin.")
+    r = _hook_write(region_dir / "quotes" / f"{_CID}.json", {k: q})
+    assert r.returncode == 2
+    assert "would be removed" in r.stderr
+
+
+def test_refs_quotes_drop_key_blocked(tmp_path: Path):
+    k1, q1 = _quote("First passage.")
+    k2, q2 = _quote("Second passage.")
+    region_dir, _ = _refs_region(tmp_path, quotes={k1: q1, k2: q2})
+    r = _hook_write(region_dir / "quotes" / f"{_CID}.json", {k1: q1})
+    assert r.returncode == 2
+    assert "would be removed" in r.stderr
+
+
+def test_refs_quotes_add_key_passes(tmp_path: Path):
+    region_dir, quotes = _refs_region(tmp_path)
+    k2, q2 = _quote("Second passage.")
+    r = _hook_write(region_dir / "quotes" / f"{_CID}.json", {**quotes, k2: q2})
+    assert r.returncode == 0, r.stderr
+
+
+def test_refs_quotes_non_object_blocked(tmp_path: Path):
+    region_dir, _ = _refs_region(tmp_path)
+    r = _run_hook(_write_payload("[]", file_path=str(region_dir / "quotes" / f"{_CID}.json")))
+    assert r.returncode == 2
+
+
+def test_refs_paper_title_change_blocked(tmp_path: Path):
+    region_dir, _ = _refs_region(tmp_path)
+    r = _hook_write(region_dir / "papers" / f"{_CID}.json", dict(_PAPER, title="Other"))
+    assert r.returncode == 2
+    assert "identity field 'title'" in r.stderr
+
+
+def test_refs_paper_authors_change_blocked(tmp_path: Path):
+    region_dir, _ = _refs_region(tmp_path)
+    r = _hook_write(region_dir / "papers" / f"{_CID}.json", dict(_PAPER, authors=["Z. Other"]))
+    assert r.returncode == 2
+    assert "identity field 'authors'" in r.stderr
+
+
+def test_refs_paper_add_missing_venue_passes(tmp_path: Path):
+    region_dir, _ = _refs_region(tmp_path)
+    r = _hook_write(region_dir / "papers" / f"{_CID}.json", dict(_PAPER, venue="J. Neurosci."))
+    assert r.returncode == 0, r.stderr
+
+
+def test_refs_paper_repair_fills_absent_identity_field(tmp_path: Path):
+    """The follow-up repair after a quotes-write warning: filling a missing
+    year on an incomplete record is allowed; it is not an identity change."""
+    incomplete = {k: v for k, v in _PAPER.items() if k != "year"}
+    region_dir, _ = _refs_region(tmp_path, paper=incomplete)
+    r = _hook_write(region_dir / "papers" / f"{_CID}.json", _PAPER)
+    assert r.returncode == 0, r.stderr
+
+
+def test_refs_paper_missing_authors_blocked(tmp_path: Path):
+    region_dir, _ = _refs_region(tmp_path)
+    bad = {k: v for k, v in _PAPER.items() if k != "authors"}
+    r = _hook_write(region_dir / "papers" / f"{_CID}.json", bad)
+    assert r.returncode == 2
+    assert "authors" in r.stderr
+
+
+def test_refs_paper_corpus_id_stem_mismatch_blocked(tmp_path: Path):
+    region_dir, _ = _refs_region(tmp_path)
+    r = _hook_write(region_dir / "papers" / "99999.json", _PAPER)
+    assert r.returncode == 2
