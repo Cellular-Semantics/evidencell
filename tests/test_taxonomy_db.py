@@ -1488,6 +1488,21 @@ def test_freshness_yaml_newer_than_db(populated_db):
     assert any("YAML newer than DB" in r for r in reasons)
 
 
+def test_freshness_gzipped_yaml_newer_than_db(populated_db):
+    """cluster.yaml.gz is the largest level; a re-ingest of it must read stale."""
+    import gzip
+    import os
+    import time
+    db, tmp_path, _ = populated_db
+    gz = tmp_path / "cluster.yaml.gz"
+    gz.write_bytes(gzip.compress(b"nodes: []\n"))
+    future = time.time() + 60
+    os.utime(gz, (future, future))
+    stale, reasons = _freshness_at(db.db_path, tmp_path)
+    assert stale is True
+    assert any("YAML newer than DB" in r for r in reasons)
+
+
 def test_freshness_recovers_after_rebuild(populated_db):
     """Rebuilding the DB after a schema_hash corruption refreshes the hash."""
     db, tmp_path, _ = populated_db

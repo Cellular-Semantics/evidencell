@@ -1385,7 +1385,11 @@ def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
         db_mtime = db_path.stat().st_mtime
     except OSError:
         return True, reasons + [f"DB mtime unreadable at {db_path}"]
-    yaml_files = list(yaml_dir.glob("*.yaml")) if yaml_dir.is_dir() else []
+    # Both forms: the largest level ships gzipped (cluster.yaml.gz, to stay
+    # under GitHub's file limit), and a *.yaml-only glob never saw it change.
+    yaml_files = (
+        [*yaml_dir.glob("*.yaml"), *yaml_dir.glob("*.yaml.gz")] if yaml_dir.is_dir() else []
+    )
     if yaml_files:
         newest_yaml = max(p.stat().st_mtime for p in yaml_files)
         if newest_yaml > db_mtime:
