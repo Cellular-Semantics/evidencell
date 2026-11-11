@@ -1,0 +1,134 @@
+# Thalamic reticular nucleus (TRN/RT) GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/THA-M-T1-R1.pdf
+# Ingestion date: 2026-11-11
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Thalamic Reticular Nucleus (TRN/RT) GABAergic Neuron"
+description: >
+  Evidence graph component for the GABAergic projection neuron of the
+  thalamic reticular nucleus — the major source of thalamic inhibition —
+  proposed from the ASTA deep research report on thalamic neuron types.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-11"
+nodes:
+  - id: trn_gabaergic_neuron
+    name: "Thalamic reticular nucleus (TRN/RT) GABAergic neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:       # To be confirmed from primary literature — mouse primary evidence
+    anatomical_location:
+      - id: UBERON:0001903
+        label: "thalamic reticular nucleus"
+        name_in_source: "thalamic reticular nucleus (TRN/RT)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:32699411"
+            method: "scRNA-seq + electrophysiology + connectivity mapping"
+            scope: "adult mouse TRN"
+            quote_key: "220696191_0d9ab57d"
+          - ref: "https://doi.org/10.1101/2023.05.01.538832"
+            method: "Epi-Retro-Seq + snmC-seq + scRNA-seq integration"
+            scope: "adult mouse RT GABAergic neurons"
+            quote_key: "258464391_a576f421"
+          - ref: "https://doi.org/10.1101/2025.09.30.679413"
+            method: "MERFISH (ABC Atlas) registered to CCFv3"
+            scope: "adult mouse RT — class 12 HY GABA"
+            quote_key: "282311854_83c180d9"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "https://doi.org/10.1101/2023.05.01.538832"
+          method: "Epi-Retro-Seq + snmC-seq + scRNA-seq integration"
+          scope: "adult mouse — RT contains GABAergic inhibitory neurons"
+          quote_key: "258464391_a576f421"
+        - ref: "PMID:32699411"
+          method: "scRNA-seq + electrophysiology"
+          scope: "adult mouse TRN — the major source of thalamic inhibition"
+          quote_key: "220696191_0d9ab57d"
+        - ref: "https://doi.org/10.1101/2025.09.30.679413"
+          method: "MERFISH (ABC Atlas)"
+          scope: "adult mouse RT — class 12 HY GABA"
+          quote_key: "282311854_83c180d9"
+    defining_markers:
+      - symbol: Spp1
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:32699411"
+            method: "scRNA-seq"
+            scope: "adult mouse TRN — marker of one gradient extreme, mutually exclusive with Ecel1; not pan-TRN"
+            quote_key: "220696191_0d9ab57d"
+            marker_type: TRANSCRIPT
+      - symbol: Ecel1
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:32699411"
+            method: "scRNA-seq"
+            scope: "adult mouse TRN — marker of the opposite gradient extreme, mutually exclusive with Spp1; not pan-TRN"
+            quote_key: "220696191_0d9ab57d"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >
+        Somatodendritic morphology not described in the report. Neurons at
+        the two extremes of the transcriptomic gradient show core-like vs
+        shell-like anatomical organisation within the nucleus, and connect
+        differentially with first-order vs higher-order thalamic nuclei.
+      sources:
+        - ref: "PMID:32699411"
+          method: "scRNA-seq + anatomy + connectivity mapping"
+          scope: "adult mouse TRN"
+          quote_key: "220696191_0d9ab57d"
+    electrophysiology:
+      description: >
+        Electrophysiological properties differ between neurons at the two
+        extremes of the transcriptomic gradient (distinct properties for the
+        Spp1 vs Ecel1 subpopulations). TRN subpopulations share activity
+        patterns according to the principal thalamic structures they project
+        to.
+      sources:
+        - ref: "PMID:32699411"
+          method: "integrated scRNA-seq + slice electrophysiology"
+          scope: "adult mouse TRN"
+          quote_key: "220696191_0d9ab57d"
+        - ref: "PMID:35102334"
+          method: "review (recordings + connectivity-based optical tagging)"
+          scope: "rodent TRN subnetworks"
+          quote_key: "246443644_7d6d3266"
+    definition_references:
+      - "PMID:32699411"
+      - "https://doi.org/10.1101/2023.05.01.538832"
+      - "https://doi.org/10.1101/2025.09.30.679413"
+      - "PMID:35102334"
+    is_terminal: false
+    notes: >
+      CL MAPPING: no CL term found for thalamic reticular nucleus neuron;
+      cl_mapping left empty (CANDIDATE) — potential CL new-term contribution
+      (parent would be CL:0000617 GABAergic neuron).
+
+      SUSPECTED HETEROGENEITY (may warrant splitting into core/Spp1 and
+      shell/Ecel1 nodes): TRN heterogeneity is a continuous transcriptomic
+      gradient of two negatively correlated expression programmes, with
+      mutually exclusive Spp1 and Ecel1 at the extremes; the two
+      subpopulations form distinct TRN-thalamus subnetworks with first-order
+      vs higher-order nuclei and differentially regulate sleep (Li et al.,
+      2020; PMID:32699411). Spp1 and Ecel1 are therefore subpopulation
+      markers, not pan-TRN markers. Roy et al. (2022; PMID:35102334, quote
+      246443644_61cfc49b) additionally describe PV- and SST-labelled TRN
+      subpopulations in mouse that are also present in human; not asserted
+      as markers here because the quote does not specify the assay.
+
+      ATLAS CONTEXT: in the ABC atlas, RT neurons fall in class 12 HY GABA,
+      shared with zona incerta, LGv and hypothalamus (Turner et al., 2025) —
+      they are not in the thalamus-proper glutamatergic class.
+
+      SPECIES: species left null; primary evidence is mouse.
+edges: []

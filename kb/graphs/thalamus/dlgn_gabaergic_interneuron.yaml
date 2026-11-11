@@ -1,0 +1,96 @@
+# Dorsal lateral geniculate nucleus (dLGN) local GABAergic interneuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/THA-M-T1-R1.pdf
+# Ingestion date: 2026-11-11
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Dorsal Lateral Geniculate Nucleus (dLGN) Local GABAergic Interneuron"
+description: >
+  Evidence graph component for the local GABAergic interneuron of the dorsal
+  lateral geniculate nucleus, proposed from the ASTA deep research report on
+  thalamic neuron types.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-11"
+nodes:
+  - id: dlgn_gabaergic_interneuron
+    name: "Dorsal lateral geniculate nucleus (dLGN) local GABAergic interneuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:       # To be confirmed from primary literature — mouse primary source; cross-species note from primate
+    anatomical_location:
+      - id: UBERON:0002479
+        label: "dorsal lateral geniculate nucleus"
+        name_in_source: "dorsal lateral geniculate nucleus (LGd)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2023.05.01.538832"
+            method: "Epi-Retro-Seq + snmC-seq + scRNA-seq integration (citing prior anatomy)"
+            scope: "adult mouse — a few local GABAergic interneurons in LGd"
+            quote_key: "258464391_a576f421"
+          - ref: "PMID:34473054"
+            method: "scRNA-seq + snRNA-seq cross-species alignment"
+            scope: "mouse, macaque and human dLGN GABAergic neurons"
+            quote_key: "237389962_9b813d38"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "https://doi.org/10.1101/2023.05.01.538832"
+          method: "Epi-Retro-Seq + snmC-seq + scRNA-seq integration (citing prior anatomy)"
+          scope: "adult mouse LGd local interneurons"
+          quote_key: "258464391_a576f421"
+        - ref: "PMID:34473054"
+          method: "scRNA-seq + snRNA-seq"
+          scope: "mouse vs primate dLGN GABAergic neurons"
+          quote_key: "237389962_9b813d38"
+    morphology:
+      description: >
+        Local (intrinsic) interneuron of dLGN; no further morphological detail
+        in the report.
+      sources:
+        - ref: "https://doi.org/10.1101/2023.05.01.538832"
+          method: "statement citing prior anatomy"
+          scope: "adult mouse LGd"
+          quote_key: "258464391_a576f421"
+    colocated_types:
+      - neighboring_type: "dlgn_relay_neuron"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          Sparse local interneurons among the excitatory thalamocortical relay
+          neurons of dLGN. Supporting quote: 258464391_a576f421 (Zhou et al.,
+          2023; https://doi.org/10.1101/2023.05.01.538832).
+    definition_references:
+      - "https://doi.org/10.1101/2023.05.01.538832"
+      - "PMID:34473054"
+    is_terminal: false
+    notes: >
+      CL MAPPING: no CL term found for LGN/thalamic GABAergic interneuron
+      (searched thalamic GABAergic neuron, lateral geniculate nucleus neuron);
+      cl_mapping left empty (CANDIDATE) — potential CL new-term contribution.
+      The nearest generic parent would be CL:0011005 GABAergic interneuron.
+
+      SPARSE EVIDENCE: the report notes the cited quotes do not detail
+      markers or subclasses; defining_markers is left empty. No marker is
+      asserted without a source.
+
+      SPECIES DIFFERENCE / HETEROGENEITY: Bakken et al. (2021;
+      PMID:34473054) report expanded diversity of GABAergic neurons in primate
+      vs mouse dLGN; human thalamus more generally shows a large expansion of
+      GABAergic neurons, most originating outside the thalamus (Kim et al.,
+      2023; PMID:37824646). A mouse-defined node may not transfer cleanly to
+      primate. Human medial-thalamic inhibitory neurons express SOX14,
+      consistent with midbrain origin (PMID:39282422; PMID:42818922), but no
+      quote ties SOX14 to mouse dLGN interneurons specifically.
+
+      ELECTROPHYSIOLOGY: not described in the report.
+
+      SPECIES: species left null.
+edges: []
