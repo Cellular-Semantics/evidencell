@@ -8,7 +8,6 @@ from pathlib import Path
 import gzip
 from contextlib import contextmanager
 
-import yaml
 
 
 def repo_root() -> Path:
@@ -23,60 +22,9 @@ def repo_root() -> Path:
 
 ATLAS_BASIS = "ATLAS_TRANSCRIPTOMIC"
 
-# Cache of the kb/graphs node index, invalidated when any file's mtime changes.
-_NODE_INDEX: tuple[tuple, dict[str, list[tuple[Path, bool]]]] | None = None
-
 
 class AmbiguousNodeError(RuntimeError):
     """A node_id is canonically defined in more than one KB graph file."""
-
-
-def _node_index() -> dict[str, list[tuple[Path, bool]]]:
-    """Map node_id -> [(file, is_stub), ...], canonical definitions first.
-
-    A *stub* is a local placeholder that exists only so edge endpoints resolve
-    in-document (see validate.structural_checks); the real record is elsewhere.
-    Two kinds: an atlas stub, recognisable from
-    definition_basis ATLAS_TRANSCRIPTOMIC because canonical atlas data lives in
-    kb/taxonomy/, and a lit stub, which carries its type's real
-    definition_basis and so must declare itself with `reference_stub`.
-    """
-    global _NODE_INDEX
-    kb_dir = repo_root() / "kb" / "graphs"
-    files = sorted(kb_dir.rglob("*.yaml")) if kb_dir.exists() else []
-    stamp = tuple((str(f), f.stat().st_mtime_ns) for f in files)
-    if _NODE_INDEX is not None and _NODE_INDEX[0] == stamp:
-        return _NODE_INDEX[1]
-
-    canonical: dict[str, list[Path]] = {}
-    stubs: dict[str, list[Path]] = {}
-    for yaml_file in files:
-        try:
-            with yaml_file.open() as fh:
-                data = yaml.safe_load(fh)
-        except Exception:
-            continue
-        nodes = data.get("nodes", []) if isinstance(data, dict) else []
-        for node in nodes:
-            if not isinstance(node, dict):
-                continue
-            node_id = node.get("id")
-            if not node_id:
-                continue
-            is_ref = (
-                bool(node.get("reference_stub"))
-                or node.get("definition_basis") == ATLAS_BASIS
-            )
-            bucket = stubs if is_ref else canonical
-            bucket.setdefault(node_id, []).append(yaml_file)
-
-    index: dict[str, list[tuple[Path, bool]]] = {
-        k: [(p, False) for p in v] for k, v in canonical.items()
-    }
-    for node_id, paths in stubs.items():
-        index.setdefault(node_id, []).extend((p, True) for p in paths)
-    _NODE_INDEX = (stamp, index)
-    return index
 
 
 def find_node_file(node_id: str) -> Path:
@@ -88,11 +36,14 @@ def find_node_file(node_id: str) -> Path:
     even if atlas stubs for the same id exist elsewhere. An id that appears
     only as a stub resolves to the first such file.
 
-    Raises FileNotFoundError if no YAML under kb/graphs/ defines the id, and
-    AmbiguousNodeError if more than one file canonically defines it.
+    Raises FileNotFoundError if no YAML under kb/graphs/ defines the id,
+    AmbiguousNodeError if more than one file canonically defines it, and
+    kb_index.KbIndexError if any file under kb/graphs/ cannot be parsed.
     """
-    index = _node_index()
-    matches = index.get(node_id)
+    # Imported here: kb_index imports this module for repo_root and ATLAS_BASIS.
+    from evidencell.kb_index import get_index
+
+    matches = [(r.source_file, r.is_stub) for r in get_index().nodes.get(node_id, [])]
     if not matches:
         raise FileNotFoundError(
             f"Node '{node_id}' not found in any KB YAML under kb/graphs/. "

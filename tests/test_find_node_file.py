@@ -3,15 +3,15 @@
 import pytest
 import yaml
 
-from evidencell import paths
+from evidencell import kb_index, paths
 from evidencell.paths import AmbiguousNodeError, find_node_file
 
 
 @pytest.fixture(autouse=True)
 def _fresh_index():
-    paths._NODE_INDEX = None
+    kb_index.clear_cache()
     yield
-    paths._NODE_INDEX = None
+    kb_index.clear_cache()
 
 
 def _write(kb_dir, name, nodes):
