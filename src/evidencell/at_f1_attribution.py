@@ -233,12 +233,12 @@ def _resolve_run_dir(runs_root: Path, run_ref: str) -> Path | None:
 def _label_for_accession(accession: str, taxonomy_id: str) -> str | None:
     """Query the taxonomy DB for a node's ``label``. Returns None if
     the DB or node isn't available."""
-    from evidencell.paths import taxonomy_db_path
-    db_path = taxonomy_db_path(taxonomy_id)
-    if not db_path.exists():
+    from evidencell.taxonomy_db import taxonomy_db_or_none
+    db_path = taxonomy_db_or_none(taxonomy_id)
+    if db_path is None:
         return None
     import sqlite3
-    with sqlite3.connect(db_path) as con:
+    with sqlite3.connect(f"file:{db_path}?mode=ro", uri=True) as con:
         row = con.execute(
             "SELECT label FROM nodes WHERE node_id = ?", (accession,)
         ).fetchone()

@@ -1176,12 +1176,13 @@ _STALE_WARNED: set[str] = set()
 
 
 def _open_taxonomy_db(taxonomy_id: str) -> "object | None":
-    """Open the SQLite TaxonomyDB for a taxonomy_id, or None if unavailable.
+    """Open the SQLite TaxonomyDB for a taxonomy_id.
 
-    Imported lazily to keep `render` usable in environments where the taxonomy
-    DB hasn't been built yet (e.g. CI fixtures, tests). Failures degrade
-    gracefully — render still emits a valid report, just without atlas-side
-    enrichment (n_cells, supertype).
+    Fails closed: a missing or empty DB raises TaxonomyDBUnavailable, because
+    atlas-side fields (n_cells, taxonomy_level, parent supertype) exist nowhere
+    else now that stubs are thin. With EVIDENCELL_ALLOW_MISSING_TAXONOMY_DB=1
+    it returns None instead, and extract_node_facts records the gap under
+    `atlas_fields_unavailable` so it cannot pass for "no such data".
 
     Emits a single stderr WARNING per taxonomy_id per process when the DB is
     stale relative to the schema or the YAML sources (see
@@ -1191,17 +1192,14 @@ def _open_taxonomy_db(taxonomy_id: str) -> "object | None":
     """
     if not taxonomy_id:
         return None
-    try:
-        from evidencell.paths import taxonomy_dir
-        from evidencell.taxonomy_db import TaxonomyDB, taxonomy_db_freshness
-    except Exception:
-        return None
-    db_path = taxonomy_dir(taxonomy_id) / f"{taxonomy_id}.db"
-    # Not `.exists()`: a 0-byte DB left behind by an earlier sqlite3.connect()
-    # would pass that check and then fail on every query (see kb_io.usable_sqlite).
-    from evidencell.kb_io import usable_sqlite
+    from evidencell.taxonomy_db import (
+        TaxonomyDB,
+        taxonomy_db_freshness,
+        taxonomy_db_or_none,
+    )
 
-    if not usable_sqlite(db_path):
+    db_path = taxonomy_db_or_none(taxonomy_id)
+    if db_path is None:
         return None
 
     # Freshness check (one warning per taxonomy_id per process)
@@ -1249,28 +1247,24 @@ def _node_b_info(edge: dict, nodes_by_id: dict, db_cache: dict | None = None) ->
             db_cache[tax_id] = _open_taxonomy_db(tax_id)
         db = db_cache.get(tax_id)
         if db is not None:
-            try:
-                tax_node = db.get_node_by_accession(accession)
-                if tax_node:
-                    if n_cells is None:
-                        n_cells = tax_node.get("n_cells")
-                    if not taxonomy_level:
-                        # The DB stores it lowercase ("supertype"); reports and
-                        # the thin-stub convention both use upper case.
-                        taxonomy_level = (
-                            tax_node.get("taxonomy_level") or ""
-                        ).upper()
-                    parents = db.get_parent_hierarchy(accession)
-                    supt_entry = next(
-                        (p for p in parents
-                         if (p.get("level") or "").upper() == "SUPERTYPE"),
-                        None,
-                    )
-                    if supt_entry:
-                        supertype = supt_entry.get("name", "")
-            except Exception:
-                # DB lookup is best-effort — never block report rendering
-                pass
+            tax_node = db.get_node_by_accession(accession)
+            if tax_node:
+                if n_cells is None:
+                    n_cells = tax_node.get("n_cells")
+                if not taxonomy_level:
+                    # The DB stores it lowercase ("supertype"); reports and
+                    # the thin-stub convention both use upper case.
+                    taxonomy_level = (
+                        tax_node.get("taxonomy_level") or ""
+                    ).upper()
+                parents = db.get_parent_hierarchy(accession)
+                supt_entry = next(
+                    (p for p in parents
+                     if (p.get("level") or "").upper() == "SUPERTYPE"),
+                    None,
+                )
+                if supt_entry:
+                    supertype = supt_entry.get("name", "")
 
     return {
         "id": b_id,
@@ -1595,6 +1589,11 @@ def extract_node_facts(
             "has_merfish_location": has_merfish,
         },
         "methods_summary": methods_summary,
+        # Taxonomies whose DB was missing under the
+        # EVIDENCELL_ALLOW_MISSING_TAXONOMY_DB opt-out: their edges' atlas-side
+        # fields are blank because they were not looked up, not because the
+        # atlas lacks them.
+        "atlas_fields_unavailable": sorted(t for t, db in db_cache.items() if db is None),
         "reference_index": ref_index_serial,
         "classical_nodes": [{
             "id": node_id,

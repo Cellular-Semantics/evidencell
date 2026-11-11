@@ -123,15 +123,9 @@ def load_level_order(taxonomy_id: str) -> list[str]:
 
 
 def _open_taxonomy_db(taxonomy_id: str) -> sqlite3.Connection:
-    db_path = (
-        repo_root() / "kb" / "taxonomy" / taxonomy_id / f"{taxonomy_id}.db"
-    )
-    if not db_path.exists():
-        raise FileNotFoundError(
-            f"Taxonomy DB not found at {db_path}. Run "
-            f"`just build-taxonomy-db {taxonomy_id}` first."
-        )
-    return sqlite3.connect(db_path)
+    from evidencell.taxonomy_db import require_taxonomy_db
+
+    return sqlite3.connect(f"file:{require_taxonomy_db(taxonomy_id)}?mode=ro", uri=True)
 
 
 def _rank_for_level(taxonomy_id: str, level_name: str) -> int:

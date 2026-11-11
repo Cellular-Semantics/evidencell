@@ -141,16 +141,12 @@ def _load_precomputed_expression(
     Returns ``{symbol: mean_expression}``, or None if the DB doesn't
     exist / has no rows for this node.
     """
-    from evidencell.paths import taxonomy_db_path
-    from evidencell.taxonomy_db import TaxonomyDB
+    from evidencell.taxonomy_db import TaxonomyDB, require_taxonomy_db
 
     # Path shape: kb/taxonomy/{taxonomy_id}/{level}.yaml(.gz).
     # Extract the taxonomy_id from the parent dir name.
     taxonomy_id = taxonomy_yaml_path.parent.name
-    db_path = taxonomy_db_path(taxonomy_id)
-    if not db_path.exists():
-        return None
-    db = TaxonomyDB(db_path)
+    db = TaxonomyDB(require_taxonomy_db(taxonomy_id))
     expr = db.get_node_expression(accession)
     return expr or None
 

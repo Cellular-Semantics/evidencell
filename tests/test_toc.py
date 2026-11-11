@@ -7,7 +7,7 @@ import sqlite3
 import pytest
 import yaml
 
-from evidencell import toc
+from evidencell import paths, toc
 
 
 @pytest.fixture
@@ -110,7 +110,7 @@ def fake_taxonomy(tmp_path, monkeypatch) -> str:
     (repo / "schema" / "celltype_mapping.yaml").write_text(yaml.safe_dump(schema_stub))
 
     monkeypatch.setattr(toc, "repo_root", lambda: repo)
-    monkeypatch.setattr(toc, "taxonomy_db_path", lambda tid: repo / "kb" / "taxonomy" / tid / f"{tid}.db")
+    monkeypatch.setattr(paths, "taxonomy_db_path", lambda tid: repo / "kb" / "taxonomy" / tid / f"{tid}.db")
     monkeypatch.setattr(toc, "taxonomy_meta_path", lambda tid: repo / "kb" / "taxonomy" / tid / "taxonomy_meta.yaml")
     monkeypatch.setattr(toc, "reports_dir_for_region", lambda r: repo / "reports" / r)
     return "TX"

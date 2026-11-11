@@ -863,13 +863,11 @@ def _load_atlas_node(
     ``just build-taxonomy-db`` propagates those edits into the DB.
     """
     del rank  # unused; kept in signature for backwards-compat
-    from evidencell.paths import taxonomy_db_path
-    from evidencell.taxonomy_db import TaxonomyDB
+    from evidencell.taxonomy_db import TaxonomyDB, require_taxonomy_db
 
-    db_path = taxonomy_db_path(taxonomy_id)
-    if not db_path.exists():
-        return None
-    db = TaxonomyDB(db_path)
+    # Raises when the DB is missing: these edges are written to the KB, and an
+    # edge emitted without its atlas side would read as a real comparison.
+    db = TaxonomyDB(require_taxonomy_db(taxonomy_id))
     node = db.get_node_by_accession(accession)
     if not node:
         return None

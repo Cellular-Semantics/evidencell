@@ -29,7 +29,6 @@ import yaml
 from evidencell.paths import (
     repo_root,
     reports_dir_for_region,
-    taxonomy_db_path,
     taxonomy_meta_path,
 )
 
@@ -125,13 +124,9 @@ def load_taxonomy_tree(
 
     If `root_accession` is given, restricts to that node and its descendants.
     """
-    db_path = taxonomy_db_path(taxonomy_id)
-    if not db_path.exists():
-        raise FileNotFoundError(
-            f"Taxonomy DB not found: {db_path}. "
-            "Run 'just build-taxonomy-db {taxonomy_id}' first."
-        )
-    conn = sqlite3.connect(db_path)
+    from evidencell.taxonomy_db import require_taxonomy_db
+
+    conn = sqlite3.connect(f"file:{require_taxonomy_db(taxonomy_id)}?mode=ro", uri=True)
     try:
         rows = conn.execute(
             "SELECT node_id, label, taxonomy_level, taxonomy_rank, parent_id FROM nodes"

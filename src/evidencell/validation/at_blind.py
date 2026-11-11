@@ -137,12 +137,11 @@ class ATBlindAudit(AuditDriver):
         ]
 
     def _check_db_exists(self) -> None:
-        path = taxonomy_db_path(self.taxonomy_id)
-        if not path.exists():
-            raise AuditAssertion(
-                f"Taxonomy DB not found at {path}. Run: "
-                f"just build-taxonomy-db {self.taxonomy_id}"
-            )
+        from evidencell.taxonomy_db import TaxonomyDBUnavailable, require_taxonomy_db
+        try:
+            require_taxonomy_db(self.taxonomy_id)
+        except TaxonomyDBUnavailable as exc:
+            raise AuditAssertion(str(exc)) from exc
 
     def _check_db_fresh(self) -> None:
         from evidencell.taxonomy_db import taxonomy_db_freshness
