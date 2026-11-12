@@ -1,11 +1,33 @@
 # HMBA Basal Ganglia Consensus Taxonomy — ingest plan
 
-**Status:** **On hold** — design settled, implementation deferred until the
-brain_cell_KG refactoring lands (curator decision, 2026-10-22). The refactor is
-not expected to change taxonomy representation, but implementing against a
-moving target would mean re-probing and re-confirming the Cypher and field
-mapping twice. The probe findings below are the design input; re-run the probe
-to confirm them once the refactor is in.
+**Status:** **Implemented on branch `bg-ingest-180`** (closes
+[#180](https://github.com/Cellular-Semantics/evidencell/issues/180), 2026-11-12).
+WS1 (parameterised anatomy loader, DHBA), gap 2 (label-derived `nt_type` with
+qualified provenance) and WS3 (BG accession codes) are in `taxonomy_db.py`;
+`inputs/taxonomies/CCN20250428.cypher`, `CCN20250428_meta.yaml` and
+`kb/taxonomy/CCN20250428/field_mapping.json` are authored, and the ingest has
+been run end-to-end against the live KG: 61/36/12/4 nodes, 86 DHBA locations,
+NT on 75/113 nodes each with one qualifying source, DHBA closure 3,317 terms.
+`field_mapping.json` is still `confirmed: false` pending the ingest gate.
+
+The brain_cell_KG changes this plan waited on landed 2026-10-27 (BG Group soma
+locations transferred onto `BG:` taxonomy nodes; DHBA/CLM CURIE prefixes fixed).
+**The two-hop `exemplar_data_of` anatomy path, the `ns3:` prefix workaround and
+the Group-level gate described below are obsolete** — anatomy is now on the node
+via `obsolete_some_soma_located_in` / `obsolete_cell_ratio`, exactly as WMBv1;
+the Cypher file is a near-copy of `CCN20230722.cypher`. Still absent in the KG:
+`nt_type` (no property on any BG node) and a computed marker panel (WS5).
+
+**NT decision (curator, 2026-11-12):** bring NT in for all BG nodes, derived
+from the cluster **label** (not the CL target's neo4j labels, which lose
+dopamine and add a spurious `hist`), with a qualified `nt_type.sources` entry
+carrying method, scope, `support: WEAK` and a caveat; cholinergic groups are a
+Chol / Chol+GABA mix and need the caveat most. Citation used as `ref`: the
+taxonomy preprint, Johansen, Fu et al. 2025, bioRxiv 10.64898/2025.12.15.694496.
+
+Remaining: WS5 (precomputed stats → expression), WS6 (KB rewiring; `CL:0020004`
+vs `CL:4310096` on GPi Shell), marker case-sensitivity before mapping.
+
 **Date:** 2026-10-22
 **Taxonomy:** `CCN20250428` (HMBA Basal Ganglia Consensus; accessions `CS20250428_*`)
 **KG:** live and queryable on `bolt://localhost:7687` — see probe sections below

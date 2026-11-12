@@ -3,17 +3,20 @@
 Data flow:
   JSON source → ingest_to_yaml() → kb/taxonomy/{id}/*.yaml  (canonical, versioned)
                                  → TaxonomyDB.build_from_yaml() → {id}.db  (query index)
-  MBA OBO JSON → TaxonomyDB.build_anat_closure() → anat_terms/hierarchy/closure tables
+  Atlas anatomy OBO JSON → TaxonomyDB.build_anat_closure() → anat_terms/hierarchy/closure
 
 The SQLite DB is always derived from the YAML files and can be rebuilt without
-the original JSON source.  The anat closure tables require a separate MBA ontology
-JSON fetch (see justfile: fetch-mba-ontology).
+the original JSON source.  The anat closure tables require a separate anatomy
+ontology JSON fetch (see justfile: fetch-anat-ontology {PREFIX}); which ontology
+a taxonomy uses is declared by ``anatomy_ontology`` in its taxonomy_meta.yaml
+and must be a key of ``ANATOMY_ONTOLOGIES``.
 """
 
 from __future__ import annotations
 
 import io
 import json
+import re
 import sqlite3
 import sys
 import urllib.request
@@ -26,21 +29,87 @@ from typing import Any, Iterator
 import ijson
 import yaml
 
-# Always-latest release of the BICAN Mouse Brain Atlas Ontology (OBO JSON / Obograph)
-MBA_ONTOLOGY_URL = (
-    "https://github.com/brain-bican/mouse_brain_atlas_ontology"
-    "/releases/latest/download/mbao-full.json"
-)
-MBA_RELEASES_API = (
-    "https://api.github.com/repos/brain-bican/"
-    "mouse_brain_atlas_ontology/releases/latest"
-)
+# ── Atlas anatomy ontologies ───────────────────────────────────────────────────
+#
+# Registry of the BICAN atlas anatomy ontologies a taxonomy's ``anat[]`` IDs may
+# be drawn from, keyed by CURIE prefix. All are ODK/TDT builds with the same
+# Obograph shape (spatial tree = BFO:0000050 part_of + a minority of is_a;
+# UBERON link = is_a from the atlas term to a UBERON class), so one parser
+# serves all of them — only the prefix and download location differ.
+# ``taxonomy_meta.yaml:anatomy_ontology`` must name one of these keys.
+ANATOMY_ONTOLOGIES: dict[str, dict[str, str]] = {
+    "MBA": {
+        "repo": "brain-bican/mouse_brain_atlas_ontology",
+        "file": "mbao-full.json",
+        "description": "Allen Mouse Brain Atlas (CCFv3) ontology",
+    },
+    "DHBA": {
+        "repo": "brain-bican/developing_human_brain_atlas_ontology",
+        "file": "dhbao-full.json",
+        "description": "Allen Developing Human Brain Atlas ontology",
+    },
+    "HBA": {
+        "repo": "brain-bican/human_brain_atlas_ontology",
+        "file": "hbao-full.json",
+        "description": "Allen Human Brain Atlas ontology",
+    },
+}
+
+# Legacy location of the MBA download, from before the loader was
+# parameterised. Still honoured on read so existing checkouts keep working.
+_LEGACY_MBA_PATH = Path("conf") / "mba" / "mbao-full.json"
 
 
-def _fetch_latest_mba_release(timeout: float = 5.0) -> str | None:
-    """Return the latest GitHub release tag for the MBA ontology, or None if unreachable."""
+def _anatomy_spec(prefix: str) -> dict[str, str]:
+    key = (prefix or "").upper()
+    if key not in ANATOMY_ONTOLOGIES:
+        raise ValueError(
+            f"Unknown anatomy ontology prefix {prefix!r}; known: "
+            f"{', '.join(sorted(ANATOMY_ONTOLOGIES))}. Add it to "
+            "ANATOMY_ONTOLOGIES in evidencell.taxonomy_db."
+        )
+    return ANATOMY_ONTOLOGIES[key]
+
+
+def anatomy_ontology_path(prefix: str, root: Path | None = None) -> Path:
+    """Local path of the downloaded OBO JSON for an anatomy ontology prefix.
+
+    Canonical location is ``conf/anatomy/{prefix.lower()}/{file}``. For MBA the
+    pre-parameterisation path ``conf/mba/mbao-full.json`` is returned instead
+    when it exists and the canonical one does not, so no re-download is forced.
+    """
+    spec = _anatomy_spec(prefix)
+    if root is None:
+        from evidencell.paths import repo_root
+        root = repo_root()
+    canonical = root / "conf" / "anatomy" / prefix.lower() / spec["file"]
+    if prefix.upper() == "MBA" and not canonical.exists():
+        legacy = root / _LEGACY_MBA_PATH
+        if legacy.exists():
+            return legacy
+    return canonical
+
+
+def anatomy_ontology_urls(prefix: str) -> list[str]:
+    """Download URLs to try in order for an anatomy ontology's OBO JSON.
+
+    The GitHub *latest release* asset is preferred (a tagged, reproducible
+    build). Not every ontology attaches assets to its releases (dhbao does not),
+    so the raw ``main`` copy is the fallback.
+    """
+    spec = _anatomy_spec(prefix)
+    return [
+        f"https://github.com/{spec['repo']}/releases/latest/download/{spec['file']}",
+        f"https://raw.githubusercontent.com/{spec['repo']}/main/{spec['file']}",
+    ]
+
+
+def _fetch_latest_ontology_release(prefix: str, timeout: float = 5.0) -> str | None:
+    """Return the latest GitHub release tag for an anatomy ontology, or None if unreachable."""
+    spec = _anatomy_spec(prefix)
+    api = f"https://api.github.com/repos/{spec['repo']}/releases/latest"
     try:
-        with urllib.request.urlopen(MBA_RELEASES_API, timeout=timeout) as resp:  # noqa: S310
+        with urllib.request.urlopen(api, timeout=timeout) as resp:  # noqa: S310
             return json.loads(resp.read())["tag_name"]
     except Exception:
         return None
@@ -67,13 +136,19 @@ class TaxonomyMeta:
     species_label: str | None = None     # e.g. "Mus musculus"
     tissue_id: str | None = None         # UBERON CURIE e.g. UBERON:0000955
     tissue_label: str | None = None      # e.g. "brain"
-    anatomy_ontology: str | None = None  # ontology used for anat[] IDs e.g. "MBA"
+    anatomy_ontology: str | None = None  # ontology used for anat[] IDs — a key of ANATOMY_ONTOLOGIES
     source_query: str | None = None      # .cypher file path for KG-backed taxonomies
     source_file: str | None = None       # JSON/CSV/XLSX path for ad hoc taxonomies
     ingest_date: str | None = None
     level_counts: dict[str, int] = field(default_factory=dict)
     level_hierarchy: list[dict] = field(default_factory=list)  # [{level_name, rank, count, is_terminal}]
     mapmycells: MapMyCellsMeta = field(default_factory=MapMyCellsMeta)
+    # PropertySource template stamped onto nt_type.sources of every node whose
+    # NT was *derived* at ingest (from a Cypher column or the cluster label)
+    # rather than read from an assayed atlas property. Keys: ref (required),
+    # method, scope, notes, support. Atlas nodes with a native NT property
+    # (WMBv1 nt_type_label) keep sources empty — provenance implicit.
+    nt_provenance: dict[str, Any] | None = None
 
 
 def _read_meta_input(taxonomy_id: str) -> dict[str, Any]:
@@ -117,6 +192,7 @@ def read_taxonomy_meta(taxonomy_id: str) -> TaxonomyMeta:
         source_query=d.get("source_query"),
         source_file=d.get("source_file"),
         ingest_date=d.get("ingest_date"),
+        nt_provenance=d.get("nt_provenance"),
         level_counts=d.get("level_counts", {}),
         level_hierarchy=d.get("level_hierarchy", []),
         mapmycells=MapMyCellsMeta(
@@ -145,6 +221,8 @@ def _meta_to_dict(meta: TaxonomyMeta) -> dict[str, Any]:
         v = getattr(meta, k)
         if v is not None:
             d[k] = v
+    if meta.nt_provenance:
+        d["nt_provenance"] = meta.nt_provenance
     if meta.level_hierarchy:
         d["level_hierarchy"] = meta.level_hierarchy
     if meta.level_counts:
@@ -226,6 +304,12 @@ class TaxonomyNode:
     cl_label: str | None
     cell_ontology_term: str | None  # label string when cl object absent
     nt_type: str | None
+    # Where nt_type came from: "property" (an assayed atlas property such as
+    # WMBv1 nt_type_label), "row_column" (a derived Cypher column routed via
+    # field_mapping row_keys.nt_type), or "label" (parsed from the cluster
+    # label by _nt_from_label). Anything but "property" is an inference and is
+    # emitted with a qualifying PropertySource — see _node_to_dict.
+    nt_source: str | None = None
     defining_markers_scoped: list[str] = field(default_factory=list)
     defining_markers: list[str] = field(default_factory=list)
     tf_markers: list[str] = field(default_factory=list)
@@ -250,6 +334,9 @@ class TaxonomyNode:
 _SPATIAL_METHOD_BY_DOI: dict[str, str] = {
     "https://doi.org/10.1038/s41586-023-06808-9": "MERFISH (Yao 2024)",
     "https://doi.org/10.1038/s41586-023-06812-z": "MERFISH (Zhuang 2023)",
+    # HMBA BG consensus (Johansen, Fu et al. 2025): Group-level
+    # spatial_regional_proportions binned to CCF broad regions (EFO:0008992).
+    "https://doi.org/10.64898/2025.12.15.694496": "MERFISH (HMBA BG consensus, CCF broad region)",
 }
 
 
@@ -295,6 +382,72 @@ def _split_markers(combo: str | list | None) -> list[str]:
     return [g.strip() for g in combo.split(",") if g.strip()]
 
 
+# ── Neurotransmitter derivation ────────────────────────────────────────────────
+#
+# Some taxonomies (HMBA BG consensus, CCN20250428) carry no NT property at all;
+# NT is only encoded in the cluster label ("STR Cholinergic GABA", "SN SOX6
+# Dopa", "CN GABA-Glut"). The token vocabulary below maps label tokens to the
+# canonical short names WMBv1's nt_type_label already uses (GABA, Glut, Dopa,
+# Chol, Sero, Hist, Glyc) so that NT filters in find_candidates work across
+# taxonomies. MSN (D1/D2 medium spiny neuron) is included because MSNs are
+# GABAergic by definition and BG labels name them without a GABA token.
+_NT_LABEL_TOKENS: dict[str, str] = {
+    "GABA": "GABA",
+    "Gaba": "GABA",
+    "Glut": "Glut",
+    "Glu": "Glut",
+    "Dopa": "Dopa",
+    "Chol": "Chol",
+    "Cholinergic": "Chol",
+    "Sero": "Sero",
+    "Hist": "Hist",
+    "Gly": "Glyc",
+    "Glyc": "Glyc",
+    "MSN": "GABA",
+}
+
+# Canonical NT short name → CL term (id, label). Verified against OLS 2026-11-12.
+_NT_CL_TERMS: dict[str, tuple[str, str]] = {
+    "GABA": ("CL:0000617", "GABAergic neuron"),
+    "Glut": ("CL:0000679", "glutamatergic neuron"),
+    "Chol": ("CL:0000108", "cholinergic neuron"),
+    "Dopa": ("CL:0000700", "dopaminergic neuron"),
+    "Sero": ("CL:0000850", "serotonergic neuron"),
+    "Hist": ("CL:0011110", "histaminergic neuron"),
+    "Glyc": ("CL:1001509", "glycinergic neuron"),
+}
+
+_NT_TOKEN_SPLIT = re.compile(r"[\s/\-]+")
+
+
+def _nt_from_label(label: str | None) -> str | None:
+    """Derive a canonical NT string ("GABA", "Dopa-GABA", "Chol-GABA") from a
+    cluster label, or None when the label carries no NT token.
+
+    Tokens are matched case-sensitively on whitespace / hyphen / slash
+    boundaries, so gene symbols and region acronyms (GAD2, GATA3, STR) do not
+    collide. Order of transmitters follows the label; duplicates collapse.
+    """
+    if not label:
+        return None
+    found: list[str] = []
+    for tok in _NT_TOKEN_SPLIT.split(label):
+        canon = _NT_LABEL_TOKENS.get(tok)
+        if canon and canon not in found:
+            found.append(canon)
+    return "-".join(found) if found else None
+
+
+def _nt_cl_terms(nt_type: str) -> list[dict]:
+    """OntologyTerm dicts for each transmitter in a canonical NT string."""
+    terms: list[dict] = []
+    for part in nt_type.split("-"):
+        hit = _NT_CL_TERMS.get(part)
+        if hit:
+            terms.append({"id": hit[0], "label": hit[1], "name_in_source": part})
+    return terms
+
+
 def _first_prop(props: dict, keys: list[str]) -> object:
     """Return the first non-None value found in props for any of the given keys."""
     for key in keys:
@@ -331,6 +484,11 @@ def _load_field_config(taxonomy_id: str) -> dict[str, list[str]]:
             k: v for k, v in row_keys_raw.items()
             if not k.startswith("_") and isinstance(v, str)
         }
+
+    # nt_type_from_label: derive NT from the cluster label when the source
+    # carries no NT property (see _nt_from_label). Opt-in per taxonomy.
+    if cfg.get("nt_type_from_label") is True:
+        target_to_keys["nt_type_from_label"] = True
 
     # field_mappings: maps wmb.properties.* source paths → target field names
     for section in cfg.get("field_mappings", {}).values():
@@ -514,6 +672,27 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
     neuronal = _scalar(_first_prop(props, fc.get("neuronal", ["Neuronal"])))
     glial = _scalar(_first_prop(props, fc.get("glial", ["Glial"])))
 
+    # NT type, in order of standing:
+    #   1. a node property (WMBv1 nt_type_label) — assayed, provenance implicit
+    #   2. a top-level row column named by row_keys.nt_type — a Cypher-derived
+    #      value (e.g. from the CL target's labels); an inference
+    #   3. the cluster label, when field_mapping sets nt_type_from_label — an
+    #      inference
+    # The origin is recorded so _node_to_dict can qualify 2 and 3 with a
+    # PropertySource from taxonomy_meta.nt_provenance.
+    nt_type = _scalar(_first_prop(props, fc.get("nt_type", ["nt_type_label"])))
+    nt_source: str | None = "property" if nt_type else None
+    nt_col = rk.get("nt_type") if isinstance(rk, dict) else None
+    if nt_type is None and nt_col:
+        raw_nt = row.get(nt_col)
+        if isinstance(raw_nt, list):
+            raw_nt = "-".join(str(x) for x in raw_nt if x) or None
+        nt_type = _scalar(raw_nt)
+        nt_source = "row_column" if nt_type else None
+    if nt_type is None and fc.get("nt_type_from_label"):
+        nt_type = _nt_from_label(props.get("label", ""))
+        nt_source = "label" if nt_type else None
+
     return TaxonomyNode(
         node_id=props.get("curie", ""),
         short_form=props.get("short_form", ""),
@@ -528,7 +707,8 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
         cl_id=cl_props.get("curie"),
         cl_label=cl_props.get("label"),
         cell_ontology_term=cot_raw if not cl_props.get("curie") else None,
-        nt_type=_scalar(_first_prop(props, fc.get("nt_type", ["nt_type_label"]))),
+        nt_type=nt_type,
+        nt_source=nt_source,
         defining_markers_scoped=_split_markers(_first_prop(
             props,
             fc.get("defining_markers_scoped", [
@@ -659,13 +839,22 @@ def _compute_level_hierarchy(
 
 # ── YAML generation ────────────────────────────────────────────────────────────
 
-# WMBv1 accession type-code → taxonomy level string
+# Accession type-code → taxonomy level string. Fallback only — the KG export
+# carries an explicit `level` column — but keeps cached exports and
+# parent_hierarchy inference working. WMBv1 (CS20230722_*) and HMBA BG
+# consensus (CS20250428_*) codes; note BG spells SUBCL / CLASS, not SUBC / CLAS.
 _ACCESSION_LEVEL_MAP: dict[str, str] = {
+    # WMBv1
     "CLUS": "CLUSTER",
     "SUPT": "SUPERTYPE",
     "SUBC": "SUBCLASS",
     "CLAS": "CLASS",
     "NETT": "NEUROTRANSMITTER",
+    # HMBA BG consensus
+    "GROUP": "GROUP",
+    "SUBCL": "SUBCLASS",
+    "CLASS": "CLASS",
+    "NEIGH": "NEIGHBORHOOD",
 }
 
 
@@ -733,14 +922,26 @@ def _parse_json_list(value: str | None) -> list[str]:
     return [str(x) for x in out if x]
 
 
-def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, str]) -> dict:
+def _node_to_dict(
+    n: TaxonomyNode,
+    meta: TaxonomyMeta,
+    name_lookup: dict[str, str],
+    level_to_rank: dict[str, int] | None = None,
+) -> dict:
     """Convert a TaxonomyNode to a schema-compliant CellTypeNode dict.
 
-    meta  — used for species fields
+    meta  — used for species fields and the nt_provenance template
     name_lookup — accession/CURIE → clean name, for parent_hierarchy.name
+    level_to_rank — level name → integer rank from _compute_level_hierarchy;
+        rank 0 is the terminal level. When absent (legacy callers) the
+        WMBv1 convention CLUSTER == terminal is used.
     """
     name = _strip_accession_from_label(n.label, n.short_form)
     tax_level = n.taxonomy_level.upper()
+    if level_to_rank is not None and tax_level in level_to_rank:
+        is_terminal = level_to_rank[tax_level] == 0
+    else:
+        is_terminal = tax_level == "CLUSTER"
 
     # Unified markers list
     markers: list[dict] = []
@@ -754,10 +955,38 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         markers.append({"symbol": sym, "category": "MERFISH"})
     markers.extend(_parse_np_markers(n.np_markers))
 
-    # NeurotransmitterType
+    # NeurotransmitterType. An assayed atlas property ("property") is emitted
+    # bare — provenance implicit from atlas + accession. A *derived* NT
+    # (row_column / label) is an inference and must not read as if it had the
+    # same standing: it gets cl_terms plus one qualifying PropertySource from
+    # taxonomy_meta.nt_provenance (method / scope / support / notes), stamped
+    # identically across the taxonomy. If the taxonomy declares no
+    # nt_provenance the derived value is still emitted but flagged in `notes`
+    # so the omission is visible rather than silent.
     nt_type_obj: dict | None = None
     if n.nt_type:
         nt_type_obj = {"name_in_source": n.nt_type}
+        if n.nt_source and n.nt_source != "property":
+            cl_terms = _nt_cl_terms(n.nt_type)
+            if cl_terms:
+                nt_type_obj["cl_terms"] = cl_terms
+            prov = meta.nt_provenance or {}
+            if prov.get("ref"):
+                src: dict = {"ref": prov["ref"]}
+                for k in ("method", "scope", "notes", "support"):
+                    if prov.get(k):
+                        src[k] = prov[k]
+                src.setdefault(
+                    "method",
+                    f"inferred from cluster {n.nt_source.replace('_', ' ')}; "
+                    "not assayed at cluster level",
+                )
+                nt_type_obj["sources"] = [src]
+            else:
+                nt_type_obj["notes"] = (
+                    f"nt_type inferred from cluster {n.nt_source.replace('_', ' ')} "
+                    "at ingest; no nt_provenance declared in taxonomy meta input"
+                )
 
     # CL mapping (cell type, not NT type)
     # OntologyTerm requires id + label + name_in_source (all three).
@@ -834,7 +1063,7 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         "taxonomy_id": n.taxonomy_id,
         "taxonomy_level": tax_level,
         "definition_basis": "ATLAS_TRANSCRIPTOMIC",
-        "is_terminal": tax_level == "CLUSTER",
+        "is_terminal": is_terminal,
     }
     if parent_hierarchy:
         d["parent_hierarchy"] = parent_hierarchy
@@ -855,6 +1084,39 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
     if species:
         d["species"] = species
     return d
+
+
+_NT_PROVENANCE_KEYS = ("ref", "method", "scope", "notes", "support")
+# Mirrors PropertySource.ref's pattern in schema/celltype_mapping.yaml.
+_PROPERTY_SOURCE_REF = re.compile(r"^(PMID:[0-9]+|https://doi\.org/.+)$")
+
+
+def _validated_nt_provenance(raw: object) -> dict[str, Any] | None:
+    """Validate the ``nt_provenance`` block of a taxonomy meta input.
+
+    ``ref`` is required (PropertySource.ref is a required slot) and must match
+    the schema's citation pattern — ``PMID:<digits>`` or ``https://doi.org/…``.
+    Unknown keys are rejected so a typo cannot silently drop a caveat.
+    """
+    if raw is None:
+        return None
+    if not isinstance(raw, dict):
+        raise ValueError("nt_provenance must be a mapping")
+    unknown = set(raw) - set(_NT_PROVENANCE_KEYS)
+    if unknown:
+        raise ValueError(
+            f"nt_provenance has unknown keys {sorted(unknown)}; "
+            f"allowed: {list(_NT_PROVENANCE_KEYS)}"
+        )
+    ref = raw.get("ref")
+    if not ref or not isinstance(ref, str):
+        raise ValueError("nt_provenance.ref is required (PMID:<digits> or https://doi.org/…)")
+    if not _PROPERTY_SOURCE_REF.match(ref):
+        raise ValueError(
+            f"nt_provenance.ref {ref!r} does not match PropertySource.ref "
+            "(PMID:<digits> or https://doi.org/…)"
+        )
+    return {k: raw[k] for k in _NT_PROVENANCE_KEYS if raw.get(k)}
 
 
 def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str, int]:
@@ -897,6 +1159,7 @@ def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str
         source_query=meta_input.get("source_query"),
         source_file=source.name,
         ingest_date=str(date.today()),
+        nt_provenance=_validated_nt_provenance(meta_input.get("nt_provenance")),
         level_counts={},  # filled below
         mapmycells=MapMyCellsMeta(
             at_taxonomy_id=mmc_raw.get("at_taxonomy_id"),
@@ -927,7 +1190,7 @@ def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str
     # Second pass: convert to CellTypeNode dicts grouped by level
     by_level: dict[str, list[dict]] = {}
     for n in all_nodes:
-        d = _node_to_dict(n, meta, name_lookup)
+        d = _node_to_dict(n, meta, name_lookup, level_to_rank)
         lev_upper = n.taxonomy_level.upper()
         rank = level_to_rank.get(lev_upper)
         if rank is not None:
@@ -1450,13 +1713,23 @@ def _iri_to_curie(iri: str) -> str | None:
     return f"{prefix}:{local}"
 
 
-def _parse_mba_obograph(path: Path) -> tuple[list[tuple[str, str, str | None]], list[tuple[str, str]]]:
-    """Parse an MBA OBO JSON (Obograph) file.
+def _parse_anatomy_obograph(
+    path: Path, prefix: str
+) -> tuple[list[tuple[str, str, str | None]], list[tuple[str, str]]]:
+    """Parse a BICAN atlas anatomy OBO JSON (Obograph) file for one CURIE prefix.
+
+    Works for any entry in ANATOMY_ONTOLOGIES (MBA, DHBA, HBA …): the builds
+    share one shape — intra-atlas tree via is_a + BFO:0000050 part_of, and a
+    UBERON cross-reference as an is_a edge from the atlas term to a UBERON
+    class. A ``{prefix}:ENTITY`` pseudo-root, if present, is excluded.
 
     Returns:
         terms: list of (anat_id, label, uberon_id_or_None)
-        edges: list of (parent_id, child_id) for MBA→MBA is_a edges only
+        edges: list of (parent_id, child_id) for intra-atlas is_a/part_of edges
     """
+    pfx = f"{prefix.upper()}:"
+    root = f"{pfx}ENTITY"
+
     with path.open(encoding="utf-8") as fh:
         data = json.load(fh)
 
@@ -1465,18 +1738,21 @@ def _parse_mba_obograph(path: Path) -> tuple[list[tuple[str, str, str | None]], 
     terms: list[tuple[str, str, str | None]] = []
     for node in graph.get("nodes", []):
         curie = _iri_to_curie(node.get("id", ""))
-        if not curie or not curie.startswith("MBA:"):
+        if not curie or not curie.startswith(pfx) or curie == root:
             continue
         label = node.get("lbl", "")
         if node.get("type") != "CLASS" or not label:
             continue
         terms.append((curie, label, None))  # uberon_id filled from edges below
 
-    # uberon_id: first UBERON target of an is_a edge from each MBA term
+    # uberon_id: first UBERON target of an is_a edge from each atlas term
     uberon_map: dict[str, str] = {}
-    mba_edges: list[tuple[str, str]] = []
+    tree_edges: list[tuple[str, str]] = []
 
     _PART_OF = "http://purl.obolibrary.org/obo/BFO_0000050"
+
+    def _intra(sub: str, obj: str) -> bool:
+        return sub.startswith(pfx) and obj.startswith(pfx) and obj != root
 
     for edge in graph.get("edges", []):
         pred = edge.get("pred", "")
@@ -1485,18 +1761,18 @@ def _parse_mba_obograph(path: Path) -> tuple[list[tuple[str, str, str | None]], 
         if not sub or not obj:
             continue
         if pred == "is_a":
-            if sub.startswith("MBA:") and obj.startswith("MBA:") and not obj.startswith("MBA:ENTITY"):
-                mba_edges.append((obj, sub))  # sub is_a obj  ⟹  obj is parent
-            elif sub.startswith("MBA:") and obj.startswith("UBERON:"):
+            if _intra(sub, obj):
+                tree_edges.append((obj, sub))  # sub is_a obj  ⟹  obj is parent
+            elif sub.startswith(pfx) and obj.startswith("UBERON:"):
                 uberon_map.setdefault(sub, obj)
         elif pred == _PART_OF:
-            if sub.startswith("MBA:") and obj.startswith("MBA:") and not obj.startswith("MBA:ENTITY"):
-                mba_edges.append((obj, sub))  # sub part_of obj  ⟹  obj is spatial parent
+            if _intra(sub, obj):
+                tree_edges.append((obj, sub))  # sub part_of obj  ⟹  obj is spatial parent
 
     # Splice uberon_id back into terms
     terms = [(anat_id, label, uberon_map.get(anat_id)) for anat_id, label, _ in terms]
 
-    return terms, mba_edges
+    return terms, tree_edges
 
 
 def _compute_closure(edges: list[tuple[str, str]]) -> list[tuple[str, str, int]]:
@@ -2211,13 +2487,16 @@ class TaxonomyDB:
             ).fetchall()
         return [dict(r) for r in rows]
 
-    def build_anat_closure(self, mba_json: Path) -> None:
-        """Populate anat_terms, anat_hierarchy, and anat_closure from an MBA OBO JSON file.
+    def build_anat_closure(self, ontology_json: Path, prefix: str = "MBA") -> None:
+        """Populate anat_terms, anat_hierarchy, and anat_closure from an atlas
+        anatomy OBO JSON file (any ANATOMY_ONTOLOGIES prefix).
 
         Idempotent — drops and rebuilds the three closure tables on each call.
-        The main nodes/anat tables are untouched.
+        The main nodes/anat tables are untouched. Records the ontology prefix
+        and release tag in ``_meta``.
         """
-        terms, edges = _parse_mba_obograph(mba_json)
+        _anatomy_spec(prefix)  # fail fast on an unknown prefix
+        terms, edges = _parse_anatomy_obograph(ontology_json, prefix)
         closure = _compute_closure(edges)
 
         con = sqlite3.connect(self.db_path)
@@ -2240,8 +2519,12 @@ class TaxonomyDB:
             con.executescript(
                 "CREATE TABLE IF NOT EXISTS _meta (key TEXT PRIMARY KEY, value TEXT);"
             )
-            release = _fetch_latest_mba_release()
+            release = _fetch_latest_ontology_release(prefix)
             now = datetime.now(tz=timezone.utc).isoformat()
+            con.execute(
+                "INSERT OR REPLACE INTO _meta VALUES ('anatomy_closure_ontology', ?)",
+                (prefix.upper(),),
+            )
             if release is not None:
                 con.execute(
                     "INSERT OR REPLACE INTO _meta VALUES ('anatomy_closure_release', ?)",
@@ -2275,7 +2558,7 @@ class TaxonomyDB:
         return [r[0] for r in rows]
 
     def get_anat_parents(self, anat_id: str) -> list[str]:
-        """Return immediate-parent MBA IDs of ``anat_id`` from anat_hierarchy."""
+        """Return immediate-parent atlas anatomy IDs of ``anat_id`` from anat_hierarchy."""
         with self._connect() as con:
             try:
                 rows = con.execute(
@@ -3104,31 +3387,81 @@ def _cmd_show_meta(taxonomy_id: str) -> None:
     print(f"  local_markers:   {mmc.local_markers_path}")
 
 
-def _cmd_fetch_mba(dest: str) -> None:
-    dest_path = Path(dest)
+def fetch_anatomy_ontology(prefix: str, dest: Path | None = None) -> Path:
+    """Download an atlas anatomy ontology's OBO JSON to its canonical local path
+    (or ``dest``). Tries the latest-release asset first, then raw ``main``.
+    Returns the path written.
+    """
+    import urllib.error
+
+    dest_path = dest if dest is not None else anatomy_ontology_path(prefix)
     dest_path.parent.mkdir(parents=True, exist_ok=True)
-    print(f"Downloading MBA ontology (latest release) → {dest_path}")
-    print(f"  URL: {MBA_ONTOLOGY_URL}")
-    with urllib.request.urlopen(MBA_ONTOLOGY_URL) as resp:  # noqa: S310
-        data = resp.read()
-    dest_path.write_bytes(data)
-    size_kb = len(data) // 1024
-    print(f"  Downloaded {size_kb:,} KB")
+    spec = _anatomy_spec(prefix)
+    print(f"Downloading {prefix.upper()} ontology ({spec['description']}) → {dest_path}")
+    last_exc: Exception | None = None
+    for url in anatomy_ontology_urls(prefix):
+        print(f"  URL: {url}")
+        try:
+            with urllib.request.urlopen(url) as resp:  # noqa: S310
+                data = resp.read()
+        except urllib.error.HTTPError as exc:
+            print(f"    {exc.code} — trying next source")
+            last_exc = exc
+            continue
+        if not data.lstrip().startswith(b"{"):
+            print("    response is not JSON (HTML landing page?) — trying next source")
+            last_exc = ValueError(f"non-JSON response from {url}")
+            continue
+        dest_path.write_bytes(data)
+        print(f"  Downloaded {len(data) // 1024:,} KB")
+        return dest_path
+    raise RuntimeError(
+        f"Could not download {prefix.upper()} ontology from any known URL"
+    ) from last_exc
 
 
-def _cmd_build_closure(taxonomy_id: str, mba_json: str) -> None:
-    mba_path = Path(mba_json)
+def _cmd_fetch_anatomy(prefix: str, dest: str | None = None) -> None:
+    try:
+        fetch_anatomy_ontology(prefix, Path(dest) if dest else None)
+    except (ValueError, RuntimeError) as exc:
+        print(f"ERROR: {exc}")
+        raise SystemExit(1)
+
+
+def _cmd_build_closure(taxonomy_id: str, ontology_json: str | None = None) -> None:
+    """Build the anat closure tables for a taxonomy.
+
+    The ontology prefix comes from ``anatomy_ontology`` in the taxonomy's
+    taxonomy_meta.yaml; the JSON path defaults to that ontology's canonical
+    download location and may be overridden positionally.
+    """
     try:
         db_path = require_taxonomy_db(taxonomy_id)
     except TaxonomyDBUnavailable as exc:
         print(f"ERROR: {exc}")
         raise SystemExit(1)
-    if not mba_path.exists():
-        print(f"ERROR: MBA JSON not found at {mba_path} — run fetch-mba-ontology first")
+    meta = read_taxonomy_meta(taxonomy_id)
+    prefix = (meta.anatomy_ontology or "").upper()
+    if not prefix:
+        print(
+            f"ERROR: taxonomy_meta.yaml for {taxonomy_id} declares no anatomy_ontology; "
+            f"set it to one of {sorted(ANATOMY_ONTOLOGIES)} and re-ingest"
+        )
         raise SystemExit(1)
-    print(f"Building anat closure from {mba_path} → {db_path}")
+    try:
+        onto_path = Path(ontology_json) if ontology_json else anatomy_ontology_path(prefix)
+    except ValueError as exc:
+        print(f"ERROR: {exc}")
+        raise SystemExit(1)
+    if not onto_path.exists():
+        print(
+            f"ERROR: {prefix} ontology JSON not found at {onto_path} — "
+            f"run: just fetch-anat-ontology {prefix}"
+        )
+        raise SystemExit(1)
+    print(f"Building {prefix} anat closure from {onto_path} → {db_path}")
     db = TaxonomyDB(db_path)
-    db.build_anat_closure(mba_path)
+    db.build_anat_closure(onto_path, prefix)
     con = sqlite3.connect(db_path)
     n_terms = con.execute("SELECT COUNT(*) FROM anat_terms").fetchone()[0]
     n_edges = con.execute("SELECT COUNT(*) FROM anat_hierarchy").fetchone()[0]
@@ -3142,10 +3475,12 @@ def _cmd_build_closure(taxonomy_id: str, mba_json: str) -> None:
     print(f"  anat_closure rows: {n_closure:,}")
 
 
-def _resolve_mba_by_name(con: "sqlite3.Connection", name: str) -> list[str]:
-    """Fallback: resolve an anatomical location name to MBA IDs by label matching.
+def _resolve_anat_by_name(con: "sqlite3.Connection", name: str) -> list[str]:
+    """Fallback: resolve an anatomical location name to atlas anatomy IDs by
+    label matching against anat_terms (whichever ontology the closure was
+    built from).
 
-    Used when a UBERON ID has no xref in the MBA ontology.  Tries direct
+    Used when a UBERON ID has no xref in the atlas ontology.  Tries direct
     substring match first, then applies Latin→English layer synonyms and
     hippocampal field prefix normalisation (e.g. "CA1 stratum pyramidale"
     → "Field CA1, pyramidal layer").
@@ -3161,7 +3496,7 @@ def _resolve_mba_by_name(con: "sqlite3.Connection", name: str) -> list[str]:
         "stratum moleculare": "molecular layer",
     }
 
-    # 1. Direct substring match on MBA label (also try with commas/punctuation stripped)
+    # 1. Direct substring match on the atlas label (also try with commas/punctuation stripped)
     rows = con.execute(
         "SELECT anat_id FROM anat_terms WHERE LOWER(label) LIKE ?",
         (f"%{norm}%",),
@@ -3328,7 +3663,9 @@ def _cmd_find_candidates(
             file=sys.stderr,
         )
 
-    # Resolve UBERON IDs to MBA IDs via anat_terms lookup, with name fallback
+    # Resolve UBERON IDs to atlas anatomy IDs (MBA, DHBA, … — whichever
+    # ontology the taxonomy's closure was built from) via anat_terms xref
+    # lookup, with name fallback
     mba_ids: list[str] = []
     with db._connect() as con:
         for loc in soma_locs:
@@ -3340,7 +3677,7 @@ def _cmd_find_candidates(
                 "SELECT anat_id, label FROM anat_terms WHERE uberon_id = ?", (aid,)
             ).fetchall()
             resolved = [r[0] for r in rows]
-            # Sanity check: if the xref-resolved MBA label shares no keywords
+            # Sanity check: if the xref-resolved atlas label shares no keywords
             # with the source name, the xref is likely wrong (e.g. UBERON:0005383
             # "stratum oriens" → MBA:672 "Caudoputamen").  Prefer name fallback.
             name = loc.get("name_in_source") or loc.get("label") or ""
@@ -3350,7 +3687,7 @@ def _cmd_find_candidates(
                 xref_words = {w.strip(",") for w in xref_label.split() if len(w) > 2}
                 if not (name_words & xref_words):
                     # No word overlap — likely wrong xref
-                    fallback = _resolve_mba_by_name(con, name)
+                    fallback = _resolve_anat_by_name(con, name)
                     if fallback:
                         print(
                             f"  {aid} xref → {resolved} ({rows[0][1]}) — "
@@ -3370,17 +3707,17 @@ def _cmd_find_candidates(
             else:
                 # Fallback: resolve by name_in_source or label
                 name = loc.get("name_in_source") or loc.get("label") or ""
-                fallback = _resolve_mba_by_name(con, name)
+                fallback = _resolve_anat_by_name(con, name)
                 if fallback:
                     mba_ids.extend(fallback)
                     print(
-                        f"  {aid} has no MBA xref — resolved by name: "
+                        f"  {aid} has no atlas anatomy xref — resolved by name: "
                         f"{name!r} → {fallback}",
                         file=sys.stderr,
                     )
                 else:
                     print(
-                        f"  WARNING: {aid} ({name}) has no MBA mapping — skipped",
+                        f"  WARNING: {aid} ({name}) has no atlas anatomy mapping — skipped",
                         file=sys.stderr,
                     )
 
@@ -3399,7 +3736,7 @@ def _cmd_find_candidates(
         print(f"  Negative markers: {neg_markers}", file=sys.stderr)
     print(f"  Soma locations: {anat_ids}", file=sys.stderr)
     if mba_ids != anat_ids:
-        print(f"  Resolved MBA IDs: {mba_ids}", file=sys.stderr)
+        print(f"  Resolved atlas anatomy IDs: {mba_ids}", file=sys.stderr)
     print(f"  Query rank: {rank}", file=sys.stderr)
     print(f"  Taxonomy: {taxonomy_id}", file=sys.stderr)
     if optional_criteria:
@@ -3438,7 +3775,7 @@ def _cmd_find_candidates(
             file=sys.stderr,
         )
 
-    # Try transitive anatomy matching (requires anat_closure table from MBA ontology).
+    # Try transitive anatomy matching (requires anat_closure table from the atlas anatomy ontology).
     # Fall back to no anatomy matching if closure not built.
     query_anat = mba_ids if mba_ids else None
     _fc_kwargs: dict = dict(
@@ -3460,7 +3797,7 @@ def _cmd_find_candidates(
         if "anat_closure" in str(exc):
             print(
                 "  WARNING: anat_closure table not built — anatomy matching disabled. "
-                "Run: just fetch-mba-ontology && just build-anat-closure "
+                "Run: just fetch-anat-ontology <PREFIX> && just build-anat-closure "
                 f"{taxonomy_id}",
                 file=sys.stderr,
             )
@@ -3602,8 +3939,8 @@ if __name__ == "__main__":
         print("  python -m evidencell.taxonomy_db build-db <taxonomy_id>")
         print("  python -m evidencell.taxonomy_db show-meta <taxonomy_id>")
         print("  python -m evidencell.taxonomy_db sync-mapmycells-paths <taxonomy_id>")
-        print("  python -m evidencell.taxonomy_db fetch-mba <dest_path>")
-        print("  python -m evidencell.taxonomy_db build-closure <taxonomy_id> <mba_json>")
+        print("  python -m evidencell.taxonomy_db fetch-anatomy <PREFIX> [dest_path]")
+        print("  python -m evidencell.taxonomy_db build-closure <taxonomy_id> [ontology_json]")
         print("  python -m evidencell.taxonomy_db find-candidates <graph_file> <node_id> <taxonomy_id> [rank] [top_k]")
         print("  python -m evidencell.taxonomy_db query-gene-expression <taxonomy_id> <accessions_csv> <genes_csv>")
         sys.exit(1)
@@ -3617,10 +3954,10 @@ if __name__ == "__main__":
         _cmd_show_meta(sys.argv[2])
     elif cmd == "sync-mapmycells-paths" and len(sys.argv) == 3:
         _cmd_sync_mapmycells_paths(sys.argv[2])
-    elif cmd == "fetch-mba" and len(sys.argv) == 3:
-        _cmd_fetch_mba(sys.argv[2])
-    elif cmd == "build-closure" and len(sys.argv) == 4:
-        _cmd_build_closure(sys.argv[2], sys.argv[3])
+    elif cmd == "fetch-anatomy" and len(sys.argv) in (3, 4):
+        _cmd_fetch_anatomy(sys.argv[2], sys.argv[3] if len(sys.argv) == 4 else None)
+    elif cmd == "build-closure" and len(sys.argv) in (3, 4):
+        _cmd_build_closure(sys.argv[2], sys.argv[3] if len(sys.argv) == 4 else None)
     elif cmd == "find-candidates" and len(sys.argv) >= 5:
         _rank = int(sys.argv[5]) if len(sys.argv) > 5 else 1
         _top_k = int(sys.argv[6]) if len(sys.argv) > 6 else 10

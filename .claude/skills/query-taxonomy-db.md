@@ -89,7 +89,7 @@ try:
         latest = _json.loads(r.read())["tag_name"]
     if cached in (None, "unknown") or latest != cached:
         print(f"MBA ontology update available ({cached!r} → {latest!r}). Downloading and rebuilding closure...")
-        subprocess.run(["just", "fetch-mba-ontology"], check=True)
+        subprocess.run(["just", "fetch-anat-ontology", "MBA"], check=True)
         subprocess.run(["just", "build-anat-closure", tid], check=True)
         print("Anatomy closure rebuilt.")
     else:
@@ -302,7 +302,8 @@ predominantly or incidentally of the requested NT type.
 - **NT type is cluster-level only** in WMB/CCN20230722. Use Step 5 for clean NT
   filtering at supertype level.
 - **UBERON ↔ MBA translation** requires closure tables. If absent, the user needs
-  to run `just fetch-mba-ontology && just build-anat-closure {taxonomy_id}`.
+  to run `just fetch-anat-ontology {PREFIX} && just build-anat-closure {taxonomy_id}`
+  (PREFIX = `anatomy_ontology` in the taxonomy's `taxonomy_meta.yaml`).
 - **Field coverage varies** between taxonomies. A taxonomy without `merfish_markers`
   or `np_markers` is not incomplete — those fields simply weren't part of its annotation.
   Do not report absences as errors.

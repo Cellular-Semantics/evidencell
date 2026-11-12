@@ -1819,3 +1819,309 @@ def test_load_expression_data_uses_db(tmp_path, monkeypatch):
 
     out = load_expression_data("PROX_TAX", "cluster")
     assert out == {"CLUS_A": {"Sst": 10.5, "Pvalb": 0.2}}
+
+
+# ── Issue #180: anatomy-ontology loader, derived NT, BG accession codes ───────
+
+from evidencell.taxonomy_db import (  # noqa: E402
+    ANATOMY_ONTOLOGIES,
+    _ACCESSION_LEVEL_MAP,
+    _infer_level_from_accession,
+    _nt_cl_terms,
+    _nt_from_label,
+    _parse_anatomy_obograph,
+    _validated_nt_provenance,
+    anatomy_ontology_path,
+    anatomy_ontology_urls,
+)
+
+
+def _obograph(prefix: str, base: str) -> dict:
+    """Minimal Obograph in the shared BICAN atlas-ontology shape."""
+    def iri(local):
+        return f"https://purl.brain-bican.org/ontology/{base}/{prefix}_{local}"
+    uberon = "http://purl.obolibrary.org/obo/UBERON_0002435"
+    return {"graphs": [{
+        "nodes": [
+            {"id": iri("ENTITY"), "lbl": "entity", "type": "CLASS"},
+            {"id": iri("1"), "lbl": "root region", "type": "CLASS"},
+            {"id": iri("2"), "lbl": "striatum", "type": "CLASS"},
+            {"id": iri("3"), "lbl": "caudate", "type": "CLASS"},
+            {"id": iri("4"), "lbl": "no label", "type": "CLASS", "lbl_": ""},
+            {"id": uberon, "lbl": "striatum", "type": "CLASS"},
+        ],
+        "edges": [
+            {"sub": iri("1"), "pred": "is_a", "obj": iri("ENTITY")},
+            {"sub": iri("2"), "pred": "http://purl.obolibrary.org/obo/BFO_0000050", "obj": iri("1")},
+            {"sub": iri("3"), "pred": "is_a", "obj": iri("2")},
+            {"sub": iri("2"), "pred": "is_a", "obj": uberon},
+        ],
+    }]}
+
+
+@pytest.mark.parametrize("prefix,base", [("MBA", "mbao"), ("DHBA", "dhbao")])
+def test_parse_anatomy_obograph_is_prefix_parameterised(tmp_path, prefix, base):
+    path = tmp_path / f"{base}-full.json"
+    path.write_text(json.dumps(_obograph(prefix, base)))
+    terms, edges = _parse_anatomy_obograph(path, prefix)
+    ids = {t[0] for t in terms}
+    assert ids == {f"{prefix}:1", f"{prefix}:2", f"{prefix}:3", f"{prefix}:4"}
+    assert f"{prefix}:ENTITY" not in ids
+    # UBERON xref spliced onto the striatum term only
+    xref = {t[0]: t[2] for t in terms}
+    assert xref[f"{prefix}:2"] == "UBERON:0002435"
+    assert xref[f"{prefix}:3"] is None
+    # part_of and is_a both become (parent, child); the ENTITY root edge is dropped
+    assert set(edges) == {(f"{prefix}:1", f"{prefix}:2"), (f"{prefix}:2", f"{prefix}:3")}
+
+
+def test_parse_anatomy_obograph_ignores_other_prefix(tmp_path):
+    path = tmp_path / "x.json"
+    path.write_text(json.dumps(_obograph("DHBA", "dhbao")))
+    terms, edges = _parse_anatomy_obograph(path, "MBA")
+    assert terms == [] and edges == []
+
+
+def test_build_anat_closure_dhba(tmp_path, populated_db):
+    db, _, _ = populated_db
+    path = tmp_path / "dhbao-full.json"
+    path.write_text(json.dumps(_obograph("DHBA", "dhbao")))
+    db.build_anat_closure(path, "DHBA")
+    assert set(db.get_descendants("DHBA:1")) == {"DHBA:1", "DHBA:2", "DHBA:3"}
+    con = sqlite3.connect(db.db_path)
+    meta = dict(con.execute("SELECT key, value FROM _meta").fetchall())
+    con.close()
+    assert meta["anatomy_closure_ontology"] == "DHBA"
+
+
+def test_build_anat_closure_rejects_unknown_prefix(tmp_path, populated_db):
+    db, _, _ = populated_db
+    path = tmp_path / "x.json"
+    path.write_text(json.dumps(_obograph("XYZ", "xyz")))
+    with pytest.raises(ValueError, match="Unknown anatomy ontology"):
+        db.build_anat_closure(path, "XYZ")
+
+
+def test_anatomy_ontology_registry_and_paths(tmp_path):
+    assert {"MBA", "DHBA", "HBA"} <= set(ANATOMY_ONTOLOGIES)
+    assert anatomy_ontology_path("DHBA", tmp_path) == (
+        tmp_path / "conf" / "anatomy" / "dhba" / "dhbao-full.json"
+    )
+    # MBA: canonical path wins when present; legacy conf/mba honoured otherwise
+    legacy = tmp_path / "conf" / "mba" / "mbao-full.json"
+    legacy.parent.mkdir(parents=True)
+    legacy.write_text("{}")
+    assert anatomy_ontology_path("MBA", tmp_path) == legacy
+    canonical = tmp_path / "conf" / "anatomy" / "mba" / "mbao-full.json"
+    canonical.parent.mkdir(parents=True)
+    canonical.write_text("{}")
+    assert anatomy_ontology_path("MBA", tmp_path) == canonical
+    urls = anatomy_ontology_urls("DHBA")
+    assert urls[0].endswith("/releases/latest/download/dhbao-full.json")
+    assert "raw.githubusercontent.com" in urls[1]
+    with pytest.raises(ValueError):
+        anatomy_ontology_path("PBA", tmp_path)
+
+
+@pytest.mark.parametrize("label,expected", [
+    ("STR SST-ADARB2 GABA", "GABA"),
+    ("STR Cholinergic GABA", "Chol-GABA"),
+    ("GPin-BF Cholinergic GABA", "Chol-GABA"),
+    ("SN SOX6 Dopa", "Dopa"),
+    ("OB Dopa-GABA", "Dopa-GABA"),
+    ("CN GABA-Glut", "GABA-Glut"),
+    ("STH PVALB-PITX2 Glut", "Glut"),
+    ("Glut Sero Dopa", "Glut-Sero-Dopa"),
+    ("STRd D1 Matrix MSN", "GABA"),
+    ("STR D1D2 Hybrid MSN", "GABA"),
+    ("GPi Shell", None),
+    ("Astro-Epen", None),
+    ("SN GATA3-PAX8 GABA", "GABA"),   # GATA3 / PAX8 must not match
+    ("DCO Il22 Gly-Gaba_2", "Glyc"),  # WMBv1-style: Gaba_2 is not a token; Gly → Glyc
+    ("", None),
+    (None, None),
+])
+def test_nt_from_label(label, expected):
+    assert _nt_from_label(label) == expected
+
+
+def test_nt_cl_terms():
+    terms = _nt_cl_terms("Chol-GABA")
+    assert [t["id"] for t in terms] == ["CL:0000108", "CL:0000617"]
+    assert terms[1] == {"id": "CL:0000617", "label": "GABAergic neuron", "name_in_source": "GABA"}
+    assert _nt_cl_terms("Nora") == []
+
+
+def test_validated_nt_provenance():
+    assert _validated_nt_provenance(None) is None
+    ok = _validated_nt_provenance({"ref": "PMID:123", "method": "m", "support": "WEAK"})
+    assert ok == {"ref": "PMID:123", "method": "m", "support": "WEAK"}
+    assert _validated_nt_provenance({"ref": "https://doi.org/10.1/x"}) == {"ref": "https://doi.org/10.1/x"}
+    with pytest.raises(ValueError, match="ref is required"):
+        _validated_nt_provenance({"method": "m"})
+    with pytest.raises(ValueError, match="does not match"):
+        _validated_nt_provenance({"ref": "DOI:10.1/x"})
+    with pytest.raises(ValueError, match="unknown keys"):
+        _validated_nt_provenance({"ref": "PMID:1", "confidence": "HIGH"})
+
+
+def test_accession_level_map_bg_codes():
+    assert _ACCESSION_LEVEL_MAP["SUBCL"] == "SUBCLASS"
+    assert _ACCESSION_LEVEL_MAP["SUBC"] == "SUBCLASS"
+    assert _infer_level_from_accession("CS20250428_GROUP_0016") == "GROUP"
+    assert _infer_level_from_accession("CS20250428_NEIGH_0003") == "NEIGHBORHOOD"
+    assert _infer_level_from_accession("CS20250428_CLASS_0002") == "CLASS"
+    assert _infer_level_from_accession("CS20230722_CLAS_01") == "CLASS"
+
+
+def _bg_row(curie, label, level, parent=None, nt_label=None, anat=None, props=None):
+    p = {"curie": f"BG:{curie}", "short_form": curie, "label": f"{label} {curie}"}
+    if nt_label is not None:
+        p["nt_type_label"] = nt_label
+    p.update(props or {})
+    row = {
+        "node": {"identity": 1, "labels": ["Individual"], "properties": p},
+        "parent_curie": f"BG:{parent}" if parent else None,
+        "cl": None,
+        "level": level,
+        "anat": anat or [],
+    }
+    return row
+
+
+def _write_bg_fixture(tmp_path, rows):
+    src = tmp_path / "bg.json"
+    src.write_text(json.dumps(rows), encoding="utf-8")
+    return src
+
+
+@pytest.fixture
+def bg_field_config(monkeypatch):
+    """field_mapping.json equivalent: NT from label, canonical row keys."""
+    import evidencell.taxonomy_db as tdb
+    cfg = {
+        "row_keys": {"node": "node", "parent_curie": "parent_curie",
+                     "cl": "cl", "anat": "anat", "level": "level"},
+        "nt_type_from_label": True,
+        "defining_markers": ["marker_gene_evidence"],
+    }
+    monkeypatch.setattr(tdb, "_load_field_config", lambda tid: cfg)
+    return cfg
+
+
+@pytest.fixture
+def bg_meta_input(tmp_path, monkeypatch):
+    import evidencell.paths as _paths
+    d = tmp_path / "inputs" / "taxonomies"
+    d.mkdir(parents=True)
+    meta = {
+        "taxonomy_name": "BG test",
+        "species_id": "NCBITaxon:9443",
+        "species_label": "Primates",
+        "anatomy_ontology": "DHBA",
+        "nt_provenance": {
+            "ref": "https://doi.org/10.1000/bg-taxonomy",
+            "method": "inferred from cluster label; not assayed at cluster level",
+            "scope": "taxonomy-wide",
+            "support": "WEAK",
+            "notes": "cholinergic groups are a Chol / Chol+GABA mix",
+        },
+    }
+    (d / "BGTEST_meta.yaml").write_text(yaml.dump(meta), encoding="utf-8")
+    monkeypatch.setattr(_paths, "taxonomy_meta_input_path", lambda tid: d / f"{tid}_meta.yaml")
+    return meta
+
+
+def test_ingest_bg_like_taxonomy(tmp_path, bg_field_config, bg_meta_input):
+    rows = [
+        _bg_row("CS1_NEIGH_0001", "Subpallium GABA", "Neighborhood"),
+        _bg_row("CS1_SUBCL_0001", "STR SST GABA", "Subclass", parent="CS1_NEIGH_0001"),
+        _bg_row("CS1_GROUP_0001", "STR Cholinergic GABA", "Group", parent="CS1_SUBCL_0001",
+                anat=[{"anat_id": "DHBA:10333", "anat_label": "striatum",
+                       "cell_ratio": 0.9, "source": "https://doi.org/10.64898/2025.12.15.694496",
+                       "notes": "Location assignment based on CCF broad region."}],
+                props={"marker_gene_evidence": ["CHAT", "SLC5A7"]}),
+        _bg_row("CS1_GROUP_0002", "GPi Shell", "Group", parent="CS1_SUBCL_0001"),
+        # a node with a native assayed NT property keeps implicit provenance
+        _bg_row("CS1_GROUP_0003", "Assayed", "Group", parent="CS1_SUBCL_0001", nt_label="Glut"),
+    ]
+    src = _write_bg_fixture(tmp_path, rows)
+    out = tmp_path / "out"
+    counts = ingest_to_yaml(src, "BGTEST", out)
+    assert counts == {"Group": 3, "Subclass": 1, "Neighborhood": 1}
+
+    groups = {n["cell_set_accession"]: n for n in
+              yaml.safe_load((out / "Group.yaml").read_text())["nodes"]}
+    chol = groups["CS1_GROUP_0001"]
+    # terminal level is rank 0 = GROUP, not CLUSTER
+    assert chol["is_terminal"] is True
+    assert chol["taxonomy_rank"] == 0
+    sub = yaml.safe_load((out / "Subclass.yaml").read_text())["nodes"][0]
+    assert sub["is_terminal"] is False and sub["taxonomy_rank"] == 1
+    # derived NT: canonical string, cl_terms, one qualifying source
+    assert chol["nt_type"]["name_in_source"] == "Chol-GABA"
+    assert [t["id"] for t in chol["nt_type"]["cl_terms"]] == ["CL:0000108", "CL:0000617"]
+    assert chol["nt_type"]["sources"] == [{
+        "ref": "https://doi.org/10.1000/bg-taxonomy",
+        "method": "inferred from cluster label; not assayed at cluster level",
+        "scope": "taxonomy-wide",
+        "notes": "cholinergic groups are a Chol / Chol+GABA mix",
+        "support": "WEAK",
+    }]
+    # parent_hierarchy level inferred from the BG accession code
+    assert chol["parent_hierarchy"][0]["level"] == "SUBCLASS"
+    # DHBA anatomy with ratio only, MERFISH source
+    loc = chol["anatomical_location"][0]
+    assert loc["id"] == "DHBA:10333" and loc["cell_ratio"] == 0.9 and "cell_count" not in loc
+    assert loc["sources"][0] == {
+        "ref": "https://doi.org/10.64898/2025.12.15.694496",
+        "method": "MERFISH (HMBA BG consensus, CCF broad region)",
+    }
+    # markers from marker_gene_evidence list
+    assert [m["symbol"] for m in chol["markers"]] == ["CHAT", "SLC5A7"]
+    # no NT token → no nt_type at all
+    assert "nt_type" not in groups["CS1_GROUP_0002"]
+    # native property → bare NT, no sources
+    assert groups["CS1_GROUP_0003"]["nt_type"] == {"name_in_source": "Glut"}
+    # taxonomy_meta carries the provenance block once
+    meta = yaml.safe_load((out / "taxonomy_meta.yaml").read_text())
+    assert meta["nt_provenance"]["ref"] == "https://doi.org/10.1000/bg-taxonomy"
+    assert meta["anatomy_ontology"] == "DHBA"
+    loaded_levels = {e["level_name"]: e["rank"] for e in meta["level_hierarchy"]}
+    assert loaded_levels == {"GROUP": 0, "SUBCLASS": 1, "NEIGHBORHOOD": 2}
+
+
+def test_ingest_derived_nt_without_provenance_is_flagged(tmp_path, bg_field_config, monkeypatch):
+    import evidencell.paths as _paths
+    monkeypatch.setattr(_paths, "taxonomy_meta_input_path", lambda tid: tmp_path / "none.yaml")
+    src = _write_bg_fixture(tmp_path, [_bg_row("CS1_GROUP_0001", "VIP GABA", "Group")])
+    ingest_to_yaml(src, "BGTEST2", tmp_path / "out")
+    node = yaml.safe_load((tmp_path / "out" / "Group.yaml").read_text())["nodes"][0]
+    assert node["nt_type"]["name_in_source"] == "GABA"
+    assert "sources" not in node["nt_type"]
+    assert "no nt_provenance" in node["nt_type"]["notes"]
+
+
+def test_ingest_nt_from_row_column(tmp_path, bg_meta_input, monkeypatch):
+    import evidencell.taxonomy_db as tdb
+    cfg = {"row_keys": {"node": "node", "parent_curie": "parent_curie", "cl": "cl",
+                        "anat": "anat", "level": "level", "nt_type": "nt_derived"}}
+    monkeypatch.setattr(tdb, "_load_field_config", lambda tid: cfg)
+    row = _bg_row("CS1_GROUP_0001", "GPi Shell", "Group")
+    row["nt_derived"] = ["GABA"]
+    src = _write_bg_fixture(tmp_path, [row])
+    ingest_to_yaml(src, "BGTEST", tmp_path / "out")
+    node = yaml.safe_load((tmp_path / "out" / "Group.yaml").read_text())["nodes"][0]
+    assert node["nt_type"]["name_in_source"] == "GABA"
+    assert node["nt_type"]["sources"][0]["ref"] == "https://doi.org/10.1000/bg-taxonomy"
+
+
+def test_ingest_meta_rejects_bad_nt_provenance(tmp_path, bg_field_config, monkeypatch):
+    import evidencell.paths as _paths
+    d = tmp_path / "inputs"
+    d.mkdir()
+    (d / "BGTEST3_meta.yaml").write_text(yaml.dump({"nt_provenance": {"method": "m"}}))
+    monkeypatch.setattr(_paths, "taxonomy_meta_input_path", lambda tid: d / f"{tid}_meta.yaml")
+    src = _write_bg_fixture(tmp_path, [_bg_row("CS1_GROUP_0001", "VIP GABA", "Group")])
+    with pytest.raises(ValueError, match="ref is required"):
+        ingest_to_yaml(src, "BGTEST3", tmp_path / "out")

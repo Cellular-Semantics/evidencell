@@ -409,18 +409,28 @@ fetch-mapmycells taxonomy_id *FLAGS:
     done
     echo "Done. Pass the .h5 to just add-expression / add-expression-all."
 
-# Download the latest BICAN Mouse Brain Atlas Ontology (OBO JSON) to conf/mba/mbao-full.json
+# Download a BICAN atlas anatomy ontology (OBO JSON) to conf/anatomy/{prefix}/.
+# PREFIX is a key of ANATOMY_ONTOLOGIES in src/evidencell/taxonomy_db.py (MBA, DHBA, HBA).
+# Usage: just fetch-anat-ontology DHBA
+[group('workflows')]
+fetch-anat-ontology PREFIX:
+    uv run python -m evidencell.taxonomy_db fetch-anatomy {{PREFIX}}
+
+# Alias: download the Mouse Brain Atlas ontology (= just fetch-anat-ontology MBA)
 # Run once; file is not committed to git (.gitignore)
 [group('workflows')]
 fetch-mba-ontology:
-    uv run python -m evidencell.taxonomy_db fetch-mba conf/mba/mbao-full.json
+    just fetch-anat-ontology MBA
 
-# Build anat hierarchy + transitive closure tables from the downloaded MBA ontology
-# Requires: just build-taxonomy-db <taxonomy_id> and just fetch-mba-ontology
+# Build anat hierarchy + transitive closure tables from the taxonomy's anatomy
+# ontology. The prefix is read from anatomy_ontology in taxonomy_meta.yaml and
+# the JSON from conf/anatomy/{prefix}/ (override with an explicit path).
+# Requires: just build-taxonomy-db <taxonomy_id> and just fetch-anat-ontology <PREFIX>
 # Usage: just build-anat-closure CCN20230722
+#        just build-anat-closure CCN20250428 path/to/dhbao-full.json
 [group('workflows')]
-build-anat-closure taxonomy_id:
-    uv run python -m evidencell.taxonomy_db build-closure {{taxonomy_id}} conf/mba/mbao-full.json
+build-anat-closure taxonomy_id *ARGS:
+    uv run python -m evidencell.taxonomy_db build-closure {{taxonomy_id}} {{ARGS}}
 
 # ── Taxonomy update operations ────────────────────────────────────────────────
 

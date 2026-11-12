@@ -179,7 +179,7 @@ just validate-taxonomy-all CCN20230722
 To also build the anatomical closure tables (for ancestor-aware location queries):
 
 ```
-just fetch-mba-ontology          # one-time download to conf/mba/
+just fetch-anat-ontology MBA     # one-time download to conf/anatomy/mba/
 just build-anat-closure CCN20230722
 ```
 
