@@ -1,0 +1,256 @@
+# Intergeniculate leaflet enkephalinergic geniculo-geniculate neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/IGL.pdf
+# Ingestion date: 2026-11-12
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Intergeniculate Leaflet Enkephalinergic Geniculo-geniculate Neuron"
+description: >
+  Evidence graph component for the enkephalinergic GABAergic neuron of the
+  intergeniculate leaflet that forms the geniculo-geniculate tract to the
+  contralateral IGL. Proposed from the ASTA deep research report on the IGL.
+  Carries a literature-to-literature subtype edge to the IGL GABAergic neuron
+  node.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10116
+  label: "Rattus norvegicus"
+  name_in_source: "rat"
+creation_date: "2026-11-12"
+nodes:
+  - id: igl_enkephalinergic_geniculogeniculate_neuron
+    name: "Intergeniculate leaflet enkephalinergic geniculo-geniculate neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10116
+      label: "Rattus norvegicus"
+      name_in_source: "rat"
+    anatomical_location:
+      - id: UBERON:0035975
+        label: "intergeniculate leaflet of the lateral geniculate complex"
+        name_in_source: "intergeniculate leaflet (IGL)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:23103793"
+            method: "statement in source (background)"
+            scope: "rat IGL"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:27916729"
+            method: "statement in source (background)"
+            scope: "rat IGL"
+            quote_key: "27232578_7306b2da"
+      - id: UBERON:0035975
+        label: "intergeniculate leaflet of the lateral geniculate complex"
+        name_in_source: "contralateral IGL (cIGL)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:23103793"
+            method: "statement in source (background); geniculo-geniculate tract"
+            scope: "rat IGL ENK+ neurons → contralateral IGL"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:27916729"
+            method: "statement in source (background)"
+            scope: "rat IGL ENK+ neurons connect contralaterally located leaflets"
+            quote_key: "27232578_7306b2da"
+          - ref: "PMID:25856520"
+            method: "statement in source citing Takatsuji et al., 1989"
+            scope: "rodent IGL ENK+ neurons connect the two contralateral IGLs"
+            quote_key: "8694896_b4e52a8c"
+    colocated_types:
+      - neighboring_type: igl_npy_geniculohypothalamic_neuron
+        spatial_relationship: INTERSPERSED
+        notes: >
+          The enkephalinergic and NPY-synthesising cells are the two main
+          GABAergic subpopulations of the same leaflet (Chrobok et al., 2016,
+          PMID:27208616, quote 12882742_62b60170; Palus et al., 2017,
+          PMID:27916729, quote 27232578_7306b2da).
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:27916729"
+          method: "statement in source (background)"
+          scope: "rat IGL — enkephalinergic cells as one of two GABAergic subpopulations"
+          quote_key: "27232578_7306b2da"
+        - ref: "PMID:23103793"
+          method: "statement in source (background)"
+          scope: "rat IGL — population of GABAergic neurons incl. ENK+ cells"
+          quote_key: "25997395_d6b35c15"
+        - ref: "PMID:30803080"
+          method: "statement in source citing Moore et al., 1994"
+          scope: "rat IGL — GABAergic neurons co-expressing ENK"
+          quote_key: "73460105_a5d177e9"
+    defining_markers:
+      - symbol: Penk
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:23103793"
+            marker_type: PROTEIN
+            method: "neurochemical identification stated in source (enkephalin)"
+            scope: "rat IGL"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:27916729"
+            marker_type: PROTEIN
+            method: "statement in source (background; enkephalinergic cells)"
+            scope: "rat IGL"
+            quote_key: "27232578_7306b2da"
+          - ref: "PMID:30803080"
+            marker_type: PROTEIN
+            method: "statement in source citing Moore et al., 1994 (enkephalin)"
+            scope: "rat IGL"
+            quote_key: "73460105_a5d177e9"
+    negative_markers:
+      - symbol: Npy
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:27208616"
+            marker_type: PROTEIN
+            method: "whole-cell patch clamp with post hoc NPY identification"
+            scope: "rat IGL — I_T-expressing group defined as neurons that do not synthesise NPY; ENK identity inferred"
+            quote_key: "12882742_30978228"
+    neuropeptides:
+      - symbol: Penk
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:23103793"
+            marker_type: PROTEIN
+            method: "neurochemical identification stated in source (enkephalin)"
+            scope: "rat IGL"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:30803080"
+            marker_type: PROTEIN
+            method: "statement in source citing Moore et al., 1994 (enkephalin)"
+            scope: "rat IGL"
+            quote_key: "73460105_a5d177e9"
+    morphology:
+      description: >
+        Projection neuron. Its axons form the geniculo-geniculate tract to the
+        contralateral IGL. It receives direct retinal innervation. It is
+        hypothesised to act as a powerful interneuron-like inhibitory element
+        on itself and on NPY-synthesising neurons, in the ipsilateral and the
+        contralateral IGL. No somatodendritic description in the evidence.
+      sources:
+        - ref: "PMID:23103793"
+          method: "statement in source (background); geniculo-geniculate tract"
+          scope: "rat IGL"
+          quote_key: "25997395_d6b35c15"
+        - ref: "PMID:25856520"
+          method: "statement in source citing Takatsuji et al., 1989 and Juhl et al., 2007"
+          scope: "rodent IGL"
+          quote_key: "8694896_b4e52a8c"
+        - ref: "PMID:27916729"
+          method: "hypothesis from slice electrophysiology (met-enkephalin application)"
+          scope: "rat IGL"
+          quote_key: "27232578_ac034fba"
+    electrophysiology:
+      description: >
+        Has a T-type Ca2+ current (I_T). In vivo, the neurons fire in an
+        infra-slow (<0.1 Hz) oscillatory (ISO) pattern of rhythmic bursts.
+        All neurons identified as projecting to the contralateral IGL show
+        ISO, which is sustained in the light and diminished or absent in
+        darkness.
+      sources:
+        - ref: "PMID:30803080"
+          method: "statement in source (background); patch clamp literature"
+          scope: "rat IGL ENK neurons"
+          quote_key: "73460105_a5d177e9"
+        - ref: "PMID:23103793"
+          method: "in vivo extracellular recording with antidromic identification of cIGL projection"
+          scope: "rat IGL, urethane anaesthesia, light vs dark"
+          quote_key: "25997395_7e370bae"
+        - ref: "PMID:28041911"
+          method: "in vivo extracellular recording"
+          scope: "urethane-anaesthetised Wistar rat; putatively enkephalinergic IGL neurons; light-on only"
+          quote_key: "3372643_98d9d287"
+    definition_references:
+      - "PMID:23103793"
+      - "PMID:27916729"
+      - "PMID:30803080"
+      - "PMID:25856520"
+      - "PMID:27208616"
+    is_terminal: false
+    notes: >
+      PARENT TYPE: one of the two main GABAergic subpopulations of the IGL;
+      subtype of igl_gabaergic_neuron (see edge below).
+
+      INFERRED-IDENTITY CAVEAT: the enkephalinergic identity of the
+      electrophysiologically defined group is partly inferred. Chrobok et
+      al., 2016 (PMID:27208616, quote 12882742_30978228) define the I_T group
+      only as "neurons that do not synthesise NPY". Later papers equate it
+      with ENK cells (Palus-Chramiec et al., 2019, PMID:30803080, quote
+      73460105_a5d177e9). ISO cells are called "putatively enkephalinergic"
+      (Chrobok et al., 2017, PMID:28041911, quote 3372643_98d9d287), and
+      the ISO cells of Blasiak et al., 2013 are identified by projection
+      (cIGL), not by ENK labelling. The NPY-negative group may also include
+      the "third cell group ... with unknown neurotransmitter content"
+      (PMID:23432696, quote 36406110_2999c838) or Thankachan Type I
+      (NPY-lacking) cells (PMID:16207879, quote 9130790_8fa09d39). So the
+      negative marker Npy and the I_T / ISO properties may describe a
+      superset of the true ENK class.
+
+      PHARMACOLOGY: met-enkephalin hyperpolarises putatively enkephalinergic
+      IGL neurons via mu-opioid receptors (Palus et al., 2017, PMID:27916729,
+      quote 27232578_ac034fba).
+
+      HETEROGENEITY: the report notes no finer molecular subdivision within
+      the ENK class.
+
+      MARKERS: Penk is the rat-convention gene symbol for the precursor of
+      the "enkephalin" (met-enkephalin) named in the sources. Evidence is
+      protein (immunohistochemical), not transcript.
+
+      CL MAPPING: no CL term found for an enkephalinergic CNS neuron (only
+      sympathetic ganglion and myenteric enkephalin neurons). cl_mapping is
+      left empty (CANDIDATE). Potential CL new-term contribution under
+      CL:0000617 GABAergic neuron.
+
+      SPECIES: rat.
+
+  - id: igl_gabaergic_neuron
+    name: "Intergeniculate leaflet (IGL) GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    reference_stub: LIT_TYPE
+edges:
+  - id: edge_igl_enkephalinergic_geniculogeniculate_neuron_to_igl_gabaergic_neuron
+    lit_type: igl_enkephalinergic_geniculogeniculate_neuron
+    taxonomy_type: igl_gabaergic_neuron
+    relationship: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    confidence: MODERATE
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:27916729"
+        snippet: >-
+          In rat, two main GABAergic subpopulations can be distinguished in
+          the IGL: neurons synthesizing neuropeptide Y (NPY), which directly
+          innervates the suprachiasmatic nuclei, and enkephalinergic cells,
+          which connect contralaterally located leaflets
+        explanation: >
+          Names enkephalinergic, contralaterally projecting cells as one of two
+          GABAergic subpopulations of the IGL. That places this node inside
+          the IGL GABAergic neuron population as a proper subset, because the
+          NPY cells are the sibling subset.
+        study_type: ELECTROPHYSIOLOGICAL
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:23103793"
+        snippet: >-
+          the other population comprises enkephalin-positive (ENK) neurons
+          giving rise to the geniculo-geniculate tract innervating the
+          contralateral IGL (cIGL)
+        explanation: >
+          The same source describes the IGL as a population of GABAergic
+          neurons divided into two distinct populations. Enkephalin-positive
+          geniculo-geniculate neurons are the second of these, so they are a
+          subset of the IGL GABAergic neuron.
+        study_type: MULTIMODAL

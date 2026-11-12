@@ -1,0 +1,226 @@
+# Intergeniculate leaflet (IGL) GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/IGL.pdf
+# Ingestion date: 2026-11-12
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Intergeniculate Leaflet (IGL) GABAergic Neuron"
+description: >
+  Evidence graph component for the GABAergic neuron of the intergeniculate
+  leaflet, proposed from the ASTA deep research report on the IGL. Carries a
+  literature-to-literature subtype edge to the coarser LGv/IGL GABAergic
+  neuron node.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10116
+  label: "Rattus norvegicus"
+  name_in_source: "rat"
+creation_date: "2026-11-12"
+nodes:
+  - id: igl_gabaergic_neuron
+    name: "Intergeniculate leaflet (IGL) GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10116
+      label: "Rattus norvegicus"
+      name_in_source: "rat"
+    anatomical_location:
+      - id: UBERON:0035975
+        label: "intergeniculate leaflet of the lateral geniculate complex"
+        name_in_source: "intergeniculate leaflet (IGL)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:27208616"
+            method: "statement in source (background)"
+            scope: "rat IGL; described as historically a subdivision of the VLG"
+            quote_key: "12882742_62b60170"
+          - ref: "PMID:30803080"
+            method: "statement in source (background)"
+            scope: "rat IGL; located between dorsal and ventral LGN"
+            quote_key: "73460105_a5d177e9"
+          - ref: "PMID:25856520"
+            method: "statement in source (background)"
+            scope: "rodent IGL; narrow bilateral structure between dLGN and vLGN"
+            quote_key: "8694896_b4e52a8c"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABA"
+      sources:
+        - ref: "PMID:25856520"
+          method: "statement in source citing GABA immunocytochemistry (Moore et al., 1993)"
+          scope: "rodent IGL — all IGL cells"
+          quote_key: "8694896_b4e52a8c"
+        - ref: "PMID:15120585"
+          method: "statement in source (background)"
+          scope: "rat IGL — many, if not all, neurons"
+          quote_key: "27043440_d40c39dd"
+        - ref: "PMID:23432696"
+          method: "statement in source citing Moore & Speh, 1993"
+          scope: "rat IGL — GABA is the most abundant transmitter"
+          quote_key: "36406110_2999c838"
+    neuropeptides:
+      - symbol: Npy
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:23103793"
+            marker_type: PROTEIN
+            method: "neurochemical identification stated in source"
+            scope: "rat IGL — one of two GABAergic subpopulations, not the whole population"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:23432696"
+            marker_type: PROTEIN
+            method: "statement in source (background)"
+            scope: "rat IGL — co-localised with GABA in a subset of neurons"
+            quote_key: "36406110_2999c838"
+      - symbol: Penk
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:23103793"
+            marker_type: PROTEIN
+            method: "neurochemical identification stated in source (enkephalin)"
+            scope: "rat IGL — one of two GABAergic subpopulations, not the whole population"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:30803080"
+            marker_type: PROTEIN
+            method: "statement in source (background; enkephalin)"
+            scope: "rat IGL — co-expressed with GABA in one subpopulation"
+            quote_key: "73460105_a5d177e9"
+    electrophysiology:
+      description: >
+        Network level: the IGL shows slow (infra-slow / ultradian) rhythmic
+        oscillations that need retinal (photic) input and are maintained by
+        the oscillatory activity of the GABAergic neurons. GABA_A receptors
+        take part in generating them. Single-cell level: the population splits
+        on subthreshold currents into a T-type Ca2+ current (I_T) group, which
+        does not synthesise NPY, and an A-type K+ current (I_A) group, which is
+        NPY-positive.
+      sources:
+        - ref: "PMID:15366259"
+          method: "review of in vivo extracellular recordings"
+          scope: "rat IGL"
+          quote_key: "14019540_d34397fa"
+        - ref: "PMID:15120585"
+          method: "in vivo extracellular recording with GABA_A antagonism"
+          scope: "rat IGL"
+          quote_key: "27043440_ee83c36c"
+        - ref: "PMID:27208616"
+          method: "whole-cell patch clamp (acute slice) with NPY identification"
+          scope: "rat IGL"
+          quote_key: "12882742_30978228"
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: "GABAergic neuron"
+        name_in_source: "GABAergic"
+      mapping_type: BROAD
+      mapping_notes: >
+        No IGL- or thalamus-specific GABAergic CL term found. CL:0000617 is a
+        generic parent only. Potential CL new-term contribution.
+    definition_references:
+      - "PMID:23103793"
+      - "PMID:27916729"
+      - "PMID:27208616"
+      - "PMID:25856520"
+      - "PMID:23432696"
+    is_terminal: false
+    notes: >
+      PARENT TYPE: narrower than lgv_igl_gabaergic_neuron, which pools LGv and
+      IGL GABAergic neurons. This node is restricted to the IGL (see edge
+      below). The coarse parent's evidence is mouse; this node's evidence is
+      almost entirely rat.
+
+      SUBTYPES: two main peptide/projection classes are modelled as child
+      nodes: igl_npy_geniculohypothalamic_neuron (NPY+, projects to the SCN)
+      and igl_enkephalinergic_geniculogeniculate_neuron (ENK+, projects to the
+      contralateral IGL) (Blasiak et al., 2013, PMID:23103793, quote
+      25997395_d6b35c15; Palus et al., 2017, PMID:27916729, quote
+      27232578_7306b2da).
+
+      SUSPECTED HETEROGENEITY (not modelled as nodes): (1) Blasiak et al.,
+      2013 (PMID:23432696, quote 36406110_2999c838) state that "a third cell
+      group is present with unknown neurotransmitter content" in the rat IGL,
+      citing Moore & Card 1994. (2) Thankachan & Rusak 2005 (PMID:16207879,
+      quote 9130790_8fa09d39) define three juxtacellularly labelled classes in
+      the "IGL/VLG". Type I lacks NPY and is sustained-activated by light.
+      Type II has strong somatic NPY and a varied light response. Type III has
+      patchy/internalised NPY, interpreted as NPY recipients rather than
+      producers. Their anatomy crosses the IGL/VLG boundary, so these classes
+      sit partly within the coarse LGv/IGL parent as well as here. There is
+      no established one-to-one mapping of Type I/II/III onto the ENK/NPY
+      classes.
+
+      CROSS-SPECIES HOMOLOGY: the medial zone of the cat vLGN, which contains
+      SCN-projecting neurons and NPY-immunoreactive processes, is proposed as
+      a homologue of the rodent IGL (Pu & Pickard, 1996, PMID:8836531, quote
+      34655061_6fdab967). The rodent IGL is described as a homologue of the
+      primate pregeniculate nucleus (Blasiak et al., 2013, PMID:23432696,
+      quote 36406110_0c02eb87). Neither homologue is asserted as a location
+      here.
+
+      MARKERS: no gene-level defining marker is given in the evidence. GABA is
+      established by immunocytochemistry statements, and Npy/Penk each mark
+      only a subpopulation, so defining_markers is left empty. Gene symbols
+      Npy/Penk are rat-convention renderings of the protein names "NPY" and
+      "enkephalin" in the sources.
+
+      MORPHOLOGY: no single-cell somatodendritic description in the evidence.
+
+      ELECTROPHYSIOLOGY (unquoted): the report also states that orexin A
+      depolarises IGL neurons through non-selective cation channels
+      (Palus-Chramiec et al., 2019, PMID:30803080). No quote in the store
+      carries that claim, so it is not asserted in the electrophysiology
+      field. Met-enkephalin hyperpolarises both putative NPY and putative ENK
+      IGL neurons via mu-opioid receptors (Palus et al., 2017, PMID:27916729,
+      quote 27232578_ac034fba).
+
+      SPECIES: rat for all IGL-specific evidence. Cat appears only as a
+      homology note.
+
+  - id: lgv_igl_gabaergic_neuron
+    name: "Ventral lateral geniculate nucleus / intergeniculate leaflet (LGv/IGL) GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    reference_stub: LIT_TYPE
+edges:
+  - id: edge_igl_gabaergic_neuron_to_lgv_igl_gabaergic_neuron
+    lit_type: igl_gabaergic_neuron
+    taxonomy_type: lgv_igl_gabaergic_neuron
+    relationship: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    confidence: MODERATE
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:27208616"
+        snippet: >-
+          The intergeniculate leaflet (IGL) is a flat retinorecipient thalamic
+          structure implicated in orchestrating circadian rhythm, historically
+          considered to be a subdivision of the neighboring ventrolateral
+          geniculate nucleus (VLG).
+        explanation: >
+          Places the IGL anatomically within the LGv/IGL complex that the
+          parent node pools. The IGL is a leaflet historically treated as a
+          subdivision of the VLG (= LGv), so neurons restricted to the IGL are
+          a spatial subset of the LGv/IGL population.
+        study_type: ELECTROPHYSIOLOGICAL
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:25856520"
+        snippet: >-
+          all IGL cells express the γ-aminobutyric acid (GABA) (Moore et al.,
+          1993)
+        explanation: >
+          The parent is defined as GABAergic. This shows that IGL neurons meet
+          the parent's transmitter criterion as well as its anatomical one,
+          so the IGL GABAergic neuron is narrower than (contained in) the
+          LGv/IGL GABAergic neuron. Background statement citing Moore et al.,
+          1993, in rat.
+        study_type: ELECTROPHYSIOLOGICAL
