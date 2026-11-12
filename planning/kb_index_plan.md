@@ -1,7 +1,8 @@
 # KB index: an in-memory knowledge graph over `kb/graphs`
 
 Status: Phase 0 (taxonomy DB fail-closed, #169), Phase 1 (#167) and Phase 1b
-(branch `kb-index-phase1b`) done; Phases 2+ under discussion.
+(#176) done; Phase 2 started (`at_coverage`, `pool_candidates`); Phases 3+
+under discussion.
 Baseline: `9bcad1a` (main after #164, #165). Figures in "Scale" and Phases 0–4
 re-measured there; the "What `strip-stubs-1-2` already did" section records
 the state at `3014944` and is left as written.
@@ -223,10 +224,24 @@ taxonomy DB (a cached build plus a DB == YAML accession check is the next CI
 step). Known exception, baselined: `CS20250428_GROUP_0016` until HMBA BG
 (`CCN20250428`) is ingested.
 
-### Phase 2 — port the region-scope consumers
+### Phase 2 — re-key consumers on node or accession, not file or region
 
-- `at_coverage` → index query, replacing the Phase 0 minimal fix
-- `pool_candidates.load_region_graph` → index query, deleting the bespoke merge
+Region scope turned out to be a stand-in in both consumers that had it. What
+they actually ask is keyed on a node (does this cell type's declared AT
+source have a run?) or on an atlas accession (which cell types' AT evidence
+lands on the same cluster?). Region stays only as a way to select a batch of
+nodes (`index.by_region`).
+
+- ~~`at_coverage` → index query~~ — done (branch `rekey-at-coverage-pools`,
+  closes #162): takes a taxonomy plus node ids, `--region`, or neither (whole
+  KB); states its scope and lists nodes declaring no `at_source_sets`
+- ~~`pool_candidates.load_region_graph` → index query~~ — done (same branch):
+  `--node X` compares X with every lit_type in the KB sharing an AT target
+  accession; `load_region_graph` deleted. Live KB: 0 pairs lost, 2 gained,
+  both across region directories
+- AT provenance gaps surfaced by the new `at-coverage` output (only 2 of 52
+  cell types with AT evidence declare `at_source_sets`; 6 MapMyCells results
+  with no run record) are tracked in #185
 - `qc_content` cross-file checks → index queries
 - **New:** one-component-per-file check — gives the layout invariant an owner so
   ASTA drift surfaces immediately
@@ -234,6 +249,13 @@ step). Known exception, baselined: `CS20250428_GROUP_0016` until HMBA BG
   (divergence is 0 and `stub_shape` covers shape); skip if Phase 4 is near
 
 *Done when:* no module under `src/` globs `kb/graphs` directly.
+
+**Parked: where atlas-to-atlas mappings live.** The forward placement rule in
+Phase 3 ("a new edge goes in its lit endpoint's file") does not cover edges
+with no lit endpoint. Current leaning: mappings between official BICAN
+taxonomies belong in the taxonomy DB (more than one such taxonomy is coming).
+Others might go there too, provided the DB keeps a distinction between
+taxonomies we map *to* and a broader set we only hold. Not yet decided.
 
 ### Phase 3 — provenance-driven write targeting
 
