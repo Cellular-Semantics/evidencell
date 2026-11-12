@@ -1,0 +1,46 @@
+taxonomy_id: CCN20250428
+taxonomy_name: HMBA Basal Ganglia consensus taxonomy (human, macaque, marmoset)
+species_id: NCBITaxon:9443
+species_label: Primates
+tissue_id: UBERON:0002420
+tissue_label: basal ganglia
+anatomy_ontology: DHBA
+source_query: inputs/taxonomies/CCN20250428.cypher
+source_file: CCN20250428.json
+ingest_date: '2026-11-12'
+nt_provenance:
+  ref: https://doi.org/10.64898/2025.12.15.694496
+  method: inferred from the cluster label (e.g. "STR Cholinergic GABA" → Chol-GABA);
+    not assayed at cluster level. The taxonomy is snRNA-seq, which captures NT transporter/synthesis
+    transcripts (SLC17A6, SLC32A1, GAD1/2) more weakly than the scRNA-seq basis of
+    WMBv1 nt_type_label.
+  scope: taxonomy-wide (CCN20250428, all levels). GABA assignments are uncontroversial.
+    Cholinergic groups (STR / STRd / GPin-BF Cholinergic GABA) are an unresolved mix
+    of cholinergic and cholinergic+GABAergic cells. MSN groups are recorded as GABA
+    by definition (D1/D2 medium spiny neurons).
+  notes: Treat a name-derived NT match as a weak corroboration only; it must not be
+    rendered as atlas-assayed evidence in mapping reports.
+  support: WEAK
+level_hierarchy:
+- level_name: GROUP
+  rank: 0
+  count: 61
+  is_terminal: true
+- level_name: SUBCLASS
+  rank: 1
+  count: 36
+- level_name: CLASS
+  rank: 2
+  count: 12
+- level_name: NEIGHBORHOOD
+  rank: 3
+  count: 4
+level_counts:
+  Class: 12
+  Group: 61
+  Neighborhood: 4
+  Subclass: 36
+mapmycells:
+  at_taxonomy_id: CCN20250428
+  stats_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/HMBA-BG-taxonomy-CCN20250428/20250630/precomputed_stats.HMBA.BG.2025-08-04.h5
+  markers_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/HMBA-BG-taxonomy-CCN20250428/20250630/query_markers.HMBA.BG.2025-08-04.json
