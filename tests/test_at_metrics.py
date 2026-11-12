@@ -750,55 +750,122 @@ def test_load_run_manifest(tmp_path):
 # ─── at_coverage (pre-mapping trigger check, issue #126 follow-up) ────
 
 
-def _write_graph(tmp_path: Path, nodes: list[dict]) -> Path:
-    g = tmp_path / "graph.yaml"
-    _write(g, yaml.safe_dump({"name": "g", "nodes": nodes}))
-    return g
+@pytest.fixture
+def cov_kb(tmp_path, monkeypatch):
+    """A tmp repo: kb/graphs read through the KB index, one taxonomy store,
+    and AT runs under ``runs/`` (passed explicitly as runs_root)."""
+    from evidencell import kb_index, paths
+
+    (tmp_path / "schema").mkdir()
+    (tmp_path / "kb" / "taxonomy" / "CCN20230722").mkdir(parents=True)
+    monkeypatch.setattr(paths, "repo_root", lambda: tmp_path)
+    kb_index.clear_cache()
+    runs = tmp_path / "runs"
+    runs.mkdir()
+    _make_run(runs, "at_run_20260101_a_mmc_wmbv1", "GEO:GSE1", "CCN20230722", "Foo")
+    yield tmp_path, runs
+    kb_index.clear_cache()
 
 
-def test_at_coverage_resolved_and_unresolved(tmp_path):
-    _make_run(tmp_path, "at_run_20260101_a_mmc_wmbv1", "GEO:GSE1", "CCN20230722", "Foo")
-    graph = _write_graph(tmp_path, [
-        {"id": "classical_hit", "definition_basis": "CLASSICAL_MULTIMODAL",
-         "at_source_sets": [{"dataset_accession": "GEO:GSE1", "source_label": "Foo"}]},
-        {"id": "classical_miss", "definition_basis": "CLASSICAL_NEUROCHEMICAL",
-         "at_source_sets": [{"dataset_accession": "GEO:GSE1", "source_label": "NopeLabel"}]},
-        # atlas node with at_source_sets is ignored (not CLASSICAL)
-        {"id": "atlas_node", "definition_basis": "ATLAS_TRANSCRIPTOMIC",
-         "at_source_sets": [{"dataset_accession": "GEO:GSE1", "source_label": "Foo"}]},
-        # classical node with no at_source_sets is skipped
-        {"id": "classical_nodecl", "definition_basis": "CLASSICAL_ANATOMICAL"},
-    ])
-    rows = at_metrics.at_coverage(graph, "CCN20230722", runs_root=tmp_path)
-    by_node = {r["node_id"]: r for r in rows}
-    assert set(by_node) == {"classical_hit", "classical_miss"}
-    assert by_node["classical_hit"]["run_ref"] == "at_run_20260101_a_mmc_wmbv1"
-    assert by_node["classical_miss"]["run_ref"] is None
+def _cov_node(root: Path, region: str, node: dict) -> None:
+    _write(root / "kb" / "graphs" / region / f"{node['id']}.yaml",
+           yaml.safe_dump({"name": node["id"], "nodes": [node]}))
 
 
-def test_at_coverage_empty_when_no_declarations(tmp_path):
-    graph = _write_graph(tmp_path, [
-        {"id": "c", "definition_basis": "CLASSICAL_MULTIMODAL"},
-        {"id": "a", "definition_basis": "ATLAS_TRANSCRIPTOMIC"},
-    ])
-    assert at_metrics.at_coverage(graph, "CCN20230722", runs_root=tmp_path) == []
+def _classical(node_id: str, *labels: str, basis: str = "CLASSICAL_MULTIMODAL") -> dict:
+    node = {"id": node_id, "name": node_id, "definition_basis": basis}
+    if labels:
+        node["at_source_sets"] = [
+            {"dataset_accession": "GEO:GSE1", "source_label": lbl} for lbl in labels
+        ]
+    return node
 
 
-def test_format_at_coverage_flags_unresolved(tmp_path):
+def test_at_coverage_region_spans_every_file(cov_kb):
+    """#162: one file per component, so a region is many files. All count."""
+    root, runs = cov_kb
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+    _cov_node(root, "hpc", _classical("miss", "NopeLabel", basis="CLASSICAL_NEUROCHEMICAL"))
+    _cov_node(root, "hpc", _classical("nodecl", basis="CLASSICAL_ANATOMICAL"))
+    _cov_node(root, "hpc", {"id": "atlas_node", "name": "a",
+                            "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+                            "at_source_sets": [{"dataset_accession": "GEO:GSE1",
+                                                "source_label": "Foo"}]})
+    _cov_node(root, "other", _classical("elsewhere", "NopeLabel"))
+
+    report = at_metrics.at_coverage("CCN20230722", region="hpc", runs_root=runs)
+    assert report["scope"] == "region hpc"
+    assert sorted(report["checked"]) == ["hit", "miss", "nodecl"]
+    assert report["undeclared"] == ["nodecl"]
+    by_node = {r["node_id"]: r for r in report["rows"]}
+    assert by_node["hit"]["run_ref"] == "at_run_20260101_a_mmc_wmbv1"
+    assert by_node["miss"]["run_ref"] is None
+
+
+def test_at_coverage_named_nodes_and_whole_kb(cov_kb):
+    root, runs = cov_kb
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+    _cov_node(root, "other", _classical("elsewhere", "NopeLabel"))
+
+    named = at_metrics.at_coverage("CCN20230722", node_ids=["elsewhere"], runs_root=runs)
+    assert named["checked"] == ["elsewhere"]
+    assert [r["run_ref"] for r in named["rows"]] == [None]
+
+    whole = at_metrics.at_coverage("CCN20230722", runs_root=runs)
+    assert (whole["scope"], whole["checked"]) == ("whole KB", ["elsewhere", "hit"])
+
+
+@pytest.mark.parametrize("kwargs, message", [
+    ({"node_ids": ["nope"]}, "No KB node"),
+    ({"node_ids": ["atlas_node"]}, "not a classical node"),
+    ({"region": "nope"}, "Unknown region"),
+    ({"node_ids": ["hit"], "region": "hpc"}, "not both"),
+])
+def test_at_coverage_rejects_bad_scope(cov_kb, kwargs, message):
+    root, runs = cov_kb
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+    _cov_node(root, "hpc", {"id": "atlas_node", "name": "a",
+                            "definition_basis": "ATLAS_TRANSCRIPTOMIC"})
+    with pytest.raises(ValueError, match=message):
+        at_metrics.at_coverage("CCN20230722", runs_root=runs, **kwargs)
+
+
+def test_at_coverage_unknown_taxonomy(cov_kb):
+    """A graph path in the taxonomy slot (the pre-#162 argument order) fails loudly."""
+    with pytest.raises(ValueError, match="Unknown taxonomy"):
+        at_metrics.at_coverage("kb/graphs/hpc/hit.yaml")
+
+
+def _report(rows, checked, undeclared=(), scope="region hpc"):
+    return {"scope": scope, "checked": list(checked),
+            "undeclared": list(undeclared), "rows": rows}
+
+
+def test_format_at_coverage_flags_unresolved_and_states_scope():
     rows = [
         {"node_id": "n1", "dataset_accession": "GEO:GSE1", "source_label": "Foo",
          "run_ref": "at_run_x"},
         {"node_id": "n2", "dataset_accession": "GEO:GSE1", "source_label": "Bar",
          "run_ref": None},
     ]
-    out = at_metrics.format_at_coverage(rows, "CCN20230722")
-    assert "UNRESOLVED" in out
+    out = at_metrics.format_at_coverage(_report(rows, ["n1", "n2", "n3"], ["n3"]),
+                                        "CCN20230722")
+    assert "scope: region hpc" in out
+    assert "3 classical node(s) checked, 2 declare 2 source set(s)" in out
     assert "1 UNRESOLVED" in out
     assert "at_run_x" in out
+    assert "declare no at_source_sets" in out and "n3" in out
+
+
+def test_format_at_coverage_undeclared_is_not_reported_as_covered():
+    out = at_metrics.format_at_coverage(_report([], ["n1"], ["n1"]), "CCN20230722")
+    assert "All declared AT sources resolve" not in out
+    assert "declare no at_source_sets" in out
 
 
 def test_format_at_coverage_empty_message():
-    assert "Nothing to attempt" in at_metrics.format_at_coverage([], "CCN20230722")
+    out = at_metrics.format_at_coverage(_report([], []), "CCN20230722")
+    assert "Nothing to attempt" in out
 
 
 # ─── at_hits_for_node (Stage A discovery, at_source_sets-driven) ──────

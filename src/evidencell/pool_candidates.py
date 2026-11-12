@@ -43,9 +43,6 @@ from __future__ import annotations
 import json
 import sys
 from collections import defaultdict
-from pathlib import Path
-
-import yaml
 
 
 DEFAULT_F1_TOLERANCE = 0.05
@@ -361,41 +358,47 @@ def find_pool_candidates_for_node(
     return [c for c in all_candidates if node_id in c["source_groups"]]
 
 
-def load_region_graph(graph_file: Path) -> dict:
-    """Merge every KB graph YAML in ``graph_file``'s directory into one graph.
+def _at_targets(edge: dict) -> set[str]:
+    """Atlas accessions this edge's AT evidence lands on (any level)."""
+    return {acc for _level, acc in _at_metrics_index(edge)}
 
-    Pool detection compares lit_types pairwise, so it must see the whole
-    region. A per-file view was adequate while one file held many lit_types;
-    once each file holds a single component it yields one lit_type, zero
-    pairs, and would silently return no candidates.
 
-    Edges are de-duplicated by id. Falls back to the single file if it is not
-    inside a region directory.
+def load_kb_graph(node_id: str | None = None) -> dict:
+    """Collect the edges pool detection needs, from the whole KB.
+
+    Pooling compares lit_types whose AT evidence lands on the same atlas
+    accession. Which file or region directory a lit_type lives in has no
+    bearing on that: atlas types span regions, and since the graph split each
+    file holds one component. So scope comes from the shared accessions, read
+    through the KB index.
+
+    With ``node_id``, returns that lit_type's edges plus every edge of each
+    lit_type whose AT evidence shares an accession with it (all of their
+    edges, because the property-panel signal reads them). Without, returns
+    every edge in the KB. Edges are de-duplicated by id. Raises KeyError if
+    no KB node has id ``node_id``.
     """
-    graph_file = Path(graph_file)
-    region_dir = graph_file.parent
-    if not region_dir.is_dir():
-        return yaml.safe_load(graph_file.read_text(encoding="utf-8")) or {}
+    from evidencell.kb_index import get_index
 
-    edges: list[dict] = []
-    seen: set[str] = set()
-    for path in sorted(region_dir.glob("*.yaml")):
-        try:
-            data = yaml.safe_load(path.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        if not isinstance(data, dict):
-            continue
-        for edge in data.get("edges") or []:
-            if not isinstance(edge, dict):
-                continue
-            edge_id = edge.get("id")
-            if edge_id:
-                if edge_id in seen:
-                    continue
-                seen.add(edge_id)
-            edges.append(edge)
-    return {"edges": edges}
+    index = get_index()
+    edges: dict[str, dict] = {
+        edge_id: records[0].edge for edge_id, records in index.edges.items()
+    }
+    if node_id is None:
+        return {"edges": list(edges.values())}
+
+    if node_id not in index.nodes:
+        raise KeyError(f"No KB node has id {node_id!r}.")
+    own = [edges[e] for e in dict.fromkeys(index.by_lit.get(node_id, []))]
+    targets = set().union(set(), *(_at_targets(e) for e in own))
+    neighbours = {
+        e.get("lit_type") for e in edges.values()
+        if e.get("lit_type") != node_id and _at_targets(e) & targets
+    }
+    return {"edges": [
+        e for e in edges.values()
+        if e.get("lit_type") == node_id or e.get("lit_type") in neighbours
+    ]}
 
 
 # ─── CLI ─────────────────────────────────────────────────────────────────────
@@ -407,19 +410,16 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="python -m evidencell.pool_candidates",
         description=(
-            "Surface candidate source-group pools from a KB graph "
+            "Surface candidate source-group pools across the KB "
             "(Phase 3 gen-report pre-pass). Emits JSON on stdout."
         ),
-    )
-    parser.add_argument(
-        "graph_file", type=Path, help="Path to KB graph YAML."
     )
     parser.add_argument(
         "--node",
         default=None,
         help=(
             "Restrict to candidates involving this lit_type. Omit to "
-            "list all pairs in the graph."
+            "list all pairs in the KB."
         ),
     )
     parser.add_argument(
@@ -437,20 +437,13 @@ def main(argv: list[str] | None = None) -> int:
             f"Default {DEFAULT_PR_TOLERANCE}."
         ),
     )
-    parser.add_argument(
-        "--this-file-only",
-        action="store_true",
-        help=(
-            "Restrict to edges in GRAPH_FILE instead of the whole region. "
-            "Pool detection is cross-file by default."
-        ),
-    )
     args = parser.parse_args(argv)
 
-    if args.this_file_only:
-        graph = yaml.safe_load(args.graph_file.read_text(encoding="utf-8"))
-    else:
-        graph = load_region_graph(args.graph_file)
+    try:
+        graph = load_kb_graph(args.node)
+    except KeyError as exc:
+        print(f"ERROR: {exc.args[0]}", file=sys.stderr)
+        return 1
     if args.node:
         candidates = find_pool_candidates_for_node(
             graph,
