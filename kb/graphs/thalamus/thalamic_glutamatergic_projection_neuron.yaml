@@ -1,0 +1,244 @@
+# Thalamic glutamatergic projection (thalamocortical relay) neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/THA-M-T1-R1.pdf
+# Ingestion date: 2026-11-11
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Thalamic Glutamatergic Projection (Thalamocortical Relay) Neuron"
+description: >
+  Evidence graph component for the glutamatergic projection (relay) neuron
+  family of thalamus proper — the classical cell type proposed from the ASTA
+  deep research report on thalamic neuron types.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-11"
+nodes:
+  - id: thalamic_glutamatergic_projection_neuron
+    name: "Thalamic glutamatergic projection (thalamocortical relay) neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:       # To be confirmed from primary literature — mouse sources dominate; human snRNA-seq pooled for markers
+    anatomical_location:
+      - id: UBERON:0004703
+        label: "dorsal thalamus"
+        name_in_source: "thalamus proper — central, exclusively excitatory regions (sensory, motor, anterior, midline/intralaminar nuclei)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2023.05.01.538832"
+            method: "Epi-Retro-Seq + snmC-seq + scRNA-seq integration"
+            scope: "adult mouse thalamus — central regions exclusively excitatory"
+            quote_key: "258464391_a576f421"
+          - ref: "https://doi.org/10.1101/2025.09.30.679413"
+            method: "MERFISH (ABC Atlas) registered to CCFv3"
+            scope: "adult mouse thalamus — class 18 TH Glut = glutamatergic neurons of thalamus proper"
+            quote_key: "282311854_83c180d9"
+      - id: UBERON:0001925
+        label: "ventral lateral nucleus of thalamus"
+        name_in_source: "motor thalamus (VL)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/241315"
+            method: "multi-FISH (Pvalb, Tnnt1) + single-cell RNA-seq of retrogradely labelled neurons"
+            scope: "adult mouse VL — Pvalb-selective, intermediate and Tnnt1-selective cells along the mediolateral axis"
+            quote_key: "116905066_4cfb88d1"
+      - id: UBERON:0002739
+        label: "medial dorsal nucleus of thalamus"
+        name_in_source: "mediodorsal nucleus (MD)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:42320642"
+            method: "single-neuron 3D reconstruction registered to CCFv3"
+            scope: "adult mouse MD Calb1 neurons"
+            quote_key: "289441883_3e761209"
+          - ref: "PMID:39282422"
+            method: "snRNA-seq + spatial transcriptomics"
+            scope: "human MD — SLC17A6+ excitatory projection neurons on a transcriptional gradient"
+            quote_key: "272427114_aebcb418"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:27411890"
+          method: "juxtacellular recording and labelling"
+          scope: "adult mouse midline thalamus — thalamic projection neurons known to be glutamatergic"
+          quote_key: "18133281_be32f064"
+        - ref: "PMID:39282422"
+          method: "snRNA-seq"
+          scope: "human MD — excitatory neurons marked by SLC17A6 (VGluT2)"
+          quote_key: "272427114_aebcb418"
+        - ref: "https://doi.org/10.1101/2025.09.30.679413"
+          method: "MERFISH (ABC Atlas)"
+          scope: "adult mouse — class 18 TH Glut"
+          quote_key: "282311854_83c180d9"
+    defining_markers:
+      - symbol: Slc17a6
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:39282422"
+            method: "snRNA-seq"
+            scope: "human MD excitatory neurons"
+            quote_key: "272427114_aebcb418"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:41501055"
+            method: "snRNA-seq"
+            scope: "human medial thalamus — ExN_Tha predominantly SLC17A6 (vs SLC17A7 in cortex)"
+            quote_key: "284543245_f2cc3213"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:42818922"
+            method: "snRNA-seq"
+            scope: "human thalamus — excitatory populations defined by SLC17A6"
+            quote_key: "292476435_57748566"
+            marker_type: TRANSCRIPT
+      - symbol: Pvalb
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.1101/241315"
+            method: "single-cell RNA-seq + multi-FISH"
+            scope: "adult mouse VL — subpopulation/gradient marker (Pvalb-selective cells), not pan-type"
+            quote_key: "116905066_4cfb88d1"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:37824646"
+            method: "review statement (core-matrix model)"
+            scope: "primate thalamus — PVALB marks core-type neurons"
+            quote_key: "261125104_84d5d827"
+            marker_type: TRANSCRIPT
+      - symbol: Tnnt1
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.1101/241315"
+            method: "single-cell RNA-seq + multi-FISH"
+            scope: "adult mouse VL — subpopulation/gradient marker (Tnnt1-selective cells), not pan-type"
+            quote_key: "116905066_4cfb88d1"
+            marker_type: TRANSCRIPT
+      - symbol: Calb1
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:42320642"
+            method: "Calb1-defined single-neuron reconstruction"
+            scope: "adult mouse MD — matrix-type subpopulation marker"
+            quote_key: "289441883_3e761209"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:37824646"
+            method: "review statement (core-matrix model)"
+            scope: "primate thalamus — CALB1 marks matrix-type neurons"
+            quote_key: "261125104_84d5d827"
+            marker_type: TRANSCRIPT
+      - symbol: Calb2
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.1101/241315"
+            method: "multi-FISH (Calb2, Tnnt1, Necab1)"
+            scope: "adult mouse thalamus — topographic gradient marker across 6 modalities"
+            quote_key: "116905066_57089776"
+            marker_type: TRANSCRIPT
+      - symbol: Necab1
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.1101/241315"
+            method: "multi-FISH (Calb2, Tnnt1, Necab1)"
+            scope: "adult mouse thalamus — topographic gradient marker across 6 modalities"
+            quote_key: "116905066_57089776"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >
+        Relay-type projection neuron with "bushy" (elongated soma, longer and
+        less frequently branching dendrites) and "radiate" (angular multipolar
+        soma, dichotomously branching dendrites) somatodendritic patterns; the
+        axon arises from the soma and rarely branches locally. Long-range
+        axonal projection styles range from core-like (low within-type
+        variability) to matrix-like (moderate variability; e.g. MD Calb1
+        neurons with widespread, tangentially distributed axons terminating in
+        cortical layers 1-3 plus collaterals to caudate putamen). Transcriptional
+        identity covaries with axonal morphology.
+      sources:
+        - ref: "PMID:27411890"
+          method: "juxtacellular labelling, somatodendritic reconstruction"
+          scope: "adult mouse midline thalamus"
+          quote_key: "18133281_be32f064"
+        - ref: "PMID:34616072"
+          method: "sparse labelling + whole-brain single-neuron reconstruction"
+          scope: "adult mouse thalamic core vs matrix neurons"
+          quote_key: "238420839_a675a306"
+        - ref: "PMID:42320642"
+          method: "single-neuron 3D reconstruction (projectomics)"
+          scope: "adult mouse MD Calb1 neurons — matrix type"
+          quote_key: "289441883_3e761209"
+    electrophysiology:
+      description: >
+        Not directly characterised in the report. Thalamic principal cells
+        have two firing modes (tonic and burst); intrinsic membrane and
+        synaptic properties vary along a continuum (e.g. CM to VA to VL)
+        rather than forming discrete profiles. Genes defining the main
+        mediolateral (primary-secondary-tertiary) transcriptional axis are
+        enriched for ion channels and neurotransmitter receptors, implying
+        systematic variation in response properties across thalamus.
+      sources:
+        - ref: "PMID:35102334"
+          method: "review (whole-cell recording studies)"
+          scope: "mouse motor thalamus CM/VA/VL; thalamic principal cells generally"
+          quote_key: "246443644_b53c8967"
+        - ref: "https://doi.org/10.1101/241315"
+          method: "bulk + single-cell RNA-seq of retrogradely labelled neurons"
+          scope: "adult mouse thalamus — PC1 enriched for receptors and ion channels"
+          quote_key: "116905066_97cf9838"
+        - ref: "PMID:31527803"
+          method: "transcriptomics integrated with anatomy and physiology"
+          scope: "adult mouse thalamus — transcriptional identity tied to membrane properties"
+          quote_key: "202579938_b1d68316"
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "thalamic excitatory neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:4023068 is defined as an excitatory neuron with soma in the
+        thalamic complex; the proposed type is the projection/relay family of
+        thalamus proper, so the mapping is recorded as BROAD rather than EXACT.
+        Mapping confidence MEDIUM. OLS4 exposed no PMID/DOI definition xrefs.
+    definition_references:
+      - "PMID:31527803"
+      - "https://doi.org/10.1101/241315"
+      - "PMID:27411890"
+      - "PMID:34616072"
+      - "https://doi.org/10.1101/2025.09.30.679413"
+    is_terminal: false
+    notes: >
+      SUSPECTED HETEROGENEITY (may warrant splitting later): this is a family
+      node, not a single uniform type. Documented axes: (i) a graded
+      mediolateral primary-secondary-tertiary transcriptional axis repeated
+      across sensory, motor and cognitive pathways, with intermediate cells
+      within and between nuclei (Phillips et al., 2017/2019; doi
+      10.1101/241315, PMID:31527803); (ii) within VL, Pvalb-selective,
+      Tnnt1-selective and intermediate neurons coexist; (iii)
+      projection-target-biased clusters by Epi-Retro-Seq (Zhou et al., 2023);
+      (iv) ABC atlas class 18 TH Glut spans many subclasses/supertypes/clusters
+      in the thalamic region (Turner et al., 2025); (v) core vs matrix (Pvalb vs
+      Calb1) projection styles. PVT, ATN and dLGN relay neurons are authored as
+      separate nucleus-specific nodes (pvt_glutamatergic_neuron,
+      anterior_thalamic_nucleus_excitatory_neuron, dlgn_relay_neuron) that are
+      members of this family.
+
+      MARKERS: only Slc17a6 is a pan-type marker. Pvalb, Tnnt1, Calb1, Calb2
+      and Necab1 are subpopulation/gradient markers along the transcriptional
+      axis and should not be scored as required for every member. The
+      Pvalb=core / Calb1=matrix correspondence is established in primates;
+      whether it holds in mouse is stated as unresolved (Zhao et al., 2026;
+      PMID:42320642). Slc17a6 sources are human snRNA-seq; mouse confirmation
+      of the marker rests on the class-level atlas annotation.
+
+      SPECIES: species left null — morphology and most transcriptomics are
+      mouse; Slc17a6 marker and MD location support include human data.
+
+      REFERENCE STORE: corpus IDs 116905066 (Phillips et al., 2018) and
+      116906088 (Phillips et al., 2017) both resolve to doi 10.1101/241315 —
+      two versions of the same bioRxiv preprint; the published version is
+      PMID:31527803.
+edges: []

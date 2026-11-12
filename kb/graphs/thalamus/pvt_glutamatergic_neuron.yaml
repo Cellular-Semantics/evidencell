@@ -1,0 +1,178 @@
+# Paraventricular thalamic nucleus (PVT) glutamatergic projection neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/THA-M-T1-R1.pdf
+# Ingestion date: 2026-11-11
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Paraventricular Thalamic Nucleus (PVT) Glutamatergic Projection Neuron"
+description: >
+  Evidence graph component for the glutamatergic projection neuron of the
+  paraventricular nucleus of the thalamus — a nucleus-specific member of the
+  thalamic glutamatergic projection neuron family, proposed from the ASTA deep
+  research report on thalamic neuron types.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-11"
+nodes:
+  - id: pvt_glutamatergic_neuron
+    name: "Paraventricular thalamic nucleus (PVT) glutamatergic projection neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:       # To be confirmed from primary literature — mouse and human sources pooled
+    anatomical_location:
+      - id: UBERON:0001920
+        label: "paraventricular nucleus of thalamus"
+        name_in_source: "paraventricular nucleus of the thalamus (PVT)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:36867023"
+            method: "snRNA-seq + multiplex FISH"
+            scope: "adult mouse PVT — five molecularly distinct neuronal subtypes"
+            quote_key: "251021326_f573a2e9"
+          - ref: "PMID:37862168"
+            method: "scRNA-seq + histology + axon projection mapping"
+            scope: "adult mouse PVT — continuous anterior-posterior transcriptomic axis"
+            quote_key: "264359607_8626b44b"
+          - ref: "PMID:41501055"
+            method: "snRNA-seq + spatial transcriptomic deconvolution"
+            scope: "human PVT — ExN_CALB cells localised to paraventricular thalamus"
+            quote_key: "284543245_ca2bf035"
+      - id: UBERON:0002705
+        label: "midline nuclear group"
+        name_in_source: "midline thalamus"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:39282422"
+            method: "snRNA-seq + spatial transcriptomics"
+            scope: "human medial thalamus — tertiary end of the excitatory gradient maps to PVT and PT"
+            quote_key: "272427114_aa16b051"
+          - ref: "PMID:27411890"
+            method: "juxtacellular recording and labelling"
+            scope: "adult mouse midline thalamic nuclei (not PVT-restricted)"
+            quote_key: "18133281_85d006d7"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:27411890"
+          method: "juxtacellular labelling (morphological inference)"
+          scope: "adult mouse midline thalamus — projection neurons known to be glutamatergic"
+          quote_key: "18133281_be32f064"
+        - ref: "PMID:27411890"
+          method: "juxtacellular labelling + IHC (CR)"
+          scope: "adult mouse midline thalamus — CR+ cells likely glutamatergic projection cells"
+          quote_key: "18133281_85d006d7"
+        - ref: "PMID:41501055"
+          method: "snRNA-seq"
+          scope: "human thalamic excitatory neurons predominantly SLC17A6"
+          quote_key: "284543245_f2cc3213"
+    defining_markers:
+      - symbol: Calb1
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:41501055"
+            method: "snRNA-seq + spatial validation"
+            scope: "human PVT (ExN_CALB) — used as PVT indicator in human and rodent; not PVT-exclusive"
+            quote_key: "284543245_c5367a6e"
+            marker_type: TRANSCRIPT
+      - symbol: Calb2
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:41501055"
+            method: "snRNA-seq + calretinin immunostaining"
+            scope: "human PVT (ExN_CALB) — not PVT-exclusive"
+            quote_key: "284543245_c5367a6e"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:27411890"
+            method: "juxtacellular labelling + calretinin IHC"
+            scope: "adult mouse midline thalamus — CR+ subpopulation, physiologically distinct"
+            quote_key: "18133281_85d006d7"
+            marker_type: PROTEIN
+      - symbol: Slc17a6
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:41501055"
+            method: "snRNA-seq"
+            scope: "human thalamic excitatory neurons (ExN_Tha), including PVT"
+            quote_key: "284543245_f2cc3213"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >
+        Midline thalamic projection neurons with relatively uniform
+        somatodendritic morphology and no sharply distinct morphological
+        types; both "bushy"-like and "radiate"-like dendritic patterns occur.
+        The axon arises from the soma with little or no local branching.
+        Anterior and posterior PVT subpopulations have nearly non-overlapping
+        axonal projection patterns, with an intermediate population.
+      sources:
+        - ref: "PMID:27411890"
+          method: "juxtacellular labelling, somatodendritic reconstruction"
+          scope: "adult mouse midline thalamus"
+          quote_key: "18133281_be32f064"
+        - ref: "PMID:37862168"
+          method: "axon projection mapping"
+          scope: "adult mouse aPVT vs pPVT"
+          quote_key: "264359607_8626b44b"
+    electrophysiology:
+      description: >
+        Calretinin (Calb2)-positive midline thalamic neurons are
+        physiologically distinct from CR-negative neurons and are
+        differentially engaged during hippocampal network oscillations; CR
+        expression, rather than nuclear location, is a major determinant of
+        firing pattern across brain states.
+      sources:
+        - ref: "PMID:27411890"
+          method: "in vivo juxtacellular recording under anaesthesia"
+          scope: "adult mouse midline thalamus (not PVT-restricted)"
+          quote_key: "18133281_85d006d7"
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "thalamic excitatory neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Nucleus-specific subset of CL thalamic excitatory neuron; no
+        PVT-specific CL term found. Mapping confidence MEDIUM.
+    definition_references:
+      - "PMID:36867023"
+      - "PMID:37862168"
+      - "PMID:41501055"
+      - "PMID:27411890"
+      - "PMID:39282422"
+    is_terminal: false
+    notes: >
+      SUSPECTED HETEROGENEITY (may warrant splitting later): mouse PVT
+      resolves into four continuous types along the anterior-posterior axis,
+      with aPVT and pPVT populations having nearly non-overlapping projections
+      and opposing effects on food consumption (Shima et al., 2022;
+      PMID:37862168), and into five molecularly distinct subtypes (PVT1-5)
+      organised on combined molecular gradients with differing cortical
+      projection overlap (Gao et al., 2023; PMID:36867023). Human PVT neurons
+      (ExN_CALB) correspond mostly to mouse posterior PVT (Nishioka et al.,
+      2026; PMID:41501055).
+
+      MARKERS: Calb1/Calb2 are used as PVT indicators but are explicitly not
+      PVT-exclusive (PMID:41501055) — they are also gradient markers across
+      the wider thalamic projection-neuron family. Calb1/Calb2 transcript
+      evidence is human; Calb2 protein evidence is mouse midline thalamus
+      generally.
+
+      SCOPE OF MIDLINE EVIDENCE: the Lara-Vasquez et al. (2016;
+      PMID:27411890) morphology and electrophysiology data come from neurons
+      across midline thalamic nuclei, not PVT alone; the CR+ vs CR- split may
+      not be PVT-specific. The midline nuclear group location entry is the
+      containing structure, recorded for that reason.
+
+      SPECIES: species left null — mouse and human sources pooled.
+
+      Member of the thalamic_glutamatergic_projection_neuron family (tertiary
+      end of the trans-thalamic transcriptional gradient).
+edges: []

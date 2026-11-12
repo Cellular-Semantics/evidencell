@@ -1,0 +1,141 @@
+# Anterior thalamic nuclei (ATN) excitatory projection neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/THA-M-T1-R1.pdf
+# Ingestion date: 2026-11-11
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Anterior Thalamic Nuclei (ATN) Excitatory Projection Neuron"
+description: >
+  Evidence graph component for the excitatory projection neuron of the
+  anterior thalamic nuclei (AD, AV, AM) — a nucleus-specific member of the
+  thalamic glutamatergic projection neuron family, proposed from the ASTA deep
+  research report on thalamic neuron types.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-11"
+nodes:
+  - id: anterior_thalamic_nucleus_excitatory_neuron
+    name: "Anterior thalamic nuclei (ATN) excitatory projection neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:       # To be confirmed from primary literature — all cited evidence is mouse
+    anatomical_location:
+      - id: UBERON:0002788
+        label: "anterior nuclear group"
+        name_in_source: "anterior thalamic nuclei (ATN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:38427564"
+            method: "scRNA-seq + spatial transcriptomics + multiplexed FISH"
+            scope: "adult mouse ATN — three discrete excitatory clusters matching AD, AV, AM"
+            quote_key: "268122794_5c2e793b"
+          - ref: "PMID:36476860"
+            method: "embryonic scRNA-seq lineage trajectories"
+            scope: "mouse — cTh.N1 glutamatergic neurons populate anterior (AD, AV, AM) nuclei"
+            quote_key: "254404676_a0c5ad08"
+      - id: UBERON:0002679
+        label: "anterodorsal nucleus of thalamus"
+        name_in_source: "anterodorsal nucleus (AD)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2023.05.01.538832"
+            method: "Epi-Retro-Seq"
+            scope: "adult mouse — RSP-projecting cluster 47 annotated as AD"
+            quote_key: "258464391_5a791974"
+      - id: UBERON:0002685
+        label: "anteroventral nucleus of thalamus"
+        name_in_source: "anteroventral nucleus (AV)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2023.05.01.538832"
+            method: "Epi-Retro-Seq"
+            scope: "adult mouse — RSP-projecting clusters 13 and 26 annotated as AV"
+            quote_key: "258464391_5a791974"
+          - ref: "PMID:38427564"
+            method: "spatial transcriptomics"
+            scope: "adult mouse AV — spatially covarying protein products and long-range inputs"
+            quote_key: "268122794_5c2e793b"
+      - id: UBERON:0002681
+        label: "anteromedial nucleus of thalamus"
+        name_in_source: "anteromedial nucleus (AM)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2025.09.30.679413"
+            method: "MERFISH (ABC Atlas) registered to CCFv3"
+            scope: "adult mouse AM — composed of discrete transcriptomic subdomains"
+            quote_key: "282311854_6f08b319"
+          - ref: "https://doi.org/10.1101/2025.09.30.679413"
+            method: "MERFISH (ABC Atlas) registered to CCFv3"
+            scope: "adult mouse — transcriptomic supertypes often define individual nuclei, e.g. AM"
+            quote_key: "282311854_83c180d9"
+    nt_type:
+      name_in_source: "excitatory (glutamatergic)"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:36476860"
+          method: "embryonic scRNA-seq lineage trajectories"
+          scope: "mouse — glutamatergic cTh.N1 neurons within AD, AV, AM"
+          quote_key: "254404676_a0c5ad08"
+        - ref: "PMID:38427564"
+          method: "scRNA-seq"
+          scope: "adult mouse ATN — excitatory cell-type clusters"
+          quote_key: "268122794_5c2e793b"
+    morphology:
+      description: >
+        Somatodendritic morphology not described in the report. Axonal
+        projection: AV and AD neurons projecting to retrosplenial cortex (RSP)
+        are uniquely enriched in AV/AD transcriptomic clusters that share no
+        enriched clusters with other cortical projections.
+      sources:
+        - ref: "https://doi.org/10.1101/2023.05.01.538832"
+          method: "Epi-Retro-Seq (retrograde labelling + single-nucleus methylome)"
+          scope: "adult mouse AV/AD RSP-projecting neurons"
+          quote_key: "258464391_5a791974"
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "thalamic excitatory neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Nucleus-specific subset of CL thalamic excitatory neuron; no
+        ATN-specific CL term found. Mapping confidence MEDIUM.
+    definition_references:
+      - "PMID:38427564"
+      - "PMID:36476860"
+      - "https://doi.org/10.1101/2023.05.01.538832"
+      - "https://doi.org/10.1101/2025.09.30.679413"
+    is_terminal: false
+    notes: >
+      SUSPECTED HETEROGENEITY (likely to warrant splitting into AD, AV and AM
+      nodes): Kapustina et al. (2024; PMID:38427564) identify three discrete
+      excitatory clusters corresponding to AD, AV and AM, each with graded
+      variation along a dorsomedial-ventrolateral axis; AM additionally
+      contains discrete subdomains in THALMANAC (Turner et al., 2025). The
+      node is kept at ATN level here because the report gives no per-nucleus
+      markers.
+
+      MARKERS: no marker genes are named in the report or in the cited quotes
+      (Kapustina et al. report marker genes but the quote does not list them).
+      defining_markers is therefore left empty; Slc17a6 is expected by
+      family membership but is not asserted here without a source.
+
+      NT TYPE: the sources say "excitatory" (Kapustina) and "glutamatergic"
+      (Govek et al., 2022, developmental lineage); glutamatergic identity is
+      also consistent with membership in the thalamic glutamatergic
+      projection neuron family.
+
+      ELECTROPHYSIOLOGY: not described in the report.
+
+      SPECIES: species left null pending primary verification; all cited
+      evidence is mouse.
+
+      Member of the thalamic_glutamatergic_projection_neuron family.
+edges: []

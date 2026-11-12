@@ -1,0 +1,158 @@
+# Dorsal lateral geniculate nucleus (dLGN) principal thalamocortical relay neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/THA-M-T1-R1.pdf
+# Ingestion date: 2026-11-11
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Dorsal Lateral Geniculate Nucleus (dLGN) Principal Thalamocortical Relay Neuron"
+description: >
+  Evidence graph component for the principal (thalamocortical relay) neuron of
+  the dorsal lateral geniculate nucleus — a nucleus-specific member of the
+  thalamic glutamatergic projection neuron family, proposed from the ASTA deep
+  research report on thalamic neuron types.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-11"
+nodes:
+  - id: dlgn_relay_neuron
+    name: "Dorsal lateral geniculate nucleus (dLGN) principal thalamocortical relay neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:       # To be confirmed from primary literature — mouse, macaque and human pooled
+    anatomical_location:
+      - id: UBERON:0002479
+        label: "dorsal lateral geniculate nucleus"
+        name_in_source: "dorsal lateral geniculate nucleus (dLGN/LGd)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:34473054"
+            method: "scRNA-seq + snRNA-seq"
+            scope: "mouse, macaque and human dLGN TC neurons"
+            quote_key: "237389962_9b813d38"
+          - ref: "PMID:34473054"
+            method: "scRNA-seq + snRNA-seq"
+            scope: "adult mouse dLGN — graded core vs shell expression"
+            quote_key: "237389962_1dd0f6d1"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:36476860"
+          method: "embryonic scRNA-seq lineage trajectories"
+          scope: "mouse — glutamatergic cTh.N1 neurons within sensory nuclei including DLG"
+          quote_key: "254404676_a0c5ad08"
+        - ref: "https://doi.org/10.1101/2023.05.01.538832"
+          method: "Epi-Retro-Seq + snmC-seq + scRNA-seq integration"
+          scope: "adult mouse — central thalamus exclusively excitatory apart from LGd local interneurons"
+          quote_key: "258464391_a576f421"
+    defining_markers:
+      - symbol: Pvalb
+        modifier: ENRICHED
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:34473054"
+            method: "scRNA-seq"
+            scope: "adult mouse dLGN — enriched in core neurons (align with primate M/P)"
+            quote_key: "237389962_1dd0f6d1"
+            marker_type: TRANSCRIPT
+      - symbol: Calb1
+        modifier: ENRICHED
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:34473054"
+            method: "scRNA-seq"
+            scope: "adult mouse dLGN — enriched in shell neurons (align with primate K)"
+            quote_key: "237389962_1dd0f6d1"
+            marker_type: TRANSCRIPT
+      - symbol: Necab1
+        modifier: ENRICHED
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:34473054"
+            method: "scRNA-seq"
+            scope: "adult mouse dLGN — enriched in shell neurons (align with primate K)"
+            quote_key: "237389962_1dd0f6d1"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >
+        Retina-recipient thalamocortical neuron projecting to primary visual
+        cortex (V1). Distinct morphological and connectional TC types are
+        described in dLGN of mice, cats and primates, but transcriptomic
+        differences between them are subtle relative to their differences in
+        morphology and cortical projection targets.
+      sources:
+        - ref: "PMID:34473054"
+          method: "review of prior anatomy + transcriptomics"
+          scope: "mouse, human and macaque dLGN"
+          quote_key: "237389962_9b813d38"
+        - ref: "PMID:34831385"
+          method: "review"
+          scope: "dLGN of mice, cats and primates"
+          quote_key: "244102130_41b92975"
+    electrophysiology:
+      description: >
+        Intrinsic properties of mouse dLGN relay neurons are not described in
+        the report. LGN in rodents and monkeys contains subpopulations
+        distinguished by single-cell electrophysiological properties, spatial
+        localisation and inputs from distinct retinal ganglion cell subtypes.
+      sources:
+        - ref: "PMID:35102334"
+          method: "review"
+          scope: "rodent and monkey LGN subpopulations"
+          quote_key: "246443644_61cfc49b"
+    colocated_types:
+      - neighboring_type: "dlgn_gabaergic_interneuron"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          dLGN is the one central thalamic nucleus with a (sparse) population
+          of local GABAergic interneurons among its excitatory relay neurons.
+          Supporting quote: 258464391_a576f421 (Zhou et al., 2023;
+          https://doi.org/10.1101/2023.05.01.538832).
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "thalamic excitatory neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Broad parent only; mapping confidence LOW. CL:4023187 'koniocellular
+        cell' (LGN koniocellular-layer neuron, primate-oriented) is a RELATED
+        candidate for the Calb1/Necab1 shell subpopulation, not for the whole
+        dLGN relay type.
+    definition_references:
+      - "PMID:34473054"
+      - "PMID:34831385"
+      - "PMID:36476860"
+      - "https://doi.org/10.1101/2023.05.01.538832"
+    is_terminal: false
+    notes: >
+      SUSPECTED HETEROGENEITY: in adult mouse, dLGN TC neurons cannot be
+      grouped into discrete transcriptomic types; diversity is a modest graded
+      core-shell axis — Pvalb-enriched core neurons (aligning with primate M/P)
+      vs Calb1/Necab1-enriched shell neurons (aligning with primate
+      koniocellular) (Bakken et al., 2021; PMID:34473054). Primates by contrast
+      have discrete M, P and two K types. A shell vs core split could be made
+      later if the mapping requires it. The ENRICHED marker modifiers reflect
+      opposing gradients, not presence/absence.
+
+      SPECIES-DEPENDENT CLAIMS: morphology statements pool mice, cats and
+      primates; the M/P/K framework is primate.
+
+      ADDITIONAL MARKER NOT ASSERTED: Roy et al. (2022; PMID:35102334, quote
+      246443644_61cfc49b) cite Spp1 as an LGN marker from monkey bulk arrays,
+      with comparable mouse expression. Not asserted as a defining marker
+      because it is nucleus-level bulk evidence and Spp1 also marks one
+      extreme of the TRN gradient.
+
+      SPECIES: species left null.
+
+      Member of the thalamic_glutamatergic_projection_neuron family (primary
+      end of the trans-thalamic transcriptional axis).
+edges: []

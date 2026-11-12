@@ -1,0 +1,114 @@
+# Ventral lateral geniculate nucleus / intergeniculate leaflet (LGv/IGL) GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/THA-M-T1-R1.pdf
+# Ingestion date: 2026-11-11
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Ventral Lateral Geniculate Nucleus / Intergeniculate Leaflet (LGv/IGL) GABAergic Neuron"
+description: >
+  Evidence graph component for the GABAergic neuron of the ventral lateral
+  geniculate nucleus and intergeniculate leaflet, proposed from the ASTA deep
+  research report on thalamic neuron types.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-11"
+nodes:
+  - id: lgv_igl_gabaergic_neuron
+    name: "Ventral lateral geniculate nucleus / intergeniculate leaflet (LGv/IGL) GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:       # To be confirmed from primary literature — mouse evidence
+    anatomical_location:
+      - id: UBERON:0002480
+        label: "ventral lateral geniculate nucleus"
+        name_in_source: "ventral lateral geniculate nucleus (LGv/VLG)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:36476860"
+            method: "embryonic scRNA-seq lineage trajectories"
+            scope: "mouse — rTh.Pro-derived GABAergic neurons in VLG"
+            quote_key: "254404676_a0c5ad08"
+          - ref: "https://doi.org/10.1101/2023.05.01.538832"
+            method: "Epi-Retro-Seq + snmC-seq + scRNA-seq integration"
+            scope: "adult mouse LGv GABAergic neurons"
+            quote_key: "258464391_a576f421"
+          - ref: "https://doi.org/10.1101/2025.09.30.679413"
+            method: "MERFISH (ABC Atlas) registered to CCFv3"
+            scope: "adult mouse LGv — class 12 HY GABA and class 20 MB GABA"
+            quote_key: "282311854_83c180d9"
+      - id: UBERON:0035975
+        label: "intergeniculate leaflet of the lateral geniculate complex"
+        name_in_source: "intergeniculate leaflet (IGL)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:36476860"
+            method: "embryonic scRNA-seq lineage trajectories"
+            scope: "mouse — rTh.Pro-derived GABAergic neurons in IGL"
+            quote_key: "254404676_a0c5ad08"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:36476860"
+          method: "embryonic scRNA-seq lineage trajectories"
+          scope: "mouse VLG and IGL"
+          quote_key: "254404676_a0c5ad08"
+        - ref: "https://doi.org/10.1101/2023.05.01.538832"
+          method: "Epi-Retro-Seq + snmC-seq + scRNA-seq integration"
+          scope: "adult mouse LGv"
+          quote_key: "258464391_a576f421"
+        - ref: "https://doi.org/10.1101/2025.09.30.679413"
+          method: "MERFISH (ABC Atlas)"
+          scope: "adult mouse LGv — GABA classes 12 and 20"
+          quote_key: "282311854_83c180d9"
+    morphology:
+      description: >
+        Somatodendritic morphology not described in the report. GABAergic
+        neurons of ventral/lateral thalamic regions including LGv are
+        described as either reciprocally connected with thalamic excitatory
+        neurons or projecting to subcortical targets such as basal ganglia and
+        brainstem; the quote does not separate LGv from RT on this point.
+      sources:
+        - ref: "https://doi.org/10.1101/2023.05.01.538832"
+          method: "statement citing prior anatomy"
+          scope: "adult mouse LGv and RT GABAergic neurons (pooled)"
+          quote_key: "258464391_a576f421"
+    definition_references:
+      - "PMID:36476860"
+      - "https://doi.org/10.1101/2023.05.01.538832"
+      - "https://doi.org/10.1101/2025.09.30.679413"
+    is_terminal: false
+    notes: >
+      CL MAPPING: no CL term found for LGv/IGL GABAergic neuron; cl_mapping
+      left empty (CANDIDATE) — potential CL new-term contribution (parent
+      would be CL:0000617 GABAergic neuron).
+
+      DEVELOPMENTAL ORIGIN: derived from Shh-responsive rostral thalamic
+      progenitors (rTh.Pro, corresponding to the pTH-R domain), distinct from
+      the cTh.Pro lineages that give rise to most thalamic glutamatergic
+      neurons (Govek et al., 2022; PMID:36476860; Price et al., 2012,
+      PMID:22435047, quote 12701386_00a5d63e, describing pTH-R as
+      Nkx2.2/Mash1-expressing).
+
+      SUSPECTED HETEROGENEITY: in ABC atlas analyses LGv contributes cells to
+      both class 12 HY GABA and class 20 MB GABA (Turner et al., 2025),
+      suggesting more than one GABAergic population; LGv and IGL are also
+      pooled here and may warrant separate nodes.
+
+      MARKERS: no fine subtype markers are given in the report; defining
+      markers left empty. Human embryonic SOX14/NKX2.2 GABAergic neurons of
+      rostral-thalamus origin (Kim et al., 2023; PMID:37824646, quote
+      261125104_c81e4ce7) are a plausible developmental counterpart but are
+      not asserted here.
+
+      ELECTROPHYSIOLOGY: not described in the report.
+
+      SPECIES: species left null; evidence is mouse.
+edges: []
