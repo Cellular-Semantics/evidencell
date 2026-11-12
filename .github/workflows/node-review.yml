@@ -1,9 +1,13 @@
-# Renders KB node files with quote text filled in, and posts the result as a
-# single sticky PR comment.
+# Renders what a PR changes in the KB — nodes, edges and the reference store —
+# as a structure-aware diff against the base branch, and posts it as a single
+# sticky PR comment (issue #179).
 #
-# Why: KB YAML cites evidence by quote_key only, so a reviewer reading the diff
-# sees bare hashes. Dereferencing them by hand against references/{region}/ is
-# the main friction in reviewing an ingest PR.
+# Why: KB YAML cites evidence by quote_key only, so a reviewer reading the raw
+# diff sees bare hashes, and comments / key order / list order / re-wrapped
+# prose all show up as noise. The render matches list items by identity, shows
+# only what changed, and keeps quote text and snippets under <details> folds.
+# It fits itself to GitHub's comment cap; the unbudgeted render and a JSON
+# change list go to the workflow artifact.
 #
 # Two ways in:
 #   * automatically, when a PR touches kb/graphs/** or references/**
@@ -75,7 +79,7 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-groups
 
-      - name: Render changed node files
+      - name: Render the KB diff
         id: render
         env:
           BASE_REF: ${{ steps.pr.outputs.base_ref }}
@@ -84,22 +88,27 @@ jobs:
           # checkout already used fetch-depth: 0; this just guarantees the
           # base ref is present. (`--depth=0` is fatal: "not a positive number".)
           git fetch --no-tags origin "$BASE_REF"
-          # Added/modified only: a deleted file cannot be rendered.
-          git diff --name-only --diff-filter=AM \
-            "origin/${BASE_REF}...HEAD" -- 'kb/graphs/**/*.yaml' > changed.txt || true
+          git diff --name-only "origin/${BASE_REF}...HEAD" \
+            -- 'kb/graphs/**/*.yaml' 'references/**' > changed.txt || true
           if [ ! -s changed.txt ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "No changed KB node files; nothing to render."
+            echo "No KB graph or reference-store changes; nothing to render."
             exit 0
           fi
-          echo "Rendering $(wc -l < changed.txt) changed node file(s)."
-          xargs -a changed.txt uv run python -m evidencell.render_review \
-            --out node_review.md
-          # GitHub caps a comment at 65536 characters.
-          if [ "$(wc -c < node_review.md)" -gt 60000 ]; then
-            head -c 60000 node_review.md > truncated.md
-            printf '\n\n---\n\n*Truncated at 60 kB — full render in the workflow artifact, or run `just node-review <file>` locally.*\n' >> truncated.md
-            mv truncated.md node_review.md
+          echo "Diffing $(wc -l < changed.txt) changed KB/reference file(s)."
+          base="origin/${BASE_REF}"
+          # Comment body: fitted to GitHub's 65 536-char cap by the renderer
+          # (drops folded quote text first, never cuts mid-tag).
+          uv run python -m evidencell.render_review --base "$base" --out node_review.md
+          # Artifact: the same render with no budget, plus the JSON change list.
+          uv run python -m evidencell.render_review --base "$base" --budget 0 \
+            --out node_review_full.md
+          uv run python -m evidencell.render_review --base "$base" --format json \
+            --out node_review.json
+          # The budget cannot drop the header or warnings; if those alone are
+          # over the cap, post a pointer instead of a broken comment.
+          if [ "$(wc -c < node_review.md)" -gt 64000 ]; then
+            printf '# Node review\n\nThe change summary alone exceeds the PR comment limit. See the `node-review` workflow artifact, or run `just node-review --base origin/%s` locally.\n' "$BASE_REF" > node_review.md
           fi
           echo "skip=false" >> "$GITHUB_OUTPUT"
 
@@ -108,7 +117,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-review
-          path: node_review.md
+          path: |
+            node_review.md
+            node_review_full.md
+            node_review.json
 
       - name: Post or update the PR comment
         if: steps.render.outputs.skip == 'false'
@@ -119,11 +131,11 @@ jobs:
           script: |
             const fs = require('fs');
             const marker = '<!-- evidencell:node-review -->';
-            const body = marker
-              + '\n\n<details><summary><b>Node review — quotes filled in</b> '
-              + '(re-run by commenting <code>/node-review</code>)</summary>\n\n'
+            const body = marker + '\n\n'
               + fs.readFileSync('node_review.md', 'utf8')
-              + '\n\n</details>';
+              + '\n\n<sub>Re-run by commenting <code>/node-review</code>. '
+              + 'Unbudgeted render and JSON change list are in the '
+              + '<code>node-review</code> workflow artifact.</sub>';
             const {owner, repo} = context.repo;
             const issue_number = Number(process.env.PR_NUMBER);
             const comments = await github.paginate(

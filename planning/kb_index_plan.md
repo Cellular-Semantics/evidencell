@@ -1,6 +1,7 @@
 # KB index: an in-memory knowledge graph over `kb/graphs`
 
-Status: **proposed**. Branch `kb-index-phase1` implements Phase 1 only.
+Status: Phase 0 (taxonomy DB fail-closed, #169), Phase 1 (#167) and Phase 1b
+(branch `kb-index-phase1b`) done; Phases 2+ under discussion.
 Baseline: `9bcad1a` (main after #164, #165). Figures in "Scale" and Phases 0–4
 re-measured there; the "What `strip-stubs-1-2` already did" section records
 the state at `3014944` and is left as written.
@@ -185,7 +186,7 @@ Three invariants:
 **#161 is deliberately excluded** — the dict-based index does not need it. It is
 required only for Phase 5.
 
-### Phase 1 — the index (additive, reversible) ← this branch
+### Phase 1 — the index (additive, reversible) — done (#167)
 
 Build `kb_index.py`. Reimplement `find_node_file` on it, preserving its
 signature and `AmbiguousNodeError` behaviour. No other caller changes.
@@ -193,6 +194,34 @@ Behaviour delta: zero. Risk: one module to revert.
 
 *Done when:* full suite passes unchanged and `test_find_node_file.py` passes
 against the new backend.
+
+### Phase 1b — `get_node()` and referential integrity — done (`kb-index-phase1b`)
+
+Atlas identity is `(taxonomy_id, accession)`. #174 made every atlas stub id its
+`cell_set_accession` (85 local aliases had split 34 clusters into two nodes
+each), and the schema now states the rule.
+
+- `node_lookup.get_node(key)` resolves a lit id, an atlas stub id or any
+  taxonomy accession to one read-only `NodeView` (kind, data, provenance:
+  defining file for lit nodes; taxonomy + every stub-holding file for atlas
+  nodes). Atlas data is the DB row. Fails closed: unknown id, missing store
+  (`UnknownTaxonomyError`), missing DB, or an accession the YAML defines but the
+  DB lacks (stale) all raise.
+- `taxonomy_db.taxonomy_accessions(tax_dir)` reads each node's own accession
+  straight from the taxonomy YAML (libyaml event scan, ~14 s for WMBv1, mtime-
+  cached), so integrity checks need no DB.
+- `qc_content.dangling_endpoint` is the referential-integrity check -- the
+  foreign-key constraint behind the in-document endpoint rule. Lit stubs must
+  have one canonical definition; atlas stubs must have id == accession, a
+  taxonomy store, and an accession that store's YAML defines. It absorbs
+  `unknown_taxonomy_id` and covers the case nothing did: an accession absent
+  from its taxonomy. Runs in CI (Content QC) without a DB.
+
+Not yet: render still uses its own DB lookup (port in Phase 2); the pre-edit
+hook does not run the check (needs a DB-first fast path); CI does not build the
+taxonomy DB (a cached build plus a DB == YAML accession check is the next CI
+step). Known exception, baselined: `CS20250428_GROUP_0016` until HMBA BG
+(`CCN20250428`) is ingested.
 
 ### Phase 2 — port the region-scope consumers
 
