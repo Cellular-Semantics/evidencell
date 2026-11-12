@@ -99,9 +99,12 @@ refresh-at-metrics *ARGS:
 # Pre-mapping check: which classical nodes' declared at_source_sets have an
 # AT run (resolved) vs not (UNRESOLVED). Report-only; exits non-zero if any
 # UNRESOLVED. Run before map-cell-type; for UNRESOLVED rows run annotation-transfer.
+# Scope: named node ids, --region REGION, or (neither) the whole KB.
+# Usage: just at-coverage CCN20230722 olm_cell_ca1
+#        just at-coverage CCN20230722 --region hippocampus
 [group('at_metrics')]
-at-coverage graph_file taxonomy_id:
-    uv run python -m evidencell.at_metrics at-coverage {{graph_file}} {{taxonomy_id}}
+at-coverage taxonomy_id *ARGS:
+    uv run python -m evidencell.at_metrics at-coverage {{taxonomy_id}} {{ARGS}}
 
 # Regenerate src/evidencell/_models.py (Pydantic classes from LinkML schema)
 [group('schema')]
@@ -594,16 +597,15 @@ gen-toc TAXONOMY_ID *ARGS:
 gen-at-figure RUN_ID *ARGS:
     uv run python -m evidencell.at_figures {{RUN_ID}} {{ARGS}}
 
-# Surface candidate source-group pools from a KB graph (Phase 3 gen-report pre-pass).
+# Surface candidate source-group pools (Phase 3 gen-report pre-pass).
 # Emits JSON on stdout. Use --node to restrict to candidates involving a given lit_type.
-# Scope is the whole region directory, not just GRAPH_FILE -- pool detection is
-# pairwise across lit_types, so a per-file view misses pairs that span files.
-# Pass --this-file-only to restrict to GRAPH_FILE.
-# Usage: just pool-candidates kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml
-#        just pool-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml --node olm_hippocampus
+# Scope is the whole KB: a pair is compared when their AT evidence lands on the
+# same atlas accession, whatever file or region directory each lives in.
+# Usage: just pool-candidates --node olm_hippocampus
+#        just pool-candidates                          # every pair in the KB
 [group('reports')]
-pool-candidates GRAPH_FILE *ARGS:
-    uv run python -m evidencell.pool_candidates {{GRAPH_FILE}} {{ARGS}}
+pool-candidates *ARGS:
+    uv run python -m evidencell.pool_candidates {{ARGS}}
 
 # Render KB node files for review, with quote text filled in. Read-only.
 # KB YAML cites evidence by quote_key only, so a diff shows bare hashes; this

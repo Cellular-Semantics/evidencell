@@ -79,12 +79,13 @@ For each `node_id`, surface candidate source-group pools for the synthesis
 subagent to judge:
 
 ```bash
-just pool-candidates {graph_file} --node {node_id} \
+just pool-candidates --node {node_id} \
   > reports/{region}/{node_id}_pool_candidates.json
 ```
 
 This is a deterministic pre-pass that compares pairs of distinct `lit_type`s
-in the graph whose AT-evidence `metrics_by_level` rows are within tolerance
+anywhere in the KB (not just this file or region) whose AT evidence lands on
+the same atlas accessions, and whose `metrics_by_level` rows are within tolerance
 (~5% F1 / purity / coverage) across their shared atlas targets. Each
 candidate entry names the source groups, the shared targets, and the
 property panels assessed (markers, anat, NT, ephys, morphology, dev).
@@ -1263,7 +1264,7 @@ from those fields — name the exact dataset, source label, and taxonomy:
 > After:   "Annotation transfer not yet run: retrieve {source_dataset_accession},
 >           score source cluster {source_cluster_label} against {taxonomy}, and
 >           attach the resulting AnnotationTransferEvidence to this edge
->           ({just at-coverage} lists it UNRESOLVED; run workflows/annotation-transfer.md)."
+>           ({just at-coverage {taxonomy} {node_id}} lists it UNRESOLVED; run workflows/annotation-transfer.md)."
 
 Do not invent an accession — use only what is on the NO_EVIDENCE item. If no
 `source_dataset_accession` is present (no dataset was ever declared), the honest

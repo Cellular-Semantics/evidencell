@@ -212,49 +212,86 @@ def test_find_for_node_filters_to_relevant_candidates():
     assert c_candidates == []
 
 
-# ── Region scoping ────────────────────────────────────────────────────────────
+# ── Scope: shared atlas targets across the whole KB ──────────────────────────
 
-def test_load_region_graph_merges_sibling_files(tmp_path):
-    """Pool detection is pairwise across lit_types, so it must see the region.
+@pytest.fixture
+def kb(tmp_path, monkeypatch):
+    """A tmp repo whose kb/graphs the KB index reads."""
+    from evidencell import kb_index, paths
 
-    Once each file holds one component, a per-file view yields one lit_type,
-    zero pairs, and silently returns no candidates.
+    (tmp_path / "schema").mkdir()
+    monkeypatch.setattr(paths, "repo_root", lambda: tmp_path)
+    kb_index.clear_cache()
+    yield tmp_path / "kb" / "graphs"
+    kb_index.clear_cache()
+
+
+def _graph_file(kb_dir, region, name, lit, edges):
+    import yaml as _yaml
+
+    path = kb_dir / region / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    nodes = [{"id": lit, "name": lit, "definition_basis": "CLASSICAL_MULTIMODAL"}]
+    path.write_text(_yaml.safe_dump({"nodes": nodes, "edges": edges}))
+    return path
+
+
+def test_kb_graph_pairs_across_files_and_regions(kb):
+    """Atlas types span regions; a pair split across directories still pools.
+
+    Since the graph split each file holds one lit_type, so any per-file or
+    per-directory view would see no pairs at all here.
     """
-    import yaml as _yaml
+    from evidencell.pool_candidates import load_kb_graph
 
-    from evidencell.pool_candidates import load_region_graph
-
-    (tmp_path / "a.yaml").write_text(
-        _yaml.safe_dump({"edges": [{"id": "e1", "lit_type": "a", "taxonomy_type": "x"}]})
-    )
-    (tmp_path / "b.yaml").write_text(
-        _yaml.safe_dump({"edges": [{"id": "e2", "lit_type": "b", "taxonomy_type": "y"}]})
-    )
-    merged = load_region_graph(tmp_path / "a.yaml")
-    assert sorted(e["id"] for e in merged["edges"]) == ["e1", "e2"]
+    _graph_file(kb, "hippocampus", "a.yaml", "lit_A",
+                [_at_edge("e1", "lit_A", "ACC_1", "run_que", "BC", 0.90)])
+    _graph_file(kb, "isocortex", "b.yaml", "lit_B",
+                [_at_edge("e2", "lit_B", "ACC_1", "run_yao", "Pvalb", 0.91)])
+    graph = load_kb_graph("lit_A")
+    assert sorted(e["id"] for e in graph["edges"]) == ["e1", "e2"]
+    [candidate] = find_pool_candidates_for_node(graph, "lit_A")
+    assert candidate["source_groups"] == ["lit_A", "lit_B"]
 
 
-def test_load_region_graph_dedupes_shared_edge_ids(tmp_path):
-    import yaml as _yaml
+def test_kb_graph_for_node_leaves_out_unrelated_lit_types(kb):
+    from evidencell.pool_candidates import load_kb_graph
 
-    from evidencell.pool_candidates import load_region_graph
+    _graph_file(kb, "r", "a.yaml", "lit_A",
+                [_at_edge("e1", "lit_A", "ACC_1", "run_1", "X", 0.9)])
+    _graph_file(kb, "r", "b.yaml", "lit_B", [
+        _at_edge("e2", "lit_B", "ACC_1", "run_2", "Y", 0.9),
+        # lit_B's other edges come too: the panel signal reads all of them.
+        _at_edge("e3", "lit_B", "ACC_9", "run_2", "Y", 0.2),
+    ])
+    _graph_file(kb, "r", "c.yaml", "lit_C",
+                [_at_edge("e4", "lit_C", "ACC_2", "run_3", "Z", 0.9)])
+    assert sorted(e["id"] for e in load_kb_graph("lit_A")["edges"]) == ["e1", "e2", "e3"]
+    assert len(load_kb_graph()["edges"]) == 4
 
-    edge = {"id": "e1", "lit_type": "a", "taxonomy_type": "x"}
-    (tmp_path / "a.yaml").write_text(_yaml.safe_dump({"edges": [edge]}))
-    (tmp_path / "b.yaml").write_text(_yaml.safe_dump({"edges": [edge]}))
-    assert len(load_region_graph(tmp_path / "a.yaml")["edges"]) == 1
+
+def test_kb_graph_dedupes_edges_held_in_two_files(kb):
+    from evidencell.pool_candidates import load_kb_graph
+
+    edge = _at_edge("e1", "lit_A", "ACC_1", "run_1", "X", 0.9)
+    _graph_file(kb, "r", "a.yaml", "lit_A", [edge])
+    _graph_file(kb, "r", "b.yaml", "lit_B", [edge])
+    assert [e["id"] for e in load_kb_graph()["edges"]] == ["e1"]
 
 
-def test_load_region_graph_tolerates_unparseable_sibling(tmp_path):
-    import yaml as _yaml
+def test_kb_graph_node_without_edges_has_no_candidates(kb):
+    from evidencell.pool_candidates import load_kb_graph
 
-    from evidencell.pool_candidates import load_region_graph
+    _graph_file(kb, "r", "a.yaml", "lit_A", [])
+    assert load_kb_graph("lit_A") == {"edges": []}
 
-    (tmp_path / "a.yaml").write_text(
-        _yaml.safe_dump({"edges": [{"id": "e1", "lit_type": "a", "taxonomy_type": "x"}]})
-    )
-    (tmp_path / "broken.yaml").write_text("{[not valid yaml", encoding="utf-8")
-    assert [e["id"] for e in load_region_graph(tmp_path / "a.yaml")["edges"]] == ["e1"]
+
+def test_kb_graph_unknown_node_raises(kb):
+    from evidencell.pool_candidates import load_kb_graph
+
+    _graph_file(kb, "r", "a.yaml", "lit_A", [])
+    with pytest.raises(KeyError, match="nope"):
+        load_kb_graph("nope")
 
 
 # ── Same-source-group suppression ─────────────────────────────────────────────
@@ -325,12 +362,11 @@ def test_suppression_is_subtractive_on_real_hippocampus_data():
     """The guard removes candidates; it never invents one."""
     import pathlib
 
-    from evidencell.pool_candidates import _independent_sources, load_region_graph
+    from evidencell.pool_candidates import _independent_sources, load_kb_graph
 
-    region = pathlib.Path("kb/graphs/hippocampus")
-    if not region.is_dir():
+    if not pathlib.Path("kb/graphs/hippocampus").is_dir():
         pytest.skip("hippocampus content not present")
-    graph = load_region_graph(next(region.glob("*.yaml")))
+    graph = load_kb_graph()
     guarded = {tuple(c["source_groups"]) for c in find_pool_candidates(graph)}
 
     import evidencell.pool_candidates as pc
