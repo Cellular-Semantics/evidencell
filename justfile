@@ -609,8 +609,15 @@ pool-candidates GRAPH_FILE *ARGS:
 # KB YAML cites evidence by quote_key only, so a diff shows bare hashes; this
 # dereferences them against the region's reference store. Takes files or a
 # region directory. Prints to stdout unless --out is given.
+# With --base REF it renders only what changed vs the merge base with REF
+# (working tree, untracked files included): nodes, edges and the reference
+# store, quotes folded. This is what the node-review PR comment posts.
+# Diff-mode flags: --format json, --budget BYTES (default 60000; 0 = none),
+# --verbose (list metadata changes).
 # Usage: just node-review kb/graphs/locus_coeruleus
 #        just node-review kb/graphs/hippocampus/olm_cell_ca1.yaml --out review.md
+#        just node-review --base origin/main
+#        just node-review --base origin/main kb/graphs/thalamus --format json
 [group('reports')]
 node-review *ARGS:
     uv run python -m evidencell.render_review {{ARGS}}
