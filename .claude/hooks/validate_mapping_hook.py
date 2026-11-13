@@ -33,29 +33,37 @@ from pathlib import Path
 _project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(_project_root / "src"))
 
-import yaml  # noqa: E402
-from evidencell.validate import (  # noqa: E402
-    simulate_edit,
-    structural_checks,
-    check_quote_key_integrity,
-    check_store_records,
-    check_store_append_only,
-    check_paper_record,
-    check_paper_append_only,
-    check_quote_set,
-    check_quote_set_append_only,
-    check_quote_keys,
-    check_flat_ref_pmids,
-    check_ref_pmids,
-    check_run_refs,
-    linkml_validate,
-    validate_terms,
-    parse_md_annotations,
-    check_md_ids,
-    check_ontology_terms,
-)
-from evidencell.paths import at_run_index_path  # noqa: E402
-from evidencell.references import store_exists  # noqa: E402
+# Fail closed: only exit code 2 blocks an edit, so a crash on import (e.g. the
+# hook run by a python3 without the project deps) would let every edit through.
+try:
+    import yaml  # noqa: E402
+    from evidencell.validate import (  # noqa: E402
+        simulate_edit,
+        structural_checks,
+        check_quote_key_integrity,
+        check_store_records,
+        check_store_append_only,
+        check_paper_record,
+        check_paper_append_only,
+        check_quote_set,
+        check_quote_set_append_only,
+        check_quote_keys,
+        check_flat_ref_pmids,
+        check_ref_pmids,
+        check_run_refs,
+        linkml_validate,
+        validate_terms,
+        parse_md_annotations,
+        check_md_ids,
+        check_ontology_terms,
+    )
+    from evidencell.paths import at_run_index_path  # noqa: E402
+    from evidencell.references import store_exists  # noqa: E402
+except ImportError as exc:
+    print(f"BLOCKING EDIT: validation hook cannot load its dependencies ({exc}).\n"
+          "Run it through the project environment (uv run, as .claude/settings.json "
+          "does), or run `uv sync` in this checkout.", file=sys.stderr)
+    sys.exit(2)
 
 # ── Curation-mode gate ───────────────────────────────────────────────────────
 # Users whose writes bypass the curation-mode zone check. Non-trusted users
