@@ -14,7 +14,6 @@ from evidencell.validate import check_quote_key_integrity, check_store_append_on
 
 def _store(**quotes):
     return {
-        "_meta": {"region": "hippocampus"},
         "11290620": {
             "corpus_id": "11290620",
             "title": "Hilar mossy cells of the dentate gyrus",
@@ -66,10 +65,6 @@ def test_quote_without_text_is_caught():
     assert "no text" in errors[0]
 
 
-def test_meta_block_is_skipped():
-    assert check_quote_key_integrity({"_meta": {"region": "x"}}) == []
-
-
 def test_whitespace_normalisation_is_respected():
     """Keys hash normalised text, so reflowing whitespace must not break them."""
     text = "a passage that was wrapped"
@@ -103,7 +98,7 @@ def test_removing_a_quote_is_blocked():
 
 
 def test_removing_a_paper_is_blocked():
-    errors = check_store_append_only(_store(), {"_meta": {}})
+    errors = check_store_append_only(_store(), {})
     assert len(errors) == 1
     assert "11290620" in errors[0]
 
@@ -335,6 +330,9 @@ def test_entry_without_quotes_key_migrates(tmp_path):
     r = migrate_region(d / "references.json")
     assert r.papers == 1
     assert load_store(d)["111"]["quotes"] == {}
+    # A legacy `_meta` block is dropped, not carried into the split layout.
+    assert "_meta" not in load_store(d)
+    assert not (d / "_meta.json").exists()
 
 
 def test_empty_monolith_is_not_deleted(tmp_path):
@@ -387,7 +385,7 @@ def _paper(**over):
             "authors": ["A. Author"], "author_keys": ["Author, 2012"],
             "resolution_confidence": "HIGH"}
     base.update(over)
-    return {"_meta": {"region": "r"}, "11290620": {**base, "quotes": {}}}
+    return {"11290620": {**base, "quotes": {}}}
 
 
 def test_valid_paper_passes_schema():

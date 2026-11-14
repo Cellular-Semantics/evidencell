@@ -16,7 +16,7 @@ def pytest_configure(config):
 def _write_store(region_dir, store):
     """Write a reference store in the split layout from a legacy-shaped dict.
 
-    Takes `{corpus_id: {...paper..., "quotes": {...}}, "_meta": {...}}` — the
+    Takes `{corpus_id: {...paper..., "quotes": {...}}}` — the
     shape fixtures were written against when the store was one file — and lays
     it out as papers/ + quotes/. Returns the region directory.
 
@@ -27,9 +27,6 @@ def _write_store(region_dir, store):
     (region_dir / "papers").mkdir(parents=True, exist_ok=True)
     (region_dir / "quotes").mkdir(parents=True, exist_ok=True)
     for corpus_id, entry in store.items():
-        if corpus_id == "_meta":
-            (region_dir / "_meta.json").write_text(json.dumps(entry))
-            continue
         if not isinstance(entry, dict):
             continue
         paper = {k: v for k, v in entry.items() if k != "quotes"}

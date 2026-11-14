@@ -74,7 +74,6 @@ def tmp_refs(tmp_path):
 def existing_refs(tmp_path, write_store):
     """Return the region dir of a store with one existing paper + quote."""
     refs = {
-        "_meta": {"region": "test", "last_updated": "", "last_updated_by": ""},
         "42": {
             "corpus_id": "42",
             "author_keys": ["Smith et al., 2020"],
@@ -216,18 +215,25 @@ def test_write_quote_status_pending(tmp_refs):
     assert data["600"]["quotes"][key]["status"] == "pending"
 
 
-def test_write_quote_meta_updated(tmp_refs):
+def test_write_quote_touches_only_paper_and_quote_files(tmp_refs):
+    """No region-wide bookkeeping file: two branches adding quotes for
+    different papers in one region must not conflict (#192)."""
     write_quote_to_refs(
         region_dir=tmp_refs,
         corpus_id="700",
-        quote_text="Meta update check.",
+        quote_text="Only per-paper files change.",
         section="Results",
         source_method="asta_snippet",
         added_by="my_extraction_run",
     )
-    data = load_store(tmp_refs)
-    assert data["_meta"]["last_updated_by"] == "my_extraction_run"
-    assert data["_meta"]["last_updated"] != ""
+    written = sorted(str(p.relative_to(tmp_refs)) for p in tmp_refs.rglob("*") if p.is_file())
+    assert written == ["papers/700.json", "quotes/700.json"]
+
+
+def test_load_store_ignores_stray_meta_file(existing_refs):
+    """A leftover _meta.json from before #192 is neither loaded nor a paper."""
+    (existing_refs / "_meta.json").write_text('{"region": "test"}')
+    assert set(load_store(existing_refs)) == {"42"}
 
 
 # ── _normalise_authors ────────────────────────────────────────────────────────

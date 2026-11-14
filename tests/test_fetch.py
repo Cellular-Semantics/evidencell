@@ -24,9 +24,6 @@ def _split(region_dir, store):
     (region_dir / "papers").mkdir(parents=True, exist_ok=True)
     (region_dir / "quotes").mkdir(parents=True, exist_ok=True)
     for cid, entry in store.items():
-        if cid == "_meta":
-            (region_dir / "_meta.json").write_text(json.dumps(entry))
-            continue
         if not isinstance(entry, dict):
             continue
         paper = {k: v for k, v in entry.items() if k != "quotes"}
@@ -83,15 +80,6 @@ def test_accepts_prefixed_corpus_id(tmp_path):
     root = _repo(tmp_path, refs=SIK)
     out = resolve_corpus_ids(["CorpusId:10664418"], root=root, allow_network=False)
     assert out["10664418"].pmid == "7472426"
-
-
-def test_meta_block_is_not_treated_as_a_paper(tmp_path):
-    """references.json carries a `_meta` bookkeeping key alongside papers."""
-    refs = dict(SIK)
-    refs["_meta"] = {"region": "hippocampus", "last_updated": "2026-04-29"}
-    root = _repo(tmp_path, refs=refs)
-    out = resolve_corpus_ids(["_meta"], root=root, allow_network=False)
-    assert out == {}
 
 
 # ── layer 2: cached catalogues ────────────────────────────────────────────────

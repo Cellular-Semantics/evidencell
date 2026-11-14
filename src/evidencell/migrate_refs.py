@@ -21,7 +21,6 @@ from pathlib import Path
 
 from evidencell.paths import repo_root
 from evidencell.references import (
-    _META_FILE,
     _PAPERS_DIR,
     _QUOTES_DIR,
     _load_split,
@@ -50,26 +49,24 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
         result.skipped = "no references.json"
         return result
     d_pre = refs_path.parent
-    if (d_pre / _QUOTES_DIR).is_dir() or (d_pre / _META_FILE).exists():
+    if (d_pre / _QUOTES_DIR).is_dir():
         result.skipped = (
-            "partially split — quotes/ or _meta.json already present alongside "
+            "partially split — quotes/ already present alongside "
             "references.json; resolve by hand"
         )
         return result
 
     # Read the monolith directly. load_store() is split-only now; the
     # migration is the single place that still knows the old format, which is
-    # where that knowledge belongs.
+    # where that knowledge belongs. A legacy `_meta` bookkeeping block is
+    # dropped: the split layout no longer keeps region bookkeeping (#192).
     before = json.loads(refs_path.read_text(encoding="utf-8"))
+    before.pop("_meta", None)
     d = refs_path.parent
 
     papers: dict[str, dict] = {}
     quotes: dict[str, dict] = {}
-    meta: dict = {}
     for corpus_id, entry in before.items():
-        if corpus_id == "_meta":
-            meta = entry
-            continue
         if not isinstance(entry, dict):
             continue
         papers[corpus_id] = {k: v for k, v in entry.items() if k != "quotes"}
@@ -95,8 +92,6 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
     # intact references.json — store_exists() flips to True the moment
     # papers/ exists, so every later read would silently prefer the bad copy.
     reconstructed: dict = {}
-    if meta:
-        reconstructed["_meta"] = meta
     for corpus_id in sorted(papers):
         reconstructed[corpus_id] = {**papers[corpus_id], "quotes": quotes[corpus_id]}
 
@@ -104,7 +99,7 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
     # empty dict; normalise before comparing so real data migrates instead of
     # tripping a spurious mismatch.
     normalised_before = {
-        k: (v if k == "_meta" or not isinstance(v, dict) else {**v, "quotes": v.get("quotes") or {}})
+        k: (v if not isinstance(v, dict) else {**v, "quotes": v.get("quotes") or {}})
         for k, v in before.items()
     }
     if reconstructed != normalised_before:
@@ -122,9 +117,6 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
         _write_json(d / _PAPERS_DIR / f"{corpus_id}.json", payload)
     for corpus_id, payload in quotes.items():
         _write_json(d / _QUOTES_DIR / f"{corpus_id}.json", payload)
-    wrote_meta = bool(meta) and not (d / _META_FILE).exists()
-    if meta:
-        _write_json(d / _META_FILE, meta)
 
     # Belt and braces: confirm the files on disk actually reload as expected
     # before removing the only other copy. If they do not, remove what was
@@ -138,8 +130,6 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
             (d / _PAPERS_DIR / f"{corpus_id}.json").unlink(missing_ok=True)
         for corpus_id in quotes:
             (d / _QUOTES_DIR / f"{corpus_id}.json").unlink(missing_ok=True)
-        if wrote_meta:
-            (d / _META_FILE).unlink(missing_ok=True)
         for sub in (_PAPERS_DIR, _QUOTES_DIR):
             try:
                 (d / sub).rmdir()          # only succeeds if now empty
