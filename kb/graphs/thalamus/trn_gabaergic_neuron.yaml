@@ -1,6 +1,8 @@
 # Thalamic reticular nucleus (TRN/RT) GABAergic neuron — thalamus
 # Source: ASTA deep research report — inputs/deepsearch/THA-M-T1-R1.pdf
 # Ingestion date: 2026-11-11
+# Source: ASTA deep research report — inputs/deepsearch/TRN_GABA.pdf
+# Ingestion date: 2026-11-14 (extended existing node; prior content preserved)
 # Status: DRAFT — node metadata from ASTA report, pending primary verification
 # Property assertions reference quotes in references/thalamus/
 # Proposed by: asta-report-ingest
@@ -40,6 +42,18 @@ nodes:
             method: "MERFISH (ABC Atlas) registered to CCFv3"
             scope: "adult mouse RT — class 12 HY GABA"
             quote_key: "282311854_83c180d9"
+          - ref: "PMID:22110467"
+            method: "review"
+            scope: "TRN as a thin sheet surrounding the anterior, lateral and partly ventral surfaces of the dorsal thalamus; traversed by thalamocortical/corticothalamic axons"
+            quote_key: "22614021_6bd1f0a7"
+          - ref: "PMID:38655183"
+            method: "review"
+            scope: "thin lamellar layer between the outer medullary lamina and the internal capsule"
+            quote_key: "269061517_9804a4e1"
+          - ref: "PMID:23500178"
+            method: "review (background)"
+            scope: "rodent TRN — dorsal/ventral extensions; auditory, visual, somatosensory and motor sectors"
+            quote_key: "45471682_d26faa77"
     nt_type:
       name_in_source: "GABAergic"
       cl_terms:
@@ -59,6 +73,18 @@ nodes:
           method: "MERFISH (ABC Atlas)"
           scope: "adult mouse RT — class 12 HY GABA"
           quote_key: "282311854_83c180d9"
+        - ref: "PMID:22110467"
+          method: "review"
+          scope: "TRN entirely composed of GABAergic cells"
+          quote_key: "22614021_6bd1f0a7"
+        - ref: "PMID:9053794"
+          method: "in situ hybridization (GAD65/GAD67 mRNA)"
+          scope: "rat reticular thalamic nucleus — densely packed GABA-containing neurons"
+          quote_key: "13838378_1a066ef6"
+        - ref: "PMID:4020436"
+          method: "EM immunocytochemistry for glutamic acid decarboxylase"
+          scope: "cat somatosensory TRN — GAD-immunoreactive axon terminals and presynaptic dendrites"
+          quote_key: "11351142_bb87302f"
     defining_markers:
       - symbol: Spp1
         ncbi_gene_id:
@@ -68,6 +94,11 @@ nodes:
             scope: "adult mouse TRN — marker of one gradient extreme, mutually exclusive with Ecel1; not pan-TRN"
             quote_key: "220696191_0d9ab57d"
             marker_type: TRANSCRIPT
+          - ref: "PMID:39630580"
+            method: "scRNA-seq (summary of Li et al., 2020)"
+            scope: "mouse TRN — one of the two most differentially expressed genes of the gradient; core pole only"
+            quote_key: "274495776_ea6ec372"
+            marker_type: TRANSCRIPT
       - symbol: Ecel1
         ncbi_gene_id:
         sources:
@@ -76,17 +107,149 @@ nodes:
             scope: "adult mouse TRN — marker of the opposite gradient extreme, mutually exclusive with Spp1; not pan-TRN"
             quote_key: "220696191_0d9ab57d"
             marker_type: TRANSCRIPT
+          - ref: "PMID:39630580"
+            method: "scRNA-seq (summary of Li et al., 2020)"
+            scope: "mouse TRN — one of the two most differentially expressed genes of the gradient; shell pole only"
+            quote_key: "274495776_ea6ec372"
+            marker_type: TRANSCRIPT
+      - symbol: Pvalb
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:24929424"
+            method: "statement in source (citing De Biasi et al., 1994); assay not stated in quote — PROTEIN assumed"
+            scope: "mouse TRN — 'defined by the expression of the parvalbumin gene'"
+            quote_key: "13962500_281f85a8"
+            marker_type: PROTEIN
+          - ref: "PMID:39448557"
+            method: "statement in source (citing Lein et al., 2007 — Allen ISH atlas)"
+            scope: "rodent thalamus — many TRN inhibitory neurons express PV; thalamic PV+ inhibitory neurons almost exclusively in TRN"
+            quote_key: "273588794_cb2ac3cf"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:41622438"
+            method: "review; assay not stated in quote — PROTEIN assumed"
+            scope: "TRN — PV expressed in approximately 70% of TRN cells (not pan-TRN)"
+            quote_key: "285258741_478ed0bb"
+            marker_type: PROTEIN
+          - ref: "https://doi.org/10.7546/CR-2013-66-7-13101331-16"
+            method: "immunohistochemistry"
+            scope: "rat TRN, postnatal development to 1 year — parvalbumin always colocalised with GABA"
+            quote_key: "28027406_16344549"
+            marker_type: PROTEIN
+      - symbol: Gad1
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:9053794"
+            method: "single-cell in situ hybridization (GAD67 mRNA)"
+            scope: "rat reticular thalamic nucleus"
+            quote_key: "13838378_20379fb3"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:41622438"
+            method: "review; protein name given (glutamate decarboxylase 67), assay not stated"
+            scope: "TRN neurons — glutamate decarboxylase 67"
+            quote_key: "285258741_478ed0bb"
+            marker_type: PROTEIN
+      - symbol: Gad2
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:9053794"
+            method: "single-cell in situ hybridization (GAD65 mRNA)"
+            scope: "rat reticular thalamic nucleus"
+            quote_key: "13838378_20379fb3"
+            marker_type: TRANSCRIPT
+      - symbol: Sst
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:28591583"
+            method: "PV/SOM-based dissociation of connectivity and physiology; assay not stated in quote — PROTEIN assumed"
+            scope: "rodent nRT, validated in human nRT — SOM marks a subpopulation distinct from PV cells; not pan-TRN in rodent"
+            quote_key: "4577451_49fd75a1"
+            marker_type: PROTEIN
+          - ref: "PMID:35687680"
+            method: "statement in source (citing Li et al., 2020); protein names given"
+            scope: "mouse — parvalbumin and somatostatin described as classic markers of TRN neurons"
+            quote_key: "249575101_cb3f6032"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: Gabra4
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:24550784"
+            method: "statement in source (citing Cope et al., 2005; Jia et al., 2005); receptor subunit (protein) level"
+            scope: "rodent NRT — cells do not express alpha4 GABA-A receptor subunit"
+            quote_key: "8097146_9fdcba62"
+            marker_type: PROTEIN
+      - symbol: Gabrd
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:24550784"
+            method: "statement in source (citing Cope et al., 2005; Jia et al., 2005); receptor subunit (protein) level"
+            scope: "rodent NRT — cells do not express delta GABA-A receptor subunit"
+            quote_key: "8097146_9fdcba62"
+            marker_type: PROTEIN
+      - symbol: Penk
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:6133921"
+            method: "immunohistochemistry (Met-enkephalin antisera)"
+            scope: "cat nucleus reticularis — negative for Met-enkephalin immunoreactivity"
+            quote_key: "2564943_cd4025ad"
+            marker_type: PROTEIN
+    neuropeptides:
+      - symbol: Sst
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:6133921"
+            method: "immunohistochemistry (somatostatin antisera)"
+            scope: "cat — at least the majority of nucleus reticularis neurons somatostatin-like immunoreactive"
+            quote_key: "2564943_95c06a97"
+            marker_type: PROTEIN
+          - ref: "PMID:6133921"
+            method: "immunohistochemistry (somatostatin antisera)"
+            scope: "cat and monkey — intense perinuclear somatostatin-like immunoreactivity in nucleus reticularis neurons"
+            quote_key: "2564943_ee27b032"
+            marker_type: PROTEIN
+          - ref: "PMID:28591583"
+            method: "PV/SOM-based dissociation; assay not stated in quote — PROTEIN assumed"
+            scope: "rodent and human nRT — SOM+ subpopulation only"
+            quote_key: "4577451_49fd75a1"
+            marker_type: PROTEIN
     morphology:
       description: >
         Somatodendritic morphology not described in the report. Neurons at
         the two extremes of the transcriptomic gradient show core-like vs
         shell-like anatomical organisation within the nucleus, and connect
         differentially with first-order vs higher-order thalamic nuclei.
+        [Added 2026-11-14 from TRN_GABA.pdf:] HRP-filled reticular nucleus
+        cells (cat) have thin axons with intrareticular collaterals and
+        diffuse branches through much of the ventral posterior and posterior
+        thalamic nuclei; dendrites end in processes resembling synaptic
+        terminals (GAD-immunoreactive presynaptic dendrites). Biocytin-filled
+        perigeniculate neurons often carry beaded intra-PGN axon collaterals.
+        The vast majority of nRT-thalamic terminals form a single synapse per
+        postsynaptic target on thin distal dendrites of relay cells. Core
+        (inner) TRN neurons are reported to have larger somata and more
+        extensive dendritic trees than edge neurons.
       sources:
         - ref: "PMID:32699411"
           method: "scRNA-seq + anatomy + connectivity mapping"
           scope: "adult mouse TRN"
           quote_key: "220696191_0d9ab57d"
+        - ref: "PMID:4020436"
+          method: "intracellular HRP fills + EM immunocytochemistry"
+          scope: "cat somatosensory TRN"
+          quote_key: "11351142_bb87302f"
+        - ref: "PMID:9348356"
+          method: "biocytin fills in slices"
+          scope: "perigeniculate nucleus (visual sector of TRN)"
+          quote_key: "15405814_6a2f954f"
+        - ref: "PMID:19005050"
+          method: "terminal ultrastructure"
+          scope: "rodent somatosensory thalamus — nRT-thalamic terminals"
+          quote_key: "29575561_d20cd0c6"
+        - ref: "PMID:41622438"
+          method: "review"
+          scope: "core vs edge TRN neurons"
+          quote_key: "285258741_478ed0bb"
     electrophysiology:
       description: >
         Electrophysiological properties differ between neurons at the two
@@ -94,6 +257,19 @@ nodes:
         Spp1 vs Ecel1 subpopulations). TRN subpopulations share activity
         patterns according to the principal thalamic structures they project
         to.
+        [Added 2026-11-14 from TRN_GABA.pdf:] Fast-spiking; generate
+        repetitive spike bursts at spindle frequency (Na+ action potentials
+        driven by low-threshold Ca2+ spikes) that initiate sleep spindles in
+        NREM sleep. No tonic GABA-A current (lack alpha4/delta subunits).
+        TRN/PGN neurons inhibit one another, mainly via GABA-A and
+        occasionally GABA-B receptors. Limbic-projecting TRN neurons track
+        arousal, whereas sensory-projecting neurons participate in spindles
+        and are suppressed by attention. PV but not SOM cells are
+        rhythmogenic. Visual TRN neurons in awake monkey show high background
+        firing (~45 spikes/s) and fast strong transient visual responses
+        that are modulated by attention. Group I mGluR activation depolarises
+        and group II mGluR activation hyperpolarises TRN neurons; adenosine
+        (A1) presynaptically suppresses nRT inhibitory output.
       sources:
         - ref: "PMID:32699411"
           method: "integrated scRNA-seq + slice electrophysiology"
@@ -103,16 +279,63 @@ nodes:
           method: "review (recordings + connectivity-based optical tagging)"
           scope: "rodent TRN subnetworks"
           quote_key: "246443644_7d6d3266"
+        - ref: "PMID:22110467"
+          method: "review (simultaneous intracellular recordings, Steriade and Deschenes, 1988)"
+          scope: "spindle-frequency spike bursts driven by low-threshold Ca2+ spikes"
+          quote_key: "22614021_49994746"
+        - ref: "PMID:16354913"
+          method: "whole-cell patch clamp, gabazine"
+          scope: "rodent NRT — no tonic GABA-A current"
+          quote_key: "16581420_e890fafa"
+        - ref: "PMID:9348356"
+          method: "slice intracellular recordings with local glutamate activation"
+          scope: "perigeniculate and rodent TRN — mutual GABA-A / occasional GABA-B inhibition"
+          quote_key: "15405814_b54e66d7"
+        - ref: "PMID:25126786"
+          method: "TRN ensemble recording + connectivity-based optogenetic tagging"
+          scope: "mouse TRN — limbic vs sensory sub-networks"
+          quote_key: "17466764_3162827e"
+        - ref: "PMID:28591583"
+          method: "slice electrophysiology of PV vs SOM nRT cells"
+          scope: "rodent nRT — PV but not SOM cells rhythmogenic"
+          quote_key: "4577451_49fd75a1"
+        - ref: "PMID:16624964"
+          method: "single-unit recording in awake behaving monkey"
+          scope: "macaque visual TRN"
+          quote_key: "9768497_95efbd8a"
+        - ref: "PMID:10414998"
+          method: "slice electrophysiology with selective mGluR agonists"
+          scope: "rat TRN"
+          quote_key: "8440723_2571618e"
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: "GABAergic neuron"
+        name_in_source: "GABAergic"
+      mapping_type: BROAD
+      mapping_notes: >
+        Added 2026-11-14 (TRN_GABA.pdf ingest; confidence MEDIUM). Only a
+        generic parent was found; no CL term exists for thalamic reticular
+        nucleus neurons (searched: thalamic reticular nucleus, reticular
+        thalamic, perigeniculate, prethalamus, GABAergic neuron thalamus,
+        Spp1, Ecel1). Potential CL new-term contribution. CL:0000617
+        definition carries no PMID/DOI refs.
     definition_references:
       - "PMID:32699411"
       - "https://doi.org/10.1101/2023.05.01.538832"
       - "https://doi.org/10.1101/2025.09.30.679413"
       - "PMID:35102334"
+      - "PMID:28591583"
+      - "PMID:25126786"
+      - "PMID:39630580"
+      - "PMID:22110467"
     is_terminal: false
     notes: >
       CL MAPPING: no CL term found for thalamic reticular nucleus neuron;
       cl_mapping left empty (CANDIDATE) — potential CL new-term contribution
       (parent would be CL:0000617 GABAergic neuron).
+      [2026-11-14: superseded — cl_mapping now set to BROAD CL:0000617 from
+      the TRN_GABA.pdf ingest; the CL new-term recommendation stands.]
 
       SUSPECTED HETEROGENEITY (may warrant splitting into core/Spp1 and
       shell/Ecel1 nodes): TRN heterogeneity is a continuous transcriptomic
@@ -125,10 +348,96 @@ nodes:
       246443644_61cfc49b) additionally describe PV- and SST-labelled TRN
       subpopulations in mouse that are also present in human; not asserted
       as markers here because the quote does not specify the assay.
+      [2026-11-14: the split has now been made — see trn_spp1_core_neuron
+      and trn_ecel1_shell_neuron, written as poles of this gradient. Hartley
+      et al. 2024 (PMID:39630580, quote 274495776_ea6ec372) restate the
+      Spp1-core/high-burst/first-order vs Ecel1-shell/low-burst/higher-order
+      split. Pvalb and Sst are now asserted from other quotes — see below.]
 
       ATLAS CONTEXT: in the ABC atlas, RT neurons fall in class 12 HY GABA,
       shared with zona incerta, LGv and hypothalamus (Turner et al., 2025) —
       they are not in the thalamus-proper glutamatergic class.
 
       SPECIES: species left null; primary evidence is mouse.
+      [2026-11-14: the TRN_GABA.pdf sources add rat, cat, PGN (carnivore)
+      and macaque evidence; species remains null.]
+
+      --- Added 2026-11-14 from inputs/deepsearch/TRN_GABA.pdf ---
+
+      CONTRADICTION (homogeneity): Sellers et al. 2014 (PMID:24929424, quote
+      13962500_281f85a8) call TRN neurons "a near homogeneous population"
+      defined by parvalbumin expression. This conflicts with the Spp1/Ecel1
+      gradient (Li et al., 2020) and with PV+ vs SOM+ subpopulations
+      (Clemente-Perez et al., 2017, PMID:28591583) — both views kept.
+
+      CONTRADICTION (Pvalb coverage): Sellers et al. 2014 treat PV as
+      defining for TRN; Flores et al. 2026 (PMID:41622438, quote
+      285258741_478ed0bb) give PV in ~70% of TRN cells; Malinova et al. 2013
+      report PV always colocalised with GABA in rat TRN (the converse
+      direction, not coverage). Pvalb is therefore a majority, not
+      universal, marker. Several Pvalb/Sst marker_type values are PROTEIN by
+      assumption because the quotes do not name the assay (flagged in each
+      source's method).
+
+      CONTRADICTION (Sst, species): in cat and monkey, at least the majority
+      of TRN neurons show somatostatin-like immunoreactivity, proposed as a
+      defining characteristic of the nucleus (Graybiel & Elde 1983,
+      PMID:6133921, quotes 2564943_95c06a97, 2564943_ee27b032). In rodent,
+      SOM marks a subpopulation distinct from PV cells, linked to limbic
+      circuits and higher-order nuclei (Clemente-Perez et al., 2017; review
+      Inserra et al. 2021, PMID:33645311, quote 232077377_39d5ae3a). Cho et
+      al. 2025 (preprint, https://doi.org/10.1101/2025.10.05.680571, quote
+      282307079_44a45345) report intra-TRN inhibition arising mainly from
+      SOM onto PV TRN neurons. Graybiel also reports TRN neurons negative for
+      avian pancreatic polypeptide antisera (not asserted as a gene, since
+      the antigen-to-gene mapping is ambiguous).
+
+      CONTRADICTION (mutual inhibition): slice physiology shows potent
+      GABA-A (occasionally GABA-B) mutual inhibition between PGN/TRN cells
+      (Sanchez-Vives et al. 1997, PMID:9348356, quote 15405814_b54e66d7),
+      while the same quote notes that Pinault et al. found axonal synaptic
+      interactions between reticular cells in adult rat to be rare on
+      morphological grounds.
+
+      ADDITIONAL HETEROGENEITY (not split): (i) limbic vs sensory sectors and
+      sub-networks (Halassa et al., 2014, PMID:25126786; one limbic, five
+      sensory and one rostral motor sector — Villalobos et al. 2022,
+      PMID:35896962, quote 251108998_6032faf3); (ii) somatosensory TRN has
+      three tiers (inner to outer receive input from POm, VPM, VPL), and
+      roughly a quarter of neurons receive convergent input from multiple
+      thalamic nuclei, distributed evenly through the TRN's thickness (Lam
+      et al. 2011, PMID:21543609, quote 17803026_048c557a); (iii) two types of
+      gap-junction-coupled clusters — within-module clusters vs clusters
+      across the TRN's thickness that target first- and higher-order nuclei;
+      coupling reduced but not abolished in connexin36 knockouts (Lee et al.
+      2014, PMID:25253862, quote 22250359_a2c2e373); (iv) PV neurons of
+      sensory TRN regulate social memory (Gao 2024, PMID:39024916, quote
+      271245495_d8c25eae — the source calls them "interneurons").
+
+      PERIGENICULATE NUCLEUS: the carnivore perigeniculate nucleus (visual
+      TRN sector) is treated as part of this population (Sanchez-Vives et
+      al. 1997). No separate anatomical_location entry was added; PGN data
+      are flagged by scope in the sources.
+
+      DEVELOPMENTAL ORIGIN: TRN neurons derive from GABAergic progenitors of
+      the embryonic prethalamus (p3) (Sellers et al. 2014, quote
+      13962500_5ff436ed; Jager et al. 2016, PMID:27929058). These progenitors
+      express Ascl1 and depend on Dlx1, Dlx2 and Arx (quote
+      264044014_14d3b43b). An Ascl1->Isl1 cascade promotes TRN fate (Nguyen et
+      al. 2024, PMID:39625482, quote 274463686_3ce3bd17). These are
+      progenitor/developmental TFs, so they are not asserted as adult
+      defining_markers.
+
+      RECEPTORS / MODULATION: TRN GABAergic neurons express pre- and
+      postsynaptic 5-HT2A and 5-HT1A receptors (Htr2a, Htr1a; Inserra et al.
+      2021, quote 232077377_781ba52b). Goitia et al. 2015 (PMID:26484945,
+      quote 35643051_a7773555) give functional evidence for presynaptic
+      5-HT1A/5-HT2A on TRN terminals. Adenosine A1 presynaptically suppresses
+      nRT inhibitory currents (Ulrich & Huguenard 1995, PMID:7576639, quote
+      16754940_ba112480). Not asserted as markers (low specificity).
+
+      UNSUPPORTED REPORT MARKERS: the report mentions Slc32a1 and a Nos1
+      negative. No quote supports either for TRN neurons (the Weil et al.
+      2022 quote concerns PHb neurons and dLGN interneurons), so neither is
+      asserted.
 edges: []

@@ -1,0 +1,150 @@
+# TRN Ecel1+ shell (edge) GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/TRN_GABA.pdf
+# Ingestion date: 2026-11-14
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "TRN Ecel1+ Shell (Edge) GABAergic Neuron"
+description: >
+  Evidence graph component for the Ecel1-expressing pole of the TRN
+  transcriptomic gradient: shell-located, low-bursting TRN GABAergic neurons
+  projecting to higher-order thalamic nuclei. Proposed from the ASTA deep
+  research report on TRN GABAergic neurons.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-14"
+nodes:
+  - id: trn_ecel1_shell_neuron
+    name: "TRN Ecel1+ shell (edge) GABAergic neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:       # To be confirmed from primary literature — mouse primary evidence
+    anatomical_location:
+      - id: UBERON:0001903
+        label: "thalamic reticular nucleus"
+        name_in_source: "bordering shell of the TRN"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:39630580"
+            method: "scRNA-seq + anatomy (summary of Li et al., 2020)"
+            scope: "mouse TRN — Ecel1+ neurons found in the bordering shell"
+            quote_key: "274495776_ea6ec372"
+          - ref: "PMID:32699411"
+            method: "scRNA-seq + anatomy"
+            scope: "adult mouse TRN — gradient-extreme neurons with shell-like anatomical structure"
+            quote_key: "220696191_0d9ab57d"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:39630580"
+          method: "statement in source"
+          scope: "mouse TRN — a thin shell of GABAergic neurons"
+          quote_key: "274495776_8970fb4f"
+        - ref: "PMID:41622438"
+          method: "review"
+          scope: "TRN composed of GABAergic inhibitory neurons"
+          quote_key: "285258741_6a1a977c"
+    defining_markers:
+      - symbol: Ecel1
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:39630580"
+            method: "scRNA-seq (summary of Li et al., 2020)"
+            scope: "mouse TRN — one of the two most differentially expressed genes of the gradient"
+            quote_key: "274495776_ea6ec372"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:32699411"
+            method: "scRNA-seq"
+            scope: "adult mouse TRN — mutually exclusive markers at the gradient extremes"
+            quote_key: "220696191_0d9ab57d"
+            marker_type: TRANSCRIPT
+    negative_markers:
+      - symbol: Spp1
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:32699411"
+            method: "scRNA-seq"
+            scope: "adult mouse TRN — markers at the two extremes are mutually exclusive"
+            quote_key: "220696191_0d9ab57d"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:39630580"
+            method: "scRNA-seq (summary of Li et al., 2020)"
+            scope: "mouse TRN — Spp1 marks the opposite (core) pole"
+            quote_key: "274495776_ea6ec372"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >
+        Shell-like anatomical organisation at the TRN borders. Soma and
+        dendrite size are not described directly for this population (see
+        notes).
+      sources:
+        - ref: "PMID:32699411"
+          method: "scRNA-seq + anatomy"
+          scope: "adult mouse TRN"
+          quote_key: "220696191_0d9ab57d"
+        - ref: "PMID:39630580"
+          method: "summary of Li et al., 2020"
+          scope: "mouse TRN Ecel1+ neurons in the bordering shell"
+          quote_key: "274495776_ea6ec372"
+    electrophysiology:
+      description: >
+        Low bursting activity relative to Spp1+ core neurons. Projects to
+        higher-order thalamic nuclei and antagonises sleep spindle duration.
+      sources:
+        - ref: "PMID:39630580"
+          method: "summary of Li et al., 2020 (slice electrophysiology + in vivo perturbation)"
+          scope: "mouse TRN Ecel1+ neurons"
+          quote_key: "274495776_ea6ec372"
+        - ref: "PMID:32699411"
+          method: "integrated scRNA-seq + slice electrophysiology + in vivo subnetwork perturbation"
+          scope: "adult mouse TRN"
+          quote_key: "220696191_0d9ab57d"
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: "GABAergic neuron"
+        name_in_source: "GABAergic"
+      mapping_type: BROAD
+      mapping_notes: >
+        Confidence LOW. BROAD to the generic GABAergic neuron only. No CL
+        term exists for thalamic reticular nucleus neurons or their
+        subtypes (searched: thalamic reticular nucleus, reticular thalamic,
+        perigeniculate, prethalamus, GABAergic neuron thalamus, Spp1, Ecel1).
+        Potential CL new-term contribution. CL:0000617 definition carries no
+        PMID/DOI refs.
+    definition_references:
+      - "PMID:32699411"
+      - "PMID:39630580"
+    is_terminal: false
+    notes: >
+      PARENT / GRADIENT POLE: subtype of trn_gabaergic_neuron. This node is
+      one pole of a continuous Spp1/Ecel1 transcriptomic gradient within
+      trn_gabaergic_neuron, not a discrete cluster. Li et al. 2020
+      (PMID:32699411, quote 220696191_0d9ab57d) describe TRN heterogeneity as
+      "a transcriptomic gradient of two negatively correlated gene-expression
+      profiles", with mutually exclusive markers only in neurons at the
+      extremes. Hartley et al. 2024 (quote 274495776_ea6ec372) refer to "the
+      two transcriptional poles of this gradient". Intermediate cells
+      between the poles are not covered by this node. Atlas mapping should
+      expect a gradient, not a 1:1 cluster.
+
+      POSSIBLE SOM OVERLAP (not asserted): this population may overlap the
+      SOM+ limbic, higher-order-projecting TRN population (Clemente-Perez et
+      al., 2017, PMID:28591583). Neither the report nor the quotes state this
+      correspondence, so Sst is not asserted.
+
+      MORPHOLOGY CAVEAT: the report says shell/edge neurons have smaller
+      somata and less extensive dendrites than core neurons. That is only an
+      inference from Flores et al. 2026 (quote 285258741_478ed0bb), which
+      describes core neurons as larger, so it is not asserted here.
+
+      SPECIES: species left null; evidence is mouse.
+edges: []
