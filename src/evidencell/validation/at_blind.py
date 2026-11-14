@@ -32,7 +32,7 @@ from evidencell.taxonomy_db import (
     TaxonomyDB,
     _classical_negative_markers,
     _classical_positive_markers,
-    _resolve_mba_by_name,
+    _resolve_anat_by_name,
     load_expression_data,
 )
 
@@ -160,13 +160,13 @@ class ATBlindAudit(AuditDriver):
             except sqlite3.OperationalError:
                 raise AuditAssertion(
                     "anat_closure table not built — region filtering would "
-                    "be disabled. Run: just fetch-mba-ontology && "
+                    "be disabled. Run: just fetch-anat-ontology <PREFIX> && "
                     f"just build-anat-closure {self.taxonomy_id}"
                 )
 
     def _check_uberon_resolution(self) -> None:
         """For every classical node we'd audit, verify that at least one
-        UBERON ID resolves to an MBA term (via xref or name fallback).
+        UBERON ID resolves to an atlas anatomy term (via xref or name fallback).
 
         This catches the silent-region-filter-skip failure that bit us
         on OLM (UBERON:0005371 has no MBA xref; without name fallback the
@@ -202,7 +202,7 @@ class ATBlindAudit(AuditDriver):
                         resolved_any = True
                         break
                     name = loc.get("name_in_source") or loc.get("label") or ""
-                    if _resolve_mba_by_name(con, name):
+                    if _resolve_anat_by_name(con, name):
                         resolved_any = True
                         break
                 if not resolved_any:
@@ -610,7 +610,7 @@ class ATBlindAudit(AuditDriver):
                     out.extend(r[0] for r in rows)
                     continue
                 name = loc.get("name_in_source") or loc.get("label") or ""
-                fb = _resolve_mba_by_name(con, name)
+                fb = _resolve_anat_by_name(con, name)
                 if fb:
                     out.extend(fb)
         return out

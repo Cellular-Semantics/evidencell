@@ -317,7 +317,7 @@ the full specification and correction loop protocol.
 | Taxonomy reference YAML | `kb/taxonomy/{taxonomy_id}/` | `map-cell-type.md`, `ingest-taxonomy.md` (M8) |
 | Taxonomy SQLite index | `kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db` (gitignored; build per worktree with `just build-taxonomy-db {taxonomy_id}`) | `map-cell-type.md` (candidate queries), `gen-report.md` (atlas-side facts). **Required** — a missing DB raises. Read-only previews (render, gen-facts) may set `EVIDENCELL_ALLOW_MISSING_TAXONOMY_DB=1` to proceed without atlas fields; anything that writes KB content (emit-stage-b, refresh-*, AT metrics) ignores it |
 | Taxonomy field mapping | `kb/taxonomy/{taxonomy_id}/field_mapping.json` | `ingest-taxonomy.md` (fast-path detection) |
-| MBA ontology JSON | `conf/mba/mbao-full.json` (gitignored; fetch with `just fetch-mba-ontology`) | `ingest-taxonomy.md` Step 4 (anat closure build); shared across all taxonomies |
+| Atlas anatomy ontology JSON | `conf/anatomy/{prefix}/` (gitignored; fetch with `just fetch-anat-ontology {PREFIX}` — MBA, DHBA or HBA, per `anatomy_ontology` in the taxonomy meta) | `ingest-taxonomy.md` Step 4 (anat closure build); one download per ontology, shared across taxonomies |
 | Precomputed stats HDF5 | `conf/mapmycells/{taxonomy_id}/` (gitignored; fetch with `just fetch-mapmycells {taxonomy_id}` — URLs come from `annotation_transfer/.../taxonomies.py`, see "MapMyCells reference files" above) | `map-cell-type.md` (target-side marker cross-check), `annotation-transfer.md` (local MapMyCells) |
 
 Place input files in the appropriate subdirectory before running the relevant orchestrator.

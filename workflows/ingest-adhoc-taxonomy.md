@@ -209,15 +209,17 @@ After human confirms, run:
 just build-taxonomy-db {taxonomy_id}
 ```
 
-If `anatomy_ontology` in `taxonomy_meta.yaml` is "MBA" and `conf/mba/mbao-full.json` exists:
+If `anatomy_ontology` in `taxonomy_meta.yaml` is a registered atlas ontology
+(MBA, DHBA, HBA — see `ANATOMY_ONTOLOGIES` in `src/evidencell/taxonomy_db.py`):
 ```
+just fetch-anat-ontology {PREFIX}     # once per ontology; skip if conf/anatomy/{prefix}/ exists
 just build-anat-closure {taxonomy_id}
 ```
 
 Verify using the discovery queries in `.claude/skills/query-taxonomy-db.md` Step 1:
 - Level counts match expected
 - Field coverage (has_nt_type, has_markers, etc.) as expected
-- Anat closure built (if MBA)
+- Anat closure built (if anatomy_ontology is registered)
 
 Report field coverage summary to the human.
 

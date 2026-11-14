@@ -1,0 +1,142 @@
+taxonomy_id: CCN20250428
+taxonomy_level: NEIGHBORHOOD
+taxonomy_rank: 3
+nodes:
+- id: BG:CS20250428_NEIGH_0000
+  name: Glut Sero Dopa
+  cell_set_accession: CS20250428_NEIGH_0000
+  taxonomy_id: CCN20250428
+  taxonomy_level: NEIGHBORHOOD
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  nt_type:
+    name_in_source: Glut-Sero-Dopa
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: Glut
+    - id: CL:0000850
+      label: serotonergic neuron
+      name_in_source: Sero
+    - id: CL:0000700
+      label: dopaminergic neuron
+      name_in_source: Dopa
+    sources:
+    - ref: https://doi.org/10.64898/2025.12.15.694496
+      method: inferred from the cluster label (e.g. "STR Cholinergic GABA" → Chol-GABA);
+        not assayed at cluster level. The taxonomy is snRNA-seq, which captures NT
+        transporter/synthesis transcripts (SLC17A6, SLC32A1, GAD1/2) more weakly than
+        the scRNA-seq basis of WMBv1 nt_type_label.
+      scope: taxonomy-wide (CCN20250428, all levels). GABA assignments are uncontroversial.
+        Cholinergic groups (STR / STRd / GPin-BF Cholinergic GABA) are an unresolved
+        mix of cholinergic and cholinergic+GABAergic cells. MSN groups are recorded
+        as GABA by definition (D1/D2 medium spiny neurons).
+      notes: Treat a name-derived NT match as a weak corroboration only; it must not
+        be rendered as atlas-assayed evidence in mapping reports.
+      support: WEAK
+  cl_mapping:
+    cl_term:
+      id: CL:0000700
+      label: dopaminergic neuron
+      name_in_source: dopaminergic neuron
+    mapping_type: EXACT
+  species:
+    id: NCBITaxon:9443
+    label: Primates
+    name_in_source: Primates
+  taxonomy_rank: 3
+- id: BG:CS20250428_NEIGH_0001
+  name: Nonneuron
+  cell_set_accession: CS20250428_NEIGH_0001
+  taxonomy_id: CCN20250428
+  taxonomy_level: NEIGHBORHOOD
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000000
+      label: cell
+      name_in_source: cell
+    mapping_type: EXACT
+  species:
+    id: NCBITaxon:9443
+    label: Primates
+    name_in_source: Primates
+  taxonomy_rank: 3
+- id: BG:CS20250428_NEIGH_0002
+  name: Subpallium GABA
+  cell_set_accession: CS20250428_NEIGH_0002
+  taxonomy_id: CCN20250428
+  taxonomy_level: NEIGHBORHOOD
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  nt_type:
+    name_in_source: GABA
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABA
+    sources:
+    - ref: https://doi.org/10.64898/2025.12.15.694496
+      method: inferred from the cluster label (e.g. "STR Cholinergic GABA" → Chol-GABA);
+        not assayed at cluster level. The taxonomy is snRNA-seq, which captures NT
+        transporter/synthesis transcripts (SLC17A6, SLC32A1, GAD1/2) more weakly than
+        the scRNA-seq basis of WMBv1 nt_type_label.
+      scope: taxonomy-wide (CCN20250428, all levels). GABA assignments are uncontroversial.
+        Cholinergic groups (STR / STRd / GPin-BF Cholinergic GABA) are an unresolved
+        mix of cholinergic and cholinergic+GABAergic cells. MSN groups are recorded
+        as GABA by definition (D1/D2 medium spiny neurons).
+      notes: Treat a name-derived NT match as a weak corroboration only; it must not
+        be rendered as atlas-assayed evidence in mapping reports.
+      support: WEAK
+  cl_mapping:
+    cl_term:
+      id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic neuron
+    mapping_type: EXACT
+  species:
+    id: NCBITaxon:9443
+    label: Primates
+    name_in_source: Primates
+  taxonomy_rank: 3
+- id: BG:CS20250428_NEIGH_0003
+  name: Subpallium GABA-Glut
+  cell_set_accession: CS20250428_NEIGH_0003
+  taxonomy_id: CCN20250428
+  taxonomy_level: NEIGHBORHOOD
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  nt_type:
+    name_in_source: GABA-Glut
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABA
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: Glut
+    sources:
+    - ref: https://doi.org/10.64898/2025.12.15.694496
+      method: inferred from the cluster label (e.g. "STR Cholinergic GABA" → Chol-GABA);
+        not assayed at cluster level. The taxonomy is snRNA-seq, which captures NT
+        transporter/synthesis transcripts (SLC17A6, SLC32A1, GAD1/2) more weakly than
+        the scRNA-seq basis of WMBv1 nt_type_label.
+      scope: taxonomy-wide (CCN20250428, all levels). GABA assignments are uncontroversial.
+        Cholinergic groups (STR / STRd / GPin-BF Cholinergic GABA) are an unresolved
+        mix of cholinergic and cholinergic+GABAergic cells. MSN groups are recorded
+        as GABA by definition (D1/D2 medium spiny neurons).
+      notes: Treat a name-derived NT match as a weak corroboration only; it must not
+        be rendered as atlas-assayed evidence in mapping reports.
+      support: WEAK
+  cl_mapping:
+    cl_term:
+      id: CL:0008060
+      label: GABA-Glut neuron
+      name_in_source: GABA-Glut neuron
+    mapping_type: EXACT
+  species:
+    id: NCBITaxon:9443
+    label: Primates
+    name_in_source: Primates
+  taxonomy_rank: 3

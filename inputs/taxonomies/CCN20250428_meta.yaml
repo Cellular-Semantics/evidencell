@@ -1,0 +1,43 @@
+# Taxonomy metadata input for CCN20250428 (HMBA Basal Ganglia consensus, primate)
+# Read by: just ingest-taxonomy-yaml <source> CCN20250428
+# Written to: kb/taxonomy/CCN20250428/taxonomy_meta.yaml
+# Design + KG probe: planning/bg_taxonomy_ingest_plan.md; dev request #180.
+
+taxonomy_name: "HMBA Basal Ganglia consensus taxonomy (human, macaque, marmoset)"
+# Single taxon at order rank — the taxonomy is a consensus across three primates
+# and the hand-authored kb/graphs/BG/ stubs already use NCBITaxon:9443.
+species_id: NCBITaxon:9443
+species_label: Primates
+tissue_id: UBERON:0002420
+tissue_label: basal ganglia
+anatomy_ontology: DHBA
+source_query: inputs/taxonomies/CCN20250428.cypher
+
+# NT is not a property of any BG node in the source; it is inferred at ingest
+# from the cluster label (field_mapping.json: nt_type_from_label). This block is
+# stamped as the single nt_type.sources entry on every node with a derived NT
+# and recorded once in taxonomy_meta.yaml. Curator decision 2026-11-12.
+nt_provenance:
+  ref: https://doi.org/10.64898/2025.12.15.694496
+  method: >-
+    inferred from the cluster label (e.g. "STR Cholinergic GABA" → Chol-GABA);
+    not assayed at cluster level. The taxonomy is snRNA-seq, which captures
+    NT transporter/synthesis transcripts (SLC17A6, SLC32A1, GAD1/2) more weakly
+    than the scRNA-seq basis of WMBv1 nt_type_label.
+  scope: >-
+    taxonomy-wide (CCN20250428, all levels). GABA assignments are
+    uncontroversial. Cholinergic groups (STR / STRd / GPin-BF Cholinergic GABA)
+    are an unresolved mix of cholinergic and cholinergic+GABAergic cells. MSN
+    groups are recorded as GABA by definition (D1/D2 medium spiny neurons).
+  support: WEAK
+  notes: >-
+    Treat a name-derived NT match as a weak corroboration only; it must not
+    be rendered as atlas-assayed evidence in mapping reports.
+
+mapmycells:
+  at_taxonomy_id: CCN20250428
+  # 20250630 combined consensus build (see annotation_transfer taxonomies.py)
+  stats_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/HMBA-BG-taxonomy-CCN20250428/20250630/precomputed_stats.HMBA.BG.2025-08-04.h5
+  markers_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/HMBA-BG-taxonomy-CCN20250428/20250630/query_markers.HMBA.BG.2025-08-04.json
+  local_stats_path: null
+  local_markers_path: null

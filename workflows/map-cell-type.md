@@ -15,8 +15,9 @@ rather than receiving them.
   after lit review.
 - Taxonomy reference DB ready for the target atlas. The `query-taxonomy-db` skill
   (Step 0) checks freshness automatically and rebuilds if needed. Anatomy closure
-  must be built once per taxonomy: `just fetch-mba-ontology` then
-  `just build-anat-closure {taxonomy_id}`. The skill will warn if a newer MBA
+  must be built once per taxonomy: `just fetch-anat-ontology {PREFIX}` (PREFIX =
+  `anatomy_ontology` in the taxonomy's `taxonomy_meta.yaml`: MBA, DHBA, HBA) then
+  `just build-anat-closure {taxonomy_id}`. The skill will warn if a newer
   ontology release is available.
 
 ---

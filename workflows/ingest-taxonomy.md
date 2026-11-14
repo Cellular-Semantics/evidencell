@@ -560,6 +560,23 @@ just ingest-taxonomy-db inputs/taxonomies/{taxonomy_id}.json {taxonomy_id}
 Note: `just fetch-taxonomy-kg` requires the [kg] optional dep group and a running
 local neo4j KG. If the KG is not available, use Option B with a previously exported JSON.
 
+**Taxonomies with no NT property (e.g. HMBA BG consensus, CCN20250428).** The
+KG export carries no `nt_type_label`. Two opt-in routes exist in
+`field_mapping.json`, both treated as *inferences* and qualified at write time:
+
+- `"nt_type_from_label": true` — parse NT tokens from the cluster label
+  (`GABA`, `Glut`, `Dopa`, `Cholinergic`→`Chol`, `Sero`, `MSN`→`GABA`;
+  see `_nt_from_label`). Preferred for BG: the CL target's neo4j labels lose
+  dopamine and add spurious histamine.
+- `row_keys.nt_type: "<column>"` — route a derived Cypher column into `nt_type`.
+
+Either way the taxonomy meta input **must** declare an `nt_provenance` block
+(`ref` required; `method`, `scope`, `support`, `notes` optional). Every derived
+`nt_type` is then emitted with `cl_terms` and one `sources` entry stamped from
+it, and the block is recorded once in `taxonomy_meta.yaml`. Without the block
+the value is still emitted but flagged in `nt_type.notes`; the ingest gate
+should treat that as a defect, not a pass.
+
 ---
 
 ### Route C — Ad hoc (CSV, XLSX, non-VFB JSON)
@@ -575,25 +592,40 @@ source_file={taxonomy_file}, field_mapping=already confirmed in Step 1."
 
 ### All routes: anatomy closure
 
-After the DB is built (any route), build the anatomical region closure tables if the
-taxonomy uses MBA regions (check `anatomy_ontology` in `taxonomy_meta.yaml`):
+After the DB is built (any route), build the anatomical region closure tables.
+Which atlas anatomy ontology the taxonomy's `anat[]` IDs come from is declared by
+`anatomy_ontology` in `taxonomy_meta.yaml` and must be a key of
+`ANATOMY_ONTOLOGIES` in `src/evidencell/taxonomy_db.py` — currently `MBA`
+(WMBv1), `DHBA` (HMBA BG consensus, CCN20250428) and `HBA`. All three are
+BICAN ODK builds with the same Obograph shape, so one loader serves them all.
 
 ```
-# Download MBA ontology if not already present
-just fetch-mba-ontology        # skip if conf/mba/mbao-full.json already exists
+# Download the ontology if not already present (one download per ontology,
+# shared across taxonomies; lands in conf/anatomy/{prefix}/)
+just fetch-anat-ontology DHBA     # or MBA / HBA — match anatomy_ontology
 
-# Build closure tables
+# Build closure tables — prefix and JSON path are resolved from taxonomy_meta.yaml
 just build-anat-closure {taxonomy_id}
 ```
 
-This parses `conf/mba/mbao-full.json` and adds three tables to the SQLite DB:
-- `anat_terms` — MBA region labels + UBERON cross-references
+This parses the ontology JSON and adds three tables to the SQLite DB:
+- `anat_terms` — atlas region labels + UBERON cross-references
 - `anat_hierarchy` — direct parent→child edges (spatial `part_of` + ontological `is_a`)
 - `anat_closure` — transitive ancestor→descendant table enabling queries like
   "all supertypes with cells anywhere under hippocampal region (MBA:1080)"
 
-For non-MBA anatomy ontologies, skip `build-anat-closure` and note the limitation
-in a comment in `taxonomy_meta.yaml`.
+The ontology prefix and release tag are recorded in the DB's `_meta` table
+(`anatomy_closure_ontology`, `anatomy_closure_release`).
+
+Note on UBERON cross-reference coverage: MBA xrefs ~46% of its terms to UBERON,
+DHBA only ~23%. `find-candidates` resolves classical-node UBERON IDs → atlas IDs
+via the xref table and falls back to label matching; expect the name-fallback
+path to carry more traffic for DHBA, and review its warnings on the first
+mapping run rather than assuming them benign.
+
+For an anatomy ontology not in the registry, add it to `ANATOMY_ONTOLOGIES`
+(dev change) rather than skipping the closure — without it anatomy scoring is
+exact-ID-match only.
 
 After completion, confirm the DB is queryable:
 
@@ -611,10 +643,11 @@ Then say:
 - The YAML reference files are the canonical ground truth. The SQLite DB is derived
   and can be rebuilt at any time with `just build-taxonomy-db {taxonomy_id}` — no
   source JSON required after the YAML is generated.
-- `conf/mba/mbao-full.json` is gitignored (large download). It is shared across all
-  taxonomies — download once, reuse for any subsequent `just build-anat-closure` runs.
-- The MBA ontology URL always resolves to the latest release. Re-run
-  `just fetch-mba-ontology` to update.
+- `conf/anatomy/` is gitignored (large downloads). Each ontology is downloaded
+  once and shared across taxonomies; re-run `just fetch-anat-ontology {PREFIX}`
+  to update. The GitHub latest-release asset is preferred, falling back to the
+  raw `main` copy for ontologies that publish no release assets (dhbao).
+- The legacy MBA location `conf/mba/mbao-full.json` is still honoured on read.
 
 ---
 

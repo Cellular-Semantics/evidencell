@@ -1080,8 +1080,14 @@ classes:
       For marker assertions use MarkerSource (extends PropertySource with
       the controlled marker_type field).
 
-      Leave sources lists empty on ATLAS_TRANSCRIPTOMIC nodes — provenance
-      is implicit from atlas + cell_set_accession (see header convention).
+      Leave sources lists empty on ATLAS_TRANSCRIPTOMIC nodes whose property
+      was assayed or computed by the source atlas — provenance is implicit
+      from atlas + cell_set_accession (see header convention). A property
+      that ingest *inferred* rather than read (e.g. an nt_type derived from
+      the cluster label for a taxonomy that assays no NT, as HMBA BG
+      consensus CCN20250428) is not covered by that implicit provenance and
+      MUST carry a PropertySource stating the inference (method), its scope
+      and a support level, so it never reads as if it had atlas standing.
 
       Property-specific guidance for LLM population:
 
@@ -1281,7 +1287,12 @@ classes:
 
       On ATLAS_TRANSCRIPTOMIC nodes: set name_in_source to the verbatim atlas
       label; cl_terms recommended but optional (atlas naming is primary).
-      Leave sources empty — provenance is implicit from atlas + cell_set_accession.
+      Leave sources empty when the atlas itself assigned the NT (WMBv1
+      nt_type_label) — provenance is implicit from atlas + cell_set_accession.
+      When the NT was inferred at ingest (from the cluster label or a derived
+      KG column, as for HMBA BG consensus which carries no NT property),
+      sources MUST hold one PropertySource qualifying the inference; the
+      taxonomy ingest stamps it from taxonomy_meta.yaml:nt_provenance.
     attributes:
       name_in_source:
         required: true
@@ -1317,7 +1328,9 @@ classes:
           "electrophysiology (inhibitory PSPs recorded)".
           scope is important — NT type can differ across species or
           developmental stage.
-          Leave empty on ATLAS_TRANSCRIPTOMIC nodes (provenance implicit).
+          Leave empty on ATLAS_TRANSCRIPTOMIC nodes whose NT the atlas
+          assayed (provenance implicit); required when the NT was inferred
+          at ingest — see the class description.
 
   PropertyComparison:
     description: >

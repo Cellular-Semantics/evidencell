@@ -30,7 +30,7 @@ full audit runs against the live corpus.
 ## Prerequisites
 
 - Taxonomy DB built and fresh: `just build-taxonomy-db CCN20230722`
-- Anat closure built: `just fetch-mba-ontology && just build-anat-closure CCN20230722`
+- Anat closure built: `just fetch-anat-ontology MBA && just build-anat-closure CCN20230722`
 - KB-wide marker enrichment current:
   `just enrich-marker-union CCN20230722 <stats.h5> <gene_mapping.tsv>`
 

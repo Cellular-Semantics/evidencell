@@ -1,0 +1,65 @@
+{
+  "taxonomy_id": "CCN20250428",
+  "taxonomy_name": "HMBA Basal Ganglia consensus (primate)",
+  "source_format": "cypher",
+  "format_version": "2026-11",
+  "confirmed": false,
+  "anatomy_ontology": "DHBA",
+  "nt_type_from_label": true,
+  "row_keys": {
+    "_note": "Canonical column names from CCN20250428.cypher (kg_query.py export). Same shape as the WMBv1 export.",
+    "node": "node",
+    "parent_curie": "parent_curie",
+    "cl": "cl",
+    "anat": "anat",
+    "level": "level"
+  },
+  "structure": "Array of objects, one per node at any taxonomy level (Group 61, Subclass 36, Class 12, Neighborhood 4). Graph-oriented: each row is one node with its CL mapping, parent pointer, level (from has_labelset) and anatomy.",
+  "top_level_keys": {
+    "cl": "Full CL node object or null. Present on 87/113 nodes via composed_primarily_of. Carries the general CL term (e.g. GPi Shell → CL:0020004); the primate-specific PCL/CL term reached via exemplar_data_of (CL:4310096) is NOT taken here — reconciliation with hand-authored kb/graphs/BG/ nodes is a curator decision.",
+    "node": "The taxonomy node: {identity, labels, properties: {curie, short_form, label, rationale, rationale_dois, marker_gene_evidence, cell_ontology_term, ...}}",
+    "parent_curie": "Parent node CURIE e.g. BG:CS20250428_SUBCL_0014. Null for the 4 Neighborhood roots.",
+    "level": "labelset.short_form: Group | Subclass | Class | Neighborhood. Ranks are derived topologically (Group=0).",
+    "anat": "Array of {anat_id (DHBA CURIE), anat_label, cell_ratio, source (taxonomy DOI URL), evidence (EFO:0008992 = MERFISH), notes}. Group level only; 86 entries over 61 Groups; ratios only (no cell_count); sums 0.9–1.0 per Group (upstream 'Adj' fraction excluded)."
+  },
+  "taxonomy_level_extraction": {
+    "source": "level column (labelset.short_form)",
+    "levels": {
+      "Group": 61,
+      "Subclass": 36,
+      "Class": 12,
+      "Neighborhood": 4
+    }
+  },
+  "field_mappings": {
+    "common_to_all_levels": [
+      {"source": "wmb.properties.curie",       "target": "node_id",    "confidence": "HIGH", "notes": "CURIE form e.g. BG:CS20250428_GROUP_0016"},
+      {"source": "wmb.properties.short_form",  "target": "short_form", "confidence": "HIGH", "notes": "Accession e.g. CS20250428_GROUP_0016"},
+      {"source": "wmb.properties.label",       "target": "label",      "confidence": "HIGH"},
+      {"source": "parent_curie",               "target": "parent_id",  "confidence": "HIGH"},
+      {"source": "cl.properties.curie",        "target": "cl_id",      "confidence": "HIGH"},
+      {"source": "cl.properties.label",        "target": "cl_label",   "confidence": "HIGH"},
+      {"source": "wmb.properties.cell_ontology_term[0]", "target": "cell_ontology_term", "confidence": "HIGH"},
+      {"source": "anat[].anat_id",             "target": "anat[].id",  "confidence": "HIGH", "notes": "DHBA CURIE"},
+      {"source": "anat[].anat_label",          "target": "anat[].label", "confidence": "HIGH"},
+      {"source": "anat[].cell_ratio",          "target": "anat[].cell_ratio", "confidence": "HIGH", "notes": "Fraction of the Group's cells in the region (MERFISH, CCF-broad binning). No cell_count published."},
+      {"source": "anat[].source",              "target": "anat[].source", "confidence": "HIGH", "notes": "Taxonomy release DOI (10.64898/2025.12.15.694496), set in the Cypher; KG evidence code EFO:0008992 (MERFISH) maps to the method string"}
+    ],
+    "group": [
+      {"source": "wmb.properties.marker_gene_evidence", "target": "defining_markers", "confidence": "MODERATE", "notes": "Curator rationale genes, 42/61 Groups only; not a computed marker panel. Human-style symbols (VIP), unlike mouse-style classical nodes — see case-sensitivity caveat in planning/bg_taxonomy_ingest_plan.md."},
+      {"source": "wmb.properties.rationale[0]",         "target": "rationale",        "confidence": "HIGH"},
+      {"source": "wmb.properties.rationale_dois",       "target": "rationale_dois",   "confidence": "HIGH"},
+      {"source": "node.label (derived)",                "target": "nt_type",          "confidence": "MODERATE", "notes": "No NT property in source. Derived by _nt_from_label from label tokens (GABA, Glut, Dopa, Cholinergic→Chol, Sero, MSN→GABA) and stamped with taxonomy_meta nt_provenance. Cholinergic groups are a Chol / Chol+GABA mix — see nt_provenance.notes."}
+    ]
+  },
+  "dropped_fields": [
+    "wmb.properties.CCN20230722_* (colour / display-order / token / accession_* block — labelset-prefix export artefact, not WMBv1 references)",
+    "wmb.properties.adjacentCellRatio (upstream 'Adj' adjacent-tissue fraction; not a location)",
+    "wmb.properties.see_also, prefLabel, label_rdfs, sl, qsl, iri, uniqueFacets, cluster_id, synonyms, has_exact_synonym",
+    "SKOS exactMatch/broadMatch/relatedMatch edges to WMBv1 (cross-taxonomy mapping assertions, out of scope for a one-taxonomy DB; candidate oracle set for a cross-species audit)"
+  ],
+  "notes": {
+    "species": "Single taxon NCBITaxon:9443 Primates (consensus across human, macaque, marmoset); matches the hand-authored BG stubs.",
+    "nt_caveat": "NT is name-derived, not assayed at cluster level; snRNA-seq gives weaker NT-marker capture than the scRNA-seq basis of WMBv1 nt_type_label. Every derived nt_type carries a qualifying PropertySource."
+  }
+}
