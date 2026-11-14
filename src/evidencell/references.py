@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -91,13 +90,6 @@ def write_quote_to_refs(
     if not paper_file.exists():
         save_paper(region_dir, corpus_id, _build_paper_entry(corpus_id, paper_meta or {}))
     append_quote(region_dir, corpus_id, quote_key, quote_record)
-
-    meta_path = region_dir / _META_FILE
-    meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
-    meta.setdefault("region", region_name(region_dir))
-    meta["last_updated"] = datetime.now(timezone.utc).isoformat()
-    meta["last_updated_by"] = added_by
-    _write_json(meta_path, meta)
     return quote_key
 
 
@@ -183,7 +175,6 @@ def _normalise_authors(authors) -> list[str]:
 # identity block in its blast radius.
 #
 #   references/{region}/
-#     _meta.json                 region bookkeeping
 #     papers/{corpus_id}.json    identity — write-once
 #     quotes/{corpus_id}.json    {quote_key: quote} — append-only
 #
@@ -196,7 +187,6 @@ def _normalise_authors(authors) -> list[str]:
 
 _PAPERS_DIR = "papers"
 _QUOTES_DIR = "quotes"
-_META_FILE = "_meta.json"
 
 
 def region_name(region_dir: Path) -> str:
@@ -246,8 +236,9 @@ def _reject_shadowed_store(d: Path) -> None:
 def load_store(refs_path: Path) -> dict:
     """Read a whole region: identity with each paper's quotes attached.
 
-    Returns `{corpus_id: {...paper..., "quotes": {...}}, "_meta": {...}}`, or
-    `{}` when the region has no store.
+    Returns `{corpus_id: {...paper..., "quotes": {...}}}`, or `{}` when the
+    region has no store. A stray `_meta.json` (retired region bookkeeping,
+    #192) is ignored.
 
     This is the *whole-region* view, and it is the expensive one — it reads
     every paper and every quote. Two callers legitimately want it:
@@ -310,10 +301,6 @@ def _load_split(d: Path) -> dict:
     the only other copy.
     """
     store: dict = {}
-    meta_path = d / _META_FILE
-    if meta_path.exists():
-        store["_meta"] = json.loads(meta_path.read_text(encoding="utf-8"))
-
     quotes_dir = d / _QUOTES_DIR
     for paper_file in sorted((d / _PAPERS_DIR).glob("*.json")):
         corpus_id = paper_file.stem

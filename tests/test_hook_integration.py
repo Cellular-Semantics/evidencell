@@ -177,9 +177,6 @@ def _split(region_dir, store):
     (region_dir / "papers").mkdir(parents=True, exist_ok=True)
     (region_dir / "quotes").mkdir(parents=True, exist_ok=True)
     for cid, entry in store.items():
-        if cid == "_meta":
-            (region_dir / "_meta.json").write_text(json.dumps(entry))
-            continue
         if not isinstance(entry, dict):
             continue
         paper = {k: v for k, v in entry.items() if k != "quotes"}

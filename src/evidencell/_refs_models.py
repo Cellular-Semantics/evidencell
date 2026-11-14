@@ -30,7 +30,7 @@ from pydantic import (
 
 
 metamodel_version = "1.12.0"
-version = "0.1.1"
+version = "0.2.0"
 
 
 class ConfiguredBaseModel(BaseModel):
@@ -220,22 +220,11 @@ class SourceDocument(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument']} })
     available: bool = Field(default=..., description="""Whether the document is present in the repository. False records a known-missing source: the quotes remain valid and attributed, but the document behind them cannot be re-read.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument']} })
-    region: Optional[str] = Field(default=None, description="""Region whose store this document belongs to.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument', 'StoreMeta']} })
+    region: Optional[str] = Field(default=None, description="""Region whose store this document belongs to.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument']} })
     runs: Optional[list[str]] = Field(default=None, description="""Workflow run identifiers that ingested this document. Matches the added_by values on quotes drawn from it.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument']} })
     recovery_notes: Optional[str] = Field(default=None, description="""For an unavailable document: where it was looked for and what was concluded. A negative result is expensive to establish and cheap to lose — without it the same search gets repeated, or worse, absence is assumed to be an oversight that someone can simply correct.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument']} })
-
-
-class StoreMeta(ConfiguredBaseModel):
-    """
-    Bookkeeping for one region's store — the contents of _meta.json.
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/references/v0.1'})
-
-    region: str = Field(default=..., description="""Region name; matches the directory name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument', 'StoreMeta']} })
-    last_updated: Optional[str] = Field(default=None, description="""ISO-8601 timestamp of the most recent write.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StoreMeta']} })
-    last_updated_by: Optional[str] = Field(default=None, description="""Identifier of the run that made the most recent write.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StoreMeta']} })
 
 
 # Model rebuild
@@ -245,4 +234,3 @@ ExternalIds.model_rebuild()
 Quote.model_rebuild()
 QuoteSet.model_rebuild()
 SourceDocument.model_rebuild()
-StoreMeta.model_rebuild()

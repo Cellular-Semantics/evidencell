@@ -161,7 +161,6 @@ MINIMAL_GRAPH = {
 }
 
 MINIMAL_REFS = {
-    "_meta": {"region": "test"},
     "111111": {
         "corpus_id": "111111",
         "author_keys": ["Smith et al., 2020"],
@@ -760,9 +759,6 @@ def _split(region_dir, store):
     (region_dir / "papers").mkdir(parents=True, exist_ok=True)
     (region_dir / "quotes").mkdir(parents=True, exist_ok=True)
     for cid, entry in store.items():
-        if cid == "_meta":
-            (region_dir / "_meta.json").write_text(json.dumps(entry))
-            continue
         if not isinstance(entry, dict):
             continue
         paper = {k: v for k, v in entry.items() if k != "quotes"}

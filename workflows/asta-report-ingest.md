@@ -76,11 +76,6 @@ references and their associated quotes in a region. Multiple workflows
 
 ```json
 {
-  "_meta": {
-    "region": "hippocampus",
-    "last_updated": "2026-03-24T...",
-    "last_updated_by": "20260324_hippocampus_report_ingest"
-  },
   "12345678": {
     "corpus_id": "12345678",
     "pmid": "10862698",
@@ -136,8 +131,7 @@ the canonical implementation is a blocked write, not a silent inconsistency.
 1. Read existing file (or start with empty `{}` if first ingest for this region)
 2. For each new reference: if corpus_id already exists, merge quotes (dedup by key)
 3. For new references: add full entry
-4. Update `_meta.last_updated` and `_meta.last_updated_by`
-5. Write back atomically
+4. Write back atomically
 
 ---
 
