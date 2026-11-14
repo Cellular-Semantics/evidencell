@@ -1,0 +1,248 @@
+# Intergeniculate leaflet NPY-positive geniculohypothalamic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/IGL.pdf
+# Ingestion date: 2026-11-12
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Intergeniculate Leaflet NPY-positive Geniculohypothalamic Neuron"
+description: >
+  Evidence graph component for the NPY-synthesising GABAergic neuron of the
+  intergeniculate leaflet that forms the geniculohypothalamic tract to the
+  suprachiasmatic nucleus. Proposed from the ASTA deep research report on the
+  IGL. Carries a literature-to-literature subtype edge to the IGL GABAergic
+  neuron node.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10116
+  label: "Rattus norvegicus"
+  name_in_source: "rat"
+creation_date: "2026-11-12"
+nodes:
+  - id: igl_npy_geniculohypothalamic_neuron
+    name: "Intergeniculate leaflet NPY-positive geniculohypothalamic neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10116
+      label: "Rattus norvegicus"
+      name_in_source: "rat"
+    anatomical_location:
+      - id: UBERON:0035975
+        label: "intergeniculate leaflet of the lateral geniculate complex"
+        name_in_source: "intergeniculate leaflet (IGL)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:23103793"
+            method: "statement in source (background)"
+            scope: "rat IGL"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:27916729"
+            method: "statement in source (background)"
+            scope: "rat IGL"
+            quote_key: "27232578_7306b2da"
+      - id: UBERON:0002034
+        label: "suprachiasmatic nucleus"
+        name_in_source: "suprachiasmatic nuclei (SCN)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:23103793"
+            method: "statement in source (background); geniculohypothalamic tract"
+            scope: "rat IGL NPY+ neurons → SCN"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:23432696"
+            method: "statement in source (background); geniculo-hypothalamic tract"
+            scope: "rat IGL NPY+ neurons → SCN"
+            quote_key: "36406110_2999c838"
+          - ref: "PMID:25856520"
+            method: "statement in source citing tract-tracing / IHC (NPY-positive fibres)"
+            scope: "rodent IGL-derived NPY fibres abundant in SCN"
+            quote_key: "8694896_b4e52a8c"
+    colocated_types:
+      - neighboring_type: igl_enkephalinergic_geniculogeniculate_neuron
+        spatial_relationship: INTERSPERSED
+        notes: >
+          The NPY-synthesising and enkephalinergic cells are the two main
+          GABAergic subpopulations of the same leaflet (Chrobok et al., 2016,
+          PMID:27208616, quote 12882742_62b60170; Palus et al., 2017,
+          PMID:27916729, quote 27232578_7306b2da). Enkephalinergic neurons are
+          hypothesised to inhibit NPY cells (Palus et al., 2017, quote
+          27232578_ac034fba).
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:27916729"
+          method: "statement in source (background)"
+          scope: "rat IGL — NPY cells as one of two GABAergic subpopulations"
+          quote_key: "27232578_7306b2da"
+        - ref: "PMID:23103793"
+          method: "statement in source (background)"
+          scope: "rat IGL — population of GABAergic neurons incl. NPY+ cells"
+          quote_key: "25997395_d6b35c15"
+        - ref: "PMID:30803080"
+          method: "statement in source citing Moore et al., 1994"
+          scope: "rat IGL — GABAergic neurons co-expressing NPY"
+          quote_key: "73460105_a5d177e9"
+    defining_markers:
+      - symbol: Npy
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:23103793"
+            marker_type: PROTEIN
+            method: "neurochemical identification stated in source"
+            scope: "rat IGL"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:27916729"
+            marker_type: PROTEIN
+            method: "statement in source (background)"
+            scope: "rat IGL"
+            quote_key: "27232578_7306b2da"
+          - ref: "PMID:23432696"
+            marker_type: PROTEIN
+            method: "statement in source (background)"
+            scope: "rat IGL — NPY-containing neurons form the GHT"
+            quote_key: "36406110_2999c838"
+    neuropeptides:
+      - symbol: Npy
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:23103793"
+            marker_type: PROTEIN
+            method: "neurochemical identification stated in source"
+            scope: "rat IGL"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:23432696"
+            marker_type: PROTEIN
+            method: "statement in source (background)"
+            scope: "rat IGL"
+            quote_key: "36406110_2999c838"
+    morphology:
+      description: >
+        Projection neuron. Its axons form the geniculohypothalamic tract and
+        terminate in the suprachiasmatic nucleus. No somatodendritic
+        description in the evidence.
+      sources:
+        - ref: "PMID:23103793"
+          method: "statement in source (background)"
+          scope: "rat IGL"
+          quote_key: "25997395_d6b35c15"
+        - ref: "PMID:23432696"
+          method: "statement in source (background)"
+          scope: "rat IGL"
+          quote_key: "36406110_2999c838"
+    electrophysiology:
+      description: >
+        In vitro, all NPY-positive IGL neurons express a marked A-type K+
+        current (I_A). In vivo, SCN-projecting IGL neurons fire at a low,
+        irregular rate in the light, and most increase firing in darkness. In
+        vitro, identified NPY-positive IGL neurons are excited by the
+        relaxin-3 receptor agonist R3/I5.
+      sources:
+        - ref: "PMID:27208616"
+          method: "whole-cell patch clamp (acute slice) with NPY identification"
+          scope: "rat IGL"
+          quote_key: "12882742_30978228"
+        - ref: "PMID:23103793"
+          method: "in vivo extracellular recording with antidromic identification of SCN projection"
+          scope: "rat IGL, urethane anaesthesia, light vs dark"
+          quote_key: "25997395_7e370bae"
+        - ref: "PMID:23432696"
+          method: "in vitro patch clamp with post hoc NPY identification"
+          scope: "rat IGL"
+          quote_key: "36406110_fb6083ff"
+    cl_mapping:
+      cl_term:
+        id: CL:4072016
+        label: "NPY interneuron"
+        name_in_source: "NPY interneuron"
+      mapping_type: RELATED
+      mapping_notes: >
+        Shares NPY+ GABAergic identity, but the CL term is an interneuron
+        (cortical layers II-III/VI, medial geniculate, inferior colliculus).
+        IGL NPY cells are SCN-projecting projection neurons, so the match is
+        neither BROAD nor EXACT. The OLS record has no definition references.
+        Potential CL new-term contribution under CL:0000617.
+    definition_references:
+      - "PMID:23103793"
+      - "PMID:27916729"
+      - "PMID:23432696"
+      - "PMID:27208616"
+    is_terminal: false
+    notes: >
+      PARENT TYPE: one of the two main GABAergic subpopulations of the IGL;
+      subtype of igl_gabaergic_neuron (see edge below).
+
+      HETEROGENEITY / THANKACHAN CLASSES: Thankachan & Rusak 2005
+      (PMID:16207879, quote 9130790_8fa09d39) describe Type II IGL/VLG
+      neurons (large amounts of NPY throughout the soma; light responses of
+      suppression, complex or none). These likely correspond to this class.
+      Their Type III neurons carry patchy/internalised NPY and are interpreted
+      as NPY recipients, not producers. Do not assign Type III cells here on
+      NPY immunolabel alone. Note the anatomy is "IGL/VLG", not IGL alone.
+
+      PHARMACOLOGY: met-enkephalin hyperpolarises putatively NPY-synthesising
+      IGL neurons via mu-opioid receptors (Palus et al., 2017, PMID:27916729,
+      quote 27232578_ac034fba). The quote does not isolate this class, so it
+      is not included in the electrophysiology description.
+
+      CROSS-SPECIES: in cat, SCN-projecting neurons and NPY-immunoreactive
+      processes are found in the medial vLGN, which is proposed as homologous
+      to the rodent IGL (Pu & Pickard, 1996, PMID:8836531, quote
+      34655061_6fdab967). Not asserted as a location for this rat-defined
+      node.
+
+      MARKERS: Npy is the rat-convention symbol for the protein "NPY"
+      (neuropeptide Y) named in the sources. Evidence is immunohistochemical
+      (protein), not transcript.
+
+      SPECIES: rat.
+
+  - id: igl_gabaergic_neuron
+    name: "Intergeniculate leaflet (IGL) GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    reference_stub: LIT_TYPE
+edges:
+  - id: edge_igl_npy_geniculohypothalamic_neuron_to_igl_gabaergic_neuron
+    lit_type: igl_npy_geniculohypothalamic_neuron
+    taxonomy_type: igl_gabaergic_neuron
+    relationship: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    confidence: MODERATE
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:27916729"
+        snippet: >-
+          In rat, two main GABAergic subpopulations can be distinguished in
+          the IGL: neurons synthesizing neuropeptide Y (NPY), which directly
+          innervates the suprachiasmatic nuclei, and enkephalinergic cells,
+          which connect contralaterally located leaflets
+        explanation: >
+          Names NPY-synthesising, SCN-innervating neurons as one of two
+          GABAergic subpopulations of the IGL. That places this node inside
+          the IGL GABAergic neuron population as a proper subset, because the
+          enkephalinergic cells are the sibling subset.
+        study_type: ELECTROPHYSIOLOGICAL
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:23103793"
+        snippet: >-
+          The intergeniculate leaflet (IGL) of the lateral geniculate body in
+          the rat is a population of GABAergic neurons that can be divided
+          into two, anatomically and neurochemically distinct populations. One
+          population comprises neuropeptide-Y (NPY)-positive neurons that form
+          the geniculohypothalamic tract innervating the suprachiasmatic
+          nuclei (SCN)
+        explanation: >
+          An independent source makes the same division: the IGL GABAergic
+          population divides into two distinct populations, and the
+          NPY-positive geniculohypothalamic neurons are one of them.
+        study_type: MULTIMODAL
