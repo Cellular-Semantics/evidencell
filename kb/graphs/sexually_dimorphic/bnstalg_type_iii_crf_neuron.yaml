@@ -296,4 +296,2726 @@ nodes:
       Oxt-negativity and Oxtr-positivity are scoped to the contrast with PVN parvocellular CRF neurons — they establish that this is a distinct extra-hypothalamic CRF class, but do not discriminate among BNST cell types.
 
       '
-edges: []
+  - id: CS20230722_CLUS_0962
+    name: 0962 STR D1 Gaba_8
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0962
+  - id: CS20230722_CLUS_1409
+    name: 1409 CEA-BST Rai14 Pdyn Crh Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1409
+  - id: CS20230722_CLUS_0961
+    name: 0961 STR D1 Gaba_8
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0961
+  - id: CS20230722_CLUS_1360
+    name: 1360 CEA-AAA-BST Six3 Sp9 Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1360
+  - id: CS20230722_CLUS_1375
+    name: 1375 ACB-BST-FS D1 Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1375
+  - id: CS20230722_SUPT_0393
+    name: 0393 CEA-BST Rai14 Pdyn Crh Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0393
+  - id: CS20230722_SUPT_0272
+    name: 0272 STR D1 Gaba_8
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0272
+  - id: CS20230722_SUPT_0265
+    name: 0265 STR D1 Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0265
+  - id: CS20230722_SUPT_0278
+    name: 0278 STR D2 Gaba_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0278
+  - id: CS20230722_SUPT_0266
+    name: 0266 STR D1 Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0266
+edges:
+  - id: edge_bnstalg_type_iii_crf_neuron_to_CS20230722_CLUS_0962
+    lit_type: bnstalg_type_iii_crf_neuron
+    taxonomy_type: CS20230722_CLUS_0962
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0962 STR D1 Gaba_8; region_fraction_100um=0.241; strict region_fraction=0.124.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: bed nucleus of stria terminalis [UBERON:0001880]
+        node_b_value: Striatum [MBA:477] count_100um=859 [painted]; Nucleus accumbens [MBA:56] count_100um=644 [painted]; Pallidum [MBA:803] count_100um=279 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.241; strict region_fraction: 0.124; region_evidence: SELF'
+      - property: marker_Crh
+        node_a_value: Crh — defining marker
+        node_b_value: 'Crh: 1.26; cohort_pct 0.904'
+        alignment: CONSISTENT
+        notes: val=1.26; cohort percentile 0.904
+      - property: marker_Oxtr
+        node_a_value: Oxtr — defining marker
+        node_b_value: 'Oxtr: 0.67; cohort_pct 0.666'
+        alignment: CONSISTENT
+        notes: val=0.67; cohort percentile 0.666
+      - property: marker_Gad1
+        node_a_value: Gad1 — defining marker
+        node_b_value: 'Gad1: 7.07; cohort_pct 0.052'
+        alignment: CONSISTENT
+        notes: val=7.07; cohort percentile 0.052
+      - property: marker_Cacna1i
+        node_a_value: Cacna1i — defining marker
+        node_b_value: 'Cacna1i: 2.59; cohort_pct 0.288'
+        alignment: APPROXIMATE
+        notes: val=2.59; cohort percentile 0.288
+      - property: marker_Hcn4
+        node_a_value: Hcn4 — defining marker
+        node_b_value: 'Hcn4: 0.03; cohort_pct 0.048'
+        alignment: DISCORDANT
+        notes: val=0.03; below MIN_DETECTABLE (0.1); cohort percentile 0.048
+      - property: marker_Kcnd2
+        node_a_value: Kcnd2 — defining marker
+        node_b_value: 'Kcnd2: 11.20; cohort_pct 0.850'
+        alignment: CONSISTENT
+        notes: val=11.20; cohort percentile 0.850
+      - property: marker_Kcnj12
+        node_a_value: Kcnj12 — defining marker
+        node_b_value: 'Kcnj12: 1.55; cohort_pct 0.883'
+        alignment: CONSISTENT
+        notes: val=1.55; cohort percentile 0.883
+      - property: marker_Kcnj4
+        node_a_value: Kcnj4 — defining marker
+        node_b_value: 'Kcnj4: 4.33; cohort_pct 0.923'
+        alignment: CONSISTENT
+        notes: val=4.33; cohort percentile 0.923
+      - property: negative_marker_Oxt
+        node_a_value: Oxt — ABSENT (classical negative marker)
+        node_b_value: 'Oxt: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Cacna1g
+        node_a_value: Cacna1g — ABSENT (classical negative marker)
+        node_b_value: 'Cacna1g: 0.04; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Kcna4
+        node_a_value: Kcna4 — ABSENT (classical negative marker)
+        node_b_value: 'Kcna4: 3.99; cohort_pct 0.921'
+        alignment: DISCORDANT
+        notes: val=3.99; cohort percentile 0.921
+      - property: negative_marker_Htr7
+        node_a_value: Htr7 — ABSENT (classical negative marker)
+        node_b_value: 'Htr7: 0.02; cohort_pct 0.010'
+        alignment: CONSISTENT
+        notes: val=0.02; below MIN_DETECTABLE (0.1); cohort percentile 0.010
+      - property: negative_marker_Slc17a7
+        node_a_value: Slc17a7 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a7: 0.03; cohort_pct 0.438'
+        alignment: CONSISTENT
+        notes: val=0.03; below MIN_DETECTABLE (0.1); cohort percentile 0.438
+      - property: negative_marker_Slc17a6
+        node_a_value: Slc17a6 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a6: 0.02; cohort_pct 0.123'
+        alignment: CONSISTENT
+        notes: val=0.02; below MIN_DETECTABLE (0.1); cohort percentile 0.123
+      - property: negative_marker_Slc17a8
+        node_a_value: Slc17a8 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a8: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: neuropeptide_Crh
+        node_a_value: Crh — neuropeptide (classical)
+        node_b_value: 'Crh: 1.26; cohort_pct 0.904'
+        alignment: CONSISTENT
+        notes: val=1.26; cohort percentile 0.904
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): marker_Hcn4, negative_marker_Kcna4. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 13
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 13
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:351
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Crh
+          val: 1.26
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.904
+        - gene: Oxtr
+          val: 0.67
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.666
+        - gene: Gad1
+          val: 7.07
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.052
+        - gene: Cacna1i
+          val: 2.59
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.288
+        - gene: Hcn4
+          val: 0.03
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.048
+        - gene: Kcnd2
+          val: 11.2
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.85
+        - gene: Kcnj12
+          val: 1.55
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.883
+        - gene: Kcnj4
+          val: 4.33
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.923
+        - gene: -Oxt
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Cacna1g
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Kcna4
+          val: 3.99
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.921
+        - gene: -Htr7
+          val: 0.02
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.01
+        - gene: -Slc17a7
+          val: 0.03
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.438
+        - gene: -Slc17a6
+          val: 0.02
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.123
+        - gene: -Slc17a8
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.124
+      region_fraction_100um: 0.241
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] Striatal D1 cluster: Hcn4 is DISCORDANT (absent) and Kcna4 is expressed, against a classical Type III profile.\n"
+    rationale_generated_at: '2026-11-13T13:32:16+00:00'
+    report_path: reports/sexually_dimorphic/bnstalg_type_iii_crf_neuron_summary.md
+    rationale_source_hash: f164a360
+  - id: edge_bnstalg_type_iii_crf_neuron_to_CS20230722_CLUS_1409
+    lit_type: bnstalg_type_iii_crf_neuron
+    taxonomy_type: CS20230722_CLUS_1409
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1409 CEA-BST Rai14 Pdyn Crh Gaba_2; region_fraction_100um=0.794; strict region_fraction=0.506.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: bed nucleus of stria terminalis [UBERON:0001880]
+        node_b_value: Pallidum [MBA:803] count_100um=129 [painted]; Bed nuclei of the stria terminalis [MBA:351] count_100um=123 [painted]; Striatum [MBA:477] count_100um=71 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.794; strict region_fraction: 0.506; region_evidence: SELF'
+      - property: marker_Crh
+        node_a_value: Crh — defining marker
+        node_b_value: 'Crh: 6.30; cohort_pct 0.979; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=6.30; cohort percentile 0.979
+      - property: marker_Oxtr
+        node_a_value: Oxtr — defining marker
+        node_b_value: 'Oxtr: 0.74; cohort_pct 0.687'
+        alignment: CONSISTENT
+        notes: val=0.74; cohort percentile 0.687
+      - property: marker_Gad1
+        node_a_value: Gad1 — defining marker
+        node_b_value: 'Gad1: 8.83; cohort_pct 0.708'
+        alignment: CONSISTENT
+        notes: val=8.83; cohort percentile 0.708
+      - property: marker_Cacna1i
+        node_a_value: Cacna1i — defining marker
+        node_b_value: 'Cacna1i: 4.49; cohort_pct 0.685'
+        alignment: CONSISTENT
+        notes: val=4.49; cohort percentile 0.685
+      - property: marker_Hcn4
+        node_a_value: Hcn4 — defining marker
+        node_b_value: 'Hcn4: 0.54; cohort_pct 0.276'
+        alignment: APPROXIMATE
+        notes: val=0.54; cohort percentile 0.276
+      - property: marker_Kcnd2
+        node_a_value: Kcnd2 — defining marker
+        node_b_value: 'Kcnd2: 11.10; cohort_pct 0.818'
+        alignment: CONSISTENT
+        notes: val=11.10; cohort percentile 0.818
+      - property: marker_Kcnj12
+        node_a_value: Kcnj12 — defining marker
+        node_b_value: 'Kcnj12: 0.57; cohort_pct 0.347'
+        alignment: APPROXIMATE
+        notes: val=0.57; cohort percentile 0.347
+      - property: marker_Kcnj4
+        node_a_value: Kcnj4 — defining marker
+        node_b_value: 'Kcnj4: 0.13; cohort_pct 0.351'
+        alignment: APPROXIMATE
+        notes: val=0.13; cohort percentile 0.351
+      - property: negative_marker_Oxt
+        node_a_value: Oxt — ABSENT (classical negative marker)
+        node_b_value: 'Oxt: 0.04; cohort_pct 0.328'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.328
+      - property: negative_marker_Cacna1g
+        node_a_value: Cacna1g — ABSENT (classical negative marker)
+        node_b_value: 'Cacna1g: 3.14; cohort_pct 0.382'
+        alignment: DISCORDANT
+        notes: val=3.14; cohort percentile 0.382
+      - property: negative_marker_Kcna4
+        node_a_value: Kcna4 — ABSENT (classical negative marker)
+        node_b_value: 'Kcna4: 2.55; cohort_pct 0.670'
+        alignment: DISCORDANT
+        notes: val=2.55; cohort percentile 0.670
+      - property: negative_marker_Htr7
+        node_a_value: Htr7 — ABSENT (classical negative marker)
+        node_b_value: 'Htr7: 1.70; cohort_pct 0.284'
+        alignment: DISCORDANT
+        notes: val=1.70; cohort percentile 0.284
+      - property: negative_marker_Slc17a7
+        node_a_value: Slc17a7 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a7: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Slc17a6
+        node_a_value: Slc17a6 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a6: 0.04; cohort_pct 0.140'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.140
+      - property: negative_marker_Slc17a8
+        node_a_value: Slc17a8 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a8: 0.07; cohort_pct 0.689'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.689
+      - property: neuropeptide_Crh
+        node_a_value: Crh — neuropeptide (classical)
+        node_b_value: 'Crh: 6.30; cohort_pct 0.979; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=6.30; cohort percentile 0.979
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: Cacna1g, Kcna4 and Htr7 are DISCORDANT negative markers on this cluster; Hcn4, Kcnj12 and Kcnj4 are APPROXIMATE.
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: The only evidence is a single atlas-metadata item, with no annotation transfer or direct measurement on Type III cells.
+    discovery_score:
+      score: 13
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 13
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:351
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Crh
+          val: 6.3
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.979
+        - gene: Oxtr
+          val: 0.74
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.687
+        - gene: Gad1
+          val: 8.83
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.708
+        - gene: Cacna1i
+          val: 4.49
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.685
+        - gene: Hcn4
+          val: 0.54
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.276
+        - gene: Kcnd2
+          val: 11.1
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.818
+        - gene: Kcnj12
+          val: 0.57
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.347
+        - gene: Kcnj4
+          val: 0.13
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.351
+        - gene: -Oxt
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.328
+        - gene: -Cacna1g
+          val: 3.14
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.382
+        - gene: -Kcna4
+          val: 2.55
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.67
+        - gene: -Htr7
+          val: 1.7
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.284
+        - gene: -Slc17a7
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Slc17a6
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.14
+        - gene: -Slc17a8
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.689
+      region_fraction: 0.506
+      region_fraction_100um: 0.794
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:NEXT] CS20230722_CLUS_1409 is the leading child cluster of the CEA-BST Rai14 Pdyn Crh Gaba_2 supertype: Crh is a defining marker (cohort percentile 0.979) and region_fraction_100um is 0.794, but the only evidence is atlas metadata and Cacna1g, Kcna4 and Htr7 are DISCORDANT negative markers.\n"
+    reconciliation_note: "Paired with edge_bnstalg_type_iii_crf_neuron_to_CS20230722_SUPT_0393 (parent supertype). Close versus broad is undecided because no experimental evidence shows whether Type III cells form a subset of this cluster or map elsewhere.\n"
+    proposed_experiments:
+      - Run annotation transfer from a Type III-matched BNST single-cell dataset onto CS20230722_CLUS_1409 (target F1 of 0.75 or higher).
+      - Multiplexed transcript co-detection of Crh with Cacna1i, Cacna1g, Kcna4 and Htr7 in mouse oval and anterolateral BNST.
+    rationale_generated_at: '2026-11-13T13:32:16+00:00'
+    report_path: reports/sexually_dimorphic/bnstalg_type_iii_crf_neuron_summary.md
+    unresolved_questions:
+      - Do the Cacna1g, Kcna4 and Htr7 signals on this cluster arise from a subpopulation distinct from any Type III subset?
+    rationale_source_hash: 3f4c289e
+  - id: edge_bnstalg_type_iii_crf_neuron_to_CS20230722_CLUS_0961
+    lit_type: bnstalg_type_iii_crf_neuron
+    taxonomy_type: CS20230722_CLUS_0961
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0961 STR D1 Gaba_8; region_fraction_100um=0.039; strict region_fraction=0.005.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: bed nucleus of stria terminalis [UBERON:0001880]
+        node_b_value: Striatum [MBA:477] count_100um=5667 [painted]; Caudoputamen [MBA:672] count_100um=4714 [painted]; Nucleus accumbens [MBA:56] count_100um=1912 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.039; strict region_fraction: 0.005; region_evidence: SELF'
+      - property: marker_Crh
+        node_a_value: Crh — defining marker
+        node_b_value: 'Crh: 0.22; cohort_pct 0.758'
+        alignment: CONSISTENT
+        notes: val=0.22; cohort percentile 0.758
+      - property: marker_Oxtr
+        node_a_value: Oxtr — defining marker
+        node_b_value: 'Oxtr: 0.51; cohort_pct 0.622'
+        alignment: CONSISTENT
+        notes: val=0.51; cohort percentile 0.622
+      - property: marker_Gad1
+        node_a_value: Gad1 — defining marker
+        node_b_value: 'Gad1: 7.10; cohort_pct 0.056'
+        alignment: CONSISTENT
+        notes: val=7.10; cohort percentile 0.056
+      - property: marker_Cacna1i
+        node_a_value: Cacna1i — defining marker
+        node_b_value: 'Cacna1i: 4.19; cohort_pct 0.591'
+        alignment: CONSISTENT
+        notes: val=4.19; cohort percentile 0.591
+      - property: marker_Hcn4
+        node_a_value: Hcn4 — defining marker
+        node_b_value: 'Hcn4: 0.05; cohort_pct 0.067'
+        alignment: DISCORDANT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.067
+      - property: marker_Kcnd2
+        node_a_value: Kcnd2 — defining marker
+        node_b_value: 'Kcnd2: 11.62; cohort_pct 0.942'
+        alignment: CONSISTENT
+        notes: val=11.62; cohort percentile 0.942
+      - property: marker_Kcnj12
+        node_a_value: Kcnj12 — defining marker
+        node_b_value: 'Kcnj12: 1.44; cohort_pct 0.856'
+        alignment: CONSISTENT
+        notes: val=1.44; cohort percentile 0.856
+      - property: marker_Kcnj4
+        node_a_value: Kcnj4 — defining marker
+        node_b_value: 'Kcnj4: 5.69; cohort_pct 0.994'
+        alignment: CONSISTENT
+        notes: val=5.69; cohort percentile 0.994
+      - property: negative_marker_Oxt
+        node_a_value: Oxt — ABSENT (classical negative marker)
+        node_b_value: 'Oxt: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Cacna1g
+        node_a_value: Cacna1g — ABSENT (classical negative marker)
+        node_b_value: 'Cacna1g: 0.07; cohort_pct 0.002'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.002
+      - property: negative_marker_Kcna4
+        node_a_value: Kcna4 — ABSENT (classical negative marker)
+        node_b_value: 'Kcna4: 5.71; cohort_pct 0.996'
+        alignment: DISCORDANT
+        notes: val=5.71; cohort percentile 0.996
+      - property: negative_marker_Htr7
+        node_a_value: Htr7 — ABSENT (classical negative marker)
+        node_b_value: 'Htr7: 0.02; cohort_pct 0.010'
+        alignment: CONSISTENT
+        notes: val=0.02; below MIN_DETECTABLE (0.1); cohort percentile 0.010
+      - property: negative_marker_Slc17a7
+        node_a_value: Slc17a7 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a7: 0.08; cohort_pct 0.562'
+        alignment: CONSISTENT
+        notes: val=0.08; below MIN_DETECTABLE (0.1); cohort percentile 0.562
+      - property: negative_marker_Slc17a6
+        node_a_value: Slc17a6 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a6: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Slc17a8
+        node_a_value: Slc17a8 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a8: 0.04; cohort_pct 0.587'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.587
+      - property: neuropeptide_Crh
+        node_a_value: Crh — neuropeptide (classical)
+        node_b_value: 'Crh: 0.22; cohort_pct 0.758'
+        alignment: CONSISTENT
+        notes: val=0.22; cohort percentile 0.758
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, marker_Hcn4, negative_marker_Kcna4. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 12
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 13
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:351
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Crh
+          val: 0.22
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.758
+        - gene: Oxtr
+          val: 0.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.622
+        - gene: Gad1
+          val: 7.1
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.056
+        - gene: Cacna1i
+          val: 4.19
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.591
+        - gene: Hcn4
+          val: 0.05
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.067
+        - gene: Kcnd2
+          val: 11.62
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.942
+        - gene: Kcnj12
+          val: 1.44
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.856
+        - gene: Kcnj4
+          val: 5.69
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.994
+        - gene: -Oxt
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Cacna1g
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.002
+        - gene: -Kcna4
+          val: 5.71
+          reliable: true
+          raw_tier: -2
+          applied_score: -2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.996
+        - gene: -Htr7
+          val: 0.02
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.01
+        - gene: -Slc17a7
+          val: 0.08
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.562
+        - gene: -Slc17a6
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Slc17a8
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.587
+      region_fraction: 0.005
+      region_fraction_100um: 0.039
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Striatal location is DISCORDANT with the BNST (region_fraction_100um 0.039) and Hcn4 is absent.\n"
+    rationale_generated_at: '2026-11-13T13:32:16+00:00'
+    report_path: reports/sexually_dimorphic/bnstalg_type_iii_crf_neuron_summary.md
+    rationale_source_hash: b8fde475
+  - id: edge_bnstalg_type_iii_crf_neuron_to_CS20230722_CLUS_1360
+    lit_type: bnstalg_type_iii_crf_neuron
+    taxonomy_type: CS20230722_CLUS_1360
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1360 CEA-AAA-BST Six3 Sp9 Gaba_3; region_fraction_100um=0.644; strict region_fraction=0.537.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: bed nucleus of stria terminalis [UBERON:0001880]
+        node_b_value: Pallidum [MBA:803] count_100um=106 [painted]; Bed nuclei of the stria terminalis [MBA:351] count_100um=96 [painted]; Striatum [MBA:477] count_100um=85 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.644; strict region_fraction: 0.537; region_evidence: SELF'
+      - property: marker_Crh
+        node_a_value: Crh — defining marker
+        node_b_value: 'Crh: 0.12; cohort_pct 0.603'
+        alignment: CONSISTENT
+        notes: val=0.12; cohort percentile 0.603
+      - property: marker_Oxtr
+        node_a_value: Oxtr — defining marker
+        node_b_value: 'Oxtr: 0.94; cohort_pct 0.741'
+        alignment: CONSISTENT
+        notes: val=0.94; cohort percentile 0.741
+      - property: marker_Gad1
+        node_a_value: Gad1 — defining marker
+        node_b_value: 'Gad1: 8.01; cohort_pct 0.282'
+        alignment: APPROXIMATE
+        notes: val=8.01; cohort percentile 0.282
+      - property: marker_Cacna1i
+        node_a_value: Cacna1i — defining marker
+        node_b_value: 'Cacna1i: 3.06; cohort_pct 0.349'
+        alignment: APPROXIMATE
+        notes: val=3.06; cohort percentile 0.349
+      - property: marker_Hcn4
+        node_a_value: Hcn4 — defining marker
+        node_b_value: 'Hcn4: 0.48; cohort_pct 0.251'
+        alignment: APPROXIMATE
+        notes: val=0.48; cohort percentile 0.251
+      - property: marker_Kcnd2
+        node_a_value: Kcnd2 — defining marker
+        node_b_value: 'Kcnd2: 10.81; cohort_pct 0.720'
+        alignment: CONSISTENT
+        notes: val=10.81; cohort percentile 0.720
+      - property: marker_Kcnj12
+        node_a_value: Kcnj12 — defining marker
+        node_b_value: 'Kcnj12: 0.39; cohort_pct 0.217'
+        alignment: APPROXIMATE
+        notes: val=0.39; cohort percentile 0.217
+      - property: marker_Kcnj4
+        node_a_value: Kcnj4 — defining marker
+        node_b_value: 'Kcnj4: 1.25; cohort_pct 0.674'
+        alignment: CONSISTENT
+        notes: val=1.25; cohort percentile 0.674
+      - property: negative_marker_Oxt
+        node_a_value: Oxt — ABSENT (classical negative marker)
+        node_b_value: 'Oxt: 0.03; cohort_pct 0.290'
+        alignment: CONSISTENT
+        notes: val=0.03; below MIN_DETECTABLE (0.1); cohort percentile 0.290
+      - property: negative_marker_Cacna1g
+        node_a_value: Cacna1g — ABSENT (classical negative marker)
+        node_b_value: 'Cacna1g: 2.75; cohort_pct 0.299'
+        alignment: DISCORDANT
+        notes: val=2.75; cohort percentile 0.299
+      - property: negative_marker_Kcna4
+        node_a_value: Kcna4 — ABSENT (classical negative marker)
+        node_b_value: 'Kcna4: 2.30; cohort_pct 0.593'
+        alignment: DISCORDANT
+        notes: val=2.30; cohort percentile 0.593
+      - property: negative_marker_Htr7
+        node_a_value: Htr7 — ABSENT (classical negative marker)
+        node_b_value: 'Htr7: 1.44; cohort_pct 0.255'
+        alignment: DISCORDANT
+        notes: val=1.44; cohort percentile 0.255
+      - property: negative_marker_Slc17a7
+        node_a_value: Slc17a7 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a7: 0.04; cohort_pct 0.449'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.449
+      - property: negative_marker_Slc17a6
+        node_a_value: Slc17a6 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a6: 0.07; cohort_pct 0.198'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.198
+      - property: negative_marker_Slc17a8
+        node_a_value: Slc17a8 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a8: 0.07; cohort_pct 0.689'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.689
+      - property: neuropeptide_Crh
+        node_a_value: Crh — neuropeptide (classical)
+        node_b_value: 'Crh: 0.12; cohort_pct 0.603'
+        alignment: CONSISTENT
+        notes: val=0.12; cohort percentile 0.603
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Cacna1g, negative_marker_Kcna4, negative_marker_Htr7. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 12
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 13
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:351
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Crh
+          val: 0.12
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.603
+        - gene: Oxtr
+          val: 0.94
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.741
+        - gene: Gad1
+          val: 8.01
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.282
+        - gene: Cacna1i
+          val: 3.06
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.349
+        - gene: Hcn4
+          val: 0.48
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.251
+        - gene: Kcnd2
+          val: 10.81
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.72
+        - gene: Kcnj12
+          val: 0.39
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.217
+        - gene: Kcnj4
+          val: 1.25
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.674
+        - gene: -Oxt
+          val: 0.03
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.29
+        - gene: -Cacna1g
+          val: 2.75
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.299
+        - gene: -Kcna4
+          val: 2.3
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.593
+        - gene: -Htr7
+          val: 1.44
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.255
+        - gene: -Slc17a7
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.449
+        - gene: -Slc17a6
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.198
+        - gene: -Slc17a8
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.689
+      region_fraction: 0.537
+      region_fraction_100um: 0.644
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] Crh is near absent on this cluster and Cacna1g, Kcna4 and Htr7 are all DISCORDANT negative markers.\n"
+    rationale_generated_at: '2026-11-13T13:32:16+00:00'
+    report_path: reports/sexually_dimorphic/bnstalg_type_iii_crf_neuron_summary.md
+    rationale_source_hash: 8bf59957
+  - id: edge_bnstalg_type_iii_crf_neuron_to_CS20230722_CLUS_1375
+    lit_type: bnstalg_type_iii_crf_neuron
+    taxonomy_type: CS20230722_CLUS_1375
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1375 ACB-BST-FS D1 Gaba_1; region_fraction_100um=0.617; strict region_fraction=0.310.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: bed nucleus of stria terminalis [UBERON:0001880]
+        node_b_value: Striatum [MBA:477] count_100um=565 [painted]; Pallidum [MBA:803] count_100um=488 [painted]; Bed nuclei of the stria terminalis [MBA:351] count_100um=402 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.617; strict region_fraction: 0.310; region_evidence: SELF'
+      - property: marker_Crh
+        node_a_value: Crh — defining marker
+        node_b_value: 'Crh: 0.18; cohort_pct 0.706'
+        alignment: CONSISTENT
+        notes: val=0.18; cohort percentile 0.706
+      - property: marker_Oxtr
+        node_a_value: Oxtr — defining marker
+        node_b_value: 'Oxtr: 1.13; cohort_pct 0.791'
+        alignment: CONSISTENT
+        notes: val=1.13; cohort percentile 0.791
+      - property: marker_Gad1
+        node_a_value: Gad1 — defining marker
+        node_b_value: 'Gad1: 7.84; cohort_pct 0.200'
+        alignment: APPROXIMATE
+        notes: val=7.84; cohort percentile 0.200
+      - property: marker_Cacna1i
+        node_a_value: Cacna1i — defining marker
+        node_b_value: 'Cacna1i: 1.23; cohort_pct 0.123'
+        alignment: APPROXIMATE
+        notes: val=1.23; cohort percentile 0.123
+      - property: marker_Hcn4
+        node_a_value: Hcn4 — defining marker
+        node_b_value: 'Hcn4: 0.20; cohort_pct 0.142'
+        alignment: APPROXIMATE
+        notes: val=0.20; cohort percentile 0.142
+      - property: marker_Kcnd2
+        node_a_value: Kcnd2 — defining marker
+        node_b_value: 'Kcnd2: 10.89; cohort_pct 0.747'
+        alignment: CONSISTENT
+        notes: val=10.89; cohort percentile 0.747
+      - property: marker_Kcnj12
+        node_a_value: Kcnj12 — defining marker
+        node_b_value: 'Kcnj12: 0.53; cohort_pct 0.315'
+        alignment: APPROXIMATE
+        notes: val=0.53; cohort percentile 0.315
+      - property: marker_Kcnj4
+        node_a_value: Kcnj4 — defining marker
+        node_b_value: 'Kcnj4: 3.85; cohort_pct 0.896'
+        alignment: CONSISTENT
+        notes: val=3.85; cohort percentile 0.896
+      - property: negative_marker_Oxt
+        node_a_value: Oxt — ABSENT (classical negative marker)
+        node_b_value: 'Oxt: 0.11; cohort_pct 0.532'
+        alignment: DISCORDANT
+        notes: val=0.11; cohort percentile 0.532
+      - property: negative_marker_Cacna1g
+        node_a_value: Cacna1g — ABSENT (classical negative marker)
+        node_b_value: 'Cacna1g: 1.56; cohort_pct 0.117'
+        alignment: DISCORDANT
+        notes: val=1.56; cohort percentile 0.117
+      - property: negative_marker_Kcna4
+        node_a_value: Kcna4 — ABSENT (classical negative marker)
+        node_b_value: 'Kcna4: 3.73; cohort_pct 0.891'
+        alignment: DISCORDANT
+        notes: val=3.73; cohort percentile 0.891
+      - property: negative_marker_Htr7
+        node_a_value: Htr7 — ABSENT (classical negative marker)
+        node_b_value: 'Htr7: 0.05; cohort_pct 0.029'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.029
+      - property: negative_marker_Slc17a7
+        node_a_value: Slc17a7 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a7: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Slc17a6
+        node_a_value: Slc17a6 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a6: 0.06; cohort_pct 0.171'
+        alignment: CONSISTENT
+        notes: val=0.06; below MIN_DETECTABLE (0.1); cohort percentile 0.171
+      - property: negative_marker_Slc17a8
+        node_a_value: Slc17a8 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a8: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: neuropeptide_Crh
+        node_a_value: Crh — neuropeptide (classical)
+        node_b_value: 'Crh: 0.18; cohort_pct 0.706'
+        alignment: CONSISTENT
+        notes: val=0.18; cohort percentile 0.706
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Oxt, negative_marker_Cacna1g, negative_marker_Kcna4. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 12
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 13
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:351
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Crh
+          val: 0.18
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.706
+        - gene: Oxtr
+          val: 1.13
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.791
+        - gene: Gad1
+          val: 7.84
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.2
+        - gene: Cacna1i
+          val: 1.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.123
+        - gene: Hcn4
+          val: 0.2
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.142
+        - gene: Kcnd2
+          val: 10.89
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.747
+        - gene: Kcnj12
+          val: 0.53
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.315
+        - gene: Kcnj4
+          val: 3.85
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.896
+        - gene: -Oxt
+          val: 0.11
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.532
+        - gene: -Cacna1g
+          val: 1.56
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.117
+        - gene: -Kcna4
+          val: 3.73
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.891
+        - gene: -Htr7
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.029
+        - gene: -Slc17a7
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Slc17a6
+          val: 0.06
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.171
+        - gene: -Slc17a8
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.31
+      region_fraction_100um: 0.617
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] Crh is low on this accumbens-fundus-type cluster and Oxt, Cacna1g and Kcna4 are DISCORDANT negative markers.\n"
+    rationale_generated_at: '2026-11-13T13:32:16+00:00'
+    report_path: reports/sexually_dimorphic/bnstalg_type_iii_crf_neuron_summary.md
+    rationale_source_hash: bc16d46c
+  - id: edge_bnstalg_type_iii_crf_neuron_to_CS20230722_SUPT_0393
+    lit_type: bnstalg_type_iii_crf_neuron
+    taxonomy_type: CS20230722_SUPT_0393
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0393 CEA-BST Rai14 Pdyn Crh Gaba_2; region_fraction_100um=0.846; strict region_fraction=0.628.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: bed nucleus of stria terminalis [UBERON:0001880]
+        node_b_value: Pallidum [MBA:803] count_100um=222 [painted]; Bed nuclei of the stria terminalis [MBA:351] count_100um=215 [painted]; Striatum [MBA:477] count_100um=107 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.846; strict region_fraction: 0.628; region_evidence: SELF'
+      - property: marker_Crh
+        node_a_value: Crh — defining marker
+        node_b_value: 'Crh: 7.96; cohort_pct 0.995; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=7.96; cohort percentile 0.995; child-cluster coverage 1.000
+      - property: marker_Oxtr
+        node_a_value: Oxtr — defining marker
+        node_b_value: 'Oxtr: 0.57; cohort_pct 0.582; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.57; cohort percentile 0.582; child-cluster coverage 1.000
+      - property: marker_Gad1
+        node_a_value: Gad1 — defining marker
+        node_b_value: 'Gad1: 9.27; cohort_pct 0.884; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=9.27; cohort percentile 0.884; child-cluster coverage 1.000
+      - property: marker_Cacna1i
+        node_a_value: Cacna1i — defining marker
+        node_b_value: 'Cacna1i: 2.98; cohort_pct 0.354; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=2.98; cohort percentile 0.354; child-cluster coverage 1.000
+      - property: marker_Hcn4
+        node_a_value: Hcn4 — defining marker
+        node_b_value: 'Hcn4: 0.39; cohort_pct 0.228; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.39; cohort percentile 0.228; child-cluster coverage 1.000
+      - property: marker_Kcnd2
+        node_a_value: Kcnd2 — defining marker
+        node_b_value: 'Kcnd2: 10.39; cohort_pct 0.582; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.39; cohort percentile 0.582; child-cluster coverage 1.000
+      - property: marker_Kcnj12
+        node_a_value: Kcnj12 — defining marker
+        node_b_value: 'Kcnj12: 0.47; cohort_pct 0.143; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.47; cohort percentile 0.143; child-cluster coverage 1.000
+      - property: marker_Kcnj4
+        node_a_value: Kcnj4 — defining marker
+        node_b_value: 'Kcnj4: 0.81; cohort_pct 0.603; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.81; cohort percentile 0.603; child-cluster coverage 1.000
+      - property: negative_marker_Oxt
+        node_a_value: Oxt — ABSENT (classical negative marker)
+        node_b_value: 'Oxt: 0.05; cohort_pct 0.339'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.339
+      - property: negative_marker_Cacna1g
+        node_a_value: Cacna1g — ABSENT (classical negative marker)
+        node_b_value: 'Cacna1g: 2.32; cohort_pct 0.196'
+        alignment: DISCORDANT
+        notes: val=2.32; cohort percentile 0.196
+      - property: negative_marker_Kcna4
+        node_a_value: Kcna4 — ABSENT (classical negative marker)
+        node_b_value: 'Kcna4: 2.58; cohort_pct 0.630'
+        alignment: DISCORDANT
+        notes: val=2.58; cohort percentile 0.630
+      - property: negative_marker_Htr7
+        node_a_value: Htr7 — ABSENT (classical negative marker)
+        node_b_value: 'Htr7: 2.84; cohort_pct 0.413'
+        alignment: DISCORDANT
+        notes: val=2.84; cohort percentile 0.413
+      - property: negative_marker_Slc17a7
+        node_a_value: Slc17a7 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a7: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Slc17a6
+        node_a_value: Slc17a6 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a6: 0.08; cohort_pct 0.185'
+        alignment: CONSISTENT
+        notes: val=0.08; below MIN_DETECTABLE (0.1); cohort percentile 0.185
+      - property: negative_marker_Slc17a8
+        node_a_value: Slc17a8 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a8: 0.03; cohort_pct 0.481'
+        alignment: CONSISTENT
+        notes: val=0.03; below MIN_DETECTABLE (0.1); cohort percentile 0.481
+      - property: neuropeptide_Crh
+        node_a_value: Crh — neuropeptide (classical)
+        node_b_value: 'Crh: 7.96; cohort_pct 0.995; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=7.96; cohort percentile 0.995; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: Cacna1g, Kcna4 and Htr7 are DISCORDANT negative markers at supertype level; the Type III channel signature is not matched.
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: The only evidence is a single atlas-metadata item; no annotation transfer or direct measurement on Type III cells is attached. Child-cluster breakdown not assessed.
+    discovery_score:
+      score: 13
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 12
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:351
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Crh
+          val: 7.96
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.995
+          coverage: 1.0
+        - gene: Oxtr
+          val: 0.57
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.582
+          coverage: 1.0
+        - gene: Gad1
+          val: 9.27
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.884
+          coverage: 1.0
+        - gene: Cacna1i
+          val: 2.98
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.354
+          coverage: 1.0
+        - gene: Hcn4
+          val: 0.39
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.228
+          coverage: 1.0
+        - gene: Kcnd2
+          val: 10.39
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.582
+          coverage: 1.0
+        - gene: Kcnj12
+          val: 0.47
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.143
+          coverage: 1.0
+        - gene: Kcnj4
+          val: 0.81
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.603
+          coverage: 1.0
+        - gene: -Oxt
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.339
+        - gene: -Cacna1g
+          val: 2.32
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.196
+        - gene: -Kcna4
+          val: 2.58
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.63
+        - gene: -Htr7
+          val: 2.84
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.413
+        - gene: -Slc17a7
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Slc17a6
+          val: 0.08
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.185
+        - gene: -Slc17a8
+          val: 0.03
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.481
+      region_fraction: 0.628
+      region_fraction_100um: 0.846
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:STRONGEST] CS20230722_SUPT_0393 is the closest available supertype: Crh is a defining marker with child coverage 1.0 and region_fraction_100um 0.846, but the only evidence is atlas metadata and Cacna1g, Kcna4 and Htr7 are DISCORDANT negative markers.\n"
+    reconciliation_note: "Paired with edge_bnstalg_type_iii_crf_neuron_to_CS20230722_CLUS_1409 (best child cluster of this supertype). Predicate left uncertain between broadMatch (Type III as a subset of the Crh-defined CEA-BST group) and no correspondence; no experimental anchor to decide.\n"
+    proposed_experiments:
+      - Run annotation transfer from a Type III-matched BNST single-cell dataset onto CS20230722_SUPT_0393 and its child clusters (target F1 of 0.75 or higher).
+      - Multiplexed transcript co-detection of Crh with Cacna1i, Cacna1g, Kcna4 and Htr7 in mouse oval and anterolateral BNST.
+    rationale_generated_at: '2026-11-13T13:32:16+00:00'
+    report_path: reports/sexually_dimorphic/bnstalg_type_iii_crf_neuron_summary.md
+    unresolved_questions:
+      - No external dataset identified for the BNST anterolateral group Type III CRF neuron; annotation transfer cannot yet be run.
+      - Is the Cav3.3+/Cav3.1-/Kv1.4-/5-HT7- signature present in any WMBv1 cluster, or does it fail to transfer from rat to mouse?
+    rationale_source_hash: 128bac29
+  - id: edge_bnstalg_type_iii_crf_neuron_to_CS20230722_SUPT_0272
+    lit_type: bnstalg_type_iii_crf_neuron
+    taxonomy_type: CS20230722_SUPT_0272
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0272 STR D1 Gaba_8; region_fraction_100um=0.061; strict region_fraction=0.019.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: bed nucleus of stria terminalis [UBERON:0001880]
+        node_b_value: Striatum [MBA:477] count_100um=7402 [painted]; Caudoputamen [MBA:672] count_100um=4984 [painted]; Nucleus accumbens [MBA:56] count_100um=3430 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.061; strict region_fraction: 0.019; region_evidence: SELF'
+      - property: marker_Crh
+        node_a_value: Crh — defining marker
+        node_b_value: 'Crh: 0.54; cohort_pct 0.841; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.54; cohort percentile 0.841; child-cluster coverage 1.000
+      - property: marker_Oxtr
+        node_a_value: Oxtr — defining marker
+        node_b_value: 'Oxtr: 0.45; cohort_pct 0.519; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.45; cohort percentile 0.519; child-cluster coverage 1.000
+      - property: marker_Gad1
+        node_a_value: Gad1 — defining marker
+        node_b_value: 'Gad1: 7.34; cohort_pct 0.116; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=7.34; cohort percentile 0.116; child-cluster coverage 1.000
+      - property: marker_Cacna1i
+        node_a_value: Cacna1i — defining marker
+        node_b_value: 'Cacna1i: 3.09; cohort_pct 0.381; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=3.09; cohort percentile 0.381; child-cluster coverage 1.000
+      - property: marker_Hcn4
+        node_a_value: Hcn4 — defining marker
+        node_b_value: 'Hcn4: 0.04; cohort_pct 0.048'
+        alignment: DISCORDANT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.048
+      - property: marker_Kcnd2
+        node_a_value: Kcnd2 — defining marker
+        node_b_value: 'Kcnd2: 11.34; cohort_pct 0.910; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.34; cohort percentile 0.910; child-cluster coverage 1.000
+      - property: marker_Kcnj12
+        node_a_value: Kcnj12 — defining marker
+        node_b_value: 'Kcnj12: 1.35; cohort_pct 0.825; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.35; cohort percentile 0.825; child-cluster coverage 1.000
+      - property: marker_Kcnj4
+        node_a_value: Kcnj4 — defining marker
+        node_b_value: 'Kcnj4: 5.10; cohort_pct 0.963; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=5.10; cohort percentile 0.963; child-cluster coverage 1.000
+      - property: negative_marker_Oxt
+        node_a_value: Oxt — ABSENT (classical negative marker)
+        node_b_value: 'Oxt: 0.01; cohort_pct 0.085'
+        alignment: CONSISTENT
+        notes: val=0.01; below MIN_DETECTABLE (0.1); cohort percentile 0.085
+      - property: negative_marker_Cacna1g
+        node_a_value: Cacna1g — ABSENT (classical negative marker)
+        node_b_value: 'Cacna1g: 0.05; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Kcna4
+        node_a_value: Kcna4 — ABSENT (classical negative marker)
+        node_b_value: 'Kcna4: 5.09; cohort_pct 0.968'
+        alignment: DISCORDANT
+        notes: val=5.09; cohort percentile 0.968
+      - property: negative_marker_Htr7
+        node_a_value: Htr7 — ABSENT (classical negative marker)
+        node_b_value: 'Htr7: 0.02; cohort_pct 0.011'
+        alignment: CONSISTENT
+        notes: val=0.02; below MIN_DETECTABLE (0.1); cohort percentile 0.011
+      - property: negative_marker_Slc17a7
+        node_a_value: Slc17a7 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a7: 0.04; cohort_pct 0.328'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.328
+      - property: negative_marker_Slc17a6
+        node_a_value: Slc17a6 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a6: 0.01; cohort_pct 0.026'
+        alignment: CONSISTENT
+        notes: val=0.01; below MIN_DETECTABLE (0.1); cohort percentile 0.026
+      - property: negative_marker_Slc17a8
+        node_a_value: Slc17a8 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a8: 0.01; cohort_pct 0.206'
+        alignment: CONSISTENT
+        notes: val=0.01; below MIN_DETECTABLE (0.1); cohort percentile 0.206
+      - property: neuropeptide_Crh
+        node_a_value: Crh — neuropeptide (classical)
+        node_b_value: 'Crh: 0.54; cohort_pct 0.841; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.54; cohort percentile 0.841; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, marker_Hcn4, negative_marker_Kcna4. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 12
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 12
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:351
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Crh
+          val: 0.54
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.841
+          coverage: 1.0
+        - gene: Oxtr
+          val: 0.45
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.519
+          coverage: 1.0
+        - gene: Gad1
+          val: 7.34
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.116
+          coverage: 1.0
+        - gene: Cacna1i
+          val: 3.09
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.381
+          coverage: 1.0
+        - gene: Hcn4
+          val: 0.04
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.048
+        - gene: Kcnd2
+          val: 11.34
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.91
+          coverage: 1.0
+        - gene: Kcnj12
+          val: 1.35
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.825
+          coverage: 1.0
+        - gene: Kcnj4
+          val: 5.1
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.963
+          coverage: 1.0
+        - gene: -Oxt
+          val: 0.01
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.085
+        - gene: -Cacna1g
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Kcna4
+          val: 5.09
+          reliable: true
+          raw_tier: -2
+          applied_score: -2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+        - gene: -Htr7
+          val: 0.02
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.011
+        - gene: -Slc17a7
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.328
+        - gene: -Slc17a6
+          val: 0.01
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.026
+        - gene: -Slc17a8
+          val: 0.01
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.206
+      region_fraction: 0.019
+      region_fraction_100um: 0.061
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Striatal supertype with DISCORDANT location (region_fraction_100um 0.061), absent Hcn4 and high Kcna4.\n"
+    rationale_generated_at: '2026-11-13T13:32:16+00:00'
+    report_path: reports/sexually_dimorphic/bnstalg_type_iii_crf_neuron_summary.md
+    rationale_source_hash: f2cfe40b
+  - id: edge_bnstalg_type_iii_crf_neuron_to_CS20230722_SUPT_0265
+    lit_type: bnstalg_type_iii_crf_neuron
+    taxonomy_type: CS20230722_SUPT_0265
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0265 STR D1 Gaba_1; region_fraction_100um=0.024; strict region_fraction=0.006.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: bed nucleus of stria terminalis [UBERON:0001880]
+        node_b_value: Striatum [MBA:477] count_100um=5427 [painted]; Nucleus accumbens [MBA:56] count_100um=3432 [painted]; Pallidum [MBA:803] count_100um=1711 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.024; strict region_fraction: 0.006; region_evidence: SELF'
+      - property: marker_Crh
+        node_a_value: Crh — defining marker
+        node_b_value: 'Crh: 1.03; cohort_pct 0.899; child-coverage 0.800'
+        alignment: CONSISTENT
+        notes: val=1.03; cohort percentile 0.899; child-cluster coverage 0.800
+      - property: marker_Oxtr
+        node_a_value: Oxtr — defining marker
+        node_b_value: 'Oxtr: 0.44; cohort_pct 0.508; child-coverage 0.800'
+        alignment: CONSISTENT
+        notes: val=0.44; cohort percentile 0.508; child-cluster coverage 0.800
+      - property: marker_Gad1
+        node_a_value: Gad1 — defining marker
+        node_b_value: 'Gad1: 7.52; cohort_pct 0.138; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=7.52; cohort percentile 0.138; child-cluster coverage 1.000
+      - property: marker_Cacna1i
+        node_a_value: Cacna1i — defining marker
+        node_b_value: 'Cacna1i: 2.88; cohort_pct 0.339; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=2.88; cohort percentile 0.339; child-cluster coverage 1.000
+      - property: marker_Hcn4
+        node_a_value: Hcn4 — defining marker
+        node_b_value: 'Hcn4: 0.08; cohort_pct 0.116'
+        alignment: DISCORDANT
+        notes: val=0.08; below MIN_DETECTABLE (0.1); cohort percentile 0.116
+      - property: marker_Kcnd2
+        node_a_value: Kcnd2 — defining marker
+        node_b_value: 'Kcnd2: 11.19; cohort_pct 0.889; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.19; cohort percentile 0.889; child-cluster coverage 1.000
+      - property: marker_Kcnj12
+        node_a_value: Kcnj12 — defining marker
+        node_b_value: 'Kcnj12: 0.84; cohort_pct 0.529; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.84; cohort percentile 0.529; child-cluster coverage 1.000
+      - property: marker_Kcnj4
+        node_a_value: Kcnj4 — defining marker
+        node_b_value: 'Kcnj4: 5.14; cohort_pct 0.968; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=5.14; cohort percentile 0.968; child-cluster coverage 1.000
+      - property: negative_marker_Oxt
+        node_a_value: Oxt — ABSENT (classical negative marker)
+        node_b_value: 'Oxt: 0.03; cohort_pct 0.222'
+        alignment: CONSISTENT
+        notes: val=0.03; below MIN_DETECTABLE (0.1); cohort percentile 0.222
+      - property: negative_marker_Cacna1g
+        node_a_value: Cacna1g — ABSENT (classical negative marker)
+        node_b_value: 'Cacna1g: 0.51; cohort_pct 0.053'
+        alignment: DISCORDANT
+        notes: val=0.51; cohort percentile 0.053
+      - property: negative_marker_Kcna4
+        node_a_value: Kcna4 — ABSENT (classical negative marker)
+        node_b_value: 'Kcna4: 4.45; cohort_pct 0.942'
+        alignment: DISCORDANT
+        notes: val=4.45; cohort percentile 0.942
+      - property: negative_marker_Htr7
+        node_a_value: Htr7 — ABSENT (classical negative marker)
+        node_b_value: 'Htr7: 0.07; cohort_pct 0.048'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.048
+      - property: negative_marker_Slc17a7
+        node_a_value: Slc17a7 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a7: 0.03; cohort_pct 0.286'
+        alignment: CONSISTENT
+        notes: val=0.03; below MIN_DETECTABLE (0.1); cohort percentile 0.286
+      - property: negative_marker_Slc17a6
+        node_a_value: Slc17a6 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a6: 0.03; cohort_pct 0.069'
+        alignment: CONSISTENT
+        notes: val=0.03; below MIN_DETECTABLE (0.1); cohort percentile 0.069
+      - property: negative_marker_Slc17a8
+        node_a_value: Slc17a8 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a8: 0.02; cohort_pct 0.302'
+        alignment: CONSISTENT
+        notes: val=0.02; below MIN_DETECTABLE (0.1); cohort percentile 0.302
+      - property: neuropeptide_Crh
+        node_a_value: Crh — neuropeptide (classical)
+        node_b_value: 'Crh: 1.03; cohort_pct 0.899; child-coverage 0.800'
+        alignment: CONSISTENT
+        notes: val=1.03; cohort percentile 0.899; child-cluster coverage 0.800
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, marker_Hcn4, negative_marker_Cacna1g, negative_marker_Kcna4. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 11
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 12
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:351
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Crh
+          val: 1.03
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.894
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.899
+          coverage: 0.8
+        - gene: Oxtr
+          val: 0.44
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.894
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.508
+          coverage: 0.8
+        - gene: Gad1
+          val: 7.52
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.138
+          coverage: 1.0
+        - gene: Cacna1i
+          val: 2.88
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.339
+          coverage: 1.0
+        - gene: Hcn4
+          val: 0.08
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.116
+        - gene: Kcnd2
+          val: 11.19
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.889
+          coverage: 1.0
+        - gene: Kcnj12
+          val: 0.84
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.529
+          coverage: 1.0
+        - gene: Kcnj4
+          val: 5.14
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+        - gene: -Oxt
+          val: 0.03
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.222
+        - gene: -Cacna1g
+          val: 0.51
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.053
+        - gene: -Kcna4
+          val: 4.45
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.942
+        - gene: -Htr7
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.048
+        - gene: -Slc17a7
+          val: 0.03
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.286
+        - gene: -Slc17a6
+          val: 0.03
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.069
+        - gene: -Slc17a8
+          val: 0.02
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.302
+      region_fraction: 0.006
+      region_fraction_100um: 0.024
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Striatal supertype with DISCORDANT location (region_fraction_100um 0.024) and absent Hcn4.\n"
+    rationale_generated_at: '2026-11-13T13:32:16+00:00'
+    report_path: reports/sexually_dimorphic/bnstalg_type_iii_crf_neuron_summary.md
+    rationale_source_hash: 604eee7f
+  - id: edge_bnstalg_type_iii_crf_neuron_to_CS20230722_SUPT_0278
+    lit_type: bnstalg_type_iii_crf_neuron
+    taxonomy_type: CS20230722_SUPT_0278
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0278 STR D2 Gaba_5; region_fraction_100um=0.048; strict region_fraction=0.016.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: bed nucleus of stria terminalis [UBERON:0001880]
+        node_b_value: Striatum [MBA:477] count_100um=4554 [painted]; Caudoputamen [MBA:672] count_100um=2431 [painted]; Nucleus accumbens [MBA:56] count_100um=2424 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.048; strict region_fraction: 0.016; region_evidence: SELF'
+      - property: marker_Crh
+        node_a_value: Crh — defining marker
+        node_b_value: 'Crh: 2.23; cohort_pct 0.947; child-coverage 0.667'
+        alignment: CONSISTENT
+        notes: val=2.23; cohort percentile 0.947; child-cluster coverage 0.667
+      - property: marker_Oxtr
+        node_a_value: Oxtr — defining marker
+        node_b_value: 'Oxtr: 0.30; cohort_pct 0.413; child-coverage 0.667'
+        alignment: APPROXIMATE
+        notes: val=0.30; cohort percentile 0.413; child-cluster coverage 0.667
+      - property: marker_Gad1
+        node_a_value: Gad1 — defining marker
+        node_b_value: 'Gad1: 8.04; cohort_pct 0.270; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=8.04; cohort percentile 0.270; child-cluster coverage 1.000
+      - property: marker_Cacna1i
+        node_a_value: Cacna1i — defining marker
+        node_b_value: 'Cacna1i: 3.15; cohort_pct 0.397; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=3.15; cohort percentile 0.397; child-cluster coverage 1.000
+      - property: marker_Hcn4
+        node_a_value: Hcn4 — defining marker
+        node_b_value: 'Hcn4: 0.01; cohort_pct 0.016'
+        alignment: DISCORDANT
+        notes: val=0.01; below MIN_DETECTABLE (0.1); cohort percentile 0.016
+      - property: marker_Kcnd2
+        node_a_value: Kcnd2 — defining marker
+        node_b_value: 'Kcnd2: 11.57; cohort_pct 0.931; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.57; cohort percentile 0.931; child-cluster coverage 1.000
+      - property: marker_Kcnj12
+        node_a_value: Kcnj12 — defining marker
+        node_b_value: 'Kcnj12: 1.03; cohort_pct 0.683; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.03; cohort percentile 0.683; child-cluster coverage 1.000
+      - property: marker_Kcnj4
+        node_a_value: Kcnj4 — defining marker
+        node_b_value: 'Kcnj4: 4.94; cohort_pct 0.947; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=4.94; cohort percentile 0.947; child-cluster coverage 1.000
+      - property: negative_marker_Oxt
+        node_a_value: Oxt — ABSENT (classical negative marker)
+        node_b_value: 'Oxt: 0.01; cohort_pct 0.085'
+        alignment: CONSISTENT
+        notes: val=0.01; below MIN_DETECTABLE (0.1); cohort percentile 0.085
+      - property: negative_marker_Cacna1g
+        node_a_value: Cacna1g — ABSENT (classical negative marker)
+        node_b_value: 'Cacna1g: 0.09; cohort_pct 0.011'
+        alignment: CONSISTENT
+        notes: val=0.09; below MIN_DETECTABLE (0.1); cohort percentile 0.011
+      - property: negative_marker_Kcna4
+        node_a_value: Kcna4 — ABSENT (classical negative marker)
+        node_b_value: 'Kcna4: 4.88; cohort_pct 0.963'
+        alignment: DISCORDANT
+        notes: val=4.88; cohort percentile 0.963
+      - property: negative_marker_Htr7
+        node_a_value: Htr7 — ABSENT (classical negative marker)
+        node_b_value: 'Htr7: 0.06; cohort_pct 0.037'
+        alignment: CONSISTENT
+        notes: val=0.06; below MIN_DETECTABLE (0.1); cohort percentile 0.037
+      - property: negative_marker_Slc17a7
+        node_a_value: Slc17a7 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a7: 0.07; cohort_pct 0.434'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.434
+      - property: negative_marker_Slc17a6
+        node_a_value: Slc17a6 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a6: 0.07; cohort_pct 0.175'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.175
+      - property: negative_marker_Slc17a8
+        node_a_value: Slc17a8 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a8: 0.01; cohort_pct 0.206'
+        alignment: CONSISTENT
+        notes: val=0.01; below MIN_DETECTABLE (0.1); cohort percentile 0.206
+      - property: neuropeptide_Crh
+        node_a_value: Crh — neuropeptide (classical)
+        node_b_value: 'Crh: 2.23; cohort_pct 0.947; child-coverage 0.667'
+        alignment: CONSISTENT
+        notes: val=2.23; cohort percentile 0.947; child-cluster coverage 0.667
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, marker_Hcn4, negative_marker_Kcna4. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 11
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 12
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:351
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Crh
+          val: 2.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.816
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.947
+          coverage: 0.667
+        - gene: Oxtr
+          val: 0.3
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.816
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.413
+          coverage: 0.667
+        - gene: Gad1
+          val: 8.04
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.27
+          coverage: 1.0
+        - gene: Cacna1i
+          val: 3.15
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.397
+          coverage: 1.0
+        - gene: Hcn4
+          val: 0.01
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.016
+        - gene: Kcnd2
+          val: 11.57
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.931
+          coverage: 1.0
+        - gene: Kcnj12
+          val: 1.03
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.683
+          coverage: 1.0
+        - gene: Kcnj4
+          val: 4.94
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.947
+          coverage: 1.0
+        - gene: -Oxt
+          val: 0.01
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.085
+        - gene: -Cacna1g
+          val: 0.09
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.011
+        - gene: -Kcna4
+          val: 4.88
+          reliable: true
+          raw_tier: -2
+          applied_score: -2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.963
+        - gene: -Htr7
+          val: 0.06
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.037
+        - gene: -Slc17a7
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.434
+        - gene: -Slc17a6
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.175
+        - gene: -Slc17a8
+          val: 0.01
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.206
+      region_fraction: 0.016
+      region_fraction_100um: 0.048
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Striatal D2-type supertype with DISCORDANT location (region_fraction_100um 0.048) and absent Hcn4.\n"
+    rationale_generated_at: '2026-11-13T13:32:16+00:00'
+    report_path: reports/sexually_dimorphic/bnstalg_type_iii_crf_neuron_summary.md
+    rationale_source_hash: 74b2a165
+  - id: edge_bnstalg_type_iii_crf_neuron_to_CS20230722_SUPT_0266
+    lit_type: bnstalg_type_iii_crf_neuron
+    taxonomy_type: CS20230722_SUPT_0266
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0266 STR D1 Gaba_2; region_fraction_100um=0.016; strict region_fraction=0.004.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: bed nucleus of stria terminalis [UBERON:0001880]
+        node_b_value: Striatum [MBA:477] count_100um=4015 [painted]; Nucleus accumbens [MBA:56] count_100um=2887 [painted]; Caudoputamen [MBA:672] count_100um=1590 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.016; strict region_fraction: 0.004; region_evidence: SELF'
+      - property: marker_Crh
+        node_a_value: Crh — defining marker
+        node_b_value: 'Crh: 0.61; cohort_pct 0.847; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.61; cohort percentile 0.847; child-cluster coverage 1.000
+      - property: marker_Oxtr
+        node_a_value: Oxtr — defining marker
+        node_b_value: 'Oxtr: 0.04; cohort_pct 0.143'
+        alignment: DISCORDANT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.143
+      - property: marker_Gad1
+        node_a_value: Gad1 — defining marker
+        node_b_value: 'Gad1: 8.23; cohort_pct 0.365; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=8.23; cohort percentile 0.365; child-cluster coverage 1.000
+      - property: marker_Cacna1i
+        node_a_value: Cacna1i — defining marker
+        node_b_value: 'Cacna1i: 1.96; cohort_pct 0.249; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.96; cohort percentile 0.249; child-cluster coverage 1.000
+      - property: marker_Hcn4
+        node_a_value: Hcn4 — defining marker
+        node_b_value: 'Hcn4: 0.07; cohort_pct 0.101'
+        alignment: DISCORDANT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.101
+      - property: marker_Kcnd2
+        node_a_value: Kcnd2 — defining marker
+        node_b_value: 'Kcnd2: 11.60; cohort_pct 0.942; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.60; cohort percentile 0.942; child-cluster coverage 1.000
+      - property: marker_Kcnj12
+        node_a_value: Kcnj12 — defining marker
+        node_b_value: 'Kcnj12: 0.81; cohort_pct 0.503; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.81; cohort percentile 0.503; child-cluster coverage 1.000
+      - property: marker_Kcnj4
+        node_a_value: Kcnj4 — defining marker
+        node_b_value: 'Kcnj4: 5.74; cohort_pct 0.989; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=5.74; cohort percentile 0.989; child-cluster coverage 1.000
+      - property: negative_marker_Oxt
+        node_a_value: Oxt — ABSENT (classical negative marker)
+        node_b_value: 'Oxt: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Cacna1g
+        node_a_value: Cacna1g — ABSENT (classical negative marker)
+        node_b_value: 'Cacna1g: 0.07; cohort_pct 0.005'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.005
+      - property: negative_marker_Kcna4
+        node_a_value: Kcna4 — ABSENT (classical negative marker)
+        node_b_value: 'Kcna4: 5.15; cohort_pct 0.974'
+        alignment: DISCORDANT
+        notes: val=5.15; cohort percentile 0.974
+      - property: negative_marker_Htr7
+        node_a_value: Htr7 — ABSENT (classical negative marker)
+        node_b_value: 'Htr7: 0.02; cohort_pct 0.011'
+        alignment: CONSISTENT
+        notes: val=0.02; below MIN_DETECTABLE (0.1); cohort percentile 0.011
+      - property: negative_marker_Slc17a7
+        node_a_value: Slc17a7 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a7: 0.04; cohort_pct 0.328'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.328
+      - property: negative_marker_Slc17a6
+        node_a_value: Slc17a6 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a6: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Slc17a8
+        node_a_value: Slc17a8 — ABSENT (classical negative marker)
+        node_b_value: 'Slc17a8: 0.07; cohort_pct 0.698'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.698
+      - property: neuropeptide_Crh
+        node_a_value: Crh — neuropeptide (classical)
+        node_b_value: 'Crh: 0.61; cohort_pct 0.847; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.61; cohort percentile 0.847; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, marker_Oxtr, marker_Hcn4, negative_marker_Kcna4. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 10
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 12
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:351
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Crh
+          val: 0.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.847
+          coverage: 1.0
+        - gene: Oxtr
+          val: 0.04
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.143
+        - gene: Gad1
+          val: 8.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.365
+          coverage: 1.0
+        - gene: Cacna1i
+          val: 1.96
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.249
+          coverage: 1.0
+        - gene: Hcn4
+          val: 0.07
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.101
+        - gene: Kcnd2
+          val: 11.6
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.942
+          coverage: 1.0
+        - gene: Kcnj12
+          val: 0.81
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.503
+          coverage: 1.0
+        - gene: Kcnj4
+          val: 5.74
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.989
+          coverage: 1.0
+        - gene: -Oxt
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Cacna1g
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.005
+        - gene: -Kcna4
+          val: 5.15
+          reliable: true
+          raw_tier: -2
+          applied_score: -2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.974
+        - gene: -Htr7
+          val: 0.02
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.011
+        - gene: -Slc17a7
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.328
+        - gene: -Slc17a6
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Slc17a8
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.698
+      region_fraction: 0.004
+      region_fraction_100um: 0.016
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Striatal supertype with DISCORDANT location (region_fraction_100um 0.016), near-absent Oxtr and absent Hcn4.\n"
+    rationale_generated_at: '2026-11-13T13:32:16+00:00'
+    report_path: reports/sexually_dimorphic/bnstalg_type_iii_crf_neuron_summary.md
+    rationale_source_hash: f491b92d
