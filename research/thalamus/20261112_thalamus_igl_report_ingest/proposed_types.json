@@ -1,0 +1,75 @@
+[
+  {
+    "proposed_id": "igl_gabaergic_neuron",
+    "name": "Intergeniculate leaflet (IGL) GABAergic neuron",
+    "markers_mentioned": ["GABA", "NPY", "enkephalin (Penk)"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": ["NPY", "enkephalin (met-enkephalin)"],
+    "anatomy_mentioned": [
+      "intergeniculate leaflet (IGL) of the lateral geniculate complex",
+      "thin flat leaflet between dorsal and ventral lateral geniculate nucleus",
+      "historically a subdivision of the ventrolateral geniculate nucleus (VLG)",
+      "medial vLGN of cat proposed as IGL homologue",
+      "pregeniculate nucleus of primates proposed as IGL homologue"
+    ],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Not described at single-cell level. Population is a bilateral, retinorecipient leaflet; outputs include the geniculohypothalamic tract to the SCN (NPY cells) and the geniculo-geniculate tract to the contralateral IGL (ENK cells).",
+    "ephys_summary": "Network shows infra-slow / ultradian oscillations that depend on retinal drive and GABA_A signalling; population splits into an I_T-expressing (non-NPY/ENK) group and an I_A-expressing (NPY) group. Depolarised by orexin A via non-selective cation channels; hyperpolarised by met-enkephalin via mu-opioid receptors.",
+    "subtypes_noted": "Two main peptide/projection classes, NPY+ (SCN-projecting) and ENK+ (contralateral IGL-projecting) (Blasiak et al., 2013; Chrobok et al., 2016; Palus et al., 2017). A third group with unknown transmitter content (Blasiak et al._1, 2013, citing Moore & Card 1994). Three juxtacellularly defined light-response classes in IGL/VLG, Type I NPY-, Type II strong somatic NPY, Type III patchy/internalised NPY (Thankachan et al., 2005). Retained as notes, not nodes.",
+    "quote_count": 18,
+    "relation_to_existing": [
+      {
+        "target": "lgv_igl_gabaergic_neuron",
+        "relationship": "narrower",
+        "justification": "The existing node pools LGv and IGL GABAergic neurons; this node restricts to the IGL, which the report describes as a mainly or wholly GABAergic leaflet historically treated as a subdivision of the VLG (Chrobok et al., 2016; Palus et al., 2015)."
+      }
+    ]
+  },
+  {
+    "proposed_id": "igl_npy_geniculohypothalamic_neuron",
+    "name": "Intergeniculate leaflet NPY-positive geniculohypothalamic neuron",
+    "markers_mentioned": ["NPY", "GABA"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": ["NPY"],
+    "anatomy_mentioned": [
+      "intergeniculate leaflet (soma)",
+      "suprachiasmatic nucleus (axon terminals, via geniculohypothalamic tract)",
+      "cat medial vLGN (SCN-projecting, NPY-immunoreactive processes; proposed homologue)"
+    ],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Projection neuron forming the geniculohypothalamic tract; NPY-positive fibres abundant in the SCN. No somatodendritic description.",
+    "ephys_summary": "All NPY+ neurons tested show a marked A-type K+ current (I_A) (Chrobok et al., 2016). SCN-projecting neurons fire at low, irregular rates in light and most increase firing in darkness (Blasiak et al., 2013). Excited by relaxin-3 (R3/I5) stimulation (Blasiak et al._1, 2013). Hyperpolarised by met-enkephalin (Palus et al., 2017).",
+    "subtypes_noted": "Thankachan et al., 2005: Type II IGL/VLG neurons (strong somatic NPY; suppression, complex or no response to illumination) likely correspond to this class; Type III neurons with patchy/internalised NPY are interpreted as NPY recipients, not NPY producers, so must not be assigned here on NPY immunolabel alone.",
+    "quote_count": 15,
+    "relation_to_existing": [
+      {
+        "target": "igl_gabaergic_neuron",
+        "relationship": "narrower",
+        "justification": "NPY-synthesising neurons are one of the two main GABAergic subpopulations of the IGL (Blasiak et al., 2013; Chrobok et al., 2016; Palus et al., 2017)."
+      }
+    ]
+  },
+  {
+    "proposed_id": "igl_enkephalinergic_geniculogeniculate_neuron",
+    "name": "Intergeniculate leaflet enkephalinergic geniculo-geniculate neuron",
+    "markers_mentioned": ["enkephalin (Penk)", "GABA"],
+    "negative_markers_mentioned": ["NPY"],
+    "neuropeptides_mentioned": ["enkephalin (met-enkephalin)"],
+    "anatomy_mentioned": [
+      "intergeniculate leaflet (soma)",
+      "contralateral intergeniculate leaflet (axon terminals, via geniculo-geniculate tract)"
+    ],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Projection neuron forming the geniculo-geniculate tract to the contralateral IGL; receives direct retinal innervation; proposed to act as a local interneuron-like inhibitory element on itself and on NPY cells, ipsi- and contralaterally. No somatodendritic description.",
+    "ephys_summary": "T-type Ca2+ current (I_T) in neurons that do not synthesise NPY (Chrobok et al., 2016). In vivo, all contralateral-IGL-projecting neurons show infra-slow (<0.1 Hz) oscillatory bursting, sustained in light and reduced in darkness (Blasiak et al., 2013; Chrobok et al., 2017). Hyperpolarised by met-enkephalin via mu-opioid receptors (Palus et al., 2017).",
+    "subtypes_noted": "Report notes no finer molecular subdivision within ENK class. ENK identity is partly inferred: Chrobok et al., 2016 define the I_T group as 'neurons that do not synthesise NPY'; later papers equate it with ENK cells; ISO cells are described as 'putatively enkephalinergic' (Chrobok et al., 2017).",
+    "quote_count": 10,
+    "relation_to_existing": [
+      {
+        "target": "igl_gabaergic_neuron",
+        "relationship": "narrower",
+        "justification": "Enkephalinergic cells are the second main GABAergic subpopulation of the IGL, projecting to the contralateral IGL (Blasiak et al., 2013; Palus et al., 2017; Palus-Chramiec et al., 2019)."
+      }
+    ]
+  }
+]
