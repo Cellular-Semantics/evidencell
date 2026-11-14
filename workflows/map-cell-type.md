@@ -80,7 +80,7 @@ source_label)` correspondences authored in evidence-extraction), resolves each t
 its AT run (`at_metrics.resolve_run_for_source`), and surfaces the atlas clusters
 that source maps to as candidates — they get the F1 score bonus and bypass the
 region/NT filters. There is no hand-made `research/{region}/at/*_f1.json` file
-anymore. Run `just at-coverage {classical_node_file} {taxonomy_id}` first: any
+anymore. Run `just at-coverage {taxonomy_id} {classical_node_id}` first: any
 `UNRESOLVED` row means a declared source has no AT run yet — run
 `workflows/annotation-transfer.md` for it before mapping, or discovery gets no AT
 signal for that node.

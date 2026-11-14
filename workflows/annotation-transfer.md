@@ -52,7 +52,7 @@ relative paths into `kb/taxonomy/{taxonomy_id}/taxonomy_meta.yaml`.
 ```
 Step 0  Dataset retrieval (driven by at_source_sets)
         Input comes from the node, not a hand-pointed file: an UNRESOLVED row
-        from `just at-coverage {graph_file} {taxonomy_id}` gives you the
+        from `just at-coverage {taxonomy_id} {node_id}` gives you the
         (dataset_accession, source_label) declared in a classical node's
         at_source_sets (the issue-#126 correspondence — which annotated cell
         set corresponds to this lit-type).

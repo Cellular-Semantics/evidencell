@@ -1211,40 +1211,87 @@ def print_refresh_report(summary: dict) -> None:
 
 
 def at_coverage(
-    graph_file: Path,
     taxonomy_id: str,
     *,
+    node_ids: list[str] | None = None,
+    region: str | None = None,
     runs_root: Path | None = None,
-) -> list[dict]:
-    """Report AT-run coverage for a graph's classical nodes.
+) -> dict:
+    """Report AT-run coverage for classical nodes, chosen by id or region.
 
     For each classical node (``definition_basis`` starting ``CLASSICAL``)
-    that declares ``at_source_sets``, resolve every declared
+    in scope, resolve every declared ``at_source_sets`` entry
     ``(dataset_accession, source_label)`` against ``taxonomy_id`` via
     :func:`resolve_run_for_source`. This is the pre-mapping trigger check
     (issue #126 follow-up): an UNRESOLVED row means a curator asserted a
     dataset correspondence for which no AT run exists yet — the signal to
     run ``workflows/annotation-transfer.md`` before programmatic mapping.
 
-    Report-only: it does not fetch, run AT, or gate mapping. Nodes with no
-    ``at_source_sets`` are skipped (that is an evidence-extraction gap, not
-    this check's concern).
+    Scope is a set of nodes, read through the KB index: ``node_ids`` names
+    them, ``region`` takes every classical node under ``kb/graphs/{region}/``,
+    and neither takes every classical node in the KB. Files play no part, so a
+    narrow run cannot pass for a wide one (#162). Raises ValueError for an
+    unknown taxonomy, region or node id, or a named node that is not
+    classical.
 
-    Returns one row dict per declared source set:
-    ``{node_id, dataset_accession, source_label, run_ref}`` where
+    Report-only: it does not fetch, run AT, or gate mapping.
+
+    Returns ``{scope, checked, undeclared, rows}``: ``checked`` is every node
+    id in scope, ``undeclared`` those declaring no ``at_source_sets`` (an
+    evidence-extraction gap, listed so it is not mistaken for coverage), and
+    ``rows`` one dict per declared source set,
+    ``{node_id, dataset_accession, source_label, run_ref}``, where
     ``run_ref`` is the resolved run id or ``None`` (UNRESOLVED).
     """
-    doc = yaml.safe_load(Path(graph_file).read_text(encoding="utf-8")) or {}
+    from . import paths
+    from .kb_index import get_index
+
+    if node_ids and region:
+        raise ValueError("Give node ids or a region, not both.")
+    if not paths.taxonomy_dir(taxonomy_id).is_dir():
+        raise ValueError(
+            f"Unknown taxonomy {taxonomy_id!r}: no store under kb/taxonomy/."
+        )
+
+    index = get_index()
+
+    def classical(node_id: str) -> dict | None:
+        for record in index.nodes.get(node_id, []):
+            basis = record.node.get("definition_basis") or ""
+            if not record.is_stub and basis.startswith("CLASSICAL"):
+                return record.node
+        return None
+
+    if node_ids:
+        scope = f"{len(node_ids)} named node(s)"
+        candidates = list(dict.fromkeys(node_ids))
+        for node_id in candidates:
+            if node_id not in index.nodes:
+                raise ValueError(f"No KB node has id {node_id!r}.")
+            if classical(node_id) is None:
+                raise ValueError(f"{node_id!r} is not a classical node.")
+    elif region:
+        if region not in index.by_region:
+            known = ", ".join(sorted(index.by_region))
+            raise ValueError(f"Unknown region {region!r}. Known: {known}.")
+        scope = f"region {region}"
+        candidates = index.by_region[region]
+    else:
+        scope = "whole KB"
+        candidates = sorted(index.nodes)
+
+    checked: list[str] = []
+    undeclared: list[str] = []
     rows: list[dict] = []
-    for node in doc.get("nodes") or []:
-        if not isinstance(node, dict):
+    for node_id in candidates:
+        node = classical(node_id)
+        if node is None:
             continue
-        basis = node.get("definition_basis") or ""
-        if not basis.startswith("CLASSICAL"):
-            continue
-        for src in node.get("at_source_sets") or []:
-            if not isinstance(src, dict):
-                continue
+        checked.append(node_id)
+        sources = [s for s in node.get("at_source_sets") or [] if isinstance(s, dict)]
+        if not sources:
+            undeclared.append(node_id)
+        for src in sources:
             dataset_accession = src.get("dataset_accession")
             source_label = src.get("source_label")
             run_ref = None
@@ -1254,52 +1301,62 @@ def at_coverage(
                     runs_root=runs_root,
                 )
             rows.append({
-                "node_id": node.get("id"),
+                "node_id": node_id,
                 "dataset_accession": dataset_accession,
                 "source_label": source_label,
                 "run_ref": run_ref,
             })
-    return rows
+    return {"scope": scope, "checked": checked, "undeclared": undeclared, "rows": rows}
 
 
-def format_at_coverage(rows: list[dict], taxonomy_id: str) -> str:
-    """Render :func:`at_coverage` rows as a human-readable table."""
-    if not rows:
-        return (
-            f"No classical nodes declare at_source_sets (taxonomy "
-            f"{taxonomy_id}). Nothing to attempt."
+def format_at_coverage(report: dict, taxonomy_id: str) -> str:
+    """Render an :func:`at_coverage` report as a human-readable table."""
+    rows = report["rows"]
+    checked = report["checked"]
+    undeclared = report["undeclared"]
+    lines = [
+        f"AT coverage (taxonomy {taxonomy_id}, scope: {report['scope']}): "
+        f"{len(checked)} classical node(s) checked, "
+        f"{len(checked) - len(undeclared)} declare {len(rows)} source set(s).",
+    ]
+    if rows:
+        w_node = max(len("node"), *(len(r["node_id"] or "") for r in rows))
+        w_ds = max(len("dataset_accession"),
+                   *(len(r["dataset_accession"] or "") for r in rows))
+        w_lbl = max(len("source_label"),
+                    *(len(r["source_label"] or "") for r in rows))
+        lines += [
+            "",
+            f"{'node':<{w_node}}  {'dataset_accession':<{w_ds}}  "
+            f"{'source_label':<{w_lbl}}  run",
+            f"{'─' * w_node}  {'─' * w_ds}  {'─' * w_lbl}  {'─' * 30}",
+        ]
+        for r in rows:
+            run = r["run_ref"] if r["run_ref"] else "✗ UNRESOLVED"
+            mark = "✓ " if r["run_ref"] else ""
+            lines.append(
+                f"{(r['node_id'] or ''):<{w_node}}  "
+                f"{(r['dataset_accession'] or ''):<{w_ds}}  "
+                f"{(r['source_label'] or ''):<{w_lbl}}  {mark}{run}"
+            )
+    lines.append("")
+    if undeclared:
+        lines.append(
+            f"{len(undeclared)} node(s) declare no at_source_sets, so there is "
+            f"nothing to check for them (an evidence-extraction gap, not "
+            f"coverage): {', '.join(undeclared)}"
         )
     unresolved = [r for r in rows if not r["run_ref"]]
-    w_node = max(len("node"), *(len(r["node_id"] or "") for r in rows))
-    w_ds = max(len("dataset_accession"),
-               *(len(r["dataset_accession"] or "") for r in rows))
-    w_lbl = max(len("source_label"),
-                *(len(r["source_label"] or "") for r in rows))
-    lines = [
-        f"AT coverage for {len(rows)} declared source set(s) "
-        f"(taxonomy {taxonomy_id}):",
-        "",
-        f"{'node':<{w_node}}  {'dataset_accession':<{w_ds}}  "
-        f"{'source_label':<{w_lbl}}  run",
-        f"{'─' * w_node}  {'─' * w_ds}  {'─' * w_lbl}  {'─' * 30}",
-    ]
-    for r in rows:
-        run = r["run_ref"] if r["run_ref"] else "✗ UNRESOLVED"
-        mark = "✓ " if r["run_ref"] else ""
-        lines.append(
-            f"{(r['node_id'] or ''):<{w_node}}  "
-            f"{(r['dataset_accession'] or ''):<{w_ds}}  "
-            f"{(r['source_label'] or ''):<{w_lbl}}  {mark}{run}"
-        )
-    lines.append("")
     if unresolved:
         lines.append(
             f"{len(unresolved)} UNRESOLVED → run `annotation-transfer` for "
             f"these datasets before mapping (retrieve_dataset preflight gates "
-            f"the load). Nodes with no at_source_sets are skipped."
+            f"the load)."
         )
-    else:
+    elif rows:
         lines.append("All declared AT sources resolve to a run.")
+    elif not checked:
+        lines.append("No classical nodes in scope. Nothing to attempt.")
     return "\n".join(lines)
 
 
@@ -1361,12 +1418,17 @@ def main(argv: list[str] | None = None) -> int:
     p_cov = sub.add_parser(
         "at-coverage",
         help=(
-            "Report AT-run coverage for a graph's classical nodes' declared "
-            "at_source_sets. Report-only; exits non-zero if any UNRESOLVED."
+            "Report AT-run coverage for classical nodes' declared "
+            "at_source_sets. Scope: the named node ids, --region, or the "
+            "whole KB. Report-only; exits non-zero if any UNRESOLVED."
         ),
     )
-    p_cov.add_argument("graph_file", type=Path)
     p_cov.add_argument("taxonomy_id")
+    p_cov.add_argument("node_ids", nargs="*", metavar="node_id")
+    p_cov.add_argument(
+        "--region", default=None,
+        help="Every classical node under kb/graphs/REGION/.",
+    )
 
     args = parser.parse_args(argv)
 
@@ -1396,11 +1458,17 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.cmd == "at-coverage":
-        rows = at_coverage(args.graph_file, args.taxonomy_id)
-        print(format_at_coverage(rows, args.taxonomy_id))
+        try:
+            report = at_coverage(
+                args.taxonomy_id, node_ids=args.node_ids, region=args.region,
+            )
+        except ValueError as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 2
+        print(format_at_coverage(report, args.taxonomy_id))
         # Non-zero when any declared source lacks a resolvable run, so the
         # check can gate a scripted pipeline. Report-only otherwise.
-        return 1 if any(not r["run_ref"] for r in rows) else 0
+        return 1 if any(not r["run_ref"] for r in report["rows"]) else 0
 
     return 1
 
