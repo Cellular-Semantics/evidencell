@@ -700,6 +700,8 @@ def extract_methods_summary(
         statistic, parameters, script provenance, contrasts cited)
       annotation_transfer_runs: list of AT method summaries
       atlas_data_sources: list of {atlas, taxonomy_id, pseudobulk_sha}
+      expression_sources: list of {taxonomy_id, stats_file} — the MapMyCells
+        stats file behind atlas expression values on these edges
       bulk_data_sources: list of {dataset_id, source_pmid, geo_accession,
         technique, n_pools, citation}
       framework_version: evidencell git commit at extract time
@@ -864,6 +866,29 @@ def extract_methods_summary(
         ),
     }
 
+    # Atlas expression provenance (#189): the stats file each target
+    # taxonomy's expression cache was filled from, so the Methods section
+    # cites it by name. Read-only and best-effort — never triggers an
+    # expression load, and a missing DB just leaves the list short (the
+    # atlas-fields path reports a missing DB on its own terms).
+    from evidencell.kb_io import usable_sqlite
+    from evidencell.paths import taxonomy_db_path
+    from evidencell.taxonomy_db import TaxonomyDB
+
+    expression_sources: list[dict] = []
+    edge_taxonomies = {
+        (nodes_by_id.get(e.get("taxonomy_type")) or {}).get("taxonomy_id")
+        for e in edges
+    }
+    for tax_id in sorted(t for t in edge_taxonomies if t):
+        tdb_path = taxonomy_db_path(tax_id)
+        stats_file = (
+            TaxonomyDB(tdb_path).expression_source_file()
+            if usable_sqlite(tdb_path) else None
+        )
+        if stats_file:
+            expression_sources.append({"taxonomy_id": tax_id, "stats_file": stats_file})
+
     # Render kb_graph_file as repo-relative when possible, so the report's
     # reproducibility footer carries a portable path (not someone's $HOME).
     try:
@@ -878,6 +903,7 @@ def extract_methods_summary(
         "bulk_correlation_runs": bulk_runs,
         "annotation_transfer_runs": at_runs,
         "atlas_data_sources": list(atlas_sources_seen.values()),
+        "expression_sources": expression_sources,
         "bulk_data_sources": list(bulk_dataset_sources_seen.values()),
         "framework_version": _evidencell_commit(),
         "gen_timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),

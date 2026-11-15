@@ -949,11 +949,17 @@ For each marker/neuropeptide on the classical node, assess the evidence chain:
   at zero in precomputed stats; or reported in literature but absent from atlas
   metadata), note the discrepancy factually. Do not explain it away — present
   both values and flag for investigation.
-- **Atlas annotation vs. expression discrepancy (mandatory check)**: For each
-  marker or neuropeptide listed as DEFINING, DEFINING_SCOPED, NEUROPEPTIDE,
-  TF, or MERFISH in the atlas node's metadata, check whether the corresponding
-  precomputed expression value (from `property_comparisons[*].node_b_value`)
-  is near-zero (< 0.5) or absent. If so, flag explicitly:
+- **Atlas annotation vs. expression discrepancy (mandatory check)**: Stage A
+  cross-checks the atlas node's metadata marker lists against measured
+  expression and Stage B copies each disagreement into the matching
+  comparison's `notes` as `METADATA DISCREPANCY LISTED_NOT_EXPRESSED` /
+  `EXPRESSED_NOT_LISTED` / `LISTED_NO_EXPRESSION_DATA`. Report every
+  `LISTED_NOT_EXPRESSED` and `LISTED_NO_EXPRESSION_DATA` you find there. Also,
+  for each marker or neuropeptide listed as DEFINING, DEFINING_SCOPED,
+  NEUROPEPTIDE, TF, or MERFISH in the atlas node's metadata, check whether
+  the corresponding expression value (from
+  `property_comparisons[*].node_b_value`) is near-zero (< 0.5) or absent
+  (older edges predate the Stage A cross-check). If so, flag explicitly:
   > ⚠ **Atlas annotation/expression discrepancy**: {gene} is listed as a {DEFINING /
   > NEUROPEPTIDE / TF / MERFISH} marker in WMBv1 atlas metadata for {accession}
   > but shows precomputed mean expression = {value}. This may reflect a marker
@@ -1000,6 +1006,10 @@ For each marker/neuropeptide on the classical node, assess the evidence chain:
 
   This belongs in the marker-provenance bullets, not in the Concerns
   list (it's an upstream curation gap, not a candidate-specific caveat).
+- **Not measured is a known gap, not absence**: a comparison with
+  `node_b_value: not measured` (`NOT_ASSESSED`) means the gene has no
+  Ensembl mapping or is absent from the atlas stats file (reason in
+  `notes`). Say so; never read it as the gene being unexpressed.
 - **Quantitative cross-check**: If precomputed stats values are available in
   `property_comparisons[*].node_b_value`, note where they confirm or
   challenge the expected marker profile. For negative markers, note any
@@ -1092,16 +1102,18 @@ etc.) so the reader knows what evidentiary base the classical node sits on.
 **Atlas mapping query.** Static text:
 > Candidate atlas clusters were retrieved from the {atlas_data_sources[0].atlas}
 > taxonomy ({atlas_data_sources[0].taxonomy_id}) at ranks 0 (cluster) and 1
-> (supertype) using metadata-based scoring (region match, NT type, defining
-> markers, sex bias when applicable). Full scoring rules: `workflows/map-cell-type.md`.
+> (supertype), scored on region match, NT type, measured expression of the
+> classical type's defining, negative and neuropeptide markers, and sex bias
+> when applicable. Full scoring rules: `workflows/map-cell-type.md`.
 
 **Property alignment.** Static text:
 > Each defining property of the classical type was compared to the corresponding
 > atlas-side value via the `property_comparisons` schema, with alignments graded
 > CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical
-> values came from precomputed expression on the cluster (cluster.yaml in the
-> taxonomy reference store) and from MERFISH spatial registration for soma
-> location.
+> values came from the atlas's MapMyCells precomputed statistics
+> ({`methods_summary.expression_sources[].stats_file`}; cluster means, with
+> coarser levels as cell-weighted means of their clusters) and from MERFISH
+> spatial registration for soma location.
 
 **Annotation transfer** *(only if `methods_summary.annotation_transfer_runs` is non-empty)*:
 For each AT run summary, render a compact table. AT run records may come

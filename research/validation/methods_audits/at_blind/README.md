@@ -42,8 +42,9 @@ query.
    hippocampal field prefix normalisation).
 2. Extract positive markers (defining + neuropeptide, deduplicated),
    negative markers, NT type, sex_bias.
-3. Load `precomputed_expression` for the queried rank AND rank 0
-   (needed for coverage descent).
+3. Load expression for the queried markers at the queried rank AND rank 0
+   (needed for coverage descent) through `TaxonomyDB.expression()` — the
+   on-demand accessor over the MapMyCells stats file (#189).
 4. Call `find_candidates` with the above + `at_hits=None`,
    `at_bypass=None`. Region filter uses the permissive rule
    (strict `cell_count > 0` OR proximity `count_in_or_near_100um > 0`

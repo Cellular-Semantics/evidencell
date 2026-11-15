@@ -131,7 +131,10 @@ def emit_stage_b(
 
     edges: list[dict] = []
     for cand in candidates:
-        atlas = _load_atlas_node(taxonomy_id, cand["node_id"], rank)
+        atlas = _load_atlas_node(
+            taxonomy_id, cand["node_id"], rank,
+            symbols=_classical_expression_symbols(classical),
+        )
         edges.append(_build_edge(
             classical_node_id=classical_node_id,
             candidate=cand,
@@ -273,8 +276,24 @@ def _property_comparisons(
 
     # ── markers / neuropeptides / negative markers ──────────────────────────
     expr_detail = {e["gene"]: e for e in (ds.get("expression_detail") or [])}
-    atlas_expr = _atlas_precomputed_expr(atlas)
+    atlas_expr = (atlas or {}).get("expression") or {}
+    not_measured = (atlas or {}).get("not_measured") or {}
+    expr_source = (atlas or {}).get("expression_source")
     atlas_marker_meta = _atlas_marker_categories(atlas)
+    # Stage A metadata-vs-expression discrepancies, keyed by gene; copied
+    # into the matching comparison's notes (#189). They don't change alignment.
+    discrepancies = {
+        d["gene"]: d for d in (candidate.get("marker_discrepancies") or [])
+    }
+
+    def _gene_ctx(sym: str, canon: str) -> dict:
+        return {
+            "atlas_val": atlas_expr.get(canon),
+            "atlas_meta_category": atlas_marker_meta.get(canon),
+            "not_measured_reason": not_measured.get(canon) or not_measured.get(sym),
+            "expression_source": expr_source,
+            "discrepancy": discrepancies.get(sym) or discrepancies.get(canon),
+        }
 
     for m in (classical.get("defining_markers") or []):
         sym = m.get("symbol") if isinstance(m, dict) else m
@@ -287,8 +306,7 @@ def _property_comparisons(
             is_negative=False,
             classical_label="defining marker",
             expr_entry=expr_detail.get(sym) or expr_detail.get(canon),
-            atlas_val=atlas_expr.get(canon),
-            atlas_meta_category=atlas_marker_meta.get(canon),
+            **_gene_ctx(sym, canon),
         ))
 
     for m in (classical.get("negative_markers") or []):
@@ -302,8 +320,7 @@ def _property_comparisons(
             is_negative=True,
             classical_label="ABSENT (classical negative marker)",
             expr_entry=expr_detail.get(f"-{sym}") or expr_detail.get(f"-{canon}") or expr_detail.get(canon),
-            atlas_val=atlas_expr.get(canon),
-            atlas_meta_category=atlas_marker_meta.get(canon),
+            **_gene_ctx(sym, canon),
         ))
 
     for m in (classical.get("neuropeptides") or []):
@@ -317,8 +334,7 @@ def _property_comparisons(
             is_negative=False,
             classical_label="neuropeptide (classical)",
             expr_entry=expr_detail.get(sym) or expr_detail.get(canon),
-            atlas_val=atlas_expr.get(canon),
-            atlas_meta_category=atlas_marker_meta.get(canon),
+            **_gene_ctx(sym, canon),
         ))
 
     return out
@@ -402,16 +418,17 @@ def _atlas_location_summary(atlas: dict | None, ds: dict) -> str:
     return "; ".join(out)
 
 
-def _atlas_precomputed_expr(atlas: dict | None) -> dict[str, float]:
-    if not atlas:
-        return {}
-    pe = atlas.get("precomputed_expression") or {}
-    out: dict[str, float] = {}
-    for g in pe.get("genes") or []:
-        sym = g.get("symbol")
-        v = g.get("mean_expression")
-        if sym and v is not None:
-            out[sym] = float(v)
+def _classical_expression_symbols(classical: dict) -> list[str]:
+    """Canonical gene symbols of a classical node's defining markers,
+    negative markers and neuropeptides — the genes Stage B compares."""
+    out: list[str] = []
+    for field in ("defining_markers", "negative_markers", "neuropeptides"):
+        for m in classical.get(field) or []:
+            sym = m.get("symbol") if isinstance(m, dict) else m
+            if sym:
+                canon = _resolve_symbol(sym)
+                if canon not in out:
+                    out.append(canon)
     return out
 
 
@@ -437,11 +454,14 @@ def _marker_comparison(
     expr_entry: dict | None,
     atlas_val: float | None,
     atlas_meta_category: str | None,
+    not_measured_reason: str | None = None,
+    expression_source: str | None = None,
+    discrepancy: dict | None = None,
 ) -> dict:
     """Build one property_comparison for a marker / neuropeptide."""
     # Atlas-side value: prefer expr_entry (cohort-relative) if Stage A
-    # scored this gene; else fall back to precomputed_expression mean;
-    # else NOT_ASSESSED.
+    # scored this gene; else the accessor's mean expression; else
+    # NOT_ASSESSED, which only happens for a gene that can't be measured.
     val = None
     cohort_pct = None
     coverage = None
@@ -458,12 +478,19 @@ def _marker_comparison(
 
     classical_text = f"{symbol} — {classical_label}"
     if val is None:
+        if not_measured_reason:
+            why = f"Gene not measured in {expression_source or 'the atlas stats file'} ({not_measured_reason})."
+        else:
+            why = (
+                f"No expression value for this atlas node in "
+                f"{expression_source or 'the atlas stats file'}."
+            )
         return {
             "property": property_name,
             "node_a_value": classical_text,
-            "node_b_value": "no atlas expression data",
+            "node_b_value": "not measured",
             "alignment": "NOT_ASSESSED",
-            "notes": "Gene absent from Stage A expression_detail and from precomputed_expression.",
+            "notes": _with_discrepancy(why, discrepancy),
         }
 
     node_b_parts = [f"{symbol}: {val:.2f}"]
@@ -476,7 +503,10 @@ def _marker_comparison(
     node_b = "; ".join(node_b_parts)
 
     alignment = _marker_alignment(val, cohort_pct, is_negative)
-    notes = _marker_notes(symbol, val, cohort_pct, coverage, alignment, is_negative)
+    notes = _with_discrepancy(
+        _marker_notes(symbol, val, cohort_pct, coverage, alignment, is_negative),
+        discrepancy,
+    )
 
     return {
         "property": property_name,
@@ -485,6 +515,32 @@ def _marker_comparison(
         "alignment": alignment,
         "notes": notes,
     }
+
+
+_DISCREPANCY_TEXT = {
+    "LISTED_NOT_EXPRESSED": (
+        "atlas metadata lists this gene as a marker but measured expression is "
+        "low/absent — check for a metadata error, gene-version difference or "
+        "scope mismatch"
+    ),
+    "EXPRESSED_NOT_LISTED": (
+        "highly expressed among siblings but not in the atlas metadata marker lists"
+    ),
+    "LISTED_NO_EXPRESSION_DATA": (
+        "atlas metadata lists this gene as a marker but it has no expression data"
+    ),
+}
+
+
+def _with_discrepancy(notes: str, discrepancy: dict | None) -> str:
+    """Append a Stage A metadata/expression discrepancy to a PC's notes."""
+    if not discrepancy:
+        return notes
+    kind = discrepancy.get("kind", "")
+    text = _DISCREPANCY_TEXT.get(kind, kind)
+    pct = discrepancy.get("sibling_pct")
+    suffix = f" (sibling percentile {pct:.3f})" if pct is not None else ""
+    return f"{notes}; METADATA DISCREPANCY {kind}: {text}{suffix}"
 
 
 def _marker_alignment(
@@ -838,26 +894,20 @@ def _canonical_discovery_path(
 
 
 def _load_atlas_node(
-    taxonomy_id: str, accession: str, rank: int,
+    taxonomy_id: str, accession: str, rank: int, symbols: list[str] | None = None,
 ) -> dict | None:
-    """Load the atlas node dict for a given accession from the taxonomy YAML.
+    """Load the atlas node dict for a given accession from the taxonomy DB.
 
     The ``rank`` argument is accepted for backwards-compat but unused —
     the DB lookup keys off accession directly. Returns None when the
     accession isn't in the DB.
 
-    Assembled from the taxonomy SQLite index (node_expression + nodes
-    marker columns + anat table), not from the level YAML. The
-    returned dict mirrors the shape downstream consumers expect
-    (``anatomical_location``, ``precomputed_expression.genes``,
-    ``markers``) so callers — ``_atlas_location_summary``,
-    ``_atlas_precomputed_expr``, ``_atlas_marker_categories`` — don't
-    change.
-
-    YAML stays the edit interface for atlas data
-    (``just add-expression`` writes precomputed_expression panels,
-    ``just reingest`` rewrites from source preserving enrichments);
-    ``just build-taxonomy-db`` propagates those edits into the DB.
+    Expression for ``symbols`` comes through ``TaxonomyDB.expression`` —
+    the on-demand accessor (#189) — so genes not yet cached load from the
+    MapMyCells stats file. The returned dict carries ``expression``
+    (``{symbol: mean}``), ``not_measured`` (``{symbol: reason}``) and
+    ``expression_source`` (stats file name) alongside the nodes-table
+    fields, ``anatomical_location`` and metadata ``markers``.
     """
     del rank  # unused; kept in signature for backwards-compat
     from evidencell.taxonomy_db import TaxonomyDB, require_taxonomy_db
@@ -869,7 +919,7 @@ def _load_atlas_node(
     if not node:
         return None
 
-    expr_map = db.get_node_expression(accession)
+    expr = db.expression(symbols or [], accessions=[accession])
     anat_rows = db.get_node_anat_rows(accession)
     marker_cats = db.get_node_marker_categories(accession)
 
@@ -892,12 +942,9 @@ def _load_atlas_node(
             }
             for r in anat_rows
         ],
-        "precomputed_expression": {
-            "genes": [
-                {"symbol": sym, "mean_expression": val}
-                for sym, val in expr_map.items()
-            ],
-        },
+        "expression": expr.for_node(accession),
+        "not_measured": expr.not_measured,
+        "expression_source": expr.source_file,
         "markers": [
             {"symbol": sym, "category": cat}
             for sym, cat in marker_cats.items()
@@ -1027,7 +1074,10 @@ def _cli() -> None:
 
     edges: list[dict] = []
     for cand in candidates:
-        atlas = _load_atlas_node(args.taxonomy_id, cand["node_id"], args.rank)
+        atlas = _load_atlas_node(
+            args.taxonomy_id, cand["node_id"], args.rank,
+            symbols=_classical_expression_symbols(classical),
+        )
         edges.append(_build_edge(
             classical_node_id=args.classical_node_id,
             candidate=cand,

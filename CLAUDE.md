@@ -126,22 +126,19 @@ inside mapping graphs. Mapping graphs reference taxonomy nodes by accession;
 stubs carry only: `id`, `name`, `definition_basis`, `taxonomy_id`,
 `cell_set_accession`.
 
-**Known violation:** `precomputed_expression` blocks currently live on atlas
-stubs in `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`.
-These should migrate to the taxonomy reference store using
-`just add-expression` (see below).
+**Atlas expression is not stored in YAML** (#189). Mean expression per atlas
+node is read on demand from the MapMyCells precomputed-stats HDF5 and cached
+in the taxonomy SQLite DB (see "Atlas expression" below). Leftover
+`precomputed_expression` blocks on stub nodes in a few `kb/graphs/` files are
+dead data — nothing reads them — and can be dropped in a content PR.
 
 ### Taxonomy update operations
 
-Two managed operations update taxonomy YAML while preserving enrichments:
-
-- **`just add-expression`** — write `PrecomputedExpression` blocks from HDF5
-  stats to taxonomy nodes. Requires a gene mapping TSV (generate once with
-  `just generate-gene-mapping`). Supports cluster and supertype levels.
 - **`just reingest`** — re-ingest from source JSON while preserving enrichment
-  fields (`precomputed_expression`, `electrophysiology`, `morphology`, etc.).
+  fields (`electrophysiology`, `morphology`, curated markers, etc.).
   Nodes removed in the new source are flagged for review, not silently dropped.
-  Use `just reingest-dry` to preview changes.
+  Use `just reingest-dry` to preview changes. Re-ingest cannot lose
+  expression: none is stored in YAML.
 
 Field ownership is explicit: `INGEST_FIELDS` are replaced from the new source,
 `ENRICHMENT_FIELDS` are preserved from old data. Both sets are declared in
@@ -151,13 +148,36 @@ The old flush-and-replace ingest (`just ingest-taxonomy-db`) still works but
 does NOT preserve enrichments. Use `just reingest` when taxonomy nodes have
 post-ingest enrichments.
 
+### Atlas expression (on-demand cache)
+
+`TaxonomyDB.expression(symbols, accessions=…, ranks=…)` in
+`src/evidencell/taxonomy_db.py` is the one accessor for atlas expression;
+`find-candidates`, `emit-stage-b`, `refresh-expression`,
+`refresh-property-comparisons` and the `at_blind` audit all go through it.
+A gene not yet cached is read (one column, all clusters) from the stats HDF5
+and written to the DB's `node_expression` / `expression_genes` tables;
+non-leaf values are n_cells-weighted means of rank-0 descendants. Details in
+`src/evidencell/expression_cache.py`.
+
+- `just build-taxonomy-db` creates the cache tables **empty**; they refill on
+  use. A new stats release (different sha256) drops and reloads the cache.
+- **Fails closed**: an uncached gene with no stats file stops the run with
+  `just fetch-mapmycells {taxonomy_id}`. There is no metadata-only fallback.
+- Genes that can't be measured (no Ensembl mapping, absent from the stats
+  file) are recorded as not measured and reported — never a silent `{}`.
+- Marker scoring in `find-candidates` uses expression only. The atlas
+  node's metadata marker lists are cross-checked and disagreements reported
+  as `marker_discrepancies` (carried into Stage B property-comparison notes).
+- `just warm-expression-cache {taxonomy_id}` optionally pre-loads every
+  marker named on a KB classical node.
+
 **Keep `WORKFLOW.md` current.**
 
 ### Skills reference
 
 | Skill | When to invoke |
 |---|---|
-| `query-taxonomy-db` | Any taxonomy candidate search, field coverage check, or DB exploration. **Do not read taxonomy YAML files directly for query purposes** — the DB is the query interface; YAML is the edit interface. Per-node `precomputed_expression` (gene → mean expression) is in the DB's `node_expression` table since 2026-06; `just build-taxonomy-db {taxonomy_id}` propagates YAML edits into it. |
+| `query-taxonomy-db` | Any taxonomy candidate search, field coverage check, or DB exploration. **Do not read taxonomy YAML files directly for query purposes** — the DB is the query interface; YAML is the edit interface. Atlas expression is not in YAML: read it through `TaxonomyDB.expression()`, which loads uncached genes from the MapMyCells stats file into the DB's `node_expression` table on demand (#189). Querying `node_expression` directly only sees genes already cached. |
 | `retrieve-dataset` | Downloading and inspecting an expression dataset (h5ad, RDS, loom, mtx). | Any time an orchestrator is added, removed, renamed, or its status changes, update `WORKFLOW.md` in the same commit. The overview table, inputs table, and typical workflow diagram must all reflect the current state. Never leave a stale status entry or a duplicate section.
 ### Provenance
 
@@ -220,11 +240,14 @@ Registered taxonomies:
 | `CCN202210140` | Whole Human Brain (Siletti) | human |
 | `CCN20230505` | Human MTG SEA-AD | human |
 
-**This is what `precomputed_expression.source` resolves to.** Every such block
-in `kb/taxonomy/**` records the filename it was derived from — e.g.
-`precomputed_stats_ABC_revision_230821.h5` — and that string is the basename of
-the registry's `stats_s3_url` for that taxonomy. So a block's provenance is
-fully traceable without keeping the 1.4 GB artefact in the repo.
+**The stats file is a runtime dependency for mapping.** Atlas expression is
+read from it on demand (see "Atlas expression" above), at
+`conf/mapmycells/{taxonomy_id}/{basename of stats_s3_url}` — exactly where
+`fetch-mapmycells` writes it. The DB cache records the filename it was filled
+from (`expression_genes.source_file`, e.g.
+`precomputed_stats_ABC_revision_230821.h5`), and gen-facts surfaces it as
+`methods_summary.expression_sources`, so report provenance resolves to a public
+URL without keeping the 1.4 GB artefact in the repo.
 
 Two things to know before using them:
 
@@ -236,8 +259,8 @@ Two things to know before using them:
   (`Human.` / `Macaque.` / `Marmoset.precomputed_stats.20250507.h5`) — use
   those directly if you need a single-species reference.
 
-Downstream, pass the `.h5` to `just add-expression` / `just add-expression-all`
-along with `conf/gene_mapping_{taxonomy_id}.tsv`.
+The accessor also needs `conf/gene_mapping_{taxonomy_id}.tsv` (symbol →
+Ensembl; committed for CCN20230722, otherwise `just generate-gene-mapping`).
 
 ---
 
@@ -318,7 +341,7 @@ the full specification and correction loop protocol.
 | Taxonomy SQLite index | `kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db` (gitignored; build per worktree with `just build-taxonomy-db {taxonomy_id}`) | `map-cell-type.md` (candidate queries), `gen-report.md` (atlas-side facts). **Required** — a missing DB raises. Read-only previews (render, gen-facts) may set `EVIDENCELL_ALLOW_MISSING_TAXONOMY_DB=1` to proceed without atlas fields; anything that writes KB content (emit-stage-b, refresh-*, AT metrics) ignores it |
 | Taxonomy field mapping | `kb/taxonomy/{taxonomy_id}/field_mapping.json` | `ingest-taxonomy.md` (fast-path detection) |
 | MBA ontology JSON | `conf/mba/mbao-full.json` (gitignored; fetch with `just fetch-mba-ontology`) | `ingest-taxonomy.md` Step 4 (anat closure build); shared across all taxonomies |
-| Precomputed stats HDF5 | `conf/mapmycells/{taxonomy_id}/` (gitignored; fetch with `just fetch-mapmycells {taxonomy_id}` — URLs come from `annotation_transfer/.../taxonomies.py`, see "MapMyCells reference files" above) | `map-cell-type.md` (target-side marker cross-check), `annotation-transfer.md` (local MapMyCells) |
+| Precomputed stats HDF5 | `conf/mapmycells/{taxonomy_id}/` (gitignored; fetch with `just fetch-mapmycells {taxonomy_id}` — URLs come from `annotation_transfer/.../taxonomies.py`, see "MapMyCells reference files" above) | `map-cell-type.md` — **required**: atlas expression is read from it on demand (#189); `annotation-transfer.md` (local MapMyCells) |
 
 Place input files in the appropriate subdirectory before running the relevant orchestrator.
 

@@ -15,7 +15,6 @@ from evidencell.taxonomy_ops import (
     INGEST_FIELDS,
     _index_nodes,
     _merge_nodes,
-    add_expression,
     collect_kb_marker_union,
     load_gene_mapping,
     load_taxonomy_level,
@@ -62,13 +61,7 @@ def tmp_taxonomy(tmp_path: Path) -> Path:
                     {"symbol": "Pvalb", "category": "DEFINING"},
                 ],
                 # Pre-existing enrichment
-                "precomputed_expression": {
-                    "source": "old_stats.h5",
-                    "level": "cluster",
-                    "genes": [
-                        {"symbol": "Pvalb", "ensembl_id": "ENSMUSG00000005716", "mean_expression": 5.0},
-                    ],
-                },
+                "electrophysiology": {"firing_pattern": "fast-spiking"},
             },
         ],
     }
@@ -119,8 +112,10 @@ class TestFieldOwnership:
         assert "id" in INGEST_FIELDS
         assert "name" in INGEST_FIELDS
 
-    def test_expression_in_enrichment(self):
-        assert "precomputed_expression" in ENRICHMENT_FIELDS
+    def test_expression_not_stored_in_yaml(self):
+        """#189: expression lives in the DB cache, not YAML — not an enrichment."""
+        assert "precomputed_expression" not in ENRICHMENT_FIELDS
+        assert "electrophysiology" in ENRICHMENT_FIELDS
 
 
 class TestIndexNodes:
@@ -146,7 +141,7 @@ class TestMergeNodes:
                 "cell_set_accession": "ACC_1",
                 "name": "Old Name",
                 "markers": [{"symbol": "X"}],
-                "precomputed_expression": {"source": "old.h5", "genes": []},
+                "electrophysiology": {"firing_pattern": "old"},
             },
         ]
         new = [
@@ -160,7 +155,7 @@ class TestMergeNodes:
         assert len(merged) == 1
         assert merged[0]["name"] == "New Name"
         assert merged[0]["markers"] == [{"symbol": "Y"}]
-        assert merged[0]["precomputed_expression"]["source"] == "old.h5"
+        assert merged[0]["electrophysiology"]["firing_pattern"] == "old"
         assert stats["updated"] == 1
 
     def test_new_node_added(self):
@@ -191,18 +186,18 @@ class TestMergeNodes:
         old = [
             {
                 "cell_set_accession": "ACC_1",
-                "precomputed_expression": {"source": "old"},
+                "electrophysiology": {"firing_pattern": "old"},
             },
         ]
         new = [
             {
                 "cell_set_accession": "ACC_1",
-                "precomputed_expression": {"source": "new"},
+                "electrophysiology": {"firing_pattern": "new"},
             },
         ]
         merged, _ = _merge_nodes(old, new, ENRICHMENT_FIELDS)
         # New already has the field → preserved as-is (not replaced from old)
-        assert merged[0]["precomputed_expression"]["source"] == "new"
+        assert merged[0]["electrophysiology"]["firing_pattern"] == "new"
 
 
 class TestLoadGeneMapping:
@@ -230,206 +225,12 @@ class TestYamlIO:
             data2 = load_taxonomy_level("TEST001", "cluster")
             assert data2["nodes"][0]["name"] == "Modified"
             # Other data preserved
-            assert data2["nodes"][1]["precomputed_expression"]["source"] == "old_stats.h5"
-
-
-class TestAddExpression:
-    def test_add_expression_basic(self, tmp_taxonomy: Path, gene_mapping_tsv: Path):
-        """Test add-expression with mock HDF5 data."""
-        import numpy as np
-
-        gene_mapping = load_gene_mapping(gene_mapping_tsv)
-
-        # Mock the HDF5 loading
-        col_names = ["ENSMUSG00000004366", "ENSMUSG00000026787", "ENSMUSG00000005716"]
-        cluster_to_row = {"CLUS_001": 0, "CLUS_002": 1}
-        sum_matrix = np.array([
-            [3.5, 1.2, 0.1],  # CLUS_001: Sst=3.5, Gad1=1.2, Pvalb=0.1
-            [0.3, 0.8, 8.7],  # CLUS_002: Sst=0.3, Gad1=0.8, Pvalb=8.7
-        ])
-
-        with (
-            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
-            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
-        ):
-            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
-            mock_h5.return_value = (col_names, cluster_to_row, sum_matrix)
-
-            result = add_expression(
-                taxonomy_id="TEST001",
-                stats_path="fake.h5",
-                genes=["Sst", "Pvalb"],
-                gene_mapping=gene_mapping,
-                level="cluster",
-            )
-
-        assert result["updated"] == 2
-        assert result["genes_found"] == 2
-        assert result["genes_missing"] == []
-
-        # Verify written data
-        with (tmp_taxonomy / "cluster.yaml").open() as fh:
-            data = yaml.safe_load(fh)
-
-        node1 = data["nodes"][0]
-        assert "precomputed_expression" in node1
-        expr = node1["precomputed_expression"]
-        assert expr["source"] == "fake.h5"
-        assert len(expr["genes"]) == 2
-        sst = next(g for g in expr["genes"] if g["symbol"] == "Sst")
-        assert sst["mean_expression"] == 3.5
-        assert sst["ensembl_id"] == "ENSMUSG00000004366"
-
-    def test_add_expression_filters_accessions(self, tmp_taxonomy: Path, gene_mapping_tsv: Path):
-        """Only update specified accessions."""
-        import numpy as np
-
-        gene_mapping = load_gene_mapping(gene_mapping_tsv)
-        col_names = ["ENSMUSG00000004366"]
-        cluster_to_row = {"CLUS_001": 0, "CLUS_002": 1}
-        sum_matrix = np.array([[3.5], [0.3]])
-
-        with (
-            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
-            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
-        ):
-            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
-            mock_h5.return_value = (col_names, cluster_to_row, sum_matrix)
-
-            result = add_expression(
-                taxonomy_id="TEST001",
-                stats_path="fake.h5",
-                genes=["Sst"],
-                gene_mapping=gene_mapping,
-                level="cluster",
-                accessions=["CLUS_001"],
-            )
-
-        assert result["updated"] == 1
-        assert result["skipped"] == 1
-
-    def test_missing_genes_reported(self, tmp_taxonomy: Path, gene_mapping_tsv: Path):
-        """Genes not in mapping are reported as missing."""
-        import numpy as np
-
-        gene_mapping = load_gene_mapping(gene_mapping_tsv)
-        col_names = ["ENSMUSG00000004366"]
-        cluster_to_row = {"CLUS_001": 0}
-        sum_matrix = np.array([[3.5]])
-
-        with (
-            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
-            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
-        ):
-            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
-            mock_h5.return_value = (col_names, cluster_to_row, sum_matrix)
-
-            result = add_expression(
-                taxonomy_id="TEST001",
-                stats_path="fake.h5",
-                genes=["Sst", "FakeGene"],
-                gene_mapping=gene_mapping,
-                level="cluster",
-            )
-
-        assert "FakeGene" in result["genes_missing"]
-
-    def test_add_expression_merges_sequential_calls(self, tmp_taxonomy: Path, gene_mapping_tsv: Path):
-        """Two sequential calls with disjoint gene sets leave both sets in YAML (issue #40)."""
-        import numpy as np
-
-        gene_mapping = load_gene_mapping(gene_mapping_tsv)
-
-        # First call: Sst + Gad1
-        col_names_1 = ["ENSMUSG00000004366", "ENSMUSG00000026787"]  # Sst, Gad1
-        cluster_to_row = {"CLUS_001": 0, "CLUS_002": 1}
-        sum_matrix_1 = np.array([[3.5, 1.2], [0.3, 0.8]])
-
-        with (
-            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
-            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
-        ):
-            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
-            mock_h5.return_value = (col_names_1, cluster_to_row, sum_matrix_1)
-            add_expression(
-                taxonomy_id="TEST001",
-                stats_path="fake1.h5",
-                genes=["Sst", "Gad1"],
-                gene_mapping=gene_mapping,
-                level="cluster",
-            )
-
-        # Second call: Cck only (disjoint)
-        col_names_2 = ["ENSMUSG00000032532"]  # Cck
-        sum_matrix_2 = np.array([[5.1], [2.3]])
-
-        with (
-            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
-            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
-        ):
-            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
-            mock_h5.return_value = (col_names_2, cluster_to_row, sum_matrix_2)
-            add_expression(
-                taxonomy_id="TEST001",
-                stats_path="fake2.h5",
-                genes=["Cck"],
-                gene_mapping=gene_mapping,
-                level="cluster",
-            )
-
-        with (tmp_taxonomy / "cluster.yaml").open() as fh:
-            data = yaml.safe_load(fh)
-
-        node1 = data["nodes"][0]
-        symbols = {g["symbol"] for g in node1["precomputed_expression"]["genes"]}
-        assert "Sst" in symbols, "Sst from first call was dropped"
-        assert "Gad1" in symbols, "Gad1 from first call was dropped"
-        assert "Cck" in symbols, "Cck from second call is missing"
-        assert len(symbols) == 3
-
-    def test_add_expression_updates_existing_gene(self, tmp_taxonomy: Path, gene_mapping_tsv: Path):
-        """Re-pushing a gene with a new value replaces it rather than duplicating."""
-        import numpy as np
-
-        gene_mapping = load_gene_mapping(gene_mapping_tsv)
-        col_names = ["ENSMUSG00000004366"]  # Sst
-        cluster_to_row = {"CLUS_001": 0, "CLUS_002": 1}
-
-        with (
-            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
-            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
-        ):
-            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
-            mock_h5.return_value = (col_names, cluster_to_row, np.array([[3.5], [0.3]]))
-            add_expression(
-                taxonomy_id="TEST001", stats_path="fake.h5",
-                genes=["Sst"], gene_mapping=gene_mapping, level="cluster",
-            )
-
-        with (
-            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
-            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
-        ):
-            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
-            mock_h5.return_value = (col_names, cluster_to_row, np.array([[9.9], [0.1]]))
-            add_expression(
-                taxonomy_id="TEST001", stats_path="fake.h5",
-                genes=["Sst"], gene_mapping=gene_mapping, level="cluster",
-            )
-
-        with (tmp_taxonomy / "cluster.yaml").open() as fh:
-            data = yaml.safe_load(fh)
-
-        node1 = data["nodes"][0]
-        genes = node1["precomputed_expression"]["genes"]
-        sst_entries = [g for g in genes if g["symbol"] == "Sst"]
-        assert len(sst_entries) == 1, "Sst should not be duplicated"
-        assert sst_entries[0]["mean_expression"] == 9.9
+            assert data2["nodes"][1]["electrophysiology"]["firing_pattern"] == "fast-spiking"
 
 
 class TestReingest:
     def test_reingest_preserves_enrichment(self, tmp_taxonomy: Path, tmp_path: Path):
-        """Re-ingest preserves precomputed_expression from old data."""
+        """Re-ingest preserves enrichment fields from old data."""
         # Create a "new source" JSON that the ingest functions will process
         # We'll mock the ingest to write known data to the temp dir
         new_nodes = [
@@ -452,7 +253,7 @@ class TestReingest:
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
                 "is_terminal": True,
                 "markers": [{"symbol": "Pvalb", "category": "DEFINING"}],
-                # No precomputed_expression in new source
+                # No electrophysiology in new source
             },
             {
                 "id": "TEST:CLUS_003",
@@ -514,8 +315,8 @@ class TestReingest:
 
         nodes_by_acc = {n["cell_set_accession"]: n for n in data["nodes"]}
         assert nodes_by_acc["CLUS_002"]["name"] == "Cluster 2 Updated"
-        assert nodes_by_acc["CLUS_002"]["precomputed_expression"]["source"] == "old_stats.h5"
-        assert "precomputed_expression" not in nodes_by_acc["CLUS_001"]
+        assert nodes_by_acc["CLUS_002"]["electrophysiology"]["firing_pattern"] == "fast-spiking"
+        assert "electrophysiology" not in nodes_by_acc["CLUS_001"]
         assert "CLUS_003" in nodes_by_acc
 
         # Verify meta preserved mapmycells
@@ -581,20 +382,12 @@ class TestCLI:
             capture_output=True, text=True,
         )
         assert result.returncode == 0
-        assert "add-expression" in result.stdout
+        assert "warm-expression-cache" in result.stdout
         assert "reingest" in result.stdout
-
-    def test_add_expression_help(self):
-        import subprocess
-        result = subprocess.run(
-            ["uv", "run", "python", "-m", "evidencell.taxonomy_ops", "add-expression", "--help"],
-            capture_output=True, text=True,
-        )
-        assert result.returncode == 0
-        assert "gene_mapping" in result.stdout
+        assert "add-expression" not in result.stdout
 
 
-# ── Phase 1 commit 10: proactive enrichment driver ──────────────────────────
+# ── KB marker union (drives warm-expression-cache) ──────────────────────────
 
 
 def _make_kb_graphs(tmp_path: Path) -> Path:
@@ -671,13 +464,13 @@ def test_collect_kb_marker_union_skips_unparseable(tmp_path, monkeypatch):
     assert "Sst" in union
 
 
-class TestEnrichMarkerUnionCLI:
+class TestWarmExpressionCacheCLI:
     def test_help(self):
         import subprocess
         result = subprocess.run(
             ["uv", "run", "python", "-m", "evidencell.taxonomy_ops",
-             "enrich-marker-union", "--help"],
+             "warm-expression-cache", "--help"],
             capture_output=True, text=True,
         )
         assert result.returncode == 0
-        assert "stats_h5" in result.stdout
+        assert "taxonomy_id" in result.stdout

@@ -1279,3 +1279,35 @@ def test_build_reference_index_uses_dataset_authors_year_for_citation_line():
     assert stephens is not None
     assert "Stephens" in stephens.citation_line
     assert "2024" in stephens.citation_line
+
+
+def test_methods_summary_cites_expression_stats_file(tmp_path, monkeypatch):
+    """#189: the stats file behind atlas expression comes from the taxonomy
+    DB's expression cache and is surfaced for the Methods section."""
+    import sqlite3
+
+    import evidencell.paths as paths_mod
+    from evidencell.render import extract_methods_summary
+    from evidencell.taxonomy_db import _DDL
+
+    db_path = tmp_path / "T1.db"
+    with sqlite3.connect(db_path) as con:
+        con.executescript(_DDL)
+        con.execute(
+            "INSERT INTO expression_genes VALUES "
+            "('Sst', 'ENS1', 'MEASURED', 'stats_v1.h5', 'abc', '2026-11-15')"
+        )
+    monkeypatch.setattr(paths_mod, "taxonomy_db_path", lambda tid: db_path)
+    graph = {
+        "nodes": [
+            {"id": "cl", "name": "Classical"},
+            {"id": "CLUS_1", "name": "c1", "taxonomy_id": "T1"},
+        ],
+        "edges": [{"id": "e1", "lit_type": "cl", "taxonomy_type": "CLUS_1", "evidence": []}],
+    }
+    ms = extract_methods_summary(graph, "cl", Path("test.yaml"))
+    assert ms["expression_sources"] == [{"taxonomy_id": "T1", "stats_file": "stats_v1.h5"}]
+
+    # No DB → silently empty (provenance only; never fails the render).
+    monkeypatch.setattr(paths_mod, "taxonomy_db_path", lambda tid: tmp_path / "missing.db")
+    assert extract_methods_summary(graph, "cl", Path("test.yaml"))["expression_sources"] == []

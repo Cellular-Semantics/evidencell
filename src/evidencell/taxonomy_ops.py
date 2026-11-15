@@ -4,8 +4,13 @@ Managed field-level updates to taxonomy reference YAML files.
 Each operation declares which fields it owns and only touches those.
 
 Operations:
-  add-expression   — write PrecomputedExpression blocks from HDF5 stats
-  reingest         — re-ingest from source, preserving enrichment fields
+  reingest               — re-ingest from source, preserving enrichment fields
+  warm-expression-cache  — pre-load the KB marker union into the taxonomy DB's
+                           expression cache (optional; the cache fills on use)
+
+Atlas expression is not stored in taxonomy YAML (#189): it is read on demand
+from the MapMyCells stats HDF5 and cached in the taxonomy SQLite DB — see
+``evidencell.expression_cache``.
 """
 
 from __future__ import annotations
@@ -24,6 +29,7 @@ from evidencell.paths import (
     taxonomy_dir,
     taxonomy_yaml_path,
 )
+from evidencell.expression_cache import load_gene_mapping  # noqa: F401  (re-export)
 from evidencell.taxonomy_db import ingest_to_yaml, ingest_cas_to_yaml, _is_cas_format
 
 log = logging.getLogger(__name__)
@@ -56,8 +62,9 @@ INGEST_FIELDS: frozenset[str] = frozenset({
 })
 
 # Fields written by enrichment operations (preserved across re-ingest).
+# Expression is not one of them: it lives in the taxonomy DB's on-demand
+# cache, not in YAML (#189), so re-ingest cannot lose it.
 ENRICHMENT_FIELDS: frozenset[str] = frozenset({
-    "precomputed_expression",
     "electrophysiology",
     "morphology",
     "defining_markers",
@@ -111,51 +118,7 @@ def _index_nodes(nodes: list[dict]) -> dict[str, dict]:
     return idx
 
 
-# ── add-expression ────────────────────────────────────────────────────────────
-
-def load_stats_h5(
-    stats_path: str | Path,
-) -> tuple[list[str], dict[str, int], Any]:
-    """Load precomputed stats HDF5 and return (col_names, cluster_to_row, sum_matrix).
-
-    col_names: list of Ensembl gene IDs (column index for sum matrix)
-    cluster_to_row: {accession: row_index}
-    sum_matrix: numpy array (n_clusters, n_genes) of mean expression values
-    """
-    import h5py
-
-    f = h5py.File(str(stats_path), "r")
-    col_names = json.loads(f["col_names"][()].decode())
-    cluster_to_row = json.loads(f["cluster_to_row"][()].decode())
-    sum_matrix = f["sum"][:]
-    f.close()
-    return col_names, cluster_to_row, sum_matrix
-
-
-def load_gene_mapping(mapping_path: str | Path) -> dict[str, str]:
-    """Load symbol → Ensembl ID mapping from a TSV file.
-
-    Expected format: two columns, header row with 'symbol' and 'ensembl_id'.
-    """
-    mapping: dict[str, str] = {}
-    with open(mapping_path, encoding="utf-8") as fh:
-        header = fh.readline().strip().split("\t")
-        sym_col = header.index("symbol")
-        ens_col = header.index("ensembl_id")
-        for line in fh:
-            parts = line.strip().split("\t")
-            if len(parts) > max(sym_col, ens_col):
-                mapping[parts[sym_col]] = parts[ens_col]
-    return mapping
-
-
-def build_gene_mapping_from_tsv(mapping_path: str | Path) -> dict[str, str]:
-    """Build symbol → Ensembl ID mapping from a TSV file.
-
-    Alias for load_gene_mapping — provided for API consistency.
-    """
-    return load_gene_mapping(mapping_path)
-
+# ── gene mapping ──────────────────────────────────────────────────────────────
 
 def generate_gene_mapping_tsv(
     stats_path: str | Path,
@@ -201,309 +164,6 @@ def generate_gene_mapping_tsv(
 
     log.info("Wrote %d/%d gene mappings to %s", n_mapped, len(col_names), out)
     return out
-
-
-def add_expression(
-    taxonomy_id: str,
-    stats_path: str | Path,
-    genes: list[str],
-    gene_mapping: dict[str, str],
-    level: str = "cluster",
-    accessions: list[str] | None = None,
-) -> dict[str, Any]:
-    """Add PrecomputedExpression blocks to taxonomy nodes.
-
-    Parameters
-    ----------
-    taxonomy_id : str
-        Target taxonomy (e.g. CCN20230722).
-    stats_path : str | Path
-        Path to precomputed_stats HDF5 file.
-    genes : list[str]
-        Gene symbols to extract expression for.
-    gene_mapping : dict[str, str]
-        symbol → Ensembl ID mapping.
-    level : str
-        Taxonomy level to update (default: "cluster").
-    accessions : list[str] | None
-        Specific node accessions to update. None = all nodes at this level.
-
-    Returns
-    -------
-    dict with keys: updated (int), skipped (int), genes_found (int),
-    genes_missing (list[str]).
-    """
-    stats_path = Path(stats_path)
-    source_name = stats_path.name
-
-    # Resolve symbols → Ensembl IDs
-    gene_ens: list[tuple[str, str]] = []  # (symbol, ensembl_id)
-    genes_missing: list[str] = []
-    for sym in genes:
-        ens = gene_mapping.get(sym)
-        if ens:
-            gene_ens.append((sym, ens))
-        else:
-            genes_missing.append(sym)
-
-    if not gene_ens:
-        raise ValueError(f"No genes could be resolved. Missing: {genes_missing}")
-
-    # Load HDF5
-    col_names, cluster_to_row, sum_matrix = load_stats_h5(stats_path)
-    ens_to_col: dict[str, int] = {e: i for i, e in enumerate(col_names)}
-
-    # Filter to genes present in HDF5
-    gene_cols: list[tuple[str, str, int]] = []  # (symbol, ensembl_id, col_idx)
-    for sym, ens in gene_ens:
-        col = ens_to_col.get(ens)
-        if col is not None:
-            gene_cols.append((sym, ens, col))
-        else:
-            genes_missing.append(sym)
-
-    if not gene_cols:
-        raise ValueError(f"No genes found in HDF5. Missing: {genes_missing}")
-
-    # Load taxonomy level YAML
-    data = load_taxonomy_level(taxonomy_id, level)
-    nodes = data.get("nodes", [])
-
-    updated = 0
-    skipped = 0
-    for node in nodes:
-        acc = node.get("cell_set_accession", "")
-        if accessions and acc not in accessions:
-            skipped += 1
-            continue
-
-        row_idx = cluster_to_row.get(acc)
-        if row_idx is None:
-            skipped += 1
-            continue
-
-        # Build GeneExpression list
-        gene_entries: list[dict[str, Any]] = []
-        for sym, ens, col in gene_cols:
-            val = float(sum_matrix[row_idx, col])
-            gene_entries.append({
-                "symbol": sym,
-                "ensembl_id": ens,
-                "mean_expression": round(val, 2),
-            })
-
-        # Merge with existing genes[] — update by symbol, preserve others
-        existing_expr = node.get("precomputed_expression", {})
-        merged: dict[str, Any] = {g["symbol"]: g for g in existing_expr.get("genes", [])}
-        for entry in gene_entries:
-            merged[entry["symbol"]] = entry
-
-        node["precomputed_expression"] = {
-            "source": source_name,
-            "level": level,
-            "genes": list(merged.values()),
-        }
-        updated += 1
-
-    # Save
-    save_taxonomy_level(taxonomy_id, level, data)
-    log.info(
-        "add-expression: updated %d nodes, skipped %d, %d/%d genes resolved",
-        updated, skipped, len(gene_cols), len(genes),
-    )
-
-    return {
-        "updated": updated,
-        "skipped": skipped,
-        "genes_found": len(gene_cols),
-        "genes_missing": genes_missing,
-        "output_file": str(taxonomy_yaml_path(taxonomy_id, level)),
-    }
-
-
-# ── add-expression for supertypes (aggregated from clusters) ─────────────────
-
-def add_expression_supertype(
-    taxonomy_id: str,
-    stats_path: str | Path,
-    genes: list[str],
-    gene_mapping: dict[str, str],
-    accessions: list[str] | None = None,
-    include_child_clusters: bool = True,
-) -> dict[str, Any]:
-    """Add PrecomputedExpression to supertype nodes with optional child cluster breakdown.
-
-    For supertypes, the expression is the mean across child clusters (weighted by n_cells).
-    Optionally includes per-child-cluster expression in child_cluster_expression.
-    """
-    import h5py
-    import numpy as np
-
-    stats_path = Path(stats_path)
-    source_name = stats_path.name
-
-    # Resolve genes
-    gene_ens: list[tuple[str, str]] = []
-    genes_missing: list[str] = []
-    for sym in genes:
-        ens = gene_mapping.get(sym)
-        if ens:
-            gene_ens.append((sym, ens))
-        else:
-            genes_missing.append(sym)
-
-    if not gene_ens:
-        raise ValueError(f"No genes resolved. Missing: {genes_missing}")
-
-    # Load HDF5
-    f = h5py.File(str(stats_path), "r")
-    col_names = json.loads(f["col_names"][()].decode())
-    cluster_to_row = json.loads(f["cluster_to_row"][()].decode())
-    sum_matrix = f["sum"][:]
-    n_cells = f["n_cells"][:]
-    tree = json.loads(f["taxonomy_tree"][()].decode())
-    f.close()
-
-    ens_to_col = {e: i for i, e in enumerate(col_names)}
-
-    gene_cols: list[tuple[str, str, int]] = []
-    for sym, ens in gene_ens:
-        col = ens_to_col.get(ens)
-        if col is not None:
-            gene_cols.append((sym, ens, col))
-        else:
-            genes_missing.append(sym)
-
-    if not gene_cols:
-        raise ValueError(f"No genes found in HDF5. Missing: {genes_missing}")
-
-    # Build supertype → child clusters from taxonomy_tree
-    # Find the supertype level key
-    hierarchy = tree.get("hierarchy", [])
-    supt_key = None
-    for h in hierarchy:
-        if "SUPT" in h:
-            supt_key = h
-
-    if not supt_key or supt_key not in tree:
-        raise ValueError(f"Supertype level not found in taxonomy_tree. Keys: {list(tree.keys())}")
-
-    supt_to_clusters: dict[str, list[str]] = {}
-    supt_data = tree[supt_key]
-    for supt_acc, children in supt_data.items():
-        if isinstance(children, list):
-            supt_to_clusters[supt_acc] = children
-        elif isinstance(children, dict):
-            # May be nested further
-            supt_to_clusters[supt_acc] = list(children.keys())
-
-    # Load supertype YAML
-    data = load_taxonomy_level(taxonomy_id, "supertype")
-    nodes = data.get("nodes", [])
-
-    updated = 0
-    skipped = 0
-    for node in nodes:
-        acc = node.get("cell_set_accession", "")
-        if accessions and acc not in accessions:
-            skipped += 1
-            continue
-
-        child_accs = supt_to_clusters.get(acc, [])
-        if not child_accs:
-            skipped += 1
-            continue
-
-        # Compute weighted mean across children
-        child_rows = []
-        child_ncells = []
-        for ca in child_accs:
-            row = cluster_to_row.get(ca)
-            if row is not None:
-                child_rows.append(row)
-                child_ncells.append(n_cells[row])
-
-        if not child_rows:
-            skipped += 1
-            continue
-
-        weights = np.array(child_ncells, dtype=float)
-        total_cells = weights.sum()
-        if total_cells == 0:
-            skipped += 1
-            continue
-
-        # Weighted mean expression per gene
-        gene_entries: list[dict[str, Any]] = []
-        for sym, ens, col in gene_cols:
-            vals = sum_matrix[child_rows, col]
-            wmean = float(np.average(vals, weights=weights))
-            gene_entries.append({
-                "symbol": sym,
-                "ensembl_id": ens,
-                "mean_expression": round(wmean, 2),
-            })
-
-        expr_block: dict[str, Any] = {
-            "source": source_name,
-            "level": "supertype",
-            "genes": gene_entries,
-        }
-
-        # Optional child cluster breakdown
-        if include_child_clusters:
-            # Merge with existing child_cluster_expression by cluster_accession
-            existing_expr = node.get("precomputed_expression", {})
-            existing_children: dict[str, dict[str, Any]] = {
-                e["cluster_accession"]: e
-                for e in existing_expr.get("child_cluster_expression", [])
-            }
-            for ca in child_accs:
-                row = cluster_to_row.get(ca)
-                if row is None:
-                    continue
-                new_expr: dict[str, float] = {}
-                for sym, ens, col in gene_cols:
-                    new_expr[sym] = round(float(sum_matrix[row, col]), 2)
-                if ca in existing_children:
-                    # Merge expression dicts
-                    old_expr = json.loads(existing_children[ca]["expression"])
-                    old_expr.update(new_expr)
-                    existing_children[ca] = {
-                        "cluster_accession": ca,
-                        "n_cells": int(n_cells[row]),
-                        "expression": json.dumps(old_expr),
-                    }
-                else:
-                    existing_children[ca] = {
-                        "cluster_accession": ca,
-                        "n_cells": int(n_cells[row]),
-                        "expression": json.dumps(new_expr),
-                    }
-            child_entries = list(existing_children.values())
-            if child_entries:
-                expr_block["child_cluster_expression"] = child_entries
-
-        # Merge top-level genes[] with existing by symbol
-        existing_expr = node.get("precomputed_expression", {})
-        merged_genes: dict[str, Any] = {g["symbol"]: g for g in existing_expr.get("genes", [])}
-        for entry in gene_entries:
-            merged_genes[entry["symbol"]] = entry
-        expr_block["genes"] = list(merged_genes.values())
-
-        node["precomputed_expression"] = expr_block
-        updated += 1
-
-    save_taxonomy_level(taxonomy_id, "supertype", data)
-    log.info("add-expression (supertype): updated %d, skipped %d", updated, skipped)
-
-    return {
-        "updated": updated,
-        "skipped": skipped,
-        "genes_found": len(gene_cols),
-        "genes_missing": genes_missing,
-        "output_file": str(taxonomy_yaml_path(taxonomy_id, "supertype")),
-    }
 
 
 # ── reingest ──────────────────────────────────────────────────────────────────
@@ -775,11 +435,9 @@ def collect_kb_marker_union() -> set[str]:
     """Scan kb/graphs/**/*.yaml for non-atlas nodes and return the union of
     all marker gene symbols mentioned across them.
 
-    Phase 1 commit 10: drives the proactive enrichment step that replaces
-    per-mapping Step 2b. The set covers every gene any classical/literature
-    node carries on its `defining_markers`, `neuropeptides`, or
-    `negative_markers` fields, so that find-candidates always sees full
-    quantitative data on candidates without a manual enrichment call.
+    Drives ``warm_expression_cache``. The set covers every gene any
+    classical/literature node carries on its `defining_markers`,
+    `neuropeptides`, or `negative_markers` fields.
 
     Atlas nodes (`definition_basis: ATLAS_TRANSCRIPTOMIC`) are skipped —
     their markers come from the taxonomy ingest itself, not from the KB
@@ -813,81 +471,24 @@ def collect_kb_marker_union() -> set[str]:
     return out
 
 
-def enrich_for_kb_marker_union(
-    taxonomy_id: str,
-    stats_path: str | Path,
-    gene_mapping_path: str | Path,
-    levels: list[str] | None = None,
-) -> dict[str, Any]:
-    """Batch-enrich every taxonomy node with `precomputed_expression` for
-    the union of all KB-mentioned marker genes.
+def warm_expression_cache(taxonomy_id: str) -> dict[str, Any]:
+    """Pre-load the KB marker union into the taxonomy DB's expression cache.
 
-    Replaces the per-mapping Step 2b enrichment in workflows/map-cell-type.md
-    so that find-candidates always sees full quantitative data on candidates
-    without a manual call. Should be re-run when classical nodes are added
-    or their marker lists change.
-
-    Args:
-        taxonomy_id: target taxonomy (e.g. CCN20230722).
-        stats_path: path to the precomputed_stats HDF5 for this taxonomy.
-        gene_mapping_path: gene mapping TSV (symbol → Ensembl).
-        levels: list of taxonomy levels to enrich (default: ["cluster",
-            "supertype"]). The supertype level also gets the
-            `child_cluster_expression` block populated by add_expression_supertype.
-
-    Returns:
-        Summary dict with `taxonomy_id`, `n_genes`, `genes_used`,
-        `genes_missing` (TSV mapping had no Ensembl), and per-level update
-        counts.
+    Optional: the cache fills on first use by find-candidates / emit-stage-b
+    / refresh-*. Warming once avoids per-gene loads spread across those runs
+    and surfaces every not-measured gene up front.
     """
-    if levels is None:
-        levels = ["cluster", "supertype"]
+    from evidencell.taxonomy_db import TaxonomyDB, require_taxonomy_db
 
     genes = sorted(collect_kb_marker_union())
-    if not genes:
-        return {
-            "taxonomy_id": taxonomy_id,
-            "n_genes": 0,
-            "genes_used": [],
-            "genes_missing": [],
-            "by_level": {},
-            "note": "No KB-mentioned marker genes found",
-        }
-
-    mapping = load_gene_mapping(gene_mapping_path)
-
-    by_level: dict[str, dict] = {}
-    for level in levels:
-        if level == "supertype":
-            res = add_expression_supertype(
-                taxonomy_id=taxonomy_id,
-                stats_path=stats_path,
-                genes=genes,
-                gene_mapping=mapping,
-                accessions=None,
-            )
-        else:
-            res = add_expression(
-                taxonomy_id=taxonomy_id,
-                stats_path=stats_path,
-                genes=genes,
-                gene_mapping=mapping,
-                level=level,
-                accessions=None,
-            )
-        by_level[level] = res
-
-    # Genes the mapping couldn't resolve — same across calls; pick from cluster
-    # path which always runs.
-    genes_missing = by_level.get("cluster", {}).get("genes_missing", [])
-    genes_used = [g for g in genes if g not in genes_missing]
-
+    db = TaxonomyDB(require_taxonomy_db(taxonomy_id))
+    lookup = db.expression(genes, accessions=[])
     return {
         "taxonomy_id": taxonomy_id,
         "n_genes": len(genes),
-        "genes_used": genes_used,
-        "genes_missing": genes_missing,
-        "by_level": by_level,
+        "n_measured": len(genes) - len(lookup.not_measured),
+        "not_measured": dict(sorted(lookup.not_measured.items())),
+        "source_file": lookup.source_file,
     }
 
 
@@ -903,31 +504,6 @@ def main() -> None:
         description="Taxonomy update operations",
     )
     sub = parser.add_subparsers(dest="command")
-
-    # add-expression
-    p_add = sub.add_parser(
-        "add-expression",
-        help="Add PrecomputedExpression blocks from HDF5 stats",
-    )
-    p_add.add_argument("taxonomy_id", help="Target taxonomy ID")
-    p_add.add_argument("stats_h5", help="Path to precomputed_stats HDF5")
-    p_add.add_argument("gene_mapping", help="Path to gene mapping TSV (symbol → ensembl_id)")
-    p_add.add_argument(
-        "genes", nargs="+",
-        help="Gene symbols to extract expression for",
-    )
-    p_add.add_argument(
-        "--level", default="cluster",
-        help="Taxonomy level (default: cluster)",
-    )
-    p_add.add_argument(
-        "--accessions", nargs="*",
-        help="Specific node accessions (default: all at level)",
-    )
-    p_add.add_argument(
-        "--supertype", action="store_true",
-        help="Also compute supertype-level aggregated expression",
-    )
 
     # reingest
     p_re = sub.add_parser(
@@ -959,48 +535,19 @@ def main() -> None:
         help="Build/rebuild kb/annotation_transfer_runs/index.yaml from manifest files",
     )
 
-    # enrich-marker-union: proactively enrich taxonomy with all KB-mentioned markers
-    p_emu = sub.add_parser(
-        "enrich-marker-union",
-        help="Batch-enrich taxonomy nodes with KB-wide marker gene union",
+    # warm-expression-cache: pre-load the KB marker union into the DB cache
+    p_warm = sub.add_parser(
+        "warm-expression-cache",
+        help="Pre-load expression for every KB-mentioned marker into the taxonomy DB cache",
     )
-    p_emu.add_argument("taxonomy_id", help="Target taxonomy ID")
-    p_emu.add_argument("stats_h5", help="Path to precomputed_stats HDF5")
-    p_emu.add_argument("gene_mapping", help="Path to gene mapping TSV")
-    p_emu.add_argument(
-        "--levels", nargs="*",
-        help="Taxonomy levels to enrich (default: cluster supertype)",
-    )
-
+    p_warm.add_argument("taxonomy_id", help="Target taxonomy ID")
 
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
         sys.exit(1)
 
-    if args.command == "add-expression":
-        mapping = load_gene_mapping(args.gene_mapping)
-        result = add_expression(
-            taxonomy_id=args.taxonomy_id,
-            stats_path=args.stats_h5,
-            genes=args.genes,
-            gene_mapping=mapping,
-            level=args.level,
-            accessions=args.accessions,
-        )
-        if args.supertype:
-            st_result = add_expression_supertype(
-                taxonomy_id=args.taxonomy_id,
-                stats_path=args.stats_h5,
-                genes=args.genes,
-                gene_mapping=mapping,
-                accessions=args.accessions,
-            )
-            result["supertype"] = st_result
-
-        print(json.dumps(result, indent=2))
-
-    elif args.command == "reingest":
+    if args.command == "reingest":
         preserve = ENRICHMENT_FIELDS
         if args.preserve:
             preserve = preserve | frozenset(args.preserve)
@@ -1021,13 +568,8 @@ def main() -> None:
         result = build_at_index()
         print(json.dumps(result, indent=2))
 
-    elif args.command == "enrich-marker-union":
-        result = enrich_for_kb_marker_union(
-            taxonomy_id=args.taxonomy_id,
-            stats_path=args.stats_h5,
-            gene_mapping_path=args.gene_mapping,
-            levels=args.levels,
-        )
+    elif args.command == "warm-expression-cache":
+        result = warm_expression_cache(args.taxonomy_id)
         print(json.dumps(result, indent=2))
 
 
