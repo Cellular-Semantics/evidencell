@@ -79,12 +79,12 @@ nodes:
         ncbi_gene_id: null
         sources:
           - ref: "PMID:24359973"
-            marker_type: TRANSCRIPT
+            marker_type: TRANSGENE_REPORTER
             method: "GAD67-GFP transgenic reporter (Chattopadhyaya et al., 2004 line) used to target interneurons"
             scope: "mouse dLGN"
             quote_key: "15010690_a1440f47"
           - ref: "PMID:30842249"
-            marker_type: TRANSCRIPT
+            marker_type: TRANSGENE_REPORTER
             method: "GAD67-GFP transgenic reporter"
             scope: "mouse dLGN, developing and adult"
             quote_key: "73481430_aac25d77"
@@ -92,8 +92,8 @@ nodes:
         ncbi_gene_id: null
         sources:
           - ref: "PMID:27929058"
-            marker_type: TRANSCRIPT
-            method: "genetic lineage / fate mapping"
+            marker_type: TRANSGENE_REPORTER
+            method: "Sox14Gfp/+ knock-in reporter / Sox14cre fate mapping"
             scope: "mouse — Sox14/Otx2-expressing precursors migrate from dorsal midbrain to generate dLGN-INs (early postnatal)"
             quote_key: "264044014_f908cf73"
       - symbol: Otx2
@@ -101,20 +101,20 @@ nodes:
         sources:
           - ref: "PMID:27929058"
             marker_type: TRANSCRIPT
-            method: "genetic lineage / fate mapping"
+            method: "in situ hybridization (Otx2)"
             scope: "mouse — expression stated for precursor cells of dLGN-INs; adult expression not stated in quote"
             quote_key: "264044014_f908cf73"
       - symbol: Grm5
         ncbi_gene_id: null
         sources:
           - ref: "PMID:23392677"
-            marker_type: PROTEIN
-            method: "statement in source citing EM localisation (mGluR5 on interneuron dendritic spines in triads)"
+            marker_type: NOT_STATED
+            method: "statement in source (assay not stated)"
             scope: "rodent dLGN"
             quote_key: "15874961_b12c2a40"
           - ref: "PMID:17192427"
-            marker_type: PROTEIN
-            method: "pharmacology (DHPG agonist; MPEP mGluR5 antagonist)"
+            marker_type: NOT_STATED
+            method: "pharmacology (DHPG agonist; MPEP antagonist) - no expression assay"
             scope: "rodent dLGN slices — mGluR5-dependent increase in interneuron-derived sIPSCs"
             quote_key: "11022573_0af766e8"
       - symbol: Hcn3
@@ -122,7 +122,7 @@ nodes:
         sources:
           - ref: "PMID:27121468"
             marker_type: TRANSCRIPT
-            method: "molecular biological + immunohistochemical analysis of HCN isoforms"
+            method: "cell-pool RT-PCR (HCN1-4 primers)"
             scope: "mouse dLGN interneurons — abundant HCN3 isoform expression"
             quote_key: "1898525_516c7674"
     morphology:
