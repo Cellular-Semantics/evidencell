@@ -1,0 +1,162 @@
+# Anterodorsal thalamic nucleus (AD) excitatory projection neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/ATN_Glut.pdf
+# Ingestion date: 2026-11-15
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Anterodorsal Thalamic Nucleus (AD) Excitatory Projection Neuron"
+description: >
+  Evidence graph component for the excitatory projection neuron of the
+  anterodorsal thalamic nucleus (AD), a nucleus-level child type of the
+  anterior thalamic nuclei (ATN) excitatory projection neuron, proposed from
+  the ASTA deep research report on ATN glutamatergic neurons.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-15"
+nodes:
+  - id: anterodorsal_thalamic_nucleus_excitatory_neuron
+    name: "Anterodorsal thalamic nucleus (AD) excitatory projection neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:       # To be confirmed from primary literature — cited evidence is mouse and rat
+    anatomical_location:
+      - id: UBERON:0002679
+        label: "anterodorsal nucleus of thalamus"
+        name_in_source: "anterodorsal nucleus (AD)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:40593635"
+            method: "brain-wide connectomics + molecular markers"
+            scope: "adult mouse AD — contains AD1 (dorsolateral) and AD2 (ventromedial) projection types"
+            quote_key: "279797062_79c8b7ec"
+          - ref: "PMID:38427564"
+            method: "scRNA-seq + spatial transcriptomics + multiplexed FISH"
+            scope: "adult mouse — discrete excitatory cluster corresponding to AD"
+            quote_key: "268122794_e9176ba6"
+          - ref: "https://doi.org/10.1101/2023.05.01.538832"
+            method: "Epi-Retro-Seq"
+            scope: "adult mouse — RSP-projecting cluster 47 annotated as AD"
+            quote_key: "258464391_5a791974"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:40593635"
+          method: "projection-defined cell typing + molecular markers"
+          scope: "adult mouse — all 13 projection-defined ATN types (incl. AD1, AD2) are glutamatergic"
+          quote_key: "279797062_9833fcee"
+        - ref: "PMID:36476860"
+          method: "embryonic scRNA-seq lineage trajectories"
+          scope: "developing mouse — glutamatergic thalamic nuclei incl. AD/AV/AM differentiate first"
+          quote_key: "254404676_7a6fba23"
+    defining_markers:
+      - symbol: Pvalb
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:40593635"
+            marker_type: TRANSCRIPT
+            method: "transcriptomic marker analysis (superior marker per ATN subnucleus)"
+            scope: "adult mouse AD"
+            quote_key: "279797062_7b604467"
+      - symbol: Htr2a
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:40957902"
+            marker_type: TRANSCRIPT
+            method: "MERFISH + Thalamoseq RNA-seq re-analysis, confirmed by RNAScope FISH"
+            scope: "adult mouse — AD expresses Htr2a more highly than all other thalamic nuclei"
+            quote_key: "281327532_26dbfa46"
+    electrophysiology:
+      description: >
+        In vivo: the anterodorsal nucleus contains head-direction cells — more
+        prominently than the anteroventral nucleus — which signal heading
+        independent of location. No intrinsic (slice) electrophysiology
+        reported.
+      sources:
+        - ref: "PMID:25195980"
+          method: "review (in vivo single-unit recording literature)"
+          scope: "rodent anterior thalamic nuclei"
+          quote_key: "9155344_6ed594e2"
+    morphology:
+      description: >
+        Somatodendritic plan as for the parent ATN type (few primary dendrites,
+        no local axon, tufted spiny distal dendrites). Axonal projections:
+        AD1 neurons (dorsolateral AD) project to postsubiculum, laterodorsal
+        and laterointermediate visual areas and subcortical mammillary
+        regions; AD2 neurons (ventromedial AD) project to retrosplenial,
+        visual, postsubicular and mammillary regions. In rat, AD provides the
+        greatest proportion of neurons bifurcating to different retrosplenial
+        areas (up to ~15% of labelled cells), though most AD thalamocortical
+        projections arise from separate neuronal populations.
+      sources:
+        - ref: "PMID:40593635"
+          method: "brain-wide anterograde/retrograde connectomics"
+          scope: "adult mouse AD1/AD2"
+          quote_key: "279797062_79c8b7ec"
+        - ref: "PMID:36089888"
+          method: "dual retrograde tracing (collateral analysis)"
+          scope: "rat anterior thalamic nuclei"
+          quote_key: "252197625_57f7cb82"
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "thalamic excitatory neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        No nucleus-specific CL term (searched anterior/anterodorsal thalamic,
+        head direction cell); broad parent only. Mapping confidence MEDIUM.
+        Potential CL contribution; CL has no head-direction cell term.
+    definition_references:
+      - "PMID:40593635"
+      - "PMID:38427564"
+      - "PMID:40957902"
+      - "PMID:25195980"
+      - "PMID:36089888"
+    is_terminal: false
+    notes: >
+      HIERARCHY: subtype of anterior_thalamic_nucleus_excitatory_neuron
+      (ATN); shared ATN properties (Slc17a6, glutamatergic identity, relay-cell
+      morphology, Papez-circuit placement) are recorded on the parent.
+      Slc17a6 applies here by inheritance.
+
+      SUBTYPES NOTED (not separate nodes): Hintiryan et al. (2025;
+      PMID:40593635) define two projection-defined types — AD1 (dorsolateral
+      AD; postsubiculum, LD/LI visual areas, mammillary regions) and AD2
+      (ventromedial AD; retrosplenial, visual, postsubicular, mammillary
+      regions). No marker separating AD1 from AD2 is reported. Kapustina et
+      al. (2024; PMID:38427564) report graded dorsomedial-ventrolateral
+      transcriptional variation within AD.
+
+      NEGATIVE MARKER (transgene, not recorded as a gene marker): the
+      Grp_KH288-Cre driver labels a subset of AV neurons but none in AD
+      (Brennan et al.; PMID:30858601). This is a BAC-transgenic line and
+      does not establish absence of endogenous Grp transcript.
+
+      CONNECTIVITY: inputs from the lateral mammillary nucleus — whose
+      thalamic projections are exclusively to AD, bilaterally (head-direction
+      system; PMID:33309908, PMID:25538571) — and from para/postsubiculum via
+      a nonfornical internal-capsule route (PMID:25616174, PMID:32132227).
+      Reciprocal connections with postsubiculum and presubiculum
+      (PMID:33069688). Mouse AD sends moderate projections to ACC (some
+      reports: area 24a, not 24b; PMID:35240879). Anterior thalamus strongly
+      recruits low-rheobase layer 3 pyramidal cells in granular RSC
+      (PMID:34170817); AD Htr2a+ cells are hypothesised to be the inputs
+      boosted by psychedelics (PMID:40957902).
+
+      FUNCTION / DISEASE: many autism and schizophrenia risk genes are
+      expressed in AD; AD is necessary for contextual memory encoding, and
+      risk-gene knockdown causes AD neuron hyperexcitability (Roy et al.,
+      2021; PMID:34197733) — a perturbation phenotype, not a baseline ephys
+      property.
+
+      SPECIES: cited evidence mixes mouse (markers, projection types) and
+      rat (bifurcation, head-direction recordings); species left null.
+edges: []
