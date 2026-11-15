@@ -1,0 +1,107 @@
+# Glucokinase-expressing anterior PVT (Gck+ aPVT) glutamatergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/PVT_Glut.pdf
+# Ingestion date: 2026-11-14
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Gck+ Anterior PVT Glutamatergic Neuron"
+description: >
+  Evidence graph component for the glucokinase (Gck)-expressing neuron of the
+  anterior paraventricular nucleus of the thalamus, a marker-defined subset of
+  the PVT glutamatergic projection neuron, proposed from the ASTA deep research
+  report on PVT glutamatergic neurons.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-14"
+nodes:
+  - id: apvt_gck_neuron
+    name: "Glucokinase-expressing anterior PVT (Gck+ aPVT) glutamatergic neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:       # To be confirmed from primary literature — single source is mouse
+    anatomical_location:
+      - id: UBERON:0001920
+        label: "paraventricular nucleus of thalamus"
+        name_in_source: "anterior PVT (aPVT)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:35303367"
+            method: "Gck transgenic mouse + viral anterograde/retrograde tracing"
+            scope: "adult mouse anterior PVT"
+            quote_key: "247548117_93d5fc5f"
+    nt_type:
+      name_in_source: "glutamatergic (inferred)"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:34220458"
+          method: "review (PVT-wide vGLUT2 mRNA; no intrinsic GABAergic neurons) — inference, not shown for Gck+ cells"
+          scope: "rodent PVT (whole nucleus)"
+          quote_key: "235466185_0d1595b7"
+    defining_markers:
+      - symbol: Gck
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:35303367"
+            method: "Gck transgenic mouse line + transcriptomic analysis of Gck-expressing neurons"
+            scope: "adult mouse anterior PVT"
+            quote_key: "247548117_93d5fc5f"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >
+        Projection neurons of anterior PVT innervating nuclei throughout the
+        brain axis, with strongest connections to forebrain areas associated
+        with reward and stress and to hypothalamic structures involved in
+        energy balance and feeding. Receive direct inputs from hypothalamic
+        arginine-vasopressin-, melanin-concentrating hormone-, orexin- and
+        proopiomelanocortin-expressing neurons. No somatodendritic
+        description in the evidence.
+      sources:
+        - ref: "PMID:35303367"
+          method: "viral anterograde and retrograde tracing + IHC/ISH"
+          scope: "adult mouse Gck+ aPVT neurons"
+          quote_key: "247548117_93d5fc5f"
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "thalamic excitatory neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        No Gck+ aPVT-specific CL term; BROAD parent only. Mapping confidence
+        MEDIUM. Glutamatergic identity inferred.
+    definition_references:
+      - "PMID:35303367"
+    is_terminal: false
+    notes: >
+      SUBSET OF pvt_glutamatergic_neuron: this is a marker-defined
+      subpopulation of the PVT glutamatergic projection neuron (anterior PVT).
+      The schema has no parent/subtype slot on CellTypeNode, so the
+      relationship is recorded here only.
+
+      NT TYPE INFERRED: glutamatergic identity is inferred from PVT
+      principal-cell context (PVT-wide vGLUT2 expression and absence of
+      intrinsic GABAergic neurons), not shown directly for Gck+ cells by the
+      single source (Gaspari et al. 2022; PMID:35303367). Slc17a6 is
+      therefore not recorded as a defining marker.
+
+      MARKER EVIDENCE: Gck is defined via a genetically modified (Gck) mouse
+      line plus transcriptomics; marker_type TRANSCRIPT is the closest fit.
+      Transcriptomic analysis reports enrichment for receptors of
+      hypothalamic-derived neuropeptides, adhesion molecules and
+      obesity/diabetes susceptibility transcription factors (no gene list in
+      the quote store).
+
+      LOCATION: no ontology term for anterior PVT; the parent PVT term
+      (UBERON:0001920) is used with name_in_source "anterior PVT".
+
+      UNRESOLVED: relationship to Gao et al. 2023 PVT1-5 clusters (the
+      anterior clusters are PVT2, PVT4, PVT5) is not addressed. Single-study
+      node; species is mouse. Electrophysiology not described.
+edges: []

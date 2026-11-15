@@ -4,6 +4,7 @@
 # Status: DRAFT — node metadata from ASTA report, pending primary verification
 # Property assertions reference quotes in references/thalamus/
 # Proposed by: asta-report-ingest
+# Enriched from: ASTA deep research report — inputs/deepsearch/PVT_Glut.pdf (2026-11-14)
 
 name: "Paraventricular Thalamic Nucleus (PVT) Glutamatergic Projection Neuron"
 description: >
@@ -22,7 +23,7 @@ nodes:
   - id: pvt_glutamatergic_neuron
     name: "Paraventricular thalamic nucleus (PVT) glutamatergic projection neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — mouse and human sources pooled
+    species:       # To be confirmed from primary literature — mouse, rat and human sources pooled
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
@@ -41,6 +42,14 @@ nodes:
             method: "snRNA-seq + spatial transcriptomic deconvolution"
             scope: "human PVT — ExN_CALB cells localised to paraventricular thalamus"
             quote_key: "284543245_ca2bf035"
+          - ref: "PMID:36867023"
+            method: "multiplex FISH of cluster marker genes"
+            scope: "adult mouse PVT — PVT2/4/5 anterior, PVT1 posterior, PVT3 middle antero-posterior levels"
+            quote_key: "251021326_3d4954d5"
+          - ref: "PMID:40925677"
+            method: "transgenic tracing + calretinin immunolabelling"
+            scope: "adult mouse PVT — densely packed CR+ core vs PVT/mediodorsal transition zone"
+            quote_key: "281243341_d0491f90"
       - id: UBERON:0002705
         label: "midline nuclear group"
         name_in_source: "midline thalamus"
@@ -54,6 +63,71 @@ nodes:
             method: "juxtacellular recording and labelling"
             scope: "adult mouse midline thalamic nuclei (not PVT-restricted)"
             quote_key: "18133281_85d006d7"
+          - ref: "PMID:33584216"
+            method: "review statement"
+            scope: "rodent — PVT as the dorsal-most midline thalamic nucleus"
+            quote_key: "231597608_3024ae53"
+      - id: UBERON:0012171
+        label: "shell of nucleus accumbens"
+        name_in_source: "shell of the nucleus accumbens (NAcSh)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34032911"
+            method: "retrograde CTb triple injection + intersectional viral anterograde tracing"
+            scope: "rat PVT — dense, highly collateralized projection"
+            quote_key: "235203924_e162d4d9"
+          - ref: "PMID:35838792"
+            method: "review of tracing literature (background statement)"
+            scope: "rodent PVT"
+            quote_key: "247109407_f5b6e106"
+      - id: UBERON:0001880
+        label: "bed nucleus of stria terminalis"
+        name_in_source: "dorsolateral bed nucleus of the stria terminalis (BSTDL)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34032911"
+            method: "retrograde CTb triple injection + intersectional viral anterograde tracing"
+            scope: "rat PVT — collateral innervation of BSTDL"
+            quote_key: "235203924_e162d4d9"
+          - ref: "PMID:35838792"
+            method: "review of tracing literature (background statement)"
+            scope: "rodent PVT"
+            quote_key: "247109407_f5b6e106"
+      - id: UBERON:0002883
+        label: "central amygdaloid nucleus"
+        name_in_source: "lateral (capsular) division of the central amygdala (CeL)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34032911"
+            method: "retrograde CTb triple injection + intersectional viral anterograde tracing"
+            scope: "rat PVT — collateral innervation of CeL"
+            quote_key: "235203924_e162d4d9"
+          - ref: "PMID:25600269"
+            method: "projection-specific inactivation + slice physiology"
+            scope: "mouse — CeL-projecting PVT neurons preferentially innervate SOM+ CeL neurons"
+            quote_key: "4471456_71209129"
+          - ref: "PMID:35838792"
+            method: "review of tracing literature (background statement)"
+            scope: "rodent PVT"
+            quote_key: "247109407_f5b6e106"
+      - id: UBERON:0001934
+        label: "dorsomedial nucleus of hypothalamus"
+        name_in_source: "dorsomedial hypothalamus (DMH)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:23661182"
+            method: "Fluoro-gold retrograde tracing + vesicular glutamate transporter ISH"
+            scope: "rat — DMH-projecting PVT cells co-localise with vGlut mRNA"
+            quote_key: "17237721_87fea274"
+      - id: UBERON:0001930
+        label: "paraventricular nucleus of hypothalamus"
+        name_in_source: "paraventricular nucleus of the hypothalamus (PVN)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:22593735"
+            method: "review statement"
+            scope: "rodent — PVT listed among glutamatergic afferents to PVN"
+            quote_key: "8197728_fdfc1a5a"
     nt_type:
       name_in_source: "glutamatergic"
       cl_terms:
@@ -73,6 +147,18 @@ nodes:
           method: "snRNA-seq"
           scope: "human thalamic excitatory neurons predominantly SLC17A6"
           quote_key: "284543245_f2cc3213"
+        - ref: "PMID:34220458"
+          method: "review (vGLUT2 mRNA; absence of intrinsic GABAergic neurons)"
+          scope: "rodent PVT"
+          quote_key: "235466185_0d1595b7"
+        - ref: "PMID:23661182"
+          method: "Fluoro-gold retrograde tracing + vesicular glutamate transporter ISH"
+          scope: "rat PVT — DMH-projecting cells"
+          quote_key: "17237721_87fea274"
+        - ref: "PMID:36867023"
+          method: "snRNA-seq (Slc17a6/Slc17a7+, Gad1/Gad2- selection)"
+          scope: "adult mouse PVT"
+          quote_key: "251021326_815dcc71"
     defining_markers:
       - symbol: Calb1
         ncbi_gene_id:
@@ -82,6 +168,11 @@ nodes:
             scope: "human PVT (ExN_CALB) — used as PVT indicator in human and rodent; not PVT-exclusive"
             quote_key: "284543245_c5367a6e"
             marker_type: TRANSCRIPT
+          - ref: "PMID:22606998"
+            method: "review of immunohistochemistry literature"
+            scope: "rodent thalamus — weak overall CALB in matrix-like nuclei, but positive cells present in PVT"
+            quote_key: "23594973_c1b76e2f"
+            marker_type: PROTEIN
       - symbol: Calb2
         ncbi_gene_id:
         sources:
@@ -95,6 +186,11 @@ nodes:
             scope: "adult mouse midline thalamus — CR+ subpopulation, physiologically distinct"
             quote_key: "18133281_85d006d7"
             marker_type: PROTEIN
+          - ref: "PMID:40925677"
+            method: "calretinin immunolabelling"
+            scope: "adult mouse PVT — densely packed CR+ neurons define the PVT core (not the transition zone)"
+            quote_key: "281243341_d0491f90"
+            marker_type: PROTEIN
       - symbol: Slc17a6
         ncbi_gene_id:
         sources:
@@ -102,6 +198,60 @@ nodes:
             method: "snRNA-seq"
             scope: "human thalamic excitatory neurons (ExN_Tha), including PVT"
             quote_key: "284543245_f2cc3213"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:34220458"
+            method: "review (vGLUT2 mRNA in situ)"
+            scope: "rodent PVT — vGLUT2 mRNA highly expressed"
+            quote_key: "235466185_0d1595b7"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:36867023"
+            method: "snRNA-seq (selection criterion)"
+            scope: "adult mouse PVT"
+            quote_key: "251021326_815dcc71"
+            marker_type: TRANSCRIPT
+      - symbol: Drd3
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:36867023"
+            method: "snRNA-seq + multiplex FISH"
+            scope: "adult mouse PVT — anterior-biased gradient marker (PVT2/PVT4); not uniform across PVT"
+            quote_key: "251021326_ecb498e7"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:23690833"
+            method: "background statement (D3 mRNA)"
+            scope: "rodent PVT"
+            quote_key: "3920351_308036ba"
+            marker_type: TRANSCRIPT
+    negative_markers:
+      - symbol: Gad1
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:36867023"
+            method: "snRNA-seq (selection criterion)"
+            scope: "adult mouse PVT — neurons selected as Gad1/Gad2-negative"
+            quote_key: "251021326_815dcc71"
+            marker_type: TRANSCRIPT
+      - symbol: Gad2
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:36867023"
+            method: "snRNA-seq (selection criterion)"
+            scope: "adult mouse PVT — neurons selected as Gad1/Gad2-negative"
+            quote_key: "251021326_815dcc71"
+            marker_type: TRANSCRIPT
+    neuropeptides:
+      - symbol: Gal
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:36867023"
+            method: "snRNA-seq + multiplex FISH"
+            scope: "adult mouse PVT — medio-lateral gradient marker; Gal-enriched cells mainly dorsolateral PVT (subset)"
+            quote_key: "251021326_ecb498e7"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:36867023"
+            method: "multiplex FISH"
+            scope: "adult mouse PVT — dorsolateral Gal vs medial Col12a1/Hs6st3"
+            quote_key: "251021326_5ed06f40"
             marker_type: TRANSCRIPT
     morphology:
       description: >
@@ -111,6 +261,16 @@ nodes:
         The axon arises from the soma with little or no local branching.
         Anterior and posterior PVT subpopulations have nearly non-overlapping
         axonal projection patterns, with an intermediate population.
+        PVT neurons give dense, highly collateralized projections to the
+        nucleus accumbens shell, dorsolateral BST and lateral central
+        amygdala; regardless of presumed target most PVT neurons collateralize
+        to a common set of forebrain regions, and neurons projecting to
+        different targets are intermixed rather than forming localized
+        subpopulations (rat). Cortical projection biases differ by
+        transcriptomic subtype: PVT1/PVT3 toward temporal association,
+        perirhinal, auditory and entorhinal cortex; PVT2/PVT4 toward
+        prelimbic, infralimbic, orbital, gustatory and insular cortex (mouse,
+        inferred by integration with a projection-labelled thalamic atlas).
       sources:
         - ref: "PMID:27411890"
           method: "juxtacellular labelling, somatodendritic reconstruction"
@@ -120,18 +280,43 @@ nodes:
           method: "axon projection mapping"
           scope: "adult mouse aPVT vs pPVT"
           quote_key: "264359607_8626b44b"
+        - ref: "PMID:34032911"
+          method: "retrograde CTb triple injection + intersectional viral anterograde tracing"
+          scope: "rat PVT"
+          quote_key: "235203924_e162d4d9"
+        - ref: "PMID:35838792"
+          method: "review of tracing literature (background statement)"
+          scope: "rodent PVT"
+          quote_key: "247109407_f5b6e106"
+        - ref: "PMID:36867023"
+          method: "snRNA-seq integration with ThalamoSeq projection-labelled atlas"
+          scope: "adult mouse PVT subtypes PVT1-4"
+          quote_key: "251021326_6820b736"
     electrophysiology:
       description: >
         Calretinin (Calb2)-positive midline thalamic neurons are
         physiologically distinct from CR-negative neurons and are
         differentially engaged during hippocampal network oscillations; CR
         expression, rather than nuclear location, is a major determinant of
-        firing pattern across brain states.
+        firing pattern across brain states. No intrinsic PVT-specific firing
+        classification in the 2026-11-14 report; state-dependent findings
+        only: excitability of posterior PVT-to-CeA projection neurons is
+        increased after spared nerve injury (rat), and anterior PVT neuron
+        firing differentiates reward availability in a cued sucrose-seeking
+        task (rat).
       sources:
         - ref: "PMID:27411890"
           method: "in vivo juxtacellular recording under anaesthesia"
           scope: "adult mouse midline thalamus (not PVT-restricted)"
           quote_key: "18133281_85d006d7"
+        - ref: "PMID:32958568"
+          method: "slice recording of retrogradely identified pPVT-CeA neurons"
+          scope: "male rat, spared nerve injury model (pathological state)"
+          quote_key: "221841412_405f324a"
+        - ref: "PMID:28426970"
+          method: "in vivo unit recording during behaviour"
+          scope: "rat aPVT"
+          quote_key: "207218608_40dbc14a"
     cl_mapping:
       cl_term:
         id: CL:4023068
@@ -140,13 +325,16 @@ nodes:
       mapping_type: BROAD
       mapping_notes: >
         Nucleus-specific subset of CL thalamic excitatory neuron; no
-        PVT-specific CL term found. Mapping confidence MEDIUM.
+        PVT-specific CL term found. Mapping confidence MEDIUM. Re-confirmed
+        2026-11-14 (PVT_Glut report ingest).
     definition_references:
       - "PMID:36867023"
       - "PMID:37862168"
       - "PMID:41501055"
       - "PMID:27411890"
       - "PMID:39282422"
+      - "PMID:34032911"
+      - "PMID:40925677"
     is_terminal: false
     notes: >
       SUSPECTED HETEROGENEITY (may warrant splitting later): mouse PVT
@@ -171,8 +359,49 @@ nodes:
       not be PVT-specific. The midline nuclear group location entry is the
       containing structure, recorded for that reason.
 
-      SPECIES: species left null — mouse and human sources pooled.
+      SPECIES: species left null — mouse and human sources pooled (rat
+      sources added 2026-11-14).
 
       Member of the thalamic_glutamatergic_projection_neuron family (tertiary
       end of the trans-thalamic transcriptional gradient).
+
+      ENRICHMENT 2026-11-14 (PVT_Glut report; run
+      20261114_thalamus_pvt_report_ingest). This node is treated as an
+      umbrella over graded, partly discrete subtypes. Gao et al. 2023
+      (PMID:36867023) PVT1-5 cluster markers (multiplex FISH): PVT1 Esr1,
+      Col12a1, Npffr1 (posterior); PVT2 Hcrtr1, Drd3, Cxcl14 (anterior); PVT3
+      Npffr1, Hs6st3, Rxfp1 (middle AP); PVT4 Drd3, Cbln2, Tesc (anterior);
+      PVT5 Thy1 (anterior). These are subtype markers and are NOT recorded as
+      defining_markers of the umbrella; Drd3 is included as an anterior-biased
+      gradient marker with that caveat, and Gal (dorsolateral subset) as a
+      neuropeptide with a subset caveat. Medio-lateral axis: Gal dorsolateral,
+      Col12a1/Hs6st3 medial at middle and posterior levels. A third axis is
+      the dense calretinin+ core vs the PVT/mediodorsal transition zone, which
+      receive different subcortical and cortical layer 5 vs layer 6 input
+      (Biro et al. 2025; PMID:40925677). Projection-defined groups (NAcSh-,
+      BSTDL-, CeL-, DMH-projecting; dmNAcSh vs vmNAcSh) are intermixed and
+      heavily collateralized (Li et al. 2021; PMID:34032911); pPVT-CeA
+      glutamatergic projection neurons (Liang et al. 2020, PMID:32958568;
+      Pliota et al. 2018, PMID:29904149) are a projection-defined posterior
+      subset without a molecular marker. Human-mouse MD-PVT gradient is
+      largely conserved with species differences in neuropeptide/
+      neuromodulator receptor genes (Schulmann et al. 2024; PMID:39282422).
+      Weak/scattered PVALB and CALB1 immunoreactivity, typical of
+      matrix-like higher-order thalamus (PMID:22606998).
+
+      MARKER-DEFINED SUBSETS written as separate nodes: apvt_gck_neuron
+      (Gck+ anterior PVT; Gaspari et al. 2022) and apvt_crh_neuron (CRF+
+      anterior PVT; Engelke et al. 2021, rat). Relationship of either to the
+      PVT1-5 clusters is unresolved.
+
+      NOT RECORDED (insufficient direct support in the quote store): the
+      report also mentions Slc17a7, Pdyn, Cartpt, Bdnf and Gck for this
+      umbrella. Slc17a7 appears only as part of a Slc17a6/Slc17a7 selection
+      filter in Gao et al.; CART and dopamine/orexin quotes describe
+      afferent fibres into PVT, not PVT neuron expression (PMID:20886038,
+      PMID:25477789); the Pdyn quote concerns hypothalamic PVN, not PVT;
+      Bdnf in PVT is supported only by a deletion experiment (PMID:25600269).
+      Neuropeptide expression in PVT is graded along the antero-posterior
+      axis and differs between mouse and rat (Curtis et al. 2021;
+      PMID:33584216).
 edges: []

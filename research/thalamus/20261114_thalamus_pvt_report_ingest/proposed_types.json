@@ -1,0 +1,90 @@
+[
+  {
+    "proposed_id": "pvt_glutamatergic_neuron",
+    "name": "Paraventricular thalamic nucleus (PVT) glutamatergic projection neuron",
+    "markers_mentioned": [
+      "Slc17a6",
+      "Slc17a7",
+      "Calb2",
+      "Drd3",
+      "Hcrtr1",
+      "Gal",
+      "Esr1",
+      "Col12a1",
+      "Npffr1",
+      "Hs6st3",
+      "Rxfp1",
+      "Cxcl14",
+      "Cbln2",
+      "Tesc",
+      "Thy1",
+      "Gck",
+      "Bdnf"
+    ],
+    "negative_markers_mentioned": [
+      "Gad1",
+      "Gad2"
+    ],
+    "neuropeptides_mentioned": [
+      "Gal",
+      "Pdyn",
+      "Crh",
+      "Cartpt"
+    ],
+    "anatomy_mentioned": [
+      "paraventricular nucleus of thalamus (dorsal midline thalamus)",
+      "anterior PVT",
+      "middle PVT",
+      "posterior PVT",
+      "calretinin-positive PVT core",
+      "PVT/mediodorsal transition zone"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Principal long-range projection neurons of the PVT (no intrinsic GABAergic interneurons); axons highly collateralized, broadcasting to NAc shell, BSTDL, CeL, mPFC, hippocampal-related limbic areas and hypothalamus (DMH, PVN). Soma organisation follows anterior-posterior and core (dense CR+) vs transition-zone axes. Weak/scattered PVALB and CALB1 (matrix-like higher-order thalamus). No dendritic morphology detail in report.",
+    "ephys_summary": "Not characterised in report beyond increased excitability of pPVT-CeA projection neurons after spared nerve injury (Liang et al., 2020) and aPVT firing that differentiates reward availability (Do-Monte et al., 2017).",
+    "subtypes_noted": "Report treats this as a broad umbrella: a family of graded, partly discrete subtypes rather than one canonical type. Axes: anterior-posterior (largest transcriptomic variance; Shima et al., 2022 describe a continuum with 4 clusters and near-non-overlapping anterior vs posterior projections, opposing effects on food intake), medio-lateral (Gal dorsolateral; Col12a1/Hs6st3 medial), and CR+ core vs transition zone (Biro et al., 2025). Gao et al., 2023 snRNA-seq defines five glutamatergic clusters: PVT1 (Esr1, Col12a1, Npffr1; posterior), PVT2 (Hcrtr1, Drd3, Cxcl14; anterior), PVT3 (Npffr1, Hs6st3, Rxfp1; middle), PVT4 (Drd3, Cbln2, Tesc; anterior), PVT5 (Thy1; anterior); PVT1/3 biased to temporal association/perirhinal/auditory/entorhinal cortex, PVT2/4 to prelimbic/infralimbic/orbital/gustatory/insular cortex. Projection-defined groups (NAcSh-, BSTDL-, CeL-, DMH-projecting; dmNAcSh vs vmNAcSh) are intermixed and heavily collateralized (Li et al., 2021). pPVT-CeA glutamatergic projection neurons (Liang et al., 2020; Pliota et al., 2018) are a projection-defined posterior subset without a molecular marker. Named marker-defined subsets proposed separately: Gck+ aPVT and Crh+ aPVT neurons. Human-mouse MD-PVT gradient conserved with species differences in neuropeptide/receptor genes (Schulmann et al., 2024).",
+    "quote_count": 93,
+    "originally_proposed_id": "pvt_glutamatergic_projection_neuron",
+    "existing_node_file": "kb/graphs/thalamus/pvt_glutamatergic_neuron.yaml",
+    "curator_decision": "2026-11-14: same type as existing node pvt_glutamatergic_neuron (from THA-M-T1-R1 ingest). ENRICH the existing file: keep every existing property and source, add new ones from this report. Do not create a new node."
+  },
+  {
+    "proposed_id": "apvt_gck_neuron",
+    "name": "Glucokinase-expressing anterior PVT (Gck+ aPVT) glutamatergic neuron",
+    "markers_mentioned": [
+      "Gck",
+      "Slc17a6"
+    ],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "anterior paraventricular nucleus of thalamus"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Projection neurons of anterior PVT innervating many brain regions; strongest outputs to forebrain reward/stress areas and hypothalamic energy-balance/feeding structures. Receive direct input from hypothalamic AVP-, MCH-, orexin- and POMC-expressing neurons.",
+    "ephys_summary": "Not described in report.",
+    "subtypes_noted": "Defined via Gck transgenic mouse plus transcriptomics (Gaspari et al., 2022); enriched in receptors for hypothalamic neuropeptides, adhesion molecules and obesity/diabetes susceptibility transcription factors. Glutamatergic identity inferred from PVT principal-cell context, not directly shown. Relationship to Gao et al. PVT1-5 clusters not resolved.",
+    "quote_count": 6,
+    "curator_decision": "2026-11-14: write as a separate node."
+  },
+  {
+    "proposed_id": "apvt_crh_neuron",
+    "name": "Corticotropin-releasing factor-expressing anterior PVT (aPVT CRF+) neuron",
+    "markers_mentioned": [
+      "Crh"
+    ],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [
+      "Crh"
+    ],
+    "anatomy_mentioned": [
+      "anterior paraventricular nucleus of thalamus"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Project densely to nucleus accumbens; receive critical input from ventromedial hypothalamus (VMH).",
+    "ephys_summary": "Not described in report; preferentially recruited (activated) during approach-avoidance conflict.",
+    "subtypes_noted": "Single-study subset (Engelke et al., 2021, rat); aPVT-CRF->NAc pathway suppresses food seeking and increases avoidance under predator-threat conflict. Mentioned only in the connectivity section of the report, not in its subtype profiles; glutamatergic identity inferred from PVT principal-cell context. Relationship to transcriptomic clusters not addressed.",
+    "quote_count": 1,
+    "curator_decision": "2026-11-14: write as a separate node."
+  }
+]
