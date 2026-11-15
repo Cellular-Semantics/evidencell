@@ -873,3 +873,55 @@ def test_validate_terms_returns_false_on_failure(tmp_path: Path):
         ok, output = validate_terms("nodes: [{id: x, cl_term: CL:9999999999}]", schema)
     assert ok is False
     assert "CL:9999999999" in output
+
+
+@pytest.mark.parametrize(
+    "kb_rel,expected_class",
+    [
+        ("kb/graphs/BG/x.yaml", "CellTypeMappingGraph"),
+        ("kb/annotation_transfer_runs/at_run_x/manifest.yaml", "AnnotationTransferRun"),
+        ("kb/correlation_runs/run_x/manifest.yaml", "CorrelationRun"),
+        ("kb/datasets/x.yaml", "BulkDataset"),
+        (None, "CellTypeMappingGraph"),
+    ],
+    ids=["graph", "at_manifest", "correlation_manifest", "dataset", "no_path"],
+)
+def test_validate_terms_passes_target_class_by_path(
+    tmp_path: Path, kb_rel: str | None, expected_class: str
+):
+    """Regression (#209): the term validator must get the same target class
+    as linkml_validate. Without one it defaults to the tree root
+    (CellTypeMappingGraph) and crashes on run manifests.
+    """
+    schema = tmp_path / "schema" / "celltype_mapping.yaml"
+    schema.parent.mkdir(parents=True)
+    schema.write_text("id: fake")
+    _write_oak_config(tmp_path, {"CL": "sqlite:obo:cl"})
+    fake_semsql = tmp_path / "semsql_home"
+    fake_semsql.mkdir()
+    (fake_semsql / "cl.db").write_bytes(b"")
+    mock_result = MagicMock(returncode=0, stdout="ok", stderr="")
+    file_path = tmp_path / kb_rel if kb_rel else None
+    with patch(
+        "evidencell.validate._semsql_db_path",
+        side_effect=lambda name: fake_semsql / f"{name}.db",
+    ), patch("evidencell.validate.subprocess.run", return_value=mock_result) as run:
+        ok, _ = validate_terms("id: x", schema, file_path=file_path)
+    assert ok is True
+    cmd = run.call_args.args[0]
+    assert "validate-data" in cmd
+    assert cmd[cmd.index("--target-class") + 1] == expected_class
+
+
+def test_validate_terms_skips_path_with_no_schema_class(tmp_path: Path):
+    """A KB path with no schema class (e.g. an AT run's f1_matrix sidecar)
+    is skipped, as in linkml_validate — no subprocess call."""
+    schema = tmp_path / "schema" / "celltype_mapping.yaml"
+    schema.parent.mkdir(parents=True)
+    schema.write_text("id: fake")
+    file_path = tmp_path / "kb" / "annotation_transfer_runs" / "r" / "at_results.yaml"
+    with patch("evidencell.validate.subprocess.run") as run:
+        ok, msg = validate_terms("id: x", schema, file_path=file_path)
+    assert ok is True
+    assert "term check skipped" in msg
+    run.assert_not_called()

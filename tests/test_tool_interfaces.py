@@ -99,6 +99,29 @@ def test_linkml_term_validator_validate_accepts_schema():
     )
 
 
+def test_linkml_term_validator_validate_data_accepts_target_class():
+    """linkml-term-validator validate-data must accept --config, --schema
+    and --target-class.
+
+    The hook's term check (`validate.validate_terms`) uses `validate-data`
+    because the `validate` subcommand has no --target-class and always
+    falls back to the schema tree root, which crashes on non-graph KB
+    files such as AT run manifests (#209).
+    """
+    r = _uv_run_help("linkml-term-validator", "validate-data")
+    _require(r, "linkml-term-validator")
+    assert r.returncode == 0, (
+        f"'linkml-term-validator validate-data --help' failed (rc={r.returncode}).\n"
+        f"stderr: {r.stderr}"
+    )
+    combined = r.stdout + r.stderr
+    for flag in ("--config", "--schema", "--target-class"):
+        assert flag in combined, (
+            f"'{flag}' not found in linkml-term-validator validate-data --help.\n"
+            "evidencell.validate.validate_terms depends on it."
+        )
+
+
 # ── runoak (OAK) ──────────────────────────────────────────────────────────────
 
 
