@@ -1,0 +1,125 @@
+# Corticotropin-releasing factor-expressing anterior PVT (aPVT CRF+) neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/PVT_Glut.pdf
+# Ingestion date: 2026-11-14
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "CRF+ Anterior PVT Neuron"
+description: >
+  Evidence graph component for the corticotropin-releasing factor (CRF;
+  Crh)-expressing neuron of the anterior paraventricular nucleus of the
+  thalamus, a marker-defined subset of the PVT glutamatergic projection
+  neuron, proposed from the ASTA deep research report on PVT glutamatergic
+  neurons.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-14"
+nodes:
+  - id: apvt_crh_neuron
+    name: "Corticotropin-releasing factor-expressing anterior PVT (aPVT CRF+) neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:       # To be confirmed from primary literature — single source is rat
+    anatomical_location:
+      - id: UBERON:0001920
+        label: "paraventricular nucleus of thalamus"
+        name_in_source: "anterior portion of the paraventricular thalamic nucleus (aPVT)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:33947849"
+            method: "circuit manipulation + tracing (approach-avoidance conflict test)"
+            scope: "adult rat anterior PVT"
+            quote_key: "233741825_efb846f2"
+      - id: UBERON:0001882
+        label: "nucleus accumbens"
+        name_in_source: "nucleus accumbens (NAc)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:33947849"
+            method: "projection tracing + pathway manipulation"
+            scope: "adult rat — aPVT CRF neurons project densely to NAc"
+            quote_key: "233741825_efb846f2"
+    nt_type:
+      name_in_source: "glutamatergic (inferred)"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:34220458"
+          method: "review (PVT-wide vGLUT2 mRNA; no intrinsic GABAergic neurons) — inference, not shown for CRF+ cells"
+          scope: "rodent PVT (whole nucleus)"
+          quote_key: "235466185_0d1595b7"
+    defining_markers:
+      - symbol: Crh
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:33947849"
+            method: "identification of CRF-expressing aPVT subpopulation (detection modality not stated in quote)"
+            scope: "adult rat anterior PVT"
+            quote_key: "233741825_efb846f2"
+            marker_type: TRANSCRIPT
+    neuropeptides:
+      - symbol: Crh
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:33947849"
+            method: "identification of CRF-expressing aPVT subpopulation (detection modality not stated in quote)"
+            scope: "adult rat anterior PVT"
+            quote_key: "233741825_efb846f2"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >
+        Projection neurons that project densely to the nucleus accumbens and
+        receive critical input from the ventromedial hypothalamus (VMH). No
+        somatodendritic description in the evidence.
+      sources:
+        - ref: "PMID:33947849"
+          method: "projection and input tracing"
+          scope: "adult rat aPVT CRF neurons"
+          quote_key: "233741825_efb846f2"
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "thalamic excitatory neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        No Crh+ aPVT-specific CL term; BROAD parent only. Mapping confidence
+        LOW. Glutamatergic identity inferred.
+    definition_references:
+      - "PMID:33947849"
+    is_terminal: false
+    notes: >
+      SUBSET OF pvt_glutamatergic_neuron: this is a marker-defined
+      subpopulation of the PVT glutamatergic projection neuron (anterior PVT).
+      The schema has no parent/subtype slot on CellTypeNode, so the
+      relationship is recorded here only.
+
+      EVIDENCE LIMITS: rat-only and connectivity/behaviour-only, from a single
+      study (Engelke et al. 2021; PMID:33947849). The report mentions this
+      population only in its connectivity section, not in its subtype
+      profiles. aPVT CRF neurons are preferentially recruited during
+      approach-food vs avoid-predator conflict, and the aPVT-CRF to NAc
+      pathway suppresses food seeking and increases avoidance. No intrinsic
+      electrophysiology described.
+
+      NT TYPE INFERRED: glutamatergic identity is inferred from PVT
+      principal-cell context (PVT-wide vGLUT2 expression and absence of
+      intrinsic GABAergic neurons), not shown directly for CRF+ cells.
+
+      MARKER EVIDENCE: the detection modality for Crh/CRF (transgenic line,
+      ISH or IHC) is not stated in the quoted abstract; marker_type
+      TRANSCRIPT is provisional pending primary verification. Crh is listed as
+      both a defining marker and a neuropeptide.
+
+      LOCATION: no ontology term for anterior PVT; the parent PVT term
+      (UBERON:0001920) is used with name_in_source "aPVT".
+
+      UNRESOLVED: relationship to mouse transcriptomic clusters (Gao et al.
+      2023 PVT1-5) and to apvt_gck_neuron is not addressed.
+edges: []

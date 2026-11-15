@@ -2,7 +2,11 @@
   "272427114_aebcb418": {
     "text": "MD was dissected from coronal slabs based on anatomical landmarks, followed by nuclei isolation and snRNA-seq via the 10X Chromium platform (Fig. 1a). Data underwent extensive quality control and filtering, clustering, and cell-type annotation based on marker genes and data from the Human Brain Cell Atlas 15 . Despite differences in tissue processing between the brain banks, both datasets showed the same major cell classes (Fig. 1b, Supplementary fig. 1a-d, see Methods for details). We identified excitatory neurons, marked by expression of SLC17A6 (VGluT2), inhibitory neurons, which comprised nearly 40% of neurons in our samples and expressed SOX14 -consistent with midbrain origin -and several non-neuronal populations (Fig. 1c; Supplementary data table 1). To investigate thalamic projection neuron subpopulations in MD, we re-clustered the excitatory neurons, integrating HBCC and MSSM data (Fig. 1d, Supplementary fig. 1e-f). We found that most excitatory neurons in MD were part of a transcriptional gradient captured by the first principal component (PC1, Fig. 1e). Genes aligned with PC1 overlapped with and correlated in their loadings with those of a previously described trans-thalamic axis separating primary, secondary and tertiary thalamic cells in mice 8 (Supplementary fig. 1g-h). Thus, projection neurons in human MD and midline thalamus exhibit a gene expression gradient that closely resembles a cell-type gradient with distinct functional and morphological properties in mice. Human MD has traditionally been divided into a magnocellular (MDmc, medial), parvocellular (MDpc, lateral-ventral) and multiform/densocellular (MDdc, lateral- dorsal) part 16 . We hypothesized that these cytoarchitectonic subdivisions could correspond to transcriptionally defined neuronal populations.",
     "section": "Major neuronal classes with soma in the mouse thalamic region",
-    "claims": ["nt_type", "defining_markers", "anatomical_location"],
+    "claims": [
+      "nt_type",
+      "defining_markers",
+      "anatomical_location"
+    ],
     "source_method": "ASTA_REPORT",
     "status": "pending",
     "added_by": "20261111_thalamus_report_ingest"
@@ -10,7 +14,9 @@
   "272427114_aa16b051": {
     "text": "To map cell populations identified by snRNA-seq onto anatomical space, we applied spatial transcriptomics to two coronal thalamic sections, then deconvoluted the cell types, using our snRNA-seq data as a reference 17 . This revealed prominent spatial separation of neuronal populations. Some excitatory neuron clusters preferentially mapped to MDmc, MDpc, or adjacent nuclei, while inhibitory interneurons appeared to be particularly enriched in MDpc and MDdc (Fig. 2a; Supplementary fig. 2a). Similarly, projection of the excitatory neuron PC1 from Fig. 1e onto the spatial transcriptomics data showed that the primary end of the gradient mapped to MD, especially MDmc, while the tertiary end mapped to PVT and PT (Supplementary fig. 2b). Among the surrounding nuclei, intralaminar nuclei were on the tertiary end, while motor/somatosensory and lateral dorsal thalamus were on the primary end, consistent with their profiles in mouse thalamus 8 . RNA-FISH confirmed this spatial distribution of marker genes associated with opposite ends of the gradient and showed that numerous cells co-expressed multiple markers (Fig. 2b, Supplementary fig. 3). These analyses suggest that the gene expression gradient of excitatory neurons corresponds to a spatial gradient of neurons between MD and PT/PVT. Having identified a cell-type gradient in human MD and PVT with major similarities to the thalamic cell-type gradient in mice, we sought to better understand the commonalities and differences in MD cellular composition between humans and mice. Since previous snRNA-seq from retrogradely labeled cells did not include enough neurons in MD 8 , we collected additional snRNA-seq from mouse MD based on anatomical dissections. As expected, this identified the same major cell classes as human MD, except that inhibitory neurons were not observed in mouse MD (Supplementary fig. 4). To directly compare thalamic projection neurons between species, we integrated human and mouse excitatory neurons (Fig. 3a, Supplementary fig.",
     "section": "Major neuronal classes with soma in the mouse thalamic region",
-    "claims": ["anatomical_location"],
+    "claims": [
+      "anatomical_location"
+    ],
     "source_method": "ASTA_REPORT",
     "status": "pending",
     "added_by": "20261111_thalamus_report_ingest"
@@ -30,5 +36,29 @@
     "source_method": "ASTA_REPORT",
     "status": "pending",
     "added_by": "20261111_thalamus_report_ingest"
+  },
+  "272427114_60413ccc": {
+    "text": "To directly compare thalamic projection neurons between species, we integrated human and mouse excitatory neurons (Fig. 3a, Supplementary fig. 5) and assigned the resulting clusters to their putative nuclei of origin based on integration with existing data from mouse PVT 13 and habenula 18 and on marker gene expression in the Allen Institute's ISH database. This allowed us to identify a correspondence between human and mouse thalamic neurons, confirming clusters derived from MD, intralaminar nuclei, and PVT",
+    "section": "projection neurons",
+    "claims": [],
+    "source_method": "ASTA_REPORT",
+    "status": "pending",
+    "added_by": "20261114_thalamus_pvt_report_ingest"
+  },
+  "272427114_ef30d7d7": {
+    "text": "Cells within MD and PVT formed a gradient captured by PC1 with loadings closely associated with the primary-secondary-tertiary gradient described above (Supplementary fig. 5c-d). MD largely occupied the primary side, while PVT occupied the tertiary side of the gradient. Notably, the primary end of the gradient is expanded in humans relative to mice (Fig. 3c)",
+    "section": "projection neurons",
+    "claims": [],
+    "source_method": "ASTA_REPORT",
+    "status": "pending",
+    "added_by": "20261114_thalamus_pvt_report_ingest"
+  },
+  "272427114_30ebbfd9": {
+    "text": "Gene ontology analysis showed that the genes associated with PC1 across both species were enriched for neuron projection development, ion channels, and synaptic transmission (Fig. 3d). Since many genes related to synaptic transmission were associated with this gradient, we compared neurotransmitter receptor gene expression between the species. Most genes showed a concordant pattern along the MD-PVT gradient between both species, but a few genes were discordant or species-specific in their gradient association (Fig. 3e, Supplementary fig. 5e). Thus, while the gene expression patterns along the gradient are largely conserved, subtle differences in neuropeptide/neuromodulator receptors exist between species.",
+    "section": "projection neurons",
+    "claims": [],
+    "source_method": "ASTA_REPORT",
+    "status": "pending",
+    "added_by": "20261114_thalamus_pvt_report_ingest"
   }
 }
