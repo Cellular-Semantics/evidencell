@@ -41,12 +41,12 @@ nodes:
             method: review (marker classification)
             scope: adult dentate gyrus
             quote_key: 279046466_998847af
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: PMID:37082558
             method: review (marker classification)
             scope: adult hippocampal DG
             quote_key: 245432259_44d5c91b
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: NeuN
         ncbi_gene_id:
         sources:
@@ -54,12 +54,12 @@ nodes:
             method: review (marker classification)
             scope: adult dentate gyrus — stage 5
             quote_key: 279046466_998847af
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: PMID:37082558
             method: review (marker classification)
             scope: adult hippocampal DG
             quote_key: 245432259_44d5c91b
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: PSA-NCAM
         ncbi_gene_id:
         sources:
@@ -67,15 +67,15 @@ nodes:
             method: review (marker classification)
             scope: adult hippocampal DG
             quote_key: 245432259_44d5c91b
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Tis21
         ncbi_gene_id:
         sources:
           - ref: PMID:19482889
-            method: Tis21 knock-in GFP mouse + IHC
+            method: "Tis21-GFP knock-in reporter mouse"
             scope: adult mouse hippocampus
             quote_key: 7393550_b2644450
-            marker_type: PROTEIN
+            marker_type: TRANSGENE_REPORTER
     negative_markers:
       - symbol: Calbindin
         ncbi_gene_id:
