@@ -44,7 +44,7 @@ nodes:
         sources:
           - ref: PMID:20147544
             marker_type: PROTEIN
-            method: immunohistochemistry
+            method: "scPCR + immunohistochemistry"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
           - ref: PMID:20147544
@@ -56,6 +56,7 @@ nodes:
             snippet: a subset of NGCs lacking nNOS arises from caudal ganglionic eminence (CGE) progenitors. Thus, while nNOS+ NGCs and IvCs arise from MGE progenitors, a CGE origin distinguishes a discrete population of nNOS− NGCs
             support: SUPPORT
             source: cite_traverse_2026_04_10
+            quote_key: "2405079_74212ca2"
             marker_type: TRANSCRIPT
           - ref: PMID:20147544
             snippet: we found that the nNOS ϩ subset, hence MGE derived, represents the majority of all hippocampal NGCs with a minor contribution from CGE-derived NGCs. This contrasts with findings in the neocortex in which fate-mapping evidence supports a dominant CGE origin for NGCs
@@ -66,13 +67,14 @@ nodes:
             snippet: The Neurogliaform interneurons that are Lhx6 + /Lamp5 + /Id2 + are annotated as MGE-derived (NGFC.M); and those that are Lhx6 - /Lamp5 + /Id2 + /Ndnf + are annotated as CGE-derived (NGFC.C)
             support: SUPPORT
             source: cite_traverse_2026_04_10
+            quote_key: "282312227_e62a536b"
             marker_type: PROTEIN
       - symbol: Npy
         ncbi_gene_id:
         sources:
           - ref: PMID:20147544
             marker_type: PROTEIN
-            method: immunohistochemistry
+            method: "scPCR + immunohistochemistry"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
           - ref: PMID:21209836
@@ -106,24 +108,24 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:20147544
-            marker_type: PROTEIN
-            method: immunohistochemistry
+            marker_type: TRANSCRIPT
+            method: "single-cell RT-PCR"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
       - symbol: Sst
         ncbi_gene_id:
         sources:
           - ref: PMID:20147544
-            marker_type: PROTEIN
-            method: immunohistochemistry
+            marker_type: TRANSCRIPT
+            method: "single-cell RT-PCR"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
       - symbol: Calb2
         ncbi_gene_id:
         sources:
           - ref: PMID:20147544
-            marker_type: PROTEIN
-            method: immunohistochemistry
+            marker_type: TRANSCRIPT
+            method: "single-cell RT-PCR"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
     neuropeptides:
@@ -132,7 +134,7 @@ nodes:
         sources:
           - ref: PMID:20147544
             marker_type: PROTEIN
-            method: immunohistochemistry
+            method: "scPCR + immunohistochemistry"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
     cl_mapping:
