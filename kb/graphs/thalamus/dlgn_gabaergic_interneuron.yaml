@@ -1,6 +1,8 @@
 # Dorsal lateral geniculate nucleus (dLGN) local GABAergic interneuron — thalamus
 # Source: ASTA deep research report — inputs/deepsearch/THA-M-T1-R1.pdf
 # Ingestion date: 2026-11-11
+# Source: ASTA deep research report — inputs/deepsearch/dLGN_GABA_interneuron.pdf
+# Ingestion date: 2026-11-14 (run 20261114_thalamus_report_ingest)
 # Status: DRAFT — node metadata from ASTA report, pending primary verification
 # Property assertions reference quotes in references/thalamus/
 # Proposed by: asta-report-ingest
@@ -9,7 +11,8 @@ name: "Dorsal Lateral Geniculate Nucleus (dLGN) Local GABAergic Interneuron"
 description: >
   Evidence graph component for the local GABAergic interneuron of the dorsal
   lateral geniculate nucleus, proposed from the ASTA deep research report on
-  thalamic neuron types.
+  thalamic neuron types and extended from a dedicated ASTA deep research
+  report on dLGN GABAergic interneurons (2026-11-14).
 brain_region:
   id: UBERON:0001897
   label: "dorsal plus ventral thalamus"
@@ -21,7 +24,7 @@ nodes:
   - id: dlgn_gabaergic_interneuron
     name: "Dorsal lateral geniculate nucleus (dLGN) local GABAergic interneuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:       # To be confirmed from primary literature — mouse primary source; cross-species note from primate
+    species:       # To be confirmed from primary literature — mostly mouse primary sources; cat/ferret/primate cross-species notes
     anatomical_location:
       - id: UBERON:0002479
         label: "dorsal lateral geniculate nucleus"
@@ -36,6 +39,18 @@ nodes:
             method: "scRNA-seq + snRNA-seq cross-species alignment"
             scope: "mouse, macaque and human dLGN GABAergic neurons"
             quote_key: "237389962_9b813d38"
+          - ref: "PMID:24359973"
+            method: "GAD67-GFP reporter visualisation + whole-cell recording"
+            scope: "mouse dLGN, first 5 postnatal weeks — GFP+ interneurons evenly distributed throughout dLGN"
+            quote_key: "15010690_ba27881b"
+          - ref: "PMID:29706872"
+            method: "GABA immunolabeling + unbiased stereology"
+            scope: "adult C57BL/6 male mouse — dLGN and LP the only dorsal thalamic nuclei with substantial GABA+ interneurons"
+            quote_key: "4792744_fdf8e890"
+          - ref: "PMID:27929058"
+            method: "statement in source (background)"
+            scope: "rodent — interneurons largely confined to dLGN; F2 terminals within glomeruli"
+            quote_key: "264044014_1ddc2e36"
     nt_type:
       name_in_source: "GABAergic"
       cl_terms:
@@ -51,46 +66,228 @@ nodes:
           method: "scRNA-seq + snRNA-seq"
           scope: "mouse vs primate dLGN GABAergic neurons"
           quote_key: "237389962_9b813d38"
+        - ref: "PMID:29706872"
+          method: "GABA immunolabeling"
+          scope: "adult mouse dLGN interneurons"
+          quote_key: "4792744_fdf8e890"
+        - ref: "PMID:27929058"
+          method: "optogenetics; GABA release from dLGN-INs"
+          scope: "mouse dLGN"
+          quote_key: "264044014_7ca82914"
+    defining_markers:
+      - symbol: Gad1
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:24359973"
+            marker_type: TRANSCRIPT
+            method: "GAD67-GFP transgenic reporter (Chattopadhyaya et al., 2004 line) used to target interneurons"
+            scope: "mouse dLGN"
+            quote_key: "15010690_a1440f47"
+          - ref: "PMID:30842249"
+            marker_type: TRANSCRIPT
+            method: "GAD67-GFP transgenic reporter"
+            scope: "mouse dLGN, developing and adult"
+            quote_key: "73481430_aac25d77"
+      - symbol: Sox14
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:27929058"
+            marker_type: TRANSCRIPT
+            method: "genetic lineage / fate mapping"
+            scope: "mouse — Sox14/Otx2-expressing precursors migrate from dorsal midbrain to generate dLGN-INs (early postnatal)"
+            quote_key: "264044014_f908cf73"
+      - symbol: Otx2
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:27929058"
+            marker_type: TRANSCRIPT
+            method: "genetic lineage / fate mapping"
+            scope: "mouse — expression stated for precursor cells of dLGN-INs; adult expression not stated in quote"
+            quote_key: "264044014_f908cf73"
+      - symbol: Grm5
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:23392677"
+            marker_type: PROTEIN
+            method: "statement in source citing EM localisation (mGluR5 on interneuron dendritic spines in triads)"
+            scope: "rodent dLGN"
+            quote_key: "15874961_b12c2a40"
+          - ref: "PMID:17192427"
+            marker_type: PROTEIN
+            method: "pharmacology (DHPG agonist; MPEP mGluR5 antagonist)"
+            scope: "rodent dLGN slices — mGluR5-dependent increase in interneuron-derived sIPSCs"
+            quote_key: "11022573_0af766e8"
+      - symbol: Hcn3
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:27121468"
+            marker_type: TRANSCRIPT
+            method: "molecular biological + immunohistochemical analysis of HCN isoforms"
+            scope: "mouse dLGN interneurons — abundant HCN3 isoform expression"
+            quote_key: "1898525_516c7674"
     morphology:
       description: >
-        Local (intrinsic) interneuron of dLGN; no further morphological detail
-        in the report.
+        Local (intrinsic) interneuron of dLGN. Highly complex, widespread
+        dendritic processes that often cross eye-specific borders; mature
+        arbors adopt a bipolar architecture after a developmental phase of
+        exuberant branching and pruning. Neurites are bifunctional: they
+        receive retinal synapses and also release GABA. Dual output onto
+        thalamocortical relay cells via classical axonal F1 terminals and
+        presynaptic dendritic F2 terminals; F2 terminals (dendritic spines
+        expressing mGluR5) participate in retinogeniculate triads within
+        glomeruli. A single EM-reconstructed mouse interneuron made 623
+        outputs and innervated 256 thalamocortical cells across functionally
+        distinct subregions.
       sources:
         - ref: "https://doi.org/10.1101/2023.05.01.538832"
           method: "statement citing prior anatomy"
           scope: "adult mouse LGd"
           quote_key: "258464391_a576f421"
+        - ref: "PMID:24359973"
+          method: "GAD67-GFP reporter imaging of dendritic arbors"
+          scope: "mouse dLGN, postnatal weeks 1-5"
+          quote_key: "15010690_ba27881b"
+        - ref: "PMID:30842249"
+          method: "developmental morphological reconstruction (GAD67-GFP)"
+          scope: "mouse dLGN, postnatal development"
+          quote_key: "73481430_7cb9656b"
+        - ref: "PMID:32142646"
+          method: "serial section electron microscopy reconstruction of one interneuron"
+          scope: "mouse visual thalamus"
+          quote_key: "198259790_6a9719ba"
+        - ref: "PMID:29252999"
+          method: "statement in source (F1 axonal vs F2 dendritic outputs)"
+          scope: "rodent dLGN"
+          quote_key: "26076888_589136d8"
+    electrophysiology:
+      description: >
+        Dendrites support brief Na+ action potentials and long-lasting Ca2+
+        spikes, whereas axons support only Na+ spikes; APs initiated (most
+        likely at the axon initial segment) backpropagate actively and with
+        high fidelity into the fine filiform dendritic appendages, giving
+        near-synchronous axonal and dendritic GABA release. Diverse firing
+        patterns on somatic depolarisation (tonic firing, periodic bursting,
+        initial burst followed by tonic spiking, spike-frequency adaptation);
+        some cells show rebound bursts after hyperpolarisation. Prominent Ih,
+        modulated by cyclic nucleotides and PIP2 (HCN3-rich). Retain ~8-10
+        retinal inputs through the first 5 postnatal weeks (no pruning,
+        unlike relay cells). Group I mGluR agonist (DHPG) depolarises and
+        group II mGluR agonists hyperpolarise these interneurons; group I
+        mGluR-driven dendrodendritic (F2) GABA release is TTX-insensitive and
+        L-type Ca2+ channel dependent. At increased firing rates they generate
+        tonic GABA_A inhibition of relay neurons via extrasynaptic
+        high-affinity GABA_A receptors.
+      sources:
+        - ref: "PMID:20386723"
+          method: "statement in source (dendritic vs axonal spikes)"
+          scope: "rodent dLGN"
+          quote_key: "11224139_4166977c"
+        - ref: "PMID:22171033"
+          method: "dendritic imaging + whole-cell recording"
+          scope: "rodent dLGN slices"
+          quote_key: "15995215_8df8c238"
+        - ref: "PMID:21980270"
+          method: "somatic current clamp (as summarised for compartmental model)"
+          scope: "rodent dLGN"
+          quote_key: "53306582_69468622"
+        - ref: "PMID:27121468"
+          method: "whole-cell patch clamp + cluster analysis"
+          scope: "mouse dLGN interneurons"
+          quote_key: "1898525_516c7674"
+        - ref: "PMID:17192427"
+          method: "whole-cell recording + mGluR pharmacology"
+          scope: "rodent dLGN slices"
+          quote_key: "11022573_0af766e8"
+        - ref: "PMID:21653871"
+          method: "whole-cell recording + TTX / nimodipine pharmacology"
+          scope: "rodent dLGN slices"
+          quote_key: "13918038_86adfc87"
     colocated_types:
       - neighboring_type: "dlgn_relay_neuron"
         spatial_relationship: INTERSPERSED
         notes: >
           Sparse local interneurons among the excitatory thalamocortical relay
-          neurons of dLGN. Supporting quote: 258464391_a576f421 (Zhou et al.,
-          2023; https://doi.org/10.1101/2023.05.01.538832).
+          neurons of dLGN. Supporting quotes: 258464391_a576f421 (Zhou et al.,
+          2023; https://doi.org/10.1101/2023.05.01.538832); 53306582_41ba60ad
+          (PMID:21980270 — relay neurons ~75-80%, interneurons the remainder);
+          4792744_fdf8e890 (PMID:29706872 — interneurons 5.6% of dLGN
+          neurons).
+    cl_mapping:
+      cl_term:
+        id: CL:0011005
+        label: "GABAergic interneuron"
+        name_in_source: "GABAergic interneuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        No thalamus/dLGN-specific interneuron term found in CL (searched dLGN
+        interneuron, thalamic interneuron, local circuit neuron thalamus,
+        geniculate). Only the generic parent CL:0011005 matches; mapping
+        confidence MEDIUM. Potential CL new-term contribution.
     definition_references:
       - "https://doi.org/10.1101/2023.05.01.538832"
       - "PMID:34473054"
+      - "PMID:27929058"
+      - "PMID:27121468"
+      - "PMID:24359973"
+      - "PMID:29706872"
+      - "PMID:32142646"
     is_terminal: false
     notes: >
-      CL MAPPING: no CL term found for LGN/thalamic GABAergic interneuron
-      (searched thalamic GABAergic neuron, lateral geniculate nucleus neuron);
-      cl_mapping left empty (CANDIDATE) — potential CL new-term contribution.
-      The nearest generic parent would be CL:0011005 GABAergic interneuron.
+      CL MAPPING: no CL term specific to LGN/thalamic GABAergic interneuron;
+      mapped BROAD to CL:0011005 GABAergic interneuron (2026-11-14 run;
+      previously left empty). Potential CL new-term contribution.
 
-      SPARSE EVIDENCE: the report notes the cited quotes do not detail
-      markers or subclasses; defining_markers is left empty. No marker is
-      asserted without a source.
+      MARKERS: positive markers now sourced from the 2026-11-14 report —
+      Gad1 (via GAD67-GFP reporter lines; PMID:24359973, PMID:30842249),
+      Sox14 and Otx2 (PMID:27929058; stated for the dorsal-midbrain precursor
+      cells that generate dLGN-INs — adult expression not asserted by the
+      quote), Grm5/mGluR5 (on F2 dendritic spines; PMID:23392677,
+      PMID:17192427 — pharmacological/EM evidence, not a transcriptomic
+      marker), and Hcn3 (PMID:27121468). The report's transcriptomics section
+      is labelled LLM-generated/unsourced and was not used to assert markers.
+      The earlier "sparse evidence / no markers" caveat is superseded. Sox14
+      also marks human medial-thalamic inhibitory neurons (PMID:39282422;
+      PMID:42818922), consistent with the midbrain-origin finding.
 
-      SPECIES DIFFERENCE / HETEROGENEITY: Bakken et al. (2021;
-      PMID:34473054) report expanded diversity of GABAergic neurons in primate
-      vs mouse dLGN; human thalamus more generally shows a large expansion of
-      GABAergic neurons, most originating outside the thalamus (Kim et al.,
-      2023; PMID:37824646). A mouse-defined node may not transfer cleanly to
-      primate. Human medial-thalamic inhibitory neurons express SOX14,
-      consistent with midbrain origin (PMID:39282422; PMID:42818922), but no
-      quote ties SOX14 to mouse dLGN interneurons specifically.
+      DEVELOPMENTAL ORIGIN: dLGN-INs derive from Sox14/Otx2-expressing
+      precursors that migrate from the dorsal midbrain (tectum) in early
+      postnatal development, setting them apart from TRN GABAergic neurons
+      (264044014_f908cf73, PMID:27929058). Recruitment into visual thalamus
+      depends on retinal input signalling astrocytes (FGF15; SHH from RGCs;
+      247085323_cb2b38fe, 247085323_67c5e927, PMID:36342840).
 
-      ELECTROPHYSIOLOGY: not described in the report.
+      ABUNDANCE (CONTRADICTION): unbiased stereology with GABA
+      immunolabeling gives 5.6% of adult mouse dLGN neurons
+      (4792744_fdf8e890, PMID:29706872), explicitly lower than earlier
+      estimates of 10-20% (210870509_6e5369ef, PMID:31964831) or 20-25%
+      (53306582_41ba60ad, PMID:21980270).
 
-      SPECIES: species left null.
+      SUSPECTED HETEROGENEITY (not split): rodent literature treats dLGN
+      interneurons as one, or at most one-two, homogeneous classes
+      (11224139_ff5d45fb, PMID:20386723; 210870509_6e5369ef, PMID:31964831).
+      Leist et al. 2016 (1898525_516c7674, PMID:27121468) resolved two mouse
+      subclasses by unsupervised cluster analysis: small cells (depolarised
+      RMP, stronger anomalous rectification, faster/higher-frequency APs,
+      rebound bursting, higher Ih density; nNOS-negative) vs large cells
+      (lower Ih; nNOS/Nos1-positive). Nos1 is therefore a subset marker and is
+      not listed as a positive or negative marker for the whole node.
+      In ferret LGNd, a subset of interlaminar-zone interneurons is
+      "PGN-like" — parvalbumin-positive, excited by thalamocortical axon
+      collaterals, rhythmic rebound low-threshold Ca2+ spikes at 1-4 Hz,
+      depolarised by serotonin, 1S,3R-ACPD and CCK8S, biphasic response to
+      ACh (7411015_1b734c58, 7411015_dc5df80b, PMID:8815875). This is
+      species-specific and Pvalb is not asserted for the node.
+
+      SPECIES DIFFERENCE: Bakken et al. (2021; PMID:34473054) report expanded
+      diversity of GABAergic neurons in primate vs mouse dLGN; human thalamus
+      more generally shows a large expansion of GABAergic neurons, most
+      originating outside the thalamus (Kim et al., 2023; PMID:37824646).
+      Interneurons are ubiquitous in carnivoran and primate thalamus but
+      largely confined to dLGN in rodents (264044014_1ddc2e36,
+      PMID:27929058). In cat, feedforward-inhibitory interneurons lie within
+      the main dLGN layers, distinct from recurrent-inhibitory perigeniculate
+      neurons (14045536_5c901cc5, PMID:21127903). A mouse-defined node may
+      not transfer cleanly to primate.
+
+      SPECIES: species left null; most cited primary data are from mouse.
 edges: []
