@@ -307,6 +307,26 @@ nodes:
           method: "slice electrophysiology with selective mGluR agonists"
           scope: "rat TRN"
           quote_key: "8440723_2571618e"
+    at_source_sets:
+      - dataset_accession: GEO:GSE145273
+        source_label: TRN Pvalb+
+        correspondence: PARTIAL
+        sources:
+          - ref: "PMID:32699411"
+            method: "manual_full_text — Li et al. 2020 identify the predominant Gad2+ Pvalb+ cluster (671 nuclei) as the inhibitory neurons of the TRN"
+            scope: "adult female mouse TRN, Smart-seq2 snRNA-seq of micro-dissected Pvalb-tdTomato TRN"
+            quote_key: "220696191_b7eca63f"
+        notes: >
+          The 671-nucleus Gad2+ Pvalb+ cluster of the GSE145273 TRN snRNA-seq
+          (the cell set deposited in Broad Single Cell Portal SCP344). The
+          source_label is the name used in the AT run, not an author cluster
+          ID; the authors call it "this Pvalb+ cluster". PARTIAL rather than
+          EXACT because the dissection also captured adjacent GABAergic
+          nuclei, and the three Pvalb-low GABAergic clusters (Gabra1/Fxyd6/
+          Tac1, assigned by the authors to neighbouring nuclei) were excluded.
+          Any Pvalb-negative TRN neurons (cf. ~70% PV coverage, see notes)
+          would also be excluded. The set spans the whole Spp1/Ecel1
+          gradient, including DP and DN intermediates.
     cl_mapping:
       cl_term:
         id: CL:0000617

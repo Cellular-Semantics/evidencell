@@ -118,6 +118,29 @@ nodes:
           method: "integrated scRNA-seq + slice electrophysiology + in vivo subnetwork perturbation"
           scope: "adult mouse TRN"
           quote_key: "220696191_0d9ab57d"
+    at_source_sets:
+      - dataset_accession: GEO:GSE145273
+        source_label: Spp1+
+        correspondence: EXACT
+        sources:
+          - ref: "PMID:32699411"
+            method: "manual_full_text — Li et al. 2020 divide the TRN gradient into Spp1 single-positive (Spp1+), DP/DN and Ecel1 single-positive segments"
+            scope: "adult female mouse TRN snRNA-seq, 671 Gad2+ Pvalb+ nuclei"
+            quote_key: "220696191_9b59d333"
+          - ref: "PMID:32699411"
+            method: "manual_full_text — retrograde RetroBead tracing from first-order thalamic nuclei + RNA-FISH"
+            scope: "adult mouse TRN; projection shown in separate animals, not in the sequenced nuclei"
+            quote_key: "220696191_6604c52c"
+        notes: >
+          Author-assigned "Spp1+" segment label (264 nuclei), taken from the
+          "Type" annotation of Broad Single Cell Portal SCP344 (values Spp1+,
+          DP, DN, Ecel1+); not re-derived here. The label is a binarised
+          marker call at one end of a continuous gradient, so purity is the
+          primary AT metric at fine levels. The first-order projection was
+          shown by retrograde tracing plus FISH for Spp1 in separate animals
+          (85.7% of FO-labelled TRN neurons were Spp1+). An AT match therefore
+          links a WMB cluster to the FO-projecting subnetwork only indirectly,
+          through the Spp1+ marker call.
     cl_mapping:
       cl_term:
         id: CL:0000617
