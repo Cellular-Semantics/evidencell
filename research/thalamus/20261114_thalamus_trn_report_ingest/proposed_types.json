@@ -1,0 +1,48 @@
+[
+  {
+    "proposed_id": "trn_gabaergic_neuron",
+    "name": "Thalamic reticular nucleus (TRN) GABAergic neuron",
+    "markers_mentioned": ["Pvalb", "Sst", "Gad1", "Gad2", "Slc32a1", "Spp1", "Ecel1", "Ascl1", "Isl1", "Dlx1", "Dlx2", "Arx", "Htr1a", "Htr2a"],
+    "negative_markers_mentioned": ["Gabra4", "Gabrd", "Nos1"],
+    "neuropeptides_mentioned": ["Sst"],
+    "anatomy_mentioned": [
+      "thalamic reticular nucleus",
+      "thin shell/sheet wrapping the anterior and lateral surfaces of the dorsal thalamus, with dorsal and ventral extensions",
+      "between the external medullary lamina and the internal capsule",
+      "perigeniculate nucleus (visual sector, cat)",
+      "limbic, sensory (x5) and motor (rostral) sectors",
+      "embryonic prethalamus (p3) origin"
+    ],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Neurons of a thin lamellar shell traversed by thalamocortical and corticothalamic fibres; thin axons with intrareticular collaterals and diffuse branches across relay nuclei (e.g. VP and posterior thalamus); presynaptic dendrites; no direct cortical projection. nRT-thalamic terminals mostly form single synapses on thin distal relay-cell dendrites (F terminals in dLGN). Core/inner cells reported to have larger somata and more extensive dendrites than edge cells.",
+    "ephys_summary": "Fast-spiking with low-threshold Ca2+ spike-driven repetitive bursts at spindle frequency (spindle pacemaker in NREM sleep); tonic firing in wakefulness (visual TRN in monkey: ~45 spikes/s background, strong fast transient visual responses, attention-modulated). No tonic GABA-A current (lacks alpha4/delta subunits); mutual GABA-A (occasionally GABA-B) inhibition between TRN cells; connexin36-dependent gap-junction-coupled clusters; group I mGluR depolarization vs group II mGluR hyperpolarization; presynaptic 5-HT1A/5-HT2A and adenosine A1 modulation of GABA release.",
+    "subtypes_noted": "Report treats TRN GABAergic neurons as one class with layered heterogeneity: (i) major transcriptomic gradient with mutually exclusive Spp1+ (core, burst-prone, first-order-projecting) and Ecel1+ (shell, low-burst, higher-order-projecting) poles (Li et al., 2020; Hartley et al., 2024) -- proposed below as separate subtype nodes; (ii) PV+ (rhythmogenic, first-order-projecting, ~70% of TRN cells) vs SOM+ (limbic, higher-order-projecting) populations (Clemente-Perez et al., 2017; Inserra et al., 2021; Flores et al., 2026; Klimczak et al., 2024), with SOM->PV intra-TRN inhibition (Cho et al., 2025); (iii) sector-defined limbic vs sensory subnetworks (Halassa et al., 2014); (iv) input-convergent (~25%) vs single-source neurons in somatosensory TRN tiers (Lam et al., 2011); (v) two gap-junction cluster types (within-module vs across-thickness) (Lee et al., 2014). Note: cat/monkey work reports somatostatin-like immunoreactivity in most TRN neurons (Graybiel et al., 1983).",
+    "quote_count": 103
+  },
+  {
+    "proposed_id": "trn_spp1_core_neuron",
+    "name": "TRN Spp1+ core GABAergic neuron",
+    "markers_mentioned": ["Spp1", "Pvalb", "Gad1"],
+    "negative_markers_mentioned": ["Ecel1"],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["central core (inner region) of the thalamic reticular nucleus"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Core/inner TRN neurons with larger somata and more extensive dendritic trees than edge neurons (review summary, Flores et al., 2026); core-like anatomical structure.",
+    "ephys_summary": "High bursting activity; projects preferentially to first-order thalamic nuclei; contributes to sleep spindle generation and delta power during slow-wave sleep.",
+    "subtypes_noted": "Pole of a continuous transcriptomic gradient rather than a discrete cluster (Li et al., 2020); intermediate cells lie between Spp1 and Ecel1 poles. Overlap with PV+ rhythmogenic, first-order-projecting population (Clemente-Perez et al., 2017) is plausible but not stated explicitly in the report.",
+    "quote_count": 6
+  },
+  {
+    "proposed_id": "trn_ecel1_shell_neuron",
+    "name": "TRN Ecel1+ shell (edge) GABAergic neuron",
+    "markers_mentioned": ["Ecel1"],
+    "negative_markers_mentioned": ["Spp1"],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["bordering shell (edge) of the thalamic reticular nucleus"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Shell-like/edge anatomical organization at TRN borders; smaller somata and less extensive dendrites than core neurons (by contrast in Flores et al., 2026).",
+    "ephys_summary": "Low bursting activity relative to Spp1+ neurons; projects preferentially to higher-order thalamic nuclei; antagonizes sleep spindle duration.",
+    "subtypes_noted": "Pole of a continuous transcriptomic gradient (Li et al., 2020). Possible correspondence with SOM+ limbic/higher-order-projecting TRN population (Clemente-Perez et al., 2017) is not stated explicitly in the report.",
+    "quote_count": 6
+  }
+]

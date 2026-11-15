@@ -1,0 +1,164 @@
+# Anteroventral thalamic nucleus (AV) excitatory projection neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/ATN_Glut.pdf
+# Ingestion date: 2026-11-15
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Anteroventral Thalamic Nucleus (AV) Excitatory Projection Neuron"
+description: >
+  Evidence graph component for the excitatory projection neuron of the
+  anteroventral thalamic nucleus (AV), a nucleus-level child type of the
+  anterior thalamic nuclei (ATN) excitatory projection neuron, proposed from
+  the ASTA deep research report on ATN glutamatergic neurons.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-15"
+nodes:
+  - id: anteroventral_thalamic_nucleus_excitatory_neuron
+    name: "Anteroventral thalamic nucleus (AV) excitatory projection neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:       # To be confirmed from primary literature — cited evidence is mouse and rat
+    anatomical_location:
+      - id: UBERON:0002685
+        label: "anteroventral nucleus of thalamus"
+        name_in_source: "anteroventral nucleus (AV)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:40593635"
+            method: "brain-wide connectomics + molecular markers"
+            scope: "adult mouse AV — contains AV1 (dorsomedial), AV2 (ventrolateral), AV3 (dorsolateral)"
+            quote_key: "279797062_79c8b7ec"
+          - ref: "PMID:38427564"
+            method: "scRNA-seq + spatial transcriptomics + multiplexed FISH"
+            scope: "adult mouse — discrete AV excitatory cluster with spatially covarying protein products and long-range inputs"
+            quote_key: "268122794_e9176ba6"
+          - ref: "https://doi.org/10.1101/2023.05.01.538832"
+            method: "Epi-Retro-Seq"
+            scope: "adult mouse — RSP-projecting clusters 13 and 26 annotated as AV"
+            quote_key: "258464391_5a791974"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:40593635"
+          method: "projection-defined cell typing + molecular markers"
+          scope: "adult mouse — all 13 projection-defined ATN types (incl. AV1-3) are glutamatergic"
+          quote_key: "279797062_9833fcee"
+        - ref: "PMID:36476860"
+          method: "embryonic scRNA-seq lineage trajectories"
+          scope: "developing mouse — glutamatergic thalamic nuclei incl. AD/AV/AM differentiate first"
+          quote_key: "254404676_7a6fba23"
+    defining_markers:
+      - symbol: C1ql2
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:40593635"
+            marker_type: TRANSCRIPT
+            method: "transcriptomic marker analysis (superior marker per ATN subnucleus)"
+            scope: "adult mouse AV"
+            quote_key: "279797062_7b604467"
+      - symbol: Bdnf
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:40593635"
+            marker_type: TRANSCRIPT
+            method: "transcriptomic marker analysis"
+            scope: "adult mouse AV"
+            quote_key: "279797062_7b604467"
+    electrophysiology:
+      description: >
+        In vivo: the anteroventral nucleus contains head-direction cells, to a
+        lesser extent than the anterodorsal nucleus. No intrinsic (slice)
+        electrophysiology reported.
+      sources:
+        - ref: "PMID:25195980"
+          method: "review (in vivo single-unit recording literature)"
+          scope: "rodent anterior thalamic nuclei"
+          quote_key: "9155344_6ed594e2"
+    morphology:
+      description: >
+        Somatodendritic plan as for the parent ATN type. Axonal projections:
+        AV is the major thalamic source to granular retrosplenial cortex
+        (RSCg), targeting primarily layer 1 and particularly L1a, with sparser
+        branching in deeper layers and dysgranular RSC; AV injections give
+        heavy termination in layers 1-4 of granular RSC (Rgb) and a light
+        projection restricted to layer 1 of anterior cingulate Cg2. Single
+        AV axons in rat granular RSC are heterogeneous — type 1 arborise only
+        in layer Ia, type 2 also branch in layers III/IV. Projection-defined
+        types: AV1 (dorsomedial; prelimbic, ACC, anterior RSC), AV2
+        (ventrolateral; granular RSC, ventral visual stream), AV3
+        (dorsolateral; prefrontal and visual cortex).
+      sources:
+        - ref: "PMID:30858601"
+          method: "anterograde AAV-ChR2 tracing (wild-type and Grp_KH288-Cre mice)"
+          scope: "adult mouse AV to granular RSC"
+          quote_key: "73729161_fddda88d"
+        - ref: "PMID:22013412"
+          method: "single-axon reconstruction (BDA)"
+          scope: "rat AV axons in granular retrosplenial cortex"
+          quote_key: "903275_698804ed"
+        - ref: "PMID:32964131"
+          method: "anterograde tracing"
+          scope: "rat AV injections — RSC and ACC terminations"
+          quote_key: "221820655_60ae409c"
+        - ref: "PMID:40593635"
+          method: "brain-wide connectomics"
+          scope: "adult mouse AV1-AV3"
+          quote_key: "279797062_79c8b7ec"
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "thalamic excitatory neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        No nucleus-specific CL term (searched anterior/anteroventral thalamic,
+        head direction cell); broad parent only. Mapping confidence MEDIUM.
+        Potential CL contribution; CL has no head-direction cell term.
+    definition_references:
+      - "PMID:40593635"
+      - "PMID:38427564"
+      - "PMID:30858601"
+      - "PMID:22013412"
+      - "PMID:32964131"
+    is_terminal: false
+    notes: >
+      HIERARCHY: subtype of anterior_thalamic_nucleus_excitatory_neuron
+      (ATN); shared ATN properties (Slc17a6, glutamatergic identity, relay-cell
+      morphology, Papez-circuit placement) are recorded on the parent.
+      Slc17a6 applies here by inheritance.
+
+      SUBTYPES NOTED (not separate nodes): Hintiryan et al. (2025;
+      PMID:40593635) define AV1 (dorsomedial), AV2 (ventrolateral) and AV3
+      (dorsolateral) projection types, without unique markers for each.
+      Kapustina et al. (2024; PMID:38427564) report a dorsomedial-
+      ventrolateral transcript gradient in AV that covaries with protein
+      products and long-range inputs — suspected continuous heterogeneity.
+
+      TRANSGENE MARKER (not recorded as a gene marker): the Grp_KH288-Cre
+      driver labels a subset of AV neurons but none in AD (PMID:30858601);
+      this BAC-transgenic labelling does not establish endogenous Grp
+      expression, and labels only a subset.
+
+      CONNECTIVITY: inputs from the ipsilateral medial mammillary nucleus
+      (pars lateralis; PMID:33309908, PMID:25538571); from presubiculum and
+      distal dorsal subiculum, mostly via the fornix, with postsubicular
+      input to lateral dorsal AV via a nonfornical route (PMID:25616174,
+      PMID:26855336, PMID:32132227); light ACC input restricted to AVDM
+      (PMID:32964131); MCC/PCC (not ACC) input to AVVL and AVDM in mouse
+      (PMID:41840687). Afferents to AV and AM are largely segregated, with
+      <1% double-labelled cells except laterodorsal tegmental input
+      (PMID:23504917). Reciprocal with ACC, secondary motor and entorhinal
+      cortex (PMID:33069688). AV and AD regulate memory specificity and
+      contextual encoding respectively via RSC projections (PMID:34197733).
+
+      SPECIES: cited evidence mixes mouse and rat; species left null.
+edges: []
