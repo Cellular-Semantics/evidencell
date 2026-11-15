@@ -1,0 +1,68 @@
+# DRAFT — move to kb/annotation_transfer_runs/at_run_20261115_phillips2019_syscluster_mmc_wmbv1/manifest.yaml
+# once issue #209 (hook term check crashes on AT manifests) is fixed.
+# LinkML schema validation (AnnotationTransferRun) already passes for this text.
+id: at_run_20261115_phillips2019_syscluster_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE133912"
+source_cluster_label: >
+  Phillips et al. 2019 (PMID:31527803) per-projection-system Seurat clusters
+  (metadata column `cluster`; paper Fig. 6): Vis_1-3, Mot_1-4, Som_1-3,
+  Aud_1-3, Pfr_1-4 (17 labels). Each projection system was clustered
+  separately (Louvain, resolution 0.6, top 10 PCs); cluster numbers follow the
+  authors' renaming in aschulmann/ThalamoSeq thal_singlecell.Rmd. Clusters
+  were defined "irrespective of nuclear boundaries" — the paper does not
+  assign them to nuclei. Every cell carries both its projection system (by
+  anatomy) and a transcriptomic cluster, so each label = one projection
+  target x one transcriptomic profile.
+  SOURCE-LABEL PURITY: pure (single projection system, single transcriptomic
+  cluster). F1 is expected to rise with atlas resolution and mostly does
+  (e.g. Vis_1: subclass 0.12 -> supertype 0.69 -> cluster 0.77).
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  Re-scoring of the MapMyCells output of
+  at_run_20261115_phillips2019_projection_mmc_wmbv1 (cell_type_mapper
+  v1.7.5, local, raw normalization, 100 bootstrap iterations; 1,952 cells)
+  against the authors' per-system cluster labels (labels_syscluster.json)
+  with `annotation-transfer score` at bootstrap threshold 0.8. No separate
+  mapping run.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 1972
+n_cells_after_filter: 1952
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: ../at_run_20261115_phillips2019_projection_mmc_wmbv1/README.md
+  python_version: ">=3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "eb34010 (branch base; run 2026-11-15)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Cluster labels are transcriptomic within a projection system; their
+  nucleus of origin is not stated in the paper. Nucleus readings in the PR /
+  README (e.g. Vis_1 -> LGd-dominant WMB cluster 2650) come from this AT run
+  plus WMBv1 MERFISH anatomy, not from the source paper, so they must not be
+  used as at_source_sets correspondences without independent support.
+  (2) Small labels (Pfr_1 44 cells, Aud_3 63, Som_3 60) give unstable
+  cluster-level F1. (3) Shares mmc_results.csv with the projection run.
+
+metadata: >
+  source_paper=PMID:31527803;
+  shared_mmc_results=../at_run_20261115_phillips2019_projection_mmc_wmbv1/mmc_results.csv;
+  labels=labels_syscluster.json; label_distribution=label_distribution.tsv

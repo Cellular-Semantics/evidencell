@@ -1,0 +1,81 @@
+# DRAFT — move to kb/annotation_transfer_runs/at_run_20261115_phillips2019_projection_mmc_wmbv1/manifest.yaml
+# once issue #209 (hook term check crashes on AT manifests) is fixed.
+# LinkML schema validation (AnnotationTransferRun) already passes for this text.
+id: at_run_20261115_phillips2019_projection_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE133912"
+source_cluster_label: >
+  Phillips et al. 2019 (PMID:31527803) single-cell RNA-seq of retrogradely
+  labelled thalamocortical neurons, labelled by PROJECTION SYSTEM (metadata
+  column `Projection`): Visual (429), Motor (477), Prefrontal (388),
+  Auditory (376), Somatosensory (282). Each label is anatomy-defined, not
+  transcriptomic: retrograde tracer injected into one cortical area, the
+  labelled "major projection complex" microdissected, cells sorted one at a
+  time (Smart-seq2-like). Per Supp. Table 3 and the authors' analysis code
+  (aschulmann/ThalamoSeq thal_singlecell.Rmd object names) the complexes are
+  Visual = LGd + LP, Motor = VA/VL, Somatosensory = VB + PO, Auditory = MGB,
+  Prefrontal = MD; sparsely labelled midline cells were avoided.
+  SOURCE-LABEL PURITY: pure by anatomy (projection target + dissected complex
+  are fixed by experiment) but MIXED by nucleus and by transcriptomic profile
+  — each label spans 2+ nuclei and the primary/secondary/tertiary profile
+  axis. Expect F1 to peak at supertype and fall at cluster; read purity and
+  the per-cluster distribution (label_distribution.tsv) rather than one best
+  F1 target.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.5, hierarchical, default
+  parameters, raw normalization, 100 bootstrap iterations) via
+  `annotation-transfer map-local`. Query gene symbols remapped to Ensembl IDs
+  with conf/gene_mapping_CCN20230722.tsv (22,169 of 36,679 symbols mapped to
+  unique Ensembl IDs). 20 is_ODC (oligodendrocyte-contaminated, unclustered)
+  cells removed as in the paper -> 1,952 cells. F1 scored with
+  `annotation-transfer score` at bootstrap threshold 0.8 against
+  labels_projection.json.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 1972
+n_cells_after_filter: 1952
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "eb34010 (branch base; run 2026-11-15)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Projection labels are nucleus-complex mixtures, so best-F1 targets are
+  supertypes covering only part of each label (F1 0.42-0.62); the
+  per-cluster distribution is the informative read-out. (2) Single-cell
+  collection was biased against tertiary (midline/intralaminar) nuclei
+  (paper, Fig. 5 legend). (3) All cells male, adult (~P55-P160). (4) Purity
+  in f1_matrix.csv is within this dataset (fraction of mapped Phillips cells
+  in that WMB node that carry the label), not atlas-wide. (5) mmc_results.csv
+  is shared with at_run_20261115_phillips2019_syscluster_mmc_wmbv1, which
+  scores the same mapping under the authors' per-system cluster labels.
+
+metadata: >
+  source_paper=PMID:31527803; source_files=GSE133912_thal_singlecell_counts.csv.gz,
+  GSE133912_thal_singlecell_metadata.csv.gz;
+  geo_counts_sha256=fc479a1268777280d986e52f052d039a7d9e583f1d28687df879967dcfd4ffc3;
+  geo_metadata_sha256=0b7ed55dd52cacf4514d18b82abd44d67ba66b062aa885557f21f7e33ce8a71b;
+  input_h5ad_sha256=b7494d18fa07d98152c779cbe2f58e27671ba82de4903f97becf203467c468ba;
+  marker_lookup=mouse_markers_230821.json;
+  marker_lookup_sha256=3e2a6a7beb9ab265ff545e9f8dc993b2c0ac6ae66b5e8825c42f8166a2f51035;
+  mmc_results=mmc_results.csv; label_distribution=label_distribution.tsv
