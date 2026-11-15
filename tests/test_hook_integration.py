@@ -472,6 +472,59 @@ def test_valid_kb_file_passes():
     )
 
 
+# ── MarkerSource.marker_type (#196) ────────────────────────────────────────────
+
+_UNSET = object()
+
+
+def _fixture_with_marker_type(marker_type: object) -> str:
+    """Valid fixture with one MarkerSource on its SST neuropeptide entry.
+
+    `marker_type=_UNSET` omits the field entirely.
+    """
+    import yaml
+
+    data = yaml.safe_load(VALID_KB_FIXTURE.read_text())
+    source = {
+        "ref": "https://doi.org/10.1016/j.neuron.2017.03.017",
+        "method": "FISH (SST/SLC17A6/SLC32A1 triple labelling)",
+        "scope": "adult human GPi",
+        "snippet": "SST+/SLC17A6+/SLC32A1+ neurons are located on the borders of the GPi",
+    }
+    if marker_type is not _UNSET:
+        source["marker_type"] = marker_type
+    node = next(n for n in data["nodes"] if n.get("neuropeptides"))
+    node["neuropeptides"][0]["sources"] = [source]
+    return yaml.safe_dump(data, sort_keys=False)
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize(
+    "marker_type", ["PROTEIN", "TRANSCRIPT", "TRANSGENE_REPORTER", "NOT_STATED"]
+)
+def test_marker_type_permissible_values_pass(marker_type: str):
+    """Every MarkerType value is accepted on a MarkerSource."""
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    r = _run_hook(_write_payload(_fixture_with_marker_type(marker_type)))
+    assert r.returncode == 0, (
+        f"Expected exit 0 for marker_type={marker_type}, got {r.returncode}\n{r.stderr}"
+    )
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize("marker_type", [_UNSET, "GUESS"], ids=["missing", "invalid"])
+def test_marker_type_missing_or_invalid_blocked(marker_type: object):
+    """marker_type stays required, and only MarkerType values are accepted."""
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    r = _run_hook(_write_payload(_fixture_with_marker_type(marker_type)))
+    assert r.returncode == 2, (
+        f"Expected exit 2 for marker_type={marker_type!r}, got {r.returncode}\n{r.stderr}"
+    )
+    assert "marker_type" in r.stderr or "GUESS" in r.stderr, r.stderr
+
+
 # ── Term-reference validation ──────────────────────────────────────────────────
 
 
