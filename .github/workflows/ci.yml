@@ -31,6 +31,7 @@ jobs:
 
       - name: Check generated models are in sync with their schemas
         run: |
+          uv run gen-pydantic schema/celltype_mapping.yaml | diff - src/evidencell/_models.py
           uv run gen-pydantic schema/references.yaml | diff - src/evidencell/_refs_models.py
 
       - name: Run fast tests (no OAK DB / network)

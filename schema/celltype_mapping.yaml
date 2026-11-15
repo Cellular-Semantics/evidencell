@@ -8,6 +8,9 @@
 # Non-terminal nodes = classical types, prior transcriptomic types, or intermediate types.
 # Edges = evidenced mapping assertions between nodes; can be chained transitively.
 #
+# Version: 0.8.1 (2026-11-15) — ADDITIVE: MarkerType gains TRANSGENE_REPORTER and NOT_STATED (#196);
+#                               marker_type stays required, but a source that names no assay is
+#                               recorded as NOT_STATED rather than a guessed PROTEIN/TRANSCRIPT.
 # Version: 0.3  (2026-02-25) — added CLMapping (EXACT/BROAD), Allen anatomy terms,
 #                               ProposedCLTerm.parent_cl_term,
 #                               AnnotationTransferEvidence.source_cell_set_accession (cross-Allen-taxonomy)
@@ -572,20 +575,49 @@ enums:
   # ── Marker type ─────────────────────────────────────────────────
   MarkerType:
     description: >
-      The molecule type detected in a marker evidence source.
-      Currently covers the two most important categories (protein vs transcript);
-      could be extended in future to other molecule types where these are used
+      How marker expression was established in a marker evidence source,
+      as stated by that source. PROTEIN and TRANSCRIPT record direct
+      detection of the endogenous gene product; TRANSGENE_REPORTER records
+      expression inferred from a reporter or driver line; NOT_STATED records
+      that the source names no assay. Set PROTEIN, TRANSCRIPT or
+      TRANSGENE_REPORTER only when the quote or the cited paper's methods
+      support it — never by assumption.
+      Could be extended in future to other molecule types where these are used
       as cell type markers (e.g. glycoproteins, lipids, metabolites) if such
       cases become relevant to atlas mappings.
     permissible_values:
       PROTEIN:
         description: >
-          Protein-level detection: IHC, immunofluorescence, western blot,
-          proximity ligation assay, mass spectrometry.
+          Protein-level detection of the endogenous gene product: IHC,
+          immunofluorescence, western blot, proximity ligation assay,
+          mass spectrometry.
       TRANSCRIPT:
         description: >
-          Transcript-level detection: bulk RNA-seq, scRNA-seq, snRNA-seq,
-          smFISH, RNAscope, MERFISH, Visium, or other spatial transcriptomics.
+          Transcript-level detection of the endogenous gene product: bulk
+          RNA-seq, scRNA-seq, snRNA-seq, ISH, smFISH, RNAscope, qPCR, MERFISH,
+          Visium, or other spatial transcriptomics.
+      TRANSGENE_REPORTER:
+        description: >
+          Expression inferred from a transgenic reporter or driver line in
+          which the marker gene's regulatory elements drive a reporter or
+          recombinase (e.g. Pvalb-IRES-Cre;Ai14, GAD67-GFP, BAC Drd1-EGFP).
+          Neither the endogenous transcript nor protein is detected directly.
+          Cre-dependent labelling reports cumulative (including developmental)
+          expression; BAC transgenics may label ectopically. Record the line
+          and allele type in method. Attach to the driver gene (Gad1 for
+          GAD67-GFP), not the reporter. Antibody staining against the reporter
+          (anti-GFP) is still TRANSGENE_REPORTER; staining against the
+          endogenous protein is a separate PROTEIN source.
+      NOT_STATED:
+        description: >
+          The source does not state how the marker was detected — neither the
+          quoted passage nor (where checked) the cited paper's methods name an
+          assay. Typical of review statements ("TRN neurons are PV+"). Do not
+          infer PROTEIN from a protein-style name (PV, SOM, GAD67) or
+          TRANSCRIPT from a gene symbol. Applies to this source only: when
+          another paper states the assay, add it as a separate MarkerSource;
+          revise this entry only if this same paper's methods are found to
+          state it.
 
   # ── Cell compartment ─────────────────────────────────────────────
   CellCompartment:
@@ -1059,7 +1091,8 @@ classes:
   HasMarkerType:
     mixin: true
     description: >
-      Mixin that adds a controlled marker_type field (PROTEIN | TRANSCRIPT).
+      Mixin that adds a controlled marker_type field
+      (PROTEIN | TRANSCRIPT | TRANSGENE_REPORTER | NOT_STATED).
       Applied to MarkerSource to give the most important methodological
       distinction as controlled vocabulary, while keeping the base
       PropertySource generic.
@@ -1068,7 +1101,10 @@ classes:
         required: true
         range: MarkerType
         description: >
-          The molecule type detected: PROTEIN or TRANSCRIPT.
+          How expression was established, as stated by this source: PROTEIN,
+          TRANSCRIPT, TRANSGENE_REPORTER, or NOT_STATED when the source names
+          no assay. Required so that every source records an explicit choice;
+          NOT_STATED is a valid choice, a guessed PROTEIN/TRANSCRIPT is not.
           The specific technique goes in PropertySource.method (free text).
 
   PropertySource:
@@ -1194,8 +1230,9 @@ classes:
       - HasMarkerType
     description: >
       Evidence source for a marker assertion. Extends PropertySource with
-      a controlled marker_type field (PROTEIN | TRANSCRIPT). Use in
-      GeneDescriptor.sources. marker_type should always be populated.
+      a controlled marker_type field (see MarkerType). Use in
+      GeneDescriptor.sources. marker_type is required; use NOT_STATED when
+      neither the quote nor the cited paper's methods name an assay.
 
       Examples:
         - marker_type: PROTEIN
@@ -1209,6 +1246,18 @@ classes:
           scope: "adult mouse, WMBv1"
           snippet: "Sst neuropeptide marker present in clusters 1996 and 1997"
           ref: "https://doi.org/10.1038/s41586-023-06812-z"
+
+        - marker_type: TRANSGENE_REPORTER
+          method: "GAD67-GFP transgenic reporter (knock-in)"
+          scope: "adult mouse dLGN"
+          quote_key: "<corpus_id>_<hash>"
+          ref: "PMID:xxxxxxxx"
+
+        - marker_type: NOT_STATED
+          method: "review statement; assay not named in quote"
+          scope: "mouse TRN"
+          quote_key: "<corpus_id>_<hash>"
+          ref: "PMID:xxxxxxxx"
 
   ElectrophysiologyProfile:
     description: >

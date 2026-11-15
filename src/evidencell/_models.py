@@ -467,17 +467,27 @@ class EvidenceType(str, Enum):
 
 class MarkerType(str, Enum):
     """
-    The molecule type detected in a marker evidence source. Currently covers the two most important categories (protein vs transcript); could be extended in future to other molecule types where these are used as cell type markers (e.g. glycoproteins, lipids, metabolites) if such cases become relevant to atlas mappings.
+    How marker expression was established in a marker evidence source, as stated by that source. PROTEIN and TRANSCRIPT record direct detection of the endogenous gene product; TRANSGENE_REPORTER records expression inferred from a reporter or driver line; NOT_STATED records that the source names no assay. Set PROTEIN, TRANSCRIPT or TRANSGENE_REPORTER only when the quote or the cited paper's methods support it — never by assumption. Could be extended in future to other molecule types where these are used as cell type markers (e.g. glycoproteins, lipids, metabolites) if such cases become relevant to atlas mappings.
 
     """
     PROTEIN = "PROTEIN"
     """
-    Protein-level detection: IHC, immunofluorescence, western blot, proximity ligation assay, mass spectrometry.
+    Protein-level detection of the endogenous gene product: IHC, immunofluorescence, western blot, proximity ligation assay, mass spectrometry.
 
     """
     TRANSCRIPT = "TRANSCRIPT"
     """
-    Transcript-level detection: bulk RNA-seq, scRNA-seq, snRNA-seq, smFISH, RNAscope, MERFISH, Visium, or other spatial transcriptomics.
+    Transcript-level detection of the endogenous gene product: bulk RNA-seq, scRNA-seq, snRNA-seq, ISH, smFISH, RNAscope, qPCR, MERFISH, Visium, or other spatial transcriptomics.
+
+    """
+    TRANSGENE_REPORTER = "TRANSGENE_REPORTER"
+    """
+    Expression inferred from a transgenic reporter or driver line in which the marker gene's regulatory elements drive a reporter or recombinase (e.g. Pvalb-IRES-Cre;Ai14, GAD67-GFP, BAC Drd1-EGFP). Neither the endogenous transcript nor protein is detected directly. Cre-dependent labelling reports cumulative (including developmental) expression; BAC transgenics may label ectopically. Record the line and allele type in method. Attach to the driver gene (Gad1 for GAD67-GFP), not the reporter. Antibody staining against the reporter (anti-GFP) is still TRANSGENE_REPORTER; staining against the endogenous protein is a separate PROTEIN source.
+
+    """
+    NOT_STATED = "NOT_STATED"
+    """
+    The source does not state how the marker was detected — neither the quoted passage nor (where checked) the cited paper's methods name an assay. Typical of review statements ("TRN neurons are PV+"). Do not infer PROTEIN from a protein-style name (PV, SOM, GAD67) or TRANSCRIPT from a gene symbol. Applies to this source only: when another paper states the assay, add it as a separate MarkerSource; revise this entry only if this same paper's methods are found to state it.
 
     """
 
@@ -942,13 +952,13 @@ class CellTypeColocation(ConfiguredBaseModel):
 
 class HasMarkerType(ConfiguredBaseModel):
     """
-    Mixin that adds a controlled marker_type field (PROTEIN | TRANSCRIPT). Applied to MarkerSource to give the most important methodological distinction as controlled vocabulary, while keeping the base PropertySource generic.
+    Mixin that adds a controlled marker_type field (PROTEIN | TRANSCRIPT | TRANSGENE_REPORTER | NOT_STATED). Applied to MarkerSource to give the most important methodological distinction as controlled vocabulary, while keeping the base PropertySource generic.
 
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5',
          'mixin': True})
 
-    marker_type: MarkerType = Field(default=..., description="""The molecule type detected: PROTEIN or TRANSCRIPT. The specific technique goes in PropertySource.method (free text).
+    marker_type: MarkerType = Field(default=..., description="""How expression was established, as stated by this source: PROTEIN, TRANSCRIPT, TRANSGENE_REPORTER, or NOT_STATED when the source names no assay. Required so that every source records an explicit choice; NOT_STATED is a valid choice, a guessed PROTEIN/TRANSCRIPT is not. The specific technique goes in PropertySource.method (free text).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['HasMarkerType']} })
 
 
@@ -1046,7 +1056,7 @@ class TypeSynonym(ConfiguredBaseModel):
 
 class MarkerSource(PropertySource, HasMarkerType):
     """
-    Evidence source for a marker assertion. Extends PropertySource with a controlled marker_type field (PROTEIN | TRANSCRIPT). Use in GeneDescriptor.sources. marker_type should always be populated.
+    Evidence source for a marker assertion. Extends PropertySource with a controlled marker_type field (see MarkerType). Use in GeneDescriptor.sources. marker_type is required; use NOT_STATED when neither the quote nor the cited paper's methods name an assay.
     Examples:
       - marker_type: PROTEIN
         method: \"IHC (SST antibody)\"
@@ -1060,11 +1070,23 @@ class MarkerSource(PropertySource, HasMarkerType):
         snippet: \"Sst neuropeptide marker present in clusters 1996 and 1997\"
         ref: \"https://doi.org/10.1038/s41586-023-06812-z\"
 
+      - marker_type: TRANSGENE_REPORTER
+        method: \"GAD67-GFP transgenic reporter (knock-in)\"
+        scope: \"adult mouse dLGN\"
+        quote_key: \"<corpus_id>_<hash>\"
+        ref: \"PMID:xxxxxxxx\"
+
+      - marker_type: NOT_STATED
+        method: \"review statement; assay not named in quote\"
+        scope: \"mouse TRN\"
+        quote_key: \"<corpus_id>_<hash>\"
+        ref: \"PMID:xxxxxxxx\"
+
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5',
          'mixins': ['HasMarkerType']})
 
-    marker_type: MarkerType = Field(default=..., description="""The molecule type detected: PROTEIN or TRANSCRIPT. The specific technique goes in PropertySource.method (free text).
+    marker_type: MarkerType = Field(default=..., description="""How expression was established, as stated by this source: PROTEIN, TRANSCRIPT, TRANSGENE_REPORTER, or NOT_STATED when the source names no assay. Required so that every source records an explicit choice; NOT_STATED is a valid choice, a guessed PROTEIN/TRANSCRIPT is not. The specific technique goes in PropertySource.method (free text).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['HasMarkerType']} })
     ref: str = Field(default=..., description="""DOI (https://doi.org/...) or PMID (PMID:xxxxxxxx)""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     method: Optional[str] = Field(default=None, description="""How this property was detected or established. Free text. Examples: \"IHC\", \"patch-clamp (acute slice)\", \"Golgi stain\", \"scRNA-seq\", \"smFISH\", \"retrograde tracing + scRNA-seq\".
