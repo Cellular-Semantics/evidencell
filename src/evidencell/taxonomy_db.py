@@ -1458,10 +1458,11 @@ def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
     try:
         con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
         try:
-            row = con.execute(
-                "SELECT value FROM _meta WHERE key = 'schema_hash'"
-            ).fetchone()
-            stored_hash = row[0] if row else None
+            meta = dict(con.execute(
+                "SELECT key, value FROM _meta "
+                "WHERE key IN ('schema_hash', 'taxonomy_built_at')"
+            ).fetchall())
+            stored_hash = meta.get("schema_hash")
         finally:
             con.close()
     except sqlite3.Error as exc:
@@ -1477,11 +1478,22 @@ def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
             f"current={_SCHEMA_HASH[:8]}) — schema gained or changed columns"
         )
 
-    # 2. Source-newer-than-DB check
-    try:
-        db_mtime = db_path.stat().st_mtime
-    except OSError:
-        return True, reasons + [f"DB mtime unreadable at {db_path}"]
+    # 2. Source-newer-than-DB check, against the recorded build time. The
+    # file mtime is not a build time: the expression cache writes to the DB
+    # on use (#189), which would make a stale DB look fresh.
+    db_mtime: float | None = None
+    built_at = meta.get("taxonomy_built_at")
+    if built_at:
+        try:
+            db_mtime = datetime.fromisoformat(built_at).timestamp()
+        except ValueError:
+            db_mtime = None
+    if db_mtime is None:
+        # DBs built before taxonomy_built_at was recorded.
+        try:
+            db_mtime = db_path.stat().st_mtime
+        except OSError:
+            return True, reasons + [f"DB mtime unreadable at {db_path}"]
     # Both forms: the largest level ships gzipped (cluster.yaml.gz, to stay
     # under GitHub's file limit), and a *.yaml-only glob never saw it change.
     yaml_files = (
@@ -1490,8 +1502,6 @@ def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
     if yaml_files:
         newest_yaml = max(p.stat().st_mtime for p in yaml_files)
         if newest_yaml > db_mtime:
-            from datetime import datetime
-            from datetime import timezone
             yaml_dt = datetime.fromtimestamp(newest_yaml, tz=timezone.utc).isoformat(timespec="seconds")
             db_dt = datetime.fromtimestamp(db_mtime, tz=timezone.utc).isoformat(timespec="seconds")
             reasons.append(
@@ -1512,7 +1522,9 @@ def taxonomy_db_freshness(taxonomy_id: str) -> tuple[bool, list[str]]:
     Checks performed:
       1. DB exists at kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db
       2. _meta.schema_hash present and equal to current _SCHEMA_HASH
-      3. DB mtime ≥ newest YAML mtime under kb/taxonomy/{taxonomy_id}/
+      3. _meta.taxonomy_built_at ≥ newest YAML mtime under
+         kb/taxonomy/{taxonomy_id}/ (the DB file's mtime only for DBs that
+         predate that key — cache writes change the mtime, not the build)
 
     Failure mode 2 means the schema gained a column since the DB was built
     (e.g. a new INTEGER field on `nodes`). Failure mode 3 means the YAML
@@ -1943,6 +1955,10 @@ class TaxonomyDB:
         """Populate DB from kb/taxonomy/{taxonomy_id}/*.yaml{,.gz}.
         Idempotent (drops + rebuilds)."""
         from evidencell.paths import iter_taxonomy_level_files, open_taxonomy_yaml
+        # Recorded as taxonomy_built_at: the freshness check compares YAML
+        # mtimes against it. Taken before the YAML is read, so an edit made
+        # during the build still reads as stale.
+        built_at = datetime.now(tz=timezone.utc).isoformat()
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         con = sqlite3.connect(self.db_path)
         try:
@@ -1975,7 +1991,7 @@ class TaxonomyDB:
             )
             con.execute(
                 "INSERT OR REPLACE INTO _meta VALUES ('taxonomy_built_at', ?)",
-                (datetime.now(tz=timezone.utc).isoformat(),),
+                (built_at,),
             )
             # Pin the schema hash so taxonomy_db_freshness() can detect when
             # the schema has gained or lost a column since this DB was built.
@@ -2250,19 +2266,6 @@ class TaxonomyDB:
         if not row:
             raise ValueError(f"No taxonomy_id recorded on any node in {self.db_path}")
         return row[0]
-
-    def expression_source_file(self) -> str | None:
-        """Stats file the expression cache was filled from (None if empty,
-        or if the DB predates the cache — a stale build, which callers'
-        freshness checks already report)."""
-        try:
-            with self._connect() as con:
-                row = con.execute(
-                    "SELECT source_file FROM expression_genes LIMIT 1"
-                ).fetchone()
-        except sqlite3.OperationalError:
-            return None
-        return row[0] if row else None
 
     def expression(
         self,
@@ -3050,35 +3053,55 @@ def _classical_positive_markers(classical: dict) -> list[str]:
     distinguish them. Order: defining markers first, then neuropeptides not
     already present (de-duped, defining-priority).
 
-    De-duplication is by canonical gene symbol (``PV`` and ``Pvalb`` are one
-    gene), keeping the first spelling: expression lookups resolve protein
-    aliases, so listing both would score the gene twice.
+    Protein-name markers (``PV``, ``CB``, ``mGluR1`` …) are left out: see
+    :func:`_classical_protein_alias_markers`.
     """
-    return _dedupe_by_gene(
-        [*(classical.get("defining_markers") or []), *(classical.get("neuropeptides") or [])]
-    )
+    out: list[str] = []
+    for m in classical.get("defining_markers") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym and not _is_protein_alias(sym):
+            out.append(sym)
+    for m in classical.get("neuropeptides") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym and sym not in out and not _is_protein_alias(sym):
+            out.append(sym)
+    return out
 
 
 def _classical_negative_markers(classical: dict) -> list[str]:
     """Extract symbols for the negative-marker channel from a classical node
-    (de-duplicated by canonical gene symbol, as for positive markers)."""
-    return _dedupe_by_gene(classical.get("negative_markers") or [])
-
-
-def _dedupe_by_gene(entries: list) -> list[str]:
-    from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
-
+    (protein-name markers left out, as for positive markers)."""
     out: list[str] = []
-    seen: set[str] = set()
-    for m in entries:
+    for m in classical.get("negative_markers") or []:
         sym = m.get("symbol") if isinstance(m, dict) else m
-        if not sym:
-            continue
-        canon = resolve_to_canonical_gene_symbol(sym)
-        if canon not in seen:
-            seen.add(canon)
+        if sym and not _is_protein_alias(sym):
             out.append(sym)
     return out
+
+
+def _classical_protein_alias_markers(classical: dict) -> list[str]:
+    """Marker symbols Stage A does not score because they are protein names
+    that only resolve to a gene through ``marker_aliases``.
+
+    That alias table is an ad hoc stopgap. Scoring through it changed
+    rankings (``olm_cell_ca1``, PR #207), so Stage A keeps its pre-#189
+    behaviour — these markers contribute nothing — until gene identity is
+    resolved properly (#216). Stage B still resolves them for its
+    property comparisons, as before.
+    """
+    out: list[str] = []
+    for key in ("defining_markers", "neuropeptides", "negative_markers"):
+        for m in classical.get(key) or []:
+            sym = m.get("symbol") if isinstance(m, dict) else m
+            if sym and _is_protein_alias(sym) and sym not in out:
+                out.append(sym)
+    return out
+
+
+def _is_protein_alias(symbol: str) -> bool:
+    from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
+
+    return resolve_to_canonical_gene_symbol(symbol) != symbol
 
 
 def _cmd_ingest(source: str, taxonomy_id: str) -> None:
@@ -3429,6 +3452,13 @@ def _cmd_find_candidates(
     # extraction is testable without a DB fixture.
     markers = _classical_positive_markers(classical)
     neg_markers = _classical_negative_markers(classical)
+    alias_markers = _classical_protein_alias_markers(classical)
+    if alias_markers:
+        print(
+            "  NOT SCORED (protein-name markers; gene identity pending #216): "
+            + ", ".join(alias_markers),
+            file=sys.stderr,
+        )
 
     nt_obj = classical.get("nt_type")
     nt_type: str | None = None
@@ -3734,6 +3764,7 @@ def _cmd_find_candidates(
         "n_candidates": cohort_size,
         "expression_source": expr.source_file,
         "not_measured_genes": dict(sorted(expr.not_measured.items())),
+        "unscored_protein_alias_markers": alias_markers,
         "candidates": [
             {
                 "node_id": c["node_id"],
@@ -3748,6 +3779,9 @@ def _cmd_find_candidates(
                    if c.get("_criteria_applied") else {}),
                 "discovery_score": _build_discovery_score(c, i),
                 "marker_discrepancies": c.get("_marker_discrepancies") or [],
+                # Stats file behind this candidate's expression values;
+                # Stage B carries it onto the edge's marker comparisons.
+                "expression_source": expr.source_file,
             }
             for i, c in enumerate(candidates)
         ],

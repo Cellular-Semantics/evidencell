@@ -1112,7 +1112,9 @@ etc.) so the reader knows what evidentiary base the classical node sits on.
 > CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical
 > values came from the atlas's MapMyCells precomputed statistics
 > ({`methods_summary.expression_sources[].stats_file`}; cluster means, with
-> coarser levels as cell-weighted means of their clusters) and from MERFISH
+> coarser levels as averages of their clusters' means, weighted by the stats
+> file's cell counts — unweighted for WMBv1, whose stats file records one
+> cell per cluster) and from MERFISH
 > spatial registration for soma location.
 
 **Annotation transfer** *(only if `methods_summary.annotation_transfer_runs` is non-empty)*:

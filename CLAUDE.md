@@ -156,11 +156,19 @@ post-ingest enrichments.
 `refresh-property-comparisons` and the `at_blind` audit all go through it.
 A gene not yet cached is read (one column, all clusters) from the stats HDF5
 and written to the DB's `node_expression` / `expression_genes` tables;
-non-leaf values are n_cells-weighted means of rank-0 descendants. Details in
-`src/evidencell/expression_cache.py`.
+non-leaf values are means of their rank-0 descendants, weighted by the stats
+file's `n_cells`. In the WMBv1 stats file `n_cells` is 1 for every cluster, so
+WMB supertype/subclass values are **plain (unweighted) averages of cluster
+means** — the same as the former YAML values, but not cell-weighted. Details
+in `src/evidencell/expression_cache.py`.
 
 - `just build-taxonomy-db` creates the cache tables **empty**; they refill on
-  use. A new stats release (different sha256) drops and reloads the cache.
+  use. A new stats release (different sha256), a regenerated gene mapping TSV
+  or a change to the protein-alias table drops and reloads the cache.
+- Stage A (`find-candidates`) does not score protein-name markers (`PV`,
+  `CB`, `mGluR1` …) that resolve to a gene only through `marker_aliases`;
+  they are listed as `unscored_protein_alias_markers` until gene identity is
+  resolved properly (#216). Stage B still resolves them for its comparisons.
 - **Fails closed**: an uncached gene with no stats file stops the run with
   `just fetch-mapmycells {taxonomy_id}`. There is no metadata-only fallback.
 - Genes that can't be measured (no Ensembl mapping, absent from the stats
@@ -243,11 +251,13 @@ Registered taxonomies:
 **The stats file is a runtime dependency for mapping.** Atlas expression is
 read from it on demand (see "Atlas expression" above), at
 `conf/mapmycells/{taxonomy_id}/{basename of stats_s3_url}` — exactly where
-`fetch-mapmycells` writes it. The DB cache records the filename it was filled
-from (`expression_genes.source_file`, e.g.
-`precomputed_stats_ABC_revision_230821.h5`), and gen-facts surfaces it as
-`methods_summary.expression_sources`, so report provenance resolves to a public
-URL without keeping the 1.4 GB artefact in the repo.
+`fetch-mapmycells` writes it. Stage B stamps the filename (e.g.
+`precomputed_stats_ABC_revision_230821.h5`) into the notes of every marker
+comparison with a measured value (`atlas expression from …`), and gen-facts
+collects those stamps into `methods_summary.expression_sources`, so report
+provenance resolves to a public URL without keeping the 1.4 GB artefact in the
+repo. Edges emitted before the stamp existed report `stats_file: null` with a
+warning; re-running `refresh-property-comparisons` stamps them.
 
 Two things to know before using them:
 

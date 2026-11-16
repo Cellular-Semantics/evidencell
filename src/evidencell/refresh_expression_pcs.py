@@ -263,10 +263,26 @@ def main(argv: list[str] | None = None) -> int:
     else:
         paths = [args.graph_file]
 
+    from evidencell.expression_cache import ExpressionUnavailable
+
+    try:
+        if len(paths) > 1 and not args.dry_run:
+            # Preflight: a dry pass loads every needed gene before the first
+            # write, so a missing stats file stops the sweep with nothing
+            # half-written. The real pass then reads from the cache.
+            for path in paths:
+                refresh_graph(path, dry_run=True)
+        return _refresh_paths(paths, dry_run=args.dry_run)
+    except ExpressionUnavailable as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+
+
+def _refresh_paths(paths: list[Path], *, dry_run: bool) -> int:
     grand_total_updates = 0
     grand_changes: list[dict[str, Any]] = []
     for path in paths:
-        result = refresh_graph(path, dry_run=args.dry_run)
+        result = refresh_graph(path, dry_run=dry_run)
         if result["pcs_updated"]:
             print(f"{path}: {result['pcs_updated']} PC(s) updated")
             for c in result["changes"]:
@@ -278,7 +294,7 @@ def main(argv: list[str] | None = None) -> int:
         grand_changes.extend(result["changes"])
     print()
     print(f"GRAND TOTAL: {grand_total_updates} PC(s) updated"
-          f"{' (dry-run)' if args.dry_run else ''}")
+          f"{' (dry-run)' if dry_run else ''}")
     return 0
 
 

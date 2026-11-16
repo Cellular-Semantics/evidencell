@@ -236,6 +236,37 @@ def test_property_comparisons_basic_olm_synthetic():
     # neuropeptide_Npy CONSISTENT
     assert by_prop["neuropeptide_Npy"]["alignment"] == "CONSISTENT"
 
+    # Every measured value carries its stats file (PR #207 review).
+    for prop in ("marker_Sst", "marker_Chrna2", "negative_marker_PV", "neuropeptide_Npy"):
+        assert "atlas expression from stats.h5" in by_prop[prop]["notes"]
+
+
+def test_stage_a_values_cite_the_discovery_stats_file():
+    """A value taken from the discovery JSON cites the file Stage A read,
+    even if the emit-time accessor reports another."""
+    classical = {"defining_markers": [{"symbol": "Sst"}, {"symbol": "Npy"}]}
+    atlas = {
+        "expression": {"Sst": 12.7, "Npy": 7.58},
+        "not_measured": {},
+        "expression_source": "stats_new.h5",
+        "markers": [],
+    }
+    candidate = {
+        "node_id": "CS_1",
+        "_classical_cache": classical,
+        "expression_source": "stats_old.h5",
+        "discovery_score": {
+            "expression_detail": [{"gene": "Sst", "val": 12.7, "percentiles": []}],
+        },
+    }
+    pcs = _property_comparisons(
+        classical_node_id="x", candidate=candidate, atlas=atlas,
+        ds=candidate["discovery_score"],
+    )
+    by_prop = {p["property"]: p for p in pcs}
+    assert "atlas expression from stats_old.h5" in by_prop["marker_Sst"]["notes"]
+    assert "atlas expression from stats_new.h5" in by_prop["marker_Npy"]["notes"]
+
 
 def test_property_comparisons_not_measured_and_discrepancy_notes():
     """#189: NOT_ASSESSED only for genes recorded as not measured (with the
@@ -265,6 +296,7 @@ def test_property_comparisons_not_measured_and_discrepancy_notes():
     assert fake["alignment"] == "NOT_ASSESSED"
     assert fake["node_b_value"] == "not measured"
     assert "NO_ENSEMBL_MAPPING" in fake["notes"] and "stats.h5" in fake["notes"]
+    assert "atlas expression from" not in fake["notes"]  # no value, no stamp
     sst = by_prop["marker_Sst"]
     assert sst["alignment"] == "DISCORDANT"  # expression-driven, unchanged by discrepancy
     assert "METADATA DISCREPANCY LISTED_NOT_EXPRESSED" in sst["notes"]

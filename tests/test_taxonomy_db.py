@@ -24,6 +24,7 @@ from evidencell.taxonomy_db import (
     _SCHEMA_HASH,
     _classical_negative_markers,
     _classical_positive_markers,
+    _classical_protein_alias_markers,
     _coverage_for_gene,
     _expression_percentile,
     _expression_score,
@@ -615,15 +616,17 @@ def test_classical_positive_markers_handles_string_entries():
     assert _classical_positive_markers(classical) == ["Sst", "Calb1"]
 
 
-def test_classical_markers_dedupe_protein_aliases():
-    """#189: expression lookups resolve aliases, so PV and Pvalb are one gene
-    and must be scored once."""
+def test_protein_alias_markers_are_not_scored_in_stage_a():
+    """PR #207 review: Stage A keeps its pre-#189 behaviour for protein-name
+    markers (they score nothing) until gene identity lands (#216)."""
     classical = {
-        "defining_markers": [{"symbol": "Sst"}, {"symbol": "SST"}],
-        "negative_markers": [{"symbol": "Pvalb"}, {"symbol": "PV"}, {"symbol": "VIP"}],
+        "defining_markers": [{"symbol": "Sst"}, {"symbol": "mGluR1"}],
+        "neuropeptides": [{"symbol": "SST"}],
+        "negative_markers": [{"symbol": "Pvalb"}, {"symbol": "PV"}, {"symbol": "CB"}],
     }
     assert _classical_positive_markers(classical) == ["Sst"]
-    assert _classical_negative_markers(classical) == ["Pvalb", "VIP"]
+    assert _classical_negative_markers(classical) == ["Pvalb"]
+    assert _classical_protein_alias_markers(classical) == ["mGluR1", "SST", "PV", "CB"]
 
 
 def test_classical_negative_markers():
@@ -1422,6 +1425,27 @@ def test_freshness_gzipped_yaml_newer_than_db(populated_db):
     gz.write_bytes(gzip.compress(b"nodes: []\n"))
     future = time.time() + 60
     os.utime(gz, (future, future))
+    stale, reasons = _freshness_at(db.db_path, tmp_path)
+    assert stale is True
+    assert any("YAML newer than DB" in r for r in reasons)
+
+
+def test_freshness_ignores_db_writes_after_build(populated_db):
+    """#189 review: an expression-cache write after a YAML change bumps the
+    DB file's mtime, but the DB still holds the old build — must read stale."""
+    import os
+    import time
+    db, tmp_path, _ = populated_db
+    yaml_file = next(tmp_path.glob("*.yaml"))
+    later = time.time() + 60
+    os.utime(yaml_file, (later, later))  # git pull after the build
+    con = sqlite3.connect(db.db_path)  # then a cache load writes to the DB
+    try:
+        con.execute("INSERT OR REPLACE INTO _meta VALUES ('cache_write', 'x')")
+        con.commit()
+    finally:
+        con.close()
+    os.utime(db.db_path, (later + 60, later + 60))
     stale, reasons = _freshness_at(db.db_path, tmp_path)
     assert stale is True
     assert any("YAML newer than DB" in r for r in reasons)

@@ -8,7 +8,8 @@ tables:
 - ``node_expression(node_id, symbol, ensembl_id, mean_expression)`` — one
   row per atlas node × cached gene. Leaf (rank-0) values are the stats
   file's per-cluster means; every non-leaf node gets the n_cells-weighted
-  mean of its rank-0 descendants.
+  mean of its rank-0 descendants. With ``n_cells == 1`` throughout (WMBv1)
+  that is a plain, unweighted average of cluster means.
 - ``expression_genes(symbol, ensembl_id, status, source_file,
   source_sha256, loaded_at)`` — which genes are cached and from which
   file. ``status`` is ``MEASURED``, or a not-measured reason
@@ -24,6 +25,10 @@ file is ``conf/mapmycells/{taxonomy_id}/{basename of stats_s3_url}`` (the
 URL from ``annotation_transfer/src/annotation_transfer/taxonomies.py``,
 which is where ``just fetch-mapmycells`` writes it) and the gene mapping is
 ``conf/gene_mapping_{taxonomy_id}.tsv``.
+
+The cache is dropped (and reloads on use) when the stats file's sha256,
+the gene mapping TSV or the protein-alias table changes — each one decides
+which column, if any, a symbol reads.
 
 Fail closed: a gene that is not cached and cannot be loaded (stats file or
 gene mapping missing) raises :class:`ExpressionUnavailable` with the fix.
@@ -53,6 +58,7 @@ NO_ENSEMBL_MAPPING = "NO_ENSEMBL_MAPPING"
 NOT_IN_STATS = "NOT_IN_STATS"
 
 _FINGERPRINT_KEY = "expression_stats_fingerprint"
+_RESOLUTION_KEY = "expression_resolution_fingerprint"
 
 
 class ExpressionUnavailable(RuntimeError):
@@ -198,6 +204,62 @@ def _drop_stale_cache(con: sqlite3.Connection, sha: str) -> None:
         con.execute("DELETE FROM expression_genes")
 
 
+def _resolution_fingerprint(mapping_path: Path) -> dict[str, str | None]:
+    """Hashes of what turns a symbol into a stats column: the gene mapping
+    TSV and the protein-alias table. ``mapping`` is None when the TSV is
+    absent."""
+    from evidencell.marker_aliases import PROTEIN_TO_GENE_ALIASES
+
+    aliases = json.dumps(sorted(PROTEIN_TO_GENE_ALIASES.items())).encode()
+    return {
+        "aliases": hashlib.sha256(aliases).hexdigest(),
+        # Small (~1 MB): hashed directly on each call, unlike the stats file.
+        "mapping": (
+            hashlib.sha256(mapping_path.read_bytes()).hexdigest()
+            if mapping_path.is_file() else None
+        ),
+    }
+
+
+def _drop_cache_if_resolution_changed(con: sqlite3.Connection, mapping_path: Path) -> None:
+    """Drop the cache when the gene mapping or alias table changed since it
+    was filled: a cached ``NO_ENSEMBL_MAPPING`` (or a gene resolved to a
+    different Ensembl ID) would otherwise outlive the fix until the next
+    ``build-taxonomy-db``.
+
+    With the mapping TSV absent only the alias table is compared, so a
+    filled cache keeps serving without it.
+    """
+    current = _resolution_fingerprint(mapping_path)
+    con.execute("CREATE TABLE IF NOT EXISTS _meta (key TEXT PRIMARY KEY, value TEXT)")
+    row = con.execute("SELECT value FROM _meta WHERE key = ?", (_RESOLUTION_KEY,)).fetchone()
+    stored = json.loads(row[0]) if row else {}
+    changed = [
+        k for k in ("aliases", "mapping")
+        if current[k] is not None and stored.get(k) is not None and stored[k] != current[k]
+    ]
+    if changed:
+        n = con.execute("SELECT COUNT(*) FROM expression_genes").fetchone()[0]
+        if n:
+            what = " and ".join(
+                {"aliases": "protein-alias table", "mapping": f"gene mapping ({mapping_path.name})"}[k]
+                for k in changed
+            )
+            print(
+                f"  The {what} changed since the expression cache was filled — "
+                f"dropping {n} cached gene(s); they reload on use.",
+                file=sys.stderr,
+            )
+        con.execute("DELETE FROM node_expression")
+        con.execute("DELETE FROM expression_genes")
+    merged = {k: current[k] if current[k] is not None else stored.get(k) for k in current}
+    if merged != stored:
+        con.execute(
+            "INSERT OR REPLACE INTO _meta VALUES (?, ?)", (_RESOLUTION_KEY, json.dumps(merged))
+        )
+        con.commit()
+
+
 def _resolve_ensembl(symbol: str, mapping: dict[str, str]) -> str | None:
     from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
 
@@ -231,6 +293,7 @@ def ensure_genes(
     sha = _stats_sha256(con, stats_path) if have_stats else None
     if sha is not None:
         _drop_stale_cache(con, sha)
+    _drop_cache_if_resolution_changed(con, mapping_path)
 
     placeholders = ",".join("?" * len(wanted))
     cached = {
@@ -394,7 +457,9 @@ def query(
     ):
         if st != MEASURED:
             out.not_measured[sym] = st
-    row = con.execute("SELECT source_file FROM expression_genes LIMIT 1").fetchone()
+    row = con.execute(
+        f"SELECT source_file FROM expression_genes WHERE symbol IN ({sym_ph}) LIMIT 1", wanted
+    ).fetchone()
     out.source_file = row[0] if row else None
 
     sql = (

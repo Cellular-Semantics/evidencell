@@ -32,6 +32,7 @@ from evidencell.at_metrics import (
     load_run_manifest,
     resolve_run_for_source,
 )
+from evidencell.expression_cache import ExpressionUnavailable
 from evidencell.kb_io import roundtrip_yaml
 from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
 from evidencell.paths import repo_root
@@ -292,6 +293,7 @@ def _property_comparisons(
             "atlas_meta_category": atlas_marker_meta.get(canon),
             "not_measured_reason": not_measured.get(canon) or not_measured.get(sym),
             "expression_source": expr_source,
+            "stage_a_expression_source": candidate.get("expression_source"),
             "discrepancy": discrepancies.get(sym) or discrepancies.get(canon),
         }
 
@@ -456,9 +458,15 @@ def _marker_comparison(
     atlas_meta_category: str | None,
     not_measured_reason: str | None = None,
     expression_source: str | None = None,
+    stage_a_expression_source: str | None = None,
     discrepancy: dict | None = None,
 ) -> dict:
-    """Build one property_comparison for a marker / neuropeptide."""
+    """Build one property_comparison for a marker / neuropeptide.
+
+    A measured value's stats file is stamped into ``notes``
+    (:data:`ATLAS_EXPRESSION_NOTE`) so reports cite where the edge's numbers
+    came from, not whatever the DB cache holds at render time.
+    """
     # Atlas-side value: prefer expr_entry (cohort-relative) if Stage A
     # scored this gene; else the accessor's mean expression; else
     # NOT_ASSESSED, which only happens for a gene that can't be measured.
@@ -473,6 +481,12 @@ def _marker_comparison(
                 cohort_pct = pct.get("pct")
                 break
         coverage = expr_entry.get("coverage")
+    # Which stats file the value came from: the discovery JSON's for a
+    # Stage A value (absent in discovery JSONs that predate it), else the
+    # accessor's.
+    value_source = expression_source
+    if val is not None:
+        value_source = stage_a_expression_source or expression_source
     if val is None:
         val = atlas_val
 
@@ -503,10 +517,10 @@ def _marker_comparison(
     node_b = "; ".join(node_b_parts)
 
     alignment = _marker_alignment(val, cohort_pct, is_negative)
-    notes = _with_discrepancy(
-        _marker_notes(symbol, val, cohort_pct, coverage, alignment, is_negative),
-        discrepancy,
-    )
+    notes = _marker_notes(symbol, val, cohort_pct, coverage, alignment, is_negative)
+    if value_source:
+        notes = f"{notes}; {ATLAS_EXPRESSION_NOTE}{value_source}"
+    notes = _with_discrepancy(notes, discrepancy)
 
     return {
         "property": property_name,
@@ -516,6 +530,10 @@ def _marker_comparison(
         "notes": notes,
     }
 
+
+# Prefix of the stats-file stamp in a marker comparison's notes; render.py
+# reads it back for the report's Methods section.
+ATLAS_EXPRESSION_NOTE = "atlas expression from "
 
 _DISCREPANCY_TEXT = {
     "LISTED_NOT_EXPRESSED": (
@@ -1073,18 +1091,22 @@ def _cli() -> None:
     at_source_sets = classical.get("at_source_sets") or []
 
     edges: list[dict] = []
-    for cand in candidates:
-        atlas = _load_atlas_node(
-            args.taxonomy_id, cand["node_id"], args.rank,
-            symbols=_classical_expression_symbols(classical),
-        )
-        edges.append(_build_edge(
-            classical_node_id=args.classical_node_id,
-            candidate=cand,
-            atlas=atlas,
-            taxonomy_id=args.taxonomy_id,
-            at_source_sets=at_source_sets,
-        ))
+    try:
+        for cand in candidates:
+            atlas = _load_atlas_node(
+                args.taxonomy_id, cand["node_id"], args.rank,
+                symbols=_classical_expression_symbols(classical),
+            )
+            edges.append(_build_edge(
+                classical_node_id=args.classical_node_id,
+                candidate=cand,
+                atlas=atlas,
+                taxonomy_id=args.taxonomy_id,
+                at_source_sets=at_source_sets,
+            ))
+    except ExpressionUnavailable as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        sys.exit(1)
 
     if args.dry_run:
         # For dry-run preview we use plain yaml — these edges are

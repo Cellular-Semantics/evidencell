@@ -701,7 +701,9 @@ def extract_methods_summary(
       annotation_transfer_runs: list of AT method summaries
       atlas_data_sources: list of {atlas, taxonomy_id, pseudobulk_sha}
       expression_sources: list of {taxonomy_id, stats_file} — the MapMyCells
-        stats file behind atlas expression values on these edges
+        stats file behind atlas expression values on these edges, from the
+        stamp in their marker comparisons; stats_file None for edges
+        emitted before the stamp existed
       bulk_data_sources: list of {dataset_id, source_pmid, geo_accession,
         technique, n_pools, citation}
       framework_version: evidencell git commit at extract time
@@ -866,28 +868,47 @@ def extract_methods_summary(
         ),
     }
 
-    # Atlas expression provenance (#189): the stats file each target
-    # taxonomy's expression cache was filled from, so the Methods section
-    # cites it by name. Read-only and best-effort — never triggers an
-    # expression load, and a missing DB just leaves the list short (the
-    # atlas-fields path reports a missing DB on its own terms).
-    from evidencell.kb_io import usable_sqlite
-    from evidencell.paths import taxonomy_db_path
-    from evidencell.taxonomy_db import TaxonomyDB
+    # expression_sources: the MapMyCells stats file behind each taxonomy's
+    # atlas expression values, read from the stamp Stage B writes into each
+    # measured marker comparison's notes — where these edges' numbers came
+    # from, not what the taxonomy DB's cache holds now. Edges emitted before
+    # the stamp existed report stats_file None, with a warning (#189).
+    import re
 
+    from evidencell.stage_b_emit import ATLAS_EXPRESSION_NOTE
+
+    stamp_re = re.compile(re.escape(ATLAS_EXPRESSION_NOTE) + r"([^;\s]+)")
+    files_by_tax: dict[str, set[str]] = {}
+    unstamped_by_tax: dict[str, int] = {}
+    for e in edges:
+        tax_id = (nodes_by_id.get(e.get("taxonomy_type")) or {}).get("taxonomy_id")
+        if not tax_id:
+            continue
+        for pc in e.get("property_comparisons") or []:
+            prop = str(pc.get("property") or "")
+            if not prop.startswith(("marker_", "negative_marker_", "neuropeptide_")):
+                continue
+            if pc.get("alignment") == "NOT_ASSESSED":
+                continue
+            stamp = stamp_re.search(str(pc.get("notes") or ""))
+            if stamp:
+                files_by_tax.setdefault(tax_id, set()).add(stamp.group(1))
+            else:
+                unstamped_by_tax[tax_id] = unstamped_by_tax.get(tax_id, 0) + 1
     expression_sources: list[dict] = []
-    edge_taxonomies = {
-        (nodes_by_id.get(e.get("taxonomy_type")) or {}).get("taxonomy_id")
-        for e in edges
-    }
-    for tax_id in sorted(t for t in edge_taxonomies if t):
-        tdb_path = taxonomy_db_path(tax_id)
-        stats_file = (
-            TaxonomyDB(tdb_path).expression_source_file()
-            if usable_sqlite(tdb_path) else None
-        )
-        if stats_file:
+    for tax_id in sorted(set(files_by_tax) | set(unstamped_by_tax)):
+        for stats_file in sorted(files_by_tax.get(tax_id, ())):
             expression_sources.append({"taxonomy_id": tax_id, "stats_file": stats_file})
+        n = unstamped_by_tax.get(tax_id)
+        if n:
+            expression_sources.append({"taxonomy_id": tax_id, "stats_file": None})
+            print(
+                f"WARNING: {n} marker comparison(s) on {tax_id} edges don't record "
+                "which stats file their expression values came from (emitted "
+                "before #189); re-run emit-stage-b / refresh-property-comparisons "
+                "to stamp them.",
+                file=sys.stderr,
+            )
 
     # Render kb_graph_file as repo-relative when possible, so the report's
     # reproducibility footer carries a portable path (not someone's $HOME).

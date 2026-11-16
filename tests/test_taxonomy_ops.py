@@ -474,3 +474,28 @@ class TestWarmExpressionCacheCLI:
         )
         assert result.returncode == 0
         assert "taxonomy_id" in result.stdout
+
+
+def test_refresh_expression_all_stops_before_writing_when_stats_missing(tmp_path, monkeypatch, capsys):
+    """PR #207 review: a missing stats file must stop refresh-expression-all
+    with the fix, not a traceback partway through the sweep."""
+    from evidencell import refresh_expression_pcs as rep
+    from evidencell.expression_cache import ExpressionUnavailable
+
+    graphs = tmp_path / "kb" / "graphs"
+    graphs.mkdir(parents=True)
+    for name in ("a.yaml", "b.yaml"):
+        (graphs / name).write_text("nodes: []\n")
+    monkeypatch.setattr(rep, "repo_root", lambda: tmp_path)
+    calls: list[tuple[str, bool]] = []
+
+    def fake_refresh(path, *, dry_run=False):
+        calls.append((path.name, dry_run))
+        if path.name == "b.yaml":
+            raise ExpressionUnavailable("stats missing. Run: just fetch-mapmycells T1")
+        return {"pcs_updated": 0, "changes": []}
+
+    monkeypatch.setattr(rep, "refresh_graph", fake_refresh)
+    assert rep.main(["--all"]) == 1
+    assert all(dry for _, dry in calls)  # nothing written
+    assert "Run: just fetch-mapmycells T1" in capsys.readouterr().err

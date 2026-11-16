@@ -569,7 +569,13 @@ def main() -> None:
         print(json.dumps(result, indent=2))
 
     elif args.command == "warm-expression-cache":
-        result = warm_expression_cache(args.taxonomy_id)
+        from evidencell.expression_cache import ExpressionUnavailable
+
+        try:
+            result = warm_expression_cache(args.taxonomy_id)
+        except ExpressionUnavailable as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            sys.exit(1)
         print(json.dumps(result, indent=2))
 
 

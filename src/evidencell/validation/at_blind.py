@@ -131,7 +131,26 @@ class ATBlindAudit(AuditDriver):
             ("taxonomy_db_fresh", self._check_db_fresh),
             ("anat_closure_built", self._check_anat_closure),
             ("uberon_resolution_coverage", self._check_uberon_resolution),
+            ("atlas_expression_loadable", self._check_expression_loadable),
         ]
+
+    def _check_expression_loadable(self) -> None:
+        """Load every audited node's marker expression before any case runs.
+
+        Without this, a missing stats file surfaces as one ``error`` outcome
+        per case instead of a clean stop with the fix (#189).
+        """
+        from evidencell.expression_cache import ExpressionUnavailable
+
+        genes: set[str] = set()
+        for case in self._extract_at_targets():
+            classical = case["classical_node"]
+            genes.update(_classical_positive_markers(classical))
+            genes.update(_classical_negative_markers(classical))
+        try:
+            self._get_db().expression(sorted(genes), accessions=[])
+        except ExpressionUnavailable as exc:
+            raise AuditAssertion(str(exc)) from exc
 
     def _check_db_exists(self) -> None:
         from evidencell.taxonomy_db import TaxonomyDBUnavailable, require_taxonomy_db

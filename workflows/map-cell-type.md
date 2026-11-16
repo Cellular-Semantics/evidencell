@@ -123,6 +123,12 @@ specification):
   there is no metadata-only mode. Genes that can't be measured (no Ensembl
   mapping, or absent from the stats file) are listed as `NOT MEASURED` on
   stderr and under `not_measured_genes` in the discovery JSON; they score 0.
+  Protein-name markers that only resolve to a gene through the
+  `marker_aliases` stopgap (`PV`, `CB`, `CR`, `NOS`, `mGluR1` …) are not
+  scored in Stage A — listed as `NOT SCORED` on stderr and under
+  `unscored_protein_alias_markers` — until gene identity is resolved
+  properly (#216). Use canonical gene symbols on classical nodes to have a
+  marker scored.
 - **Soft scoring** within the surviving pool:
   - **Graded region score** from `region_fraction_100um`:
     +2 if ≥ 0.5, +1 if ≥ 0.1, +0.5 if > 0, else 0.
@@ -165,7 +171,8 @@ specification):
   null/`exact`/`lower_bound`; see schema), `region_evidence`,
   `at_hit`, `coverage` are emitted alongside the score for
   downstream consumption; `marker_discrepancies` per candidate and
-  top-level `not_measured_genes` / `expression_source` sit outside
+  per-candidate `expression_source`, and top-level `not_measured_genes` /
+  `unscored_protein_alias_markers` / `expression_source` sit outside
   `discovery_score`.
 
 ---
@@ -255,12 +262,16 @@ warning.
     if any, is appended to the notes (`METADATA DISCREPANCY …`) so
     gen-facts and report synthesis can see it. It does not change
     the alignment.
+    Every comparison with a measured value records its stats file in
+    the notes (`atlas expression from {file}`); gen-facts collects
+    these for the report's Methods section.
     Symbol resolution: classical-node marker abbreviations
     (PV → Pvalb, CB → Calb1, CR → Calb2, NOS → Nos1, VIP → Vip,
     etc.) are mapped to canonical gene symbols via
-    `_CANONICAL_GENE_ALIAS` in `src/evidencell/stage_b_emit.py`.
-    Add new aliases there; preferred long-term is to use
-    canonical gene symbols in classical-node YAML.
+    `PROTEIN_TO_GENE_ALIASES` in `src/evidencell/marker_aliases.py`
+    (Stage B only; Stage A does not score them). This table is a
+    stopgap — see #216; preferred is canonical gene symbols in
+    classical-node YAML.
 - `evidence[]` — emit deterministically:
   - `ATLAS_METADATA` (always; `supports: PARTIAL`): explanation
     auto-built from candidate atlas-side properties (n_cells,

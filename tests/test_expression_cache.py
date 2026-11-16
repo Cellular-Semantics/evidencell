@@ -161,6 +161,33 @@ def test_new_stats_release_drops_and_reloads_cache(db, stats):
     assert cached == {"Sst"}  # Pvalb dropped with the stale release; reloads on use
 
 
+def test_regenerated_gene_mapping_drops_not_measured(db, mapping):
+    """#189 review: a NO_ENSEMBL_MAPPING row must not outlive a fix to the
+    gene mapping TSV."""
+    assert db.expression(["Nosuchgene"]).not_measured == {"Nosuchgene": NO_ENSEMBL_MAPPING}
+    mapping.write_text(mapping.read_text() + "ENS_GAD1\tNosuchgene\n")
+    out = db.expression(["Nosuchgene"], accessions=["CLUS_3"])
+    assert out.not_measured == {}
+    assert out.values == {"CLUS_3": {"Nosuchgene": 2.0}}
+
+
+def test_alias_table_change_drops_not_measured(db, monkeypatch):
+    """#189 review: likewise for a new PROTEIN_TO_GENE_ALIASES entry."""
+    from evidencell import marker_aliases
+
+    assert db.expression(["GAD-1"]).not_measured == {"GAD-1": NO_ENSEMBL_MAPPING}
+    monkeypatch.setitem(marker_aliases.PROTEIN_TO_GENE_ALIASES, "GAD-1", "Gad1")
+    out = db.expression(["GAD-1"], accessions=["CLUS_3"])
+    assert out.not_measured == {}
+    assert out.values == {"CLUS_3": {"GAD-1": 2.0}}
+
+
+def test_unchanged_resolution_keeps_the_cache(db, stats):
+    db.expression(["Sst"])
+    stats.unlink()  # a reload would now fail closed
+    assert db.expression(["Sst"], accessions=["CLUS_1"]).values == {"CLUS_1": {"Sst": 10.0}}
+
+
 def test_stats_hash_is_memoised_by_size_and_mtime(db, stats, monkeypatch):
     db.expression(["Sst"])
     calls: list[Path] = []
