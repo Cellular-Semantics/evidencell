@@ -64,33 +64,33 @@ nodes:
             method: "review (LC/peri-LC neurochemistry)"
             scope: "mouse — NPY exclusively secreted by peri-LC GABAergic cells"
             quote_key: "273433369_78752938"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
     negative_markers:
       - symbol: Th
         modifier: ABSENT
         ncbi_gene_id:
         sources:
           - ref: "PMID:38872397"
-            method: "juxtacellular recording + TH immunolabelling"
+            method: "juxtacellular recording; TH identification assay not stated (full text not retrieved)"
             scope: "adult mouse LC surround — TH-negative cell class"
             quote_key: "270489273_65a42189"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: "PMID:39427811"
             method: "review (LC/peri-LC neurochemistry)"
             scope: "peri-LC GABAergic cells vs noradrenergic LC core"
             quote_key: "273433369_45bcf7fc"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Dbh
         modifier: ABSENT
         ncbi_gene_id:
         sources:
           - ref: "PMID:38872397"
-            method: "juxtacellular recording + TH immunolabelling"
+            method: "inferred from non-noradrenergic identity; DBH not assayed"
             scope: >
               adult mouse — inferred from the non-noradrenergic identity of the
               LC surround; DBH itself was not assayed in the cited quote
             quote_key: "270489273_f3c96847"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
     neuropeptides:
       - symbol: Npy
         ncbi_gene_id:
@@ -99,7 +99,7 @@ nodes:
             method: "review (LC/peri-LC neurochemistry)"
             scope: "mouse peri-LC GABAergic cells"
             quote_key: "273433369_78752938"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
     morphology:
       description: >
         Non-noradrenergic (TH-negative) cells intermingled within the

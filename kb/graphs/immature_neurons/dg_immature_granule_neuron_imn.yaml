@@ -51,12 +51,12 @@ nodes:
             method: "review (stage 5 marker profile)"
             scope: "adult dentate gyrus — stage 5 immature granule neuron"
             quote_key: "279046466_b2e95c41"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: "https://doi.org/10.5114/ppn.2021.111950"
             method: "review (marker classification)"
             scope: "adult dentate gyrus immature neurons"
             quote_key: "252063749_e1c84f70"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: NeuN
         modifier: "stage 5 onward — co-expressed with DCX"
         ncbi_gene_id:
@@ -65,12 +65,12 @@ nodes:
             method: "review (stage 5 marker profile)"
             scope: "adult dentate gyrus — stage 5"
             quote_key: "279046466_b2e95c41"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: "https://doi.org/10.5114/ppn.2021.111950"
             method: "review (marker classification)"
             scope: "adult dentate gyrus immature neurons"
             quote_key: "252063749_e1c84f70"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: PSA-NCAM
         ncbi_gene_id:
         sources:
@@ -78,16 +78,16 @@ nodes:
             method: "review (marker classification)"
             scope: "adult dentate gyrus immature neurons"
             quote_key: "252063749_e1c84f70"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Tis21
         modifier: "reappears during maturation phase (stage 5)"
         ncbi_gene_id:
         sources:
           - ref: "PMID:19482889"
-            method: "Tis21-GFP knock-in mouse + IHC"
+            method: "Tis21-GFP knock-in reporter mouse"
             scope: "adult mouse hippocampus maturing neurons"
             quote_key: "13799502_a8f3d219"
-            marker_type: PROTEIN
+            marker_type: TRANSGENE_REPORTER
     negative_markers:
       - symbol: Calbindin
         modifier: "absent at immature stage; appears only at stage 6"

@@ -90,12 +90,12 @@ nodes:
             snippet: the Sst;;Tac1 intersection revealed a population of bistratified INs that preferentially synapsed onto fast-spiking interneurons (FS-INs) and were both necessary and sufficient to interrupt their firing
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: PMID:37467748
             snippet: These two interneuron types have been reported to co-express SOM and PV
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: PMID:33398060
             marker_type: TRANSCRIPT
             method: patch-seq
@@ -105,16 +105,16 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:38640347
-            marker_type: TRANSCRIPT
-            method: intersectional genetics
+            marker_type: TRANSGENE_REPORTER
+            method: "intersectional genetics (Sst;;Tac1 reporter)"
             scope: mouse hippocampus
             quote_key: 269246896_c084d5c0
       - symbol: Tac1
         ncbi_gene_id:
         sources:
           - ref: PMID:38640347
-            marker_type: TRANSCRIPT
-            method: intersectional genetics
+            marker_type: TRANSGENE_REPORTER
+            method: "intersectional genetics (Sst;;Tac1 reporter)"
             scope: mouse hippocampus
             quote_key: 269246896_c084d5c0
     negative_markers: []
@@ -123,8 +123,8 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:38640347
-            marker_type: TRANSCRIPT
-            method: intersectional genetics
+            marker_type: TRANSGENE_REPORTER
+            method: "intersectional genetics (Sst;;Tac1 reporter)"
             scope: mouse hippocampus
             quote_key: 269246896_c084d5c0
     cl_mapping:
