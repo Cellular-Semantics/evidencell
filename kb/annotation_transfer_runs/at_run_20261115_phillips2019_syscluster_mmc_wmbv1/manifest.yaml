@@ -1,6 +1,3 @@
-# DRAFT — move to kb/annotation_transfer_runs/at_run_20261115_phillips2019_syscluster_mmc_wmbv1/manifest.yaml
-# once issue #209 (hook term check crashes on AT manifests) is fixed.
-# LinkML schema validation (AnnotationTransferRun) already passes for this text.
 id: at_run_20261115_phillips2019_syscluster_mmc_wmbv1
 record_type: AnnotationTransferRun
 
@@ -12,9 +9,11 @@ source_cluster_label: >
   separately (Louvain, resolution 0.6, top 10 PCs); cluster numbers follow the
   authors' renaming in aschulmann/ThalamoSeq thal_singlecell.Rmd. Clusters
   were defined "irrespective of nuclear boundaries" — the paper does not
-  assign them to nuclei. Every cell carries both its projection system (by
-  anatomy) and a transcriptomic cluster, so each label = one projection
-  target x one transcriptomic profile.
+  assign them to nuclei, and the nuclei dissected per system are themselves
+  inferred (code object names, Fig. 7a), not recorded (see
+  at_run_20261115_phillips2019_projection_mmc_wmbv1). Every cell carries both
+  its projection system (by anatomy) and a transcriptomic cluster, so each
+  label = one projection target x one transcriptomic profile.
   SOURCE-LABEL PURITY: pure (single projection system, single transcriptomic
   cluster). F1 is expected to rise with atlas resolution and mostly does
   (e.g. Vis_1: subclass 0.12 -> supertype 0.69 -> cluster 0.77).
@@ -55,12 +54,16 @@ output:
 
 caveats: >
   (1) Cluster labels are transcriptomic within a projection system; their
-  nucleus of origin is not stated in the paper. Nucleus readings in the PR /
-  README (e.g. Vis_1 -> LGd-dominant WMB cluster 2650) come from this AT run
-  plus WMBv1 MERFISH anatomy, not from the source paper, so they must not be
-  used as at_source_sets correspondences without independent support.
-  (2) Small labels (Pfr_1 44 cells, Aud_3 63, Som_3 60) give unstable
-  cluster-level F1. (3) Shares mmc_results.csv with the projection run.
+  nucleus of origin is not stated in the paper. Nucleus readings (e.g.
+  Vis_1 -> LGd-dominant WMB cluster 2650) come from this AT run plus WMBv1
+  MERFISH anatomy, not from the source paper, so they must not be used as
+  at_source_sets correspondences without independent support (e.g. the
+  nucleus-resolved pooled samples of GEO:GSE133911). (2) Visual clusters
+  include an LD-dominant component (WMB 0658 / 2655), so not every Vis_*
+  cluster is LGd or LP. (3) Purity is within this dataset only and can be a
+  design artefact (only the Visual system sampled LGd). (4) Small labels
+  (Pfr_1 44 cells, Aud_3 63, Som_3 60) give unstable cluster-level F1.
+  (5) Shares mmc_results.csv with the projection run.
 
 metadata: >
   source_paper=PMID:31527803;

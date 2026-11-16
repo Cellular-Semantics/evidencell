@@ -1,8 +1,8 @@
 # AT Run: Phillips 2019 thalamic projection neurons → WMBv1 (CCN20230722)
 
-Status: outputs complete; **manifest.yaml not yet written**. The pre-edit hook's
-term check crashes on every AT manifest (issue #209). Draft manifest text is in
-the PR description.
+Status: outputs complete, manifest written, run registered (`index.yaml`).
+`at_results.yaml` / `at_results_best.yaml` generated with `at_metrics migrate`.
+Not yet attached to any KB node (pending F1 gate review).
 
 ## Purpose
 
@@ -16,8 +16,13 @@ Each cell's projection system is set by anatomy, not by transcriptome.
 - GEO:GSE133912: `GSE133912_thal_singlecell_counts.csv.gz` (cells x gene
   symbols, UMI), `GSE133912_thal_singlecell_metadata.csv.gz`
 - Authors' analysis code: https://github.com/aschulmann/ThalamoSeq
-  (`thal_singlecell.Rmd`). It names the dissected complexes VAL (motor), VBPO
-  (somatosensory), LGLP (visual), MGB (auditory) and MD (prefrontal).
+  (`thal_singlecell.Rmd`). Its object names suggest the dissected complexes:
+  VAL (motor), VBPO (somatosensory), LGLP (visual), MGB (auditory) and MD
+  (prefrontal).
+- The nuclei dissected per system are **not recorded** in the metadata or in
+  Supp. Table 3, which gives injection coordinates only. The composition above
+  is inferred, and it is incomplete for Visual: about 20% of Visual cells map
+  to LD-dominant WMB supertype 0658 / cluster 2655.
 
 ## Two label schemes, one mapping
 

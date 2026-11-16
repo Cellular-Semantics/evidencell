@@ -1,6 +1,3 @@
-# DRAFT — move to kb/annotation_transfer_runs/at_run_20261115_phillips2019_projection_mmc_wmbv1/manifest.yaml
-# once issue #209 (hook term check crashes on AT manifests) is fixed.
-# LinkML schema validation (AnnotationTransferRun) already passes for this text.
 id: at_run_20261115_phillips2019_projection_mmc_wmbv1
 record_type: AnnotationTransferRun
 
@@ -11,17 +8,23 @@ source_cluster_label: >
   column `Projection`): Visual (429), Motor (477), Prefrontal (388),
   Auditory (376), Somatosensory (282). Each label is anatomy-defined, not
   transcriptomic: retrograde tracer injected into one cortical area, the
-  labelled "major projection complex" microdissected, cells sorted one at a
-  time (Smart-seq2-like). Per Supp. Table 3 and the authors' analysis code
-  (aschulmann/ThalamoSeq thal_singlecell.Rmd object names) the complexes are
-  Visual = LGd + LP, Motor = VA/VL, Somatosensory = VB + PO, Auditory = MGB,
-  Prefrontal = MD; sparsely labelled midline cells were avoided.
-  SOURCE-LABEL PURITY: pure by anatomy (projection target + dissected complex
-  are fixed by experiment) but MIXED by nucleus and by transcriptomic profile
-  — each label spans 2+ nuclei and the primary/secondary/tertiary profile
-  axis. Expect F1 to peak at supertype and fall at cluster; read purity and
-  the per-cluster distribution (label_distribution.tsv) rather than one best
-  F1 target.
+  labelled "major projection complex" microdissected, cells hand-picked one
+  per well. NUCLEUS COMPOSITION IS NOT RECORDED: neither the cell metadata
+  nor Supp. Table 3 (injection coordinates only) names the nuclei dissected.
+  The working composition below is inferred from object names in the
+  authors' analysis code (aschulmann/ThalamoSeq thal_singlecell.Rmd: LGLP,
+  VAL, VBPO, MGB, MD) and Fig. 7a: Visual = LGd + LP, Motor = VA/VL,
+  Somatosensory = VB + PO, Auditory = MGB, Prefrontal = MD. This mapping
+  shows the inference is incomplete for Visual: ~20% of Visual cells map to
+  LD-dominant WMB supertype 0658 (LD 0.77; cluster 2655, LD 0.53), consistent
+  with visual injections at two AP levels (2.9 and 3.8 mm caudal) reaching
+  higher-order/medial visual areas that receive LD input. Sparsely labelled
+  midline cells were avoided (Fig. 5 legend).
+  SOURCE-LABEL PURITY: pure by anatomy (projection target fixed by
+  experiment) but MIXED by nucleus and by transcriptomic profile — each
+  label spans 2+ nuclei and the primary/secondary/tertiary profile axis.
+  Expect F1 to peak at supertype and fall at cluster; read the per-cluster
+  distribution (label_distribution.tsv) rather than one best F1 target.
 source_species: "NCBITaxon:10090"
 
 target_atlas: WMBv1
@@ -64,11 +67,21 @@ caveats: >
   supertypes covering only part of each label (F1 0.42-0.62); the
   per-cluster distribution is the informative read-out. (2) Single-cell
   collection was biased against tertiary (midline/intralaminar) nuclei
-  (paper, Fig. 5 legend). (3) All cells male, adult (~P55-P160). (4) Purity
-  in f1_matrix.csv is within this dataset (fraction of mapped Phillips cells
-  in that WMB node that carry the label), not atlas-wide. (5) mmc_results.csv
-  is shared with at_run_20261115_phillips2019_syscluster_mmc_wmbv1, which
-  scores the same mapping under the authors' per-system cluster labels.
+  (paper, Fig. 5 legend); absence of a tertiary cluster is uninformative.
+  (3) Purity in f1_matrix.csv is within this dataset only. Purity 1.0 can be
+  a design artefact: e.g. CLUS_2650 is 100% Visual partly because no other
+  system dissected LGd. (4) Clusters shared across systems (PO/VPM-dominant
+  0659/2663, 0654/2648 hold Motor, Somatosensory and Visual cells) may be
+  genuine multi-target projection (PO -> S1 and M1) or label spread to
+  adjacent cortex / DiI fibre-of-passage uptake; this dataset cannot
+  separate them. (5) Retrograde label = projects to at least the injected
+  area; collaterals are invisible. (6) Dominant-nucleus annotations come
+  from WMBv1 MERFISH CCF registration and are boundary-prone (Auditory cells
+  mainly land in 0660/2665 annotated LP/SGN, i.e. the caudal LP-SGN-POL-MGd
+  border). (7) All cells male, adult (~P55-P160); dissociation with pronase
+  may induce stress genes. (8) mmc_results.csv is shared with
+  at_run_20261115_phillips2019_syscluster_mmc_wmbv1, which scores the same
+  mapping under the authors' per-system cluster labels.
 
 metadata: >
   source_paper=PMID:31527803; source_files=GSE133912_thal_singlecell_counts.csv.gz,
