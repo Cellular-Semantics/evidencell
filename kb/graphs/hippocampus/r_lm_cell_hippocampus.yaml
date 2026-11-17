@@ -14,6 +14,9 @@ nodes:
     name: Radiatum-lacunosum moleculare (R-LM) cell
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:39107
+      label: Murinae
+      name_in_source: "Mice; Rats (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0014552
         label: CA1 stratum oriens
@@ -33,7 +36,7 @@ nodes:
       sources: []
     defining_markers:
       - symbol: Sst
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: PMID:10777798
             snippet: In area CA1, the vast majority of these interneurons were comprised of O-LM cells and two newly identified interneuronal subtypes, R-LM and P-LM cells

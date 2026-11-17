@@ -22,7 +22,10 @@ nodes:
   - id: str_immature_neuron
     name: "Striatum Immature Neuron (SVZ-derived)"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:       # To be confirmed — studies cite mouse, rat
+    species:  # To be confirmed — studies cite mouse, rat
+      id: NCBITaxon:10116
+      label: Rattus norvegicus
+      name_in_source: "Rats (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0002435
         label: "striatum"
@@ -36,7 +39,7 @@ nodes:
       sources: []
     defining_markers:
       - symbol: DCX
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:84394"
         sources:
           - ref: "PMID:15684031"
             method: "IHC"

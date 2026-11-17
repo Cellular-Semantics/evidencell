@@ -22,7 +22,10 @@ nodes:
   - id: peri_lc_gabaergic_neuron
     name: "Peri-locus coeruleus GABAergic neuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:       # To be confirmed from primary literature — mouse sources
+    species:  # To be confirmed from primary literature — mouse sources
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0003023
         label: "pontine tegmentum"
@@ -58,7 +61,7 @@ nodes:
           quote_key: "273433369_78752938"
     defining_markers:
       - symbol: Npy
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:109648"
         sources:
           - ref: "PMID:39427811"
             method: "review (LC/peri-LC neurochemistry)"
@@ -68,7 +71,7 @@ nodes:
     negative_markers:
       - symbol: Th
         modifier: ABSENT
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:21823"
         sources:
           - ref: "PMID:38872397"
             method: "juxtacellular recording; TH identification assay not stated (full text not retrieved)"
@@ -82,7 +85,7 @@ nodes:
             marker_type: NOT_STATED
       - symbol: Dbh
         modifier: ABSENT
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13166"
         sources:
           - ref: "PMID:38872397"
             method: "inferred from non-noradrenergic identity; DBH not assayed"
@@ -93,7 +96,7 @@ nodes:
             marker_type: NOT_STATED
     neuropeptides:
       - symbol: Npy
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:109648"
         sources:
           - ref: "PMID:39427811"
             method: "review (LC/peri-LC neurochemistry)"

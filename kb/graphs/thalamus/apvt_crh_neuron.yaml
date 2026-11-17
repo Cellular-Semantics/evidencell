@@ -23,7 +23,10 @@ nodes:
   - id: apvt_crh_neuron
     name: "Corticotropin-releasing factor-expressing anterior PVT (aPVT CRF+) neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — single source is rat
+    species:  # To be confirmed from primary literature — single source is rat
+      id: NCBITaxon:10116
+      label: Rattus norvegicus
+      name_in_source: "Rats (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
@@ -56,7 +59,7 @@ nodes:
           quote_key: "235466185_0d1595b7"
     defining_markers:
       - symbol: Crh
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:81648"
         sources:
           - ref: "PMID:33947849"
             method: "in situ hybridization (CRF in PVT) + AAV-CRF-Cre promoter-driven reporter"
@@ -65,7 +68,7 @@ nodes:
             marker_type: TRANSCRIPT
     neuropeptides:
       - symbol: Crh
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:81648"
         sources:
           - ref: "PMID:33947849"
             method: "in situ hybridization (CRF in PVT) + AAV-CRF-Cre promoter-driven reporter"

@@ -18,7 +18,10 @@ nodes:
 - id: cea_pkc_delta_neuron
   name: Central amygdala protein kinase C-delta (PKC-delta) neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
   nt_type:
     name_in_source: GABAergic
     sources:
@@ -54,7 +57,7 @@ nodes:
     compartment: SOMA
   defining_markers:
   - symbol: Prkcd
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:18753"
     sources:
     - ref: PMID:33188006
       method: asta_report
@@ -84,7 +87,7 @@ nodes:
       marker_type: TRANSCRIPT
   negative_markers:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:20604"
     sources:
     - ref: PMID:33188006
       method: asta_report

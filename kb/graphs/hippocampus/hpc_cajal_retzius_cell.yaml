@@ -12,6 +12,9 @@ nodes:
     name: hippocampal Cajal-Retzius cell
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0014557
         label: CA1 stratum lacunosum moleculare
@@ -54,7 +57,7 @@ nodes:
           quote_key: 631148_85ae9bb1
     defining_markers:
       - symbol: Reln
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:19699"
         sources:
           - ref: PMID:25253849
             method: "immunohistochemistry (anti-reelin)"

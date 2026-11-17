@@ -14,6 +14,9 @@ nodes:
     name: Trilaminar cell
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:39107
+      label: Murinae
+      name_in_source: "Mice; Rats (MeSH organisms of cited primary papers; inferred, #216)"
 
     anatomical_location:
       # Soma — oriens/alveus border. The previous single entry cited a quote that
@@ -121,7 +124,7 @@ nodes:
 
     defining_markers:
       - symbol: Chrm2
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:243764"
         sources:
           - marker_type: PROTEIN
             ref: PMID:32016558
@@ -154,7 +157,7 @@ nodes:
             notes: Sparse Chrm2+ interneurons, a subpopulation negative for Sst and Pvalb.
             quote_key: 289175303_54ac3e9e
       - symbol: Ntng1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:80883"
         sources:
           - marker_type: TRANSCRIPT
             ref: PMID:32016558
@@ -174,7 +177,7 @@ nodes:
       # (including CL:4023121 sst chodl GABAergic interneuron).
       - symbol: Sst
         modifier: ABSENT
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20604"
         sources:
           - marker_type: PROTEIN
             ref: PMID:32016558
@@ -189,7 +192,7 @@ nodes:
       # Pvalb was previously and incorrectly listed as a DEFINING marker — see node notes.
       - symbol: Pvalb
         modifier: ABSENT
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:19293"
         sources:
           - marker_type: TRANSCRIPT
             ref: PMID:32016558
@@ -201,7 +204,7 @@ nodes:
             quote_key: 211024938_016867da
       - symbol: Vip
         modifier: ABSENT
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:22353"
         sources:
           - marker_type: PROTEIN
             ref: PMID:32016558
@@ -211,7 +214,7 @@ nodes:
             quote_key: 211024938_9161cd35
       - symbol: Npy
         modifier: ABSENT
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:109648"
         sources:
           - marker_type: PROTEIN
             ref: PMID:32016558
@@ -221,7 +224,7 @@ nodes:
             quote_key: 211024938_9161cd35
       - symbol: Calb1
         modifier: ABSENT
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12307"
         sources:
           - marker_type: PROTEIN
             ref: PMID:32016558

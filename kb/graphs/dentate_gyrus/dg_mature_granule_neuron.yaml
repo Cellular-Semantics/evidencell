@@ -14,6 +14,9 @@ nodes:
     name: Dentate Gyrus Mature Granule Neuron
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:39107
+      label: Murinae
+      name_in_source: "Mice; Rats (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0001885
         label: dentate gyrus of hippocampal formation
@@ -35,7 +38,7 @@ nodes:
           quote_key: 625292_ff3f8b1d
     defining_markers:
       - symbol: Calbindin
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12307"
         sources:
           - ref: PMID:40519263
             method: review (marker classification)
@@ -43,7 +46,7 @@ nodes:
             quote_key: 279046466_998847af
             marker_type: NOT_STATED
       - symbol: NeuN
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:52897"
         sources:
           - ref: PMID:40519263
             method: review (marker classification)
@@ -51,7 +54,7 @@ nodes:
             quote_key: 279046466_998847af
             marker_type: NOT_STATED
       - symbol: Tbr1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:21375"
         sources:
           - ref: PMID:18385329
             method: "Tbr2-GFP transgene study; assay for Tbr1 not named in abstract (full text not retrieved)"
@@ -60,9 +63,9 @@ nodes:
             marker_type: NOT_STATED
     negative_markers:
       - symbol: DCX
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13193"
       - symbol: Nestin
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:18008"
       - symbol: PSA-NCAM
         ncbi_gene_id:
     neuropeptides: []

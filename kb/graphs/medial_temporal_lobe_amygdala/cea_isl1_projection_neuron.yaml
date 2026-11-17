@@ -18,7 +18,10 @@ nodes:
 - id: cea_isl1_projection_neuron
   name: Central amygdala ISL1-expressing long-range projection neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
   nt_type:
     name_in_source: GABAergic
     sources:
@@ -42,7 +45,7 @@ nodes:
     compartment: SOMA
   defining_markers:
   - symbol: Isl1
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:16392"
     sources:
     - ref: PMID:36425768
       method: cite_traverse

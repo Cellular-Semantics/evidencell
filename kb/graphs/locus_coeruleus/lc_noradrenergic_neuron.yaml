@@ -21,7 +21,10 @@ nodes:
   - id: lc_noradrenergic_neuron
     name: "Locus coeruleus noradrenergic (A6) neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — mouse, rat and human sources pooled
+    species:  # To be confirmed from primary literature — mouse, rat and human sources pooled
+      id: NCBITaxon:314146
+      label: Euarchontoglires
+      name_in_source: "Mice; Humans; Rats (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0002148
         label: "locus ceruleus"
@@ -78,7 +81,7 @@ nodes:
           quote_key: "273433369_45bcf7fc"
     defining_markers:
       - symbol: Th
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:21823"
         sources:
           - ref: "PMID:29791834"
             method: "bacTRAP translational profiling"
@@ -96,7 +99,7 @@ nodes:
             quote_key: "247944827_82efb1ad"
             marker_type: PROTEIN
       - symbol: Dbh
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13166"
         sources:
           - ref: "PMID:29791834"
             method: "bacTRAP translational profiling"
@@ -115,7 +118,7 @@ nodes:
             marker_type: PROTEIN
       - symbol: Slc6a2
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20538"
         sources:
           - ref: "PMID:29791834"
             method: "bacTRAP translational profiling"
@@ -124,7 +127,7 @@ nodes:
             marker_type: TRANSCRIPT
       - symbol: Slc18a2
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:214084"
         sources:
           - ref: "PMID:29791834"
             method: "bacTRAP translational profiling"
@@ -133,7 +136,7 @@ nodes:
             marker_type: TRANSCRIPT
       - symbol: Gch1
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14528"
         sources:
           - ref: "PMID:29791834"
             method: "bacTRAP translational profiling"
@@ -141,7 +144,7 @@ nodes:
             quote_key: "44089056_03c032a1"
             marker_type: TRANSCRIPT
       - symbol: Phox2a
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:11859"
         sources:
           - ref: "PMID:38364691"
             method: "IHC (Phox2a)"
@@ -154,7 +157,7 @@ nodes:
             quote_key: "267366284_bb2513d7"
             marker_type: PROTEIN
       - symbol: Gal
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14419"
         sources:
           - ref: "PMID:37487094"
             method: "single-cell RNA-seq + electrophysiology"
@@ -169,7 +172,7 @@ nodes:
     negative_markers:
       - symbol: Npy
         modifier: ABSENT
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:109648"
         sources:
           - ref: "PMID:37487094"
             method: "single-cell RNA-seq"
@@ -183,7 +186,7 @@ nodes:
             marker_type: NOT_STATED
     neuropeptides:
       - symbol: Gal
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14419"
         sources:
           - ref: "PMID:37487094"
             method: "single-cell RNA-seq + electrophysiology"
@@ -196,7 +199,7 @@ nodes:
             quote_key: "16354027_26800417"
             marker_type: NOT_STATED
       - symbol: Crh
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12918"
         sources:
           - ref: "PMID:39427811"
             method: "review (LC neurochemistry)"

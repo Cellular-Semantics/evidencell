@@ -14,6 +14,9 @@ nodes:
     name: Neurogliaform cell (NGC)
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:39107
+      label: Murinae
+      name_in_source: "Mice; Rats (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0014557
         label: CA1 stratum lacunosum moleculare
@@ -40,7 +43,7 @@ nodes:
           name_in_source: GABAergic
     defining_markers:
       - symbol: Nos1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:18125"
         sources:
           - ref: PMID:20147544
             marker_type: PROTEIN
@@ -70,7 +73,7 @@ nodes:
             quote_key: "282312227_e62a536b"
             marker_type: PROTEIN
       - symbol: Npy
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:109648"
         sources:
           - ref: PMID:20147544
             marker_type: PROTEIN
@@ -83,7 +86,7 @@ nodes:
             scope: mouse CA1
             quote_key: 8617990_2d09820f
       - symbol: Lamp5
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:76161"
         sources:
           - ref: PMID:41473287
             marker_type: TRANSCRIPT
@@ -96,7 +99,7 @@ nodes:
             scope: hippocampus
             quote_key: 259953057_9718900f
       - symbol: Id2
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:15902"
         sources:
           - ref: PMID:41473287
             marker_type: TRANSCRIPT
@@ -105,7 +108,7 @@ nodes:
             quote_key: 282312227_bb365351
     negative_markers:
       - symbol: Pvalb
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:19293"
         sources:
           - ref: PMID:20147544
             marker_type: TRANSCRIPT
@@ -113,7 +116,7 @@ nodes:
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
       - symbol: Sst
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: PMID:20147544
             marker_type: TRANSCRIPT
@@ -121,7 +124,7 @@ nodes:
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
       - symbol: Calb2
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12308"
         sources:
           - ref: PMID:20147544
             marker_type: TRANSCRIPT
@@ -130,7 +133,7 @@ nodes:
             quote_key: 2405079_6850b924
     neuropeptides:
       - symbol: Npy
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:109648"
         sources:
           - ref: PMID:20147544
             marker_type: PROTEIN
