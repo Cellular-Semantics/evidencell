@@ -692,6 +692,14 @@ at-preflight FILE:
 at-convert INPUT OUTPUT *ARGS:
     cd annotation_transfer && uv run annotation-transfer convert {{INPUT}} {{OUTPUT}} {{ARGS}}
 
+# Transform an expression matrix to log2(CPM+1) for a --normalization log2CPM
+# run. Only for datasets published without counts (Smart-seq2/RSEM TPM, etc).
+# --input-scale {counts,cpm,tpm,ln1p,log2_1p,log10_1p} is required; pass
+# --gene-lengths TSV for full-length data mapped to a UMI-based taxonomy.
+[group('annotation-transfer')]
+at-normalize INPUT OUTPUT *ARGS:
+    cd annotation_transfer && uv run annotation-transfer normalize {{INPUT}} {{OUTPUT}} {{ARGS}}
+
 # Run MapMyCells via web API or local (taxonomy-aware)
 [group('annotation-transfer')]
 at-map INPUT TAXONOMY OUTPUT_DIR *ARGS:

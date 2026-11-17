@@ -212,6 +212,22 @@ candidate's evidence items and ask:
    morphology confirmation)? A marker absent at transcript level on
    the candidate cluster is decisive only if the lit established it
    as a transcript-level discriminator.
+3b. **How the AT query was normalised.** Check
+   `query_normalization` on each AT evidence item (and on
+   `methods_summary.annotation_transfer_runs[*]`). Absent or `raw`
+   is the ordinary case — counts in, nothing to say. `log2CPM`
+   means the source dataset was published without counts and was
+   mapped as pre-normalised expression, typically full-length
+   TPM against a UMI-based taxonomy: the gene-length mismatch
+   biases the marker correlation the mapper optimises, and the
+   integer-count input check did not apply. Weigh those F1
+   values as indicative rather than counts-grade, say so in
+   plain words wherever you cite them, and carry the point into
+   the edge's `caveats` — do not let the number stand
+   unqualified beside counts-based F1 from another run. The
+   evidence item's `explanation` already carries the sentence to
+   build on. See `docs/at_data_flow.md` § "Query normalisation".
+
 4. **Heterogeneity / contradictions.** Do the source quotes name
    subpopulations within the classical type that would predict
    atlas-side scatter (e.g. "OLM cells comprise three Pnoc
@@ -717,7 +733,9 @@ classical type being reported. For each cited AT run:
    those.
 
 Use a short interpretive line below the figure (≤2 sentences) drawing on
-`methods_summary.annotation_transfer_runs[*].caveats` if relevant.
+`methods_summary.annotation_transfer_runs[*].caveats` if relevant. If the
+run's `query_normalization` is not `raw`, name it there too — the figure
+shows F1 values whose provenance the caption is the last chance to state.
 
 ### 4. Per-survivor property alignment + Evidence support tables
 

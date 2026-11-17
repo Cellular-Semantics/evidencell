@@ -1152,6 +1152,18 @@ def refresh_kb(
                 old_levels = ev.get("metrics_by_level") or []
                 new_levels = payload["metrics_by_level"]
                 old_supports = ev.get("supports")
+                # Keep the run's query normalisation stamped on the
+                # evidence item. Edges emitted before the field existed
+                # (or before the run was re-declared) pick it up here, so
+                # a consumer reading the item alone still sees how the
+                # F1 was produced.
+                run_norm = (
+                    load_run_manifest(run_ref, runs_root=runs_root).get(
+                        "query_normalization"
+                    )
+                    or "raw"
+                )
+                stored_norm = ev.get("query_normalization") or "raw"
                 row = {
                     "edge_id": edge.get("id"),
                     "evidence_index": idx,
@@ -1165,9 +1177,19 @@ def refresh_kb(
                     "f1_source_relpath": payload["f1_source_relpath"],
                 }
                 rows.append(row)
+                if run_norm != stored_norm:
+                    row["query_normalization"] = (
+                        f"{stored_norm} → {run_norm}"
+                    )
                 if old_levels != new_levels and not dry_run:
                     ev["metrics_by_level"] = new_levels
                     ev["f1_source_relpath"] = payload["f1_source_relpath"]
+                    changed = True
+                if run_norm != stored_norm and not dry_run:
+                    if run_norm == "raw":
+                        ev.pop("query_normalization", None)
+                    else:
+                        ev["query_normalization"] = run_norm
                     changed = True
         if rows:
             try:
@@ -1199,6 +1221,10 @@ def print_refresh_report(summary: dict) -> None:
                 print(
                     f"      supports: {r['old_supports']} → "
                     f"{r['suggested_supports']}  (suggested; not auto-applied)"
+                )
+            if "query_normalization" in r:
+                print(
+                    f"      query_normalization: {r['query_normalization']}"
                 )
             if r["old_n_levels"] != r["new_n_levels"]:
                 print(

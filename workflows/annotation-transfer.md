@@ -23,7 +23,8 @@ The annotation transfer proto-repo provides three stages:
 | Stage | Tool | Description |
 |-------|------|-------------|
 | **Preflight** | `just at-preflight FILE` | Estimate memory, gate large datasets |
-| **Convert** | `just at-convert INPUT OUTPUT [--cluster-col COL]` | Sanitise h5ad for MapMyCells (raw counts, sparse CSR, minimal obs/var) |
+| **Convert** | `just at-convert INPUT OUTPUT [--cluster-col COL] [--normalization raw\|log2CPM]` | Sanitise h5ad for MapMyCells (counts by default, sparse CSR, minimal obs/var) |
+| **Normalize** | `just at-normalize INPUT OUTPUT --input-scale SCALE [--gene-lengths TSV]` | Transform a TPM / ln(TPM+1) matrix to log2(CPM+1) for a `log2CPM` run |
 | **Map** | `just at-map INPUT TAXONOMY OUTPUT_DIR` | Run MapMyCells via web API or local (auto-resolved) |
 | **Map (local)** | `just at-map-local INPUT STATS MARKERS OUTPUT_JSON` | Run MapMyCells locally (requires `cell_type_mapper`) |
 | **Subsample** | `just at-subsample INPUT OUTPUT [--stratify-col COL]` | Stratified subsample for web API limits (150K cells / 2GB) |
@@ -68,6 +69,33 @@ Step 0  Dataset retrieval (driven by at_source_sets)
         gate — STOP if the load may exceed available RAM. Identity check:
         confirm `source_label` is present in obs before mapping.
 
+Step 0.2 Query normalisation (only when the dataset has no counts)
+        Default path: X holds raw integer counts, nothing to do — convert
+        and map with the default --normalization raw.
+        Datasets published only as normalised expression (Smart-seq2 /
+        RSEM TPM tables, for example) have no counts to recover. Map them
+        as log2(CPM+1), which cell_type_mapper supports natively:
+          just at-normalize <in.h5ad> <log2cpm.h5ad> --input-scale tpm
+          just at-convert <log2cpm.h5ad> <ready.h5ad> --normalization log2CPM
+          just at-map <ready.h5ad> CCN20230722 <out/> --backend local --normalization log2CPM
+        --input-scale says what X currently holds (tpm / cpm / counts /
+        ln1p / log2_1p / log10_1p); get it from the submitter's own
+        description of the file, not from the look of the numbers.
+        Three things to know:
+          * The web backend has no normalisation parameter and treats
+            every upload as counts, so a log2CPM run must use --backend
+            local. `at-map` refuses the combination rather than
+            mis-mapping silently.
+          * Pass --gene-lengths when the source is full-length (TPM/FPKM)
+            and the target taxonomy is UMI-based (all the registered
+            ones are). TPM is gene-length normalised and the reference
+            is not; without the correction that bias lands directly on
+            the marker-wise correlation MapMyCells optimises.
+          * Record `query_normalization: log2CPM` in the run manifest
+            (Step 4). It propagates onto every evidence item the run
+            backs, and downstream reports are expected to weigh those F1
+            values as indicative rather than counts-grade.
+
 Step 0.5 Backend resolution + subsample
         Load taxonomy spec; check preferred backend.
         If web backend and dataset >150K cells:
@@ -91,6 +119,13 @@ Step 3  Parse results (PENDING — not yet automated)
 
 Step 4  Append to KB
         AnnotationTransferEvidence appended to relevant MappingEdge.
+        In the run's manifest.yaml, set `query_normalization` to the value
+        used at Step 1 (omit it, or write `raw`, for an ordinary counts
+        run). `emit-stage-b` copies a non-raw value onto each evidence
+        item it emits — as a `query_normalization` field, in `method`, and
+        as a caveat sentence in `explanation` — and
+        `just refresh-at-metrics --apply` re-stamps existing items when
+        the manifest changes.
 
 Step 5  Confidence re-assessment
         Re-evaluate MappingConfidence per decision guide given new experimental

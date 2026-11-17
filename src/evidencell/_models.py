@@ -397,6 +397,24 @@ class CorrespondenceType(str, Enum):
     """
 
 
+class QueryNormalization(str, Enum):
+    """
+    Normalisation of the query matrix handed to MapMyCells (cell_type_mapper's `--type_assignment.normalization`). Recorded on an AnnotationTransferRun and copied onto each AnnotationTransferEvidence item it backs, so a consumer weighing an F1 value can see how the query was prepared without opening the run manifest.
+Distinct from AnnotationTransferResultSet.normalisation, which names a *variant of the F1 matrix* (e.g. `by_class`), not the query scale.
+
+    """
+    raw = "raw"
+    """
+    X held raw integer counts; cell_type_mapper rescaled each cell to CPM and applied log2(x+1) itself. The default, and the only mode the MapMyCells web API supports.
+
+    """
+    log2CPM = "log2CPM"
+    """
+    X already held log2(CPM+1) and was mapped as-is. Used for datasets published without counts (e.g. Smart-seq2/RSEM TPM tables). Lower-tier evidence: the integer-count sanity check does not apply, and a full-length TPM query is gene-length normalised while the reference taxonomy is not, which biases the marker-wise correlation the mapper optimises. Treat F1 from such a run as indicative rather than on a par with a counts run.
+
+    """
+
+
 class EvidenceSupport(str, Enum):
     SUPPORT = "SUPPORT"
     REFUTE = "REFUTE"
@@ -1707,6 +1725,8 @@ class AnnotationTransferEvidence(EvidenceItem):
                        'NeurotransmitterType',
                        'AnnotationTransferEvidence']} })
     tool_version: Optional[str] = Field(default=None, description="""Version of tool used, e.g. \"MapMyCells v1.2\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
+    query_normalization: Optional[QueryNormalization] = Field(default=None, description="""Normalisation of the query matrix in the backing run. Copied from AnnotationTransferRun.query_normalization by `emit-stage-b` / `refresh-at-metrics`; absent means `raw`. Present on the evidence item (rather than only in the run manifest) so that any consumer reading this item — a report synthesis agent included — sees how the F1 was produced alongside the F1 itself. A `log2CPM` value means the numbers are indicative rather than counts-grade; see the enum.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
     code_reference: Optional[str] = Field(default=None, description="""URL or accession of the notebook/script that produced these results. E.g. https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
     source_groups: Optional[list[SourceGroup]] = Field(default=None, description="""Optional. When this evidence's metrics were computed by pooling multiple raw source clusters into one pseudo-source, record the composition here. Absence means per-source metrics keyed by source_cluster_label.
@@ -2730,6 +2750,8 @@ class AnnotationTransferRun(ConfiguredBaseModel):
                        'MarkerAnalysisEvidence',
                        'CorrelationRun',
                        'AnnotationTransferRun']} })
+    query_normalization: Optional[QueryNormalization] = Field(default=None, description="""Normalisation of the query matrix passed to MapMyCells (`--type_assignment.normalization`). Defaults to `raw` when absent, which is what every run predating this field used. Set by the pipeline, not by hand: `annotation-transfer convert/map --normalization`. `emit-stage-b` copies it onto each AnnotationTransferEvidence item backed by this run, so the caveat travels with the numbers.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
     tool_version: Optional[str] = Field(default=None, description="""Specific tool version, e.g. \"cell_type_mapper v1.7.1\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
     code_reference: Optional[str] = Field(default=None, description="""URL of the run's notebook or script (canonical link)""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
     bootstrap_threshold: Optional[float] = Field(default=None, description="""Bootstrap score cutoff applied (0–1)""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })

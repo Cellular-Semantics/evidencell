@@ -621,17 +621,29 @@ def _at_evidence(
     def _item(*, supports: str, run_ref: str | None, metrics: dict | None,
               explanation: str) -> dict:
         target_atlas = "WMBv1"
+        query_norm = "raw"
         if run_ref:
-            target_atlas = load_run_manifest(run_ref).get("target_atlas") or "WMBv1"
+            manifest = load_run_manifest(run_ref)
+            target_atlas = manifest.get("target_atlas") or "WMBv1"
+            query_norm = manifest.get("query_normalization") or "raw"
+        method = "MapMyCells (via at_metrics.compute_edge_metrics)"
+        if query_norm != "raw":
+            # Keep the caveat on the evidence item itself, not only in the
+            # run manifest: a consumer weighing this F1 (report synthesis
+            # included) reads the item, not the manifest.
+            method = f"{method}, {query_norm} query normalization"
+            explanation = f"{explanation} {_QUERY_NORM_CAVEAT[query_norm]}"
         item: dict = {
             "evidence_type": "ANNOTATION_TRANSFER",
             "supports": supports,
             "source_dataset_accession": dataset_accession,
             "source_cluster_label": source_label,
             "target_atlas": target_atlas,
-            "method": "MapMyCells (via at_metrics.compute_edge_metrics)",
+            "method": method,
             "explanation": explanation,
         }
+        if query_norm != "raw":
+            item["query_normalization"] = query_norm
         if correspondence:
             item["correspondence"] = correspondence
         if run_ref:
@@ -713,6 +725,22 @@ def _at_evidence(
 
 
 # ─── caveats (rule-based) ────────────────────────────────────────────────────
+
+
+#: Appended to an AT evidence item's explanation when the backing run used
+#: a non-raw query normalisation. Prose, not a tier code: the downstream
+#: consumer is an LLM reading the evidence item.
+_QUERY_NORM_CAVEAT = {
+    "log2CPM": (
+        "CAVEAT: the query was mapped as pre-normalised log2(CPM+1), not "
+        "raw counts — typically a full-length (Smart-seq/TPM) dataset "
+        "published without counts. TPM is gene-length normalised while "
+        "the reference taxonomy is not, which biases the marker-wise "
+        "correlation MapMyCells optimises, and the integer-count input "
+        "check does not apply to such a run. Weigh these F1 values as "
+        "indicative rather than on a par with a counts-based run."
+    ),
+}
 
 
 def _caveats(

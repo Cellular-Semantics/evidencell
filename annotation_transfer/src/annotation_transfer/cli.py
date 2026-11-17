@@ -1,9 +1,10 @@
 """CLI entry points for the annotation transfer pipeline.
 
 Usage:
-    annotation-transfer convert INPUT OUTPUT [--cluster-col COL --cluster-value VAL --label-col COL]
-    annotation-transfer map INPUT TAXONOMY OUTPUT_DIR [--backend web|local|auto --algorithm ALG]
-    annotation-transfer map-local INPUT STATS MARKERS OUTPUT_JSON [--csv PATH]
+    annotation-transfer convert INPUT OUTPUT [--cluster-col COL --cluster-value VAL --label-col COL --normalization raw|log2CPM]
+    annotation-transfer normalize INPUT OUTPUT --input-scale SCALE [--gene-lengths TSV]
+    annotation-transfer map INPUT TAXONOMY OUTPUT_DIR [--backend web|local|auto --algorithm ALG --normalization raw|log2CPM]
+    annotation-transfer map-local INPUT STATS MARKERS OUTPUT_JSON [--csv PATH --normalization raw|log2CPM]
     annotation-transfer score MMC_CSV LABELS_JSON OUTPUT [--threshold 0.8]
     annotation-transfer subsample INPUT OUTPUT [--max-cells N --stratify-col COL]
     annotation-transfer taxonomy-setup TAXONOMY_ID [--web/--no-web --download/--no-download]
@@ -32,6 +33,7 @@ def cmd_convert(args: argparse.Namespace) -> None:
         cluster_col=args.cluster_col,
         cluster_value=args.cluster_value,
         label_col=args.label_col,
+        normalization=args.normalization,
     )
 
     if labels:
@@ -40,6 +42,36 @@ def cmd_convert(args: argparse.Namespace) -> None:
         print(f"Source labels: {labels_path} ({len(labels)} cells)")
 
     print(f"MapMyCells-ready: {args.output}")
+    print(f"Normalization:    {args.normalization}")
+    if args.normalization != "raw":
+        print(
+            f"  Pass --normalization {args.normalization} to `map` / `map-local` too, "
+            "and record it as query_normalization in the run manifest."
+        )
+
+
+def cmd_normalize(args: argparse.Namespace) -> None:
+    import anndata as ad
+
+    from annotation_transfer.convert import load_gene_lengths, to_log2cpm
+
+    adata = ad.read_h5ad(args.input)
+    lengths = load_gene_lengths(args.gene_lengths) if args.gene_lengths else None
+    out = to_log2cpm(
+        adata,
+        input_scale=args.input_scale,
+        gene_lengths=lengths,
+    )
+    out.write_h5ad(args.output, compression="gzip")
+    print(f"log2(CPM+1): {args.output}  ({out.n_obs} cells x {out.n_vars} genes)")
+    if lengths is None:
+        print(
+            "  No --gene-lengths given. For full-length (Smart-seq/TPM) data "
+            "mapped to a UMI-based taxonomy, gene-length normalisation is left "
+            "in place and biases the marker correlation; see "
+            "docs/at_data_flow.md."
+        )
+    print("  Convert and map with --normalization log2CPM.")
 
 
 def cmd_map(args: argparse.Namespace) -> None:
@@ -64,10 +96,12 @@ def cmd_map(args: argparse.Namespace) -> None:
         algorithm=args.algorithm,
         max_cells_web=args.max_cells,
         subsample_col=args.subsample_col,
+        normalization=args.normalization,
         on_status=on_status,
     )
 
     print(f"Backend: {result.backend_used.value}")
+    print(f"Normalization: {result.normalization}")
     print(f"Output CSV: {result.output_csv}")
     if result.output_json:
         print(f"Output JSON: {result.output_json}")
@@ -87,9 +121,11 @@ def cmd_map_local(args: argparse.Namespace) -> None:
         args.marker_genes,
         args.output_json,
         output_csv=csv_path,
+        normalization=args.normalization,
     )
     print(f"MapMyCells result: {args.output_json}")
     print(f"MapMyCells CSV:    {csv_path}")
+    print(f"Normalization:     {args.normalization}")
 
 
 def cmd_score(args: argparse.Namespace) -> None:
@@ -216,6 +252,32 @@ def main(argv: list[str] | None = None) -> None:
     p_conv.add_argument("--cluster-value", help="Value to filter cluster-col")
     p_conv.add_argument("--label-col", help="obs column for source labels (default: cluster-col)")
     p_conv.add_argument("-y", "--yes", action="store_true", help="Skip preflight confirmation")
+    p_conv.add_argument(
+        "--normalization", choices=["raw", "log2CPM"], default="raw",
+        help="Query normalisation of X (default: raw integer counts). "
+             "log2CPM skips the integer check for datasets published "
+             "without counts; X must already be log2(CPM+1).",
+    )
+
+    # normalize
+    p_norm = sub.add_parser(
+        "normalize",
+        help="Transform an expression matrix to log2(CPM+1) for log2CPM mapping",
+    )
+    p_norm.add_argument("input", type=Path, help="Input h5ad file")
+    p_norm.add_argument("output", type=Path, help="Output h5ad with X = log2(CPM+1)")
+    p_norm.add_argument(
+        "--input-scale", required=True,
+        choices=["counts", "cpm", "tpm", "ln1p", "log2_1p", "log10_1p"],
+        help="What X currently holds. The *_1p scales are offset-logs "
+             "of a linear matrix in that base.",
+    )
+    p_norm.add_argument(
+        "--gene-lengths", type=Path,
+        help="Optional (gene_id, length_bp) TSV. Undoes gene-length "
+             "normalisation in a TPM/FPKM table, putting full-length data "
+             "on the same footing as a UMI-based reference taxonomy.",
+    )
 
     # map (new: taxonomy-aware)
     p_map = sub.add_parser("map", help="Run MapMyCells (web API or local)")
@@ -226,6 +288,11 @@ def main(argv: list[str] | None = None) -> None:
     p_map.add_argument("--algorithm", help="Mapping algorithm workflow name")
     p_map.add_argument("--max-cells", type=int, default=150_000, help="Max cells for web API")
     p_map.add_argument("--subsample-col", help="Column for stratified subsampling")
+    p_map.add_argument(
+        "--normalization", choices=["raw", "log2CPM"], default="raw",
+        help="Query normalisation declared at convert time (default: raw). "
+             "log2CPM requires the local backend.",
+    )
 
     # map-local (backward-compatible)
     p_mapl = sub.add_parser("map-local", help="Run MapMyCells locally (requires cell_type_mapper)")
@@ -234,6 +301,10 @@ def main(argv: list[str] | None = None) -> None:
     p_mapl.add_argument("marker_genes", type=Path, help="Marker genes JSON")
     p_mapl.add_argument("output_json", type=Path, help="Output extended JSON")
     p_mapl.add_argument("--csv", type=Path, help="Also write CSV output")
+    p_mapl.add_argument(
+        "--normalization", choices=["raw", "log2CPM"], default="raw",
+        help="Passed to --type_assignment.normalization (default: raw).",
+    )
 
     # score
     p_score = sub.add_parser("score", help="Compute F1 matrix from MapMyCells output")
@@ -272,6 +343,7 @@ def main(argv: list[str] | None = None) -> None:
 
     handlers = {
         "convert": cmd_convert,
+        "normalize": cmd_normalize,
         "map": cmd_map,
         "map-local": cmd_map_local,
         "score": cmd_score,
