@@ -12,6 +12,13 @@ for f in GSE145273_TPM.TRN.tsv.gz GSE145273_TPM.nonTRN.tsv.gz GSE145273_TPM.patc
     "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE145nnn/GSE145273/suppl/$f"
 done
 
+# Ensembl 102 (last GRCm38 release, the paper's mm10) GTF for gene lengths
+# (gene_lengths_from_gtf.py → at-normalize --gene-lengths).
+mkdir -p "$GEO_DIR/ensembl"
+[ -s "$GEO_DIR/ensembl/Mus_musculus.GRCm38.102.gtf.gz" ] || curl -sSfL \
+  -o "$GEO_DIR/ensembl/Mus_musculus.GRCm38.102.gtf.gz" \
+  "https://ftp.ebi.ac.uk/pub/ensembl/release-102/gtf/mus_musculus/Mus_musculus.GRCm38.102.gtf.gz"
+
 # SCP344 downloads need a login, but the public explore API returns the
 # biSNE cluster with its per-cell "Type" annotation.
 curl -sSf "https://singlecell.broadinstitute.org/single_cell/api/v1/studies/SCP344/clusters/biSNE?annotation_name=Type&annotation_type=group&annotation_scope=study&fields=coordinates,cells,annotation&subsample=all" \

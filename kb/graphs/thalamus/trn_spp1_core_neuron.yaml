@@ -134,7 +134,10 @@ nodes:
         notes: >
           Author-assigned "Spp1+" segment label (264 nuclei), taken from the
           "Type" annotation of Broad Single Cell Portal SCP344 (values Spp1+,
-          DP, DN, Ecel1+); not re-derived here. The label is a binarised
+          DP, DN, Ecel1+); not re-derived here. SCP344 cell names are offset
+          one row against the annotation; the AT run applies the shift and
+          checks it against Spp1/Ecel1 expression (99.9% agreement; see the
+          run caveats). The label is a binarised
           marker call at one end of a continuous gradient, so purity is the
           primary AT metric at fine levels. The first-order projection was
           shown by retrograde tracing plus FISH for Spp1 in separate animals
