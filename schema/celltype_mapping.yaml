@@ -1107,6 +1107,7 @@ classes:
           NOT_STATED is a valid choice, a guessed PROTEIN/TRANSCRIPT is not.
           The specific technique goes in PropertySource.method (free text).
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             Does this source say how the marker was detected: antibody (protein),
             RNA (transcript), or a reporter or Cre line? If it does not say,
@@ -1158,6 +1159,7 @@ classes:
           "P21 mouse cerebellum". Populate where context affects
           generalisability of the claim.
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             In what species, age, brain region and preparation did this source
             make the observation?
@@ -1485,6 +1487,18 @@ classes:
 # GRAPH NODES
 # ══════════════════════════════════════════════════════════════════
 
+  # ── Ingest questions (#202) ─────────────────────────────────────
+  #
+  # Slots an ingest agent fills carry two annotations:
+  #   ingest_question — the question whose answer fills the slot. Workflows
+  #     read it from the generated schema slice (`just schema-slice`), never
+  #     from hand-written prompt text.
+  #   ingest_phase    — identity (who is this type; how does it relate to
+  #     the KB) or properties (what is it like). Workflows map phases to
+  #     steps; step numbers never appear in the schema.
+  # Descriptions next to a question are read by agents: state current
+  # meaning only, not rename history.
+
   CellTypeNode:
     description: >
       A named cell type at any level of description: classical, prior transcriptomic,
@@ -1505,6 +1519,7 @@ classes:
         required: true
         description: Human-readable name, e.g. "Lugaro cell", "1145 CB PLI Gly-Gaba_2"
         annotations:
+          ingest_phase: identity
           ingest_question: >-
             What name do the sources most often use for this cell type? Use it
             as written; record the other names under synonyms.
@@ -1533,6 +1548,7 @@ classes:
           For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms
           only if that label is used as a cell type name in at least one non-atlas paper.
         annotations:
+          ingest_phase: identity
           ingest_question: >-
             What other names or abbreviations do the sources use for this cell
             type? Cite, for each, a passage where the name is used for this type.
@@ -1540,6 +1556,7 @@ classes:
         required: true
         range: DefinitionBasis
         annotations:
+          ingest_phase: identity
           ingest_question: >-
             What kind of evidence defines this type in the sources: anatomy or
             morphology, electrophysiology, neurochemistry, prior transcriptomic
@@ -1552,6 +1569,7 @@ classes:
             obligation_level: REQUIRED
         description: NCBITaxon term
         annotations:
+          ingest_phase: identity
           ingest_question: >-
             Which species do the sources describe this type in? If the sources
             span several species, record the species of the defining description
@@ -1576,6 +1594,7 @@ classes:
           soma in SO, axon in SLM). Leave compartment absent when location is
           not compartment-specific or compartment is unknown.
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             Where are this type's cell bodies? If the type is defined partly by
             where its axon or dendrites go, where do they go? Give the most
@@ -1589,6 +1608,7 @@ classes:
           this type. Records relative positional context separately from the
           anatomical location above (e.g. "adjacent to GPi core neurons").
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             Which other cell types do the sources describe as intermingled with,
             or adjacent to, this type?
@@ -1601,6 +1621,7 @@ classes:
           BROAD: this node is a subtype; a ProposedCLTerm would be a new child of the cl_term.
           Terminal nodes (atlas cell sets) may also have a cl_mapping once cognate CL terms exist.
         annotations:
+          ingest_phase: identity
           ingest_question: >-
             Which Cell Ontology term is this type? If none matches exactly,
             which is the closest broader CL term?
@@ -1628,6 +1649,7 @@ classes:
           from the original type description. For atlas nodes: defining markers from
           the atlas (cluster.markers.combo or equivalent).
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             Which genes or proteins do the sources use to identify this type,
             and how was each one detected in each source?
@@ -1636,6 +1658,7 @@ classes:
         multivalued: true
         description: Markers explicitly shown to be absent (all node types).
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             Which markers do the sources explicitly show to be absent from this
             type? A marker that is simply not mentioned is not absent.
@@ -1652,6 +1675,7 @@ classes:
           a defining marker AND as a neuropeptide co-transmitter).
           Examples: Sst, Vip, Cck, Npy, Pnoc.
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             Which neuropeptides do the sources report this type expressing?
       at_source_sets:
@@ -1679,6 +1703,7 @@ classes:
           Carries the naming triple: name_in_source (verbatim source label),
           cl_terms (CL identifiers), sources (evidence provenance).
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             Which neurotransmitter does this type release? Is that shown
             directly in the sources, or inferred from context?
@@ -1689,6 +1714,7 @@ classes:
           Electrophysiological characterisation with nested evidence sources.
           Replaces former electrophysiology_class (string) + ephys_sources (list) pair.
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             How do the sources describe this type's intrinsic electrical
             properties (firing pattern, sag, adaptation, bursting), and in
@@ -1700,6 +1726,7 @@ classes:
           Morphological characterisation with nested evidence sources.
           Replaces former morphology_notes (string) + morphology_sources (list) pair.
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             How do the sources describe this type's soma, dendrites and axon?
 
@@ -1795,6 +1822,7 @@ classes:
           Not needed for atlas terminal nodes — use metadata_url on
           AtlasMetadataEvidence instead.
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             Which papers first established, or best characterise, this cell
             type?
@@ -1820,6 +1848,7 @@ classes:
       notes:
         description: Any caveats or observations not captured by other fields
         annotations:
+          ingest_phase: properties
           ingest_question: >-
             What caveats remain that no other field can hold, such as
             contradictions between sources, claims that differ by species, or
