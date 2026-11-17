@@ -816,6 +816,9 @@ def extract_methods_summary(
                                 "output_relpath": output_at.get("relpath", ""),
                                 "figure_relpath": figure_at.get("relpath", ""),
                                 "run_dir_name": run_dir.name if run_dir else "",
+                                "query_normalization": (
+                                    m.get("query_normalization") or "raw"
+                                ),
                                 "caveats": m.get("caveats", ""),
                             })
                 else:
@@ -835,6 +838,9 @@ def extract_methods_summary(
                             "source_species": ev.get("source_species", ""),
                             "target_atlas": ev.get("target_atlas", ""),
                             "target_species": ev.get("target_species", ""),
+                            "query_normalization": (
+                                ev.get("query_normalization") or "raw"
+                            ),
                             # Derive display-only summary from
                             # metrics_by_level (no more best_* on
                             # ANNOTATION_TRANSFER evidence; see

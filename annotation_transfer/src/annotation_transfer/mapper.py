@@ -13,6 +13,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
+from annotation_transfer.convert import NORMALIZATIONS
 from annotation_transfer.taxonomies import TaxonomySpec, get_taxonomy
 
 
@@ -37,19 +38,40 @@ class MappingResult:
     subsampled_from: int | None  # original n_cells if subsampled, else None
     taxonomy: str
     algorithm: str
+    normalization: str = "raw"  # query normalisation declared for the run
 
 
 def resolve_backend(
     taxonomy: TaxonomySpec,
     input_h5ad: Path,
     requested: MappingBackend | None = None,
+    *,
+    normalization: str = "raw",
 ) -> MappingBackend:
     """Determine which backend to use for this mapping run.
 
-    Priority: explicit request > taxonomy preference > auto logic.
+    Priority: explicit request > normalisation constraint > taxonomy
+    preference > auto logic.
+
+    ``normalization`` is a hard constraint, not a preference: the web API
+    exposes no normalisation parameter and treats every upload as raw
+    counts, so a non-raw query can only be mapped locally. When the
+    caller has not pinned a backend, a non-raw run therefore resolves to
+    LOCAL whenever the local files are present — otherwise `auto` would
+    pick WEB for any taxonomy with a ``web_ref_id`` and the run would be
+    refused despite being perfectly runnable.
     """
     if requested is not None and requested != MappingBackend.AUTO:
         return requested
+
+    # No local files for a non-raw run: fall through, so the WEB path
+    # raises the refusal that names taxonomy-setup --download.
+    if (
+        normalization != "raw"
+        and taxonomy.local_stats_path
+        and taxonomy.local_markers_path
+    ):
+        return MappingBackend.LOCAL
 
     preferred = taxonomy.preferred_backend
 
@@ -112,6 +134,7 @@ def run_mapping(
     algorithm: str | None = None,
     max_cells_web: int = 150_000,
     subsample_col: str | None = None,
+    normalization: str = "raw",
     # Local-only overrides
     precomputed_stats: Path | None = None,
     marker_genes: Path | None = None,
@@ -136,6 +159,12 @@ def run_mapping(
         Max cells before subsampling for web API.
     subsample_col
         Column for stratified subsampling (web path only).
+    normalization
+        Query normalisation of ``input_h5ad`` (``raw`` or ``log2CPM``),
+        as declared at convert time. Local backend only — the MapMyCells
+        web API exposes no normalisation parameter and always assumes
+        raw counts, so a non-raw run with the web backend is refused
+        rather than silently mis-mapped.
     precomputed_stats
         Override local precomputed stats path.
     marker_genes
@@ -156,11 +185,29 @@ def run_mapping(
         else:
             algorithm = "HierarchicalAlgorithmRun"
 
-    resolved = resolve_backend(taxonomy, input_h5ad, backend)
+    if normalization not in NORMALIZATIONS:
+        raise MapperError(
+            f"Unknown normalization {normalization!r}; "
+            f"must be one of {', '.join(NORMALIZATIONS)}."
+        )
+
+    resolved = resolve_backend(
+        taxonomy, input_h5ad, backend, normalization=normalization
+    )
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     if resolved == MappingBackend.WEB:
+        if normalization != "raw":
+            raise MapperError(
+                f"normalization={normalization!r} is not available on the "
+                "MapMyCells web API, which exposes no normalisation "
+                "parameter and treats every upload as raw counts. The "
+                "local backend was not selected automatically because "
+                "this taxonomy has no downloaded precomputed stats + "
+                "markers — fetch them and re-run: "
+                f"'annotation-transfer taxonomy-setup {taxonomy.id} --download')."
+            )
         return _run_web(
             input_h5ad, taxonomy, algorithm, output_dir,
             max_cells_web=max_cells_web,
@@ -172,6 +219,7 @@ def run_mapping(
             input_h5ad, taxonomy, algorithm, output_dir,
             precomputed_stats=precomputed_stats,
             marker_genes=marker_genes,
+            normalization=normalization,
         )
 
 
@@ -218,6 +266,7 @@ def _run_web(
         subsampled_from=subsampled_from,
         taxonomy=taxonomy.id,
         algorithm=algorithm,
+        normalization="raw",
     )
 
 
@@ -229,6 +278,7 @@ def _run_local(
     *,
     precomputed_stats: Path | None,
     marker_genes: Path | None,
+    normalization: str = "raw",
 ) -> MappingResult:
     from annotation_transfer.mapper_local import run_mapmycells
 
@@ -253,6 +303,7 @@ def _run_local(
     run_mapmycells(
         input_h5ad, stats, markers, output_json,
         output_csv=output_csv,
+        normalization=normalization,
     )
 
     n_cells = _count_cells(input_h5ad)
@@ -265,4 +316,5 @@ def _run_local(
         subsampled_from=None,
         taxonomy=taxonomy.id,
         algorithm=algorithm,
+        normalization=normalization,
     )

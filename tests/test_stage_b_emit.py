@@ -558,3 +558,76 @@ def test_evidence_list_two_source_sets_positive_and_negative(monkeypatch):
     assert len(at) == 2
     supports = {i["source_cluster_label"]: i["supports"] for i in at}
     assert supports == {"Calb2": "SUPPORT", "Vip-Crh": "NO_EVIDENCE"}
+
+
+# ─── query normalisation visibility (#208) ────────────────────────────
+
+
+def _patch_at_with_norm(monkeypatch, query_normalization):
+    _patch_at(
+        monkeypatch,
+        run_map={("GEO:GSE145273", "TRN"): "at_run_norm"},
+        metrics_map={"at_run_norm": {
+            "metrics_by_level": [{"taxonomy_level": "CLUSTER", "f1_score": 0.72}],
+            "best_mapping_rank": 0, "best_f1_score": 0.72,
+            "supports_default": "SUPPORT", "f1_source_relpath": "at_results.yaml",
+        }},
+    )
+    manifest = {"target_atlas": "WMBv1"}
+    if query_normalization is not None:
+        manifest["query_normalization"] = query_normalization
+    monkeypatch.setattr(sbe, "load_run_manifest", lambda r: manifest)
+
+
+def _norm_item(monkeypatch, query_normalization):
+    _patch_at_with_norm(monkeypatch, query_normalization)
+    return sbe._at_evidence(
+        source_set={"dataset_accession": "GEO:GSE145273", "source_label": "TRN"},
+        taxonomy_id="CCN20230722",
+        edge_target="CS20230722_CLUS_0768",
+    )
+
+
+def test_at_evidence_log2cpm_run_stamps_evidence_item(monkeypatch):
+    """A consumer weighing this F1 reads the evidence item, not the run
+    manifest — so the caveat has to be on the item."""
+    item = _norm_item(monkeypatch, "log2CPM")
+    assert item["query_normalization"] == "log2CPM"
+    assert "log2CPM" in item["method"]
+    assert "CAVEAT" in item["explanation"]
+    assert "gene-length" in item["explanation"]
+
+
+def test_at_evidence_raw_run_leaves_item_unstamped(monkeypatch):
+    item = _norm_item(monkeypatch, "raw")
+    assert "query_normalization" not in item
+    assert "CAVEAT" not in item["explanation"]
+
+
+def test_at_evidence_manifest_without_field_treated_as_raw(monkeypatch):
+    """Runs predating the field are raw by definition."""
+    item = _norm_item(monkeypatch, None)
+    assert "query_normalization" not in item
+    assert "CAVEAT" not in item["explanation"]
+
+
+def test_at_evidence_rejects_unknown_normalization(monkeypatch):
+    """query_normalization is hand-authored into the run manifest, so a
+    typo must be a named diagnostic — not a bare KeyError that kills the
+    whole emit, and not an invalid value written into KB YAML."""
+    import pytest
+
+    _patch_at_with_norm(monkeypatch, "log2cpm")
+    with pytest.raises(ValueError, match="unknown query_normalization"):
+        sbe._at_evidence(
+            source_set={
+                "dataset_accession": "GEO:GSE145273", "source_label": "TRN",
+            },
+            taxonomy_id="CCN20230722",
+            edge_target="CS20230722_CLUS_0768",
+        )
+
+
+def test_at_evidence_tolerates_whitespace_in_normalization(monkeypatch):
+    item = _norm_item(monkeypatch, " log2CPM ")
+    assert item["query_normalization"] == "log2CPM"

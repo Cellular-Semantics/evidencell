@@ -28,9 +28,12 @@ import yaml
 from ruamel.yaml import YAML
 
 from evidencell.at_metrics import (
+    QUERY_NORM_CAVEAT,
+    apply_query_norm_caveat,
     compute_edge_metrics,
     load_run_manifest,
     resolve_run_for_source,
+    validate_query_normalization,
 )
 from evidencell.expression_cache import ExpressionUnavailable
 from evidencell.kb_io import roundtrip_yaml
@@ -695,17 +698,35 @@ def _at_evidence(
     def _item(*, supports: str, run_ref: str | None, metrics: dict | None,
               explanation: str) -> dict:
         target_atlas = "WMBv1"
+        query_norm = "raw"
         if run_ref:
-            target_atlas = load_run_manifest(run_ref).get("target_atlas") or "WMBv1"
+            manifest = load_run_manifest(run_ref)
+            target_atlas = manifest.get("target_atlas") or "WMBv1"
+            # Hand-authored by a curator, so validate before use: an
+            # unrecognised value must be a named diagnostic, not a
+            # KeyError here or a schema failure after it reaches KB YAML.
+            query_norm = validate_query_normalization(
+                manifest.get("query_normalization"),
+                context=f"{run_ref}/manifest.yaml",
+            )
+        method = "MapMyCells (via at_metrics.compute_edge_metrics)"
+        # Keep the caveat on the evidence item itself, not only in the
+        # run manifest: a consumer weighing this F1 (report synthesis
+        # included) reads the item, not the manifest.
+        method, explanation = apply_query_norm_caveat(
+            method, explanation, query_norm
+        )
         item: dict = {
             "evidence_type": "ANNOTATION_TRANSFER",
             "supports": supports,
             "source_dataset_accession": dataset_accession,
             "source_cluster_label": source_label,
             "target_atlas": target_atlas,
-            "method": "MapMyCells (via at_metrics.compute_edge_metrics)",
+            "method": method,
             "explanation": explanation,
         }
+        if query_norm != "raw":
+            item["query_normalization"] = query_norm
         if correspondence:
             item["correspondence"] = correspondence
         if run_ref:
@@ -787,6 +808,12 @@ def _at_evidence(
 
 
 # ─── caveats (rule-based) ────────────────────────────────────────────────────
+
+
+#: Query-normalisation caveat text. Defined in ``at_metrics`` alongside
+#: the refresh path that has to re-derive it, so emit and refresh cannot
+#: drift apart; re-exported here for callers of this module.
+_QUERY_NORM_CAVEAT = QUERY_NORM_CAVEAT
 
 
 def _caveats(
