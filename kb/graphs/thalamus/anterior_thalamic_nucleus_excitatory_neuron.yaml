@@ -163,6 +163,23 @@ nodes:
       mapping_notes: >
         Nucleus-specific subset of CL thalamic excitatory neuron; no
         ATN-specific CL term found. Mapping confidence MEDIUM.
+    at_source_sets:
+      - dataset_accession: GEO:GSE227627
+        source_label: ATN
+        correspondence: SUPERSET
+        sources:
+          - ref: "PMID:38427564"
+            method: "abstract (Europe PMC) — scRNA-seq of microdissected ATN resolves three excitatory clusters matching AD, AV, AM"
+            scope: "adult mouse ATN scRNA-seq (GEO:GSE227627)"
+            quote_key: "268122794_d6a861ff"
+        notes: >
+          "ATN" is the whole microdissected, hand-picked cell set (GEO sample
+          annotation "tissue: Anterior thalamic nuclei"; 912 cells after QC).
+          GEO deposits no per-cell cluster labels, so this is the only
+          published-annotation label available. SUPERSET because the
+          dissection also catches neighbouring-nucleus neurons (IAD, LD,
+          MD/CM, RE in the WMBv1 mapping) and a few contaminated wells. AT
+          run at_run_20261117_kapustina2024_atn_mmc_wmbv1.
     definition_references:
       - "PMID:38427564"
       - "PMID:36476860"
