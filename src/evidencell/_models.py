@@ -959,7 +959,15 @@ class HasMarkerType(ConfiguredBaseModel):
          'mixin': True})
 
     marker_type: MarkerType = Field(default=..., description="""How expression was established, as stated by this source: PROTEIN, TRANSCRIPT, TRANSGENE_REPORTER, or NOT_STATED when the source names no assay. Required so that every source records an explicit choice; NOT_STATED is a valid choice, a guessed PROTEIN/TRANSCRIPT is not. The specific technique goes in PropertySource.method (free text).
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['HasMarkerType']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'Does this source say how the '
+                                                      'marker was detected: antibody '
+                                                      '(protein), RNA (transcript), or '
+                                                      'a reporter or Cre line? If it '
+                                                      'does not say, the answer is '
+                                                      'NOT_STATED.'}},
+         'domain_of': ['HasMarkerType']} })
 
 
 class PropertySource(ConfiguredBaseModel):
@@ -995,7 +1003,12 @@ class PropertySource(ConfiguredBaseModel):
                        'CorrelationRun',
                        'AnnotationTransferRun']} })
     scope: Optional[str] = Field(default=None, description="""Experimental context: species, age, brain region, preparation. E.g. \"adult mouse GPi\", \"human GPi post-mortem tissue\", \"P21 mouse cerebellum\". Populate where context affects generalisability of the claim.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'In what species, age, brain '
+                                                      'region and preparation did this '
+                                                      'source make the observation?'}},
+         'domain_of': ['PropertySource']} })
     snippet: Optional[str] = Field(default=None, description="""Verbatim quote from the cited source supporting this assertion. Strongly recommended — primary material for reviewers at the evidence gate. Must be exact text from the source, no paraphrase. If quote_key is set, snippet may be omitted (dereferenceable from references.json). If both are present, snippet is the verified text.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource', 'LiteratureEvidence']} })
     quote_key: Optional[str] = Field(default=None, description="""Content-hashed key into the region's references.json quote store. Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars of SHA-256 of the normalised quote text. Allows quote lookup without embedding full text in the KB YAML. Set by asta-report-ingest and cite-traverse workflows. Reports dereference to include snippet text.
@@ -1087,7 +1100,15 @@ class MarkerSource(PropertySource, HasMarkerType):
          'mixins': ['HasMarkerType']})
 
     marker_type: MarkerType = Field(default=..., description="""How expression was established, as stated by this source: PROTEIN, TRANSCRIPT, TRANSGENE_REPORTER, or NOT_STATED when the source names no assay. Required so that every source records an explicit choice; NOT_STATED is a valid choice, a guessed PROTEIN/TRANSCRIPT is not. The specific technique goes in PropertySource.method (free text).
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['HasMarkerType']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'Does this source say how the '
+                                                      'marker was detected: antibody '
+                                                      '(protein), RNA (transcript), or '
+                                                      'a reporter or Cre line? If it '
+                                                      'does not say, the answer is '
+                                                      'NOT_STATED.'}},
+         'domain_of': ['HasMarkerType']} })
     ref: str = Field(default=..., description="""DOI (https://doi.org/...) or PMID (PMID:xxxxxxxx)""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     method: Optional[str] = Field(default=None, description="""How this property was detected or established. Free text. Examples: \"IHC\", \"patch-clamp (acute slice)\", \"Golgi stain\", \"scRNA-seq\", \"smFISH\", \"retrograde tracing + scRNA-seq\".
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
@@ -1097,7 +1118,12 @@ class MarkerSource(PropertySource, HasMarkerType):
                        'CorrelationRun',
                        'AnnotationTransferRun']} })
     scope: Optional[str] = Field(default=None, description="""Experimental context: species, age, brain region, preparation. E.g. \"adult mouse GPi\", \"human GPi post-mortem tissue\", \"P21 mouse cerebellum\". Populate where context affects generalisability of the claim.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'In what species, age, brain '
+                                                      'region and preparation did this '
+                                                      'source make the observation?'}},
+         'domain_of': ['PropertySource']} })
     snippet: Optional[str] = Field(default=None, description="""Verbatim quote from the cited source supporting this assertion. Strongly recommended — primary material for reviewers at the evidence gate. Must be exact text from the source, no paraphrase. If quote_key is set, snippet may be omitted (dereferenceable from references.json). If both are present, snippet is the verified text.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource', 'LiteratureEvidence']} })
     quote_key: Optional[str] = Field(default=None, description="""Content-hashed key into the region's references.json quote store. Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars of SHA-256 of the normalised quote text. Allows quote lookup without embedding full text in the KB YAML. Set by asta-report-ingest and cite-traverse workflows. Reports dereference to include snippet text.
@@ -1303,44 +1329,134 @@ class CellTypeNode(ConfiguredBaseModel):
                        'CorrelationContrast',
                        'AnnotationTransferRunSummary',
                        'AnnotationTransferRun']} })
-    name: str = Field(default=..., description="""Human-readable name, e.g. \"Lugaro cell\", \"1145 CB PLI Gly-Gaba_2\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['HierarchyNode', 'CellTypeNode', 'CellTypeMappingGraph']} })
+    name: str = Field(default=..., description="""Human-readable name, e.g. \"Lugaro cell\", \"1145 CB PLI Gly-Gaba_2\"""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'What name do the sources most '
+                                                      'often use for this cell type? '
+                                                      'Use it as written; record the '
+                                                      'other names under synonyms.'}},
+         'domain_of': ['HierarchyNode', 'CellTypeNode', 'CellTypeMappingGraph']} })
     reference_stub: Optional[ReferenceStubKind] = Field(default=None, description="""Present when this node is a placeholder for a type defined elsewhere, not a definition in its own right. Carry only id, name, definition_basis and (for taxonomy references) taxonomy_id and cell_set_accession; everything else belongs on the canonical record. Absent means this node is canonical.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     synonyms: Optional[list[TypeSynonym]] = Field(default=None, description="""Alternative names and abbreviations for this cell type, with evidence provenance. Populated during literature mining — synonym extraction is the first processing step for each paper (both survey and targeted paths). Used to expand queries in subsequent searches.
 Include all forms that appear in the literature or atlases: abbreviations (OLM), long forms if non-obvious, historical names, atlas labels used as cell type names. Do NOT include the canonical name field value itself.
 For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only if that label is used as a cell type name in at least one non-atlas paper.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
-    definition_basis: DefinitionBasis = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
-    species: Optional[OntologyTerm] = Field(default=None, description="""NCBITaxon term""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'What other names or '
+                                                      'abbreviations do the sources '
+                                                      'use for this cell type? Cite, '
+                                                      'for each, a passage where the '
+                                                      'name is used for this type.'}},
+         'domain_of': ['CellTypeNode']} })
+    definition_basis: DefinitionBasis = Field(default=..., json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'What kind of evidence defines '
+                                                      'this type in the sources: '
+                                                      'anatomy or morphology, '
+                                                      'electrophysiology, '
+                                                      'neurochemistry, prior '
+                                                      'transcriptomic clustering, or '
+                                                      'several of these together?'}},
+         'domain_of': ['CellTypeNode']} })
+    species: Optional[OntologyTerm] = Field(default=None, description="""NCBITaxon term""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'Which species do the sources '
+                                                      'describe this type in? If the '
+                                                      'sources span several species, '
+                                                      'record the species of the '
+                                                      'defining description here and '
+                                                      "give each source's species in "
+                                                      'its scope.'}},
+         'bindings': [{'binds_value_of': 'id',
                        'obligation_level': 'REQUIRED',
                        'range': 'NCBITaxonClassTerm'}],
          'domain_of': ['CellTypeNode', 'CellTypeMappingGraph', 'BulkDataset']} })
     anatomical_location: Optional[list[AnatomicalLocation]] = Field(default=None, description="""Anatomical location(s) of this cell type. Each entry is an AnatomicalLocation (OntologyTerm + optional compartment). Prefer Allen atlas terms (MBA for mouse; DHBA or HBA for human/primate); use UBERON as fallback. Look up via OLS4. name_in_source carries the region name as written in the source (e.g. \"GPi shell region\", \"GPi\"). Multiple entries for types that span regions or are defined relative to multiple structures. Set compartment (SOMA, AXON_TARGET, DENDRITE) when a type has different compartments in different regions (e.g. OLM: soma in SO, axon in SLM). Leave compartment absent when location is not compartment-specific or compartment is unknown.
-""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': "Where are this type's cell "
+                                                      'bodies? If the type is defined '
+                                                      'partly by where its axon or '
+                                                      'dendrites go, where do they go? '
+                                                      'Give the most specific '
+                                                      'structure the sources '
+                                                      'support.'}},
+         'bindings': [{'binds_value_of': 'id',
                        'obligation_level': 'REQUIRED',
                        'range': 'AnatomyTerm'}],
          'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     colocated_types: Optional[list[CellTypeColocation]] = Field(default=None, description="""Other cell types that co-localise with or are spatially adjacent to this type. Records relative positional context separately from the anatomical location above (e.g. \"adjacent to GPi core neurons\").
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'Which other cell types do the '
+                                                      'sources describe as '
+                                                      'intermingled with, or adjacent '
+                                                      'to, this type?'}},
+         'domain_of': ['CellTypeNode']} })
     cl_mapping: Optional[CLMapping] = Field(default=None, description="""CL term binding with mapping type (EXACT or BROAD). Every non-terminal node should have a cl_mapping. EXACT: this node IS this CL term (modulo species). BROAD: this node is a subtype; a ProposedCLTerm would be a new child of the cl_term. Terminal nodes (atlas cell sets) may also have a cl_mapping once cognate CL terms exist.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'Which Cell Ontology term is '
+                                                      'this type? If none matches '
+                                                      'exactly, which is the closest '
+                                                      'broader CL term?'}},
+         'domain_of': ['CellTypeNode']} })
     proposed_cl_term: Optional[ProposedCLTerm] = Field(default=None, description="""Draft CL term for this node — populated when authoring a new or revised CL entry. For BROAD cl_mapping nodes: proposed_cl_term.parent_cl_term = cl_mapping.cl_term. For EXACT cl_mapping nodes: proposed_cl_term.cl_id = cl_mapping.cl_term.id (updating an existing term).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     is_terminal: Optional[bool] = Field(default=None, description="""True if this node is a cell set in the community target atlas (the mapping destination). Terminal nodes should have cell_set_accession populated.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     defining_markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""Markers used to define this type. For classical/literature nodes: markers from the original type description. For atlas nodes: defining markers from the atlas (cluster.markers.combo or equivalent).
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
-    negative_markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""Markers explicitly shown to be absent (all node types).""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'Which genes or proteins do the '
+                                                      'sources use to identify this '
+                                                      'type, and how was each one '
+                                                      'detected in each source?'}},
+         'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+    negative_markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""Markers explicitly shown to be absent (all node types).""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'Which markers do the sources '
+                                                      'explicitly show to be absent '
+                                                      'from this type? A marker that '
+                                                      'is simply not mentioned is not '
+                                                      'absent.'}},
+         'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     neuropeptides: Optional[list[GeneDescriptor]] = Field(default=None, description="""Neuropeptide co-transmitters expressed by this cell type (all node types). For classical nodes: from literature (populate sources on each GeneDescriptor). For atlas nodes: from atlas np.markers column (sources left empty). Separate from defining_markers because neuropeptide identity is a distinct functional property — though a gene may appear in both lists (e.g. Sst as a defining marker AND as a neuropeptide co-transmitter). Examples: Sst, Vip, Cck, Npy, Pnoc.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'Which neuropeptides do the '
+                                                      'sources report this type '
+                                                      'expressing?'}},
+         'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     at_source_sets: Optional[list[AtSourceSet]] = Field(default=None, description="""Annotated cell set(s), in external dataset(s), that correspond to this classical cell type — the result of an agentic judgement made by reading the dataset's describing paper (NOT inferable from transcriptomic overlap alone). Authored by lit-ingest / evidence-extraction once a dataset's annotation labels are available. Each entry names a (dataset_accession, source_label) pair plus the nature of the correspondence, and carries quote-backed `sources` exactly like defining_markers. `emit-stage-b` iterates these to attach ANNOTATION_TRANSFER evidence, resolving the AT run operationally from (dataset_accession, target_taxonomy, source_label). Distinct from prior_dataset_accession/prior_cluster_label, which assert that the node *is* a prior transcriptomic cluster.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     nt_type: Optional[NeurotransmitterType] = Field(default=None, description="""Neurotransmitter type of this cell type. Applies to both classical and atlas terminal nodes (unified field, replaces atlas_nt_type). Carries the naming triple: name_in_source (verbatim source label), cl_terms (CL identifiers), sources (evidence provenance).
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'Which neurotransmitter does '
+                                                      'this type release? Is that '
+                                                      'shown directly in the sources, '
+                                                      'or inferred from context?'}},
+         'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     electrophysiology: Optional[ElectrophysiologyProfile] = Field(default=None, description="""Electrophysiological characterisation with nested evidence sources. Replaces former electrophysiology_class (string) + ephys_sources (list) pair.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'How do the sources describe '
+                                                      "this type's intrinsic "
+                                                      'electrical properties (firing '
+                                                      'pattern, sag, adaptation, '
+                                                      'bursting), and in what '
+                                                      'preparation were they '
+                                                      'recorded?'}},
+         'domain_of': ['CellTypeNode']} })
     morphology: Optional[MorphologyProfile] = Field(default=None, description="""Morphological characterisation with nested evidence sources. Replaces former morphology_notes (string) + morphology_sources (list) pair.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'How do the sources describe '
+                                                      "this type's soma, dendrites and "
+                                                      'axon?'}},
+         'domain_of': ['CellTypeNode']} })
     prior_dataset_accession: Optional[str] = Field(default=None, description="""Dataset accession where this T-type was defined, e.g. SCP795, GEO:GSE173954. Used when definition_basis = PRIOR_TRANSCRIPTOMIC.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     prior_cluster_label: Optional[str] = Field(default=None, description="""Cluster label in the prior dataset, e.g. \"PLI3\", \"MLI1\". Used when definition_basis = PRIOR_TRANSCRIPTOMIC.
@@ -1384,14 +1500,29 @@ For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only
     sex_bias: Optional[SexBias] = Field(default=None, description="""Expected direction of sexual dimorphism in cell number or defining-marker expression. Set on classical nodes only. Used by find-candidates to score atlas clusters whose male_female_ratio matches the expected direction. Leave absent when sex dimorphism is not documented for this type.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     definition_references: Optional[list[str]] = Field(default=None, description="""General source citations for this node's defining properties — the key papers that established or characterised this cell type. DOI or PMID strings. Not property-scoped; for property-specific provenance use the nested sources on electrophysiology, morphology, anatomical_location, nt_type, and marker GeneDescriptors. Not needed for atlas terminal nodes — use metadata_url on AtlasMetadataEvidence instead.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'Which papers first established, '
+                                                      'or best characterise, this cell '
+                                                      'type?'}},
+         'domain_of': ['CellTypeNode']} })
     precomputed_expression: Optional[PrecomputedExpression] = Field(default=None, description="""Precomputed expression statistics for key genes from the atlas taxonomy. Used for property comparison scoring on mapping edges. Populated by the precomputed-stats workflow for atlas terminal nodes. Leave absent for classical/prior-transcriptomic nodes.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     cell_set_designation: Optional[str] = Field(default=None, description="""CAS taxonomy designation string for this cell set (e.g. \"Vip\", \"49_Vip\"). From CAS-format taxonomy ingest. Distinct from name which may be editorially adjusted.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     rationale_dois: Optional[list[str]] = Field(default=None, description="""DOIs cited as rationale for this cell set's designation in the source CAS taxonomy. From CAS-format taxonomy metadata.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
-    notes: Optional[str] = Field(default=None, description="""Any caveats or observations not captured by other fields""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+    notes: Optional[str] = Field(default=None, description="""Any caveats or observations not captured by other fields""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'properties'},
+                         'ingest_question': {'tag': 'ingest_question',
+                                             'value': 'What caveats remain that no '
+                                                      'other field can hold, such as '
+                                                      'contradictions between sources, '
+                                                      'claims that differ by species, '
+                                                      'or suspected heterogeneity? '
+                                                      'Findings that answer another '
+                                                      'question belong in that '
+                                                      "question's field, not here."}},
+         'domain_of': ['CellTypeColocation',
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
