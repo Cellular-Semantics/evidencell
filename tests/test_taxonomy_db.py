@@ -24,7 +24,6 @@ from evidencell.taxonomy_db import (
     _SCHEMA_HASH,
     _classical_negative_markers,
     _classical_positive_markers,
-    _classical_protein_alias_markers,
     _coverage_for_gene,
     _expression_percentile,
     _expression_score,
@@ -616,17 +615,16 @@ def test_classical_positive_markers_handles_string_entries():
     assert _classical_positive_markers(classical) == ["Sst", "Calb1"]
 
 
-def test_protein_alias_markers_are_not_scored_in_stage_a():
-    """PR #207 review: Stage A keeps its pre-#189 behaviour for protein-name
-    markers (they score nothing) until gene identity lands (#216)."""
+def test_protein_name_markers_are_scored_in_stage_a():
+    """#216: protein names reach Stage A; gene identity resolves them in
+    ``TaxonomyDB.expression`` (they were held back pending #216 in PR #207)."""
     classical = {
         "defining_markers": [{"symbol": "Sst"}, {"symbol": "mGluR1"}],
         "neuropeptides": [{"symbol": "SST"}],
         "negative_markers": [{"symbol": "Pvalb"}, {"symbol": "PV"}, {"symbol": "CB"}],
     }
-    assert _classical_positive_markers(classical) == ["Sst"]
-    assert _classical_negative_markers(classical) == ["Pvalb"]
-    assert _classical_protein_alias_markers(classical) == ["mGluR1", "SST", "PV", "CB"]
+    assert _classical_positive_markers(classical) == ["Sst", "mGluR1", "SST"]
+    assert _classical_negative_markers(classical) == ["Pvalb", "PV", "CB"]
 
 
 def test_classical_negative_markers():
@@ -1734,11 +1732,15 @@ def test_expressed_not_listed_uses_sibling_band(tmp_path):
     assert by_id["B"]["_marker_discrepancies"] == []
 
 
-def test_marker_discrepancies_resolve_aliases():
+def test_marker_discrepancies_use_resolved_gene_symbols():
     from evidencell.taxonomy_db import _marker_discrepancies
 
-    out = _marker_discrepancies(["PV"], {"Pvalb"}, {"PV": 0.0}, {"PV": [0.0, 5.0]})
+    out = _marker_discrepancies(
+        ["PV"], {"Pvalb"}, {"PV": 0.0}, {"PV": [0.0, 5.0]}, {"PV": "Pvalb"}
+    )
     assert out[0]["kind"] == "LISTED_NOT_EXPRESSED"
+    # Without the resolution, "PV" is not on the list.
+    assert _marker_discrepancies(["PV"], {"Pvalb"}, {"PV": 0.0}, {"PV": [0.0, 5.0]}) == []
 
 
 def test_listed_marker_lowest_among_high_siblings_is_not_flagged():

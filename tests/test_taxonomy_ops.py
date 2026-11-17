@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import textwrap
 from pathlib import Path
 from unittest.mock import patch
 
@@ -16,7 +15,6 @@ from evidencell.taxonomy_ops import (
     _index_nodes,
     _merge_nodes,
     collect_kb_marker_union,
-    load_gene_mapping,
     load_taxonomy_level,
     reingest,
     save_taxonomy_level,
@@ -85,20 +83,6 @@ def tmp_taxonomy(tmp_path: Path) -> Path:
         yaml.dump(meta, fh, allow_unicode=True, sort_keys=False)
 
     return tax_dir
-
-
-@pytest.fixture
-def gene_mapping_tsv(tmp_path: Path) -> Path:
-    """Create a minimal gene mapping TSV."""
-    p = tmp_path / "gene_mapping.tsv"
-    p.write_text(textwrap.dedent("""\
-        ensembl_id\tsymbol
-        ENSMUSG00000004366\tSst
-        ENSMUSG00000026787\tGad1
-        ENSMUSG00000005716\tPvalb
-        ENSMUSG00000032532\tCck
-    """))
-    return p
 
 
 # ── Unit tests ────────────────────────────────────────────────────────────────
@@ -198,14 +182,6 @@ class TestMergeNodes:
         merged, _ = _merge_nodes(old, new, ENRICHMENT_FIELDS)
         # New already has the field → preserved as-is (not replaced from old)
         assert merged[0]["electrophysiology"]["firing_pattern"] == "new"
-
-
-class TestLoadGeneMapping:
-    def test_load(self, gene_mapping_tsv: Path):
-        mapping = load_gene_mapping(gene_mapping_tsv)
-        assert mapping["Sst"] == "ENSMUSG00000004366"
-        assert mapping["Pvalb"] == "ENSMUSG00000005716"
-        assert len(mapping) == 4
 
 
 class TestYamlIO:
@@ -434,16 +410,16 @@ def test_collect_kb_marker_union_unions_lit_node_markers(tmp_path, monkeypatch):
     monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
 
     union = collect_kb_marker_union()
-    assert union == {"Sst", "Calb1", "Npy", "Pvalb", "Vip"}
+    assert set(union) == {"Sst", "Calb1", "Npy", "Pvalb", "Vip"}
     assert "Foo" not in union  # atlas-node markers excluded
     assert "Bar" not in union
 
 
 def test_collect_kb_marker_union_handles_no_kb_dir(tmp_path, monkeypatch):
-    """No kb/graphs directory → empty set, no error."""
+    """No kb/graphs directory → empty result, no error."""
     import evidencell.paths as paths_mod
     monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
-    assert collect_kb_marker_union() == set()
+    assert collect_kb_marker_union() == {}
 
 
 def test_collect_kb_marker_union_skips_unparseable(tmp_path, monkeypatch):

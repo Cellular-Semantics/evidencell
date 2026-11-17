@@ -10,7 +10,8 @@ Operations:
 
 Atlas expression is not stored in taxonomy YAML (#189): it is read on demand
 from the MapMyCells stats HDF5 and cached in the taxonomy SQLite DB — see
-``evidencell.expression_cache``.
+``evidencell.expression_cache``. Marker names resolve to the stats file's
+genes through the gene identity tables (``evidencell.gene_identity``).
 """
 
 from __future__ import annotations
@@ -29,7 +30,6 @@ from evidencell.paths import (
     taxonomy_dir,
     taxonomy_yaml_path,
 )
-from evidencell.expression_cache import load_gene_mapping  # noqa: F401  (re-export)
 from evidencell.taxonomy_db import ingest_to_yaml, ingest_cas_to_yaml, _is_cas_format
 
 log = logging.getLogger(__name__)
@@ -116,54 +116,6 @@ def _index_nodes(nodes: list[dict]) -> dict[str, dict]:
         if acc:
             idx[acc] = n
     return idx
-
-
-# ── gene mapping ──────────────────────────────────────────────────────────────
-
-def generate_gene_mapping_tsv(
-    stats_path: str | Path,
-    output_path: str | Path,
-) -> Path:
-    """Generate a gene mapping TSV from HDF5 col_names using mygene.
-
-    Requires: pip install mygene
-    Queries the MyGene.info API to resolve Ensembl IDs → gene symbols.
-    Writes a TSV with columns: ensembl_id, symbol.
-    """
-    import h5py
-
-    f = h5py.File(str(stats_path), "r")
-    col_names = json.loads(f["col_names"][()].decode())
-    f.close()
-
-    try:
-        import mygene  # type: ignore[import-untyped]
-    except ImportError:
-        raise ImportError(
-            "mygene required for gene mapping generation. "
-            "Install with: uv add mygene"
-        )
-
-    mg = mygene.MyGeneInfo()
-    results = mg.querymany(
-        col_names,
-        scopes="ensembl.gene",
-        fields="symbol",
-        species="mouse",
-        returnall=True,
-    )
-
-    out = Path(output_path)
-    n_mapped = 0
-    with out.open("w", encoding="utf-8") as fh:
-        fh.write("ensembl_id\tsymbol\n")
-        for hit in results["out"]:
-            if "symbol" in hit and "query" in hit:
-                fh.write(f"{hit['query']}\t{hit['symbol']}\n")
-                n_mapped += 1
-
-    log.info("Wrote %d/%d gene mappings to %s", n_mapped, len(col_names), out)
-    return out
 
 
 # ── reingest ──────────────────────────────────────────────────────────────────
@@ -431,9 +383,10 @@ def _collect_run_refs(obj: object, result: list[str] | None = None) -> list[str]
 
 # ── CLI ──────────────────────────────────────────────────────────────────────
 
-def collect_kb_marker_union() -> set[str]:
+def collect_kb_marker_union() -> dict[str, str | None]:
     """Scan kb/graphs/**/*.yaml for non-atlas nodes and return the union of
-    all marker gene symbols mentioned across them.
+    all marker gene symbols mentioned across them, each with the first
+    curated ``ncbi_gene_id`` seen for it (None when no marker carries one).
 
     Drives ``warm_expression_cache``. The set covers every gene any
     classical/literature node carries on its `defining_markers`,
@@ -448,9 +401,9 @@ def collect_kb_marker_union() -> set[str]:
     root = repo_root()
     graphs_dir = root / "kb" / "graphs"
     if not graphs_dir.exists():
-        return set()
+        return {}
 
-    out: set[str] = set()
+    out: dict[str, str | None] = {}
     for yaml_path in sorted(graphs_dir.rglob("*.yaml")):
         try:
             doc = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
@@ -467,7 +420,9 @@ def collect_kb_marker_union() -> set[str]:
                 for m in nd.get(field) or []:
                     sym = m.get("symbol") if isinstance(m, dict) else m
                     if sym:
-                        out.add(sym)
+                        gid = m.get("ncbi_gene_id") if isinstance(m, dict) else None
+                        if out.get(sym) is None:
+                            out[sym] = gid
     return out
 
 
@@ -480,9 +435,12 @@ def warm_expression_cache(taxonomy_id: str) -> dict[str, Any]:
     """
     from evidencell.taxonomy_db import TaxonomyDB, require_taxonomy_db
 
-    genes = sorted(collect_kb_marker_union())
+    union = collect_kb_marker_union()
+    genes = sorted(union)
     db = TaxonomyDB(require_taxonomy_db(taxonomy_id))
-    lookup = db.expression(genes, accessions=[])
+    lookup = db.expression(
+        genes, accessions=[], gene_ids={s: g for s, g in union.items() if g}
+    )
     return {
         "taxonomy_id": taxonomy_id,
         "n_genes": len(genes),
@@ -521,14 +479,6 @@ def main() -> None:
         help="Report changes without writing",
     )
 
-    # generate-gene-mapping
-    p_gm = sub.add_parser(
-        "generate-gene-mapping",
-        help="Generate gene mapping TSV from HDF5 via mygene",
-    )
-    p_gm.add_argument("stats_h5", help="Path to precomputed_stats HDF5")
-    p_gm.add_argument("output", help="Output TSV path")
-
     # build-at-index
     sub.add_parser(
         "build-at-index",
@@ -559,10 +509,6 @@ def main() -> None:
             dry_run=args.dry_run,
         )
         print(json.dumps(result, indent=2))
-
-    elif args.command == "generate-gene-mapping":
-        out = generate_gene_mapping_tsv(args.stats_h5, args.output)
-        print(f"Gene mapping written to {out}")
 
     elif args.command == "build-at-index":
         result = build_at_index()

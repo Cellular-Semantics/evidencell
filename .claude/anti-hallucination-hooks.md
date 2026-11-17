@@ -106,18 +106,33 @@ adapters that aren't cached.
 
 **Storage format**
 ```yaml
-symbol: "Chrna2"
-ncbi_gene_id: 11440           # MGI or NCBI, species-specific
+symbol: "CB"                       # as the source writes it
+ncbi_gene_id: "NCBIGene:12307"     # species-specific NCBI Gene CURIE
 ```
 
-**Check**
-- `symbol` resolves to `ncbi_gene_id` in the reference gene database.
-- Gene symbols alone are not sufficient — the same symbol can refer to different genes
-  across species (e.g. human CHRNA2 vs mouse Chrna2 have different NCBITaxon-scoped IDs).
+**Check** (`gene_identity.check_marker_gene_ids`, hook step 3c), for every
+GeneDescriptor in a `kb/graphs` file that carries `ncbi_gene_id`:
+- the ID exists in Translator NodeNormalization as an NCBI gene;
+- its taxon is the node's `species` (or the graph's), or a descendant of it
+  (a human gene on a Primates node, a mouse gene on a Murinae node) — via
+  the NCBITaxon slim;
+- `symbol` is the gene's label, one of its Name Resolver names, or a reviewed
+  override name in a `kb/taxonomy/*/gene_overrides.tsv` (compared
+  case/space/hyphen-insensitively). Catches a plausible ID for the wrong gene.
 
-**Verification source:** NCBI Gene (via API) or OAK HGNC/MGI adapter.
+**Verification source:** Translator NodeNormalization + Name Resolver,
+cached in `conf/gene_id_cache.json` (gitignored) and seeded offline from the
+committed `kb/taxonomy/*/gene_ids.tsv.gz`.
 
-**Status:** Schema has `ncbi_gene_id` field. Hook check — *not yet implemented*.
+**Soft skip:** an uncached ID with Translator unreachable, or a taxon
+comparison without `conf/oak_dbs/taxslim.obo`, is allowed and listed under
+"Checks NOT run" with the fix. Bypass: `EVIDENCELL_SKIP_GENE_CHECK=1`.
+
+**Status:** Implemented end-to-end (#216). Tests: `tests/test_gene_identity.py`
+(unit, offline cache), `tests/test_hook_integration.py` (through the hook:
+seeded-cache blocks, offline soft skip, and live NodeNorm rejection of a
+hallucinated ID and of a mouse gene on a Primates node, marked
+`integration`).
 
 ---
 

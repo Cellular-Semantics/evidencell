@@ -347,6 +347,7 @@ ingest-taxonomy-yaml taxonomy_file taxonomy_id:
     uv run python -m evidencell.taxonomy_db ingest {{taxonomy_file}} {{taxonomy_id}}
 
 # Build SQLite query index from YAML reference files (no source JSON required).
+# Loads the gene identity tables from gene_ids.tsv.gz + gene_overrides.tsv (#216).
 # Expression cache tables start empty and fill on use from the stats HDF5.
 # Usage: just build-taxonomy-db CCN20230722
 [group('workflows')]
@@ -429,7 +430,8 @@ build-anat-closure taxonomy_id:
 # Pre-load expression for every marker named on a KB classical node into the
 # taxonomy DB's expression cache, and list genes that can't be measured.
 # Optional: the cache fills on first use by find-candidates / emit-stage-b /
-# refresh-*. Needs the stats file (just fetch-mapmycells) and gene mapping TSV.
+# refresh-*. Needs the stats file (just fetch-mapmycells) and the gene tables
+# (kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz, loaded by build-taxonomy-db).
 # Usage: just warm-expression-cache CCN20230722
 [group('workflows')]
 warm-expression-cache taxonomy_id:
@@ -461,13 +463,35 @@ reingest taxonomy_id source_json *ARGS:
 reingest-dry taxonomy_id source_json:
     uv run python -m evidencell.taxonomy_ops reingest {{taxonomy_id}} {{source_json}} --dry-run
 
-# Generate gene mapping TSV from HDF5 stats via mygene API
-# Run once per stats file; the expression cache reads conf/gene_mapping_{taxonomy_id}.tsv
-# Requires: uv add mygene
-# Usage: just generate-gene-mapping path/to/stats.h5 conf/gene_mapping_CCN20230722.tsv
+# Build the taxonomy's gene identity table (#216): the stats file's Ensembl IDs
+# → NCBIGene + label + taxon (Translator NodeNormalization) + every name each
+# gene goes by (Translator Name Resolver /synonyms). Writes the committed
+# kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz, which build-taxonomy-db loads
+# offline into the genes / gene_synonyms tables. Network; ~10 min for WMB.
+# Re-run only to refresh deliberately (new stats file or Translator release):
+# commit the diff after review, then rebuild the DB.
+# Usage: just build-gene-ids CCN20230722
 [group('workflows')]
-generate-gene-mapping stats_h5 output:
-    uv run python -m evidencell.taxonomy_ops generate-gene-mapping {{stats_h5}} {{output}}
+build-gene-ids taxonomy_id:
+    uv run python -m evidencell.gene_identity fetch {{taxonomy_id}}
+
+# Candidate genes for classical marker names (protein names, abbreviations,
+# symbols), as JSON — for setting a marker's ncbi_gene_id at curation time.
+# method: EXACT_SYMBOL / CASE_INSENSITIVE_SYMBOL / UNIQUE_SYNONYM / OVERRIDE are
+# safe to accept; AMBIGUOUS lists the claimant genes to choose from (with the
+# paper's context); NO_MATCH means not a gene name — classify it, don't guess.
+# Pass a taxonomy id to resolve offline against its genes, or an NCBITaxon CURIE
+# to query Name Resolver over that species' genes (network).
+# Usage: just resolve-gene-names CCN20230722 PV CB mGluR1
+#        just resolve-gene-names NCBITaxon:10116 CB nNOS
+[group('workflows')]
+resolve-gene-names target +names:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    case "{{target}}" in
+        NCBITaxon:*) uv run python -m evidencell.gene_identity resolve --taxon "{{target}}" {{names}} ;;
+        *)           uv run python -m evidencell.gene_identity resolve --taxonomy "{{target}}" {{names}} ;;
+    esac
 
 # Find candidate atlas matches for a classical node by querying the taxonomy DB
 # Extracts the node's property signature (markers, NT, anatomy) and scores taxonomy entries

@@ -159,6 +159,13 @@ For marker claims, use MarkerSource (extends PropertySource):
   GeneDescriptor.sources → add a MarkerSource entry on the specific gene
   marker_type: PROTEIN   → IHC, immunofluorescence, Western blot
   marker_type: TRANSCRIPT → scRNA-seq, smFISH, ISH, qPCR
+  A marker you add (or one still without an ID) also gets ncbi_gene_id, in
+  the node's species: run `just resolve-gene-names {taxonomy_id|NCBITaxon:…}
+  {symbol}` and follow CLAUDE.md § "Gene IDs on classical markers" —
+  AMBIGUOUS → pick from the listed claimants using this paper's wording;
+  NO_MATCH → not a gene name, leave ncbi_gene_id empty. The pre-edit hook
+  rejects an ID that doesn't exist, is the wrong species, or names a
+  different gene from the symbol.
 
 For annotation-transfer source correspondence, use at_source_sets[].sources:
   at_source_sets[].sources → per-correspondence evidence (nested on each

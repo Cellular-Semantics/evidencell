@@ -1,37 +1,40 @@
-"""On-demand atlas expression, cached in the taxonomy SQLite DB (#189).
+"""On-demand atlas expression, cached in the taxonomy SQLite DB (#189, #216).
 
 Expression values are derived data: they come from the MapMyCells
 precomputed-stats HDF5 for a taxonomy, not from the taxonomy YAML. This
 module reads them one gene column at a time and caches them in two DB
-tables:
+tables, both keyed by Ensembl ID:
 
-- ``node_expression(node_id, symbol, ensembl_id, mean_expression)`` — one
-  row per atlas node × cached gene. Leaf (rank-0) values are the stats
-  file's per-cluster means; every non-leaf node gets the n_cells-weighted
-  mean of its rank-0 descendants. With ``n_cells == 1`` throughout (WMBv1)
-  that is a plain, unweighted average of cluster means.
-- ``expression_genes(symbol, ensembl_id, status, source_file,
-  source_sha256, loaded_at)`` — which genes are cached and from which
-  file. ``status`` is ``MEASURED``, or a not-measured reason
-  (``NO_ENSEMBL_MAPPING``, ``NOT_IN_STATS``) so an unmeasurable gene is a
-  recorded gap, never a silent empty result.
+- ``node_expression(node_id, ensembl_id, mean_expression)`` — one row per
+  atlas node × cached gene. Leaf (rank-0) values are the stats file's
+  per-cluster means; every non-leaf node gets the n_cells-weighted mean of
+  its rank-0 descendants. With ``n_cells == 1`` throughout (WMBv1) that is
+  a plain, unweighted average of cluster means.
+- ``expression_genes(ensembl_id, source_file, source_sha256, loaded_at)`` —
+  which genes are cached and from which file.
 
-``just build-taxonomy-db`` creates both tables empty; they fill on use.
-Consumers go through :meth:`TaxonomyDB.expression`, which calls
-:func:`ensure_genes` then :func:`query`.
+Which gene a marker name means is not decided here: callers resolve names
+through :mod:`evidencell.gene_identity` (the ``genes`` / ``gene_synonyms``
+tables), and this module reads the resolved genes' stats columns. A name
+that doesn't resolve is reported in ``not_measured`` with the reason
+(``NO_ENSEMBL_MAPPING``: no gene of the taxonomy has that name;
+``AMBIGUOUS_SYMBOL``: several do) — a recorded gap, never a silent empty
+result.
 
-File locations come from the existing registry, not new config: the stats
-file is ``conf/mapmycells/{taxonomy_id}/{basename of stats_s3_url}`` (the
-URL from ``annotation_transfer/src/annotation_transfer/taxonomies.py``,
-which is where ``just fetch-mapmycells`` writes it) and the gene mapping is
-``conf/gene_mapping_{taxonomy_id}.tsv``.
+``just build-taxonomy-db`` creates both cache tables empty; they fill on
+use. Consumers go through :meth:`TaxonomyDB.expression`.
 
-The cache is dropped (and reloads on use) when the stats file's sha256,
-the gene mapping TSV or the protein-alias table changes — each one decides
-which column, if any, a symbol reads.
+The stats file location comes from the existing registry: it is
+``conf/mapmycells/{taxonomy_id}/{basename of stats_s3_url}`` (the URL from
+``annotation_transfer/src/annotation_transfer/taxonomies.py``, which is
+where ``just fetch-mapmycells`` writes it).
 
-Fail closed: a gene that is not cached and cannot be loaded (stats file or
-gene mapping missing) raises :class:`ExpressionUnavailable` with the fix.
+The cache is dropped (and reloads on use) when the stats file's sha256
+changes. A stats file that differs from the one ``gene_ids.tsv.gz`` was
+built from is refused: its column indices can't be trusted.
+
+Fail closed: a gene that is not cached and cannot be loaded (stats file
+missing or mismatched) raises :class:`ExpressionUnavailable` with the fix.
 
 Stats format: ``sum`` is the per-cluster sum of expression over cells and
 ``n_cells`` the cell count, so a cluster mean is ``sum / n_cells``. The
@@ -50,36 +53,46 @@ import sys
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Iterable
+from typing import TYPE_CHECKING, Iterable, Mapping
 from urllib.parse import urlparse
 
-MEASURED = "MEASURED"
+if TYPE_CHECKING:
+    from evidencell.gene_identity import Gene, GeneMatch
+
 NO_ENSEMBL_MAPPING = "NO_ENSEMBL_MAPPING"
-NOT_IN_STATS = "NOT_IN_STATS"
+AMBIGUOUS_SYMBOL = "AMBIGUOUS_SYMBOL"
 
 _FINGERPRINT_KEY = "expression_stats_fingerprint"
-_RESOLUTION_KEY = "expression_resolution_fingerprint"
 
 
 class ExpressionUnavailable(RuntimeError):
-    """Expression is needed but can't be read (stats file / mapping missing)."""
+    """Expression is needed but can't be read (stats file / gene tables missing)."""
 
 
 @dataclass
 class ExpressionLookup:
     """Result of an expression query.
 
-    ``values``: ``{node_id: {symbol: mean_expression}}`` for measured genes.
-    ``not_measured``: ``{symbol: reason}`` for genes that can't be measured.
+    ``values``: ``{node_id: {name: mean_expression}}`` for measured genes,
+    keyed by the names the caller asked for.
+    ``not_measured``: ``{name: reason}`` for names that can't be measured.
+    ``genes``: ``{name: GeneMatch}`` — how each name resolved.
     ``source_file``: basename of the stats file the cache was filled from.
     """
 
     values: dict[str, dict[str, float]] = field(default_factory=dict)
     not_measured: dict[str, str] = field(default_factory=dict)
+    genes: dict[str, GeneMatch] = field(default_factory=dict)
     source_file: str | None = None
 
     def for_node(self, accession: str) -> dict[str, float]:
         return self.values.get(_node_id(accession), {})
+
+    def gene_symbol(self, name: str) -> str | None:
+        """The atlas-side symbol ``name`` resolved to (the stats file's
+        symbol, as used in atlas marker lists), or None."""
+        m = self.genes.get(name)
+        return m.gene.stats_symbol if m is not None and m.gene is not None else None
 
 
 # ── File locations (registry-driven) ─────────────────────────────────────────
@@ -126,30 +139,6 @@ def stats_h5_path(taxonomy_id: str) -> Path:
         )
     name = Path(urlparse(spec.stats_s3_url).path).name
     return repo_root() / "conf" / "mapmycells" / taxonomy_id / name
-
-
-def gene_mapping_path(taxonomy_id: str) -> Path:
-    """Canonical local path of a taxonomy's symbol → Ensembl mapping TSV."""
-    from evidencell.paths import repo_root
-
-    return repo_root() / "conf" / f"gene_mapping_{taxonomy_id}.tsv"
-
-
-def load_gene_mapping(mapping_path: str | Path) -> dict[str, str]:
-    """Load symbol → Ensembl ID mapping from a TSV file.
-
-    Expected format: header row naming 'symbol' and 'ensembl_id' columns.
-    """
-    mapping: dict[str, str] = {}
-    with open(mapping_path, encoding="utf-8") as fh:
-        header = fh.readline().strip().split("\t")
-        sym_col = header.index("symbol")
-        ens_col = header.index("ensembl_id")
-        for line in fh:
-            parts = line.strip().split("\t")
-            if len(parts) > max(sym_col, ens_col):
-                mapping[parts[sym_col]] = parts[ens_col]
-    return mapping
 
 
 # ── Cache maintenance ────────────────────────────────────────────────────────
@@ -202,90 +191,27 @@ def _drop_stale_cache(con: sqlite3.Connection, sha: str) -> None:
         )
         con.execute("DELETE FROM node_expression")
         con.execute("DELETE FROM expression_genes")
-
-
-def _resolution_fingerprint(mapping_path: Path) -> dict[str, str | None]:
-    """Hashes of what turns a symbol into a stats column: the gene mapping
-    TSV and the protein-alias table. ``mapping`` is None when the TSV is
-    absent."""
-    from evidencell.marker_aliases import PROTEIN_TO_GENE_ALIASES
-
-    aliases = json.dumps(sorted(PROTEIN_TO_GENE_ALIASES.items())).encode()
-    return {
-        "aliases": hashlib.sha256(aliases).hexdigest(),
-        # Small (~1 MB): hashed directly on each call, unlike the stats file.
-        "mapping": (
-            hashlib.sha256(mapping_path.read_bytes()).hexdigest()
-            if mapping_path.is_file() else None
-        ),
-    }
-
-
-def _drop_cache_if_resolution_changed(con: sqlite3.Connection, mapping_path: Path) -> None:
-    """Drop the cache when the gene mapping or alias table changed since it
-    was filled: a cached ``NO_ENSEMBL_MAPPING`` (or a gene resolved to a
-    different Ensembl ID) would otherwise outlive the fix until the next
-    ``build-taxonomy-db``.
-
-    With the mapping TSV absent only the alias table is compared, so a
-    filled cache keeps serving without it.
-    """
-    current = _resolution_fingerprint(mapping_path)
-    con.execute("CREATE TABLE IF NOT EXISTS _meta (key TEXT PRIMARY KEY, value TEXT)")
-    row = con.execute("SELECT value FROM _meta WHERE key = ?", (_RESOLUTION_KEY,)).fetchone()
-    stored = json.loads(row[0]) if row else {}
-    changed = [
-        k for k in ("aliases", "mapping")
-        if current[k] is not None and stored.get(k) is not None and stored[k] != current[k]
-    ]
-    if changed:
-        n = con.execute("SELECT COUNT(*) FROM expression_genes").fetchone()[0]
-        if n:
-            what = " and ".join(
-                {"aliases": "protein-alias table", "mapping": f"gene mapping ({mapping_path.name})"}[k]
-                for k in changed
-            )
-            print(
-                f"  The {what} changed since the expression cache was filled — "
-                f"dropping {n} cached gene(s); they reload on use.",
-                file=sys.stderr,
-            )
-        con.execute("DELETE FROM node_expression")
-        con.execute("DELETE FROM expression_genes")
-    merged = {k: current[k] if current[k] is not None else stored.get(k) for k in current}
-    if merged != stored:
-        con.execute(
-            "INSERT OR REPLACE INTO _meta VALUES (?, ?)", (_RESOLUTION_KEY, json.dumps(merged))
-        )
+        # Committed now: if the reload below fails, the stale values must
+        # not survive a rollback and be served on the next call.
         con.commit()
-
-
-def _resolve_ensembl(symbol: str, mapping: dict[str, str]) -> str | None:
-    from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
-
-    ens = mapping.get(symbol)
-    if ens is None:
-        canon = resolve_to_canonical_gene_symbol(symbol)
-        if canon != symbol:
-            ens = mapping.get(canon)
-    return ens
 
 
 def ensure_genes(
     con: sqlite3.Connection,
     taxonomy_id: str,
-    symbols: Iterable[str],
+    genes: Iterable[Gene],
     *,
     stats_path: Path,
-    mapping_path: Path,
 ) -> None:
-    """Make sure every symbol has an ``expression_genes`` row, loading
-    uncached genes from the stats HDF5.
+    """Make sure every gene has cached expression, loading uncached genes
+    from the stats HDF5 by their ``stats_col``.
 
-    Raises :class:`ExpressionUnavailable` if any symbol is uncached and the
-    stats file or gene mapping is missing.
+    Raises :class:`ExpressionUnavailable` if any gene is uncached and the
+    stats file is missing, or is not the file the gene table was built from.
     """
-    wanted = sorted({s for s in symbols if s})
+    from evidencell.gene_identity import gene_ids_meta
+
+    wanted = {g.ensembl_id: g for g in genes}
     if not wanted:
         return
 
@@ -293,34 +219,36 @@ def ensure_genes(
     sha = _stats_sha256(con, stats_path) if have_stats else None
     if sha is not None:
         _drop_stale_cache(con, sha)
-    _drop_cache_if_resolution_changed(con, mapping_path)
 
-    placeholders = ",".join("?" * len(wanted))
+    ids = sorted(wanted)
     cached = {
         r[0]
         for r in con.execute(
-            f"SELECT symbol FROM expression_genes WHERE symbol IN ({placeholders})", wanted
+            f"SELECT ensembl_id FROM expression_genes WHERE ensembl_id IN ({','.join('?' * len(ids))})",
+            ids,
         )
     }
-    missing = [s for s in wanted if s not in cached]
+    missing = [wanted[e] for e in ids if e not in cached]
     if not missing:
         return
 
-    sample = ", ".join(missing[:8]) + (" …" if len(missing) > 8 else "")
+    sample = ", ".join(g.stats_symbol for g in missing[:8]) + (" …" if len(missing) > 8 else "")
     if not have_stats:
         raise ExpressionUnavailable(
             f"Atlas expression for {len(missing)} gene(s) ({sample}) is not cached in the "
             f"{taxonomy_id} taxonomy DB and the MapMyCells stats file is missing: "
             f"{stats_path}. Run: just fetch-mapmycells {taxonomy_id}"
         )
-    if not mapping_path.is_file():
-        raise ExpressionUnavailable(
-            f"Atlas expression for {len(missing)} gene(s) ({sample}) needs the gene "
-            f"mapping TSV, which is missing: {mapping_path}. Run: just "
-            f"generate-gene-mapping {stats_path} {mapping_path}"
-        )
     assert sha is not None
-    _load_genes(con, missing, stats_path=stats_path, mapping_path=mapping_path, sha=sha)
+    meta = gene_ids_meta(con) or {}
+    if meta.get("stats_sha256") and meta["stats_sha256"] != sha:
+        raise ExpressionUnavailable(
+            f"The {taxonomy_id} gene table (gene_ids.tsv.gz) was built from a stats file "
+            f"with sha256 {meta['stats_sha256'][:12]}…, but {stats_path.name} has "
+            f"{sha[:12]}…; its column indices can't be trusted. Refresh it with: "
+            f"just build-gene-ids {taxonomy_id}, then just build-taxonomy-db {taxonomy_id}"
+        )
+    _load_genes(con, missing, stats_path=stats_path, sha=sha)
 
 
 def _leaf_descendants(con: sqlite3.Connection) -> tuple[list[str], dict[str, list[str]]]:
@@ -356,16 +284,14 @@ def _leaf_descendants(con: sqlite3.Connection) -> tuple[list[str], dict[str, lis
 
 def _load_genes(
     con: sqlite3.Connection,
-    symbols: list[str],
+    genes: list[Gene],
     *,
     stats_path: Path,
-    mapping_path: Path,
     sha: str,
 ) -> None:
     import h5py
     import numpy as np
 
-    mapping = load_gene_mapping(mapping_path)
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     source = stats_path.name
 
@@ -373,61 +299,55 @@ def _load_genes(
         col_names: list[str] = json.loads(f["col_names"][()])
         cluster_to_row: dict[str, int] = json.loads(f["cluster_to_row"][()])
         n_cells = np.asarray(f["n_cells"][:], dtype=float)
-        ens_to_col = {e: i for i, e in enumerate(col_names)}
-
-        status: dict[str, tuple[str | None, str]] = {}  # symbol → (ensembl, status)
-        measured: list[tuple[str, str, int]] = []  # (symbol, ensembl, col)
-        for sym in symbols:
-            ens = _resolve_ensembl(sym, mapping)
-            if ens is None:
-                status[sym] = (None, NO_ENSEMBL_MAPPING)
-            elif ens not in ens_to_col:
-                status[sym] = (ens, NOT_IN_STATS)
-            else:
-                status[sym] = (ens, MEASURED)
-                measured.append((sym, ens, ens_to_col[ens]))
-
-        node_rows: list[tuple[str, str, str, float]] = []
-        if measured:
-            # Read only the needed columns, never the whole matrix. h5py needs
-            # increasing indices for a fancy selection.
-            cols = sorted({c for _, _, c in measured})
-            col_pos = {c: i for i, c in enumerate(cols)}
-            sums = np.asarray(f["sum"][:, cols], dtype=float)
-
-            leaves, descendants = _leaf_descendants(con)
-            leaf_row = {n: cluster_to_row[n] for n in leaves if n in cluster_to_row}
-            if not leaf_row:
+        for g in genes:
+            if g.stats_col >= len(col_names) or (
+                col_names[g.stats_col].split(".", 1)[0] != g.ensembl_id
+            ):
                 raise ExpressionUnavailable(
-                    f"None of the taxonomy's leaf node ids appear in the stats file's "
-                    f"cluster_to_row ({stats_path}); is it the right file for this taxonomy?"
+                    f"{stats_path.name} column {g.stats_col} is not {g.ensembl_id} "
+                    f"({g.stats_symbol}); the gene table is out of step with the stats file. "
+                    "Refresh it with just build-gene-ids, then just build-taxonomy-db."
                 )
 
-            def _emit(node_id: str, rows: list[int]) -> None:
-                total = n_cells[rows].sum()
-                if total <= 0:
-                    return
-                means = sums[rows].sum(axis=0) / total
-                for sym, ens, col in measured:
-                    node_rows.append((node_id, sym, ens, float(means[col_pos[col]])))
+        # Read only the needed columns, never the whole matrix. h5py needs
+        # increasing indices for a fancy selection.
+        cols = sorted({g.stats_col for g in genes})
+        col_pos = {c: i for i, c in enumerate(cols)}
+        sums = np.asarray(f["sum"][:, cols], dtype=float)
 
-            for node_id, row in leaf_row.items():
-                _emit(node_id, [row])
-            for node_id, leaf_ids in descendants.items():
-                rows = [leaf_row[n] for n in leaf_ids if n in leaf_row]
-                if rows:
-                    _emit(node_id, rows)
+        leaves, descendants = _leaf_descendants(con)
+        leaf_row = {n: cluster_to_row[n] for n in leaves if n in cluster_to_row}
+        if not leaf_row:
+            raise ExpressionUnavailable(
+                f"None of the taxonomy's leaf node ids appear in the stats file's "
+                f"cluster_to_row ({stats_path}); is it the right file for this taxonomy?"
+            )
 
-    con.executemany("INSERT OR REPLACE INTO node_expression VALUES (?, ?, ?, ?)", node_rows)
+        node_rows: list[tuple[str, str, float]] = []
+
+        def _emit(node_id: str, rows: list[int]) -> None:
+            total = n_cells[rows].sum()
+            if total <= 0:
+                return
+            means = sums[rows].sum(axis=0) / total
+            for g in genes:
+                node_rows.append((node_id, g.ensembl_id, float(means[col_pos[g.stats_col]])))
+
+        for node_id, row in leaf_row.items():
+            _emit(node_id, [row])
+        for node_id, leaf_ids in descendants.items():
+            rows = [leaf_row[n] for n in leaf_ids if n in leaf_row]
+            if rows:
+                _emit(node_id, rows)
+
+    con.executemany("INSERT OR REPLACE INTO node_expression VALUES (?, ?, ?)", node_rows)
     con.executemany(
-        "INSERT OR REPLACE INTO expression_genes VALUES (?, ?, ?, ?, ?, ?)",
-        [(sym, ens, st, source, sha, now) for sym, (ens, st) in status.items()],
+        "INSERT OR REPLACE INTO expression_genes VALUES (?, ?, ?, ?)",
+        [(g.ensembl_id, source, sha, now) for g in genes],
     )
     con.commit()
-    n_measured = sum(1 for _, st in status.values() if st == MEASURED)
     print(
-        f"  Loaded expression for {n_measured}/{len(symbols)} gene(s) from {source} "
-        f"into the taxonomy DB cache",
+        f"  Loaded expression for {len(genes)} gene(s) from {source} into the taxonomy DB cache",
         file=sys.stderr,
     )
 
@@ -437,36 +357,39 @@ def _load_genes(
 
 def query(
     con: sqlite3.Connection,
-    symbols: Iterable[str],
+    matches: Mapping[str, GeneMatch],
     *,
     accessions: Iterable[str] | None = None,
     ranks: Iterable[int] | None = None,
 ) -> ExpressionLookup:
-    """Read cached expression for ``symbols``.
+    """Read cached expression for resolved names, keyed by name.
 
     Restrict nodes with ``accessions`` and/or ``ranks``; with neither,
     every node is returned. Call :func:`ensure_genes` first.
     """
-    wanted = sorted({s for s in symbols if s})
-    out = ExpressionLookup()
-    if not wanted:
+    from evidencell.gene_identity import AMBIGUOUS
+
+    out = ExpressionLookup(genes=dict(matches))
+    by_ensembl: dict[str, list[str]] = {}
+    for name, m in matches.items():
+        if m.gene is None:
+            out.not_measured[name] = AMBIGUOUS_SYMBOL if m.method == AMBIGUOUS else NO_ENSEMBL_MAPPING
+        else:
+            by_ensembl.setdefault(m.gene.ensembl_id, []).append(name)
+    if not by_ensembl:
         return out
-    sym_ph = ",".join("?" * len(wanted))
-    for sym, st in con.execute(
-        f"SELECT symbol, status FROM expression_genes WHERE symbol IN ({sym_ph})", wanted
-    ):
-        if st != MEASURED:
-            out.not_measured[sym] = st
+    ens = sorted(by_ensembl)
+    ens_ph = ",".join("?" * len(ens))
     row = con.execute(
-        f"SELECT source_file FROM expression_genes WHERE symbol IN ({sym_ph}) LIMIT 1", wanted
+        f"SELECT source_file FROM expression_genes WHERE ensembl_id IN ({ens_ph}) LIMIT 1", ens
     ).fetchone()
     out.source_file = row[0] if row else None
 
     sql = (
-        "SELECT e.node_id, e.symbol, e.mean_expression FROM node_expression e "
-        f"JOIN nodes n ON n.node_id = e.node_id WHERE e.symbol IN ({sym_ph})"
+        "SELECT e.node_id, e.ensembl_id, e.mean_expression FROM node_expression e "
+        f"JOIN nodes n ON n.node_id = e.node_id WHERE e.ensembl_id IN ({ens_ph})"
     )
-    params: list = list(wanted)
+    params: list = list(ens)
     if accessions is not None:
         ids = sorted({_node_id(a) for a in accessions if a})
         if not ids:
@@ -477,6 +400,8 @@ def query(
         rank_list = sorted(set(ranks))
         sql += f" AND n.taxonomy_rank IN ({','.join('?' * len(rank_list))})"
         params += rank_list
-    for node_id, sym, val in con.execute(sql, params):
-        out.values.setdefault(node_id, {})[sym] = float(val)
+    for node_id, ensembl_id, val in con.execute(sql, params):
+        node = out.values.setdefault(node_id, {})
+        for name in by_ensembl[ensembl_id]:
+            node[name] = float(val)
     return out
