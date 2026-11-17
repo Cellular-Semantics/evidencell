@@ -40,7 +40,10 @@ def _repo_root() -> Path:
 
 
 REPO = _repo_root()
-H5_PATH = REPO / "conf/mapmycells/CCN20230722/precomputed_stats.h5"
+H5_PATH = REPO / "conf/mapmycells/CCN20230722/precomputed_stats_ABC_revision_230821.h5"
+# Retired in #216 (gene identity is now kb/taxonomy/CCN20230722/gene_ids.tsv.gz).
+# This run used the TSV; restore it to reproduce the recorded results exactly:
+#   git show 7f39421:conf/gene_mapping_CCN20230722.tsv > conf/gene_mapping_CCN20230722.tsv
 GENE_MAPPING = REPO / "conf/gene_mapping_CCN20230722.tsv"
 TAX_DB = REPO / "kb/taxonomy/CCN20230722/CCN20230722.db"
 
@@ -49,6 +52,11 @@ STATES = ["Male", "FR", "FNR"]
 
 
 def load_symbol_to_ensembl():
+    if not GENE_MAPPING.is_file():
+        raise SystemExit(
+            f"{GENE_MAPPING} is missing (retired in #216). Restore it to reproduce "
+            "this run:\n  git show 7f39421:conf/gene_mapping_CCN20230722.tsv > conf/gene_mapping_CCN20230722.tsv"
+        )
     df = pd.read_csv(GENE_MAPPING, sep="\t")
     return dict(zip(df["symbol"], df["ensembl_id"]))
 

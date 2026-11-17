@@ -22,7 +22,10 @@ nodes:
   - id: dlgn_relay_neuron
     name: "Dorsal lateral geniculate nucleus (dLGN) principal thalamocortical relay neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — mouse, macaque and human pooled
+    species:  # To be confirmed from primary literature — mouse, macaque and human pooled
+      id: NCBITaxon:314146
+      label: Euarchontoglires
+      name_in_source: "Macaca mulatta; Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0002479
         label: "dorsal lateral geniculate nucleus"
@@ -55,7 +58,7 @@ nodes:
     defining_markers:
       - symbol: Pvalb
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:19293"
         sources:
           - ref: "PMID:34473054"
             method: "scRNA-seq"
@@ -64,7 +67,7 @@ nodes:
             marker_type: TRANSCRIPT
       - symbol: Calb1
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12307"
         sources:
           - ref: "PMID:34473054"
             method: "scRNA-seq"
@@ -73,7 +76,7 @@ nodes:
             marker_type: TRANSCRIPT
       - symbol: Necab1
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:69352"
         sources:
           - ref: "PMID:34473054"
             method: "scRNA-seq"

@@ -22,7 +22,10 @@ nodes:
   - id: dg_neuroblast_imn
     name: "Dentate Gyrus Neuroblast (Type-3 Progenitor)"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:       # To be confirmed — studies cite mouse, rat, human
+    species:  # To be confirmed — studies cite mouse, rat, human
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0001885
         label: "dentate gyrus of hippocampal formation"
@@ -44,7 +47,7 @@ nodes:
           quote_key: "8479504_a44f9b22"
     defining_markers:
       - symbol: DCX
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13193"
         sources:
           - ref: "https://doi.org/10.5114/ppn.2021.111950"
             method: "review (marker classification)"
@@ -66,7 +69,7 @@ nodes:
             marker_type: NOT_STATED
       - symbol: Ki67
         modifier: "proliferative marker"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:17345"
         sources:
           - ref: "https://doi.org/10.5114/ppn.2021.111950"
             method: "review (marker classification)"
@@ -75,7 +78,7 @@ nodes:
             marker_type: NOT_STATED
       - symbol: Nestin
         modifier: "type-2b stage only (co-expressed with DCX)"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:18008"
         sources:
           - ref: "PMID:40519263"
             method: "review (type-2b neuroblast marker)"
@@ -84,7 +87,7 @@ nodes:
             marker_type: NOT_STATED
       - symbol: Tbr2
         modifier: "intermediate progenitor (type-2) stage"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13813"
         sources:
           - ref: "PMID:18385329"
             method: "Tbr2-GFP transgene + IHC"
@@ -93,7 +96,7 @@ nodes:
             marker_type: PROTEIN
       - symbol: Tis21
         modifier: "type-2/3 progenitors (transit-amplifying stages)"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12227"
         sources:
           - ref: "PMID:19482889"
             method: "Tis21-GFP knock-in reporter mouse"
@@ -103,13 +106,13 @@ nodes:
     negative_markers:
       - symbol: NeuN
         modifier: "NeuN negative at type-3 neuroblast stage"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:52897"
       - symbol: Calbindin
         modifier: "absent until stage 6 (mature granule cell)"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12307"
       - symbol: GFAP
         modifier: "absent in type-2/3 neuroblasts (distinguishes from type-1 RGL)"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14580"
     neuropeptides: []
     colocated_types:
       - neighboring_type: "type-1 RGL stem cells"

@@ -22,7 +22,10 @@ nodes:
   - id: dg_mature_granule_neuron_imn
     name: "Dentate Gyrus Mature Granule Neuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:       # To be confirmed — studies cite mouse, rat, human
+    species:  # To be confirmed — studies cite mouse, rat, human
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0001885
         label: "dentate gyrus of hippocampal formation"
@@ -45,7 +48,7 @@ nodes:
     defining_markers:
       - symbol: Calbindin
         modifier: "stage 6 — terminally differentiated"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12307"
         sources:
           - ref: "PMID:40519263"
             method: "review (stage 6 marker profile)"
@@ -54,7 +57,7 @@ nodes:
             marker_type: NOT_STATED
       - symbol: NeuN
         modifier: "mature pan-neuronal marker"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:52897"
         sources:
           - ref: "PMID:40519263"
             method: "review (stage 6 marker profile)"
@@ -63,7 +66,7 @@ nodes:
             marker_type: NOT_STATED
       - symbol: Tbr1
         modifier: "terminal TF cascade marker (Pax6 > Ngn2 > Tbr2 > NeuroD > Tbr1)"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:21375"
         sources:
           - ref: "PMID:18385329"
             method: "TF cascade in adult SGZ"
@@ -73,10 +76,10 @@ nodes:
     negative_markers:
       - symbol: DCX
         modifier: "downregulated at stage 6"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13193"
       - symbol: Nestin
         modifier: "absent at terminal differentiation"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:18008"
       - symbol: PSA-NCAM
         modifier: "downregulated at stage 6"
         ncbi_gene_id:

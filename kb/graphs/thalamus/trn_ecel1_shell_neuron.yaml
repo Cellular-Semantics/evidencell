@@ -22,7 +22,10 @@ nodes:
   - id: trn_ecel1_shell_neuron
     name: "TRN Ecel1+ shell (edge) GABAergic neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — mouse primary evidence
+    species:  # To be confirmed from primary literature — mouse primary evidence
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0001903
         label: "thalamic reticular nucleus"
@@ -54,7 +57,7 @@ nodes:
           quote_key: "285258741_6a1a977c"
     defining_markers:
       - symbol: Ecel1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13599"
         sources:
           - ref: "PMID:39630580"
             method: "scRNA-seq (summary of Li et al., 2020)"
@@ -68,7 +71,7 @@ nodes:
             marker_type: TRANSCRIPT
     negative_markers:
       - symbol: Spp1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20750"
         sources:
           - ref: "PMID:32699411"
             method: "scRNA-seq"

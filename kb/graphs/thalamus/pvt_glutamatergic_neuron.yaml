@@ -23,7 +23,10 @@ nodes:
   - id: pvt_glutamatergic_neuron
     name: "Paraventricular thalamic nucleus (PVT) glutamatergic projection neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — mouse, rat and human sources pooled
+    species:  # To be confirmed from primary literature — mouse, rat and human sources pooled
+      id: NCBITaxon:314146
+      label: Euarchontoglires
+      name_in_source: "Rats; Mice; Humans (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
@@ -161,7 +164,7 @@ nodes:
           quote_key: "251021326_815dcc71"
     defining_markers:
       - symbol: Calb1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12307"
         sources:
           - ref: "PMID:41501055"
             method: "snRNA-seq + spatial validation"
@@ -174,7 +177,7 @@ nodes:
             quote_key: "23594973_c1b76e2f"
             marker_type: NOT_STATED
       - symbol: Calb2
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12308"
         sources:
           - ref: "PMID:41501055"
             method: "snRNA-seq + calretinin immunostaining"
@@ -192,7 +195,7 @@ nodes:
             quote_key: "281243341_d0491f90"
             marker_type: PROTEIN
       - symbol: Slc17a6
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:140919"
         sources:
           - ref: "PMID:41501055"
             method: "snRNA-seq"
@@ -210,7 +213,7 @@ nodes:
             quote_key: "251021326_815dcc71"
             marker_type: TRANSCRIPT
       - symbol: Drd3
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13490"
         sources:
           - ref: "PMID:36867023"
             method: "snRNA-seq + multiplex FISH"
@@ -224,7 +227,7 @@ nodes:
             marker_type: TRANSCRIPT
     negative_markers:
       - symbol: Gad1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14415"
         sources:
           - ref: "PMID:36867023"
             method: "snRNA-seq (selection criterion)"
@@ -232,7 +235,7 @@ nodes:
             quote_key: "251021326_815dcc71"
             marker_type: TRANSCRIPT
       - symbol: Gad2
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14417"
         sources:
           - ref: "PMID:36867023"
             method: "snRNA-seq (selection criterion)"
@@ -241,7 +244,7 @@ nodes:
             marker_type: TRANSCRIPT
     neuropeptides:
       - symbol: Gal
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14419"
         sources:
           - ref: "PMID:36867023"
             method: "snRNA-seq + multiplex FISH"

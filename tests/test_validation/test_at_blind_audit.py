@@ -6,6 +6,7 @@ execution, and outcome categorisation without touching the real KB.
 from __future__ import annotations
 
 import json
+import os
 import sqlite3
 from pathlib import Path
 
@@ -78,11 +79,11 @@ def synthetic_corpus(tmp_path, monkeypatch):
     );
     CREATE TABLE _meta (key TEXT PRIMARY KEY, value TEXT);
     CREATE TABLE node_expression (
-      node_id TEXT NOT NULL, symbol TEXT NOT NULL, ensembl_id TEXT,
-      mean_expression REAL NOT NULL, PRIMARY KEY (node_id, symbol)
+      node_id TEXT NOT NULL, ensembl_id TEXT NOT NULL,
+      mean_expression REAL NOT NULL, PRIMARY KEY (node_id, ensembl_id)
     );
     CREATE TABLE expression_genes (
-      symbol TEXT PRIMARY KEY, ensembl_id TEXT, status TEXT NOT NULL,
+      ensembl_id TEXT PRIMARY KEY,
       source_file TEXT NOT NULL, source_sha256 TEXT NOT NULL, loaded_at TEXT NOT NULL
     );
     """)
@@ -172,10 +173,21 @@ def synthetic_corpus(tmp_path, monkeypatch):
         ).encode()
         f["n_cells"] = np.array([1, 1, 1])
         f["sum"] = np.array([[5.0], [5.0], [5.0]])
-    mapping = repo / "conf" / "gene_mapping_MINI001.tsv"
-    mapping.write_text("ensembl_id\tsymbol\nENS_SST\tSst\n")
+    from evidencell.gene_identity import load_gene_tables, write_gene_ids
+
+    tax_dir = repo / "kb" / "taxonomy" / "MINI001"
+    write_gene_ids(
+        tax_dir / "gene_ids.tsv.gz",
+        {"stats_file": stats.name, "stats_sha256": ec_mod._sha256(stats)},
+        [{"ensembl_id": "ENS_SST", "stats_symbol": "Sst", "stats_col": 0,
+          "ncbi_gene_id": "NCBIGene:20604", "label": "Sst", "taxon": "NCBITaxon:10090",
+          "equivalent_ids": [], "synonyms": ["Sst"]}],
+    )
+    # Back-date it so the freshness preflight still sees the DB as newer.
+    os.utime(tax_dir / "gene_ids.tsv.gz", (0, 0))
+    with sqlite3.connect(db_path) as gcon:
+        load_gene_tables(gcon, tax_dir)
     monkeypatch.setattr(ec_mod, "stats_h5_path", lambda tid: stats)
-    monkeypatch.setattr(ec_mod, "gene_mapping_path", lambda tid: mapping)
 
     return repo
 

@@ -17,7 +17,6 @@ from evidencell.stage_b_emit import (
     _caveats,
     _location_alignment,
     _marker_alignment,
-    _resolve_symbol,
     _property_comparisons,
     emit_stage_b,
 )
@@ -32,23 +31,6 @@ OLM_DISCOVERY_RANK0 = (
     / "map_olm_20260603"
     / "discovery_candidates_rank0.json"
 )
-
-
-# ── _resolve_symbol ─────────────────────────────────────────────────────────
-
-
-def test_resolve_symbol_aliases():
-    assert _resolve_symbol("PV") == "Pvalb"
-    assert _resolve_symbol("CB") == "Calb1"
-    assert _resolve_symbol("CR") == "Calb2"
-    assert _resolve_symbol("NOS") == "Nos1"
-    assert _resolve_symbol("VIP") == "Vip"
-
-
-def test_resolve_symbol_passthrough():
-    assert _resolve_symbol("Sst") == "Sst"
-    assert _resolve_symbol("Chrna2") == "Chrna2"
-    assert _resolve_symbol("Grm1") == "Grm1"
 
 
 # ── _location_alignment tier rules ──────────────────────────────────────────
@@ -186,7 +168,9 @@ def test_property_comparisons_basic_olm_synthetic():
             {"id": "MBA:399", "label": "stratum oriens",
              "count_in_or_near_100um": 250, "cell_count_completeness": None},
         ],
-        "expression": {"Sst": 12.7, "Chrna2": 0.57, "Pvalb": 3.12, "Npy": 7.58},
+        # Keyed by the classical marker name; PV resolved to Pvalb (#216).
+        "expression": {"Sst": 12.7, "Chrna2": 0.57, "PV": 3.12, "Npy": 7.58},
+        "gene_symbols": {"Sst": "Sst", "Chrna2": "Chrna2", "PV": "Pvalb", "Npy": "Npy"},
         "not_measured": {},
         "expression_source": "stats.h5",
         "markers": [{"symbol": "Sst", "category": "NEUROPEPTIDE"}],
@@ -228,7 +212,7 @@ def test_property_comparisons_basic_olm_synthetic():
     # marker_Chrna2 CONSISTENT (top-cohort presence)
     assert by_prop["marker_Chrna2"]["alignment"] == "CONSISTENT"
 
-    # negative_marker_PV DISCORDANT (Pvalb 3.12 in atlas; alias resolved)
+    # negative_marker_PV DISCORDANT (Pvalb 3.12 in atlas; PV resolved to Pvalb)
     assert by_prop["negative_marker_PV"]["alignment"] == "DISCORDANT"
     # node_b_value should cite the Pvalb value (alias-resolved).
     assert "3.12" in by_prop["negative_marker_PV"]["node_b_value"]
@@ -302,7 +286,9 @@ def test_property_comparisons_not_measured_and_discrepancy_notes():
     assert "METADATA DISCREPANCY LISTED_NOT_EXPRESSED" in sst["notes"]
 
 
-def test_classical_expression_symbols_are_canonical_and_deduped():
+def test_classical_expression_symbols_are_names_as_written_and_deduped():
+    """#216: names go to TaxonomyDB.expression as written; gene identity
+    resolves them there (PV and Pvalb are both asked for, one gene)."""
     from evidencell.stage_b_emit import _classical_expression_symbols
 
     classical = {
@@ -310,7 +296,7 @@ def test_classical_expression_symbols_are_canonical_and_deduped():
         "negative_markers": [{"symbol": "Pvalb"}],
         "neuropeptides": ["Npy"],
     }
-    assert _classical_expression_symbols(classical) == ["Sst", "Pvalb", "Npy"]
+    assert _classical_expression_symbols(classical) == ["Sst", "PV", "Pvalb", "Npy"]
 
 
 # ── end-to-end emit against the real OLM rank-0 fixture ─────────────────────

@@ -11,8 +11,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-OUT = Path('/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/annotation_transfer/data/harris2018/f1_heatmap_by_class.png')
-F1 = Path('/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/annotation_transfer/data/harris2018/f1_chamberland_by_class.csv')
+HD = Path(__file__).resolve().parents[4] / 'annotation_transfer/data/harris2018'  # repo-relative
+OUT = HD / 'f1_heatmap_by_class.png'
+F1 = HD / 'f1_chamberland_by_class.csv'
 LEVELS = ['class', 'subclass', 'supertype', 'cluster']
 SUBFAMS = ['Chrna2', 'Ndnf', 'Sst_Nos1', 'Sst_Tac1']  # exclude unassigned
 TOP_N = 6

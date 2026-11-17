@@ -45,7 +45,9 @@ edges:
 
 
 def _run_hook(
-    payload: dict, user: str | None = "dosumis@gmail.com"
+    payload: dict,
+    user: str | None = "dosumis@gmail.com",
+    env_extra: dict[str, str] | None = None,
 ) -> subprocess.CompletedProcess:
     """Run the hook subprocess.
 
@@ -58,6 +60,7 @@ def _run_hook(
     env = os.environ.copy()
     if user is not None:
         env["EVIDENCELL_HOOK_USER"] = user
+    env.update(env_extra or {})
     return subprocess.run(
         [sys.executable, str(HOOK)],
         input=json.dumps(payload),
@@ -470,6 +473,106 @@ def test_valid_kb_file_passes():
     assert r.returncode == 0, (
         f"Expected exit 0 for valid KB file, got {r.returncode}\n{r.stderr}"
     )
+
+
+# ── Gene IDs on markers (#216) ────────────────────────────────────────────────
+
+
+def _fixture_with_sst_gene_id(gene_id: str) -> str:
+    """Valid fixture with the first node's SST marker pointed at ``gene_id``."""
+    import yaml
+
+    data = yaml.safe_load(VALID_KB_FIXTURE.read_text())
+    node = next(n for n in data["nodes"] if n.get("defining_markers"))
+    marker = next(m for m in node["defining_markers"] if m["symbol"] == "SST")
+    marker["ncbi_gene_id"] = gene_id
+    return yaml.safe_dump(data, sort_keys=False)
+
+
+def _offline_gene_env(tmp_path: Path, cache: dict) -> dict[str, str]:
+    """Hook env with a seeded gene-ID cache and an unreachable Translator."""
+    cache_file = tmp_path / "gene_id_cache.json"
+    cache_file.write_text(json.dumps(cache))
+    return {
+        "EVIDENCELL_GENE_ID_CACHE": str(cache_file),
+        "EVIDENCELL_NODENORM_URL": "http://127.0.0.1:9",
+        "EVIDENCELL_NAMERES_URL": "http://127.0.0.1:9",
+    }
+
+
+def test_gene_id_naming_another_gene_blocked(tmp_path: Path):
+    """An ncbi_gene_id whose gene isn't the marker's symbol is blocked
+    (cached lookup; no network)."""
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = _offline_gene_env(tmp_path, {
+        "NCBIGene:5816": {"label": "PVALB", "taxon": "NCBITaxon:9606", "names": ["PV"]},
+    })
+    r = _run_hook(_write_payload(_fixture_with_sst_gene_id("NCBIGene:5816")), env_extra=env)
+    assert r.returncode == 2, r.stderr
+    assert "Gene ID errors" in r.stderr
+    assert "NCBIGene:5816 is PVALB; 'SST' is not its label or a known synonym" in r.stderr
+
+
+def test_gene_id_that_does_not_exist_blocked(tmp_path: Path):
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = _offline_gene_env(tmp_path, {"NCBIGene:999999999": {"missing": True}})
+    r = _run_hook(_write_payload(_fixture_with_sst_gene_id("NCBIGene:999999999")), env_extra=env)
+    assert r.returncode == 2, r.stderr
+    assert "NCBIGene:999999999 does not resolve to an NCBI gene" in r.stderr
+
+
+def test_gene_id_check_bypass_env(tmp_path: Path):
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = _offline_gene_env(tmp_path, {"NCBIGene:999999999": {"missing": True}})
+    env["EVIDENCELL_SKIP_GENE_CHECK"] = "1"
+    r = _run_hook(_write_payload(_fixture_with_sst_gene_id("NCBIGene:999999999")), env_extra=env)
+    assert "Gene ID check bypassed via EVIDENCELL_SKIP_GENE_CHECK=1" in r.stderr
+    assert "does not resolve" not in r.stderr
+
+
+@pytest.mark.integration
+def test_gene_id_check_soft_skips_offline_and_says_so(tmp_path: Path):
+    """Offline with nothing cached: the edit is allowed, and every unchecked
+    ID is listed under "Checks NOT run"."""
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = _offline_gene_env(tmp_path, {})
+    r = _run_hook(_write_payload(VALID_KB_FIXTURE.read_text()), env_extra=env)
+    assert r.returncode == 0, r.stderr
+    assert "Checks NOT run for this file:" in r.stderr
+    assert "gene ID NCBIGene:6750: Translator NodeNormalization unreachable" in r.stderr
+
+
+@pytest.mark.integration
+def test_hallucinated_gene_id_blocked_via_nodenorm(tmp_path: Path):
+    """End-to-end against the live Translator NodeNormalization service."""
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = {"EVIDENCELL_GENE_ID_CACHE": str(tmp_path / "cache.json")}
+    r = _run_hook(_write_payload(_fixture_with_sst_gene_id("NCBIGene:999999999")), env_extra=env)
+    if "Translator NodeNormalization unreachable" in r.stderr:
+        pytest.skip("Translator NodeNormalization unreachable")
+    assert r.returncode == 2, r.stderr
+    assert "NCBIGene:999999999 does not resolve to an NCBI gene" in r.stderr
+
+
+@pytest.mark.integration
+def test_mouse_gene_id_on_primate_node_blocked_via_nodenorm(tmp_path: Path):
+    """Live lookup: Sst (mouse, NCBIGene:20604) on a Primates node."""
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    taxslim = Path(__file__).parent.parent / "conf" / "oak_dbs" / "taxslim.obo"
+    if not taxslim.is_file():
+        pytest.skip("needs conf/oak_dbs/taxslim.obo (just fetch-oak-dbs)")
+    env = {"EVIDENCELL_GENE_ID_CACHE": str(tmp_path / "cache.json")}
+    r = _run_hook(_write_payload(_fixture_with_sst_gene_id("NCBIGene:20604")), env_extra=env)
+    if "Translator NodeNormalization unreachable" in r.stderr:
+        pytest.skip("Translator NodeNormalization unreachable")
+    assert r.returncode == 2, r.stderr
+    assert "is a NCBITaxon:10090 gene (Sst), but the node's species is NCBITaxon:9443" in r.stderr
 
 
 # ── MarkerSource.marker_type (#196) ────────────────────────────────────────────

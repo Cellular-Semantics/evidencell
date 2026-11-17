@@ -18,7 +18,10 @@ nodes:
 - id: paralaminar_immature_neuron
   name: Paralaminar/ventral amygdala immature excitatory neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:314146
+    label: Euarchontoglires
+    name_in_source: "Humans; Primates; Macaca mulatta; Mice (MeSH organisms of cited primary papers; inferred, #216)"
   anatomical_location:
   - id: UBERON:0002887
     sources:
@@ -43,7 +46,7 @@ nodes:
     compartment: SOMA
   defining_markers:
   - symbol: Dcx
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:13193"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -61,7 +64,7 @@ nodes:
       quote_key: 235715856_1045f5c1
       marker_type: NOT_STATED
   - symbol: Bcl2
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:12043"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -79,7 +82,7 @@ nodes:
       quote_key: 235715856_1045f5c1
       marker_type: PROTEIN
   - symbol: Ncam1
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:17967"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -97,7 +100,7 @@ nodes:
       quote_key: 235715856_1045f5c1
       marker_type: NOT_STATED
   - symbol: Rbfox3
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:52897"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -115,7 +118,7 @@ nodes:
       quote_key: 235715856_1045f5c1
       marker_type: PROTEIN
   - symbol: Tubb3
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:22152"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -133,7 +136,7 @@ nodes:
       quote_key: 235715856_1045f5c1
       marker_type: NOT_STATED
   - symbol: Vim
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:22352"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -151,7 +154,7 @@ nodes:
       quote_key: 235715856_1045f5c1
       marker_type: NOT_STATED
   - symbol: Nes
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:18008"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -169,7 +172,7 @@ nodes:
       quote_key: 235715856_1045f5c1
       marker_type: NOT_STATED
   - symbol: Mki67
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:17345"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -187,7 +190,7 @@ nodes:
       quote_key: 235715856_1045f5c1
       marker_type: NOT_STATED
   - symbol: Sp8
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:320145"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -205,7 +208,7 @@ nodes:
       quote_key: 235715856_1045f5c1
       marker_type: NOT_STATED
   - symbol: Nr2f2
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:11819"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -223,7 +226,7 @@ nodes:
       quote_key: 235715856_1045f5c1
       marker_type: NOT_STATED
   - symbol: Prox1
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:19130"
     sources:
     - ref: PMID:31227709
       method: asta_report
@@ -242,7 +245,7 @@ nodes:
       marker_type: NOT_STATED
   negative_markers:
   - symbol: Nkx2-1
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:21869"
     sources:
     - ref: PMID:31227709
       method: asta_report

@@ -74,6 +74,7 @@ nodes:
       # these cells in the PCL. These are therefore independently confirmed
       # on the classical type, not just inferred from the snRNA-seq cluster.
       - symbol: Nxph1
+        ncbi_gene_id: "NCBIGene:18231"
         sources:
           - marker_type: TRANSCRIPT
             method: "smFISH on cerebellar tissue (Fig 3A-E)"
@@ -81,6 +82,7 @@ nodes:
             snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−); smFISH-identified PLI1s match distribution of morphologically confirmed tdTomato+ CCs in Oxtr-Cre×Ai14 mice"
             ref: "PMID:35578131"
       - symbol: Aldh1a3
+        ncbi_gene_id: "NCBIGene:56847"
         sources:
           - marker_type: TRANSCRIPT
             method: "smFISH on cerebellar tissue (Fig 3A-E)"
@@ -89,6 +91,7 @@ nodes:
             ref: "PMID:35578131"
     negative_markers:
       - symbol: Slc6a5
+        ncbi_gene_id: "NCBIGene:104245"
         sources:
           - marker_type: TRANSCRIPT
             method: "smFISH on cerebellar tissue (Fig 3A-E)"
@@ -152,6 +155,7 @@ nodes:
           name_in_source: "GABA"
     defining_markers:
       - symbol: Nxph1
+        ncbi_gene_id: "NCBIGene:18231"
         sources:
           - marker_type: TRANSCRIPT
             method: "snRNA-seq (snDrop-seq, SCP795)"
@@ -159,6 +163,7 @@ nodes:
             snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−)"
             ref: "PMID:35578131"
       - symbol: Aldh1a3
+        ncbi_gene_id: "NCBIGene:56847"
         sources:
           - marker_type: TRANSCRIPT
             method: "snRNA-seq (snDrop-seq, SCP795)"
@@ -166,6 +171,7 @@ nodes:
             snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−)"
             ref: "PMID:35578131"
       - symbol: Klhl1
+        ncbi_gene_id: "NCBIGene:93688"
         sources:
           - marker_type: TRANSCRIPT
             method: "snRNA-seq"
@@ -174,6 +180,7 @@ nodes:
             ref: "PMID:34616064"
     negative_markers:
       - symbol: Slc6a5
+        ncbi_gene_id: "NCBIGene:104245"
         sources:
           - marker_type: TRANSCRIPT
             method: "snRNA-seq (snDrop-seq, SCP795)"

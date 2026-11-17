@@ -21,7 +21,10 @@ nodes:
   - id: thalamic_glutamatergic_projection_neuron
     name: "Thalamic glutamatergic projection (thalamocortical relay) neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — mouse sources dominate; human snRNA-seq pooled for markers
+    species:  # To be confirmed from primary literature — mouse sources dominate; human snRNA-seq pooled for markers
+      id: NCBITaxon:314146
+      label: Euarchontoglires
+      name_in_source: "Mice; Humans (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0004703
         label: "dorsal thalamus"
@@ -79,7 +82,7 @@ nodes:
           quote_key: "282311854_83c180d9"
     defining_markers:
       - symbol: Slc17a6
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:140919"
         sources:
           - ref: "PMID:39282422"
             method: "snRNA-seq"
@@ -97,7 +100,7 @@ nodes:
             quote_key: "292476435_57748566"
             marker_type: TRANSCRIPT
       - symbol: Pvalb
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:19293"
         sources:
           - ref: "https://doi.org/10.1101/241315"
             method: "single-cell RNA-seq + multi-FISH"
@@ -110,7 +113,7 @@ nodes:
             quote_key: "261125104_84d5d827"
             marker_type: NOT_STATED
       - symbol: Tnnt1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:21955"
         sources:
           - ref: "https://doi.org/10.1101/241315"
             method: "single-cell RNA-seq + multi-FISH"
@@ -118,7 +121,7 @@ nodes:
             quote_key: "116905066_4cfb88d1"
             marker_type: TRANSCRIPT
       - symbol: Calb1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12307"
         sources:
           - ref: "PMID:42320642"
             method: "Calb1-defined single-neuron reconstruction (labelling method not stated)"
@@ -131,7 +134,7 @@ nodes:
             quote_key: "261125104_84d5d827"
             marker_type: NOT_STATED
       - symbol: Calb2
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12308"
         sources:
           - ref: "https://doi.org/10.1101/241315"
             method: "multi-FISH (Calb2, Tnnt1, Necab1)"
@@ -139,7 +142,7 @@ nodes:
             quote_key: "116905066_57089776"
             marker_type: TRANSCRIPT
       - symbol: Necab1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:69352"
         sources:
           - ref: "https://doi.org/10.1101/241315"
             method: "multi-FISH (Calb2, Tnnt1, Necab1)"

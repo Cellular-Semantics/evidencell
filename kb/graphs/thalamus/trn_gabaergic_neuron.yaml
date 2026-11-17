@@ -23,7 +23,10 @@ nodes:
   - id: trn_gabaergic_neuron
     name: "Thalamic reticular nucleus (TRN/RT) GABAergic neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — mouse primary evidence
+    species:  # To be confirmed from primary literature — mouse primary evidence
+      id: NCBITaxon:1437010
+      label: Boreoeutheria
+      name_in_source: "Mice; Rats; Cats; Macaca mulatta (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0001903
         label: "thalamic reticular nucleus"
@@ -87,7 +90,7 @@ nodes:
           quote_key: "11351142_bb87302f"
     defining_markers:
       - symbol: Spp1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20750"
         sources:
           - ref: "PMID:32699411"
             method: "scRNA-seq"
@@ -100,7 +103,7 @@ nodes:
             quote_key: "274495776_ea6ec372"
             marker_type: TRANSCRIPT
       - symbol: Ecel1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13599"
         sources:
           - ref: "PMID:32699411"
             method: "scRNA-seq"
@@ -113,7 +116,7 @@ nodes:
             quote_key: "274495776_ea6ec372"
             marker_type: TRANSCRIPT
       - symbol: Pvalb
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:19293"
         sources:
           - ref: "PMID:24929424"
             method: "statement in source citing De Biasi et al., 1994 (assay not stated)"
@@ -136,7 +139,7 @@ nodes:
             quote_key: "28027406_16344549"
             marker_type: PROTEIN
       - symbol: Gad1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14415"
         sources:
           - ref: "PMID:9053794"
             method: "single-cell in situ hybridization (GAD67 mRNA)"
@@ -149,7 +152,7 @@ nodes:
             quote_key: "285258741_478ed0bb"
             marker_type: NOT_STATED
       - symbol: Gad2
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14417"
         sources:
           - ref: "PMID:9053794"
             method: "single-cell in situ hybridization (GAD65 mRNA)"
@@ -157,7 +160,7 @@ nodes:
             quote_key: "13838378_20379fb3"
             marker_type: TRANSCRIPT
       - symbol: Sst
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: "PMID:28591583"
             method: "SOM-IRES-Cre reporter lines + SOM immunohistochemistry (rodent); SOM immunostaining (human)"
@@ -171,7 +174,7 @@ nodes:
             marker_type: NOT_STATED
     negative_markers:
       - symbol: Gabra4
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14397"
         sources:
           - ref: "PMID:24550784"
             method: "review statement citing Cope 2005; Jia 2005 (assay not stated)"
@@ -179,7 +182,7 @@ nodes:
             quote_key: "8097146_9fdcba62"
             marker_type: NOT_STATED
       - symbol: Gabrd
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14403"
         sources:
           - ref: "PMID:24550784"
             method: "review statement citing Cope 2005; Jia 2005 (assay not stated)"
@@ -187,7 +190,7 @@ nodes:
             quote_key: "8097146_9fdcba62"
             marker_type: NOT_STATED
       - symbol: Penk
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:18619"
         sources:
           - ref: "PMID:6133921"
             method: "immunohistochemistry (Met-enkephalin antisera)"
@@ -196,7 +199,7 @@ nodes:
             marker_type: PROTEIN
     neuropeptides:
       - symbol: Sst
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: "PMID:6133921"
             method: "immunohistochemistry (somatostatin antisera)"

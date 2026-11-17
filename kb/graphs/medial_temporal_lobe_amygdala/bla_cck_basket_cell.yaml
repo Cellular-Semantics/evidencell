@@ -18,7 +18,10 @@ nodes:
 - id: bla_cck_basket_cell
   name: Basolateral amygdala cholecystokinin basket cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
   nt_type:
     name_in_source: GABAergic
     sources:
@@ -50,7 +53,7 @@ nodes:
     compartment: SOMA
   defining_markers:
   - symbol: Cck
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:12424"
     sources:
     - ref: PMID:22837739
       method: asta_report
@@ -74,7 +77,7 @@ nodes:
       quote_key: 273531817_26309a28
       marker_type: TRANSCRIPT
   - symbol: Calb1
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:12307"
     sources:
     - ref: PMID:22837739
       method: asta_report
@@ -92,7 +95,7 @@ nodes:
       quote_key: 232283078_d4238834
       marker_type: PROTEIN
   - symbol: Cnr1
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:12801"
     sources:
     - ref: PMID:27013983
       method: asta_report
@@ -111,7 +114,7 @@ nodes:
       marker_type: NOT_STATED
   neuropeptides:
   - symbol: Cck
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:12424"
     sources:
     - ref: PMID:22837739
       method: asta_report
@@ -125,7 +128,7 @@ nodes:
       marker_type: PROTEIN
   negative_markers:
   - symbol: Pvalb
-    ncbi_gene_id: null
+    ncbi_gene_id: "NCBIGene:19293"
     sources:
     - ref: PMID:33837051
       method: asta_snippet — Vereczki 2021 census establishes PVALB+ and non-PVALB cells as distinct non-overlapping

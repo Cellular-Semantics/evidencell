@@ -14,6 +14,9 @@ nodes:
     name: Hippocampo-septal (HS) cell
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:39107
+      label: Murinae
+      name_in_source: "Rats; Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0014552
         label: CA1 stratum oriens
@@ -44,7 +47,7 @@ nodes:
           name_in_source: GABAergic
     defining_markers:
       - symbol: Sst
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: https://doi.org/10.1101/598599
             marker_type: PROTEIN
@@ -66,7 +69,7 @@ nodes:
     negative_markers: []
     neuropeptides:
       - symbol: Sst
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20604"
     cl_mapping:
       cl_term:
         id: CL:4023121

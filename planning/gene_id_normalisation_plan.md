@@ -1,3 +1,10 @@
+> **Superseded (2026-11-17) by #216.** Gene identity is implemented in
+> `src/evidencell/gene_identity.py`: a committed per-taxonomy
+> `gene_ids.tsv.gz` (Translator NodeNormalization + Name Resolver), loaded
+> into the taxonomy DB's `genes` / `gene_synonyms` tables, a reviewed
+> `gene_overrides.tsv`, `just resolve-gene-names` for curation, and a
+> pre-edit hook check on `ncbi_gene_id`. Kept for its design history.
+
 # Gene symbol & ID normalisation for taxonomy nodes
 
 ## Context

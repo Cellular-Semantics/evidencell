@@ -163,16 +163,22 @@ means** — the same as the former YAML values, but not cell-weighted. Details
 in `src/evidencell/expression_cache.py`.
 
 - `just build-taxonomy-db` creates the cache tables **empty**; they refill on
-  use. A new stats release (different sha256), a regenerated gene mapping TSV
-  or a change to the protein-alias table drops and reloads the cache.
-- Stage A (`find-candidates`) does not score protein-name markers (`PV`,
-  `CB`, `mGluR1` …) that resolve to a gene only through `marker_aliases`;
-  they are listed as `unscored_protein_alias_markers` until gene identity is
-  resolved properly (#216). Stage B still resolves them for its comparisons.
+  use. The cache is keyed by Ensembl ID. A new stats release (different
+  sha256) drops it, and is refused until `gene_ids.tsv.gz` is refreshed for
+  that file (its column indices would otherwise be untrusted).
+- **Gene identity (#216).** Marker names resolve to the stats file's genes
+  through the `genes` / `gene_synonyms` tables, loaded by `build-taxonomy-db`
+  from the committed `kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz` (Translator
+  NodeNormalization + Name Resolver; refresh with `just build-gene-ids`) and
+  the reviewed `gene_overrides.tsv`. A marker's `ncbi_gene_id` pins its gene;
+  otherwise the name resolves by override, exact symbol, case-insensitive
+  symbol, or a synonym exactly one gene claims. See
+  `src/evidencell/gene_identity.py`.
 - **Fails closed**: an uncached gene with no stats file stops the run with
   `just fetch-mapmycells {taxonomy_id}`. There is no metadata-only fallback.
-- Genes that can't be measured (no Ensembl mapping, absent from the stats
-  file) are recorded as not measured and reported — never a silent `{}`.
+- Names that can't be measured are recorded and reported — never a silent
+  `{}`: `NO_ENSEMBL_MAPPING` (no gene of the taxonomy has that name) or
+  `AMBIGUOUS_SYMBOL` (several do; set the marker's `ncbi_gene_id`).
 - Marker scoring in `find-candidates` uses expression only. The atlas
   node's metadata marker lists are cross-checked and disagreements reported
   as `marker_discrepancies` (carried into Stage B property-comparison notes).
@@ -269,8 +275,27 @@ Two things to know before using them:
   (`Human.` / `Macaque.` / `Marmoset.precomputed_stats.20250507.h5`) — use
   those directly if you need a single-species reference.
 
-The accessor also needs `conf/gene_mapping_{taxonomy_id}.tsv` (symbol →
-Ensembl; committed for CCN20230722, otherwise `just generate-gene-mapping`).
+The accessor also needs the taxonomy's gene identity table,
+`kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz` (committed for CCN20230722;
+otherwise `just build-gene-ids {taxonomy_id}`, which needs the stats file and
+network). `build-taxonomy-db` loads it offline.
+
+### Gene IDs on classical markers
+
+Every classical marker (`defining_markers`, `negative_markers`,
+`neuropeptides`) should carry `ncbi_gene_id`, in the node's species (a gene
+of a descendant species is fine on a higher-taxon node, e.g. a mouse gene on
+a Murinae node). Get it from `just resolve-gene-names {taxonomy_id|NCBITaxon:…}
+NAME…`: `EXACT_SYMBOL` / `CASE_INSENSITIVE_SYMBOL` / `UNIQUE_SYNONYM` /
+`OVERRIDE` can be taken as given; `AMBIGUOUS` lists the genes that claim the
+name — pick one from that list using the paper (quote its definition if it
+gives one), never another gene; `NO_MATCH` means it is not a gene name
+(antibody clone, PTM state, glycoform, exogenous label, gene family) —
+classify it and leave `ncbi_gene_id` empty. A reviewed name → gene decision
+that should apply everywhere goes in `kb/taxonomy/{taxonomy_id}/gene_overrides.tsv`
+with a rationale. The pre-edit hook checks every `ncbi_gene_id` (exists,
+right species, symbol is the gene's label or a known name); markers that
+can't take an ID are listed in `research/gene_identity_216/unresolvable_markers.tsv`.
 
 ---
 

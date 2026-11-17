@@ -22,7 +22,10 @@ nodes:
   - id: pir_immature_neuron
     name: "Piriform Cortex Layer II Immature Neuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:       # To be confirmed — studies cite mouse, rat, guinea pig
+    species:  # To be confirmed — studies cite mouse, rat, guinea pig
+      id: NCBITaxon:39107
+      label: Murinae
+      name_in_source: "Mice; Rats (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0004725
         label: "piriform cortex"
@@ -40,7 +43,7 @@ nodes:
           quote_key: "235300723_e71a4b88"
     defining_markers:
       - symbol: DCX
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13193"
         sources:
           - ref: "PMID:29688272"
             method: "IHC"
@@ -77,7 +80,7 @@ nodes:
             marker_type: PROTEIN
       - symbol: TBR1
         modifier: "upon resumption of maturation"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:21375"
         sources:
           - ref: "PMID:29688272"
             method: "IHC"
@@ -95,7 +98,7 @@ nodes:
             marker_type: PROTEIN
       - symbol: CRMP-4
         modifier: "TOAD/Ulip/CRMP-4"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:22240"
         sources:
           - ref: "PMID:18245040"
             method: "IHC"
@@ -112,22 +115,22 @@ nodes:
             marker_type: PROTEIN
     negative_markers:
       - symbol: NeuN
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:52897"
       - symbol: c-Fos
         modifier: "no activity marker expression"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14281"
       - symbol: Arc
         modifier: "no activity marker expression"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:11838"
       - symbol: NMDA-receptor
         modifier: "no NMDA receptors"
         ncbi_gene_id:
       - symbol: glucocorticoid-receptor
         modifier: "no glucocorticoid receptors"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14815"
       - symbol: GFAP
         modifier: "no glial markers"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14580"
     neuropeptides: []
     colocated_types: []
     cl_mapping:

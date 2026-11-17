@@ -44,9 +44,10 @@ just fetch-mapmycells {taxonomy_id}    # → conf/mapmycells/{taxonomy_id}/ (1�
 just build-taxonomy-db {taxonomy_id}   # expression cache tables start empty
 ```
 
-The gene mapping TSV is `conf/gene_mapping_{taxonomy_id}.tsv` (committed for
-CCN20230722; otherwise `just generate-gene-mapping {stats_h5} {tsv}`). Both
-paths come from the registry in
+Marker names resolve to the stats file's genes through the taxonomy's gene
+identity table, `kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz` (committed for
+CCN20230722; otherwise `just build-gene-ids {taxonomy_id}`), loaded by
+`build-taxonomy-db` (#216). The stats path comes from the registry in
 `annotation_transfer/src/annotation_transfer/taxonomies.py` — there is no
 path parameter to set. `just warm-expression-cache {taxonomy_id}` optionally
 pre-loads every KB marker gene and lists any that can't be measured.
@@ -123,12 +124,13 @@ specification):
   there is no metadata-only mode. Genes that can't be measured (no Ensembl
   mapping, or absent from the stats file) are listed as `NOT MEASURED` on
   stderr and under `not_measured_genes` in the discovery JSON; they score 0.
-  Protein-name markers that only resolve to a gene through the
-  `marker_aliases` stopgap (`PV`, `CB`, `CR`, `NOS`, `mGluR1` …) are not
-  scored in Stage A — listed as `NOT SCORED` on stderr and under
-  `unscored_protein_alias_markers` — until gene identity is resolved
-  properly (#216). Use canonical gene symbols on classical nodes to have a
-  marker scored.
+  Each marker name resolves to a gene through the gene identity tables
+  (#216): its `ncbi_gene_id` if set, else a reviewed override, an exact or
+  case-insensitive symbol, or a synonym only one gene claims (`PV` → Pvalb,
+  `mGluR1` → Grm1). A name several genes claim is `AMBIGUOUS_SYMBOL` (the
+  stderr line lists them) and scores 0 until the marker's `ncbi_gene_id` is
+  set. `gene_resolution` in the discovery JSON records how each name
+  resolved.
 - **Soft scoring** within the surviving pool:
   - **Graded region score** from `region_fraction_100um`:
     +2 if ≥ 0.5, +1 if ≥ 0.1, +0.5 if > 0, else 0.
@@ -184,7 +186,7 @@ specification):
   `at_hit`, `coverage` are emitted alongside the score for
   downstream consumption; `marker_discrepancies` per candidate and
   per-candidate `expression_source`, and top-level `not_measured_genes` /
-  `unscored_protein_alias_markers` / `expression_source` sit outside
+  `gene_resolution` / `expression_source` sit outside
   `discovery_score`.
 
 ---
@@ -269,7 +271,7 @@ warning.
       CONSISTENT, otherwise DISCORDANT;
     - `NOT_ASSESSED` (`node_b_value: not measured`) only for a gene
       recorded as not measured — the notes give the reason
-      (`NO_ENSEMBL_MAPPING` / `NOT_IN_STATS`) and the stats file.
+      (`NO_ENSEMBL_MAPPING` / `AMBIGUOUS_SYMBOL`) and the stats file.
     The candidate's Stage A `marker_discrepancies` entry for the gene,
     if any, is appended to the notes (`METADATA DISCREPANCY …`) so
     gen-facts and report synthesis can see it. It does not change
@@ -277,13 +279,10 @@ warning.
     Every comparison with a measured value records its stats file in
     the notes (`atlas expression from {file}`); gen-facts collects
     these for the report's Methods section.
-    Symbol resolution: classical-node marker abbreviations
-    (PV → Pvalb, CB → Calb1, CR → Calb2, NOS → Nos1, VIP → Vip,
-    etc.) are mapped to canonical gene symbols via
-    `PROTEIN_TO_GENE_ALIASES` in `src/evidencell/marker_aliases.py`
-    (Stage B only; Stage A does not score them). This table is a
-    stopgap — see #216; preferred is canonical gene symbols in
-    classical-node YAML.
+    Symbol resolution: classical-node marker names resolve to atlas
+    genes exactly as in Stage A — through the gene identity tables,
+    pinned by each marker's `ncbi_gene_id` (#216). The atlas symbol a
+    name resolved to is used to match the atlas metadata marker lists.
 - `evidence[]` — emit deterministically:
   - `ATLAS_METADATA` (always; `supports: PARTIAL`): explanation
     auto-built from candidate atlas-side properties (n_cells,

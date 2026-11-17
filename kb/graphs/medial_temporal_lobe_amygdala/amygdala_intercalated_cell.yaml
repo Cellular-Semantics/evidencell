@@ -13,6 +13,9 @@ nodes:
     name: Amygdala intercalated cell
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:314146
+      label: Euarchontoglires
+      name_in_source: "Macaca mulatta; Mice (MeSH organisms of cited primary papers; inferred, #216)"
     nt_type:
       name_in_source: GABAergic
       cl_terms:
@@ -48,7 +51,7 @@ nodes:
             quote_key: 15449738_a21bd562
     defining_markers:
       - symbol: Foxp2
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:114142"
         sources:
           - ref: PMID:39463931
             method: asta_snippet — Yu et al. 2024 identifies FOXP2+ ITC interneuron subtypes in primate amygdala
@@ -61,7 +64,7 @@ nodes:
             quote_key: 256832817_4f39c6f9
             marker_type: TRANSCRIPT
       - symbol: Drd1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:13488"
         sources:
           - ref: PMID:36788214
             method: asta_snippet — Yu et al. 2023 identifies DRD1+ and DRD1- TSHZ1+ ITC subtypes
@@ -69,7 +72,7 @@ nodes:
             quote_key: 256832817_4f39c6f9
             marker_type: TRANSCRIPT
       - symbol: Oprm1
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:18390"
         sources:
           - ref: PMID:39463931
             method: asta_snippet — Yu et al. 2024 identifies FOXP2+ ITC interneuron subtypes in primate amygdala
