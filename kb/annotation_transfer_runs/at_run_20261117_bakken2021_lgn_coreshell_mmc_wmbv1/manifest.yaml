@@ -1,0 +1,65 @@
+id: at_run_20261117_bakken2021_lgn_coreshell_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE182211"
+source_cluster_label: >
+  DERIVED label scheme on Bakken et al. 2021 (PMID:34473054) mouse SMART-seq
+  v4 cells: the published glutamatergic dLGN cluster (GEO `cluster_label` ==
+  "LGd", 1,012 cells) split by dissection region (`dissection_roi`):
+  "LGd core" (682 cells, dLGN - Core) and "LGd shell" (330 cells, dLGN -
+  Shell). Only LGd cells are scored. The authors report that the main axis
+  of variation inside this cluster follows core vs shell, and that
+  microdissections are enrichments, not clean separations.
+  SOURCE-LABEL PURITY: mixed. Each label is a dissection enrichment along a
+  continuous gradient, not a transcriptomic type.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  Same MapMyCells output as at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1
+  (mmc_results.csv lives in that run record). F1 scored with `annotation-transfer score` at bootstrap
+  threshold 0.8 against labels_coreshell.json.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 2187
+n_cells_after_filter: 1012
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: ../at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1/README.md
+  python_version: ">=3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "86bfcc0 (branch base; run 2026-11-17)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Derived relabel, scored apart from the published labels by design.
+  It is not declared as an at_source_sets correspondence on any node; it
+  answers whether WMBv1 resolves the dLGN core/shell axis.
+  (2) Result: it does not. Core cells (97.2%) and shell cells (99.7%) land in
+  the same WMB cluster, 2650 TH Prkcd Grin2c Glut_2. F1 for each label
+  (0.80 core, 0.51 shell) only reflects the 2:1 core:shell cell ratio,
+  because both labels share one target. Read label_distribution.tsv, not F1.
+  A core-vs-shell split of dlgn_relay_neuron would have no separate WMBv1
+  counterpart.
+  (3) Purity is within LGd cells only. The cluster-run platform caveats
+  (SMART-seq v4 read counts vs UMI reference, no gene-length correction)
+  apply here too.
+
+metadata: >
+  source_paper=PMID:34473054;
+  mmc_results=../at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1/mmc_results.csv;
+  mmc_results_sha256=779f37d7ef13948f55f54bd260cb0807412db1ce6cf566598d2fb2d050b2d78d;
+  label_distribution=label_distribution.tsv
