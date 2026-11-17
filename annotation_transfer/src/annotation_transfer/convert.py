@@ -323,8 +323,12 @@ def to_log2cpm(
         )
     x = x / totals * 1e6
 
-    # 4. log2(x+1).
-    a.X = sp.csr_matrix(np.log2(x + 1.0))
+    # 4. log2(x+1), in place: `x` is already a fresh array from step 3,
+    # and a dense query matrix is big enough that a second full copy is
+    # the difference between running and an OOM kill.
+    np.add(x, 1.0, out=x)
+    np.log2(x, out=x)
+    a.X = sp.csr_matrix(x)
     a.raw = None
     return a
 

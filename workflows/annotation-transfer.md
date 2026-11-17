@@ -77,22 +77,27 @@ Step 0.2 Query normalisation (only when the dataset has no counts)
         as log2(CPM+1), which cell_type_mapper supports natively:
           just at-normalize <in.h5ad> <log2cpm.h5ad> --input-scale tpm
           just at-convert <log2cpm.h5ad> <ready.h5ad> --normalization log2CPM
-          just at-map <ready.h5ad> CCN20230722 <out/> --backend local --normalization log2CPM
+          just at-map <ready.h5ad> CCN20230722 <out/> --normalization log2CPM
         --input-scale says what X currently holds (tpm / cpm / counts /
         ln1p / log2_1p / log10_1p); get it from the submitter's own
         description of the file, not from the look of the numbers.
         Three things to know:
           * The web backend has no normalisation parameter and treats
-            every upload as counts, so a log2CPM run must use --backend
-            local. `at-map` refuses the combination rather than
-            mis-mapping silently.
+            every upload as counts, so a log2CPM run can only run
+            locally. `at-map` resolves to the local backend by itself
+            when the taxonomy's precomputed stats + markers are
+            downloaded; if they are not, it refuses the run (naming
+            `taxonomy-setup --download`) rather than mis-mapping
+            silently. An explicit `--backend web` is always refused.
           * Pass --gene-lengths when the source is full-length (TPM/FPKM)
             and the target taxonomy is UMI-based (all the registered
             ones are). TPM is gene-length normalised and the reference
             is not; without the correction that bias lands directly on
             the marker-wise correlation MapMyCells optimises.
           * Record `query_normalization: log2CPM` in the run manifest
-            (Step 4). It propagates onto every evidence item the run
+            (Step 4), spelled exactly like that — it is validated
+            against the schema enum when `emit-stage-b` reads it, and a
+            typo aborts the emit with a diagnostic naming the manifest. It propagates onto every evidence item the run
             backs, and downstream reports are expected to weigh those F1
             values as indicative rather than counts-grade.
 

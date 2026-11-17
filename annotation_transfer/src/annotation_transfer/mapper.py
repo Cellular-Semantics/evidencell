@@ -45,13 +45,33 @@ def resolve_backend(
     taxonomy: TaxonomySpec,
     input_h5ad: Path,
     requested: MappingBackend | None = None,
+    *,
+    normalization: str = "raw",
 ) -> MappingBackend:
     """Determine which backend to use for this mapping run.
 
-    Priority: explicit request > taxonomy preference > auto logic.
+    Priority: explicit request > normalisation constraint > taxonomy
+    preference > auto logic.
+
+    ``normalization`` is a hard constraint, not a preference: the web API
+    exposes no normalisation parameter and treats every upload as raw
+    counts, so a non-raw query can only be mapped locally. When the
+    caller has not pinned a backend, a non-raw run therefore resolves to
+    LOCAL whenever the local files are present — otherwise `auto` would
+    pick WEB for any taxonomy with a ``web_ref_id`` and the run would be
+    refused despite being perfectly runnable.
     """
     if requested is not None and requested != MappingBackend.AUTO:
         return requested
+
+    # No local files for a non-raw run: fall through, so the WEB path
+    # raises the refusal that names taxonomy-setup --download.
+    if (
+        normalization != "raw"
+        and taxonomy.local_stats_path
+        and taxonomy.local_markers_path
+    ):
+        return MappingBackend.LOCAL
 
     preferred = taxonomy.preferred_backend
 
@@ -171,7 +191,9 @@ def run_mapping(
             f"must be one of {', '.join(NORMALIZATIONS)}."
         )
 
-    resolved = resolve_backend(taxonomy, input_h5ad, backend)
+    resolved = resolve_backend(
+        taxonomy, input_h5ad, backend, normalization=normalization
+    )
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -180,9 +202,10 @@ def run_mapping(
             raise MapperError(
                 f"normalization={normalization!r} is not available on the "
                 "MapMyCells web API, which exposes no normalisation "
-                "parameter and treats every upload as raw counts. Run "
-                "with --backend local (requires the taxonomy's "
-                "precomputed stats + markers: "
+                "parameter and treats every upload as raw counts. The "
+                "local backend was not selected automatically because "
+                "this taxonomy has no downloaded precomputed stats + "
+                "markers — fetch them and re-run: "
                 f"'annotation-transfer taxonomy-setup {taxonomy.id} --download')."
             )
         return _run_web(

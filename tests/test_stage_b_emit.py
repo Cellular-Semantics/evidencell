@@ -538,3 +538,25 @@ def test_at_evidence_manifest_without_field_treated_as_raw(monkeypatch):
     item = _norm_item(monkeypatch, None)
     assert "query_normalization" not in item
     assert "CAVEAT" not in item["explanation"]
+
+
+def test_at_evidence_rejects_unknown_normalization(monkeypatch):
+    """query_normalization is hand-authored into the run manifest, so a
+    typo must be a named diagnostic — not a bare KeyError that kills the
+    whole emit, and not an invalid value written into KB YAML."""
+    import pytest
+
+    _patch_at_with_norm(monkeypatch, "log2cpm")
+    with pytest.raises(ValueError, match="unknown query_normalization"):
+        sbe._at_evidence(
+            source_set={
+                "dataset_accession": "GEO:GSE145273", "source_label": "TRN",
+            },
+            taxonomy_id="CCN20230722",
+            edge_target="CS20230722_CLUS_0768",
+        )
+
+
+def test_at_evidence_tolerates_whitespace_in_normalization(monkeypatch):
+    item = _norm_item(monkeypatch, " log2CPM ")
+    assert item["query_normalization"] == "log2CPM"

@@ -28,9 +28,12 @@ import yaml
 from ruamel.yaml import YAML
 
 from evidencell.at_metrics import (
+    QUERY_NORM_CAVEAT,
+    apply_query_norm_caveat,
     compute_edge_metrics,
     load_run_manifest,
     resolve_run_for_source,
+    validate_query_normalization,
 )
 from evidencell.kb_io import roundtrip_yaml
 from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
@@ -625,14 +628,20 @@ def _at_evidence(
         if run_ref:
             manifest = load_run_manifest(run_ref)
             target_atlas = manifest.get("target_atlas") or "WMBv1"
-            query_norm = manifest.get("query_normalization") or "raw"
+            # Hand-authored by a curator, so validate before use: an
+            # unrecognised value must be a named diagnostic, not a
+            # KeyError here or a schema failure after it reaches KB YAML.
+            query_norm = validate_query_normalization(
+                manifest.get("query_normalization"),
+                context=f"{run_ref}/manifest.yaml",
+            )
         method = "MapMyCells (via at_metrics.compute_edge_metrics)"
-        if query_norm != "raw":
-            # Keep the caveat on the evidence item itself, not only in the
-            # run manifest: a consumer weighing this F1 (report synthesis
-            # included) reads the item, not the manifest.
-            method = f"{method}, {query_norm} query normalization"
-            explanation = f"{explanation} {_QUERY_NORM_CAVEAT[query_norm]}"
+        # Keep the caveat on the evidence item itself, not only in the
+        # run manifest: a consumer weighing this F1 (report synthesis
+        # included) reads the item, not the manifest.
+        method, explanation = apply_query_norm_caveat(
+            method, explanation, query_norm
+        )
         item: dict = {
             "evidence_type": "ANNOTATION_TRANSFER",
             "supports": supports,
@@ -727,20 +736,10 @@ def _at_evidence(
 # ─── caveats (rule-based) ────────────────────────────────────────────────────
 
 
-#: Appended to an AT evidence item's explanation when the backing run used
-#: a non-raw query normalisation. Prose, not a tier code: the downstream
-#: consumer is an LLM reading the evidence item.
-_QUERY_NORM_CAVEAT = {
-    "log2CPM": (
-        "CAVEAT: the query was mapped as pre-normalised log2(CPM+1), not "
-        "raw counts — typically a full-length (Smart-seq/TPM) dataset "
-        "published without counts. TPM is gene-length normalised while "
-        "the reference taxonomy is not, which biases the marker-wise "
-        "correlation MapMyCells optimises, and the integer-count input "
-        "check does not apply to such a run. Weigh these F1 values as "
-        "indicative rather than on a par with a counts-based run."
-    ),
-}
+#: Query-normalisation caveat text. Defined in ``at_metrics`` alongside
+#: the refresh path that has to re-derive it, so emit and refresh cannot
+#: drift apart; re-exported here for callers of this module.
+_QUERY_NORM_CAVEAT = QUERY_NORM_CAVEAT
 
 
 def _caveats(

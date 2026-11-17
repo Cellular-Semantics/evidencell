@@ -2,7 +2,7 @@
 
 Usage:
     annotation-transfer convert INPUT OUTPUT [--cluster-col COL --cluster-value VAL --label-col COL --normalization raw|log2CPM]
-    annotation-transfer normalize INPUT OUTPUT --input-scale SCALE [--gene-lengths TSV]
+    annotation-transfer normalize INPUT OUTPUT --input-scale SCALE [--gene-lengths TSV] [-y]
     annotation-transfer map INPUT TAXONOMY OUTPUT_DIR [--backend web|local|auto --algorithm ALG --normalization raw|log2CPM]
     annotation-transfer map-local INPUT STATS MARKERS OUTPUT_JSON [--csv PATH --normalization raw|log2CPM]
     annotation-transfer score MMC_CSV LABELS_JSON OUTPUT [--threshold 0.8]
@@ -54,6 +54,12 @@ def cmd_normalize(args: argparse.Namespace) -> None:
     import anndata as ad
 
     from annotation_transfer.convert import load_gene_lengths, to_log2cpm
+    from annotation_transfer.preflight import preflight_gate
+
+    # Gate here too, not only in `convert`: this is the heaviest step in
+    # the pipeline (to_log2cpm densifies X), so it is the likeliest place
+    # to be OOM-killed on a large query.
+    preflight_gate(args.input, auto_approve=args.yes)
 
     adata = ad.read_h5ad(args.input)
     lengths = load_gene_lengths(args.gene_lengths) if args.gene_lengths else None
@@ -271,6 +277,9 @@ def main(argv: list[str] | None = None) -> None:
         choices=["counts", "cpm", "tpm", "ln1p", "log2_1p", "log10_1p"],
         help="What X currently holds. The *_1p scales are offset-logs "
              "of a linear matrix in that base.",
+    )
+    p_norm.add_argument(
+        "-y", "--yes", action="store_true", help="Skip preflight confirmation",
     )
     p_norm.add_argument(
         "--gene-lengths", type=Path,

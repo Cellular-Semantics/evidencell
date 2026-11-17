@@ -228,3 +228,57 @@ def test_run_mapping_local_threads_normalization(tmp_path, monkeypatch):
     )
     assert captured["normalization"] == "log2CPM"
     assert result.normalization == "log2CPM"
+
+
+# ─── normalisation as a backend constraint (#208 follow-up) ───────────
+
+
+def test_log2cpm_prefers_local_even_when_web_available(tmp_path):
+    """log2CPM can only be mapped locally, so `auto` must not hand it to
+    the web backend when the local files are sitting right there."""
+    from annotation_transfer.mapper import MappingBackend, resolve_backend
+    from annotation_transfer.taxonomies import TaxonomySpec
+
+    stats = tmp_path / "stats.h5"
+    markers = tmp_path / "markers.json"
+    stats.touch()
+    markers.touch()
+    tax = TaxonomySpec(
+        id="CCN20230722",
+        name="Whole Mouse Brain",
+        species="mouse",
+        web_ref_id="WMB-10Xv3",
+        local_stats_path=stats,
+        local_markers_path=markers,
+        preferred_backend="web",
+    )
+    assert resolve_backend(
+        tax, tmp_path / "q.h5ad", None, normalization="log2CPM"
+    ) == MappingBackend.LOCAL
+    # raw is unaffected — the web preference still wins.
+    assert resolve_backend(
+        tax, tmp_path / "q.h5ad", None, normalization="raw"
+    ) == MappingBackend.WEB
+    # An explicit --backend web is still honoured (and refused later by
+    # run_mapping with a diagnostic).
+    assert resolve_backend(
+        tax, tmp_path / "q.h5ad", MappingBackend.WEB, normalization="log2CPM"
+    ) == MappingBackend.WEB
+
+
+def test_log2cpm_without_local_files_falls_through_to_web(tmp_path):
+    """No local files → WEB, so run_mapping raises the refusal that tells
+    the user to download them."""
+    from annotation_transfer.mapper import MappingBackend, resolve_backend
+    from annotation_transfer.taxonomies import TaxonomySpec
+
+    tax = TaxonomySpec(
+        id="CCN20230722",
+        name="Whole Mouse Brain",
+        species="mouse",
+        web_ref_id="WMB-10Xv3",
+        preferred_backend="auto",
+    )
+    assert resolve_backend(
+        tax, tmp_path / "q.h5ad", None, normalization="log2CPM"
+    ) == MappingBackend.WEB
