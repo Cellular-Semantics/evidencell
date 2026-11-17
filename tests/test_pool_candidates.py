@@ -294,6 +294,16 @@ def test_kb_graph_unknown_node_raises(kb):
         load_kb_graph("nope")
 
 
+def test_cli_unknown_node_exits_2(kb, capsys):
+    """Bad scope exits 2, as at-coverage does."""
+    from evidencell.pool_candidates import main
+
+    _graph_file(kb, "r", "a.yaml", "lit_A", [])
+    assert main(["--node", "nope"]) == 2
+    assert "No KB node" in capsys.readouterr().err
+    assert main(["--node", "lit_A"]) == 0
+
+
 # ── Same-source-group suppression ─────────────────────────────────────────────
 
 def _at_edge(edge_id, lit, target, run_ref, label, f1, level="SUBCLASS"):

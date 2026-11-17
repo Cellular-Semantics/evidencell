@@ -100,6 +100,10 @@ refresh-at-metrics *ARGS:
 # AT run (resolved) vs not (UNRESOLVED). Report-only; exits non-zero if any
 # UNRESOLVED. Run before map-cell-type; for UNRESOLVED rows run annotation-transfer.
 # Scope: named node ids, --region REGION, or (neither) the whole KB.
+# Every row is checked against the one TAXONOMY_ID given. A source whose run
+# targets a different taxonomy shows as "NO RUN ON {taxonomy_id}" and still
+# exits non-zero, so a scope mixing taxonomies (whole KB, BG) is a report,
+# not a gate: gate on named nodes or a single-taxonomy region.
 # Usage: just at-coverage CCN20230722 olm_cell_ca1
 #        just at-coverage CCN20230722 --region hippocampus
 [group('at_metrics')]

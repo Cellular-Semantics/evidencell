@@ -401,6 +401,9 @@ parallel where possible (taxonomy ingest + report ingest are independent).
     # preflight is the single resource checkpoint. Nodes with no at_source_sets
     # are listed separately (proceed; AT simply absent) — the header states how
     # many nodes were checked, so a narrow run cannot pass for a region sweep.
+    # Rows are checked against the one taxonomy given: a source whose run
+    # targets another taxonomy shows as "NO RUN ON {taxonomy_id}" (still
+    # non-zero exit) — check whether the node is meant to map to it.
 
 ── Mapping ────────────────────────────────────────────────────────────────────
 

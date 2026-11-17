@@ -443,7 +443,7 @@ def main(argv: list[str] | None = None) -> int:
         graph = load_kb_graph(args.node)
     except KeyError as exc:
         print(f"ERROR: {exc.args[0]}", file=sys.stderr)
-        return 1
+        return 2
     if args.node:
         candidates = find_pool_candidates_for_node(
             graph,

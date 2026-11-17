@@ -868,6 +868,62 @@ def test_format_at_coverage_empty_message():
     assert "Nothing to attempt" in out
 
 
+def test_at_coverage_named_scope_counts_distinct_nodes(cov_kb):
+    root, runs = cov_kb
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+    report = at_metrics.at_coverage(
+        "CCN20230722", node_ids=["hit", "hit"], runs_root=runs,
+    )
+    assert report["scope"] == "1 named node(s)"
+    assert report["checked"] == ["hit"]
+
+
+def test_at_coverage_run_on_another_taxonomy_is_flagged_not_resolved(cov_kb):
+    """at_source_sets names no taxonomy: a run against a different taxonomy is
+    reported as such, kept apart from a source with no run anywhere, and
+    never counted as resolved."""
+    root, runs = cov_kb
+    _make_run(runs, "at_run_20260201_b_mmc_hmba", "GEO:GSE1", "CCN20250428", "Primate")
+    _cov_node(root, "bg", _classical("primate_type", "Primate"))
+    _cov_node(root, "bg", _classical("no_run_type", "NopeLabel"))
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+
+    report = at_metrics.at_coverage("CCN20230722", runs_root=runs)
+    by_node = {r["node_id"]: r for r in report["rows"]}
+    assert by_node["primate_type"]["run_ref"] is None
+    assert by_node["primate_type"]["other_taxonomy_runs"] == [
+        {"taxonomy_id": "CCN20250428", "run_ref": "at_run_20260201_b_mmc_hmba"},
+    ]
+    assert by_node["no_run_type"]["other_taxonomy_runs"] == []
+    assert by_node["hit"]["other_taxonomy_runs"] == []
+
+    out = at_metrics.format_at_coverage(report, "CCN20230722")
+    assert "NO RUN ON CCN20230722 (run on CCN20250428: at_run_20260201_b_mmc_hmba)" in out
+    assert "1 UNRESOLVED" in out
+    assert "1 with NO RUN ON CCN20230722" in out
+    assert "All declared AT sources resolve" not in out
+
+
+def test_at_coverage_cli_exit_codes(cov_kb, monkeypatch, capsys):
+    """0 all resolved, 1 any source without a run on the taxonomy (including
+    one that only has a run on another taxonomy), 2 bad scope."""
+    root, runs = cov_kb
+    _make_run(runs, "at_run_20260201_b_mmc_hmba", "GEO:GSE1", "CCN20250428", "Primate")
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+    _cov_node(root, "bg", _classical("primate_type", "Primate"))
+    monkeypatch.setattr(
+        at_metrics, "repo_root",
+        lambda: root,
+    )
+    (root / "kb" / "annotation_transfer_runs").symlink_to(runs)
+
+    assert at_metrics.main(["at-coverage", "CCN20230722", "hit"]) == 0
+    assert at_metrics.main(["at-coverage", "CCN20230722", "primate_type"]) == 1
+    assert "NO RUN ON CCN20230722" in capsys.readouterr().out
+    assert at_metrics.main(["at-coverage", "CCN20230722", "nope"]) == 2
+    assert "No KB node" in capsys.readouterr().err
+
+
 # ─── at_hits_for_node (Stage A discovery, at_source_sets-driven) ──────
 
 
