@@ -2,12 +2,11 @@
 
 Many ``MappingEdge.property_comparisons[*]`` entries carry stale claims
 like ``node_b_value: "not resolvable from atlas metadata"`` for markers
-that DO have ``precomputed_expression`` values on the atlas node — the
-claim was written before the precomputed-stats panel was loaded for
-that taxonomy / gene. This module sweeps the KB and updates such PCs
-with the current ``mean_expression`` value from the appropriate
-taxonomy file (``cluster.yaml`` / ``supertype.yaml`` / ``subclass.yaml``
-/ ``class.yaml``).
+that DO have measured expression on the atlas node — the claim was
+written before expression was available for that taxonomy / gene. This
+module sweeps the KB and updates such PCs with the current mean
+expression, read through ``TaxonomyDB.expression`` (the on-demand
+accessor over the MapMyCells stats file, #189).
 
 Scope (conservative — minimises curator surprise):
 
@@ -52,15 +51,6 @@ from .marker_aliases import PROTEIN_TO_GENE_ALIASES as _PROTEIN_TO_GENE_ALIASES
 from .paths import repo_root
 
 
-# Atlas accession prefix → taxonomy YAML filename
-_ACCESSION_PREFIX_TO_YAML = {
-    "CLAS_": "class.yaml",
-    "SUBC_": "subclass.yaml",
-    "SUPT_": "supertype.yaml",
-    "CLUS_": "cluster.yaml",
-}
-
-
 _STALE_PATTERN = re.compile(
     r"not\s+(?:resolvable|available|assessed)|\bn/a\b|^\s*[-]\s*$|^\s*$",
     re.IGNORECASE,
@@ -75,8 +65,8 @@ def _looks_stale(node_b_value: str) -> bool:
 
 
 def _candidate_gene_symbols(pc: dict) -> list[str]:
-    """Return candidate gene symbols to look up in
-    ``precomputed_expression`` for this PC, ordered by likelihood.
+    """Return candidate gene symbols to look up atlas expression for
+    this PC, ordered by likelihood.
 
     Sources, in order:
     1. PC's ``property`` suffix (e.g. ``marker_Grm1`` → ``Grm1``).
@@ -114,52 +104,31 @@ def _candidate_gene_symbols(pc: dict) -> list[str]:
     return out
 
 
-def _resolve_taxonomy_path(taxonomy_id: str, accession: str) -> Path | None:
-    """Map a taxonomy accession to the appropriate ``{level}.yaml``
-    file under ``kb/taxonomy/{taxonomy_id}/``. Returns None when the
-    accession's level can't be inferred or the file is missing.
-    """
-    for prefix, fname in _ACCESSION_PREFIX_TO_YAML.items():
-        if prefix in accession:
-            p = repo_root() / "kb" / "taxonomy" / taxonomy_id / fname
-            return p if p.exists() else None
-    return None
-
-
-def _load_precomputed_expression(
-    taxonomy_yaml_path: Path, accession: str
-) -> dict[str, float] | None:
-    """Load ``{gene_symbol: mean_expression}`` for a single
-    atlas-taxonomy node.
-
-    Routes through the taxonomy SQLite DB's ``node_expression`` table
-    (millisecond lookup) rather than re-parsing the level YAML file
-    (~minutes for cluster.yaml.gz). The ``taxonomy_yaml_path``
-    argument is retained in the signature for backwards-compat but
-    used only to derive the taxonomy_id.
-
-    Returns ``{symbol: mean_expression}``, or None if the DB doesn't
-    exist / has no rows for this node.
-    """
+def _load_expression(
+    taxonomy_id: str, accession: str, symbols: list[str]
+) -> dict[str, float]:
+    """``{symbol: mean_expression}`` for one atlas node, through the
+    on-demand accessor (uncached genes load from the stats file)."""
     from evidencell.taxonomy_db import TaxonomyDB, require_taxonomy_db
 
-    # Path shape: kb/taxonomy/{taxonomy_id}/{level}.yaml(.gz).
-    # Extract the taxonomy_id from the parent dir name.
-    taxonomy_id = taxonomy_yaml_path.parent.name
     db = TaxonomyDB(require_taxonomy_db(taxonomy_id))
-    expr = db.get_node_expression(accession)
-    return expr or None
+    return db.expression(symbols, accessions=[accession]).for_node(accession)
 
 
 def _format_expression_value(gene: str, mean: float) -> str:
     return f"{gene} mean_expression={mean:.2f}"
 
 
-def refresh_edge(
-    edge: dict,
-    expr_cache: dict[tuple[str, str], dict[str, float] | None],
-    taxonomy_id: str,
-) -> list[dict[str, Any]]:
+_MARKER_FAMILY = (
+    "marker_",
+    "neuropeptide_",
+    "tf_",
+    "np_",
+    "negative_marker_",
+)
+
+
+def refresh_edge(edge: dict, taxonomy_id: str) -> list[dict[str, Any]]:
     """Inspect each marker-family PC on this edge; for any with a
     stale ``node_b_value``, look up the atlas-side expression and
     rewrite ``node_b_value`` if a gene match is found. Returns a list
@@ -170,36 +139,26 @@ def refresh_edge(
     if not taxonomy_type:
         return changes
 
-    expr_key = (taxonomy_id, taxonomy_type)
-    if expr_key not in expr_cache:
-        path = _resolve_taxonomy_path(taxonomy_id, taxonomy_type)
-        if path is None:
-            expr_cache[expr_key] = None
-        else:
-            expr_cache[expr_key] = _load_precomputed_expression(
-                path, taxonomy_type
-            )
-    expr = expr_cache[expr_key]
-    if not expr:
-        return changes
-
+    stale: list[tuple[dict, list[str]]] = []
     for pc in edge.get("property_comparisons") or []:
         if not isinstance(pc, dict):
             continue
         prop = (pc.get("property") or "").lower()
-        marker_family = (
-            "marker_",
-            "neuropeptide_",
-            "tf_",
-            "np_",
-            "negative_marker_",
-        )
-        if not any(prop.startswith(p) for p in marker_family):
+        if not any(prop.startswith(p) for p in _MARKER_FAMILY):
             continue
+        if not _looks_stale(pc.get("node_b_value") or ""):
+            continue
+        stale.append((pc, _candidate_gene_symbols(pc)))
+    if not stale:
+        return changes
+
+    symbols = list(dict.fromkeys(sym for _, cands in stale for sym in cands))
+    expr = _load_expression(taxonomy_id, taxonomy_type, symbols)
+    if not expr:
+        return changes
+
+    for pc, candidates in stale:
         old_b = pc.get("node_b_value") or ""
-        if not _looks_stale(old_b):
-            continue
-        candidates = _candidate_gene_symbols(pc)
         for sym in candidates:
             if sym in expr:
                 new_b = _format_expression_value(sym, expr[sym])
@@ -230,7 +189,6 @@ def refresh_graph(
         return {"file": str(path), "edges_seen": 0, "pcs_updated": 0,
                 "changes": []}
 
-    expr_cache: dict[tuple[str, str], dict[str, float] | None] = {}
     all_changes: list[dict[str, Any]] = []
     edges_seen = 0
     # The taxonomy_id lives on the atlas-side taxonomy node referenced
@@ -251,7 +209,7 @@ def refresh_graph(
         taxonomy_id = tax_node.get("taxonomy_id")
         if not taxonomy_id:
             continue
-        changes = refresh_edge(edge, expr_cache, taxonomy_id)
+        changes = refresh_edge(edge, taxonomy_id)
         all_changes.extend(changes)
 
     if all_changes and not dry_run:
@@ -271,8 +229,8 @@ def main(argv: list[str] | None = None) -> int:
         prog="python -m evidencell.refresh_expression_pcs",
         description=(
             "Refresh atlas-side expression on marker-family "
-            "property_comparisons. Looks up mean_expression in the "
-            "appropriate kb/taxonomy/{id}/{level}.yaml and rewrites "
+            "property_comparisons. Reads mean expression through the "
+            "taxonomy DB's on-demand expression cache and rewrites "
             "stale 'not resolvable from atlas metadata' node_b_values."
         ),
     )
@@ -305,10 +263,26 @@ def main(argv: list[str] | None = None) -> int:
     else:
         paths = [args.graph_file]
 
+    from evidencell.expression_cache import ExpressionUnavailable
+
+    try:
+        if len(paths) > 1 and not args.dry_run:
+            # Preflight: a dry pass loads every needed gene before the first
+            # write, so a missing stats file stops the sweep with nothing
+            # half-written. The real pass then reads from the cache.
+            for path in paths:
+                refresh_graph(path, dry_run=True)
+        return _refresh_paths(paths, dry_run=args.dry_run)
+    except ExpressionUnavailable as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+
+
+def _refresh_paths(paths: list[Path], *, dry_run: bool) -> int:
     grand_total_updates = 0
     grand_changes: list[dict[str, Any]] = []
     for path in paths:
-        result = refresh_graph(path, dry_run=args.dry_run)
+        result = refresh_graph(path, dry_run=dry_run)
         if result["pcs_updated"]:
             print(f"{path}: {result['pcs_updated']} PC(s) updated")
             for c in result["changes"]:
@@ -320,7 +294,7 @@ def main(argv: list[str] | None = None) -> int:
         grand_changes.extend(result["changes"])
     print()
     print(f"GRAND TOTAL: {grand_total_updates} PC(s) updated"
-          f"{' (dry-run)' if args.dry_run else ''}")
+          f"{' (dry-run)' if dry_run else ''}")
     return 0
 
 

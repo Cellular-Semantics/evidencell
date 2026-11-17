@@ -1,7 +1,19 @@
 # Taxonomy Update Architecture — Design Spike
 
-**Status:** Implemented (add-expression + reingest); update-anatomy, update-names deferred
+**Status:** Implemented (reingest); update-anatomy, update-names deferred.
+`add-expression` was implemented and later retired (#189, 2026-11) — see the
+note below.
 **Date:** 2026-04-23
+
+> **2026-11 update (#189): expression moved out of YAML.** Expression
+> profiles turned out to be derived data, not an enrichment: they are now
+> read on demand, one gene column at a time, from the MapMyCells stats HDF5
+> and cached in the taxonomy SQLite DB (`src/evidencell/expression_cache.py`,
+> `TaxonomyDB.expression()`). `add-expression`, `add-expression-all` and
+> `enrich-marker-union` are gone, `precomputed_expression` is no longer in
+> `ENRICHMENT_FIELDS`, and the blocks were removed from `kb/taxonomy/**`.
+> The "Expression profiles" row and the `add-expression` operation below are
+> kept as the historical design record.
 **Context:** Phase 3 of the male_female_ratio plan. Addresses how taxonomy
 reference YAML is maintained after initial ingest, without data loss on
 re-ingest and without uncontrolled overlay file proliferation.

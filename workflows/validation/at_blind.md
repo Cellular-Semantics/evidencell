@@ -31,8 +31,9 @@ full audit runs against the live corpus.
 
 - Taxonomy DB built and fresh: `just build-taxonomy-db CCN20230722`
 - Anat closure built: `just fetch-mba-ontology && just build-anat-closure CCN20230722`
-- KB-wide marker enrichment current:
-  `just enrich-marker-union CCN20230722 <stats.h5> <gene_mapping.tsv>`
+- MapMyCells stats file present: `just fetch-mapmycells CCN20230722`
+  (atlas expression loads from it on demand into the DB cache, #189;
+  optionally pre-load with `just warm-expression-cache CCN20230722`)
 
 The audit's preflight will check these and abort with a specific
 error if any are missing.

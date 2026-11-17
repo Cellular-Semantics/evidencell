@@ -81,9 +81,10 @@ def test_freshness_reports_empty_db_as_stale(db_path, tmp_path):
     assert stale and "not found or empty" in reasons[0]
 
 
-def test_load_expression_data_raises(db_path):
-    with pytest.raises(TaxonomyDBUnavailable):
-        taxonomy_db.load_expression_data("T1", "cluster")
+def test_expression_accessor_never_creates_a_db(db_path):
+    with pytest.raises(sqlite3.OperationalError):
+        TaxonomyDB(db_path).expression(["Sst"])
+    assert not db_path.exists()
 
 
 def test_kb_writer_ignores_opt_out(db_path, monkeypatch):
