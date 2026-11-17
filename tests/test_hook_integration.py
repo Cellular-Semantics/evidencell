@@ -674,6 +674,38 @@ def test_term_check_rejects_label_mismatch():
     )
 
 
+_AT_MANIFEST_FIXTURE = (
+    Path(__file__).parent.parent / "kb" / "annotation_transfer_runs"
+    / "at_run_20260617_wang2023_cea_mmc_wmbv1" / "manifest.yaml"
+)
+
+
+@pytest.mark.integration
+def test_term_check_accepts_at_run_manifest():
+    """Regression (#209): the term check used to run with no target class,
+    so linkml-term-validator fell back to CellTypeMappingGraph and crashed
+    (`No such slot id as an attribute of CellTypeMappingGraph`) on every
+    AnnotationTransferRun manifest, blocking all new AT run registration.
+    Requires warm OAK DBs, otherwise the term check soft-skips and this
+    test would pass without exercising it.
+    """
+    if not _AT_MANIFEST_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {_AT_MANIFEST_FIXTURE}")
+    ready, missing = _oak_dbs_ready()
+    if not ready:
+        pytest.skip(f"OAK DBs missing: {missing}; run `just fetch-oak-dbs`")
+
+    r = _run_hook(_write_payload(
+        _AT_MANIFEST_FIXTURE.read_text(),
+        file_path="/project/kb/annotation_transfer_runs/at_run_test/manifest.yaml",
+    ))
+    assert r.returncode == 0, (
+        f"Expected AT manifest to pass the hook, got {r.returncode}\n{r.stderr}"
+    )
+    assert "Traceback" not in r.stderr, r.stderr
+    assert "term check skipped" not in r.stderr.lower(), r.stderr
+
+
 # ── Reference-store writes: split layout (issue #168) ─────────────────────────
 #
 # Each file under references/{region}/{papers,quotes}/ is validated against its

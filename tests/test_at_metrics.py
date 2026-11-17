@@ -880,3 +880,177 @@ def test_at_hits_for_node_unresolved_source_skipped(tmp_path, capsys):
 
 def test_at_hits_for_node_empty_when_no_source_sets(tmp_path):
     assert at_metrics.at_hits_for_node([], "CCN20230722", runs_root=tmp_path) == {}
+
+
+# ─── query normalisation: validation, manifest availability, re-stamp ──
+
+
+def _norm_graph(
+    kb_root: Path, run_name: str, evidence_extra: dict,
+) -> Path:
+    """One-edge graph whose single AT evidence item cites ``run_name``."""
+    graph_path = kb_root / "demo.yaml"
+    ev = {
+        "evidence_type": "ANNOTATION_TRANSFER",
+        "run_ref": run_name,
+        "source_cluster_label": "Sst-OLM",
+        "supports": "PARTIAL",
+        "method": "MapMyCells (via at_metrics.compute_edge_metrics)",
+        "explanation": "Baseline explanation.",
+        "metrics_by_level": [
+            {
+                "taxonomy_level": "SUPERTYPE",
+                "best_target_accession": "wrong",
+                "best_target_name": "wrong",
+                "f1_score": 999.0,
+            },
+        ],
+    }
+    ev.update(evidence_extra)
+    _write(
+        graph_path,
+        yaml.safe_dump({
+            "edges": [
+                {
+                    "id": "edge_demo_olm",
+                    "lit_type": "demo_olm",
+                    "taxonomy_type": "CS20230722_SUPT_0216",
+                    "evidence": [ev],
+                },
+            ],
+        }),
+    )
+    return graph_path
+
+
+def _set_manifest_norm(run: Path, value: str | None) -> None:
+    doc = yaml.safe_load(run.joinpath("manifest.yaml").read_text())
+    if value is None:
+        doc.pop("query_normalization", None)
+    else:
+        doc["query_normalization"] = value
+    run.joinpath("manifest.yaml").write_text(yaml.safe_dump(doc))
+
+
+def test_load_run_manifest_raises_on_unparseable_manifest(tmp_path):
+    """"Absent" and "unreadable" are different facts. Collapsing them
+    lets a YAML syntax error pose as a run with default provenance."""
+    run = tmp_path / "at_run_broken"
+    _write(run / "manifest.yaml", "id: x\n  bad: [unclosed\n")
+    with pytest.raises(ValueError, match="could not be parsed"):
+        at_metrics.load_run_manifest("at_run_broken", runs_root=tmp_path)
+
+
+def test_validate_query_normalization_rejects_typo():
+    with pytest.raises(ValueError, match="unknown query_normalization"):
+        at_metrics.validate_query_normalization(
+            "log2cpm", context="run/manifest.yaml"
+        )
+
+
+def test_validate_query_normalization_accepts_known_and_empty():
+    assert at_metrics.validate_query_normalization(
+        None, context="x") == "raw"
+    assert at_metrics.validate_query_normalization(
+        "log2CPM", context="x") == "log2CPM"
+
+
+def test_refresh_kb_keeps_stamp_when_manifest_absent(
+    tmp_path, shape_b_run, fake_taxonomy_db
+):
+    """A missing manifest is unknown, not raw — refresh must not strip a
+    correct log2CPM stamp off the evidence item."""
+    at_metrics.migrate_run(shape_b_run)
+    (shape_b_run / "manifest.yaml").unlink()
+    kb_root = tmp_path / "kb_graphs"
+    method = (
+        "MapMyCells (via at_metrics.compute_edge_metrics), "
+        "log2CPM query normalization"
+    )
+    explanation = (
+        "Baseline explanation. " + at_metrics.QUERY_NORM_CAVEAT["log2CPM"]
+    )
+    graph_path = _norm_graph(kb_root, shape_b_run.name, {
+        "query_normalization": "log2CPM",
+        "method": method,
+        "explanation": explanation,
+    })
+    summary = at_metrics.refresh_kb(
+        dry_run=False, kb_root=kb_root, runs_root=tmp_path
+    )
+    ev = yaml.safe_load(graph_path.read_text())["edges"][0]["evidence"][0]
+    assert ev["query_normalization"] == "log2CPM"
+    assert "log2CPM query normalization" in ev["method"]
+    assert "CAVEAT" in ev["explanation"]
+    row = next(iter(summary.values()))[0]
+    assert "no manifest" in row["query_normalization"]
+
+
+def test_refresh_kb_withdraws_caveat_from_all_three_places(
+    tmp_path, shape_b_run, fake_taxonomy_db
+):
+    """log2CPM → raw must clear the structured field, the method suffix
+    and the explanation sentence — gen-report reads the prose."""
+    at_metrics.migrate_run(shape_b_run)
+    _set_manifest_norm(shape_b_run, "raw")
+    kb_root = tmp_path / "kb_graphs"
+    method = (
+        "MapMyCells (via at_metrics.compute_edge_metrics), "
+        "log2CPM query normalization"
+    )
+    explanation = (
+        "Baseline explanation. " + at_metrics.QUERY_NORM_CAVEAT["log2CPM"]
+    )
+    graph_path = _norm_graph(kb_root, shape_b_run.name, {
+        "query_normalization": "log2CPM",
+        "method": method,
+        "explanation": explanation,
+    })
+    at_metrics.refresh_kb(
+        dry_run=False, kb_root=kb_root, runs_root=tmp_path
+    )
+    ev = yaml.safe_load(graph_path.read_text())["edges"][0]["evidence"][0]
+    assert "query_normalization" not in ev
+    assert "log2CPM" not in ev["method"]
+    assert "CAVEAT" not in ev["explanation"]
+    assert ev["explanation"] == "Baseline explanation."
+
+
+def test_refresh_kb_adds_caveat_to_all_three_places(
+    tmp_path, shape_b_run, fake_taxonomy_db
+):
+    """raw → log2CPM must gain the prose too, not just the field."""
+    at_metrics.migrate_run(shape_b_run)
+    _set_manifest_norm(shape_b_run, "log2CPM")
+    kb_root = tmp_path / "kb_graphs"
+    graph_path = _norm_graph(kb_root, shape_b_run.name, {})
+    at_metrics.refresh_kb(
+        dry_run=False, kb_root=kb_root, runs_root=tmp_path
+    )
+    ev = yaml.safe_load(graph_path.read_text())["edges"][0]["evidence"][0]
+    assert ev["query_normalization"] == "log2CPM"
+    assert ev["method"].endswith("log2CPM query normalization")
+    assert "CAVEAT" in ev["explanation"]
+    assert ev["explanation"].startswith("Baseline explanation.")
+
+
+def test_refresh_kb_rejects_typo_in_manifest(
+    tmp_path, shape_b_run, fake_taxonomy_db
+):
+    at_metrics.migrate_run(shape_b_run)
+    _set_manifest_norm(shape_b_run, "log2cpm")
+    kb_root = tmp_path / "kb_graphs"
+    _norm_graph(kb_root, shape_b_run.name, {})
+    with pytest.raises(ValueError, match="unknown query_normalization"):
+        at_metrics.refresh_kb(
+            dry_run=False, kb_root=kb_root, runs_root=tmp_path
+        )
+
+
+def test_strip_then_apply_round_trips():
+    method, expl = at_metrics.apply_query_norm_caveat(
+        "base method", "Base explanation.", "log2CPM"
+    )
+    assert at_metrics.strip_query_norm_caveat(method, expl) == (
+        "base method", "Base explanation."
+    )

@@ -15,6 +15,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from annotation_transfer.convert import NORMALIZATIONS
+
 
 class MapperError(Exception):
     """Raised when MapMyCells mapping fails."""
@@ -28,6 +30,7 @@ def run_mapmycells(
     *,
     output_csv: Path | None = None,
     log_path: Path | None = None,
+    normalization: str = "raw",
 ) -> Path:
     """Run MapMyCells via the cell_type_mapper CLI.
 
@@ -45,6 +48,14 @@ def run_mapmycells(
         Optional path for simplified CSV output.
     log_path
         Optional path for log messages.
+    normalization
+        Query normalisation of ``input_h5ad``, passed to
+        ``--type_assignment.normalization``. ``raw`` (default) means X
+        holds counts and cell_type_mapper normalises to log2(CPM+1)
+        itself; ``log2CPM`` means X is already log2(CPM+1) and is used
+        as-is. Must match the value given to
+        ``convert.prepare_for_mapmycells`` — a mismatch does not raise,
+        it silently degrades every call.
 
     Returns
     -------
@@ -55,13 +66,19 @@ def run_mapmycells(
     MapperError
         If the cell_type_mapper CLI is not installed or the mapping fails.
     """
+    if normalization not in NORMALIZATIONS:
+        raise MapperError(
+            f"Unknown normalization {normalization!r}; "
+            f"must be one of {', '.join(NORMALIZATIONS)}."
+        )
+
     cmd = [
         sys.executable, "-m", "cell_type_mapper.cli.from_specified_markers",
         "--query_path", str(input_h5ad),
         "--precomputed_stats.path", str(precomputed_stats),
         "--query_markers.serialized_lookup", str(marker_genes),
         "--extended_result_path", str(output_json),
-        "--type_assignment.normalization", "raw",
+        "--type_assignment.normalization", normalization,
     ]
 
     if output_csv is not None:

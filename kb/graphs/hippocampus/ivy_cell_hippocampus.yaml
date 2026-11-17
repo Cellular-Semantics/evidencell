@@ -36,29 +36,29 @@ nodes:
         sources:
           - ref: PMID:20147544
             marker_type: PROTEIN
-            method: immunohistochemistry
+            method: "scPCR + immunohistochemistry"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
           - ref: PMID:39401246
             marker_type: PROTEIN
-            method: transgenic mouse
+            method: "immunohistochemistry"
             scope: mouse CA1
             quote_key: 262127573_d140faf4
           - ref: PMID:37467748
             snippet: Lamp5 interneurons include ivy and neurogliaform cells (NGFCs). The ivy cell is the most common interneuron type in CA1; it has a distinct morphology with a relatively extensive axonal cloud extending over several hippocampal layers and co-expresses neuronal nitric oxide synthase (nNOS)
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: PMID:41473287
             snippet: Amongst NGFCs Grin3a is expressed in both Lamp5+/Lhx6+ MGE-derived subsets, also known as Ivy cells (IvyCs), and Lamp5+/Lhx6- caudal ganglionic eminence (CGE)-derived subsets
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: PMID:21209836
             snippet: The labeled cell types correspond well to previously described NPY-positive multipolar cells, often referred to as Ivy cells and neurogliaform cells
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: PMID:20147544
             snippet: nNOS strongly colocalizes with neuropeptide Y in both Ivy cells (IvCs) and a subset of neurogliaform cells (NGCs)
             support: SUPPORT
@@ -69,7 +69,7 @@ nodes:
         sources:
           - ref: PMID:20147544
             marker_type: PROTEIN
-            method: immunohistochemistry
+            method: "scPCR + immunohistochemistry"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
       - symbol: Lamp5
@@ -79,24 +79,24 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:20147544
-            marker_type: PROTEIN
-            method: immunohistochemistry
+            marker_type: TRANSCRIPT
+            method: "single-cell RT-PCR"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
       - symbol: Sst
         ncbi_gene_id:
         sources:
           - ref: PMID:20147544
-            marker_type: PROTEIN
-            method: immunohistochemistry
+            marker_type: TRANSCRIPT
+            method: "single-cell RT-PCR"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
       - symbol: Calb2
         ncbi_gene_id:
         sources:
           - ref: PMID:20147544
-            marker_type: PROTEIN
-            method: immunohistochemistry
+            marker_type: TRANSCRIPT
+            method: "single-cell RT-PCR"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
     neuropeptides:
@@ -105,7 +105,7 @@ nodes:
         sources:
           - ref: PMID:20147544
             marker_type: PROTEIN
-            method: immunohistochemistry
+            method: "scPCR + immunohistochemistry"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
     cl_mapping:

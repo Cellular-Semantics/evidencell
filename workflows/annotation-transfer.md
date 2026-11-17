@@ -23,7 +23,8 @@ The annotation transfer proto-repo provides three stages:
 | Stage | Tool | Description |
 |-------|------|-------------|
 | **Preflight** | `just at-preflight FILE` | Estimate memory, gate large datasets |
-| **Convert** | `just at-convert INPUT OUTPUT [--cluster-col COL]` | Sanitise h5ad for MapMyCells (raw counts, sparse CSR, minimal obs/var) |
+| **Convert** | `just at-convert INPUT OUTPUT [--cluster-col COL] [--normalization raw\|log2CPM]` | Sanitise h5ad for MapMyCells (counts by default, sparse CSR, minimal obs/var) |
+| **Normalize** | `just at-normalize INPUT OUTPUT --input-scale SCALE [--gene-lengths TSV]` | Transform a TPM / ln(TPM+1) matrix to log2(CPM+1) for a `log2CPM` run |
 | **Map** | `just at-map INPUT TAXONOMY OUTPUT_DIR` | Run MapMyCells via web API or local (auto-resolved) |
 | **Map (local)** | `just at-map-local INPUT STATS MARKERS OUTPUT_JSON` | Run MapMyCells locally (requires `cell_type_mapper`) |
 | **Subsample** | `just at-subsample INPUT OUTPUT [--stratify-col COL]` | Stratified subsample for web API limits (150K cells / 2GB) |
@@ -68,6 +69,38 @@ Step 0  Dataset retrieval (driven by at_source_sets)
         gate — STOP if the load may exceed available RAM. Identity check:
         confirm `source_label` is present in obs before mapping.
 
+Step 0.2 Query normalisation (only when the dataset has no counts)
+        Default path: X holds raw integer counts, nothing to do — convert
+        and map with the default --normalization raw.
+        Datasets published only as normalised expression (Smart-seq2 /
+        RSEM TPM tables, for example) have no counts to recover. Map them
+        as log2(CPM+1), which cell_type_mapper supports natively:
+          just at-normalize <in.h5ad> <log2cpm.h5ad> --input-scale tpm
+          just at-convert <log2cpm.h5ad> <ready.h5ad> --normalization log2CPM
+          just at-map <ready.h5ad> CCN20230722 <out/> --normalization log2CPM
+        --input-scale says what X currently holds (tpm / cpm / counts /
+        ln1p / log2_1p / log10_1p); get it from the submitter's own
+        description of the file, not from the look of the numbers.
+        Three things to know:
+          * The web backend has no normalisation parameter and treats
+            every upload as counts, so a log2CPM run can only run
+            locally. `at-map` resolves to the local backend by itself
+            when the taxonomy's precomputed stats + markers are
+            downloaded; if they are not, it refuses the run (naming
+            `taxonomy-setup --download`) rather than mis-mapping
+            silently. An explicit `--backend web` is always refused.
+          * Pass --gene-lengths when the source is full-length (TPM/FPKM)
+            and the target taxonomy is UMI-based (all the registered
+            ones are). TPM is gene-length normalised and the reference
+            is not; without the correction that bias lands directly on
+            the marker-wise correlation MapMyCells optimises.
+          * Record `query_normalization: log2CPM` in the run manifest
+            (Step 4), spelled exactly like that — it is validated
+            against the schema enum when `emit-stage-b` reads it, and a
+            typo aborts the emit with a diagnostic naming the manifest. It propagates onto every evidence item the run
+            backs, and downstream reports are expected to weigh those F1
+            values as indicative rather than counts-grade.
+
 Step 0.5 Backend resolution + subsample
         Load taxonomy spec; check preferred backend.
         If web backend and dataset >150K cells:
@@ -91,6 +124,17 @@ Step 3  Parse results (PENDING — not yet automated)
 
 Step 4  Append to KB
         AnnotationTransferEvidence appended to relevant MappingEdge.
+        In the run's manifest.yaml, set `query_normalization` to the value
+        used at Step 1 (omit it, or write `raw`, for an ordinary counts
+        run). `emit-stage-b` copies a non-raw value onto each evidence
+        item it emits — as a `query_normalization` field, in `method`, and
+        as a caveat sentence in `explanation` — and
+        `just refresh-at-metrics --apply` re-stamps existing items when
+        the manifest changes.
+        Also write the run's free-text `caveats:` field — see
+        "Run quality caveats" below. A non-raw run always needs one;
+        so does anything else that makes these F1 values weaker than
+        the numbers alone suggest.
 
 Step 5  Confidence re-assessment
         Re-evaluate MappingConfidence per decision guide given new experimental
@@ -125,6 +169,54 @@ be interpreted in mapping edges and reports.
   cluster. The audit tags such cases with
   `at_f1_monotonicity: falls_with_resolution` — read purity over
   F1 when consuming.
+
+## Run quality caveats
+
+`query_normalization` records *what was done* to the query. It does not
+record *how much to trust the result* — and nothing downstream infers
+that. `supports` is a bare F1 threshold (`>= 0.6` → SUPPORT) and Stage-B
+top-K ranking is normalisation-blind, so a `log2CPM` F1 of 0.61 is
+scored exactly like a counts-based 0.61.
+
+Until that is structured (issue #227), **the run manifest's free-text
+`caveats:` field is the place to say it**, and writing one is part of
+registering the run — not optional polish. It is what a curator reads
+before trusting a number, and what gen-report's synthesis builds the
+edge-level caveat from.
+
+Write a `caveats:` entry whenever the run's numbers are weaker than
+their face value:
+
+- **Non-raw query normalisation.** Always. Say that the query was
+  mapped as pre-normalised log2(CPM+1) rather than counts, and why
+  (dataset published without counts). If the source is full-length
+  TPM/FPKM against a UMI-based taxonomy, say whether `--gene-lengths`
+  was applied — uncorrected, the gene-length mismatch lands directly
+  on the marker correlation the mapper optimises.
+- **Thin source labels.** A label with a handful of cells cannot
+  support a reliable F1. Name the label and its n, and say plainly if
+  it should be treated as uninformative — e.g. Que 2021's `AAC`
+  (n=6).
+- **Source/target mismatch.** Age, region, species or preparation
+  differences between the source dataset and the target atlas — e.g.
+  a juvenile source (mean P30) against adult WMBv1.
+- **Derived or aggregated labels.** Scoring under a relabel scheme
+  rather than the published labels (see the anti-pattern below).
+
+Write it as prose a biologist can act on: which numbers are affected,
+which direction the bias runs, and whether the result is merely
+indicative or should not be used at all. Do not restate what
+`query_normalization` already encodes — the caveat exists to add the
+judgement the structured field cannot carry.
+
+Two separate surfaces, both needed:
+
+| Surface | Written by | Covers |
+|---|---|---|
+| `manifest.yaml` → `caveats:` | curator, at Step 4 | the run as a whole |
+| MappingEdge → `caveats` | gen-report synthesis (Step 3b) | this edge's use of it |
+
+---
 
 **Anti-pattern — do not bundle AT + relabel in one run.** When you
 want to score the same MapMyCells output under two label schemes (raw

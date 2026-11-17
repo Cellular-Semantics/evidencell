@@ -595,20 +595,129 @@ def load_result_set(
     return AnnotationTransferResultSet(**doc)
 
 
+def run_manifest_path(
+    run_ref: str, *, runs_root: Path | None = None,
+) -> Path:
+    """Path of ``run_ref``'s ``manifest.yaml`` (whether or not it exists)."""
+    runs_root = runs_root or (repo_root() / "kb" / "annotation_transfer_runs")
+    return runs_root / run_ref / "manifest.yaml"
+
+
 def load_run_manifest(
     run_ref: str, *, runs_root: Path | None = None,
 ) -> dict:
-    """Return the parsed ``manifest.yaml`` for ``run_ref`` (``{}`` if absent
-    or unreadable). Used to surface run-level provenance (e.g.
-    ``target_atlas``) without hardcoding it on the evidence item."""
-    runs_root = runs_root or (repo_root() / "kb" / "annotation_transfer_runs")
-    manifest = runs_root / run_ref / "manifest.yaml"
+    """Return the parsed ``manifest.yaml`` for ``run_ref`` (``{}`` if the
+    file is absent). Used to surface run-level provenance (e.g.
+    ``target_atlas``, ``query_normalization``) without hardcoding it on
+    the evidence item.
+
+    A manifest that exists but cannot be parsed raises rather than
+    returning ``{}``: "absent" and "unreadable" are different facts, and
+    collapsing them lets a YAML syntax error masquerade as a run with
+    default provenance — which silently downgrades every evidence item
+    that cites the run (a ``log2CPM`` caveat would be dropped as if the
+    run were ``raw``).
+    """
+    manifest = run_manifest_path(run_ref, runs_root=runs_root)
     if not manifest.is_file():
         return {}
     try:
         return yaml.safe_load(manifest.read_text(encoding="utf-8")) or {}
-    except Exception:  # noqa: BLE001 — treat unreadable manifest as absent
-        return {}
+    except Exception as exc:  # noqa: BLE001 — surface, don't swallow
+        raise ValueError(
+            f"Run manifest {manifest} exists but could not be parsed: "
+            f"{exc}. Fix the manifest — treating it as absent would drop "
+            "the run's provenance (e.g. a query_normalization caveat) "
+            "from every evidence item that cites it."
+        ) from exc
+
+
+# ─── query normalisation: validation + caveat text ───────────────────
+
+#: Query normalisations recognised on a run manifest and on an
+#: AnnotationTransferEvidence item. Mirrors the ``QueryNormalization``
+#: enum in ``schema/celltype_mapping.yaml``.
+QUERY_NORMALIZATIONS = ("raw", "log2CPM")
+
+#: Appended to an AT evidence item's explanation when the backing run used
+#: a non-raw query normalisation. Prose, not a tier code: the downstream
+#: consumer is an LLM reading the evidence item.
+QUERY_NORM_CAVEAT = {
+    "log2CPM": (
+        "CAVEAT: the query was mapped as pre-normalised log2(CPM+1), not "
+        "raw counts — typically a full-length (Smart-seq/TPM) dataset "
+        "published without counts. TPM is gene-length normalised while "
+        "the reference taxonomy is not, which biases the marker-wise "
+        "correlation MapMyCells optimises, and the integer-count input "
+        "check does not apply to such a run. Weigh these F1 values as "
+        "indicative rather than on a par with a counts-based run."
+    ),
+}
+
+
+def validate_query_normalization(value: object, *, context: str) -> str:
+    """Return ``value`` as a known query normalisation, or raise.
+
+    ``query_normalization`` is hand-authored into a run manifest by a
+    curator (``workflows/annotation-transfer.md`` Step 4), so a typo
+    (``log2cpm``, a trailing space) is an expected failure mode. Catch it
+    here with a diagnostic naming the manifest, rather than letting it
+    surface as a bare ``KeyError`` from the caveat table or as a schema
+    validation failure long after the value was written into KB YAML.
+    """
+    if value is None or value == "":
+        return "raw"
+    norm = value.strip() if isinstance(value, str) else value
+    if norm not in QUERY_NORMALIZATIONS:
+        raise ValueError(
+            f"{context}: unknown query_normalization {value!r}. "
+            f"Must be one of {', '.join(QUERY_NORMALIZATIONS)} "
+            "(case-sensitive; check the run manifest for a typo or "
+            "stray whitespace)."
+        )
+    if norm != "raw" and norm not in QUERY_NORM_CAVEAT:  # pragma: no cover
+        raise ValueError(
+            f"{context}: query_normalization {norm!r} is valid but has no "
+            "caveat text in QUERY_NORM_CAVEAT — add one before using it."
+        )
+    return norm
+
+
+def apply_query_norm_caveat(
+    method: str, explanation: str, norm: str,
+) -> tuple[str, str]:
+    """Stamp ``norm``'s caveat onto ``(method, explanation)``.
+
+    The caveat lives in three places on an evidence item — the structured
+    ``query_normalization`` field, a ``method`` suffix, and a sentence in
+    ``explanation``. This is the single writer of the latter two, so
+    emit and refresh cannot drift apart.
+    """
+    if norm == "raw":
+        return method, explanation
+    method = f"{method}, {norm} query normalization"
+    caveat = QUERY_NORM_CAVEAT[norm]
+    explanation = f"{explanation} {caveat}".strip()
+    return method, explanation
+
+
+def strip_query_norm_caveat(
+    method: str, explanation: str,
+) -> tuple[str, str]:
+    """Inverse of :func:`apply_query_norm_caveat` for every known norm.
+
+    Used before re-stamping, so a corrected run (``log2CPM`` → ``raw``)
+    does not leave a withdrawn caveat behind in the prose.
+    """
+    for norm, caveat in QUERY_NORM_CAVEAT.items():
+        suffix = f", {norm} query normalization"
+        if method.endswith(suffix):
+            method = method[: -len(suffix)]
+        for marker in (f" {caveat}", caveat):
+            if marker in explanation:
+                explanation = explanation.replace(marker, "").strip()
+                break
+    return method, explanation
 
 
 def resolve_run_for_source(
@@ -1152,6 +1261,30 @@ def refresh_kb(
                 old_levels = ev.get("metrics_by_level") or []
                 new_levels = payload["metrics_by_level"]
                 old_supports = ev.get("supports")
+                # Keep the run's query normalisation stamped on the
+                # evidence item. Edges emitted before the field existed
+                # (or before the run was re-declared) pick it up here, so
+                # a consumer reading the item alone still sees how the
+                # F1 was produced.
+                # A manifest that is missing is *unknown*, not raw: if we
+                # defaulted here we would strip a correct log2CPM stamp
+                # off the item and report it as a legitimate transition.
+                manifest_available = run_manifest_path(
+                    run_ref, runs_root=runs_root
+                ).is_file()
+                stored_norm = validate_query_normalization(
+                    ev.get("query_normalization"),
+                    context=f"{path}[{idx}] (stored on evidence item)",
+                )
+                if manifest_available:
+                    run_norm = validate_query_normalization(
+                        load_run_manifest(
+                            run_ref, runs_root=runs_root
+                        ).get("query_normalization"),
+                        context=f"{run_ref}/manifest.yaml",
+                    )
+                else:
+                    run_norm = stored_norm
                 row = {
                     "edge_id": edge.get("id"),
                     "evidence_index": idx,
@@ -1165,9 +1298,38 @@ def refresh_kb(
                     "f1_source_relpath": payload["f1_source_relpath"],
                 }
                 rows.append(row)
+                if not manifest_available:
+                    row["query_normalization"] = (
+                        f"{stored_norm} (kept; no manifest at "
+                        f"{run_ref}/manifest.yaml to confirm it)"
+                    )
+                elif run_norm != stored_norm:
+                    row["query_normalization"] = (
+                        f"{stored_norm} → {run_norm}"
+                    )
                 if old_levels != new_levels and not dry_run:
                     ev["metrics_by_level"] = new_levels
                     ev["f1_source_relpath"] = payload["f1_source_relpath"]
+                    changed = True
+                if run_norm != stored_norm and not dry_run:
+                    if run_norm == "raw":
+                        ev.pop("query_normalization", None)
+                    else:
+                        ev["query_normalization"] = run_norm
+                    # The caveat lives in three places; re-derive all of
+                    # them, or a withdrawn caveat survives in the prose
+                    # (and gen-report's synthesis reads the prose).
+                    method, explanation = strip_query_norm_caveat(
+                        str(ev.get("method") or ""),
+                        str(ev.get("explanation") or ""),
+                    )
+                    method, explanation = apply_query_norm_caveat(
+                        method, explanation, run_norm
+                    )
+                    if method:
+                        ev["method"] = method
+                    if explanation:
+                        ev["explanation"] = explanation
                     changed = True
         if rows:
             try:
@@ -1199,6 +1361,10 @@ def print_refresh_report(summary: dict) -> None:
                 print(
                     f"      supports: {r['old_supports']} → "
                     f"{r['suggested_supports']}  (suggested; not auto-applied)"
+                )
+            if "query_normalization" in r:
+                print(
+                    f"      query_normalization: {r['query_normalization']}"
                 )
             if r["old_n_levels"] != r["new_n_levels"]:
                 print(

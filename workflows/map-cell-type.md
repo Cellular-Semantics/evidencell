@@ -32,23 +32,24 @@ PARAMS:
                                 # if null → discovery mode (Step 0 queries taxonomy DB)
   ranks: [0, 1]                 # taxonomy ranks to query (0=leaf, 1=supertype, 2=subclass, …)
                                 # check taxonomy_meta.yaml level_hierarchy for available ranks
-  stats_h5: "conf/mapmycells/{taxonomy_id}/precomputed_stats.h5"
-                                # canonical HDF5 path; used by Step 2b for expression enrichment
-                                # if not at canonical path, copy/symlink before running
-  gene_mapping_tsv: "conf/gene_mapping_{taxonomy_id}.tsv"
-                                # generate once: just generate-gene-mapping {stats_h5} {gene_mapping_tsv}
   model: "sonnet"
 ```
 
-**Precomputed stats**: Before starting, check whether a precomputed stats HDF5 is available
-for the target taxonomy:
+**Setup, once per checkout per taxonomy** — atlas expression is read on
+demand from the MapMyCells precomputed-stats HDF5 and cached in the
+taxonomy DB (#189), so the stats file is a runtime dependency:
 
 ```bash
-just show-meta {taxonomy_id}   # check mapmycells.local_stats_path
+just fetch-mapmycells {taxonomy_id}    # → conf/mapmycells/{taxonomy_id}/ (1–1.5 GB)
+just build-taxonomy-db {taxonomy_id}   # expression cache tables start empty
 ```
 
-If `local_stats_path` is set, Step 2.5 will run the stats cross-check automatically.
-If not, download with `just at-download-taxonomy {taxonomy_id}` first.
+The gene mapping TSV is `conf/gene_mapping_{taxonomy_id}.tsv` (committed for
+CCN20230722; otherwise `just generate-gene-mapping {stats_h5} {tsv}`). Both
+paths come from the registry in
+`annotation_transfer/src/annotation_transfer/taxonomies.py` — there is no
+path parameter to set. `just warm-expression-cache {taxonomy_id}` optionally
+pre-loads every KB marker gene and lists any that can't be measured.
 
 ---
 
@@ -114,6 +115,20 @@ specification):
     **Remove once BCKG ships an upstream anat-rollup fix.** See
     [planning/at_blind_region_drop_findings_2026-05-12.md](../planning/at_blind_region_drop_findings_2026-05-12.md)
     § a, § B2.
+- **Expression** for the node's `defining_markers + neuropeptides +
+  negative_markers` comes from `TaxonomyDB.expression()`. Genes not yet
+  cached load from the stats HDF5 on first use (one-off per gene per
+  checkout). If the HDF5 is missing and any queried gene is uncached,
+  `find-candidates` **stops** with `just fetch-mapmycells {taxonomy_id}` —
+  there is no metadata-only mode. Genes that can't be measured (no Ensembl
+  mapping, or absent from the stats file) are listed as `NOT MEASURED` on
+  stderr and under `not_measured_genes` in the discovery JSON; they score 0.
+  Protein-name markers that only resolve to a gene through the
+  `marker_aliases` stopgap (`PV`, `CB`, `CR`, `NOS`, `mGluR1` …) are not
+  scored in Stage A — listed as `NOT SCORED` on stderr and under
+  `unscored_protein_alias_markers` — until gene identity is resolved
+  properly (#216). Use canonical gene symbols on classical nodes to have a
+  marker scored.
 - **Soft scoring** within the surviving pool:
   - **Graded region score** from `region_fraction_100um`:
     +2 if ≥ 0.5, +1 if ≥ 0.1, +0.5 if > 0, else 0.
@@ -129,8 +144,23 @@ specification):
     region and those rescued by 100µm scatter alone.
   - Per-marker presence/absence credit and percentile-based
     discrimination (defining markers + neuropeptides + negative
-    markers, equal-weight); annotation-transfer F1 buckets
-    (+3/+2/+1); sex-bias bonus at rank 0.
+    markers, equal-weight), **from expression only** — a gene listed
+    in the atlas node's metadata marker columns gets no credit for
+    being listed; annotation-transfer F1 buckets (+3/+2/+1); sex-bias
+    bonus at rank 0.
+- **Metadata cross-check (not scored)**: per candidate × queried gene,
+  the atlas metadata marker lists (`defining_markers_scoped`,
+  `defining_markers`, `tf_markers`, `merfish_markers`, `np_markers`)
+  are compared with measured expression and disagreements reported as
+  `marker_discrepancies` in the discovery JSON, plus a one-line summary
+  per candidate on stderr:
+  - `LISTED_NOT_EXPRESSED` — listed, but below `MIN_DETECTABLE`, or in
+    the bottom 10% of siblings (same parent) *and* under half the top
+    sibling's value. The important case: metadata error, gene-version
+    difference, or scope mismatch.
+  - `EXPRESSED_NOT_LISTED` — top 10% of siblings but not listed.
+    Informational; metadata lists are short.
+  - `LISTED_NO_EXPRESSION_DATA` — listed, but can't be measured.
 - **Heterogeneity coverage** at rank ≥ 1: positive-marker scores are
   soft-dampened by `coverage^0.5` where coverage is the fraction of
   rank-(N−1) children with detectable expression. Tempers over-confidence
@@ -140,7 +170,10 @@ specification):
   `region_count_completeness` (provenance of the winning anat row —
   null/`exact`/`lower_bound`; see schema), `region_evidence`,
   `at_hit`, `coverage` are emitted alongside the score for
-  downstream consumption.
+  downstream consumption; `marker_discrepancies` per candidate and
+  per-candidate `expression_source`, and top-level `not_measured_genes` /
+  `unscored_protein_alias_markers` / `expression_source` sit outside
+  `discovery_score`.
 
 ---
 
@@ -160,37 +193,13 @@ the input set instead of discovery output.
 
 ---
 
-## Step 2: Pre-flight — proactive enrichment
+## Step 2: (removed)
 
-`precomputed_expression` data on candidate atlas nodes is now provisioned
-proactively, not on demand per mapping. Before running this orchestrator,
-ensure:
-
-```bash
-just enrich-marker-union {taxonomy_id} {stats_h5} {gene_mapping_tsv}
-```
-
-has been run for the taxonomy. This single command:
-
-1. Scans `kb/graphs/**/*.yaml` for non-atlas nodes and collects the union
-   of all their `defining_markers + neuropeptides + negative_markers`
-   symbols.
-2. Enriches every taxonomy node at the cluster + supertype levels with
-   `precomputed_expression` for those genes (the supertype path also
-   populates `child_cluster_expression` for the heterogeneity coverage
-   signal at rank ≥ 1).
-3. Rebuilds the SQLite DB to reflect the new data.
-
-Re-run when classical nodes are added or their marker lists change.
-Phase 1 commit 10 introduced this; previous per-mapping Step 2b/2c are
-removed.
-
-If `stats_h5` or `gene_mapping_tsv` is unavailable for the target
-taxonomy, expression data will be sparse and Stage A scoring will fall
-back to metadata-only marker matching (binary +1). The Stage B emitter
-marks expression-comparisons as `NOT_ASSESSED` for genes absent from
-both `discovery_score.expression_detail` and atlas metadata. This is a
-degraded mode; address by acquiring the HDF5 and re-running enrichment.
+The former pre-flight enrichment step (`just enrich-marker-union` + DB
+rebuild) is gone (#189). Expression is no longer stored in taxonomy YAML;
+`find-candidates`, `emit-stage-b` and the `refresh-*` commands load any
+uncached gene from the stats HDF5 themselves. There is no degraded mode:
+a missing stats file stops the run with the fetch command.
 
 ---
 
@@ -200,7 +209,8 @@ Stage B is fully programmatic as of issue #96. The per-candidate
 mapping subagent that used to live here has been replaced by
 `just emit-stage-b`, which constructs a `MappingEdge` skeleton per
 top-K candidate from the Stage A discovery JSON + classical node YAML
-+ taxonomy YAML + AT artifact. No LLM call. Run it once per rank:
++ taxonomy DB (atlas expression through the same on-demand accessor as
+Stage A) + AT artifact. No LLM call. Run it once per rank:
 
 ```bash
 just emit-stage-b {classical_node_file} {classical_node_id} {taxonomy_id} {rank} {top_k}
@@ -244,13 +254,24 @@ warning.
       `cohort_pct in [0.1, 0.5)` → APPROXIMATE;
     - positive marker, `val < MIN_DETECTABLE` → DISCORDANT;
     - negative marker inverts: `val < MIN_DETECTABLE` →
-      CONSISTENT, otherwise DISCORDANT.
+      CONSISTENT, otherwise DISCORDANT;
+    - `NOT_ASSESSED` (`node_b_value: not measured`) only for a gene
+      recorded as not measured — the notes give the reason
+      (`NO_ENSEMBL_MAPPING` / `NOT_IN_STATS`) and the stats file.
+    The candidate's Stage A `marker_discrepancies` entry for the gene,
+    if any, is appended to the notes (`METADATA DISCREPANCY …`) so
+    gen-facts and report synthesis can see it. It does not change
+    the alignment.
+    Every comparison with a measured value records its stats file in
+    the notes (`atlas expression from {file}`); gen-facts collects
+    these for the report's Methods section.
     Symbol resolution: classical-node marker abbreviations
     (PV → Pvalb, CB → Calb1, CR → Calb2, NOS → Nos1, VIP → Vip,
     etc.) are mapped to canonical gene symbols via
-    `_CANONICAL_GENE_ALIAS` in `src/evidencell/stage_b_emit.py`.
-    Add new aliases there; preferred long-term is to use
-    canonical gene symbols in classical-node YAML.
+    `PROTEIN_TO_GENE_ALIASES` in `src/evidencell/marker_aliases.py`
+    (Stage B only; Stage A does not score them). This table is a
+    stopgap — see #216; preferred is canonical gene symbols in
+    classical-node YAML.
 - `evidence[]` — emit deterministically:
   - `ATLAS_METADATA` (always; `supports: PARTIAL`): explanation
     auto-built from candidate atlas-side properties (n_cells,

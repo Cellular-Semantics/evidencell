@@ -77,6 +77,14 @@ def synthetic_corpus(tmp_path, monkeypatch):
       PRIMARY KEY (ancestor_id, descendant_id)
     );
     CREATE TABLE _meta (key TEXT PRIMARY KEY, value TEXT);
+    CREATE TABLE node_expression (
+      node_id TEXT NOT NULL, symbol TEXT NOT NULL, ensembl_id TEXT,
+      mean_expression REAL NOT NULL, PRIMARY KEY (node_id, symbol)
+    );
+    CREATE TABLE expression_genes (
+      symbol TEXT PRIMARY KEY, ensembl_id TEXT, status TEXT NOT NULL,
+      source_file TEXT NOT NULL, source_sha256 TEXT NOT NULL, loaded_at TEXT NOT NULL
+    );
     """)
     con.executemany(
         "INSERT INTO nodes(node_id, short_form, label, taxonomy_id, "
@@ -147,6 +155,27 @@ def synthetic_corpus(tmp_path, monkeypatch):
     con.execute("INSERT INTO _meta VALUES ('schema_hash', ?)", (_SCHEMA_HASH,))
     con.commit()
     con.close()
+
+    # Atlas expression is read on demand from a MapMyCells stats file (#189);
+    # give the audit a tiny one (Sst expressed in every cluster).
+    import h5py
+    import numpy as np
+
+    import evidencell.expression_cache as ec_mod
+
+    stats = repo / "conf" / "mini_stats.h5"
+    stats.parent.mkdir(parents=True, exist_ok=True)
+    with h5py.File(stats, "w") as f:
+        f["col_names"] = json.dumps(["ENS_SST"]).encode()
+        f["cluster_to_row"] = json.dumps(
+            {"CLUS_TARGET": 0, "CLUS_SIBLING": 1, "CLUS_DISTANT": 2}
+        ).encode()
+        f["n_cells"] = np.array([1, 1, 1])
+        f["sum"] = np.array([[5.0], [5.0], [5.0]])
+    mapping = repo / "conf" / "gene_mapping_MINI001.tsv"
+    mapping.write_text("ensembl_id\tsymbol\nENS_SST\tSst\n")
+    monkeypatch.setattr(ec_mod, "stats_h5_path", lambda tid: stats)
+    monkeypatch.setattr(ec_mod, "gene_mapping_path", lambda tid: mapping)
 
     return repo
 

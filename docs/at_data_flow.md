@@ -168,6 +168,82 @@ wrong source as positive support).
 
 ---
 
+## Query normalisation
+
+What the mapper was told X holds. `cell_type_mapper` takes exactly two
+values on `--type_assignment.normalization`, and the AT pipeline passes
+one of them through at both the convert and the map step:
+
+| Value | X holds | Who normalises |
+|---|---|---|
+| `raw` (default) | raw integer counts | `cell_type_mapper` rescales each cell to CPM and applies log2(x+1) |
+| `log2CPM` | log2(CPM+1) | nobody — X is used as-is |
+
+`log2CPM` exists for datasets published without counts, typically
+full-length Smart-seq2/RSEM TPM tables where no UMI counts exist
+anywhere short of realigning the raw reads. It is a supported upstream
+mode, not a workaround (issue #208).
+
+**It is not equivalent to a counts run, and the difference is not the
+flag.** Two things degrade such a run:
+
+1. **Gene-length normalisation.** TPM divides each gene by effective
+   length; the reference taxonomies are UMI CPM and do not. That is a
+   gene-specific multiplicative factor — a gene-specific *additive
+   offset* in log space, spanning several log2 units across a marker
+   panel. Assignment is Pearson correlation across marker genes
+   (`cell_type_mapper/utils/distance_utils.py::correlation_dot`), which
+   is invariant to per-cell affine shifts but not to per-gene offsets,
+   so the distortion lands directly on the quantity being optimised.
+   `annotation-transfer normalize --gene-lengths` approximately undoes
+   it; without that correction the bias is simply present.
+2. **No integer check.** `convert`'s integer-count test is the gate that
+   catches a mis-prepared matrix, and it does not apply here. The
+   replacement checks — non-negativity, a max-value ceiling, and a
+   de-logged library-size test — are deliberately strict because a
+   wrongly scaled or wrongly based matrix does **not** raise inside
+   `cell_type_mapper`: it correlates near zero against every reference
+   type and collapses every cell onto one label.
+
+Platform difference (full-length vs 3' UMI, detection depth, dropout)
+remains on top of both. Cross-platform mapping is routine; expect lower
+bootstrapping probabilities and wider runner-up spread.
+
+### How it reaches a consumer
+
+The value is recorded once and propagated, so nobody has to open the run
+directory to find out how an F1 was produced:
+
+```
+manifest.yaml: query_normalization   ← set when the run is registered
+        │
+        ├─ emit-stage-b ─────────────→ evidence item:
+        │                                 query_normalization: log2CPM
+        │                                 method: "… , log2CPM query normalization"
+        │                                 explanation: "… CAVEAT: …"
+        │
+        ├─ refresh-at-metrics --apply → re-stamps existing evidence items
+        │                               when the manifest changes
+        │
+        └─ gen-facts ────────────────→ annotation_transfer_runs[].query_normalization
+                                        (and the item's own field, via extras)
+```
+
+Absent means `raw` everywhere — every run predating the field was a
+counts run. Only a non-raw value is written onto evidence items, so
+ordinary runs produce no diff.
+
+The caveat is prose rather than a tier code on purpose: the consumer is
+a report-synthesis agent reading the evidence item, and the thing it
+needs to do with the information ("weigh this F1 as indicative, not
+counts-grade") doesn't survive compression to a flag.
+
+**Not to be confused with** `AnnotationTransferResultSet.normalisation`,
+which names a *variant of the F1 matrix* (e.g. `by_class`, surfaced as
+`at_results_by_class.yaml`) and says nothing about the query scale.
+
+---
+
 ## Source-of-truth table
 
 Use this table when a consumer doesn't know which file to trust.
@@ -179,6 +255,7 @@ Use this table when a consumer doesn't know which file to trust.
 | What numbers does *this specific figure* show? | The figure's `_metrics.json` sidecar | The figure and sidecar are produced together by `at_figures --emit-metrics`. Captions cite the sidecar verbatim. |
 | What does this edge claim about its AT signal? | `MappingEdge.evidence[].metrics_by_level` on the edge YAML | Populated programmatically from `at_results.yaml`. Should never disagree with the canonical file — if it does, that's a bug, file an issue. |
 | What's the pool composition for an AT cohort? | `MappingEdge.evidence[].source_groups` on the edge YAML | Structural; lists raw `source_label` members. Joins back to `source_label` column in `at_results.yaml`. |
+| How was the query normalised for this run? | `kb/annotation_transfer_runs/{run_id}/manifest.yaml` → `query_normalization` | Absent = `raw`. Copied onto each evidence item the run backs; see § "Query normalisation". |
 | Where does the AT pipeline write its raw output? | `f1_*.csv` + `mmc_results.csv` in the run dir | Retained for audit; **migrate to `at_results.yaml` before downstream consumption** — see `just migrate-at-metrics`. |
 
 ---

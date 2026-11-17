@@ -21,10 +21,12 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any, Iterable, Iterator
 
 import ijson
 import yaml
+
+from evidencell.expression_cache import ExpressionLookup, ExpressionUnavailable
 
 # Always-latest release of the BICAN Mouse Brain Atlas Ontology (OBO JSON / Obograph)
 MBA_ONTOLOGY_URL = (
@@ -1222,12 +1224,23 @@ CREATE TABLE IF NOT EXISTS anat (
   cell_count_completeness  TEXT
 );
 
+-- Expression cache (#189): empty after a build, filled on demand from the
+-- MapMyCells stats HDF5 by evidencell.expression_cache.
 CREATE TABLE IF NOT EXISTS node_expression (
   node_id         TEXT NOT NULL REFERENCES nodes(node_id),
   symbol          TEXT NOT NULL,
   ensembl_id      TEXT,
   mean_expression REAL NOT NULL,
   PRIMARY KEY (node_id, symbol)
+);
+
+CREATE TABLE IF NOT EXISTS expression_genes (
+  symbol          TEXT PRIMARY KEY,
+  ensembl_id      TEXT,
+  status          TEXT NOT NULL,
+  source_file     TEXT NOT NULL,
+  source_sha256   TEXT NOT NULL,
+  loaded_at       TEXT NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS idx_nodes_level  ON nodes(taxonomy_level);
@@ -1445,10 +1458,11 @@ def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
     try:
         con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
         try:
-            row = con.execute(
-                "SELECT value FROM _meta WHERE key = 'schema_hash'"
-            ).fetchone()
-            stored_hash = row[0] if row else None
+            meta = dict(con.execute(
+                "SELECT key, value FROM _meta "
+                "WHERE key IN ('schema_hash', 'taxonomy_built_at')"
+            ).fetchall())
+            stored_hash = meta.get("schema_hash")
         finally:
             con.close()
     except sqlite3.Error as exc:
@@ -1464,11 +1478,22 @@ def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
             f"current={_SCHEMA_HASH[:8]}) — schema gained or changed columns"
         )
 
-    # 2. Source-newer-than-DB check
-    try:
-        db_mtime = db_path.stat().st_mtime
-    except OSError:
-        return True, reasons + [f"DB mtime unreadable at {db_path}"]
+    # 2. Source-newer-than-DB check, against the recorded build time. The
+    # file mtime is not a build time: the expression cache writes to the DB
+    # on use (#189), which would make a stale DB look fresh.
+    db_mtime: float | None = None
+    built_at = meta.get("taxonomy_built_at")
+    if built_at:
+        try:
+            db_mtime = datetime.fromisoformat(built_at).timestamp()
+        except ValueError:
+            db_mtime = None
+    if db_mtime is None:
+        # DBs built before taxonomy_built_at was recorded.
+        try:
+            db_mtime = db_path.stat().st_mtime
+        except OSError:
+            return True, reasons + [f"DB mtime unreadable at {db_path}"]
     # Both forms: the largest level ships gzipped (cluster.yaml.gz, to stay
     # under GitHub's file limit), and a *.yaml-only glob never saw it change.
     yaml_files = (
@@ -1477,8 +1502,6 @@ def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
     if yaml_files:
         newest_yaml = max(p.stat().st_mtime for p in yaml_files)
         if newest_yaml > db_mtime:
-            from datetime import datetime
-            from datetime import timezone
             yaml_dt = datetime.fromtimestamp(newest_yaml, tz=timezone.utc).isoformat(timespec="seconds")
             db_dt = datetime.fromtimestamp(db_mtime, tz=timezone.utc).isoformat(timespec="seconds")
             reasons.append(
@@ -1499,7 +1522,9 @@ def taxonomy_db_freshness(taxonomy_id: str) -> tuple[bool, list[str]]:
     Checks performed:
       1. DB exists at kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db
       2. _meta.schema_hash present and equal to current _SCHEMA_HASH
-      3. DB mtime ≥ newest YAML mtime under kb/taxonomy/{taxonomy_id}/
+      3. _meta.taxonomy_built_at ≥ newest YAML mtime under
+         kb/taxonomy/{taxonomy_id}/ (the DB file's mtime only for DBs that
+         predate that key — cache writes change the mtime, not the build)
 
     Failure mode 2 means the schema gained a column since the DB was built
     (e.g. a new INTEGER field on `nodes`). Failure mode 3 means the YAML
@@ -1700,6 +1725,116 @@ def _coverage_for_gene(
     return n_detected / n_with, n_with
 
 
+# ── Metadata-marker vs expression discrepancies (#189) ───────────────────────
+#
+# Marker scores come from expression only. The atlas node's metadata marker
+# lists (defining_markers_scoped / defining_markers / tf_markers /
+# merfish_markers / np_markers) are cross-checked against measured
+# expression and disagreements reported; they never change the score.
+
+# Sibling-percentile bands (mid-rank percentile among nodes sharing the
+# candidate's parent). Below LOW, a listed marker counts as "not expressed"
+# — but only when its value is also under LOW_FRACTION of the highest
+# sibling's: when every sibling expresses the gene strongly (Sst across
+# Sst Gaba clusters, 10.5–12.7), the lowest one is not "not expressed".
+# Above HIGH, an unlisted detectable gene counts as "expressed".
+DISCREPANCY_LOW_SIBLING_PCT: float = 0.10
+DISCREPANCY_LOW_FRACTION_OF_MAX: float = 0.5
+DISCREPANCY_HIGH_SIBLING_PCT: float = 0.90
+
+LISTED_NOT_EXPRESSED = "LISTED_NOT_EXPRESSED"
+EXPRESSED_NOT_LISTED = "EXPRESSED_NOT_LISTED"
+LISTED_NO_EXPRESSION_DATA = "LISTED_NO_EXPRESSION_DATA"
+
+
+def _midrank_percentile(val: float, reference: list[float]) -> float | None:
+    """Mid-rank percentile of ``val`` in ``reference`` (ties count half).
+
+    Unlike ``_expression_percentile`` (strictly-below), equal values sit at
+    the middle, so a gene expressed identically across all siblings reads
+    0.5 rather than 0.0 and is not mistaken for the bottom of the band.
+    """
+    if not reference:
+        return None
+    below = sum(v < val for v in reference)
+    equal = sum(v == val for v in reference)
+    return (below + 0.5 * equal) / len(reference)
+
+
+def _marker_discrepancies(
+    genes: list[str],
+    listed: set[str],
+    node_expr: dict[str, float],
+    sibling_vals: dict[str, list[float]],
+) -> list[dict]:
+    """Compare a candidate's metadata marker lists with measured expression.
+
+    For each queried gene (aliases resolved for the "listed" check):
+
+    - ``LISTED_NOT_EXPRESSED``: in the metadata lists, but mean expression
+      is below ``MIN_DETECTABLE``, or in the bottom sibling band and under
+      half the highest sibling's value. Points at a metadata error, a
+      gene-version difference, or a scope mismatch.
+    - ``EXPRESSED_NOT_LISTED``: detectable and in the top sibling band but
+      absent from the lists. Informational — metadata lists are short.
+    - ``LISTED_NO_EXPRESSION_DATA``: in the lists, but no expression value
+      for this node, so the listing can't be checked.
+    """
+    from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
+
+    out: list[dict] = []
+    for g in genes:
+        is_listed = g in listed or resolve_to_canonical_gene_symbol(g) in listed
+        val = node_expr.get(g)
+        if val is None:
+            if is_listed:
+                out.append({
+                    "gene": g, "kind": LISTED_NO_EXPRESSION_DATA,
+                    "val": None, "sibling_pct": None,
+                })
+            continue
+        sibs = sibling_vals.get(g, [])
+        pct = _midrank_percentile(val, sibs)
+        kind: str | None = None
+        if is_listed and (
+            val < MIN_DETECTABLE
+            or (
+                pct is not None
+                and pct < DISCREPANCY_LOW_SIBLING_PCT
+                and val < DISCREPANCY_LOW_FRACTION_OF_MAX * max(sibs)
+            )
+        ):
+            kind = LISTED_NOT_EXPRESSED
+        elif (
+            not is_listed
+            and val >= MIN_DETECTABLE
+            and pct is not None
+            and pct > DISCREPANCY_HIGH_SIBLING_PCT
+        ):
+            kind = EXPRESSED_NOT_LISTED
+        if kind:
+            out.append({
+                "gene": g, "kind": kind, "val": round(val, 3),
+                "sibling_pct": round(pct, 3) if pct is not None else None,
+            })
+    return out
+
+
+def format_discrepancy_summary(discrepancies: list[dict]) -> str:
+    """One-line human summary of a candidate's ``marker_discrepancies``."""
+    labels = (
+        (LISTED_NOT_EXPRESSED, "listed-not-expressed"),
+        (EXPRESSED_NOT_LISTED, "expressed-not-listed"),
+        (LISTED_NO_EXPRESSION_DATA, "listed-no-data"),
+    )
+    parts = []
+    for kind, label in labels:
+        genes = [d["gene"] for d in discrepancies if d["kind"] == kind]
+        if genes:
+            parts.append(f"{label}: {', '.join(genes)}")
+    return "; ".join(parts) if parts else "no metadata/expression discrepancies"
+
+
 def _score_from_percentiles(
     sibling_pct: float,
     global_pct: float,
@@ -1772,35 +1907,6 @@ def _neg_expression_score(mean_expr: float) -> int:
     return -_expression_score(mean_expr)
 
 
-def load_expression_data(
-    taxonomy_id: str,
-    level: str,
-    symbols: list[str] | None = None,
-) -> dict[str, dict[str, float]]:
-    """Load precomputed mean expression from the taxonomy DB.
-
-    Returns ``{cell_set_accession: {gene_symbol: mean_expression}}``.
-    Returns an empty dict when the DB has no expression rows for the
-    queried level / symbols.
-
-    Pre-2026-06: this function loaded the taxonomy YAML directly
-    (cluster.yaml.gz, supertype.yaml, ...). Parsing the cluster file
-    via pure-Python PyYAML cost ~4 minutes per call. As of the
-    ``node_expression`` table refactor it queries the DB instead;
-    the call is now milliseconds.
-
-    Pass ``symbols`` to restrict the panel (the typical Stage A call
-    passes the union of classical-node markers). Omit to return every
-    enriched gene at the level.
-
-    YAML edit interface is unchanged — ``add_expression`` and
-    ``reingest`` still write into the YAML; ``just build-taxonomy-db``
-    propagates those writes into the ``node_expression`` DB table.
-    """
-    db = TaxonomyDB(require_taxonomy_db(taxonomy_id))
-    return db.get_expression_for_level(level, symbols=symbols)
-
-
 # Registry of optional scoring criteria for find_candidates().
 # Each entry maps a criterion name to:
 #   column    — DB column on the nodes table
@@ -1831,18 +1937,34 @@ _OPTIONAL_CRITERIA_REGISTRY: dict[str, dict] = {
 class TaxonomyDB:
     """SQLite query index for a taxonomy, built from YAML reference files."""
 
-    def __init__(self, db_path: Path) -> None:
+    def __init__(
+        self,
+        db_path: Path,
+        *,
+        stats_path: Path | None = None,
+        gene_mapping_path: Path | None = None,
+    ) -> None:
+        """``stats_path`` / ``gene_mapping_path`` override the registry-derived
+        expression sources (``expression_cache.stats_h5_path`` /
+        ``gene_mapping_path``); tests use them to point at a fixture file."""
         self.db_path = db_path
+        self._stats_path = stats_path
+        self._gene_mapping_path = gene_mapping_path
 
     def build_from_yaml(self, taxonomy_dir: Path) -> None:
         """Populate DB from kb/taxonomy/{taxonomy_id}/*.yaml{,.gz}.
         Idempotent (drops + rebuilds)."""
         from evidencell.paths import iter_taxonomy_level_files, open_taxonomy_yaml
+        # Recorded as taxonomy_built_at: the freshness check compares YAML
+        # mtimes against it. Taken before the YAML is read, so an edit made
+        # during the build still reads as stale.
+        built_at = datetime.now(tz=timezone.utc).isoformat()
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         con = sqlite3.connect(self.db_path)
         try:
             con.executescript(
                 "DROP TABLE IF EXISTS node_expression;"
+                "DROP TABLE IF EXISTS expression_genes;"
                 "DROP TABLE IF EXISTS anat;"
                 "DROP TABLE IF EXISTS nodes;"
             )
@@ -1869,7 +1991,7 @@ class TaxonomyDB:
             )
             con.execute(
                 "INSERT OR REPLACE INTO _meta VALUES ('taxonomy_built_at', ?)",
-                (datetime.now(tz=timezone.utc).isoformat(),),
+                (built_at,),
             )
             # Pin the schema hash so taxonomy_db_freshness() can detect when
             # the schema has gained or lost a column since this DB was built.
@@ -1986,29 +2108,6 @@ class TaxonomyDB:
                     a.get("count_in_or_near_100um"),
                     a.get("ratio_in_or_near_100um"),
                     a.get("cell_count_completeness"),
-                ),
-            )
-
-        # Precomputed expression: mirror PrecomputedExpression.genes[] into
-        # node_expression. YAML stays the edit interface for these
-        # enrichment values (curators write via add_expression); the DB
-        # is the query interface for downstream consumers (Stage A
-        # scoring, Stage B emit, refresh-expression-pcs, gen-report).
-        expr_block = nd.get("precomputed_expression") or {}
-        for gene_entry in expr_block.get("genes") or []:
-            if not isinstance(gene_entry, dict):
-                continue
-            sym = gene_entry.get("symbol")
-            mean = gene_entry.get("mean_expression")
-            if not sym or mean is None:
-                continue
-            con.execute(
-                "INSERT OR REPLACE INTO node_expression VALUES (?, ?, ?, ?)",
-                (
-                    node_id,
-                    sym,
-                    gene_entry.get("ensembl_id"),
-                    float(mean),
                 ),
             )
 
@@ -2158,84 +2257,53 @@ class TaxonomyDB:
             cur = parent
         return chain
 
-    def get_node_expression(
+    def taxonomy_id(self) -> str:
+        """The taxonomy id recorded on this DB's nodes."""
+        with self._connect() as con:
+            row = con.execute(
+                "SELECT taxonomy_id FROM nodes WHERE taxonomy_id IS NOT NULL LIMIT 1"
+            ).fetchone()
+        if not row:
+            raise ValueError(f"No taxonomy_id recorded on any node in {self.db_path}")
+        return row[0]
+
+    def expression(
         self,
-        accession: str,
-        symbols: list[str] | None = None,
-    ) -> dict[str, float]:
-        """Look up precomputed mean expression for an atlas node.
+        symbols: Iterable[str],
+        accessions: Iterable[str] | None = None,
+        ranks: Iterable[int] | None = None,
+    ) -> ExpressionLookup:
+        """Mean expression of ``symbols`` on atlas nodes — the one accessor
+        every expression consumer goes through (#189).
 
-        Returns ``{symbol: mean_expression}``. Empty dict if the node
-        has no precomputed_expression rows (i.e. not yet enriched via
-        ``add_expression`` for any of the queried symbols), if the
-        accession is unknown, or if the DB predates the
-        ``node_expression`` table (older builds gracefully degrade).
+        Genes not yet cached are read from the MapMyCells stats HDF5 and
+        cached in this DB first (see :mod:`evidencell.expression_cache`).
+        Restrict nodes with ``accessions`` and/or ``ranks``. Genes that
+        can't be measured (no Ensembl mapping, absent from the stats file)
+        come back in ``not_measured`` with the reason — never as a silent
+        empty result.
 
-        Pass ``symbols`` to restrict the query; otherwise all enriched
-        symbols on the node are returned.
+        Raises :class:`ExpressionUnavailable` when an uncached gene can't be
+        loaded because the stats file or gene mapping is missing.
         """
-        if not accession:
-            return {}
-        node_id = accession.split(":", 1)[-1] if ":" in accession else accession
-        try:
-            with self._connect() as con:
-                if symbols:
-                    placeholders = ",".join("?" * len(symbols))
-                    rows = con.execute(
-                        f"SELECT symbol, mean_expression FROM node_expression "
-                        f"WHERE node_id = ? AND symbol IN ({placeholders})",
-                        (node_id, *symbols),
-                    ).fetchall()
-                else:
-                    rows = con.execute(
-                        "SELECT symbol, mean_expression FROM node_expression "
-                        "WHERE node_id = ?",
-                        (node_id,),
-                    ).fetchall()
-        except sqlite3.OperationalError:
-            # node_expression table missing (legacy DB pre-2026-06).
-            # Rebuild via `just build-taxonomy-db {taxonomy_id}`.
-            return {}
-        return {r[0]: float(r[1]) for r in rows}
+        from evidencell import expression_cache as ec
 
-    def get_expression_for_level(
-        self,
-        level: str,
-        symbols: list[str] | None = None,
-    ) -> dict[str, dict[str, float]]:
-        """Return ``{accession: {symbol: mean_expression}}`` for every
-        node at the given taxonomy level.
-
-        Replaces the YAML-based ``load_expression_data`` for Stage A's
-        percentile computation. Pass ``symbols`` to restrict the panel;
-        omit for everything currently enriched (the typical Stage A
-        call passes the union of classical-node markers across the
-        cohort).
-        """
-        result: dict[str, dict[str, float]] = {}
-        try:
-            with self._connect() as con:
-                if symbols:
-                    placeholders = ",".join("?" * len(symbols))
-                    query = (
-                        f"SELECT n.short_form, e.symbol, e.mean_expression "
-                        f"FROM node_expression e JOIN nodes n ON n.node_id = e.node_id "
-                        f"WHERE n.taxonomy_level = ? AND e.symbol IN ({placeholders})"
-                    )
-                    params: tuple = (level, *symbols)
-                else:
-                    query = (
-                        "SELECT n.short_form, e.symbol, e.mean_expression "
-                        "FROM node_expression e JOIN nodes n ON n.node_id = e.node_id "
-                        "WHERE n.taxonomy_level = ?"
-                    )
-                    params = (level,)
-                for short_form, sym, mean in con.execute(query, params):
-                    result.setdefault(short_form, {})[sym] = float(mean)
-        except sqlite3.OperationalError:
-            # Legacy DB pre-2026-06 — node_expression table missing.
-            return {}
-        return result
+        wanted = [s for s in dict.fromkeys(symbols) if s]
+        if not wanted:
+            return ExpressionLookup()
+        tid: str | None = None
+        stats = self._stats_path
+        mapping = self._gene_mapping_path
+        if stats is None or mapping is None:
+            tid = self.taxonomy_id()
+            stats = stats or ec.stats_h5_path(tid)
+            mapping = mapping or ec.gene_mapping_path(tid)
+        with self._connect() as con:
+            ec.ensure_genes(
+                con, tid or self.taxonomy_id(), wanted,
+                stats_path=stats, mapping_path=mapping,
+            )
+            return ec.query(con, wanted, accessions=accessions, ranks=ranks)
 
     def get_node_marker_categories(
         self,
@@ -2424,10 +2492,11 @@ class TaxonomyDB:
         anat_root_ids:     region IDs resolved transitively via closure tables
         nt_type:           prefix match; propagated from clusters when propagate_nt=True
                            (required for supertype/subclass in WMBv1 where nt_type is null)
-        markers:           gene symbols; each match adds 1 pt
-        marker_columns:    which SQLite marker columns to score against; defaults to all four
-                           (defining_markers_scoped, defining_markers, tf_markers, merfish_markers).
-                           Pass ["defining_markers_scoped"] for scoped-only marker matching.
+        markers:           gene symbols expected to be expressed; scored from expression
+        marker_columns:    which metadata marker columns to cross-check against expression
+                           (``marker_discrepancies``); defaults to all four
+                           (defining_markers_scoped, defining_markers, tf_markers,
+                           merfish_markers), plus np_markers. Never scored.
         propagate_nt:      when True (default), fall back to cluster-aggregated NT when the
                            node's own nt_type is null
         rank:              integer rank (0 = leaf). Selects nodes by taxonomy_rank column.
@@ -2441,12 +2510,12 @@ class TaxonomyDB:
                            Example: {"sex_bias": "female"}
 
         negative_markers: gene symbols expected to be absent; penalise candidates
-                           where these are expressed. Uses expression_data when available.
-        expression_data:  ``{cell_set_accession: {symbol: mean_expression}}`` from
-                          the taxonomy YAML (load with ``load_expression_data()``).
-                          When provided, marker scoring uses percentile-based scoring
-                          (see README § Expression scoring) instead of binary +1.
-                          Falls back to binary +1 for genes absent from expression_data.
+                           where these are expressed.
+        expression_data:  ``{node_id: {symbol: mean_expression}}`` for the queried
+                          rank (and rank 0, for coverage) — ``TaxonomyDB.expression()``
+                          ``.values``. Markers are scored from these values only; a gene
+                          with no value on a candidate scores 0 (it is reported as not
+                          measured by the caller). Metadata marker lists never score.
 
         Scoring:
           - Region (graded, from `region_fraction_100um`): +2 if ≥ 0.5,
@@ -2455,12 +2524,11 @@ class TaxonomyDB:
             strictly in any of the curator-queried anat terms
             (`cell_count > 0`, not just proximity).
           - NT match (filter only — no explicit point award).
-          - Marker scoring (with expression_data): sibling-percentile
-            primary (+2/+1/0), global-percentile specificity bonus
-            (+1 if top 10% atlas-wide), negative markers inverted.
-          - Without expression_data: binary +1 per marker found in
-            DB columns. Candidates with mean_expression <
-            MIN_DETECTABLE for a queried gene contribute 0.
+          - Marker scoring: expression only, cohort-relative tiers
+            (``_score_marker_tier``), coverage-dampened at rank ≥ 1,
+            negative markers inverted. No value on a candidate → 0.
+          - Metadata marker lists are cross-checked, not scored: each
+            candidate gets ``_marker_discrepancies``.
           - AT signal (if at_hits provided): F1 ≥ 0.5 → +3, ≥ 0.3 → +2,
             ≥ floor → +1.
           - Optional criteria add their registered bonus (default 1).
@@ -2725,9 +2793,9 @@ class TaxonomyDB:
                     if not (nn.startswith(qt) or qt.startswith(nn)):
                         continue
 
-            # Per-candidate metadata-marker set: used as fallback for genes
-            # absent from precomputed_expression. Covers four JSON-array
-            # marker columns plus parsed np_markers symbols.
+            # Per-candidate metadata-marker set: cross-checked against
+            # expression for `_marker_discrepancies`, never scored. Covers
+            # the JSON-array marker columns plus parsed np_markers symbols.
             cand_markers: set[str] = set()
             for col in _marker_cols:
                 raw = nd.get(col)
@@ -2770,6 +2838,14 @@ class TaxonomyDB:
             g: [s["_node_expr"].get(g, 0.0) for s in survivors]
             for g in queried_genes
         }
+
+        # Sibling groups (same parent, same rank) for the discrepancy bands.
+        # Unlike the cohort, siblings are taken from every node at the rank.
+        siblings_of: dict[str | None, list[str]] = defaultdict(list)
+        for row in rows:
+            rd = dict(row)
+            siblings_of[rd.get("parent_id")].append(rd["node_id"])
+        discrepancy_genes = list(dict.fromkeys([*(markers or []), *(negative_markers or [])]))
 
         # ──────────────────────────────────────────────────────────────────
         # Pass 2: score each survivor using the cohort distributions.
@@ -2828,19 +2904,8 @@ class TaxonomyDB:
                             entry["coverage"] = round(coverage, 3)
                         expr_detail[m] = entry
                         score += delta
-                    elif m in cand_markers:
-                        # Metadata fallback — gene flagged on candidate but
-                        # not in precomputed_expression. Binary +1; no cohort
-                        # context available.
-                        score += 1
-                        expr_detail[m] = {
-                            "val": None,
-                            "reliable": None,
-                            "cohort_pct": None,
-                            "raw_tier": 1,
-                            "score": 1,
-                            "source": "metadata",
-                        }
+                    # No value → not measured on this node: scores 0. The
+                    # metadata lists never substitute (#189).
 
             # Negative markers (option A: cohort-relative tier).
             if negative_markers:
@@ -2863,22 +2928,23 @@ class TaxonomyDB:
                             "source": "expression",
                         }
                         score += tier
-                    elif m in cand_markers:
-                        # Gap-4 metadata fallback: gene absent from
-                        # precomputed_expression but flagged on candidate
-                        # → contradicts the negative-marker expectation.
-                        expr_detail[f"-{m}"] = {
-                            "val": None,
-                            "reliable": None,
-                            "cohort_pct": None,
-                            "raw_tier": -1,
-                            "score": -1,
-                            "source": "metadata",
-                        }
-                        score += -1
 
             if expr_detail:
                 nd["_expression_detail"] = expr_detail
+
+            if discrepancy_genes:
+                sib_ids = siblings_of.get(nd.get("parent_id"), [node_acc])
+                sibling_vals = {
+                    g: [
+                        expression_data[sid][g]
+                        for sid in sib_ids
+                        if expression_data and g in expression_data.get(sid, {})
+                    ]
+                    for g in discrepancy_genes
+                }
+                nd["_marker_discrepancies"] = _marker_discrepancies(
+                    discrepancy_genes, cand_markers, node_expr, sibling_vals,
+                )
 
             # ── Annotation transfer (Stage A signal) ──────────────────────
             # F1 buckets (rough first cut; review after live data):
@@ -2986,27 +3052,56 @@ def _classical_positive_markers(classical: dict) -> list[str]:
     they feed the same Stage A scoring path; the scoring function does not
     distinguish them. Order: defining markers first, then neuropeptides not
     already present (de-duped, defining-priority).
+
+    Protein-name markers (``PV``, ``CB``, ``mGluR1`` …) are left out: see
+    :func:`_classical_protein_alias_markers`.
     """
     out: list[str] = []
     for m in classical.get("defining_markers") or []:
         sym = m.get("symbol") if isinstance(m, dict) else m
-        if sym:
+        if sym and not _is_protein_alias(sym):
             out.append(sym)
     for m in classical.get("neuropeptides") or []:
         sym = m.get("symbol") if isinstance(m, dict) else m
-        if sym and sym not in out:
+        if sym and sym not in out and not _is_protein_alias(sym):
             out.append(sym)
     return out
 
 
 def _classical_negative_markers(classical: dict) -> list[str]:
-    """Extract symbols for the negative-marker channel from a classical node."""
+    """Extract symbols for the negative-marker channel from a classical node
+    (protein-name markers left out, as for positive markers)."""
     out: list[str] = []
     for m in classical.get("negative_markers") or []:
         sym = m.get("symbol") if isinstance(m, dict) else m
-        if sym:
+        if sym and not _is_protein_alias(sym):
             out.append(sym)
     return out
+
+
+def _classical_protein_alias_markers(classical: dict) -> list[str]:
+    """Marker symbols Stage A does not score because they are protein names
+    that only resolve to a gene through ``marker_aliases``.
+
+    That alias table is an ad hoc stopgap. Scoring through it changed
+    rankings (``olm_cell_ca1``, PR #207), so Stage A keeps its pre-#189
+    behaviour — these markers contribute nothing — until gene identity is
+    resolved properly (#216). Stage B still resolves them for its
+    property comparisons, as before.
+    """
+    out: list[str] = []
+    for key in ("defining_markers", "neuropeptides", "negative_markers"):
+        for m in classical.get(key) or []:
+            sym = m.get("symbol") if isinstance(m, dict) else m
+            if sym and _is_protein_alias(sym) and sym not in out:
+                out.append(sym)
+    return out
+
+
+def _is_protein_alias(symbol: str) -> bool:
+    from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
+
+    return resolve_to_canonical_gene_symbol(symbol) != symbol
 
 
 def _cmd_ingest(source: str, taxonomy_id: str) -> None:
@@ -3114,54 +3209,62 @@ def _cmd_query_gene_expression(
 
     Output: JSON with keys = cell_set_accession, values = {label: mean_expr}.
     Genes absent from the H5 col_names are reported as null.
+
+    Reads the stats file directly (only the requested columns), bypassing
+    the DB expression cache — a debugging probe, not a scoring path.
     """
     import h5py
+    import numpy as np
 
-    meta = read_taxonomy_meta(taxonomy_id)
-    stats_path = meta.mapmycells.local_stats_path
-    if not stats_path:
-        print(json.dumps({"error": f"No local_stats_path for {taxonomy_id}"}))
+    from evidencell.expression_cache import stats_h5_path
+
+    try:
+        h5_path = stats_h5_path(taxonomy_id)
+    except ExpressionUnavailable as exc:
+        print(json.dumps({"error": str(exc)}))
         sys.exit(1)
-
-    from evidencell.paths import repo_root
-    h5_path = repo_root() / stats_path
     if not h5_path.exists():
-        print(json.dumps({"error": f"Stats file not found: {h5_path}"}))
+        print(json.dumps({
+            "error": f"Stats file not found: {h5_path}. "
+                     f"Run: just fetch-mapmycells {taxonomy_id}"
+        }))
         sys.exit(1)
 
     with h5py.File(h5_path, "r") as f:
         # Datasets are JSON-encoded scalar strings in this format
         col_names: list[str] = json.loads(f["col_names"][()])
-        sum_matrix = f["sum"][:]  # shape: (n_clusters, n_genes)
         cluster_to_row: dict[str, int] = json.loads(f["cluster_to_row"][()])
+        col_idx_map = {c: i for i, c in enumerate(col_names)}
+        col_lower = {c.lower(): i for i, c in enumerate(col_names)}
 
-    col_idx_map = {c: i for i, c in enumerate(col_names)}
-    col_lower = {c.lower(): i for i, c in enumerate(col_names)}
+        # Parse gene entries and build label → column index mapping
+        gene_indices: dict[str, int | None] = {}
+        for g in genes:
+            if "=" in g:
+                label, ens_id = g.split("=", 1)
+                gene_indices[label] = col_idx_map.get(ens_id)
+            elif g.startswith("ENSMUSG") or g.startswith("ENSG"):
+                gene_indices[g] = col_idx_map.get(g)
+            else:
+                gene_indices[g] = col_lower.get(g.lower())
 
-    # Parse gene entries and build label → column index mapping
-    gene_indices: dict[str, int | None] = {}
-    for g in genes:
-        if "=" in g:
-            label, ens_id = g.split("=", 1)
-            gene_indices[label] = col_idx_map.get(ens_id)
-        elif g.startswith("ENSMUSG") or g.startswith("ENSG"):
-            gene_indices[g] = col_idx_map.get(g)
-        else:
-            gene_indices[g] = col_lower.get(g.lower())
+        cols = sorted({c for c in gene_indices.values() if c is not None})
+        col_pos = {c: i for i, c in enumerate(cols)}
+        sums = np.asarray(f["sum"][:, cols], dtype=float) if cols else None
+        n_cells = np.asarray(f["n_cells"][:], dtype=float)
 
     result: dict[str, dict[str, float | None]] = {}
     for acc in accessions:
         row_idx = cluster_to_row.get(acc)
-        if row_idx is None:
+        if row_idx is None or sums is None or n_cells[row_idx] <= 0:
             result[acc] = {g: None for g in gene_indices}
             continue
-        row = sum_matrix[row_idx]
         expr: dict[str, float | None] = {}
         for label, col_idx in gene_indices.items():
             if col_idx is None:
                 expr[label] = None
             else:
-                val = float(row[col_idx])
+                val = float(sums[row_idx, col_pos[col_idx]] / n_cells[row_idx])
                 expr[label] = round(val, 4) if val != 0.0 else 0.0
         result[acc] = expr
 
@@ -3349,6 +3452,13 @@ def _cmd_find_candidates(
     # extraction is testable without a DB fixture.
     markers = _classical_positive_markers(classical)
     neg_markers = _classical_negative_markers(classical)
+    alias_markers = _classical_protein_alias_markers(classical)
+    if alias_markers:
+        print(
+            "  NOT SCORED (protein-name markers; gene identity pending #216): "
+            + ", ".join(alias_markers),
+            file=sys.stderr,
+        )
 
     nt_obj = classical.get("nt_type")
     nt_type: str | None = None
@@ -3371,44 +3481,28 @@ def _cmd_find_candidates(
 
     db = TaxonomyDB(db_path)
 
-    # Load precomputed expression data from the taxonomy YAML at the target
-    # rank's level. When rank > 0, also load rank-0 expression so that the
-    # heterogeneity coverage calculation in find_candidates can see leaf
-    # values for descent-based dampening (Phase 1 follow-up C).
-    with db._connect() as _con:
-        _level_row = _con.execute(
-            "SELECT taxonomy_level FROM nodes WHERE taxonomy_rank = ? LIMIT 1", (rank,)
-        ).fetchone()
-    _expr_level = _level_row[0] if _level_row else "cluster"
-    expression_data = load_expression_data(taxonomy_id, _expr_level)
-    if rank > 0:
-        with db._connect() as _con:
-            _leaf_row = _con.execute(
-                "SELECT taxonomy_level FROM nodes WHERE taxonomy_rank = 0 LIMIT 1"
-            ).fetchone()
-        if _leaf_row:
-            leaf_level = _leaf_row[0]
-            leaf_expr = load_expression_data(taxonomy_id, leaf_level)
-            # Merge (queried rank takes precedence on key collisions, which
-            # shouldn't happen since accessions are unique across ranks).
-            for acc, gene_map in leaf_expr.items():
-                expression_data.setdefault(acc, gene_map)
-            if leaf_expr:
-                print(
-                    f"  Loaded leaf expression data: {len(leaf_expr)} nodes "
-                    f"at {leaf_level} level (for coverage computation)",
-                    file=sys.stderr,
-                )
-    if expression_data:
+    # Expression for every queried gene at the target rank, plus rank 0 so
+    # find_candidates can compute leaf coverage (Phase 1 follow-up C).
+    # Uncached genes load from the MapMyCells stats HDF5 on first use; if
+    # that file is missing, stop with the fix rather than score from
+    # metadata (#189).
+    queried = list(dict.fromkeys([*markers, *neg_markers]))
+    try:
+        expr = db.expression(queried, ranks={rank, 0})
+    except ExpressionUnavailable as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        sys.exit(1)
+    expression_data = expr.values
+    if queried:
         print(
-            f"  Loaded expression data: {len(expression_data)} nodes "
-            f"(merged across queried + leaf ranks where applicable)",
+            f"  Expression: {len(queried) - len(expr.not_measured)}/{len(queried)} "
+            f"queried gene(s) measured in {expr.source_file}",
             file=sys.stderr,
         )
-    else:
+    if expr.not_measured:
         print(
-            f"  No precomputed_expression found for {taxonomy_id}/{_expr_level} "
-            "— falling back to binary marker scoring",
+            "  NOT MEASURED (score 0): "
+            + ", ".join(f"{g} ({r})" for g, r in sorted(expr.not_measured.items())),
             file=sys.stderr,
         )
 
@@ -3558,6 +3652,15 @@ def _cmd_find_candidates(
     # If qualifying pool < K, all are emitted.
     candidates = candidates[:top_k]
 
+    print("  Marker discrepancies (metadata lists vs expression; not scored):",
+          file=sys.stderr)
+    for c in candidates:
+        print(
+            f"    {c['node_id']} ({c.get('label', '')}): "
+            f"{format_discrepancy_summary(c.get('_marker_discrepancies') or [])}",
+            file=sys.stderr,
+        )
+
     # Build the SURVIVAL_COHORT filters list from active query parameters.
     # Format is free-text 'key=value' for agent consumption; not for
     # programmatic parsing downstream.
@@ -3659,6 +3762,9 @@ def _cmd_find_candidates(
         "taxonomy_id": taxonomy_id,
         "rank": rank,
         "n_candidates": cohort_size,
+        "expression_source": expr.source_file,
+        "not_measured_genes": dict(sorted(expr.not_measured.items())),
+        "unscored_protein_alias_markers": alias_markers,
         "candidates": [
             {
                 "node_id": c["node_id"],
@@ -3672,6 +3778,10 @@ def _cmd_find_candidates(
                 **({"criteria_applied": c["_criteria_applied"]}
                    if c.get("_criteria_applied") else {}),
                 "discovery_score": _build_discovery_score(c, i),
+                "marker_discrepancies": c.get("_marker_discrepancies") or [],
+                # Stats file behind this candidate's expression values;
+                # Stage B carries it onto the edge's marker comparisons.
+                "expression_source": expr.source_file,
             }
             for i, c in enumerate(candidates)
         ],

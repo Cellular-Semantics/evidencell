@@ -1279,3 +1279,37 @@ def test_build_reference_index_uses_dataset_authors_year_for_citation_line():
     assert stephens is not None
     assert "Stephens" in stephens.citation_line
     assert "2024" in stephens.citation_line
+
+
+def test_methods_summary_cites_expression_stats_file(capsys):
+    """#189: the stats file behind atlas expression comes from the stamp on
+    the edges' marker comparisons — not from the taxonomy DB cache, which
+    may be empty or refilled since the edges were emitted (PR #207 review)."""
+    from evidencell.render import extract_methods_summary
+
+    def graph(notes: str) -> dict:
+        return {
+            "nodes": [
+                {"id": "cl", "name": "Classical"},
+                {"id": "CLUS_1", "name": "c1", "taxonomy_id": "T1"},
+            ],
+            "edges": [{
+                "id": "e1", "lit_type": "cl", "taxonomy_type": "CLUS_1", "evidence": [],
+                "property_comparisons": [
+                    {"property": "marker_Sst", "alignment": "CONSISTENT", "notes": notes},
+                    {"property": "negative_marker_Ghost", "alignment": "NOT_ASSESSED",
+                     "notes": "Gene not measured in stats_v1.h5 (NOT_IN_STATS)."},
+                    {"property": "nt_type", "alignment": "CONSISTENT", "notes": "GABA"},
+                ],
+            }],
+        }
+
+    stamped = graph("Sst present; atlas expression from stats_v1.h5; METADATA DISCREPANCY x")
+    ms = extract_methods_summary(stamped, "cl", Path("test.yaml"))
+    assert ms["expression_sources"] == [{"taxonomy_id": "T1", "stats_file": "stats_v1.h5"}]
+    assert "WARNING" not in capsys.readouterr().err
+
+    # Emitted before the stamp existed: reported as unknown, with a warning.
+    ms = extract_methods_summary(graph("Sst present"), "cl", Path("test.yaml"))
+    assert ms["expression_sources"] == [{"taxonomy_id": "T1", "stats_file": None}]
+    assert "refresh-property-comparisons" in capsys.readouterr().err
