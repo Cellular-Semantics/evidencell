@@ -142,12 +142,24 @@ specification):
     `cell_count > 0` strictly in any curator-queried term.
     Preserves discrimination between candidates centred in the
     region and those rescued by 100µm scatter alone.
-  - Per-marker presence/absence credit and percentile-based
+  - Per-marker presence/absence credit and cohort-percentile
     discrimination (defining markers + neuropeptides + negative
     markers, equal-weight), **from expression only** — a gene listed
     in the atlas node's metadata marker columns gets no credit for
-    being listed; annotation-transfer F1 buckets (+3/+2/+1); sex-bias
-    bonus at rank 0.
+    being listed. Tiers (`_score_marker_tier`; `cohort_pct` is the
+    candidate's percentile among the surviving pool):
+
+    | Marker | `val < 0.1` (absent) | present, `cohort_pct < 0.95` | present, `cohort_pct ≥ 0.95` |
+    |---|---|---|---|
+    | positive | −1 | +1 | +2 |
+    | negative | +1 if ≥ 1 positive marker is present on the candidate, else 0 | −1 | −2 |
+
+    The absent-negative credit is gated on positive support (#219):
+    absence only adds evidence for a candidate that already looks like
+    the query, so an unrelated type cannot climb the list on +1 per
+    absent negative marker. `expression_detail` keeps the ungated call
+    as `raw_tier` and the applied value as `applied_score`.
+  - Annotation-transfer F1 buckets (+3/+2/+1); sex-bias bonus at rank 0.
 - **Metadata cross-check (not scored)**: per candidate × queried gene,
   the atlas metadata marker lists (`defining_markers_scoped`,
   `defining_markers`, `tf_markers`, `merfish_markers`, `np_markers`)

@@ -1660,7 +1660,10 @@ COHORT_SPECIFIC_PCT: float = 0.95
 
 
 def _score_marker_tier(
-    val: float, cohort_pct: float | None, is_negative: bool = False
+    val: float,
+    cohort_pct: float | None,
+    is_negative: bool = False,
+    positive_support: bool = True,
 ) -> int:
     """Phase 1 follow-up scoring for a single marker on a single candidate.
 
@@ -1675,16 +1678,25 @@ def _score_marker_tier(
       val ≥ MIN_DETECTABLE, cohort_pct ≥ 0.95           → +2 (cohort-specific)
 
     Negative markers (absence confirms expectation):
-      val < MIN_DETECTABLE                              → +1 (absent — confirms)
+      val < MIN_DETECTABLE, positive_support            → +1 (absent — confirms)
+      val < MIN_DETECTABLE, no positive_support         →  0 (absent — neutral)
       val ≥ MIN_DETECTABLE, cohort_pct < 0.95           → −1 (present — contradicts)
       val ≥ MIN_DETECTABLE, cohort_pct ≥ 0.95           → −2 (aberrantly high)
+
+    ``positive_support`` is True when the candidate has at least one positive
+    marker scored present (tier ≥ +1). An absent negative marker only adds
+    evidence for a candidate that already looks like the query; without that
+    gate an unrelated type collects +1 per absent negative marker and can
+    outrank real candidates (#219). Presence penalties are never gated.
 
     A `cohort_pct` of None (no surviving cohort or gene not in cohort
     distribution) collapses the +2 / −2 bonus to +1 / −1; the call still
     distinguishes presence from absence via MIN_DETECTABLE.
     """
     if val < MIN_DETECTABLE:
-        return +1 if is_negative else -1
+        if is_negative:
+            return +1 if positive_support else 0
+        return -1
     is_specific = cohort_pct is not None and cohort_pct >= COHORT_SPECIFIC_PCT
     if is_negative:
         return -2 if is_specific else -1
@@ -2527,6 +2539,8 @@ class TaxonomyDB:
           - Marker scoring: expression only, cohort-relative tiers
             (``_score_marker_tier``), coverage-dampened at rank ≥ 1,
             negative markers inverted. No value on a candidate → 0.
+            An absent negative marker earns +1 only when at least one
+            positive marker is present on the candidate (#219).
           - Metadata marker lists are cross-checked, not scored: each
             candidate gets ``_marker_discrepancies``.
           - AT signal (if at_hits provided): F1 ≥ 0.5 → +3, ≥ 0.3 → +2,
@@ -2863,6 +2877,7 @@ class TaxonomyDB:
             )
 
             # Positive markers (defining + neuropeptide).
+            positive_present = False
             if markers:
                 for m in markers:
                     if m in node_expr:
@@ -2874,6 +2889,8 @@ class TaxonomyDB:
                         tier = _score_marker_tier(
                             val, cohort_pct, is_negative=False
                         )
+                        if tier > 0:
+                            positive_present = True
                         # Coverage dampening at rank ≥ 1: positive marker
                         # credit on a heterogeneous supertype is reduced by
                         # sqrt(coverage). Negative-tier (absence) propagates
@@ -2907,7 +2924,9 @@ class TaxonomyDB:
                     # No value → not measured on this node: scores 0. The
                     # metadata lists never substitute (#189).
 
-            # Negative markers (option A: cohort-relative tier).
+            # Negative markers (option A: cohort-relative tier). The
+            # absence credit is gated on positive support (#219): raw_tier
+            # keeps the ungated call, score is what was applied.
             if negative_markers:
                 for m in negative_markers:
                     if m in node_expr:
@@ -2919,15 +2938,19 @@ class TaxonomyDB:
                         tier = _score_marker_tier(
                             val, cohort_pct, is_negative=True
                         )
+                        applied = _score_marker_tier(
+                            val, cohort_pct, is_negative=True,
+                            positive_support=positive_present,
+                        )
                         expr_detail[f"-{m}"] = {
                             "val": val,
                             "reliable": reliable,
                             "cohort_pct": round(cohort_pct, 3),
                             "raw_tier": tier,
-                            "score": tier,
+                            "score": applied,
                             "source": "expression",
                         }
-                        score += tier
+                        score += applied
 
             if expr_detail:
                 nd["_expression_detail"] = expr_detail

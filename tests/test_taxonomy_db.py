@@ -1814,3 +1814,69 @@ def test_get_node_anat_rows_returns_full_row_shape(tmp_path):
     assert by_id["MBA:399"]["count_in_or_near_100um"] == 90
     assert by_id["MBA:399"]["cell_count_completeness"] == "lower_bound"
     assert by_id["MBA:431"]["cell_count_completeness"] is None
+
+
+# ── #219: absent negative markers need positive support ─────────────────────
+
+
+@pytest.mark.parametrize(
+    "val,cohort_pct,is_negative,positive_support,expected",
+    [
+        (0.0, None, False, True, -1),    # positive absent
+        (0.0, None, False, False, -1),   # gate never touches positives
+        (1.0, 0.50, False, True, +1),    # positive present
+        (1.0, 0.95, False, True, +2),    # positive cohort-specific
+        (0.0, None, True, True, +1),     # negative absent, supported
+        (0.0, None, True, False, 0),     # negative absent, unsupported → neutral
+        (1.0, 0.50, True, False, -1),    # presence penalty is never gated
+        (1.0, 0.95, True, False, -2),
+    ],
+)
+def test_score_marker_tier_table(val, cohort_pct, is_negative, positive_support, expected):
+    from evidencell.taxonomy_db import _score_marker_tier
+
+    assert _score_marker_tier(
+        val, cohort_pct, is_negative=is_negative, positive_support=positive_support
+    ) == expected
+
+
+def test_unrelated_candidate_gets_no_net_positive_marker_score(tmp_path):
+    """A candidate with every positive marker absent and every negative
+    marker absent must not get a net positive marker score (#219: Astro-TE
+    NN_5 reached the OLM top 5 on absent-negative credit)."""
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "UNRELATED", n_cells=10)
+    _insert_node(db, "MATCH", n_cells=10)
+    negs = ["Pvalb", "Calb1", "Calb2", "Nos1", "Vip"]
+    expr = {
+        "UNRELATED": {"Sst": 0.0, **{g: 0.0 for g in negs}},
+        "MATCH": {"Sst": 9.0, **{g: 0.0 for g in negs}},
+    }
+
+    results = db.find_candidates(
+        markers=["Sst"], negative_markers=negs, rank=0, expression_data=expr,
+    )
+    by_id = {c["node_id"]: c for c in results}
+    # −1 for absent Sst, 0 per absent negative → net −1, cut from results.
+    assert "UNRELATED" not in by_id
+
+    # With a positive marker present the absence credit still applies.
+    match = by_id["MATCH"]["_expression_detail"]
+    assert all(match[f"-{g}"]["score"] == 1 for g in negs)
+
+
+def test_gated_negative_marker_detail_keeps_raw_tier(tmp_path):
+    """The gated absence call stays visible: raw_tier +1, applied score 0.
+    Sst has no value (not measured → 0), so nothing supports the candidate
+    and its score is 0, which keeps it in the results."""
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "CAND", n_cells=10)
+
+    results = db.find_candidates(
+        markers=["Sst"], negative_markers=["Pvalb"], rank=0,
+        expression_data={"CAND": {"Pvalb": 0.0}},
+    )
+    cand = next(c for c in results if c["node_id"] == "CAND")
+    d = cand["_expression_detail"]["-Pvalb"]
+    assert (d["raw_tier"], d["score"]) == (1, 0)
+    assert cand["_score"] == 0
