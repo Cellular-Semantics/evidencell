@@ -656,7 +656,8 @@ INPUT FILES:
    `references/{region}/quotes/{corpus_id}.json`, keyed by quote_key. Editing
    `claims` is allowed — it is curation metadata, not provenance. Do not touch
    `text`: the quote key is a hash of it, so any edit invalidates the key and the
-   write is rejected.
+   write is rejected. Make these edits with the Edit tool, never a script: the
+   pre-edit hook guards the reference store too.
 
 3. Per field, pick the 1-3 most informative quote_keys. Prefer direct
    characterisation over review, and resolved references over unresolved. Cite
