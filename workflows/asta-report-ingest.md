@@ -1,19 +1,20 @@
 # ASTA Report Ingest Orchestrator
 
 You are an ASTA deep research report ingestion coordinator. You parse a pre-generated
-ASTA AI2 deep research PDF, propose classical CellTypeNode stubs with property metadata,
-and resolve all references. Quotes are stored in a shared per-region reference store
-with content-hashed keys — they are **not** promoted to KB evidence items. Each proposed
-node is written as its own file under `kb/graphs/{region}/`, matching the
-one-component-per-file layout the KB uses.
+ASTA AI2 deep research PDF, resolve its references into the shared per-region reference
+store, identify the cell types it describes, reconcile each one against the nodes
+already in the KB, and write or enrich one node file per type under
+`kb/graphs/{region}/`. Quotes are stored with content-hashed keys and cited by key —
+they are **not** promoted to KB evidence items.
 
 Entry point: user asks Claude to run `just ingest-report {region} {pdf_file}`.
-Claude runs the recipe (validates inputs, shows existing nodes), then reads and
-follows this orchestrator.
+Claude runs the recipe (validates inputs, lists the region's existing nodes), then
+reads and follows this orchestrator.
 
-Classical cell type nodes **emerge from this workflow** — they are not required to
-exist beforehand. The PDF is the discovery mechanism for the classical side;
-`ingest-taxonomy.md` handles the transcriptomic atlas side.
+A report may describe types that are new to the KB, types that already have a node,
+or subtypes of existing nodes. The workflow decides which before it writes anything,
+and adds to existing nodes rather than rewriting them. `ingest-taxonomy.md` handles
+the transcriptomic atlas side.
 
 ---
 
@@ -41,25 +42,42 @@ Output directory: `research/{region}/{YYYYMMDD}_{region}_report_ingest/`
 
 ```
 PDF
- ├─ Step 1:   parse → extracted_quotes.json  (temp, keyed by author_key)
- │                   → reference_list.json    (author_keys + titles)
- │                   → pdf_corpus_ids.json    (S2 corpus IDs from PDF links)
+ ├─ Step 0:  setup → existing_nodes.yaml   (region's canonical nodes, from the KB index)
+ │                 → slice_identity.md, slice_properties.md   (schema slices)
  │
- ├─ Step 1b:  LLM read → proposed_types.json  (proposed node summaries)
+ ├─ Step 1:  parse → extracted_quotes.json, reference_list.json, pdf_corpus_ids.json
  │
- ├─ Step 2:   batch resolve + merge quotes
- │            → references/{region}/  (shared, keyed by corpus_id)
- │               quotes stored with content-hashed keys: {corpus_id}_{hash8}
+ ├─ Step 2:  resolve refs + merge quotes → references/{region}/
+ │                                        → run_quotes.json   (this run's quote pool)
  │
- ├─ Step 3:   CL lookup → cl_mappings.json
+ ├─ Step 3:  identify + reconcile       (identity questions)
+ │           → kb/graphs/{region}/{node_id}.yaml   identity fields: new files,
+ │                                                  or additions to existing ones
+ │           → ingest_plan.yaml                     action per type, subtype
+ │                                                  hypotheses, unplaced findings
  │
- ├─ Step 3b:  quote → property matching, one file per node
- │            → kb/graphs/{region}/{node_id}.yaml
+ ├─ Step 4:  CL lookup → cl_mapping on each node file; cl_mappings.json
  │
- ├─ Step 4:   review (PR by default; in-session gate if gate: true)
+ ├─ Step 5:  characterise, one subagent per node   (property questions)
+ │           → property fields on each node file; unplaced/{node_id}.yaml
  │
- └─ Step 5:   handoff to survey
+ ├─ Step 6:  review (PR by default; in-session gate if gate: true)
+ │
+ └─ Step 7:  handoff to survey
 ```
+
+**The node file is the handoff between Steps 3, 4 and 5.** Whatever a step decides
+about a node is written to the node file, in schema fields, under hook validation.
+A finding that fits no field goes to `ingest_plan.yaml` or `unplaced/` — never to
+free text passed between steps, and never to `notes` unless it is a caveat.
+
+**Field guidance comes from the schema.** Each slot an agent fills carries an
+`ingest_question` and an `ingest_phase` annotation. Step 0 renders one slice per
+phase with `just schema-slice`; Step 3 answers the `identity` questions (except
+`cl_mapping`, which Step 4 owns) and Step 5 the `properties` questions. Never add a
+hand-written field list to a step prompt: change the slot's question in the schema.
+What stays in the prompts is workflow policy — what to write when, what never to
+write, how to treat existing nodes.
 
 Quotes live in the region's reference store, never in the KB YAML. The KB references
 quotes by key. Reports dereference keys to include snippets when needed.
@@ -152,7 +170,7 @@ ASTA deep research PDFs follow a consistent structure:
 - **Reference list** at end of document
 - **Hyperlinked citations** — every `(Author et al., Year)` citation in the PDF is a
   hyperlink to `https://www.semanticscholar.org/p/{corpus_id}`. These embedded corpus
-  IDs are the primary mechanism for reference resolution (see Step 1b).
+  IDs are the primary mechanism for reference resolution (see Step 2).
 
 Key extraction rule: **verbatim quotes are delimited by `"..."` quotation marks** and
 appear as standalone blocks under a paper attribution — NOT inline within synthesis
@@ -163,7 +181,7 @@ sentences. Inline quoted fragments in synthesis text are ASTA paraphrase, not ve
 ## Step 0: Setup
 
 1. Confirm `{pdf_file}` exists at the given path (relative to repo root).
-2. Create output directory:
+2. Create output directory; `{run_id}` is its basename:
    ```bash
    mkdir -p research/{region}/{YYYYMMDD}_{region}_report_ingest
    ```
@@ -177,6 +195,17 @@ sentences. Inline quoted fragments in synthesis text are ASTA paraphrase, not ve
      "started_at": "..."
    }
    ```
+4. Snapshot the region's existing nodes and render the schema slices:
+   ```bash
+   uv run python -m evidencell.kb_index region {region} > {output_dir}/existing_nodes.yaml
+   just schema-slice identity > {output_dir}/slice_identity.md
+   just schema-slice properties > {output_dir}/slice_properties.md
+   ```
+   `existing_nodes.yaml` lists every canonical node in `kb/graphs/{region}/` with
+   its identity fields (name, synonyms, definition basis, species, CL term) and
+   file. It is taken before anything is written, so Step 3 reconciles against the
+   KB as it was when the run started. The slices are the field guidance Steps 3
+   and 5 read; pass them to subagents as files, not paraphrased.
 
 ---
 
@@ -203,73 +232,13 @@ output file format is identical — downstream steps are agnostic to the method.
 
 **Note:** The parser handles only mechanical extraction (quotes, refs, links).
 It does NOT identify proposed classical cell types — that requires LLM judgement
-and is handled in Step 1b below.
-
----
-
-## Step 1b: Proposed types identification (LLM subagent)
-
-Spawn a **single subagent** that reads the PDF and the already-extracted quotes
-to identify the classical cell types the report describes.
-
-**Subagent config:** `subagent_type: "general-purpose"`, `model: {thinking_model}`
-
-```
-You are a cell type identification agent. Read an ASTA deep research PDF and
-identify the classical cell types it describes. You have access to the
-already-extracted quotes in {output_dir}/extracted_quotes.json for reference.
-You perform ONLY the steps listed below.
-
-PDF FILE: {pdf_file}
-OUTPUT DIRECTORY: {output_dir}
-REGION: {region}
-
-TASK:
-
-1. Read the PDF at {pdf_file}. Focus on the overall taxonomy framing:
-   - What cell type(s) does the report treat as its subject?
-   - Are there subtypes or heterogeneity discussed?
-
-2. Read {output_dir}/extracted_quotes.json for context on what evidence exists.
-
-3. For each proposed classical cell type, note:
-   - A proposed_id (snake_case, region-scoped)
-   - The full name
-   - Markers mentioned (positive, negative, neuropeptides)
-   - Anatomy, NT type
-   - Morphology and ephys summaries (concise, from synthesis context)
-   - Subtypes or heterogeneity noted
-   - Quote count (from extracted_quotes.json)
-
-4. Write {output_dir}/proposed_types.json:
-   [{
-     "proposed_id": "olm_ca1",
-     "name": "Oriens-Lacunosum Moleculare (O-LM) interneuron",
-     "markers_mentioned": ["Sst", "Chrna2", "Npy"],
-     "negative_markers_mentioned": [],
-     "neuropeptides_mentioned": ["Sst", "Npy", "Pnoc"],
-     "anatomy_mentioned": ["CA1 stratum oriens"],
-     "nt_type": "GABAergic",
-     "morphology_summary": "Horizontal soma in SO, spiny dendrites in SO, axon to SLM",
-     "ephys_summary": "Regular-to-fast spiking, prominent Ih sag, theta resonance",
-     "subtypes_noted": "SST+ vs PV+ subpopulation (Fernández et al., 2024)",
-     "quote_count": N
-   }]
-
-RETURN:
-"Proposed {Q} classical type(s). Written proposed_types.json."
-
-DO NOT:
-- Re-extract quotes (already done in Step 1)
-- Write a KB YAML file (that happens in Step 3b)
-- Call any MCP search tools
-```
+and is handled in Step 3.
 
 ---
 
 ## Step 2: Reference resolution and quote store merge
 
-Resolve author_key references using the corpus IDs extracted in Step 1b,
+Resolve author_key references using the corpus IDs extracted in Step 1,
 then merge extracted quotes into the shared reference store with
 content-hashed keys.
 
@@ -378,7 +347,23 @@ TASK:
       bacteriophage genomics paper came to sit on a hippocampal interneuron
       node for six months.
 
-6. Write {output_dir}/resolution_report.md — summary:
+6. Write {output_dir}/run_quotes.json — one entry for every quote this run
+   passed to write_quote_to_refs, including ones that were already in the
+   store (the call returns the key either way). This is the quote pool Steps 3
+   and 5 cite from:
+       [{
+         "quote_key": "<returned key>",
+         "corpus_id": "<digits-only>",
+         "ref": "PMID:<digits>" | "https://doi.org/<doi>" | null,
+         "author_key": "Last et al., YYYY",
+         "section": "<report section header>",
+         "text": "<the quote>"
+       }]
+   `ref` is the PMID form when the paper has a PMID, otherwise the DOI URL,
+   otherwise null (UNRESOLVED). A quote with a null ref cannot be cited in KB
+   YAML.
+
+7. Write {output_dir}/resolution_report.md — summary:
    - Total references, HIGH/MODERATE/UNRESOLVED counts
    - Quotes merged: N new, M deduplicated
    - Any extra_references (inline citations without evidence-section quotes)
@@ -386,7 +371,7 @@ TASK:
 RETURN:
 "Resolved {N}/{total} references. HIGH: X, MODERATE: Y, UNRESOLVED: Z.
 Merged {Q} quotes into the reference store ({D} deduplicated).
-See resolution_report.md."
+See resolution_report.md and run_quotes.json."
 
 DO NOT:
 - Guess corpus IDs
@@ -397,35 +382,201 @@ DO NOT:
 
 ---
 
-## Step 3: CL lookup subagent
+## Step 3: Identify and reconcile (LLM subagent)
 
-Spawn a **single subagent** to anchor proposed nodes to Cell Ontology terms.
+Spawn a **single subagent** that reads the report, decides which cell types it
+describes and how each relates to the region's existing nodes, and writes each
+type's identity fields to its node file.
+
+This is where the structural decisions are made: which types exist, whether each
+is new, and how types relate to one another. Making them here, against the KB and
+in schema fields, is what stops them being lost before Step 5.
+
+**Subagent config:** `subagent_type: "general-purpose"`, `model: {thinking_model}`
+
+```
+You are a cell type identification and reconciliation agent. You read an ASTA
+deep research report, decide which cell types it describes, decide how each one
+relates to the nodes already in the KB, and write each type's identity fields to
+its KB node file. You perform ONLY the steps listed below.
+
+PDF FILE: {pdf_file}
+OUTPUT DIRECTORY: {output_dir}
+REGION: {region}
+RUN ID: {run_id}
+DATE: {date}
+
+INPUT FILES:
+- {pdf_file}                          the report
+- {output_dir}/existing_nodes.yaml    canonical nodes already in this region
+- {output_dir}/run_quotes.json        this run's quotes, each with quote_key and ref
+- {output_dir}/slice_identity.md      the identity fields: one question per field,
+                                      with each field's allowed values and shape
+
+## Part A: Identify
+
+1. Read the report. Which cell type(s) does it treat as its subject? Which
+   subtypes or subpopulations does it characterise? Propose a type only where
+   the report characterises it (a name plus at least one defining property). A
+   type mentioned in passing is not proposed.
+
+## Part B: Reconcile against the KB
+
+2. For each proposed type, compare it with existing_nodes.yaml (names, synonyms,
+   definition basis, the anatomy its name implies) and choose ONE action:
+   - NEW — no existing node describes this population.
+   - ENRICH <node_id> — an existing node describes the same population, and the
+     report adds names or evidence for it.
+   - DUPLICATE <node_id> — an existing node describes the same population and
+     the report adds nothing new. Nothing is written for it.
+   Two nodes describe the same population when the sources would let you swap
+   one name for the other. A narrower population inside an existing node is NEW,
+   not ENRICH; record the relation as a subtype hypothesis (step 5).
+   Never choose ENRICH on name similarity alone. If unsure between NEW and
+   ENRICH, choose NEW and say why in reconciliation_note; review merges.
+
+3. Mint an id for each NEW type: lowercase_underscored, describing the
+   population (not the report), and unique across the KB — check
+   existing_nodes.yaml and `ls kb/graphs/*/`.
+
+## Part C: Answer the identity questions
+
+4. For each NEW or ENRICH type, answer every question in slice_identity.md
+   except cl_mapping, which Step 4 owns. Cite sources by quote_key from
+   run_quotes.json, with ref copied from the same entry. Use only entries whose
+   ref is not null.
+
+5. Subtype relations. If the report describes a type as part of another type —
+   one proposed in this run or one in existing_nodes.yaml — record it in
+   ingest_plan.yaml under subtype_hypotheses. The schema has no field for it yet
+   (#183), so it goes nowhere else: not in notes, not as an edge. For each, give
+   the kind:
+   - DEFINITIONAL — the child is defined as the parent narrowed by an extra
+     criterion (a nucleus, a marker, a projection target, one end of a gradient).
+   - EMPIRICAL — the child is defined independently (e.g. by a transgenic line
+     or a clustering) and the sources report that it falls within the parent.
+
+## Part D: Write
+
+6. NEW: write kb/graphs/{region}/{node_id}.yaml with the Write tool. One node
+   per file; filename and id must match. The file is a CellTypeMappingGraph with
+   exactly one CellTypeNode carrying identity fields only, and no edges:
+
+   # {node name} — {region}
+   # Source: ASTA deep research report — {pdf_file}
+   # Ingestion date: {date}
+   # Status: DRAFT — node metadata from ASTA report, pending primary verification
+   # Property assertions reference quotes in references/{region}/
+   # Proposed by: asta-report-ingest
+
+   name: "{short name}"
+   description: >
+     Evidence graph component for {node name}, proposed from the ASTA deep
+     research report {pdf file name}.
+   brain_region: {copy the brain_region block from an existing file in
+                  kb/graphs/{region}/; if there is none, the region's
+                  top-level structure as id, label, name_in_source}
+   target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+   species: {the node's species, or omit}
+   creation_date: "{date}"
+   nodes:
+     - id: ...
+       name: ...
+       definition_basis: ...
+       species: ...
+       synonyms: [...]
+   edges: []
+
+   Property fields (markers, location, NT type, morphology, electrophysiology,
+   neuropeptides, notes, definition_references) are written in Step 5, and
+   cl_mapping in Step 4. Do not add them here.
+
+7. ENRICH: edit the existing node file with the Edit tool. You may ADD a synonym
+   not already present, and species if absent. Never change or remove an existing
+   value. If the report contradicts an existing identity value, leave the file
+   unchanged and record the conflict in identity_conflicts.
+
+8. Write {output_dir}/ingest_plan.yaml, one entry per proposed type:
+
+   run_id: {run_id}
+   types:
+     - node_id: <id; for ENRICH/DUPLICATE the existing id>
+       action: NEW | ENRICH | DUPLICATE
+       file: kb/graphs/{region}/<id>.yaml      # null for DUPLICATE
+       report_sections: [<report section headers that characterise this type>]
+       reconciliation_note: <why this action; name the existing nodes considered>
+       subtype_hypotheses:
+         - parent: <node id>
+           kind: DEFINITIONAL | EMPIRICAL
+           quote_keys: [...]
+           note: <caveats: gradient pole, single study, inferred, ...>
+       identity_conflicts: [<ENRICH only: report value vs existing value>]
+       unplaced: [{finding: ..., quote_keys: [...]}]   # identity findings with no field
+
+9. If the pre-edit hook blocks a write, fix the reported problem and retry.
+   Never write through a shell command — `cp`, `cat >` and `sed -i` are not
+   intercepted by the hook, and a write that bypasses it is unvalidated KB content.
+
+RETURN:
+"Proposed {T} type(s): NEW {n}, ENRICH {e}, DUPLICATE {d}. Subtype hypotheses: {s}.
+Wrote {w} new node file(s), edited {x}. See ingest_plan.yaml."
+
+DO NOT:
+- Write property fields (Step 5) or cl_mapping (Step 4)
+- Write edges or LIT_TYPE stubs
+- Record a subtype relation in notes or as an edge
+- Change or remove any existing value in an ENRICH node
+- Cite a quote that is not in run_quotes.json, or whose ref is null
+- Put quote text in the KB YAML
+```
+
+---
+
+## Step 4: CL lookup (LLM subagent)
+
+Spawn a **single subagent** to anchor nodes to Cell Ontology terms. It answers
+the `cl_mapping` identity question, which needs OLS lookups, and writes the answer
+into each node file.
 
 **Subagent config:** `subagent_type: "general-purpose"`, `model: {model}`
 
 ```
-You are a Cell Ontology lookup agent. Match proposed classical cell types to
-existing CL terms and collect CL definition references as additional seed papers.
+You are a Cell Ontology lookup agent. Match the run's cell types to existing CL
+terms, write each match into its node file, and collect CL definition references
+as additional seed papers. You perform ONLY the steps listed below.
 
 OUTPUT DIRECTORY: {output_dir}
 REGION: {region}
 
+INPUT FILES:
+- {output_dir}/ingest_plan.yaml       the run's types, with action and file
+- {output_dir}/slice_identity.md      the cl_mapping question and the CLMapping shape
+- the node files named in ingest_plan.yaml
+
 TASK:
 
-1. Read {output_dir}/proposed_types.json for the list of proposed classical types.
+1. Read ingest_plan.yaml. Work on every NEW type, and every ENRICH type whose
+   node file has no cl_mapping. Skip DUPLICATE types.
 
-2. For each proposed type, search OLS4 by name and synonyms:
+2. For each, search OLS4 by name and synonyms (read them from the node file):
    mcp__ols4__search(query="{type_name}", ontology="cl", rows=5)
-   Also try key synonym searches if the primary name returns no match
-   (e.g. "O-LM neuron", "oriens lacunosum moleculare", "OLM interneuron").
+   Also try key synonym searches if the primary name returns no match.
 
 3. For each match found:
-   - Record: cl_term_id, label, mapping_type (EXACT/BROAD/RELATED)
+   - Decide the mapping type (EXACT / BROAD / RELATED) as defined in
+     slice_identity.md.
    - Fetch the term detail to get definition references:
      mcp__ols4__get_term(iri="{term_iri}")
    - Extract any PMID or DOI references from the definition or xrefs.
 
-4. Write {output_dir}/cl_mappings.json:
+4. Write cl_mapping into the node file with the Edit tool, in the CLMapping shape
+   given in slice_identity.md (cl_term with id, label, name_in_source;
+   mapping_type; mapping_notes saying what was searched and why this type was
+   chosen). Where no term fits, map BROAD to the closest ancestor and say so in
+   mapping_notes. Never change an existing cl_mapping; if your lookup disagrees
+   with one, record that in cl_mappings.json only.
+
+5. Write {output_dir}/cl_mappings.json:
    {
      "olm_ca1": {
        "cl_term_id": "CL:0000000",
@@ -443,163 +594,121 @@ TASK:
      }
    }
 
+6. If the pre-edit hook blocks a write, fix the reported problem and retry.
+   Never write through a shell command.
+
 RETURN:
 "CL lookup complete. Matched: N nodes. Unmatched (CANDIDATE): M nodes.
-CL definition references: P additional seed papers. See cl_mappings.json."
+Written to node files: W. CL definition references: P additional seed papers.
+See cl_mappings.json."
 
 DO NOT:
 - Auto-assign EXACT mapping if only a synonym matches — use BROAD or RELATED
 - Invent CL term IDs
+- Edit any field other than cl_mapping
 ```
 
 ---
-## Step 3b: Quote matching and node authoring
 
-Spawn a **single subagent** that matches quotes from the reference store to node
-property fields and writes **one KB file per proposed node**, directly into
-`kb/graphs/{region}/`.
+## Step 5: Characterise, one node at a time (LLM subagents)
 
-This is the key filtering step: quotes are evaluated for relevance to specific
-properties, not dumped in bulk.
+For each type in `ingest_plan.yaml` with action NEW or ENRICH, spawn **one
+subagent** that answers the property questions for that node and writes the
+answers into its file. Dispatch them **one after another**, not in parallel: each
+appends `claims` to quotes in the shared store, and concurrent writes to the same
+quote file would race.
 
-**Why direct writes.** The pre-edit validation hook is a PreToolUse hook on
-`Write`/`Edit`. A draft written to `research/` is not covered by it, so the
-former flow was *write unvalidated → review → validate on promotion*, and the
-promotion step was a `cp` away from writing wholly unvalidated YAML into the KB
-(that is how an unresolvable `taxonomy_id` once reached 44 nodes across six
-files). Writing each node straight to its destination inverts the order: the
-hook fires on every write, and a malformed node fails at the point of
-authorship, where the subagent still has the context to fix it.
+One node per subagent keeps each context to one type's quotes plus the properties
+slice, and a failure costs one node, not the run.
 
 **Subagent config:** `subagent_type: "general-purpose"`, `model: {thinking_model}`
 
 ```
-You are a quote matching and node authoring agent. You match quotes from the
-shared reference store to node property fields and write one KB file per node.
-You perform ONLY the steps listed below.
+You are a node characterisation agent for ONE cell type. You match quotes to the
+property fields of one KB node and write them into its file. You perform ONLY the
+steps listed below.
 
+NODE: {node_id}
+ACTION: {NEW | ENRICH}
+NODE FILE: {file}
 OUTPUT DIRECTORY: {output_dir}
 REGION: {region}
 
 INPUT FILES:
-- {output_dir}/proposed_types.json                (node summaries from Step 1b)
-- references/{region}/                            (shared quote store)
-- {output_dir}/cl_mappings.json                   (CL term matches)
+- {file}                              the node as Steps 3 and 4 left it; read it first
+- {output_dir}/ingest_plan.yaml       this node's entry: report_sections,
+                                      subtype_hypotheses, reconciliation_note
+- {output_dir}/run_quotes.json        this run's quotes (the main pool)
+- references/{region}/quotes/         the region's full quote store (an ENRICH node
+                                      may already cite earlier quotes)
+- {output_dir}/slice_properties.md    the property fields: one question per field,
+                                      with each field's shape and allowed values
+- {pdf_file}                          the report, for the sections in report_sections
 
-PROPERTY CATEGORIES:
-Quotes can validate these node property fields:
-- morphology (description + sources)
-- electrophysiology (description + sources)
-- defining_markers (positive markers)
-- negative_markers
-- neuropeptides
-- nt_type
-- anatomical_location (with nested sources per location entry)
-- colocated_types
+## Part A: Match quotes to questions
 
-## Part A: Match quotes to properties
+1. For each question in slice_properties.md, find quotes that answer it for THIS
+   cell type or its immediate broader class. Discard tangential mentions and
+   generic statements.
 
-1. Read all input files.
+2. For each kept quote, add the fields it answers to its "claims" list (e.g.
+   ["defining_markers", "anatomical_location"]). Quotes live in
+   `references/{region}/quotes/{corpus_id}.json`, keyed by quote_key. Editing
+   `claims` is allowed — it is curation metadata, not provenance. Do not touch
+   `text`: the quote key is a hash of it, so any edit invalidates the key and the
+   write is rejected.
 
-2. For each proposed node in proposed_types.json, scan quotes in the reference
-   store for claims about specific properties. For each quote, decide:
-   a. Which property category it addresses (a quote may address several).
-   b. Whether it is relevant enough to cite for that property. Keep quotes that
-      characterise this specific cell type or its immediate broader class;
-      discard tangential mentions and generic statements.
+3. Per field, pick the 1-3 most informative quote_keys. Prefer direct
+   characterisation over review, and resolved references over unresolved. Cite
+   only quotes with a PMID or DOI.
 
-3. For each kept quote, update its "claims" list with the property categories
-   it addresses (e.g. ["soma_location_so", "sst_positive"]). Quotes live in
-   `references/{region}/quotes/{corpus_id}.json`, keyed by quote_key.
+## Part B: Write
 
-   Editing `claims` on an existing quote is allowed — it is curation metadata,
-   not provenance. Do not touch `text`: the quote key is a hash of it, so any
-   edit invalidates the key and the write is rejected. If the recorded text is
-   genuinely wrong, add the correct quote as a new entry rather than editing
-   the existing one.
+4. Write the property fields into the node file with the Edit tool. Shapes,
+   required sub-fields and allowed values are in slice_properties.md.
+   - NEW: add the property fields. Leave identity fields and cl_mapping as they are.
+   - ENRICH: add new entries and new sources. Never remove or rewrite an existing
+     entry, source or description. A description may be extended with a sentence
+     tied to a new source.
 
-4. For each property category on each node, select the best supporting
-   references and their quote keys:
-   - Pick the 1-3 most informative quote_keys per property
-   - Prefer: direct characterisation > review > tangential mention
-   - Prefer: resolved references (with PMID/DOI) > UNRESOLVED
+   Workflow policy (applies on top of the slice):
+   - Sources carry quote_key, ref, and method/scope where known. Never put quote
+     text in the YAML: no snippet fields.
+   - nt_type: always attempt it. Where the sources do not state it, infer from
+     well-established facts (e.g. BNST CRF neurons are GABAergic) and say it is
+     inferred. find-candidates scores on NT type, so a silently missing value
+     weakens retrieval.
+   - defining_markers / negative_markers / neuropeptides: ncbi_gene_id: null.
+   - anatomical_location: look terms up with mcp__ols4__search; every CURIE must
+     resolve (the hook checks).
+   - definition_references: the 3-5 most informative resolved refs.
 
-## Part B: Write one file per node
+5. notes: caveats only, as the notes question says. A finding that answers no
+   question in the slice goes to {output_dir}/unplaced/{node_id}.yaml:
 
-5. For each proposed node, write `kb/graphs/{region}/{node_id}.yaml` with the
-   **Write** tool. One node per file — this is the KB's one-component-per-file
-   layout, and it is what makes each node independently reviewable in a diff.
-
-   `{node_id}` is the node's `id`. Filename and id must match.
-
-   Each file is a `CellTypeMappingGraph` containing exactly one CellTypeNode
-   and no edges:
-   - id, name, definition_basis
-   - species: null (to be confirmed from primary literature)
-   - anatomical_location: from synthesis context if unambiguous
-   - nt_type.name_in_source — always attempt to resolve NT type, inferring from
-     well-established facts where the report does not state it (BNST CRF
-     neurons are GABAergic, for example). If it is genuinely unresolvable, say
-     so in `notes`: find-candidates scores on NT type, and a silently missing
-     value weakens candidate retrieval with no signal to the mapper.
-   - defining_markers: symbol only; ncbi_gene_id: null
-   - negative_markers, neuropeptides: as identified
-   - morphology: {description: "...", sources: [...]}
-   - electrophysiology: {description: "...", sources: [...]}
-   - anatomical_location: [{..., sources: [...]}]  (sources nested per location)
-   - cl_mapping: from cl_mappings.json (if matched)
-   - definition_references: the top 3-5 most informative resolved refs
-   - is_terminal: false
-   - notes: caveats worth carrying — contradictions between sources,
-     species-dependent claims, suspected heterogeneity that may warrant
-     splitting the node later, or a provisional MBA term where no child term
-     exists for the subnucleus.
-
-   Edges: leave empty — mapping relationships require primary literature.
-
-   For nested sources entries, use this pattern:
-   ```yaml
-   morphology:
-     description: "Large soma with horizontal dendrites in stratum oriens..."
-     sources:
-       - ref: "PMID:20421280"
-         method: "biocytin fill"
-         scope: "adult rat CA1"
-         quote_key: "12345678_a3f2c1d0"  # → lookup in the reference store
-   ```
-
-   Do NOT inline quote text in the KB YAML. Use quote_keys only.
-
-   Header comment block:
-   ```yaml
-   # {node_name} — {region}
-   # Source: ASTA deep research report — {pdf_file}
-   # Ingestion date: {date}
-   # Status: DRAFT — node metadata from ASTA report, pending primary verification
-   # Property assertions reference quotes in references/{region}/
-   # Proposed by: asta-report-ingest
-   ```
+   - finding: <what the sources say>
+     quote_keys: [...]
+     closest_field: <field it nearly fits, or null>
 
 6. If the pre-edit hook blocks a write, fix the reported problem and retry.
-   Never work around a block by writing through a shell command — `cp`, `cat >`
-   and `sed -i` are not intercepted by the hook, and a write that bypasses it
-   is unvalidated KB content.
+   Never write through a shell command — `cp`, `cat >` and `sed -i` are not
+   intercepted by the hook.
 
 RETURN:
-"Wrote {N} node file(s) to kb/graphs/{region}/: {filenames}.
-Properties cited: {P}. Quotes used: {Q}.
-Nodes with no quote support for any property: {G}."
+"{node_id} ({action}): {F} property fields written, {Q} quotes cited,
+{U} unplaced findings."
 
 DO NOT:
-- Put quote text in the KB YAML (use quote_keys only)
-- Invent property values not supported by quotes or synthesis context
-- Write more than one node per file
-- Write a combined/draft KB file anywhere
+- Edit any other node's file
+- Change identity fields or cl_mapping
+- Write edges, or record a subtype relation anywhere
+- Put quote text in the KB YAML
+- Invent property values not supported by the quotes or the report's text
 ```
 
 ---
 
-## Step 4: Review
+## Step 6: Review
 
 Two paths. The default is a pull request; `gate: true` adds an in-session
 sign-off before the run finishes.
@@ -610,15 +719,17 @@ The node files are already written and hook-validated. Summarise the run and
 hand review to the operator:
 
 ```
-Wrote {N} node(s) to kb/graphs/{region}/:
-  {node_id}.yaml — {name} — CL: {term or "none"} — {P} properties cited
+Types: NEW {n}, ENRICH {e}, DUPLICATE {d}
+  {node_id}.yaml — {action} — {name} — CL: {term or "none"} — {P} properties cited
   ...
+Subtype hypotheses: {s} (in ingest_plan.yaml; not yet KB content, see #183)
+Unplaced findings: {u} (in unplaced/)
 
 References: {R} papers, {Q} quotes ({U} UNRESOLVED)
 Run artifacts: {output_dir}/
 
-Review these as a diff. Each node is its own file, so a node you do not want
-is a file you delete.
+Review these as a diff. A NEW node is its own file, so a node you do not want
+is a file you delete. ENRICH changes are additions to existing files.
 ```
 
 Then run the structural check and show the result:
@@ -630,6 +741,14 @@ just validate-all
 Branch, commit and PR are the operator's to run. A PR gives line-level comment
 on each node, and CI runs the same validation on every push.
 
+Points for the reviewer beyond the diff:
+- **Reconciliation.** Check each NEW / ENRICH / DUPLICATE decision and its
+  `reconciliation_note` in `ingest_plan.yaml`. A wrong NEW is a duplicate node; a
+  wrong ENRICH merges two populations.
+- **Subtype hypotheses and unplaced findings** are the run's record of what the
+  schema could not hold. They are inputs to schema decisions (#183, #202), so
+  keep them with the run artifacts.
+
 **Reviewer note:** KB YAML carries `quote_key` values, not quote text. To read
 the evidence behind an assertion, dereference the key against
 `references/{region}/quotes/{corpus_id}.json`.
@@ -639,14 +758,14 @@ the evidence behind an assertion, dereference the key against
 Use when a reviewer should sign off on new KB content before the session ends.
 
 1. Show the same summary as above.
-2. Show per-node detail — name, CL mapping, properties cited, and any node
-   with no quote support.
+2. Show per-node detail — action, name, CL mapping, properties cited, and any
+   node with no quote support.
 3. Ask:
-   > "Wrote {N} node(s): {names}. CL mapped: {X}. {U} references UNRESOLVED.
+   > "Types: NEW {n}, ENRICH {e}, DUPLICATE {d}. CL mapped: {X}. {U} references
+   > UNRESOLVED.
    >
-   > Review the files in kb/graphs/{region}/. Edit directly if needed
-   > (correct names, adjust markers, add refs), or tell me which nodes to
-   > delete."
+   > Review the files in kb/graphs/{region}/ and ingest_plan.yaml. Edit directly
+   > if needed, or tell me which nodes to delete or which decisions to change."
 4. Apply any requested deletions or edits, then re-run `just validate-all`.
 
 The gate changes *when* a human looks, not *what* was written — the files and
@@ -654,7 +773,7 @@ their validation are identical either way.
 
 ---
 
-## Step 5: Handoff
+## Step 7: Handoff
 
 ```
 INGEST COMPLETE
@@ -678,14 +797,21 @@ concurrently in a separate session.
 ```
 
 ---
+
 ## Rules
 
-- **Classical nodes emerge here.** Do not require pre-existing KB nodes.
+- **Reconcile before writing.** Every proposed type is NEW, ENRICH or DUPLICATE
+  against `existing_nodes.yaml`. Existing nodes are added to, never rewritten.
+- **The node file is the handoff.** Steps 3, 4 and 5 pass decisions to each
+  other through schema fields in the node file, not through free text.
+- **Field guidance comes from the schema slices.** Prompts carry workflow policy;
+  what a field means and what to ask about it lives in the schema
+  (`ingest_question`, `ingest_phase`). Fix a field's guidance there, not here.
 - **One node per file.** `kb/graphs/{region}/{node_id}.yaml`, filename matching
   the node id. Never write a combined draft.
-- **Write with the Write tool, always.** The pre-edit hook is a PreToolUse hook
-  on `Write`/`Edit`; `cp`, `cat >` and `sed -i` bypass it silently. A write
-  that bypasses the hook is unvalidated KB content.
+- **Write and Edit tools only.** The pre-edit hook is a PreToolUse hook on
+  `Write`/`Edit`; `cp`, `cat >` and `sed -i` bypass it silently. A write that
+  bypasses it is unvalidated KB content.
 - **Quotes live in the reference store.** Content-hashed keys
   (`{corpus_id}_{hash8}`) ensure dedup across ingests. The KB YAML references
   quotes by key only — never inline text.
@@ -694,6 +820,8 @@ concurrently in a separate session.
 - **No evidence items at ingest.** Nodes carry property fields with `sources`
   entries pointing at quote_keys. `LiteratureEvidence` items are created by
   `evidence-extraction` after primary verification.
+- **No edges at ingest.** Subtype relations go to `ingest_plan.yaml` until the
+  schema has a field for them (#183).
 - **Nodes are DRAFT until verified.** Property assertions come from ASTA report
   quotes, which are paraphrase until `survey` / `evidence-extraction` confirms
   them against primary text. Say so in the node header comment.
@@ -704,15 +832,11 @@ concurrently in a separate session.
   and stops.
 - **Subagent prompts are contracts.** Pass verbatim with variables filled in.
 
-## Known gap: cross-report node identity
+## Known gap: reconciliation sees one region
 
-Step 1b mints `proposed_id` from the PDF in isolation and is never shown the
-existing KB, so two reports describing the same cell type will propose two
-nodes under different ids. The only existing-node signal is the id list printed
-by `just ingest-report`, before this orchestrator is read.
-
-Until index-backed reconciliation lands (#163 "Not in scope", depends on the
-KB index), **review is the net**: check proposed ids against the list the
-recipe printed, and against `kb/graphs/{region}/` filenames, before accepting.
-See #116 for what this has already cost — 7 stranded ingest stubs in
-hippocampus, 4 duplicating a mapping node under a different id.
+Step 3 reconciles against `existing_nodes.yaml`, which lists the canonical nodes
+in `kb/graphs/{region}/` only. A type whose node lives in another region's
+directory — a type spanning two regions, or one filed under a neighbouring
+region — is not seen, and may be proposed again as NEW. Review is the net for
+these: check NEW ids against `kb/graphs/*/` before accepting. See #116 for what
+duplicate nodes have cost.

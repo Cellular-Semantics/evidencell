@@ -340,8 +340,8 @@ ingest-report region pdf_file:
     echo "Region: {{region}}"
     echo "PDF:    {{pdf_file}}"
     echo ""
-    echo "Existing KB nodes in region (if any):"
-    grep -rh "^  - id:" kb/ --include="*.yaml" 2>/dev/null | grep -i "{{region}}" | sed 's/  - id: /    /' | sort || echo "    (none yet)"
+    echo "Existing KB nodes in region (from the KB index):"
+    uv run python -m evidencell.kb_index region "{{region}}" | grep '^- id:' | sed 's/^- id: /    /' || echo "    (none yet)"
     echo ""
     echo "Inputs validated. Proceeding with workflows/asta-report-ingest.md"
 

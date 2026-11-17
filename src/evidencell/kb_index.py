@@ -149,3 +149,57 @@ def _build(kb_dir: Path, files: list[Path]) -> KbIndex:
     for node_id, records in stubs.items():
         index.nodes.setdefault(node_id, []).extend(records)
     return index
+
+
+def region_summary(region: str) -> list[dict[str, Any]]:
+    """Identity summary of every canonical node in a region, for agents that must
+    decide whether a proposed type is new, an existing node, or a subtype of one.
+
+    Region is the kb/graphs subdirectory. Carries identity fields only (name,
+    synonyms, definition basis, species, CL term, parents), not properties.
+    """
+    index = get_index()
+    root = paths.repo_root()
+    out = []
+    for node_id in index.by_region.get(region, []):
+        record = index.nodes[node_id][0]
+        node = record.node
+        cl = (node.get("cl_mapping") or {})
+        cl_term = cl.get("cl_term") or {}
+        entry: dict[str, Any] = {
+            "id": node_id,
+            "name": node.get("name"),
+            "definition_basis": node.get("definition_basis"),
+            "file": str(record.source_file.relative_to(root)),
+        }
+        if syn := [s.get("term") for s in node.get("synonyms") or [] if isinstance(s, dict)]:
+            entry["synonyms"] = syn
+        if species := (node.get("species") or {}).get("label"):
+            entry["species"] = species
+        if cl_term.get("id"):
+            entry["cl_mapping"] = f"{cl_term['id']} {cl_term.get('label', '')} ({cl.get('mapping_type')})"
+        if parents := [p.get("parent") for p in node.get("subtype_of") or [] if isinstance(p, dict)]:
+            entry["subtype_of"] = parents
+        out.append(entry)
+    return out
+
+
+def main() -> None:
+    import argparse
+    import sys
+
+    ap = argparse.ArgumentParser(prog="python -m evidencell.kb_index")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    reg = sub.add_parser("region", help="identity summary of a region's canonical nodes (YAML)")
+    reg.add_argument("region")
+    args = ap.parse_args()
+    try:
+        summary = region_summary(args.region)
+    except KbIndexError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        sys.exit(1)
+    print(yaml.safe_dump(summary, sort_keys=False, allow_unicode=True, width=100), end="")
+
+
+if __name__ == "__main__":
+    main()
