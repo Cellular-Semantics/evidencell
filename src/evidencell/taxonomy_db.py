@@ -2454,6 +2454,30 @@ class TaxonomyDB:
         "defining_markers_scoped", "defining_markers", "tf_markers", "merfish_markers"
     )
 
+    def _propagate_nt_by_rank(
+        self,
+        child_rank: int = 0,
+        parent_rank: int = 1,
+    ) -> dict[str, str | None]:
+        """Like propagate_nt_types but using rank instead of level names."""
+        sql = """
+            SELECT p.node_id AS parent_id,
+                   COUNT(DISTINCT c.nt_type) AS n_types,
+                   MAX(c.nt_type)            AS single_type
+            FROM nodes c
+            JOIN nodes p ON c.parent_id = p.node_id
+            WHERE c.taxonomy_rank = ?
+              AND p.taxonomy_rank = ?
+              AND c.nt_type IS NOT NULL
+            GROUP BY p.node_id
+        """
+        with self._connect() as con:
+            rows = con.execute(sql, [child_rank, parent_rank]).fetchall()
+        return {
+            r["parent_id"]: (r["single_type"] if r["n_types"] == 1 else None)
+            for r in rows
+        }
+
     def find_candidates(
         self,
         anat_ids: list[str] | None = None,
@@ -2478,17 +2502,15 @@ class TaxonomyDB:
 
         anat_ids:          exact anat region IDs (leaf match)
         anat_root_ids:     region IDs resolved transitively via closure tables
-        nt_type:           prefix match against the candidate's NT calls (own nt_type, or
-                           its leaf descendants' NTs when propagate_nt=True — required
-                           above the leaves in WMBv1 where nt_type is null). When the
-                           rank carries any NT calls, a candidate with none fails.
+        nt_type:           prefix match; propagated from clusters when propagate_nt=True
+                           (required for supertype/subclass in WMBv1 where nt_type is null)
         markers:           gene symbols expected to be expressed; scored from expression
         marker_columns:    which metadata marker columns to cross-check against expression
                            (``marker_discrepancies``); defaults to all four
                            (defining_markers_scoped, defining_markers, tf_markers,
                            merfish_markers), plus np_markers. Never scored.
-        propagate_nt:      when True (default), fall back to the leaf descendants' NTs when
-                           the node's own nt_type is null
+        propagate_nt:      when True (default), fall back to cluster-aggregated NT when the
+                           node's own nt_type is null
         rank:              integer rank (0 = leaf). Selects nodes by taxonomy_rank column.
         level:             taxonomy level string (e.g. "cluster", "supertype"). Used when rank
                            is not provided, for backward compatibility.
@@ -2513,8 +2535,7 @@ class TaxonomyDB:
           - Region exact-match bonus: +1 when candidate has cells
             strictly in any of the curator-queried anat terms
             (`cell_count > 0`, not just proximity).
-          - NT match (filter only — no explicit point award). Null NT
-            fails a known-NT query unless the rank has no NT calls at all.
+          - NT match (filter only — no explicit point award).
           - Marker scoring: expression only, cohort-relative tiers
             (``_score_marker_tier``), coverage-dampened at rank ≥ 1,
             negative markers inverted. No value on a candidate → 0.
@@ -2559,6 +2580,17 @@ class TaxonomyDB:
 
         # Determine whether we're at leaf rank (rank 0) for NT propagation
         is_leaf = rank == 0 if rank is not None else (level == "cluster")
+
+        # Pre-load propagated NT map for non-leaf levels when needed
+        _nt_map: dict[str, str | None] = {}
+        if nt_type and propagate_nt and not is_leaf:
+            if rank is not None:
+                # Propagate from rank 0 (leaf) to the target rank's level name
+                _nt_map = self._propagate_nt_by_rank(child_rank=0, parent_rank=rank)
+            else:
+                _nt_map = self.propagate_nt_types(
+                    child_level="cluster", parent_level=level,  # type: ignore[arg-type]
+                )
 
         # Resolve current rank integer for optional_criteria rank gating
         effective_rank: int | None = rank  # None only when level-based (legacy path)
@@ -2650,48 +2682,6 @@ class TaxonomyDB:
         if compute_coverage:
             assert expression_data is not None
             child_expression_data = expression_data
-
-        # ── NT calls per candidate (#219) ─────────────────────────────────
-        # A candidate's NT calls are its own nt_type or, when that is null
-        # above the leaves (WMBv1 stores NT on clusters only), the set of
-        # NTs on its leaf descendants — so a mixed-NT supertype passes when
-        # any descendant matches. When the queried rank carries NT calls
-        # at all, a candidate with none is not "unassessed": it is a
-        # non-neurotransmitting type (WMBv1 NN and IMN clusters) and fails
-        # a known-NT query. A rank with no NT calls anywhere (a taxonomy
-        # without NT data, or propagate_nt=False above the leaves) leaves
-        # the filter off rather than dropping every candidate.
-        nt_calls: dict[str, set[str]] = {}
-        if nt_type:
-            leaf_nt: dict[str, set[str]] = defaultdict(set)
-            if propagate_nt and not is_leaf:
-                with self._connect() as con:
-                    if rank is not None:
-                        rank0_nt = dict(con.execute(
-                            "SELECT node_id, nt_type FROM nodes "
-                            "WHERE taxonomy_rank = 0 AND nt_type IS NOT NULL"
-                        ).fetchall())
-                        for pid, leaves in parent_to_rank0.items():
-                            leaf_nt[pid] = {
-                                rank0_nt[lf] for lf in leaves if rank0_nt.get(lf)
-                            }
-                    else:
-                        for pid, nt in con.execute(
-                            "SELECT p.node_id, c.nt_type FROM nodes c "
-                            "JOIN nodes p ON c.parent_id = p.node_id "
-                            "WHERE c.taxonomy_level = 'cluster' "
-                            "AND p.taxonomy_level = ? AND c.nt_type IS NOT NULL",
-                            (level,),
-                        ).fetchall():
-                            if nt:
-                                leaf_nt[pid].add(nt)
-            for row in rows:
-                rd = dict(row)
-                own_nt = rd.get("nt_type")
-                calls = {own_nt} if own_nt else leaf_nt.get(rd["node_id"], set())
-                if calls:
-                    nt_calls[rd["node_id"]] = calls
-        apply_nt_filter = bool(nt_calls)
 
         # ──────────────────────────────────────────────────────────────────
         # Pass 1: hard filters. Apply region (programmatic only — LLM-adjacency
@@ -2810,14 +2800,12 @@ class TaxonomyDB:
                 # missed entirely. Remove once BCKG ships a complete
                 # upstream anat-rollup fix.
 
-            if apply_nt_filter and not bypassed:
-                assert nt_type is not None
-                qt = nt_type.lower()
-                if not any(
-                    nn.lower().startswith(qt) or qt.startswith(nn.lower())
-                    for nn in nt_calls.get(node_acc, ())
-                ):
-                    continue
+            if nt_type and not bypassed:
+                node_nt = nd.get("nt_type") or _nt_map.get(node_acc)
+                if node_nt:
+                    nn, qt = node_nt.lower(), nt_type.lower()
+                    if not (nn.startswith(qt) or qt.startswith(nn)):
+                        continue
 
             # Per-candidate metadata-marker set: cross-checked against
             # expression for `_marker_discrepancies`, never scored. Covers

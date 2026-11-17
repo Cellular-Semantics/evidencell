@@ -100,14 +100,7 @@ specification):
     aggregates upstream, so the query inspects the candidate's
     edge to the curator's literal terms directly — no
     `get_descendants()` expansion on our side.
-  - **NT match** — prefix match of the classical node's NT against the
-    candidate's NT calls: its own `nt_type` or, above the leaves (WMBv1
-    stores NT on clusters only), the set of its rank-0 descendants' NTs.
-    A mixed-NT supertype passes when any descendant matches. When the
-    queried rank carries NT calls at all, a candidate with none fails —
-    in WMBv1 that is the non-neuronal (`NN`) and `IMN` types. A rank with
-    no NT calls anywhere (taxonomy without NT data) leaves the filter
-    off (#219).
+  - **NT match** — only when both classical and candidate carry NT.
   - Annotation-transfer-matched candidates bypass both filters.
   - **Rank ≥ 1 descendant-anat fallback** (BCKG workaround): when a
     rank ≥ 1 candidate's own anat fails to qualify under the
