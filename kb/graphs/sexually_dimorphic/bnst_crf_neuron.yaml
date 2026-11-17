@@ -159,7 +159,7 @@ nodes:
             method: single-cell RT-PCR
             scope: adult rat BNSTALG Type III neurons (95% CRF mRNA+)
             quote_key: 4940077_5b783374
-          - marker_type: TRANSCRIPT
+          - marker_type: TRANSGENE_REPORTER
             ref: PMID:32277042
             method: Crh-IRES-Cre driver + Cre-dependent viral labelling
             scope: adult mouse dlBNST
@@ -187,9 +187,9 @@ nodes:
       - symbol: Grin2d
         ncbi_gene_id:
         sources:
-          - marker_type: PROTEIN
+          - marker_type: NOT_STATED
             ref: PMID:32277042
-            method: electrophysiology (GluN2D-NMDAR currents) in CRF+ cells
+            method: "electrophysiology (GluN2D-NMDAR currents) in CRF+ cells; no expression assay"
             scope: adult mouse dlBNST
             quote_key: 215732537_a72b2aee
             notes: Functional (channel-level) evidence; not a transcript quantification.
@@ -240,14 +240,14 @@ nodes:
       - symbol: Crh
         ncbi_gene_id: NCBIGene:12918
         sources:
-          - marker_type: TRANSCRIPT
+          - marker_type: NOT_STATED
             ref: https://doi.org/10.3389/fncir.2025.1593443
             method: literature description
             scope: adult mouse
             quote_key: 279874350_b2b4adba
-          - marker_type: TRANSCRIPT
+          - marker_type: PROTEIN
             ref: PMID:23554470
-            method: literature description
+            method: "in vivo microdialysis (CRF peptide release)"
             scope: adult mouse
             quote_key: 14550592_292dccea
           - marker_type: TRANSCRIPT

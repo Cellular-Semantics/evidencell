@@ -77,15 +77,16 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:37467748
-            marker_type: PROTEIN
-            method: review/primary
+            marker_type: NOT_STATED
+            method: "review"
             scope: hippocampus
             quote_key: 259953057_10f139f9
           - ref: PMID:24671999
             snippet: although IS3 cells can be distinguished based on the coexpression of VIP and CR, VIP and CR alone are expressed by several distinct types of hippocampal interneurons
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: TRANSCRIPT
+            quote_key: "23480858_7922942f"
+            marker_type: PROTEIN
           - ref: PMID:23162426
             snippet: a combination of immunohistochemistry and anatomical analysis identified three distinct subtypes of IS interneurons in the rat hippocampus
             support: SUPPORT
@@ -95,23 +96,24 @@ nodes:
             snippet: The majority of cells in the VIP subclass are interneuron-specific (IS), specifically targeting other interneurons rather than PCs. Three types of IS interneurons have been described, mostly in the hippocampus
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: PMID:24671999
             snippet: type 3 IS (IS3) cells that coexpress the vasoactive intestinal polypeptide (VIP) and calretinin contact several distinct types of interneurons within the hippocampal CA1 stratum oriens/alveus (O/A), with preferential innervation of oriens-lacunosum moleculare cells (OLMs) through dendritic synapses
             support: SUPPORT
             source: cite_traverse_2026_04_10
+            quote_key: "23480858_7922942f"
             marker_type: PROTEIN
       - symbol: Vip
         ncbi_gene_id:
         sources:
           - ref: PMID:37467748
-            marker_type: PROTEIN
-            method: review/primary
+            marker_type: NOT_STATED
+            method: "review"
             scope: hippocampus
             quote_key: 259953057_10f139f9
           - ref: PMID:39401246
-            marker_type: PROTEIN
-            method: transgenic mouse
+            marker_type: NOT_STATED
+            method: "background citation (no assay)"
             scope: mouse CA1
             quote_key: 262127573_d140faf4
     negative_markers: []
@@ -120,7 +122,7 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:37467748
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
             method: review
             scope: hippocampus
             quote_key: 259953057_10f139f9

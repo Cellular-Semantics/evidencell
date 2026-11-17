@@ -212,15 +212,21 @@ def _cli() -> int:
              "print the summary.",
     )
     args = p.parse_args()
-    summary = refresh_property_comparisons(
-        graph_file=args.graph_file,
-        classical_node_id=args.classical_node_id,
-        taxonomy_id=args.taxonomy_id,
-        rank=args.rank,
-        top_k=args.top_k,
-        discovery_json_path=args.discovery_json,
-        dry_run=args.dry_run,
-    )
+    from evidencell.expression_cache import ExpressionUnavailable
+
+    try:
+        summary = refresh_property_comparisons(
+            graph_file=args.graph_file,
+            classical_node_id=args.classical_node_id,
+            taxonomy_id=args.taxonomy_id,
+            rank=args.rank,
+            top_k=args.top_k,
+            discovery_json_path=args.discovery_json,
+            dry_run=args.dry_run,
+        )
+    except ExpressionUnavailable as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
     json.dump(summary, sys.stdout, indent=2, default=str)
     sys.stdout.write("\n")
     return 0

@@ -116,20 +116,20 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: "PMID:24929424"
-            method: "statement in source (citing De Biasi et al., 1994); assay not stated in quote — PROTEIN assumed"
+            method: "statement in source citing De Biasi et al., 1994 (assay not stated)"
             scope: "mouse TRN — 'defined by the expression of the parvalbumin gene'"
             quote_key: "13962500_281f85a8"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: "PMID:39448557"
-            method: "statement in source (citing Lein et al., 2007 — Allen ISH atlas)"
+            method: "PV immunohistochemistry (own data); quoted claim cites Lein et al., 2007"
             scope: "rodent thalamus — many TRN inhibitory neurons express PV; thalamic PV+ inhibitory neurons almost exclusively in TRN"
             quote_key: "273588794_cb2ac3cf"
-            marker_type: TRANSCRIPT
+            marker_type: PROTEIN
           - ref: "PMID:41622438"
-            method: "review; assay not stated in quote — PROTEIN assumed"
+            method: "review statement (assay not stated)"
             scope: "TRN — PV expressed in approximately 70% of TRN cells (not pan-TRN)"
             quote_key: "285258741_478ed0bb"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: "https://doi.org/10.7546/CR-2013-66-7-13101331-16"
             method: "immunohistochemistry"
             scope: "rat TRN, postnatal development to 1 year — parvalbumin always colocalised with GABA"
@@ -144,10 +144,10 @@ nodes:
             quote_key: "13838378_20379fb3"
             marker_type: TRANSCRIPT
           - ref: "PMID:41622438"
-            method: "review; protein name given (glutamate decarboxylase 67), assay not stated"
+            method: "review statement (assay not stated)"
             scope: "TRN neurons — glutamate decarboxylase 67"
             quote_key: "285258741_478ed0bb"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Gad2
         ncbi_gene_id:
         sources:
@@ -160,32 +160,32 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: "PMID:28591583"
-            method: "PV/SOM-based dissociation of connectivity and physiology; assay not stated in quote — PROTEIN assumed"
+            method: "SOM-IRES-Cre reporter lines + SOM immunohistochemistry (rodent); SOM immunostaining (human)"
             scope: "rodent nRT, validated in human nRT — SOM marks a subpopulation distinct from PV cells; not pan-TRN in rodent"
             quote_key: "4577451_49fd75a1"
             marker_type: PROTEIN
           - ref: "PMID:35687680"
-            method: "statement in source (citing Li et al., 2020); protein names given"
+            method: "statement in source citing Li et al., 2020 (assay not stated)"
             scope: "mouse — parvalbumin and somatostatin described as classic markers of TRN neurons"
             quote_key: "249575101_cb3f6032"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
     negative_markers:
       - symbol: Gabra4
         ncbi_gene_id:
         sources:
           - ref: "PMID:24550784"
-            method: "statement in source (citing Cope et al., 2005; Jia et al., 2005); receptor subunit (protein) level"
+            method: "review statement citing Cope 2005; Jia 2005 (assay not stated)"
             scope: "rodent NRT — cells do not express alpha4 GABA-A receptor subunit"
             quote_key: "8097146_9fdcba62"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Gabrd
         ncbi_gene_id:
         sources:
           - ref: "PMID:24550784"
-            method: "statement in source (citing Cope et al., 2005; Jia et al., 2005); receptor subunit (protein) level"
+            method: "review statement citing Cope 2005; Jia 2005 (assay not stated)"
             scope: "rodent NRT — cells do not express delta GABA-A receptor subunit"
             quote_key: "8097146_9fdcba62"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Penk
         ncbi_gene_id:
         sources:
@@ -209,7 +209,7 @@ nodes:
             quote_key: "2564943_ee27b032"
             marker_type: PROTEIN
           - ref: "PMID:28591583"
-            method: "PV/SOM-based dissociation; assay not stated in quote — PROTEIN assumed"
+            method: "SOM-IRES-Cre reporter lines + SOM immunohistochemistry (rodent); SOM immunostaining (human)"
             scope: "rodent and human nRT — SOM+ subpopulation only"
             quote_key: "4577451_49fd75a1"
             marker_type: PROTEIN
@@ -307,6 +307,26 @@ nodes:
           method: "slice electrophysiology with selective mGluR agonists"
           scope: "rat TRN"
           quote_key: "8440723_2571618e"
+    at_source_sets:
+      - dataset_accession: GEO:GSE145273
+        source_label: TRN Pvalb+
+        correspondence: PARTIAL
+        sources:
+          - ref: "PMID:32699411"
+            method: "manual_full_text — Li et al. 2020 identify the predominant Gad2+ Pvalb+ cluster (671 nuclei) as the inhibitory neurons of the TRN"
+            scope: "adult female mouse TRN, Smart-seq2 snRNA-seq of micro-dissected Pvalb-tdTomato TRN"
+            quote_key: "220696191_b7eca63f"
+        notes: >
+          The 671-nucleus Gad2+ Pvalb+ cluster of the GSE145273 TRN snRNA-seq
+          (the cell set deposited in Broad Single Cell Portal SCP344). The
+          source_label is the name used in the AT run, not an author cluster
+          ID; the authors call it "this Pvalb+ cluster". PARTIAL rather than
+          EXACT because the dissection also captured adjacent GABAergic
+          nuclei, and the three Pvalb-low GABAergic clusters (Gabra1/Fxyd6/
+          Tac1, assigned by the authors to neighbouring nuclei) were excluded.
+          Any Pvalb-negative TRN neurons (cf. ~70% PV coverage, see notes)
+          would also be excluded. The set spans the whole Spp1/Ecel1
+          gradient, including DP and DN intermediates.
     cl_mapping:
       cl_term:
         id: CL:0000617

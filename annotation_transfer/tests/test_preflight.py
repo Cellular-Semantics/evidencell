@@ -125,3 +125,28 @@ def test_report_fits_flag():
         fits=False,
     )
     assert "WARNING" in report_bad.summary()
+
+
+def test_normalize_subcommand_runs_the_preflight_gate(tmp_path, monkeypatch):
+    """`normalize` densifies X and so is the heaviest step in the
+    pipeline — it must hit the same RAM gate `convert` does."""
+    import anndata as ad
+    import numpy as np
+    import scipy.sparse as sp
+
+    from annotation_transfer import cli
+
+    src = tmp_path / "in.h5ad"
+    out = tmp_path / "out.h5ad"
+    ad.AnnData(
+        X=sp.csr_matrix(np.array([[1.0, 2.0], [3.0, 4.0]])),
+    ).write_h5ad(src)
+
+    gated: list = []
+    monkeypatch.setattr(
+        "annotation_transfer.preflight.preflight_gate",
+        lambda path, auto_approve=False: gated.append((path, auto_approve)),
+    )
+    cli.main(["normalize", str(src), str(out), "--input-scale", "counts", "-y"])
+    assert gated == [(src, True)]
+    assert out.is_file()

@@ -24,6 +24,7 @@ from evidencell.taxonomy_db import (
     _SCHEMA_HASH,
     _classical_negative_markers,
     _classical_positive_markers,
+    _classical_protein_alias_markers,
     _coverage_for_gene,
     _expression_percentile,
     _expression_score,
@@ -615,6 +616,19 @@ def test_classical_positive_markers_handles_string_entries():
     assert _classical_positive_markers(classical) == ["Sst", "Calb1"]
 
 
+def test_protein_alias_markers_are_not_scored_in_stage_a():
+    """PR #207 review: Stage A keeps its pre-#189 behaviour for protein-name
+    markers (they score nothing) until gene identity lands (#216)."""
+    classical = {
+        "defining_markers": [{"symbol": "Sst"}, {"symbol": "mGluR1"}],
+        "neuropeptides": [{"symbol": "SST"}],
+        "negative_markers": [{"symbol": "Pvalb"}, {"symbol": "PV"}, {"symbol": "CB"}],
+    }
+    assert _classical_positive_markers(classical) == ["Sst"]
+    assert _classical_negative_markers(classical) == ["Pvalb"]
+    assert _classical_protein_alias_markers(classical) == ["mGluR1", "SST", "PV", "CB"]
+
+
 def test_classical_negative_markers():
     classical = {"negative_markers": [{"symbol": "Pvalb"}, {"symbol": "Vip"}]}
     assert _classical_negative_markers(classical) == ["Pvalb", "Vip"]
@@ -717,55 +731,6 @@ def test_find_candidates_negative_marker_detail(populated_db):
         assert "cohort_pct" in detail
 
 
-def test_find_candidates_negative_marker_metadata_fallback(populated_db):
-    """Gap 4: negative marker absent from precomputed_expression but flagged
-    as a defining/MERFISH/TF marker on the candidate scores -1."""
-    db, _, _ = populated_db
-
-    with sqlite3.connect(db.db_path) as con:
-        con.row_factory = sqlite3.Row
-        rows = con.execute(
-            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' ORDER BY node_id"
-        ).fetchall()
-    node_ids = [r["node_id"] for r in rows]
-    if not node_ids:
-        return
-
-    # Inject Pvalb into the candidate's defining_markers metadata column,
-    # then query with Pvalb as a negative_marker. No expression data — only
-    # the metadata fallback can fire.
-    import json as _json
-    with sqlite3.connect(db.db_path) as con:
-        con.execute(
-            "UPDATE nodes SET defining_markers = ? WHERE node_id = ?",
-            (_json.dumps(["Pvalb", "Sst"]), node_ids[0]),
-        )
-        con.commit()
-
-    results = db.find_candidates(
-        negative_markers=["Pvalb"],
-        level="cluster",
-        # No expression_data → metadata fallback path is the only way Pvalb
-        # gets scored on this candidate.
-    )
-    # Find candidate by id; it should be in results because score may still
-    # be > 0 from other criteria, or we accept score <= 0 here for the
-    # detail-presence check.
-    target = next((c for c in results if c["node_id"] == node_ids[0]), None)
-    if target is None:
-        # If the node didn't make the score>0 cut, run the lower-level call
-        # to inspect detail directly.
-        return  # other criteria pushed score <= 0; the metadata penalty
-                # contribution itself is verified in the next assertion path
-
-    assert "_expression_detail" in target
-    detail = target["_expression_detail"].get("-Pvalb")
-    assert detail is not None, "Negative-marker metadata fallback should emit detail"
-    assert detail["score"] == -1
-    assert detail["source"] == "metadata"
-    assert detail["val"] is None
-
-
 def test_cmd_find_candidates_json_output_includes_expression_detail():
     """Gap 7: confirm the JSON-output construction in _cmd_find_candidates
     includes the expression_detail field. The value-side construction is
@@ -783,44 +748,6 @@ def test_cmd_find_candidates_json_output_includes_expression_detail():
     assert "_expression_detail" in src, (
         "JSON output must read from c['_expression_detail']"
     )
-
-
-def test_find_candidates_np_markers_fallback(populated_db):
-    """Neuropeptide markers stored in np_markers column are included in binary fallback.
-
-    Before this fix, genes only in np_markers were silently missed when no
-    expression_data was provided — find_candidates would return 0 matches even
-    for a gene prominently labelling the cluster (e.g. Sst for Sst Gaba clusters).
-    """
-    db, tmp_path, _ = populated_db
-
-    # Manually inject an np_markers value into the DB for our test node
-    with sqlite3.connect(db.db_path) as con:
-        con.row_factory = sqlite3.Row
-        rows = con.execute(
-            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' ORDER BY node_id"
-        ).fetchall()
-    node_ids = [r["node_id"] for r in rows]
-    if not node_ids:
-        return
-
-    # Write a packed np_markers string directly — simulates an atlas cluster
-    # whose neuropeptide identity marker is only in np_markers, not defining_markers
-    with sqlite3.connect(db.db_path) as con:
-        con.execute(
-            "UPDATE nodes SET np_markers = ? WHERE node_id = ?",
-            ("Sst:9.5,Crh:4.2", node_ids[0]),
-        )
-        con.commit()
-
-    # Without expression_data: Sst must still be found via binary fallback
-    results = db.find_candidates(markers=["Sst"], level="cluster")
-    found = next((c for c in results if c["node_id"] == node_ids[0]), None)
-    assert found is not None, (
-        "Node with Sst in np_markers must be returned by binary fallback; "
-        "was silently missed before np_markers decoding was added"
-    )
-    assert found["_score"] >= 1
 
 
 # ── Phase 1 commit 3: hard prerequisite filters ─────────────────────────────
@@ -1503,6 +1430,27 @@ def test_freshness_gzipped_yaml_newer_than_db(populated_db):
     assert any("YAML newer than DB" in r for r in reasons)
 
 
+def test_freshness_ignores_db_writes_after_build(populated_db):
+    """#189 review: an expression-cache write after a YAML change bumps the
+    DB file's mtime, but the DB still holds the old build — must read stale."""
+    import os
+    import time
+    db, tmp_path, _ = populated_db
+    yaml_file = next(tmp_path.glob("*.yaml"))
+    later = time.time() + 60
+    os.utime(yaml_file, (later, later))  # git pull after the build
+    con = sqlite3.connect(db.db_path)  # then a cache load writes to the DB
+    try:
+        con.execute("INSERT OR REPLACE INTO _meta VALUES ('cache_write', 'x')")
+        con.commit()
+    finally:
+        con.close()
+    os.utime(db.db_path, (later + 60, later + 60))
+    stale, reasons = _freshness_at(db.db_path, tmp_path)
+    assert stale is True
+    assert any("YAML newer than DB" in r for r in reasons)
+
+
 def test_freshness_recovers_after_rebuild(populated_db):
     """Rebuilding the DB after a schema_hash corruption refreshes the hash."""
     db, tmp_path, _ = populated_db
@@ -1698,63 +1646,130 @@ def test_filter_drops_candidate_outside_proximity_and_strict(tmp_path):
 # ── node_expression DB table + helper queries ──────────────────────────────
 
 
-def _insert_expr(db: TaxonomyDB, node_id: str, symbol: str,
-                  mean: float, ensembl: str | None = None) -> None:
+def _set_metadata_markers(db: TaxonomyDB, node_id: str, **cols: str) -> None:
     with db._connect() as con:
-        con.execute(
-            "INSERT OR REPLACE INTO node_expression VALUES (?, ?, ?, ?)",
-            (node_id, symbol, ensembl, mean),
-        )
+        for col, val in cols.items():
+            con.execute(f"UPDATE nodes SET {col} = ? WHERE node_id = ?", (val, node_id))
         con.commit()
 
 
-def test_get_node_expression_returns_all_genes(tmp_path):
+# ── #189: marker scoring is expression-only; metadata is cross-checked ──────
+
+
+def test_metadata_listed_gene_with_zero_expression_scores_from_expression(tmp_path):
+    """A gene in the candidate's metadata markers but with zero measured
+    expression is scored from expression (absence tier, −1), never the old
+    metadata +1, and is reported LISTED_NOT_EXPRESSED."""
     db = _make_focused_db(tmp_path)
-    _insert_node(db, "CLUS_X", n_cells=100)
-    _insert_expr(db, "CLUS_X", "Sst", 10.5, "ENSMUSG00000004366")
-    _insert_expr(db, "CLUS_X", "Pvalb", 0.2)
-    _insert_expr(db, "CLUS_X", "Chrna2", 0.05)
+    _insert_node(db, "CAND", n_cells=10)
+    _insert_node(db, "OTHER", n_cells=10)
+    _set_metadata_markers(db, "CAND", defining_markers='["Sst"]')
 
-    expr = db.get_node_expression("CLUS_X")
-    assert expr == {"Sst": 10.5, "Pvalb": 0.2, "Chrna2": 0.05}
+    results = db.find_candidates(
+        markers=["Sst"], rank=0,
+        expression_data={"CAND": {"Sst": 0.0}, "OTHER": {"Sst": 0.0}},
+    )
+    # Score −1 drops the candidate (negative scores are cut); inspect via a
+    # second positive marker to keep it in the results.
+    assert all(c["node_id"] != "CAND" for c in results)
+
+    results = db.find_candidates(
+        markers=["Sst", "Gad1"], rank=0,
+        expression_data={
+            "CAND": {"Sst": 0.0, "Gad1": 9.0},
+            "OTHER": {"Sst": 0.0, "Gad1": 0.0},
+        },
+    )
+    cand = next(c for c in results if c["node_id"] == "CAND")
+    assert cand["_expression_detail"]["Sst"]["score"] == -1
+    assert cand["_expression_detail"]["Sst"]["source"] == "expression"
+    kinds = {d["gene"]: d["kind"] for d in cand["_marker_discrepancies"]}
+    assert kinds["Sst"] == "LISTED_NOT_EXPRESSED"
 
 
-def test_get_node_expression_restricts_to_queried_symbols(tmp_path):
+def test_metadata_listed_gene_without_expression_scores_zero(tmp_path):
+    """No expression value → no score at all (metadata never substitutes);
+    the listing is reported as LISTED_NO_EXPRESSION_DATA."""
     db = _make_focused_db(tmp_path)
-    _insert_node(db, "CLUS_X", n_cells=100)
-    _insert_expr(db, "CLUS_X", "Sst", 10.5)
-    _insert_expr(db, "CLUS_X", "Pvalb", 0.2)
-    _insert_expr(db, "CLUS_X", "Chrna2", 0.05)
+    _insert_node(db, "CAND", n_cells=10)
+    _set_metadata_markers(db, "CAND", np_markers="Sst:9.5,Crh:4.2")
 
-    expr = db.get_node_expression("CLUS_X", symbols=["Sst", "Chrna2"])
-    assert expr == {"Sst": 10.5, "Chrna2": 0.05}
+    results = db.find_candidates(markers=["Sst"], rank=0, expression_data={})
+    cand = next(c for c in results if c["node_id"] == "CAND")
+    assert cand["_score"] == 0
+    assert "_expression_detail" not in cand
+    assert cand["_marker_discrepancies"] == [{
+        "gene": "Sst", "kind": "LISTED_NO_EXPRESSION_DATA",
+        "val": None, "sibling_pct": None,
+    }]
 
 
-def test_get_node_expression_empty_for_unknown_node(tmp_path):
+def test_negative_marker_in_metadata_without_expression_is_not_penalised(tmp_path):
+    """The old Gap-4 metadata fallback (−1 for a negative marker listed in
+    metadata) is gone: with no expression value the gene scores 0."""
     db = _make_focused_db(tmp_path)
-    assert db.get_node_expression("CLUS_DOES_NOT_EXIST") == {}
+    _insert_node(db, "CAND", n_cells=10)
+    _set_metadata_markers(db, "CAND", defining_markers='["Pvalb"]')
+
+    results = db.find_candidates(negative_markers=["Pvalb"], rank=0, expression_data={})
+    cand = next(c for c in results if c["node_id"] == "CAND")
+    assert cand["_score"] == 0
+    assert cand["_marker_discrepancies"][0]["kind"] == "LISTED_NO_EXPRESSION_DATA"
 
 
-def test_get_expression_for_level_groups_by_accession(tmp_path):
+def test_expressed_not_listed_uses_sibling_band(tmp_path):
+    """EXPRESSED_NOT_LISTED fires for a detectable gene in the top sibling
+    band that the metadata lists omit; a listed gene in the top band is fine."""
     db = _make_focused_db(tmp_path)
-    _insert_node(db, "CLUS_A", n_cells=10)
-    _insert_node(db, "CLUS_B", n_cells=10)
-    _insert_expr(db, "CLUS_A", "Sst", 10.5)
-    _insert_expr(db, "CLUS_A", "Pvalb", 0.2)
-    _insert_expr(db, "CLUS_B", "Sst", 8.0)
+    for n in ("A", "B", "C", "D", "E", "F"):
+        _insert_node(db, n, n_cells=10)
+    _set_metadata_markers(db, "B", defining_markers='["Sst"]')
+    expr = {n: {"Sst": 0.5} for n in ("C", "D", "E", "F")}
+    expr["A"] = {"Sst": 9.0}
+    expr["B"] = {"Sst": 8.0}
 
-    out = db.get_expression_for_level("cluster")
-    assert out == {"CLUS_A": {"Sst": 10.5, "Pvalb": 0.2}, "CLUS_B": {"Sst": 8.0}}
+    results = db.find_candidates(markers=["Sst"], rank=0, expression_data=expr)
+    by_id = {c["node_id"]: c for c in results}
+    assert [d["kind"] for d in by_id["A"]["_marker_discrepancies"]] == ["EXPRESSED_NOT_LISTED"]
+    assert by_id["B"]["_marker_discrepancies"] == []
 
 
-def test_get_expression_for_level_restricts_to_symbols(tmp_path):
-    db = _make_focused_db(tmp_path)
-    _insert_node(db, "CLUS_A", n_cells=10)
-    _insert_expr(db, "CLUS_A", "Sst", 10.5)
-    _insert_expr(db, "CLUS_A", "Pvalb", 0.2)
+def test_marker_discrepancies_resolve_aliases():
+    from evidencell.taxonomy_db import _marker_discrepancies
 
-    out = db.get_expression_for_level("cluster", symbols=["Sst"])
-    assert out == {"CLUS_A": {"Sst": 10.5}}
+    out = _marker_discrepancies(["PV"], {"Pvalb"}, {"PV": 0.0}, {"PV": [0.0, 5.0]})
+    assert out[0]["kind"] == "LISTED_NOT_EXPRESSED"
+
+
+def test_listed_marker_lowest_among_high_siblings_is_not_flagged():
+    """Regression (WMB Sst Gaba_3): Sst 10.54 is the lowest of nine sibling
+    clusters (10.54–12.7) — bottom band by rank, but plainly expressed."""
+    from evidencell.taxonomy_db import _marker_discrepancies
+
+    sibs = [10.54, 10.78, 10.86, 10.97, 11.43, 11.62, 11.92, 12.11, 12.7]
+    assert _marker_discrepancies(["Sst"], {"Sst"}, {"Sst": 10.54}, {"Sst": sibs}) == []
+    # Same rank position but far below the top sibling → flagged.
+    low = [1.0, *sibs[1:]]
+    out = _marker_discrepancies(["Sst"], {"Sst"}, {"Sst": 1.0}, {"Sst": low})
+    assert out[0]["kind"] == "LISTED_NOT_EXPRESSED"
+
+
+def test_midrank_percentile_ties_sit_in_the_middle():
+    from evidencell.taxonomy_db import _midrank_percentile
+
+    assert _midrank_percentile(3.0, [3.0, 3.0, 3.0]) == 0.5
+    assert _midrank_percentile(1.0, []) is None
+
+
+def test_format_discrepancy_summary():
+    from evidencell.taxonomy_db import format_discrepancy_summary
+
+    assert format_discrepancy_summary([]) == "no metadata/expression discrepancies"
+    line = format_discrepancy_summary([
+        {"gene": "Sst", "kind": "LISTED_NOT_EXPRESSED"},
+        {"gene": "Vip", "kind": "EXPRESSED_NOT_LISTED"},
+    ])
+    assert line == "listed-not-expressed: Sst; expressed-not-listed: Vip"
 
 
 def test_get_node_marker_categories_priorities(tmp_path):
@@ -1799,23 +1814,3 @@ def test_get_node_anat_rows_returns_full_row_shape(tmp_path):
     assert by_id["MBA:399"]["count_in_or_near_100um"] == 90
     assert by_id["MBA:399"]["cell_count_completeness"] == "lower_bound"
     assert by_id["MBA:431"]["cell_count_completeness"] is None
-
-
-def test_load_expression_data_uses_db(tmp_path, monkeypatch):
-    """load_expression_data is the Stage A entry; it must now read from
-    the DB rather than re-parsing taxonomy YAML."""
-    from evidencell.taxonomy_db import load_expression_data
-    from evidencell import paths as paths_module
-
-    db = _make_focused_db(tmp_path)
-    _insert_node(db, "CLUS_A", n_cells=10)
-    _insert_expr(db, "CLUS_A", "Sst", 10.5)
-    _insert_expr(db, "CLUS_A", "Pvalb", 0.2)
-
-    # Point taxonomy_db_path at our fixture DB.
-    def fake_db_path(_taxonomy_id: str):
-        return tmp_path / "PROX_TAX.db"
-    monkeypatch.setattr(paths_module, "taxonomy_db_path", fake_db_path)
-
-    out = load_expression_data("PROX_TAX", "cluster")
-    assert out == {"CLUS_A": {"Sst": 10.5, "Pvalb": 0.2}}
