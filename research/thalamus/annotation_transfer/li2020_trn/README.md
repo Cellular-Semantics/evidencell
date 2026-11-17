@@ -1,6 +1,8 @@
 # Li et al. 2020 TRN → WMBv1 (CCN20230722) — annotation transfer
 
-**Status: mapped and scored; awaiting the F1-matrix `[GATE]`.** Mapping was
+**Status: mapped and scored; awaiting the F1-matrix `[GATE]`.** This round
+adds the AT runs only. map-cell-type on the three TRN nodes is a separate
+second round after this is merged. Mapping was
 unblocked by #208 / PR #222 (`--normalization log2CPM`). There are two run records
 sharing one MapMyCells output (`mmc_results.csv` here):
 
