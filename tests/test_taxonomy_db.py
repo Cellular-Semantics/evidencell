@@ -789,32 +789,46 @@ def test_find_candidates_nt_filter_drops_mismatches(populated_db):
     )
 
 
-def test_find_candidates_nt_filter_passes_when_candidate_unassessed(populated_db):
-    """NT filter: candidate with no NT call passes through (don't
-    disqualify on missing data)."""
-    db, _, _ = populated_db
+def test_find_candidates_nt_filter_drops_null_nt_when_rank_has_nt_calls(tmp_path):
+    """NT filter (#219): when the rank carries NT calls, a candidate with
+    none is a non-neurotransmitting type (WMBv1 NN clusters), not
+    "unassessed" — it fails a known-NT query."""
+    db = _make_focused_db(tmp_path)
+    _insert_ranked_node(db, "GABA_CL", rank=0, nt_type="GABA")
+    _insert_ranked_node(db, "NN_CL", rank=0, nt_type=None)
 
-    with sqlite3.connect(db.db_path) as con:
-        con.row_factory = sqlite3.Row
-        rows = con.execute(
-            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' "
-            "ORDER BY node_id LIMIT 1"
-        ).fetchall()
-    if not rows:
-        return
+    ids = {c["node_id"] for c in db.find_candidates(nt_type="GABAergic", rank=0)}
+    assert ids == {"GABA_CL"}
 
-    with sqlite3.connect(db.db_path) as con:
-        con.execute(
-            "UPDATE nodes SET nt_type = NULL WHERE node_id = ?",
-            (rows[0]["node_id"],),
-        )
-        con.commit()
 
-    results = db.find_candidates(nt_type="GABA", level="cluster", propagate_nt=False)
-    result_ids = {c["node_id"] for c in results}
-    assert rows[0]["node_id"] in result_ids, (
-        "Unassessed-NT candidate must pass through NT filter"
-    )
+def test_find_candidates_nt_filter_off_when_rank_has_no_nt_calls(tmp_path):
+    """A taxonomy without NT data must not lose every candidate: with no NT
+    call anywhere at the rank, the filter is a no-op."""
+    db = _make_focused_db(tmp_path)
+    _insert_ranked_node(db, "A", rank=0, nt_type=None)
+    _insert_ranked_node(db, "B", rank=0, nt_type=None)
+
+    ids = {c["node_id"] for c in db.find_candidates(nt_type="GABAergic", rank=0)}
+    assert ids == {"A", "B"}
+
+
+def test_find_candidates_nt_filter_uses_leaf_nt_set_at_rank_1(tmp_path):
+    """Above the leaves, a supertype's NT calls are its leaves' NTs: a
+    mixed supertype passes when any leaf matches, an all-Glut one and one
+    whose leaves have no NT (NN) fail. The old single-type propagation
+    collapsed mixed and empty both to None, which passed everything."""
+    db = _make_focused_db(tmp_path)
+    for sup, leaf_nts in {
+        "MIXED": ["GABA", "Dopa"],
+        "GLUT": ["Glut", "Glut-GABA"],
+        "NN": [None, None],
+    }.items():
+        _insert_ranked_node(db, sup, rank=1, nt_type=None)
+        for i, nt in enumerate(leaf_nts):
+            _insert_ranked_node(db, f"{sup}_{i}", rank=0, nt_type=nt, parent_id=sup)
+
+    ids = {c["node_id"] for c in db.find_candidates(nt_type="GABAergic", rank=1)}
+    assert ids == {"MIXED"}
 
 
 def test_find_candidates_region_filter_drops_with_anat_elsewhere(populated_db):
@@ -1814,3 +1828,87 @@ def test_get_node_anat_rows_returns_full_row_shape(tmp_path):
     assert by_id["MBA:399"]["count_in_or_near_100um"] == 90
     assert by_id["MBA:399"]["cell_count_completeness"] == "lower_bound"
     assert by_id["MBA:431"]["cell_count_completeness"] is None
+
+
+# ── #219: absent negative markers need positive support ─────────────────────
+
+
+def _insert_ranked_node(
+    db: TaxonomyDB,
+    node_id: str,
+    rank: int,
+    nt_type: str | None,
+    parent_id: str | None = None,
+) -> None:
+    with db._connect() as con:
+        con.execute(
+            "INSERT INTO nodes(node_id, short_form, label, taxonomy_id, "
+            "taxonomy_level, taxonomy_rank, parent_id, nt_type) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (node_id, node_id, node_id, "PROX_TAX",
+             "cluster" if rank == 0 else "supertype", rank, parent_id, nt_type),
+        )
+        con.commit()
+
+
+@pytest.mark.parametrize(
+    "val,cohort_pct,is_negative,positive_support,expected",
+    [
+        (0.0, None, False, True, -1),    # positive absent
+        (0.0, None, False, False, -1),   # gate never touches positives
+        (1.0, 0.50, False, True, +1),    # positive present
+        (1.0, 0.95, False, True, +2),    # positive cohort-specific
+        (0.0, None, True, True, +1),     # negative absent, supported
+        (0.0, None, True, False, 0),     # negative absent, unsupported → neutral
+        (1.0, 0.50, True, False, -1),    # presence penalty is never gated
+        (1.0, 0.95, True, False, -2),
+    ],
+)
+def test_score_marker_tier_table(val, cohort_pct, is_negative, positive_support, expected):
+    from evidencell.taxonomy_db import _score_marker_tier
+
+    assert _score_marker_tier(
+        val, cohort_pct, is_negative=is_negative, positive_support=positive_support
+    ) == expected
+
+
+def test_unrelated_candidate_gets_no_net_positive_marker_score(tmp_path):
+    """A candidate with every positive marker absent and every negative
+    marker absent must not get a net positive marker score (#219: Astro-TE
+    NN_5 reached the OLM top 5 on absent-negative credit)."""
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "UNRELATED", n_cells=10)
+    _insert_node(db, "MATCH", n_cells=10)
+    negs = ["Pvalb", "Calb1", "Calb2", "Nos1", "Vip"]
+    expr = {
+        "UNRELATED": {"Sst": 0.0, **{g: 0.0 for g in negs}},
+        "MATCH": {"Sst": 9.0, **{g: 0.0 for g in negs}},
+    }
+
+    results = db.find_candidates(
+        markers=["Sst"], negative_markers=negs, rank=0, expression_data=expr,
+    )
+    by_id = {c["node_id"]: c for c in results}
+    # −1 for absent Sst, 0 per absent negative → net −1, cut from results.
+    assert "UNRELATED" not in by_id
+
+    # With a positive marker present the absence credit still applies.
+    match = by_id["MATCH"]["_expression_detail"]
+    assert all(match[f"-{g}"]["score"] == 1 for g in negs)
+
+
+def test_gated_negative_marker_detail_keeps_raw_tier(tmp_path):
+    """The gated absence call stays visible: raw_tier +1, applied score 0.
+    Sst has no value (not measured → 0), so nothing supports the candidate
+    and its score is 0, which keeps it in the results."""
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "CAND", n_cells=10)
+
+    results = db.find_candidates(
+        markers=["Sst"], negative_markers=["Pvalb"], rank=0,
+        expression_data={"CAND": {"Pvalb": 0.0}},
+    )
+    cand = next(c for c in results if c["node_id"] == "CAND")
+    d = cand["_expression_detail"]["-Pvalb"]
+    assert (d["raw_tier"], d["score"]) == (1, 0)
+    assert cand["_score"] == 0
