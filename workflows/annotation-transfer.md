@@ -131,6 +131,10 @@ Step 4  Append to KB
         as a caveat sentence in `explanation` — and
         `just refresh-at-metrics --apply` re-stamps existing items when
         the manifest changes.
+        Also write the run's free-text `caveats:` field — see
+        "Run quality caveats" below. A non-raw run always needs one;
+        so does anything else that makes these F1 values weaker than
+        the numbers alone suggest.
 
 Step 5  Confidence re-assessment
         Re-evaluate MappingConfidence per decision guide given new experimental
@@ -165,6 +169,54 @@ be interpreted in mapping edges and reports.
   cluster. The audit tags such cases with
   `at_f1_monotonicity: falls_with_resolution` — read purity over
   F1 when consuming.
+
+## Run quality caveats
+
+`query_normalization` records *what was done* to the query. It does not
+record *how much to trust the result* — and nothing downstream infers
+that. `supports` is a bare F1 threshold (`>= 0.6` → SUPPORT) and Stage-B
+top-K ranking is normalisation-blind, so a `log2CPM` F1 of 0.61 is
+scored exactly like a counts-based 0.61.
+
+Until that is structured (issue #227), **the run manifest's free-text
+`caveats:` field is the place to say it**, and writing one is part of
+registering the run — not optional polish. It is what a curator reads
+before trusting a number, and what gen-report's synthesis builds the
+edge-level caveat from.
+
+Write a `caveats:` entry whenever the run's numbers are weaker than
+their face value:
+
+- **Non-raw query normalisation.** Always. Say that the query was
+  mapped as pre-normalised log2(CPM+1) rather than counts, and why
+  (dataset published without counts). If the source is full-length
+  TPM/FPKM against a UMI-based taxonomy, say whether `--gene-lengths`
+  was applied — uncorrected, the gene-length mismatch lands directly
+  on the marker correlation the mapper optimises.
+- **Thin source labels.** A label with a handful of cells cannot
+  support a reliable F1. Name the label and its n, and say plainly if
+  it should be treated as uninformative — e.g. Que 2021's `AAC`
+  (n=6).
+- **Source/target mismatch.** Age, region, species or preparation
+  differences between the source dataset and the target atlas — e.g.
+  a juvenile source (mean P30) against adult WMBv1.
+- **Derived or aggregated labels.** Scoring under a relabel scheme
+  rather than the published labels (see the anti-pattern below).
+
+Write it as prose a biologist can act on: which numbers are affected,
+which direction the bias runs, and whether the result is merely
+indicative or should not be used at all. Do not restate what
+`query_normalization` already encodes — the caveat exists to add the
+judgement the structured field cannot carry.
+
+Two separate surfaces, both needed:
+
+| Surface | Written by | Covers |
+|---|---|---|
+| `manifest.yaml` → `caveats:` | curator, at Step 4 | the run as a whole |
+| MappingEdge → `caveats` | gen-report synthesis (Step 3b) | this edge's use of it |
+
+---
 
 **Anti-pattern — do not bundle AT + relabel in one run.** When you
 want to score the same MapMyCells output under two label schemes (raw
