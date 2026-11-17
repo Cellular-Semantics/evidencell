@@ -1,0 +1,99 @@
+id: at_run_20261117_kapustina2024_atn_derivedk3_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE227627"
+source_cluster_label: >
+  DERIVED labels, not published ones. derived_k3_0 (197 cells),
+  derived_k3_1 (459) and derived_k3_2 (222) are a 3-group unsupervised
+  partition of the 878 excitatory neurons in the Kapustina et al. 2024
+  (PMID:38427564) ATN scRNA-seq, re-derived here because GEO:GSE227627
+  deposits no per-cell cluster labels. The partition was made without
+  reference to WMBv1 (scripts/derive_k3_labels.py: two-stage KMeans on PCA
+  with fixed seeds).
+  The groups are deliberately NOT named AD / AV / AM. The KB's independent
+  nucleus markers (AD Pvalb/Htr2a, AV C1ql2/Bdnf, AM Rspo2/Tnnt1; quoted
+  from Hintiryan 2025, not from this paper) do not cleanly separate them:
+  - Pvalb and C1ql2 are both highest in derived_k3_1.
+  - Htr2a and Rspo2 are essentially undetected.
+  - Only Tnnt1 (78% of derived_k3_2 cells vs 35-37% elsewhere) points to
+    one group.
+  Naming the groups from where they land in WMBv1 would be circular.
+  Top within-dataset markers (derived_k3_markers.tsv):
+  - k3_0: Stmn1, Scn3b, Calb1, Necab1.
+  - k3_1: Cplx1, Car4, Pcp4l1, Nefh.
+  - k3_2: Foxp1, Syt7, Tnnt1, Cpne7, plus nuclear-RNA genes.
+  SOURCE-LABEL PURITY: unknown. Separation is weak (silhouette 0.18,
+  consistent with the graded dorsomedial-ventrolateral variation the paper
+  reports). k3_1 and k3_2 behave as near-pure groups; k3_0 is a mixed
+  remainder.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  Same MapMyCells output as at_run_20261117_kapustina2024_atn_mmc_wmbv1
+  (cell_type_mapper v1.7.5 local, raw counts, 912 cells), not re-mapped.
+  Labels from scripts/derive_k3_labels.py (scanpy 1.13.0, scikit-learn
+  1.9.1). Stage 1 kept 878 of 912 cells as neurons, dropping 25
+  oligodendrocyte-contaminated and 9 low-Snap25 cells. Stage 2 (technical
+  genes removed, 1,500 HVG batch-aware by animal, total-UMI regressed out,
+  KMeans k=3 on 15 PCs) produced the three groups. F1 scored with
+  `annotation-transfer score` at bootstrap threshold 0.8 against
+  labels_derivedk3.json.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 912
+n_cells_after_filter: 878
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: "3.13"
+  packages: [cell_type_mapper, scanpy, scikit-learn, anndata, pandas, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "86bfcc0 (branch base; run 2026-11-17)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Derived / re-clustered labels. These are not the authors' clusters,
+  and they must not be used as at_source_sets correspondences for the AD,
+  AV or AM nodes. The run is descriptive: it shows how the dataset's own
+  transcriptomic structure lines up with WMBv1, to be redone with the
+  authors' per-cell labels if those can be obtained.
+  (2) Per-group results:
+  - derived_k3_1 -> 0642 AV Col27a1 Glut_1 (supertype F1 0.93: coverage
+    0.91, purity 0.95).
+  - derived_k3_2 -> 0662 TH Prkcd Grin2c Glut_9, AM-dominant in WMB
+    MERFISH (F1 0.80: coverage 0.81, purity 0.80).
+  - derived_k3_0 is a mixed remainder. Its best supertype is 0652
+    CM-IAD-CL-PCN (F1 0.50), and the rest spreads over 0662, 0658 (LD),
+    0641 (AD) and 0670 (RE). Its cells look like dissection-edge catches
+    from IAD/MD/LD/RE, not an ATN nucleus.
+  The AV / AM readings rest on WMBv1 anatomy and are not independent of the
+  mapping.
+  (3) No AD group emerges. The 38 cells mapping to 0641 AD Serpinb7 are
+  split across groups (27 in k3_1, 11 in k3_0). This fits AD being
+  under-sampled in this dataset and transcriptomically close to AV, and
+  does not contradict the paper's three-cluster result.
+  (4) Weak separation (silhouette 0.18), graded variation and a
+  nuclear-RNA signature in k3_2 make the boundaries soft. Purity and
+  coverage are more informative than a single F1, and cluster-level F1
+  falls (k3_1 0.63 at CLUS_2615), as expected when a group spans two WMB
+  clusters (2615 and 2616).
+  (5) Shares mmc_results.csv with at_run_20261117_kapustina2024_atn_mmc_wmbv1.
+
+metadata: >
+  source_paper=PMID:38427564;
+  shared_mmc_results=../at_run_20261117_kapustina2024_atn_mmc_wmbv1/mmc_results.csv;
+  labels=labels_derivedk3.json; markers=derived_k3_markers.tsv;
+  label_distribution=label_distribution.tsv
