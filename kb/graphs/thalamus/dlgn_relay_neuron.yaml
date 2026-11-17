@@ -107,6 +107,25 @@ nodes:
           method: "review"
           scope: "rodent and monkey LGN subpopulations"
           quote_key: "246443644_61cfc49b"
+    at_source_sets:
+      - dataset_accession: GEO:GSE182211
+        source_label: LGd
+        correspondence: EXACT
+        sources:
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Bakken et al. 2021 assign all glutamatergic cells from mouse dLGN dissections to one cluster, with a core-shell axis of variation inside it"
+            scope: "adult male mouse dLGN core and shell dissections, SMART-seq v4 single cells"
+            quote_key: "237389962_45eeb70e"
+        notes: >
+          Mouse subset of GSE182211 only. The paper calls this cluster 'dLGN';
+          the GEO metadata column cluster_label calls it "LGd" (1,012 cells:
+          682 from dLGN-core and 330 from dLGN-shell dissections, none from
+          the LP or LGv control dissections). EXACT because the authors place
+          every dLGN glutamatergic cell in this one cluster; the core/shell
+          gradient inside it is recorded in the node notes, not split here.
+          A derived core/shell relabel of the same cells is scored in a
+          separate AT run (labels "LGd core" / "LGd shell") and is not
+          declared here.
     colocated_types:
       - neighboring_type: "dlgn_gabaergic_interneuron"
         spatial_relationship: INTERSPERSED
