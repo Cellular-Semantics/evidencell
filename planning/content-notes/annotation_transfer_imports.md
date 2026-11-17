@@ -26,6 +26,15 @@ Curation tasks: run `annotation-transfer` orchestrator then write resulting
   - NEW edge cck_basket → SUPT_0187 Sncg Gaba_3: Harris `Cck.Cxcl14.Vip` (PARTIAL, F1=0.768, recall=0.951)
 - Tags: `#annotation-transfer`
 
+## Phillips 2019 thalamic projection neurons — thalamus
+
+- Dataset: GSE133912 (single-cell, retrograde-labelled by cortical target); GSE133911 pooled (nucleus-resolved) pending
+- AT runs: `at_run_20261115_phillips2019_projection_mmc_wmbv1`, `at_run_20261115_phillips2019_syscluster_mmc_wmbv1`
+- Branch: `content/thalamus-at-phillips2019` (draft PR #211)
+- Status: Runs registered; awaiting F1 gate review and import into `dlgn_relay_neuron` / `thalamic_glutamatergic_projection_neuron`
+- Interpretation notes: [`thalamus_phillips2019_at.md`](thalamus_phillips2019_at.md)
+- Tags: `#annotation-transfer`
+
 ## PV hippocampus
 
 - Dataset: GSE142546 (Que 2021, PV patch-seq)
