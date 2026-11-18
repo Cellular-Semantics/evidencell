@@ -38,27 +38,44 @@ Output directory: `research/{region}/{YYYYMMDD}_{region}_report_ingest/`
 
 ---
 
+## Tools and skills
+
+Subagents get these by name in their prompts. Which tool to use is decided
+here and in the skills, never in the schema.
+
+| Need | Use |
+|---|---|
+| Field meanings, shapes, allowed values, fill order | `{output_dir}/schema_subset.yaml` (Step 0, `just schema-subset`) |
+| The node's Cell Ontology anchor (`cl_mapping`) | `.claude/skills/cl-mapping.md` |
+| Any other ontology term: species, anatomy, transmitter CL terms | `.claude/skills/term-grounding.md` |
+| Paper metadata for corpus IDs | `mcp__Asta_semanticscholar__get_paper_batch`, `just fetch-reference` |
+| Adding quotes to the reference store | `evidencell.references.write_quote_to_refs()` |
+| The region's existing nodes | `uv run python -m evidencell.kb_index region {region}` |
+| Checking written files | the pre-edit hook (automatic), `just validate-terms-file`, `just validate-all` |
+
+---
+
 ## Data flow overview
 
 ```
 PDF
  ├─ Step 0:  setup → existing_nodes.yaml   (region's canonical nodes, from the KB index)
- │                 → slice_identity.md, slice_properties.md   (schema slices)
+ │                 → schema_subset.yaml     (the schema needed to write a node file)
  │
  ├─ Step 1:  parse → extracted_quotes.json, reference_list.json, pdf_corpus_ids.json
  │
  ├─ Step 2:  resolve refs + merge quotes → references/{region}/
  │                                        → run_quotes.json   (this run's quote pool)
  │
- ├─ Step 3:  identify + reconcile       (identity questions)
+ ├─ Step 3:  identify + reconcile       (identity fields)
  │           → kb/graphs/{region}/{node_id}.yaml   identity fields: new files,
  │                                                  or additions to existing ones
  │           → ingest_plan.yaml                     action per type, subtype
  │                                                  hypotheses, unplaced findings
  │
- ├─ Step 4:  CL lookup → cl_mapping on each node file; cl_mappings.json
+ ├─ Step 4:  CL mapping → cl_mapping on each node file; cl_mappings.json
  │
- ├─ Step 5:  characterise, one subagent per node   (property questions)
+ ├─ Step 5:  characterise, one subagent per node   (property fields)
  │           → property fields on each node file; unplaced/{node_id}.yaml
  │
  ├─ Step 6:  review (PR by default; in-session gate if gate: true)
@@ -71,13 +88,14 @@ about a node is written to the node file, in schema fields, under hook validatio
 A finding that fits no field goes to `ingest_plan.yaml` or `unplaced/` — never to
 free text passed between steps, and never to `notes` unless it is a caveat.
 
-**Field guidance comes from the schema.** Each slot an agent fills carries an
-`ingest_question` and an `ingest_phase` annotation. Step 0 renders one slice per
-phase with `just schema-slice`; Step 3 answers the `identity` questions (except
-`cl_mapping`, which Step 4 owns) and Step 5 the `properties` questions. Never add a
-hand-written field list to a step prompt: change the slot's question in the schema.
-What stays in the prompts is workflow policy — what to write when, what never to
-write, how to treat existing nodes.
+**Field guidance comes from the schema.** Step 0 writes `schema_subset.yaml`: the
+graph header, `CellTypeNode`, and every class and enum they use, copied from the
+schema. The `CellTypeNode` slots this workflow writes carry an `ingest_phase`
+annotation, filled in order: `identity` in Step 3, `classification`
+(`cl_mapping`) in Step 4, `properties` in Step 5. Never add a hand-written field
+list to a step prompt: if a field's guidance is wrong, fix its description in
+the schema. What stays in the prompts is workflow policy — what to write when,
+what never to write, how to treat existing nodes.
 
 Quotes live in the region's reference store, never in the KB YAML. The KB references
 quotes by key. Reports dereference keys to include snippets when needed.
@@ -195,17 +213,16 @@ sentences. Inline quoted fragments in synthesis text are ASTA paraphrase, not ve
      "started_at": "..."
    }
    ```
-4. Snapshot the region's existing nodes and render the schema slices:
+4. Snapshot the region's existing nodes and write the schema subset:
    ```bash
    uv run python -m evidencell.kb_index region {region} > {output_dir}/existing_nodes.yaml
-   just schema-slice identity > {output_dir}/slice_identity.md
-   just schema-slice properties > {output_dir}/slice_properties.md
+   just schema-subset -o {output_dir}/schema_subset.yaml
    ```
    `existing_nodes.yaml` lists every canonical node in `kb/graphs/{region}/` with
    its identity fields (name, synonyms, definition basis, species, CL term) and
    file. It is taken before anything is written, so Step 3 reconciles against the
-   KB as it was when the run started. The slices are the field guidance Steps 3
-   and 5 read; pass them to subagents as files, not paraphrased.
+   KB as it was when the run started. The schema subset is the field guidance
+   Steps 3 to 5 read; pass it to subagents as a file, not paraphrased.
 
 ---
 
@@ -410,8 +427,10 @@ INPUT FILES:
 - {pdf_file}                          the report
 - {output_dir}/existing_nodes.yaml    canonical nodes already in this region
 - {output_dir}/run_quotes.json        this run's quotes, each with quote_key and ref
-- {output_dir}/slice_identity.md      the identity fields: one question per field,
-                                      with each field's allowed values and shape
+- {output_dir}/schema_subset.yaml     the schema for a node file: each field's
+                                      description, shape, allowed values and
+                                      ingest_phase
+- .claude/skills/term-grounding.md    how to find and write species terms
 
 ## Part A: Identify
 
@@ -439,12 +458,13 @@ INPUT FILES:
    population (not the report), and unique across the KB — check
    existing_nodes.yaml and `ls kb/graphs/*/`.
 
-## Part C: Answer the identity questions
+## Part C: Fill the identity fields
 
-4. For each NEW or ENRICH type, answer every question in slice_identity.md
-   except cl_mapping, which Step 4 owns. Cite sources by quote_key from
-   run_quotes.json, with ref copied from the same entry. Use only entries whose
-   ref is not null.
+4. For each NEW or ENRICH type, fill every CellTypeNode field tagged
+   `ingest_phase: identity` in schema_subset.yaml, following each field's
+   description and allowed values. Ground species terms as term-grounding.md
+   says. Cite sources by quote_key from run_quotes.json, with ref copied from
+   the same entry. Use only entries whose ref is not null.
 
 5. Subtype relations. If the report describes a type as part of another type —
    one proposed in this run or one in existing_nodes.yaml — record it in
@@ -532,25 +552,26 @@ DO NOT:
 
 ---
 
-## Step 4: CL lookup (LLM subagent)
+## Step 4: CL mapping (LLM subagent)
 
-Spawn a **single subagent** to anchor nodes to Cell Ontology terms. It answers
-the `cl_mapping` identity question, which needs OLS lookups, and writes the answer
-into each node file.
+Spawn a **single subagent** to anchor the run's nodes to Cell Ontology terms. It
+fills the `classification` field (`cl_mapping`) in each node file, following the
+`cl-mapping` skill.
 
 **Subagent config:** `subagent_type: "general-purpose"`, `model: {model}`
 
 ```
-You are a Cell Ontology lookup agent. Match the run's cell types to existing CL
-terms, write each match into its node file, and collect CL definition references
-as additional seed papers. You perform ONLY the steps listed below.
+You are a Cell Ontology mapping agent. You set cl_mapping on the run's nodes.
+You perform ONLY the steps listed below.
 
 OUTPUT DIRECTORY: {output_dir}
 REGION: {region}
 
 INPUT FILES:
+- .claude/skills/cl-mapping.md        how to choose the CL term and mapping type;
+                                      read it first and follow it
 - {output_dir}/ingest_plan.yaml       the run's types, with action and file
-- {output_dir}/slice_identity.md      the cl_mapping question and the CLMapping shape
+- {output_dir}/schema_subset.yaml     the CLMapping shape and CLMappingType values
 - the node files named in ingest_plan.yaml
 
 TASK:
@@ -558,54 +579,34 @@ TASK:
 1. Read ingest_plan.yaml. Work on every NEW type, and every ENRICH type whose
    node file has no cl_mapping. Skip DUPLICATE types.
 
-2. For each, search OLS4 by name and synonyms (read them from the node file):
-   mcp__ols4__search(query="{type_name}", ontology="cl", rows=5)
-   Also try key synonym searches if the primary name returns no match.
+2. For each, choose the CL term and mapping type as cl-mapping.md says, and
+   write cl_mapping into the node file with the Edit tool.
 
-3. For each match found:
-   - Decide the mapping type (EXACT / BROAD / RELATED) as defined in
-     slice_identity.md.
-   - Fetch the term detail to get definition references:
-     mcp__ols4__get_term(iri="{term_iri}")
-   - Extract any PMID or DOI references from the definition or xrefs.
-
-4. Write cl_mapping into the node file with the Edit tool, in the CLMapping shape
-   given in slice_identity.md (cl_term with id, label, name_in_source;
-   mapping_type; mapping_notes saying what was searched and why this type was
-   chosen). Where no term fits, map BROAD to the closest ancestor and say so in
-   mapping_notes. Never change an existing cl_mapping; if your lookup disagrees
-   with one, record that in cl_mappings.json only.
-
-5. Write {output_dir}/cl_mappings.json:
+3. Write {output_dir}/cl_mappings.json, one entry per node worked on:
    {
-     "olm_ca1": {
-       "cl_term_id": "CL:0000000",
-       "label": "oriens-lacunosum moleculare neuron",
-       "mapping_type": "EXACT",
-       "mapping_confidence": "HIGH",
-       "definition_references": ["PMID:10000001", "PMID:10000002"]
-     },
-     "no_match_node": {
-       "cl_term_id": null,
-       "mapping_type": null,
-       "mapping_confidence": "CANDIDATE",
-       "definition_references": [],
-       "note": "No CL term found — potential CL contribution"
+     "<node_id>": {
+       "cl_term_id": "CL:...",
+       "label": "...",
+       "mapping_type": "EXACT | BROAD | RELATED",
+       "definition_references": ["PMID:...", "https://doi.org/..."],
+       "disagreement": "<only for an ENRICH node whose existing cl_mapping you
+                        would have set differently; the file is left unchanged>"
      }
    }
+   definition_references are the PMIDs and DOIs from an EXACT term's definition
+   and xrefs; they are seed papers for later retrieval.
 
-6. If the pre-edit hook blocks a write, fix the reported problem and retry.
+4. If the pre-edit hook blocks a write, fix the reported problem and retry.
    Never write through a shell command.
 
 RETURN:
-"CL lookup complete. Matched: N nodes. Unmatched (CANDIDATE): M nodes.
-Written to node files: W. CL definition references: P additional seed papers.
+"CL mapping complete. EXACT: X, BROAD: Y, RELATED: Z. Disagreements: D.
 See cl_mappings.json."
 
 DO NOT:
-- Auto-assign EXACT mapping if only a synonym matches — use BROAD or RELATED
-- Invent CL term IDs
 - Edit any field other than cl_mapping
+- Change an existing cl_mapping
+- Invent CL term IDs or labels
 ```
 
 ---
@@ -613,13 +614,12 @@ DO NOT:
 ## Step 5: Characterise, one node at a time (LLM subagents)
 
 For each type in `ingest_plan.yaml` with action NEW or ENRICH, spawn **one
-subagent** that answers the property questions for that node and writes the
-answers into its file. Dispatch them **one after another**, not in parallel: each
+subagent** that fills the property fields in that node's file. Dispatch them **one after another**, not in parallel: each
 appends `claims` to quotes in the shared store, and concurrent writes to the same
 quote file would race.
 
-One node per subagent keeps each context to one type's quotes plus the properties
-slice, and a failure costs one node, not the run.
+One node per subagent keeps each context to one type's quotes plus the schema
+subset, and a failure costs one node, not the run.
 
 **Subagent config:** `subagent_type: "general-purpose"`, `model: {thinking_model}`
 
@@ -641,15 +641,18 @@ INPUT FILES:
 - {output_dir}/run_quotes.json        this run's quotes (the main pool)
 - references/{region}/quotes/         the region's full quote store (an ENRICH node
                                       may already cite earlier quotes)
-- {output_dir}/slice_properties.md    the property fields: one question per field,
-                                      with each field's shape and allowed values
+- {output_dir}/schema_subset.yaml     the schema for a node file: each field's
+                                      description, shape, allowed values and
+                                      ingest_phase
+- .claude/skills/term-grounding.md    how to find and write anatomy and
+                                      transmitter terms
 - {pdf_file}                          the report, for the sections in report_sections
 
-## Part A: Match quotes to questions
+## Part A: Match quotes to fields
 
-1. For each question in slice_properties.md, find quotes that answer it for THIS
-   cell type or its immediate broader class. Discard tangential mentions and
-   generic statements.
+1. For each CellTypeNode field tagged `ingest_phase: properties` in
+   schema_subset.yaml, find quotes that bear on it for THIS cell type or its
+   immediate broader class. Discard tangential mentions and generic statements.
 
 2. For each kept quote, add the fields it answers to its "claims" list (e.g.
    ["defining_markers", "anatomical_location"]). Quotes live in
@@ -665,14 +668,14 @@ INPUT FILES:
 
 ## Part B: Write
 
-4. Write the property fields into the node file with the Edit tool. Shapes,
-   required sub-fields and allowed values are in slice_properties.md.
+4. Write the property fields into the node file with the Edit tool. Meanings,
+   shapes, required sub-fields and allowed values are in schema_subset.yaml.
    - NEW: add the property fields. Leave identity fields and cl_mapping as they are.
    - ENRICH: add new entries and new sources. Never remove or rewrite an existing
      entry, source or description. A description may be extended with a sentence
      tied to a new source.
 
-   Workflow policy (applies on top of the slice):
+   Workflow policy (applies on top of the schema):
    - Sources carry quote_key, ref, and method/scope where known. Never put quote
      text in the YAML: no snippet fields.
    - nt_type: always attempt it. Where the sources do not state it, infer from
@@ -680,12 +683,12 @@ INPUT FILES:
      inferred. find-candidates scores on NT type, so a silently missing value
      weakens retrieval.
    - defining_markers / negative_markers / neuropeptides: ncbi_gene_id: null.
-   - anatomical_location: look terms up with mcp__ols4__search; every CURIE must
-     resolve (the hook checks).
+   - anatomical_location and nt_type.cl_terms: ground terms as
+     term-grounding.md says; every CURIE must resolve (the hook checks).
    - definition_references: the 3-5 most informative resolved refs.
 
-5. notes: caveats only, as the notes question says. A finding that answers no
-   question in the slice goes to {output_dir}/unplaced/{node_id}.yaml:
+5. notes: caveats only, as the notes description says. A finding that fits no
+   field goes to {output_dir}/unplaced/{node_id}.yaml:
 
    - finding: <what the sources say>
      quote_keys: [...]
@@ -805,9 +808,11 @@ concurrently in a separate session.
   against `existing_nodes.yaml`. Existing nodes are added to, never rewritten.
 - **The node file is the handoff.** Steps 3, 4 and 5 pass decisions to each
   other through schema fields in the node file, not through free text.
-- **Field guidance comes from the schema slices.** Prompts carry workflow policy;
-  what a field means and what to ask about it lives in the schema
-  (`ingest_question`, `ingest_phase`). Fix a field's guidance there, not here.
+- **Field guidance comes from the schema.** Prompts carry workflow policy; what
+  a field means lives in its schema description, and when it is filled in its
+  `ingest_phase`. Fix a field's guidance there, not here.
+- **Tools live in the workflow and skills, never the schema.** `cl-mapping.md`
+  for CL anchors, `term-grounding.md` for every other ontology term.
 - **One node per file.** `kb/graphs/{region}/{node_id}.yaml`, filename matching
   the node id. Never write a combined draft.
 - **Write and Edit tools only.** The pre-edit hook is a PreToolUse hook on
