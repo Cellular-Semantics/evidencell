@@ -50,12 +50,12 @@ nodes:
             method: "review (marker classification)"
             scope: "adult dentate gyrus neuroblasts"
             quote_key: "252063749_e1c84f70"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: "PMID:40519263"
             method: "review (type-3 neuroblast marker)"
             scope: "adult dentate gyrus — type-3 neuroblast"
             quote_key: "279046466_b2e95c41"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: PSA-NCAM
         ncbi_gene_id:
         sources:
@@ -63,7 +63,7 @@ nodes:
             method: "review (marker classification)"
             scope: "adult dentate gyrus migrating neuroblasts"
             quote_key: "252063749_e1c84f70"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Ki67
         modifier: "proliferative marker"
         ncbi_gene_id:
@@ -72,7 +72,7 @@ nodes:
             method: "review (marker classification)"
             scope: "adult dentate gyrus neuroblasts"
             quote_key: "252063749_e1c84f70"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Nestin
         modifier: "type-2b stage only (co-expressed with DCX)"
         ncbi_gene_id:
@@ -81,7 +81,7 @@ nodes:
             method: "review (type-2b neuroblast marker)"
             scope: "adult dentate gyrus — type-2b stage"
             quote_key: "279046466_b2e95c41"
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Tbr2
         modifier: "intermediate progenitor (type-2) stage"
         ncbi_gene_id:
@@ -96,10 +96,10 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: "PMID:19482889"
-            method: "Tis21-GFP knock-in mouse + IHC"
+            method: "Tis21-GFP knock-in reporter mouse"
             scope: "adult mouse hippocampus transit-amplifying progenitors"
             quote_key: "13799502_a8f3d219"
-            marker_type: PROTEIN
+            marker_type: TRANSGENE_REPORTER
     negative_markers:
       - symbol: NeuN
         modifier: "NeuN negative at type-3 neuroblast stage"

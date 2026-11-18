@@ -908,8 +908,15 @@ def validate_terms(
     Validate ontology-term CURIEs in YAML content via linkml-term-validator.
 
     Subprocess-based, mirroring `linkml_validate`. Writes the simulated
-    post-edit content to a tempfile, then invokes the `validate` subcommand of
-    linkml-term-validator with the project's `conf/oak_config.yaml`.
+    post-edit content to a tempfile, then invokes the `validate-data`
+    subcommand of linkml-term-validator with the project's
+    `conf/oak_config.yaml`.
+
+    The target class is chosen by file_path location exactly as in
+    `linkml_validate`; defaults to CellTypeMappingGraph otherwise. The
+    `validate` subcommand cannot take one — it always falls back to the
+    schema tree root (CellTypeMappingGraph), which crashes on any other
+    document shape, e.g. AT/correlation run manifests (#209).
 
     Soft-skip behaviour: if `conf/oak_config.yaml` is missing, or if any
     required OAK semsql DB is not yet cached, returns
@@ -918,6 +925,13 @@ def validate_terms(
 
     Returns (passed: bool, output_text: str).
     """
+    if file_path is not None:
+        target_class = _target_class_for_kb_path(file_path)
+        if target_class is None:
+            return True, f"(no schema class for {file_path} — term check skipped)"
+    else:
+        target_class = "CellTypeMappingGraph"
+
     project_root = schema_path.parent.parent
     oak_config_path = project_root / "conf" / "oak_config.yaml"
 
@@ -940,9 +954,10 @@ def validate_terms(
         result = subprocess.run(
             [
                 "uv", "run", "linkml-term-validator",
-                "validate",
+                "validate-data",
                 "--config", str(oak_config_path),
                 "--schema", str(schema_path),
+                "--target-class", target_class,
                 str(tmp),
             ],
             capture_output=True,

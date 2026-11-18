@@ -99,9 +99,16 @@ refresh-at-metrics *ARGS:
 # Pre-mapping check: which classical nodes' declared at_source_sets have an
 # AT run (resolved) vs not (UNRESOLVED). Report-only; exits non-zero if any
 # UNRESOLVED. Run before map-cell-type; for UNRESOLVED rows run annotation-transfer.
+# Scope: named node ids, --region REGION, or (neither) the whole KB.
+# Every row is checked against the one TAXONOMY_ID given. A source whose run
+# targets a different taxonomy shows as "NO RUN ON {taxonomy_id}" and still
+# exits non-zero, so a scope mixing taxonomies (whole KB, BG) is a report,
+# not a gate: gate on named nodes or a single-taxonomy region.
+# Usage: just at-coverage CCN20230722 olm_cell_ca1
+#        just at-coverage CCN20230722 --region hippocampus
 [group('at_metrics')]
-at-coverage graph_file taxonomy_id:
-    uv run python -m evidencell.at_metrics at-coverage {{graph_file}} {{taxonomy_id}}
+at-coverage taxonomy_id *ARGS:
+    uv run python -m evidencell.at_metrics at-coverage {{taxonomy_id}} {{ARGS}}
 
 # Regenerate src/evidencell/_models.py (Pydantic classes from LinkML schema)
 [group('schema')]
@@ -354,7 +361,8 @@ fetch-taxonomy-kg cypher_file taxonomy_id *ARGS:
 ingest-taxonomy-yaml taxonomy_file taxonomy_id:
     uv run python -m evidencell.taxonomy_db ingest {{taxonomy_file}} {{taxonomy_id}}
 
-# Build SQLite query index from YAML reference files (no source JSON required)
+# Build SQLite query index from YAML reference files (no source JSON required).
+# Expression cache tables start empty and fill on use from the stats HDF5.
 # Usage: just build-taxonomy-db CCN20230722
 [group('workflows')]
 build-taxonomy-db taxonomy_id:
@@ -371,9 +379,10 @@ ingest-taxonomy-db taxonomy_file taxonomy_id:
 # taxonomy, to the canonical repo-root path conf/mapmycells/{taxonomy_id}/.
 #
 # URLs are NOT hardcoded here -- annotation_transfer/src/annotation_transfer/
-# taxonomies.py is the single authority, keyed by taxonomy id. The filename it
-# names is the same string recorded as `source` on every precomputed_expression
-# block in kb/taxonomy/, so a block's provenance resolves to a public URL.
+# taxonomies.py is the single authority, keyed by taxonomy id. The stats file is
+# a runtime dependency for mapping: atlas expression is read from it on demand
+# and cached in the taxonomy DB (evidencell.expression_cache, #189). The cache
+# records the filename it was filled from, so reports cite it by name.
 #
 # These files are large (WMBv1 1.4GB, HMBA BG 1.1GB) and are gitignored.
 # Existing files are left alone; pass --force to re-download.
@@ -415,7 +424,7 @@ fetch-mapmycells taxonomy_id *FLAGS:
         echo "  downloading $size -> $out"
         curl -fL --progress-bar "$url" -o "$out"
     done
-    echo "Done. Pass the .h5 to just add-expression / add-expression-all."
+    echo "Done. find-candidates / emit-stage-b read expression from it on demand."
 
 # Download the latest BICAN Mouse Brain Atlas Ontology (OBO JSON) to conf/mba/mbao-full.json
 # Run once; file is not committed to git (.gitignore)
@@ -432,35 +441,19 @@ build-anat-closure taxonomy_id:
 
 # ── Taxonomy update operations ────────────────────────────────────────────────
 
-# Add precomputed expression profiles to taxonomy nodes from HDF5 stats
-# Requires: gene mapping TSV (generate with just generate-gene-mapping)
-# Usage: just add-expression CCN20230722 path/to/stats.h5 path/to/gene_mapping.tsv Sst Pvalb Cck
+# Pre-load expression for every marker named on a KB classical node into the
+# taxonomy DB's expression cache, and list genes that can't be measured.
+# Optional: the cache fills on first use by find-candidates / emit-stage-b /
+# refresh-*. Needs the stats file (just fetch-mapmycells) and gene mapping TSV.
+# Usage: just warm-expression-cache CCN20230722
 [group('workflows')]
-add-expression taxonomy_id stats_h5 gene_mapping +GENES:
-    uv run python -m evidencell.taxonomy_ops add-expression {{taxonomy_id}} {{stats_h5}} {{gene_mapping}} {{GENES}}
-
-# Add expression to both cluster and supertype levels
-# Usage: just add-expression-all CCN20230722 path/to/stats.h5 path/to/gene_mapping.tsv Sst Pvalb
-[group('workflows')]
-add-expression-all taxonomy_id stats_h5 gene_mapping +GENES:
-    uv run python -m evidencell.taxonomy_ops add-expression {{taxonomy_id}} {{stats_h5}} {{gene_mapping}} {{GENES}} --supertype
-
-# Proactive enrichment: scan kb/graphs/**/*.yaml for non-atlas nodes, collect
-# the union of all (defining_markers + neuropeptides + negative_markers)
-# symbols, and enrich every taxonomy node at cluster + supertype levels with
-# precomputed_expression for that union.
-# Replaces the per-mapping Step 2b in workflows/map-cell-type.md so that
-# find-candidates always sees full quantitative data on candidates.
-# Re-run when classical nodes are added or their marker lists change.
-# Usage: just enrich-marker-union CCN20230722 conf/mapmycells/CCN20230722/precomputed_stats.h5 conf/gene_mapping_CCN20230722.tsv
-[group('workflows')]
-enrich-marker-union taxonomy_id stats_h5 gene_mapping:
-    uv run python -m evidencell.taxonomy_ops enrich-marker-union {{taxonomy_id}} {{stats_h5}} {{gene_mapping}}
+warm-expression-cache taxonomy_id:
+    uv run python -m evidencell.taxonomy_ops warm-expression-cache {{taxonomy_id}}
 
 # Refresh stale atlas-side expression on marker-family PropertyComparisons.
 # Sweeps MappingEdge.property_comparisons entries whose node_b_value is
 # "not resolvable from atlas metadata" (or similar) and rewrites them with
-# the current mean_expression value from kb/taxonomy/{id}/{level}.yaml.
+# the current mean expression, read through the taxonomy DB's on-demand cache.
 # Usage: just refresh-expression kb/graphs/region/file.yaml
 #        just refresh-expression-all
 [group('workflows')]
@@ -484,7 +477,7 @@ reingest-dry taxonomy_id source_json:
     uv run python -m evidencell.taxonomy_ops reingest {{taxonomy_id}} {{source_json}} --dry-run
 
 # Generate gene mapping TSV from HDF5 stats via mygene API
-# Run once per stats file; output reusable across add-expression calls
+# Run once per stats file; the expression cache reads conf/gene_mapping_{taxonomy_id}.tsv
 # Requires: uv add mygene
 # Usage: just generate-gene-mapping path/to/stats.h5 conf/gene_mapping_CCN20230722.tsv
 [group('workflows')]
@@ -602,16 +595,15 @@ gen-toc TAXONOMY_ID *ARGS:
 gen-at-figure RUN_ID *ARGS:
     uv run python -m evidencell.at_figures {{RUN_ID}} {{ARGS}}
 
-# Surface candidate source-group pools from a KB graph (Phase 3 gen-report pre-pass).
+# Surface candidate source-group pools (Phase 3 gen-report pre-pass).
 # Emits JSON on stdout. Use --node to restrict to candidates involving a given lit_type.
-# Scope is the whole region directory, not just GRAPH_FILE -- pool detection is
-# pairwise across lit_types, so a per-file view misses pairs that span files.
-# Pass --this-file-only to restrict to GRAPH_FILE.
-# Usage: just pool-candidates kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml
-#        just pool-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml --node olm_hippocampus
+# Scope is the whole KB: a pair is compared when their AT evidence lands on the
+# same atlas accession, whatever file or region directory each lives in.
+# Usage: just pool-candidates --node olm_hippocampus
+#        just pool-candidates                          # every pair in the KB
 [group('reports')]
-pool-candidates GRAPH_FILE *ARGS:
-    uv run python -m evidencell.pool_candidates {{GRAPH_FILE}} {{ARGS}}
+pool-candidates *ARGS:
+    uv run python -m evidencell.pool_candidates {{ARGS}}
 
 # Render KB node files for review, with quote text filled in. Read-only.
 # KB YAML cites evidence by quote_key only, so a diff shows bare hashes; this
@@ -699,6 +691,14 @@ at-preflight FILE:
 [group('annotation-transfer')]
 at-convert INPUT OUTPUT *ARGS:
     cd annotation_transfer && uv run annotation-transfer convert {{INPUT}} {{OUTPUT}} {{ARGS}}
+
+# Transform an expression matrix to log2(CPM+1) for a --normalization log2CPM
+# run. Only for datasets published without counts (Smart-seq2/RSEM TPM, etc).
+# --input-scale {counts,cpm,tpm,ln1p,log2_1p,log10_1p} is required; pass
+# --gene-lengths TSV for full-length data mapped to a UMI-based taxonomy.
+[group('annotation-transfer')]
+at-normalize INPUT OUTPUT *ARGS:
+    cd annotation_transfer && uv run annotation-transfer normalize {{INPUT}} {{OUTPUT}} {{ARGS}}
 
 # Run MapMyCells via web API or local (taxonomy-aware)
 [group('annotation-transfer')]

@@ -1,0 +1,78 @@
+id: at_run_20261117_li2020_trn_pvalb_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE145273"
+source_cluster_label: >
+  Li et al. 2020 TRN Gad2+ Pvalb+ cluster as one label, "TRN Pvalb+"
+  (670 of the authors' 671 snRNA-seq nuclei from micro-dissected
+  Pvalb-tdTomato TRN; the cell set deposited in Broad Single Cell Portal
+  SCP344). Expression from GEO GSE145273_TPM.TRN.tsv.gz. Source
+  DOI: 10.1038/s41586-020-2504-5 (PMID:32699411).
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.5, hierarchical, default
+  parameters, type_assignment.normalization = log2CPM). Query built from
+  the deposited ln(TPM+1) table: gene symbols remapped to WMBv1 Ensembl IDs
+  via conf/gene_mapping_CCN20230722.tsv (18,591 genes kept), then
+  `annotation-transfer normalize --input-scale ln1p --gene-lengths`
+  (Ensembl 102 GRCm38 union-of-exon lengths; 0 further genes dropped) to
+  log2(CPM+1), `convert --normalization log2CPM`, `map-local
+  --normalization log2CPM`. F1 scoring with `annotation-transfer score`
+  (bootstrap_threshold 0.8). Same MapMyCells output as
+  at_run_20261117_li2020_trn_spp1ecel1_mmc_wmbv1.
+query_normalization: log2CPM
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 670
+n_cells_after_filter: 670
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: ../../../research/thalamus/annotation_transfer/li2020_trn/README.md
+  python_version: "3.13"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  Query normalisation. GSE145273 is published only as ln(TPM+1)
+  (Smart-seq2 snRNA-seq, RSEM), with no counts, so the query was mapped
+  as pre-normalised log2(CPM+1) and not as counts. The gene-length bias of
+  full-length TPM against UMI-based WMBv1 was corrected with --gene-lengths,
+  using Ensembl 102 union-of-exon lengths because RSEM's effective lengths
+  were not deposited. A sensitivity run without the correction agreed
+  cell-for-cell at 99.9% (subclass), 98.7% (supertype) and 95.4% (cluster),
+  so this result is not sensitive to the correction. Read the F1 values as
+  indicative, not counts-grade.
+
+  Single-label run. Every query cell carries "TRN Pvalb+", so purity is
+  1.0 by construction and F1 reduces to coverage. The informative numbers
+  are coverage: 667/670 cells map to subclass 093 RT-ZI Gnb3 Gaba (F1
+  0.998). Within that subclass, cells spread over supertypes 0431-0435 and
+  many clusters, dominated by 0435 / CLUS 1604 (the Spp1+ core
+  population; see the companion run). Do not read the low cluster-level F1
+  as a mismatch: the label is a mixed population of core and shell cells.
+
+  Source/target scope. The 671-nucleus source cluster is the Pvalb+ subset
+  of TRN GABAergic cells. Three Pvalb-low GABAergic clusters assigned to
+  neighbouring structures were excluded by the authors. WMBv1 093 RT-ZI
+  Gnb3 Gaba also contains zona incerta neurons, so this run supports the
+  TRN → 093 direction only, not 093 → TRN.
+
+  Cell-id alignment. The SCP344 cell names are offset by one row against
+  their annotations. This does not affect this run (all cells get one
+  label), but the cell set was defined after correcting it. See the
+  companion run and research/thalamus/annotation_transfer/li2020_trn/README.md.

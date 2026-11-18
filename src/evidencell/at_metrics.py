@@ -595,20 +595,129 @@ def load_result_set(
     return AnnotationTransferResultSet(**doc)
 
 
+def run_manifest_path(
+    run_ref: str, *, runs_root: Path | None = None,
+) -> Path:
+    """Path of ``run_ref``'s ``manifest.yaml`` (whether or not it exists)."""
+    runs_root = runs_root or (repo_root() / "kb" / "annotation_transfer_runs")
+    return runs_root / run_ref / "manifest.yaml"
+
+
 def load_run_manifest(
     run_ref: str, *, runs_root: Path | None = None,
 ) -> dict:
-    """Return the parsed ``manifest.yaml`` for ``run_ref`` (``{}`` if absent
-    or unreadable). Used to surface run-level provenance (e.g.
-    ``target_atlas``) without hardcoding it on the evidence item."""
-    runs_root = runs_root or (repo_root() / "kb" / "annotation_transfer_runs")
-    manifest = runs_root / run_ref / "manifest.yaml"
+    """Return the parsed ``manifest.yaml`` for ``run_ref`` (``{}`` if the
+    file is absent). Used to surface run-level provenance (e.g.
+    ``target_atlas``, ``query_normalization``) without hardcoding it on
+    the evidence item.
+
+    A manifest that exists but cannot be parsed raises rather than
+    returning ``{}``: "absent" and "unreadable" are different facts, and
+    collapsing them lets a YAML syntax error masquerade as a run with
+    default provenance — which silently downgrades every evidence item
+    that cites the run (a ``log2CPM`` caveat would be dropped as if the
+    run were ``raw``).
+    """
+    manifest = run_manifest_path(run_ref, runs_root=runs_root)
     if not manifest.is_file():
         return {}
     try:
         return yaml.safe_load(manifest.read_text(encoding="utf-8")) or {}
-    except Exception:  # noqa: BLE001 — treat unreadable manifest as absent
-        return {}
+    except Exception as exc:  # noqa: BLE001 — surface, don't swallow
+        raise ValueError(
+            f"Run manifest {manifest} exists but could not be parsed: "
+            f"{exc}. Fix the manifest — treating it as absent would drop "
+            "the run's provenance (e.g. a query_normalization caveat) "
+            "from every evidence item that cites it."
+        ) from exc
+
+
+# ─── query normalisation: validation + caveat text ───────────────────
+
+#: Query normalisations recognised on a run manifest and on an
+#: AnnotationTransferEvidence item. Mirrors the ``QueryNormalization``
+#: enum in ``schema/celltype_mapping.yaml``.
+QUERY_NORMALIZATIONS = ("raw", "log2CPM")
+
+#: Appended to an AT evidence item's explanation when the backing run used
+#: a non-raw query normalisation. Prose, not a tier code: the downstream
+#: consumer is an LLM reading the evidence item.
+QUERY_NORM_CAVEAT = {
+    "log2CPM": (
+        "CAVEAT: the query was mapped as pre-normalised log2(CPM+1), not "
+        "raw counts — typically a full-length (Smart-seq/TPM) dataset "
+        "published without counts. TPM is gene-length normalised while "
+        "the reference taxonomy is not, which biases the marker-wise "
+        "correlation MapMyCells optimises, and the integer-count input "
+        "check does not apply to such a run. Weigh these F1 values as "
+        "indicative rather than on a par with a counts-based run."
+    ),
+}
+
+
+def validate_query_normalization(value: object, *, context: str) -> str:
+    """Return ``value`` as a known query normalisation, or raise.
+
+    ``query_normalization`` is hand-authored into a run manifest by a
+    curator (``workflows/annotation-transfer.md`` Step 4), so a typo
+    (``log2cpm``, a trailing space) is an expected failure mode. Catch it
+    here with a diagnostic naming the manifest, rather than letting it
+    surface as a bare ``KeyError`` from the caveat table or as a schema
+    validation failure long after the value was written into KB YAML.
+    """
+    if value is None or value == "":
+        return "raw"
+    norm = value.strip() if isinstance(value, str) else value
+    if norm not in QUERY_NORMALIZATIONS:
+        raise ValueError(
+            f"{context}: unknown query_normalization {value!r}. "
+            f"Must be one of {', '.join(QUERY_NORMALIZATIONS)} "
+            "(case-sensitive; check the run manifest for a typo or "
+            "stray whitespace)."
+        )
+    if norm != "raw" and norm not in QUERY_NORM_CAVEAT:  # pragma: no cover
+        raise ValueError(
+            f"{context}: query_normalization {norm!r} is valid but has no "
+            "caveat text in QUERY_NORM_CAVEAT — add one before using it."
+        )
+    return norm
+
+
+def apply_query_norm_caveat(
+    method: str, explanation: str, norm: str,
+) -> tuple[str, str]:
+    """Stamp ``norm``'s caveat onto ``(method, explanation)``.
+
+    The caveat lives in three places on an evidence item — the structured
+    ``query_normalization`` field, a ``method`` suffix, and a sentence in
+    ``explanation``. This is the single writer of the latter two, so
+    emit and refresh cannot drift apart.
+    """
+    if norm == "raw":
+        return method, explanation
+    method = f"{method}, {norm} query normalization"
+    caveat = QUERY_NORM_CAVEAT[norm]
+    explanation = f"{explanation} {caveat}".strip()
+    return method, explanation
+
+
+def strip_query_norm_caveat(
+    method: str, explanation: str,
+) -> tuple[str, str]:
+    """Inverse of :func:`apply_query_norm_caveat` for every known norm.
+
+    Used before re-stamping, so a corrected run (``log2CPM`` → ``raw``)
+    does not leave a withdrawn caveat behind in the prose.
+    """
+    for norm, caveat in QUERY_NORM_CAVEAT.items():
+        suffix = f", {norm} query normalization"
+        if method.endswith(suffix):
+            method = method[: -len(suffix)]
+        for marker in (f" {caveat}", caveat):
+            if marker in explanation:
+                explanation = explanation.replace(marker, "").strip()
+                break
+    return method, explanation
 
 
 def resolve_run_for_source(
@@ -689,6 +798,51 @@ def resolve_run_for_source(
         file=sys.stderr,
     )
     return chosen
+
+
+def runs_on_other_taxonomies(
+    dataset_accession: str,
+    target_taxonomy: str,
+    source_label: str,
+    *,
+    runs_root: Path | None = None,
+) -> list[dict]:
+    """List AT runs of ``(dataset_accession, source_label)`` against any
+    taxonomy *other than* ``target_taxonomy``.
+
+    A node's ``at_source_sets`` entry names no taxonomy, so when
+    :func:`resolve_run_for_source` finds nothing, "no run at all" and "a run
+    exists, against a different taxonomy" look the same. This tells them
+    apart. It never substitutes for a resolved run: the caller still has no
+    run against ``target_taxonomy``.
+
+    Returns ``[{taxonomy_id, run_ref}]`` sorted by taxonomy then run id.
+    """
+    runs_root = runs_root or (repo_root() / "kb" / "annotation_transfer_runs")
+    if not runs_root.is_dir():
+        return []
+
+    found: list[dict] = []
+    for manifest in sorted(runs_root.glob("*/manifest.yaml")):
+        try:
+            data = yaml.safe_load(manifest.read_text(encoding="utf-8")) or {}
+        except Exception:  # noqa: BLE001 — skip unreadable manifest
+            continue
+        taxonomy = data.get("target_taxonomy_id")
+        if (
+            data.get("source_dataset_accession") != dataset_accession
+            or not taxonomy
+            or taxonomy == target_taxonomy
+        ):
+            continue
+        run_ref = data.get("id") or manifest.parent.name
+        try:
+            rs = load_result_set(run_ref, runs_root=runs_root)
+        except Exception:  # noqa: BLE001 — un-migrated / missing YAML
+            continue
+        if any(row.source_label == source_label for row in rs.rows):
+            found.append({"taxonomy_id": taxonomy, "run_ref": run_ref})
+    return sorted(found, key=lambda r: (r["taxonomy_id"], r["run_ref"]))
 
 
 def lookup_metrics(
@@ -1152,6 +1306,30 @@ def refresh_kb(
                 old_levels = ev.get("metrics_by_level") or []
                 new_levels = payload["metrics_by_level"]
                 old_supports = ev.get("supports")
+                # Keep the run's query normalisation stamped on the
+                # evidence item. Edges emitted before the field existed
+                # (or before the run was re-declared) pick it up here, so
+                # a consumer reading the item alone still sees how the
+                # F1 was produced.
+                # A manifest that is missing is *unknown*, not raw: if we
+                # defaulted here we would strip a correct log2CPM stamp
+                # off the item and report it as a legitimate transition.
+                manifest_available = run_manifest_path(
+                    run_ref, runs_root=runs_root
+                ).is_file()
+                stored_norm = validate_query_normalization(
+                    ev.get("query_normalization"),
+                    context=f"{path}[{idx}] (stored on evidence item)",
+                )
+                if manifest_available:
+                    run_norm = validate_query_normalization(
+                        load_run_manifest(
+                            run_ref, runs_root=runs_root
+                        ).get("query_normalization"),
+                        context=f"{run_ref}/manifest.yaml",
+                    )
+                else:
+                    run_norm = stored_norm
                 row = {
                     "edge_id": edge.get("id"),
                     "evidence_index": idx,
@@ -1165,9 +1343,38 @@ def refresh_kb(
                     "f1_source_relpath": payload["f1_source_relpath"],
                 }
                 rows.append(row)
+                if not manifest_available:
+                    row["query_normalization"] = (
+                        f"{stored_norm} (kept; no manifest at "
+                        f"{run_ref}/manifest.yaml to confirm it)"
+                    )
+                elif run_norm != stored_norm:
+                    row["query_normalization"] = (
+                        f"{stored_norm} → {run_norm}"
+                    )
                 if old_levels != new_levels and not dry_run:
                     ev["metrics_by_level"] = new_levels
                     ev["f1_source_relpath"] = payload["f1_source_relpath"]
+                    changed = True
+                if run_norm != stored_norm and not dry_run:
+                    if run_norm == "raw":
+                        ev.pop("query_normalization", None)
+                    else:
+                        ev["query_normalization"] = run_norm
+                    # The caveat lives in three places; re-derive all of
+                    # them, or a withdrawn caveat survives in the prose
+                    # (and gen-report's synthesis reads the prose).
+                    method, explanation = strip_query_norm_caveat(
+                        str(ev.get("method") or ""),
+                        str(ev.get("explanation") or ""),
+                    )
+                    method, explanation = apply_query_norm_caveat(
+                        method, explanation, run_norm
+                    )
+                    if method:
+                        ev["method"] = method
+                    if explanation:
+                        ev["explanation"] = explanation
                     changed = True
         if rows:
             try:
@@ -1200,6 +1407,10 @@ def print_refresh_report(summary: dict) -> None:
                     f"      supports: {r['old_supports']} → "
                     f"{r['suggested_supports']}  (suggested; not auto-applied)"
                 )
+            if "query_normalization" in r:
+                print(
+                    f"      query_normalization: {r['query_normalization']}"
+                )
             if r["old_n_levels"] != r["new_n_levels"]:
                 print(
                     f"      metrics_by_level: {r['old_n_levels']} levels "
@@ -1211,95 +1422,191 @@ def print_refresh_report(summary: dict) -> None:
 
 
 def at_coverage(
-    graph_file: Path,
     taxonomy_id: str,
     *,
+    node_ids: list[str] | None = None,
+    region: str | None = None,
     runs_root: Path | None = None,
-) -> list[dict]:
-    """Report AT-run coverage for a graph's classical nodes.
+) -> dict:
+    """Report AT-run coverage for classical nodes, chosen by id or region.
 
     For each classical node (``definition_basis`` starting ``CLASSICAL``)
-    that declares ``at_source_sets``, resolve every declared
+    in scope, resolve every declared ``at_source_sets`` entry
     ``(dataset_accession, source_label)`` against ``taxonomy_id`` via
     :func:`resolve_run_for_source`. This is the pre-mapping trigger check
     (issue #126 follow-up): an UNRESOLVED row means a curator asserted a
     dataset correspondence for which no AT run exists yet — the signal to
     run ``workflows/annotation-transfer.md`` before programmatic mapping.
 
-    Report-only: it does not fetch, run AT, or gate mapping. Nodes with no
-    ``at_source_sets`` are skipped (that is an evidence-extraction gap, not
-    this check's concern).
+    Scope is a set of nodes, read through the KB index: ``node_ids`` names
+    them, ``region`` takes every classical node under ``kb/graphs/{region}/``,
+    and neither takes every classical node in the KB. Files play no part, so a
+    narrow run cannot pass for a wide one (#162). Raises ValueError for an
+    unknown taxonomy, region or node id, or a named node that is not
+    classical.
 
-    Returns one row dict per declared source set:
-    ``{node_id, dataset_accession, source_label, run_ref}`` where
-    ``run_ref`` is the resolved run id or ``None`` (UNRESOLVED).
+    Every row is resolved against the one ``taxonomy_id`` given: an
+    ``at_source_sets`` entry names no taxonomy, and nothing on a node says
+    which taxonomies it is meant to map to. So a scope that spans nodes
+    mapped to different taxonomies (the whole KB, or a mixed region such as
+    ``BG``) reports a node's source as unresolved when its run targets
+    another taxonomy. Such rows carry ``other_taxonomy_runs`` so they can be
+    told apart from a source with no run anywhere, but they still count as
+    unresolved: the tool cannot know the node was not meant for
+    ``taxonomy_id`` too.
+
+    Report-only: it does not fetch, run AT, or gate mapping.
+
+    Returns ``{scope, checked, undeclared, rows}``: ``checked`` is every node
+    id in scope, ``undeclared`` those declaring no ``at_source_sets`` (an
+    evidence-extraction gap, listed so it is not mistaken for coverage), and
+    ``rows`` one dict per declared source set,
+    ``{node_id, dataset_accession, source_label, run_ref,
+    other_taxonomy_runs}``, where ``run_ref`` is the resolved run id or
+    ``None`` (UNRESOLVED) and ``other_taxonomy_runs`` is
+    ``[{taxonomy_id, run_ref}]`` for an unresolved source that has runs
+    against other taxonomies (empty otherwise).
     """
-    doc = yaml.safe_load(Path(graph_file).read_text(encoding="utf-8")) or {}
+    from . import paths
+    from .kb_index import get_index
+
+    if node_ids and region:
+        raise ValueError("Give node ids or a region, not both.")
+    if not paths.taxonomy_dir(taxonomy_id).is_dir():
+        raise ValueError(
+            f"Unknown taxonomy {taxonomy_id!r}: no store under kb/taxonomy/."
+        )
+
+    index = get_index()
+
+    def classical(node_id: str) -> dict | None:
+        for record in index.nodes.get(node_id, []):
+            basis = record.node.get("definition_basis") or ""
+            if not record.is_stub and basis.startswith("CLASSICAL"):
+                return record.node
+        return None
+
+    if node_ids:
+        candidates = list(dict.fromkeys(node_ids))
+        scope = f"{len(candidates)} named node(s)"
+        for node_id in candidates:
+            if node_id not in index.nodes:
+                raise ValueError(f"No KB node has id {node_id!r}.")
+            if classical(node_id) is None:
+                raise ValueError(f"{node_id!r} is not a classical node.")
+    elif region:
+        if region not in index.by_region:
+            known = ", ".join(sorted(index.by_region))
+            raise ValueError(f"Unknown region {region!r}. Known: {known}.")
+        scope = f"region {region}"
+        candidates = index.by_region[region]
+    else:
+        scope = "whole KB"
+        candidates = sorted(index.nodes)
+
+    checked: list[str] = []
+    undeclared: list[str] = []
     rows: list[dict] = []
-    for node in doc.get("nodes") or []:
-        if not isinstance(node, dict):
+    for node_id in candidates:
+        node = classical(node_id)
+        if node is None:
             continue
-        basis = node.get("definition_basis") or ""
-        if not basis.startswith("CLASSICAL"):
-            continue
-        for src in node.get("at_source_sets") or []:
-            if not isinstance(src, dict):
-                continue
+        checked.append(node_id)
+        sources = [s for s in node.get("at_source_sets") or [] if isinstance(s, dict)]
+        if not sources:
+            undeclared.append(node_id)
+        for src in sources:
             dataset_accession = src.get("dataset_accession")
             source_label = src.get("source_label")
             run_ref = None
+            other_taxonomy_runs: list[dict] = []
             if dataset_accession and source_label:
                 run_ref = resolve_run_for_source(
                     dataset_accession, taxonomy_id, source_label,
                     runs_root=runs_root,
                 )
+                if run_ref is None:
+                    other_taxonomy_runs = runs_on_other_taxonomies(
+                        dataset_accession, taxonomy_id, source_label,
+                        runs_root=runs_root,
+                    )
             rows.append({
-                "node_id": node.get("id"),
+                "node_id": node_id,
                 "dataset_accession": dataset_accession,
                 "source_label": source_label,
                 "run_ref": run_ref,
+                "other_taxonomy_runs": other_taxonomy_runs,
             })
-    return rows
+    return {"scope": scope, "checked": checked, "undeclared": undeclared, "rows": rows}
 
 
-def format_at_coverage(rows: list[dict], taxonomy_id: str) -> str:
-    """Render :func:`at_coverage` rows as a human-readable table."""
-    if not rows:
-        return (
-            f"No classical nodes declare at_source_sets (taxonomy "
-            f"{taxonomy_id}). Nothing to attempt."
-        )
-    unresolved = [r for r in rows if not r["run_ref"]]
-    w_node = max(len("node"), *(len(r["node_id"] or "") for r in rows))
-    w_ds = max(len("dataset_accession"),
-               *(len(r["dataset_accession"] or "") for r in rows))
-    w_lbl = max(len("source_label"),
-                *(len(r["source_label"] or "") for r in rows))
+def format_at_coverage(report: dict, taxonomy_id: str) -> str:
+    """Render an :func:`at_coverage` report as a human-readable table."""
+    rows = report["rows"]
+    checked = report["checked"]
+    undeclared = report["undeclared"]
     lines = [
-        f"AT coverage for {len(rows)} declared source set(s) "
-        f"(taxonomy {taxonomy_id}):",
-        "",
-        f"{'node':<{w_node}}  {'dataset_accession':<{w_ds}}  "
-        f"{'source_label':<{w_lbl}}  run",
-        f"{'─' * w_node}  {'─' * w_ds}  {'─' * w_lbl}  {'─' * 30}",
+        f"AT coverage (taxonomy {taxonomy_id}, scope: {report['scope']}): "
+        f"{len(checked)} classical node(s) checked, "
+        f"{len(checked) - len(undeclared)} declare {len(rows)} source set(s).",
     ]
-    for r in rows:
-        run = r["run_ref"] if r["run_ref"] else "✗ UNRESOLVED"
-        mark = "✓ " if r["run_ref"] else ""
-        lines.append(
-            f"{(r['node_id'] or ''):<{w_node}}  "
-            f"{(r['dataset_accession'] or ''):<{w_ds}}  "
-            f"{(r['source_label'] or ''):<{w_lbl}}  {mark}{run}"
-        )
+    if rows:
+        w_node = max(len("node"), *(len(r["node_id"] or "") for r in rows))
+        w_ds = max(len("dataset_accession"),
+                   *(len(r["dataset_accession"] or "") for r in rows))
+        w_lbl = max(len("source_label"),
+                    *(len(r["source_label"] or "") for r in rows))
+        lines += [
+            "",
+            f"{'node':<{w_node}}  {'dataset_accession':<{w_ds}}  "
+            f"{'source_label':<{w_lbl}}  run",
+            f"{'─' * w_node}  {'─' * w_ds}  {'─' * w_lbl}  {'─' * 30}",
+        ]
+        for r in rows:
+            mark = "✓ " if r["run_ref"] else ""
+            if r["run_ref"]:
+                run = r["run_ref"]
+            elif r.get("other_taxonomy_runs"):
+                others = ", ".join(
+                    f"{o['taxonomy_id']}: {o['run_ref']}"
+                    for o in r["other_taxonomy_runs"]
+                )
+                run = f"✗ NO RUN ON {taxonomy_id} (run on {others})"
+            else:
+                run = "✗ UNRESOLVED"
+            lines.append(
+                f"{(r['node_id'] or ''):<{w_node}}  "
+                f"{(r['dataset_accession'] or ''):<{w_ds}}  "
+                f"{(r['source_label'] or ''):<{w_lbl}}  {mark}{run}"
+            )
     lines.append("")
+    if undeclared:
+        lines.append(
+            f"{len(undeclared)} node(s) declare no at_source_sets, so there is "
+            f"nothing to check for them (an evidence-extraction gap, not "
+            f"coverage): {', '.join(undeclared)}"
+        )
+    missing = [r for r in rows if not r["run_ref"]]
+    elsewhere = [r for r in missing if r.get("other_taxonomy_runs")]
+    unresolved = [r for r in missing if not r.get("other_taxonomy_runs")]
     if unresolved:
         lines.append(
             f"{len(unresolved)} UNRESOLVED → run `annotation-transfer` for "
             f"these datasets before mapping (retrieve_dataset preflight gates "
-            f"the load). Nodes with no at_source_sets are skipped."
+            f"the load)."
         )
-    else:
+    if elsewhere:
+        lines.append(
+            f"{len(elsewhere)} with NO RUN ON {taxonomy_id} but a run on "
+            f"another taxonomy → at_source_sets names no taxonomy, so check "
+            f"whether the node is meant to map to {taxonomy_id}. If it is, "
+            f"run `annotation-transfer` against it; if not, the row is out "
+            f"of scope for this taxonomy (still counted in the exit status)."
+        )
+    if rows and not missing:
         lines.append("All declared AT sources resolve to a run.")
+    elif not checked:
+        lines.append("No classical nodes in scope. Nothing to attempt.")
     return "\n".join(lines)
 
 
@@ -1361,12 +1668,19 @@ def main(argv: list[str] | None = None) -> int:
     p_cov = sub.add_parser(
         "at-coverage",
         help=(
-            "Report AT-run coverage for a graph's classical nodes' declared "
-            "at_source_sets. Report-only; exits non-zero if any UNRESOLVED."
+            "Report AT-run coverage for classical nodes' declared "
+            "at_source_sets. Scope: the named node ids, --region, or the "
+            "whole KB. Every row is checked against TAXONOMY_ID only. "
+            "Report-only; exits non-zero if any declared source has no run "
+            "against it."
         ),
     )
-    p_cov.add_argument("graph_file", type=Path)
     p_cov.add_argument("taxonomy_id")
+    p_cov.add_argument("node_ids", nargs="*", metavar="node_id")
+    p_cov.add_argument(
+        "--region", default=None,
+        help="Every classical node under kb/graphs/REGION/.",
+    )
 
     args = parser.parse_args(argv)
 
@@ -1396,11 +1710,17 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.cmd == "at-coverage":
-        rows = at_coverage(args.graph_file, args.taxonomy_id)
-        print(format_at_coverage(rows, args.taxonomy_id))
+        try:
+            report = at_coverage(
+                args.taxonomy_id, node_ids=args.node_ids, region=args.region,
+            )
+        except ValueError as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 2
+        print(format_at_coverage(report, args.taxonomy_id))
         # Non-zero when any declared source lacks a resolvable run, so the
         # check can gate a scripted pipeline. Report-only otherwise.
-        return 1 if any(not r["run_ref"] for r in rows) else 0
+        return 1 if any(not r["run_ref"] for r in report["rows"]) else 0
 
     return 1
 

@@ -104,30 +104,30 @@ nodes:
         ncbi_gene_id: NCBIGene:22393
         sources:
           - ref: PMID:7722624
-            method: synthesis (ASTA report)
+            method: "not stated"
             scope: rodent hippocampus
             quote_key: 5468451_9958f302
-            marker_type: TRANSCRIPT
+            marker_type: NOT_STATED
           - ref: PMID:32009891
-            method: synthesis (ASTA report)
+            method: "not stated"
             scope: mouse hippocampus
             quote_key: 210181642_fe20295e
-            marker_type: TRANSCRIPT
+            marker_type: NOT_STATED
           - ref: PMID:28779130
-            method: synthesis (ASTA report)
+            method: "not stated"
             scope: rat hippocampus
             quote_key: 3288675_d83802d0
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
           - ref: PMID:8995369
-            method: synthesis (ASTA report)
+            method: "not stated"
             scope: rodent hippocampus
             quote_key: 20157937_a263df39
-            marker_type: TRANSCRIPT
+            marker_type: NOT_STATED
           - ref: PMID:24554721
-            method: synthesis (ASTA report)
+            method: "not stated"
             scope: rodent hippocampus
             quote_key: 34872919_d652553e
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Gria1
         ncbi_gene_id:
         sources:
@@ -161,10 +161,10 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:27375434
-            method: review
+            method: "review statement"
             scope: rat hippocampus
             quote_key: 14854554_ed1bdc00
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
     electrophysiology:
       description: CA1 pyramidal cells receive entorhinal cortical inputs producing somatic EPSPs that are 5-6 fold smaller than CA2 pyramidal neurons; perforant-path input alone is insufficient to drive action potential output. AMPA receptors mediate excitatory synaptic transmission at CA1 pyramidal cell synapses.
       sources:
@@ -226,10 +226,10 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:27678395
-            method: transgenic Drd1-tdTomato reporter
+            method: "BAC transgenic Drd1-EGFP reporter"
             scope: mouse dorsal CA1
             quote_key: 1711204_08c527a1
-            marker_type: PROTEIN
+            marker_type: TRANSGENE_REPORTER
     notes: "[Migrated from asta-ingest stub `ca1_pyramidal_cell` on 2026-06-10]\n\nAMBIGUITY: Ventral CA1 pyramidal neurons express D1/D2 dopamine receptors (45.1% of D1/D2 cells in vHipp are glutamatergic) — likely projection-specific vCA1/vSubiculum subtypes; dorsal CA1 pyramidal cells are D1R-negative. Np65-positive glutamatergic neurons are not CA1-specific (also CA2-3 and subiculum)."
     synonyms:
       - term: ca1_pyramidal_cell

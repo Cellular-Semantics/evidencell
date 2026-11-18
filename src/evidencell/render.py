@@ -700,6 +700,10 @@ def extract_methods_summary(
         statistic, parameters, script provenance, contrasts cited)
       annotation_transfer_runs: list of AT method summaries
       atlas_data_sources: list of {atlas, taxonomy_id, pseudobulk_sha}
+      expression_sources: list of {taxonomy_id, stats_file} — the MapMyCells
+        stats file behind atlas expression values on these edges, from the
+        stamp in their marker comparisons; stats_file None for edges
+        emitted before the stamp existed
       bulk_data_sources: list of {dataset_id, source_pmid, geo_accession,
         technique, n_pools, citation}
       framework_version: evidencell git commit at extract time
@@ -812,6 +816,9 @@ def extract_methods_summary(
                                 "output_relpath": output_at.get("relpath", ""),
                                 "figure_relpath": figure_at.get("relpath", ""),
                                 "run_dir_name": run_dir.name if run_dir else "",
+                                "query_normalization": (
+                                    m.get("query_normalization") or "raw"
+                                ),
                                 "caveats": m.get("caveats", ""),
                             })
                 else:
@@ -831,6 +838,9 @@ def extract_methods_summary(
                             "source_species": ev.get("source_species", ""),
                             "target_atlas": ev.get("target_atlas", ""),
                             "target_species": ev.get("target_species", ""),
+                            "query_normalization": (
+                                ev.get("query_normalization") or "raw"
+                            ),
                             # Derive display-only summary from
                             # metrics_by_level (no more best_* on
                             # ANNOTATION_TRANSFER evidence; see
@@ -864,6 +874,48 @@ def extract_methods_summary(
         ),
     }
 
+    # expression_sources: the MapMyCells stats file behind each taxonomy's
+    # atlas expression values, read from the stamp Stage B writes into each
+    # measured marker comparison's notes — where these edges' numbers came
+    # from, not what the taxonomy DB's cache holds now. Edges emitted before
+    # the stamp existed report stats_file None, with a warning (#189).
+    import re
+
+    from evidencell.stage_b_emit import ATLAS_EXPRESSION_NOTE
+
+    stamp_re = re.compile(re.escape(ATLAS_EXPRESSION_NOTE) + r"([^;\s]+)")
+    files_by_tax: dict[str, set[str]] = {}
+    unstamped_by_tax: dict[str, int] = {}
+    for e in edges:
+        tax_id = (nodes_by_id.get(e.get("taxonomy_type")) or {}).get("taxonomy_id")
+        if not tax_id:
+            continue
+        for pc in e.get("property_comparisons") or []:
+            prop = str(pc.get("property") or "")
+            if not prop.startswith(("marker_", "negative_marker_", "neuropeptide_")):
+                continue
+            if pc.get("alignment") == "NOT_ASSESSED":
+                continue
+            stamp = stamp_re.search(str(pc.get("notes") or ""))
+            if stamp:
+                files_by_tax.setdefault(tax_id, set()).add(stamp.group(1))
+            else:
+                unstamped_by_tax[tax_id] = unstamped_by_tax.get(tax_id, 0) + 1
+    expression_sources: list[dict] = []
+    for tax_id in sorted(set(files_by_tax) | set(unstamped_by_tax)):
+        for stats_file in sorted(files_by_tax.get(tax_id, ())):
+            expression_sources.append({"taxonomy_id": tax_id, "stats_file": stats_file})
+        n = unstamped_by_tax.get(tax_id)
+        if n:
+            expression_sources.append({"taxonomy_id": tax_id, "stats_file": None})
+            print(
+                f"WARNING: {n} marker comparison(s) on {tax_id} edges don't record "
+                "which stats file their expression values came from (emitted "
+                "before #189); re-run emit-stage-b / refresh-property-comparisons "
+                "to stamp them.",
+                file=sys.stderr,
+            )
+
     # Render kb_graph_file as repo-relative when possible, so the report's
     # reproducibility footer carries a portable path (not someone's $HOME).
     try:
@@ -878,6 +930,7 @@ def extract_methods_summary(
         "bulk_correlation_runs": bulk_runs,
         "annotation_transfer_runs": at_runs,
         "atlas_data_sources": list(atlas_sources_seen.values()),
+        "expression_sources": expression_sources,
         "bulk_data_sources": list(bulk_dataset_sources_seen.values()),
         "framework_version": _evidencell_commit(),
         "gen_timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),

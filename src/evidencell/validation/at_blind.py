@@ -33,7 +33,6 @@ from evidencell.taxonomy_db import (
     _classical_negative_markers,
     _classical_positive_markers,
     _resolve_mba_by_name,
-    load_expression_data,
 )
 
 from .base import AuditAssertion, AuditDriver, AuditOutcome
@@ -123,8 +122,6 @@ class ATBlindAudit(AuditDriver):
         self.limit = limit
         self.graphs_root = graphs_root or (repo_root() / "kb" / "graphs")
         self._db: TaxonomyDB | None = None
-        self._expr_cache: dict[int, dict] = {}
-        self._rank_to_level: dict[int, str] = {}
 
     # ── Preflight invariants ──────────────────────────────────────────
 
@@ -134,7 +131,26 @@ class ATBlindAudit(AuditDriver):
             ("taxonomy_db_fresh", self._check_db_fresh),
             ("anat_closure_built", self._check_anat_closure),
             ("uberon_resolution_coverage", self._check_uberon_resolution),
+            ("atlas_expression_loadable", self._check_expression_loadable),
         ]
+
+    def _check_expression_loadable(self) -> None:
+        """Load every audited node's marker expression before any case runs.
+
+        Without this, a missing stats file surfaces as one ``error`` outcome
+        per case instead of a clean stop with the fix (#189).
+        """
+        from evidencell.expression_cache import ExpressionUnavailable
+
+        genes: set[str] = set()
+        for case in self._extract_at_targets():
+            classical = case["classical_node"]
+            genes.update(_classical_positive_markers(classical))
+            genes.update(_classical_negative_markers(classical))
+        try:
+            self._get_db().expression(sorted(genes), accessions=[])
+        except ExpressionUnavailable as exc:
+            raise AuditAssertion(str(exc)) from exc
 
     def _check_db_exists(self) -> None:
         from evidencell.taxonomy_db import TaxonomyDBUnavailable, require_taxonomy_db
@@ -378,8 +394,12 @@ class ATBlindAudit(AuditDriver):
         )
         mba_ids = self._resolve_anat(classical)
         optional_criteria = self._sex_bias(classical)
-        expression_data = self._merged_expression(rank)
         db = self._get_db()
+        # Queried rank + rank 0 (for leaf coverage), through the on-demand
+        # accessor; genes load into the DB cache on first use.
+        expression_data = db.expression(
+            [*markers, *neg_markers], ranks={rank, 0},
+        ).values
 
         fc_kwargs = dict(
             nt_type=nt_type,
@@ -620,28 +640,6 @@ class ATBlindAudit(AuditDriver):
         if not sb or sb == "NOT_DIMORPHIC":
             return None
         return {"sex_bias": sb.lower().split("_")[0]}
-
-    def _merged_expression(self, rank: int) -> dict:
-        """Load queried-rank + rank-0 expression data, merged."""
-        merged: dict = {}
-        for r in {rank, 0}:
-            if r in self._expr_cache:
-                merged.update(self._expr_cache[r])
-                continue
-            if not self._rank_to_level:
-                db = self._get_db()
-                with db._connect() as con:
-                    rows = con.execute(
-                        "SELECT DISTINCT taxonomy_level, taxonomy_rank FROM nodes "
-                        "WHERE taxonomy_rank IS NOT NULL"
-                    ).fetchall()
-                self._rank_to_level = {row[1]: row[0] for row in rows}
-            level = self._rank_to_level.get(r)
-            if level:
-                ed = load_expression_data(self.taxonomy_id, level)
-                self._expr_cache[r] = ed
-                merged.update(ed)
-        return merged
 
     def _categorise_miss(
         self,

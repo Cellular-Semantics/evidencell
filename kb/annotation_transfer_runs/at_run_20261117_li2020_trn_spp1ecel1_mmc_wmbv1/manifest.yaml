@@ -1,0 +1,95 @@
+id: at_run_20261117_li2020_trn_spp1ecel1_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE145273"
+source_cluster_label: >
+  Li et al. 2020 TRN Pvalb+ subtype labels from the author-deposited
+  per-cell "Type" annotation in Broad Single Cell Portal SCP344: Spp1+ (264),
+  Ecel1+ (212), DN (160), DP (34); 670 cells. These are binarised on/off
+  calls of Spp1 and Ecel1 along a continuous core-shell gradient (paper
+  Ext. Data Fig. 3c-d; counts match the paper's 264 / 212). Labels in
+  research/thalamus/annotation_transfer/li2020_trn/labels_spp1_ecel1_type.json.
+  Source DOI: 10.1038/s41586-020-2504-5 (PMID:32699411).
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.5, hierarchical, default
+  parameters, type_assignment.normalization = log2CPM). Same MapMyCells run
+  as at_run_20261117_li2020_trn_pvalb_mmc_wmbv1; this record re-scores the
+  shared output
+  (research/thalamus/annotation_transfer/li2020_trn/mmc_results.csv) under
+  the SCP344 Type labels. Query construction: ln(TPM+1) → WMBv1 Ensembl IDs
+  → `annotation-transfer normalize --input-scale ln1p --gene-lengths`
+  → log2(CPM+1). F1 scoring with `annotation-transfer score`
+  (bootstrap_threshold 0.8).
+query_normalization: log2CPM
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 670
+n_cells_after_filter: 670
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: ../../../research/thalamus/annotation_transfer/li2020_trn/README.md
+  python_version: "3.13"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  Query normalisation. The query was mapped as pre-normalised log2(CPM+1)
+  derived from the deposited ln(TPM+1) table, with gene-length correction
+  (Ensembl 102 union-of-exon lengths), because GSE145273 has no counts.
+  Without the correction, mapping agreed cell-for-cell at 98.7% (supertype)
+  and 95.4% (cluster). Read the F1 values as indicative, not counts-grade.
+
+  SCP344 label alignment, which matters for anyone re-deriving these labels.
+  As returned by the SCP344 API, the cell names are offset one row against
+  the Type annotation (the first name, "TRN_X", is an R row-names
+  artefact). Paired as returned, Type agreed with the paper's binarised
+  Spp1/Ecel1 calls (ln(TPM+1) > 1.1) for 34% of cells, i.e. chance; shifted
+  by one row, it agrees for 99.9% and the counts match the paper exactly.
+  prepare_li2020_trn.py applies the shift and asserts the agreement. Any
+  earlier use of these labels with the unshifted pairing is wrong, including
+  the label file staged in PR #210 before this run.
+
+  Gradient labels; read purity alongside F1. Spp1+ behaves like a pure label:
+  F1 rises with resolution (subclass 0.57 → supertype 0.67 → cluster 0.86),
+  with CLUS 1604 RT-ZI Gnb3 Gaba_5 at coverage 0.98 and purity 0.76. Most of
+  1604's remaining cells are DN/DP. Ecel1+ does not concentrate in any one
+  cluster: 95% of confidently mapped Ecel1+ cells fall outside 1604, spread
+  over the Ecel1-high, Spp1-low 093 clusters (1601, 1593, 1588, 1600,
+  1602-1603, supertypes 0431-0434) at purity 0.72-0.92 for the larger ones.
+  No single target reaches F1 0.6 (best: CLUS 1601, F1 0.34, purity 0.78).
+  So the Ecel1+ ↔ WMB correspondence is one-to-many ("093 minus 1604"), and
+  a low per-cluster F1 understates it. The WMBv1 precomputed means agree:
+  1604 is the only 093 cluster with high Spp1 (7.6 log2CPM) and low Ecel1
+  (0.9); the other 093 clusters have Spp1 near 0 and Ecel1 4-9.
+
+  DP (n=34) and DN (n=160) are scored but not attached to any KB node. DP is
+  too small and too mixed (in 1604, purity 0.06) to read on its own.
+
+  Projection identity is indirect. The Spp1+ → first-order and Ecel1+ →
+  higher-order projection biases (85.7% / 86.0%) come from retrograde
+  RetroBead labelling plus RNA-FISH in separate animals, not from the
+  sequenced nuclei. Linking 1604 to "projects to first-order nuclei" goes
+  WMB cluster ← MapMyCells ← snRNA-seq marker call ← FISH marker ←
+  retrograde label, and should be stated as such.
+
+  Source/target scope. WMBv1 093 RT-ZI Gnb3 Gaba also contains zona incerta
+  neurons. Some of the Ecel1-high, Pvalb-low clusters (e.g. 1580, 1583,
+  1584, 1595, 1596, 1599) received few or no TRN query cells and are
+  probably ZI. The Ecel1+ result supports TRN shell → those clusters, not
+  the reverse.

@@ -750,55 +750,178 @@ def test_load_run_manifest(tmp_path):
 # ─── at_coverage (pre-mapping trigger check, issue #126 follow-up) ────
 
 
-def _write_graph(tmp_path: Path, nodes: list[dict]) -> Path:
-    g = tmp_path / "graph.yaml"
-    _write(g, yaml.safe_dump({"name": "g", "nodes": nodes}))
-    return g
+@pytest.fixture
+def cov_kb(tmp_path, monkeypatch):
+    """A tmp repo: kb/graphs read through the KB index, one taxonomy store,
+    and AT runs under ``runs/`` (passed explicitly as runs_root)."""
+    from evidencell import kb_index, paths
+
+    (tmp_path / "schema").mkdir()
+    (tmp_path / "kb" / "taxonomy" / "CCN20230722").mkdir(parents=True)
+    monkeypatch.setattr(paths, "repo_root", lambda: tmp_path)
+    kb_index.clear_cache()
+    runs = tmp_path / "runs"
+    runs.mkdir()
+    _make_run(runs, "at_run_20260101_a_mmc_wmbv1", "GEO:GSE1", "CCN20230722", "Foo")
+    yield tmp_path, runs
+    kb_index.clear_cache()
 
 
-def test_at_coverage_resolved_and_unresolved(tmp_path):
-    _make_run(tmp_path, "at_run_20260101_a_mmc_wmbv1", "GEO:GSE1", "CCN20230722", "Foo")
-    graph = _write_graph(tmp_path, [
-        {"id": "classical_hit", "definition_basis": "CLASSICAL_MULTIMODAL",
-         "at_source_sets": [{"dataset_accession": "GEO:GSE1", "source_label": "Foo"}]},
-        {"id": "classical_miss", "definition_basis": "CLASSICAL_NEUROCHEMICAL",
-         "at_source_sets": [{"dataset_accession": "GEO:GSE1", "source_label": "NopeLabel"}]},
-        # atlas node with at_source_sets is ignored (not CLASSICAL)
-        {"id": "atlas_node", "definition_basis": "ATLAS_TRANSCRIPTOMIC",
-         "at_source_sets": [{"dataset_accession": "GEO:GSE1", "source_label": "Foo"}]},
-        # classical node with no at_source_sets is skipped
-        {"id": "classical_nodecl", "definition_basis": "CLASSICAL_ANATOMICAL"},
-    ])
-    rows = at_metrics.at_coverage(graph, "CCN20230722", runs_root=tmp_path)
-    by_node = {r["node_id"]: r for r in rows}
-    assert set(by_node) == {"classical_hit", "classical_miss"}
-    assert by_node["classical_hit"]["run_ref"] == "at_run_20260101_a_mmc_wmbv1"
-    assert by_node["classical_miss"]["run_ref"] is None
+def _cov_node(root: Path, region: str, node: dict) -> None:
+    _write(root / "kb" / "graphs" / region / f"{node['id']}.yaml",
+           yaml.safe_dump({"name": node["id"], "nodes": [node]}))
 
 
-def test_at_coverage_empty_when_no_declarations(tmp_path):
-    graph = _write_graph(tmp_path, [
-        {"id": "c", "definition_basis": "CLASSICAL_MULTIMODAL"},
-        {"id": "a", "definition_basis": "ATLAS_TRANSCRIPTOMIC"},
-    ])
-    assert at_metrics.at_coverage(graph, "CCN20230722", runs_root=tmp_path) == []
+def _classical(node_id: str, *labels: str, basis: str = "CLASSICAL_MULTIMODAL") -> dict:
+    node = {"id": node_id, "name": node_id, "definition_basis": basis}
+    if labels:
+        node["at_source_sets"] = [
+            {"dataset_accession": "GEO:GSE1", "source_label": lbl} for lbl in labels
+        ]
+    return node
 
 
-def test_format_at_coverage_flags_unresolved(tmp_path):
+def test_at_coverage_region_spans_every_file(cov_kb):
+    """#162: one file per component, so a region is many files. All count."""
+    root, runs = cov_kb
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+    _cov_node(root, "hpc", _classical("miss", "NopeLabel", basis="CLASSICAL_NEUROCHEMICAL"))
+    _cov_node(root, "hpc", _classical("nodecl", basis="CLASSICAL_ANATOMICAL"))
+    _cov_node(root, "hpc", {"id": "atlas_node", "name": "a",
+                            "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+                            "at_source_sets": [{"dataset_accession": "GEO:GSE1",
+                                                "source_label": "Foo"}]})
+    _cov_node(root, "other", _classical("elsewhere", "NopeLabel"))
+
+    report = at_metrics.at_coverage("CCN20230722", region="hpc", runs_root=runs)
+    assert report["scope"] == "region hpc"
+    assert sorted(report["checked"]) == ["hit", "miss", "nodecl"]
+    assert report["undeclared"] == ["nodecl"]
+    by_node = {r["node_id"]: r for r in report["rows"]}
+    assert by_node["hit"]["run_ref"] == "at_run_20260101_a_mmc_wmbv1"
+    assert by_node["miss"]["run_ref"] is None
+
+
+def test_at_coverage_named_nodes_and_whole_kb(cov_kb):
+    root, runs = cov_kb
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+    _cov_node(root, "other", _classical("elsewhere", "NopeLabel"))
+
+    named = at_metrics.at_coverage("CCN20230722", node_ids=["elsewhere"], runs_root=runs)
+    assert named["checked"] == ["elsewhere"]
+    assert [r["run_ref"] for r in named["rows"]] == [None]
+
+    whole = at_metrics.at_coverage("CCN20230722", runs_root=runs)
+    assert (whole["scope"], whole["checked"]) == ("whole KB", ["elsewhere", "hit"])
+
+
+@pytest.mark.parametrize("kwargs, message", [
+    ({"node_ids": ["nope"]}, "No KB node"),
+    ({"node_ids": ["atlas_node"]}, "not a classical node"),
+    ({"region": "nope"}, "Unknown region"),
+    ({"node_ids": ["hit"], "region": "hpc"}, "not both"),
+])
+def test_at_coverage_rejects_bad_scope(cov_kb, kwargs, message):
+    root, runs = cov_kb
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+    _cov_node(root, "hpc", {"id": "atlas_node", "name": "a",
+                            "definition_basis": "ATLAS_TRANSCRIPTOMIC"})
+    with pytest.raises(ValueError, match=message):
+        at_metrics.at_coverage("CCN20230722", runs_root=runs, **kwargs)
+
+
+def test_at_coverage_unknown_taxonomy(cov_kb):
+    """A graph path in the taxonomy slot (the pre-#162 argument order) fails loudly."""
+    with pytest.raises(ValueError, match="Unknown taxonomy"):
+        at_metrics.at_coverage("kb/graphs/hpc/hit.yaml")
+
+
+def _report(rows, checked, undeclared=(), scope="region hpc"):
+    return {"scope": scope, "checked": list(checked),
+            "undeclared": list(undeclared), "rows": rows}
+
+
+def test_format_at_coverage_flags_unresolved_and_states_scope():
     rows = [
         {"node_id": "n1", "dataset_accession": "GEO:GSE1", "source_label": "Foo",
          "run_ref": "at_run_x"},
         {"node_id": "n2", "dataset_accession": "GEO:GSE1", "source_label": "Bar",
          "run_ref": None},
     ]
-    out = at_metrics.format_at_coverage(rows, "CCN20230722")
-    assert "UNRESOLVED" in out
+    out = at_metrics.format_at_coverage(_report(rows, ["n1", "n2", "n3"], ["n3"]),
+                                        "CCN20230722")
+    assert "scope: region hpc" in out
+    assert "3 classical node(s) checked, 2 declare 2 source set(s)" in out
     assert "1 UNRESOLVED" in out
     assert "at_run_x" in out
+    assert "declare no at_source_sets" in out and "n3" in out
+
+
+def test_format_at_coverage_undeclared_is_not_reported_as_covered():
+    out = at_metrics.format_at_coverage(_report([], ["n1"], ["n1"]), "CCN20230722")
+    assert "All declared AT sources resolve" not in out
+    assert "declare no at_source_sets" in out
 
 
 def test_format_at_coverage_empty_message():
-    assert "Nothing to attempt" in at_metrics.format_at_coverage([], "CCN20230722")
+    out = at_metrics.format_at_coverage(_report([], []), "CCN20230722")
+    assert "Nothing to attempt" in out
+
+
+def test_at_coverage_named_scope_counts_distinct_nodes(cov_kb):
+    root, runs = cov_kb
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+    report = at_metrics.at_coverage(
+        "CCN20230722", node_ids=["hit", "hit"], runs_root=runs,
+    )
+    assert report["scope"] == "1 named node(s)"
+    assert report["checked"] == ["hit"]
+
+
+def test_at_coverage_run_on_another_taxonomy_is_flagged_not_resolved(cov_kb):
+    """at_source_sets names no taxonomy: a run against a different taxonomy is
+    reported as such, kept apart from a source with no run anywhere, and
+    never counted as resolved."""
+    root, runs = cov_kb
+    _make_run(runs, "at_run_20260201_b_mmc_hmba", "GEO:GSE1", "CCN20250428", "Primate")
+    _cov_node(root, "bg", _classical("primate_type", "Primate"))
+    _cov_node(root, "bg", _classical("no_run_type", "NopeLabel"))
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+
+    report = at_metrics.at_coverage("CCN20230722", runs_root=runs)
+    by_node = {r["node_id"]: r for r in report["rows"]}
+    assert by_node["primate_type"]["run_ref"] is None
+    assert by_node["primate_type"]["other_taxonomy_runs"] == [
+        {"taxonomy_id": "CCN20250428", "run_ref": "at_run_20260201_b_mmc_hmba"},
+    ]
+    assert by_node["no_run_type"]["other_taxonomy_runs"] == []
+    assert by_node["hit"]["other_taxonomy_runs"] == []
+
+    out = at_metrics.format_at_coverage(report, "CCN20230722")
+    assert "NO RUN ON CCN20230722 (run on CCN20250428: at_run_20260201_b_mmc_hmba)" in out
+    assert "1 UNRESOLVED" in out
+    assert "1 with NO RUN ON CCN20230722" in out
+    assert "All declared AT sources resolve" not in out
+
+
+def test_at_coverage_cli_exit_codes(cov_kb, monkeypatch, capsys):
+    """0 all resolved, 1 any source without a run on the taxonomy (including
+    one that only has a run on another taxonomy), 2 bad scope."""
+    root, runs = cov_kb
+    _make_run(runs, "at_run_20260201_b_mmc_hmba", "GEO:GSE1", "CCN20250428", "Primate")
+    _cov_node(root, "hpc", _classical("hit", "Foo"))
+    _cov_node(root, "bg", _classical("primate_type", "Primate"))
+    monkeypatch.setattr(
+        at_metrics, "repo_root",
+        lambda: root,
+    )
+    (root / "kb" / "annotation_transfer_runs").symlink_to(runs)
+
+    assert at_metrics.main(["at-coverage", "CCN20230722", "hit"]) == 0
+    assert at_metrics.main(["at-coverage", "CCN20230722", "primate_type"]) == 1
+    assert "NO RUN ON CCN20230722" in capsys.readouterr().out
+    assert at_metrics.main(["at-coverage", "CCN20230722", "nope"]) == 2
+    assert "No KB node" in capsys.readouterr().err
 
 
 # ─── at_hits_for_node (Stage A discovery, at_source_sets-driven) ──────
@@ -880,3 +1003,177 @@ def test_at_hits_for_node_unresolved_source_skipped(tmp_path, capsys):
 
 def test_at_hits_for_node_empty_when_no_source_sets(tmp_path):
     assert at_metrics.at_hits_for_node([], "CCN20230722", runs_root=tmp_path) == {}
+
+
+# ─── query normalisation: validation, manifest availability, re-stamp ──
+
+
+def _norm_graph(
+    kb_root: Path, run_name: str, evidence_extra: dict,
+) -> Path:
+    """One-edge graph whose single AT evidence item cites ``run_name``."""
+    graph_path = kb_root / "demo.yaml"
+    ev = {
+        "evidence_type": "ANNOTATION_TRANSFER",
+        "run_ref": run_name,
+        "source_cluster_label": "Sst-OLM",
+        "supports": "PARTIAL",
+        "method": "MapMyCells (via at_metrics.compute_edge_metrics)",
+        "explanation": "Baseline explanation.",
+        "metrics_by_level": [
+            {
+                "taxonomy_level": "SUPERTYPE",
+                "best_target_accession": "wrong",
+                "best_target_name": "wrong",
+                "f1_score": 999.0,
+            },
+        ],
+    }
+    ev.update(evidence_extra)
+    _write(
+        graph_path,
+        yaml.safe_dump({
+            "edges": [
+                {
+                    "id": "edge_demo_olm",
+                    "lit_type": "demo_olm",
+                    "taxonomy_type": "CS20230722_SUPT_0216",
+                    "evidence": [ev],
+                },
+            ],
+        }),
+    )
+    return graph_path
+
+
+def _set_manifest_norm(run: Path, value: str | None) -> None:
+    doc = yaml.safe_load(run.joinpath("manifest.yaml").read_text())
+    if value is None:
+        doc.pop("query_normalization", None)
+    else:
+        doc["query_normalization"] = value
+    run.joinpath("manifest.yaml").write_text(yaml.safe_dump(doc))
+
+
+def test_load_run_manifest_raises_on_unparseable_manifest(tmp_path):
+    """"Absent" and "unreadable" are different facts. Collapsing them
+    lets a YAML syntax error pose as a run with default provenance."""
+    run = tmp_path / "at_run_broken"
+    _write(run / "manifest.yaml", "id: x\n  bad: [unclosed\n")
+    with pytest.raises(ValueError, match="could not be parsed"):
+        at_metrics.load_run_manifest("at_run_broken", runs_root=tmp_path)
+
+
+def test_validate_query_normalization_rejects_typo():
+    with pytest.raises(ValueError, match="unknown query_normalization"):
+        at_metrics.validate_query_normalization(
+            "log2cpm", context="run/manifest.yaml"
+        )
+
+
+def test_validate_query_normalization_accepts_known_and_empty():
+    assert at_metrics.validate_query_normalization(
+        None, context="x") == "raw"
+    assert at_metrics.validate_query_normalization(
+        "log2CPM", context="x") == "log2CPM"
+
+
+def test_refresh_kb_keeps_stamp_when_manifest_absent(
+    tmp_path, shape_b_run, fake_taxonomy_db
+):
+    """A missing manifest is unknown, not raw — refresh must not strip a
+    correct log2CPM stamp off the evidence item."""
+    at_metrics.migrate_run(shape_b_run)
+    (shape_b_run / "manifest.yaml").unlink()
+    kb_root = tmp_path / "kb_graphs"
+    method = (
+        "MapMyCells (via at_metrics.compute_edge_metrics), "
+        "log2CPM query normalization"
+    )
+    explanation = (
+        "Baseline explanation. " + at_metrics.QUERY_NORM_CAVEAT["log2CPM"]
+    )
+    graph_path = _norm_graph(kb_root, shape_b_run.name, {
+        "query_normalization": "log2CPM",
+        "method": method,
+        "explanation": explanation,
+    })
+    summary = at_metrics.refresh_kb(
+        dry_run=False, kb_root=kb_root, runs_root=tmp_path
+    )
+    ev = yaml.safe_load(graph_path.read_text())["edges"][0]["evidence"][0]
+    assert ev["query_normalization"] == "log2CPM"
+    assert "log2CPM query normalization" in ev["method"]
+    assert "CAVEAT" in ev["explanation"]
+    row = next(iter(summary.values()))[0]
+    assert "no manifest" in row["query_normalization"]
+
+
+def test_refresh_kb_withdraws_caveat_from_all_three_places(
+    tmp_path, shape_b_run, fake_taxonomy_db
+):
+    """log2CPM → raw must clear the structured field, the method suffix
+    and the explanation sentence — gen-report reads the prose."""
+    at_metrics.migrate_run(shape_b_run)
+    _set_manifest_norm(shape_b_run, "raw")
+    kb_root = tmp_path / "kb_graphs"
+    method = (
+        "MapMyCells (via at_metrics.compute_edge_metrics), "
+        "log2CPM query normalization"
+    )
+    explanation = (
+        "Baseline explanation. " + at_metrics.QUERY_NORM_CAVEAT["log2CPM"]
+    )
+    graph_path = _norm_graph(kb_root, shape_b_run.name, {
+        "query_normalization": "log2CPM",
+        "method": method,
+        "explanation": explanation,
+    })
+    at_metrics.refresh_kb(
+        dry_run=False, kb_root=kb_root, runs_root=tmp_path
+    )
+    ev = yaml.safe_load(graph_path.read_text())["edges"][0]["evidence"][0]
+    assert "query_normalization" not in ev
+    assert "log2CPM" not in ev["method"]
+    assert "CAVEAT" not in ev["explanation"]
+    assert ev["explanation"] == "Baseline explanation."
+
+
+def test_refresh_kb_adds_caveat_to_all_three_places(
+    tmp_path, shape_b_run, fake_taxonomy_db
+):
+    """raw → log2CPM must gain the prose too, not just the field."""
+    at_metrics.migrate_run(shape_b_run)
+    _set_manifest_norm(shape_b_run, "log2CPM")
+    kb_root = tmp_path / "kb_graphs"
+    graph_path = _norm_graph(kb_root, shape_b_run.name, {})
+    at_metrics.refresh_kb(
+        dry_run=False, kb_root=kb_root, runs_root=tmp_path
+    )
+    ev = yaml.safe_load(graph_path.read_text())["edges"][0]["evidence"][0]
+    assert ev["query_normalization"] == "log2CPM"
+    assert ev["method"].endswith("log2CPM query normalization")
+    assert "CAVEAT" in ev["explanation"]
+    assert ev["explanation"].startswith("Baseline explanation.")
+
+
+def test_refresh_kb_rejects_typo_in_manifest(
+    tmp_path, shape_b_run, fake_taxonomy_db
+):
+    at_metrics.migrate_run(shape_b_run)
+    _set_manifest_norm(shape_b_run, "log2cpm")
+    kb_root = tmp_path / "kb_graphs"
+    _norm_graph(kb_root, shape_b_run.name, {})
+    with pytest.raises(ValueError, match="unknown query_normalization"):
+        at_metrics.refresh_kb(
+            dry_run=False, kb_root=kb_root, runs_root=tmp_path
+        )
+
+
+def test_strip_then_apply_round_trips():
+    method, expl = at_metrics.apply_query_norm_caveat(
+        "base method", "Base explanation.", "log2CPM"
+    )
+    assert at_metrics.strip_query_norm_caveat(method, expl) == (
+        "base method", "Base explanation."
+    )

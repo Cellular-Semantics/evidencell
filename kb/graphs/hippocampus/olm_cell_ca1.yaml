@@ -52,9 +52,9 @@ nodes:
             method: "Chamberland 2024 gene-pair rule (Sst+/Chrna2+ > 0)"
             scope: "mouse CA1"
             quote_key: "269246896_c87fdbd0"
-          - marker_type: TRANSCRIPT
+          - marker_type: TRANSGENE_REPORTER
             ref: "PMID:38640347"
-            method: "Chrna2-Cre transgenic labelling"
+            method: "Chrna2-Cre;Ai9 reporter"
             scope: "mouse CA1 stratum oriens"
             quote_key: "269246896_1b1ebab4"
     cl_mapping:
@@ -127,9 +127,9 @@ nodes:
       - symbol: Nkx2-1
         ncbi_gene_id:
         sources:
-          - marker_type: TRANSCRIPT
+          - marker_type: TRANSGENE_REPORTER
             ref: "PMID:38640347"
-            method: "Nkx2-1-Cre transgenic intersection"
+            method: "Nkx2-1-Cre intersectional reporter"
             scope: "mouse CA1"
             quote_key: "269246896_c084d5c0"
     cl_mapping:
@@ -292,30 +292,32 @@ nodes:
         sources:
           - ref: PMID:31420995
             marker_type: TRANSCRIPT
-            method: single-cell RT-PCR
+            method: "single-cell RNA-seq"
             scope: mouse OLM
             quote_key: 201041756_2d5a5fb3
           - ref: PMID:37162922
             snippet: the Ndnf;;Nkx2-1 intersection identified a population of oriens lacunosum-moleculare (OLM) INs that predominantly targeted CA1 pyramidal neurons, avoiding FS-INs
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: PROTEIN
+            marker_type: TRANSCRIPT
           - ref: PMID:31420995
             snippet: we found a surprisingly consistent expression of Npy in OLMs, which was previously not associated with the identity of this type
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: PROTEIN
+            quote_key: "201041756_bef5edc7"
+            marker_type: TRANSCRIPT
           - ref: PMID:23042082
             snippet: the vast majority (95.1%, 214/225 cells) of Tomato+ cells were also som+ and comprised a subpopulation (35.2%, 214/608) of CA1 som+ interneurons
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: PROTEIN
+            quote_key: "7952877_19fdc5c2"
+            marker_type: TRANSCRIPT
           - ref: PMID:29487503
             snippet: the nicotinic acetylcholine receptor Chrna2 was identified as a specific genetic marker for CA1 OLM interneurons
             support: SUPPORT
             source: cite_traverse_2026_04_10
-            marker_type: TRANSCRIPT
-          - marker_type: PROTEIN
+            marker_type: NOT_STATED
+          - marker_type: TRANSCRIPT
             ref: "PMID:10804195"
             method: "in situ hybridization"
             scope: "mouse CA1 stratum oriens"
@@ -329,16 +331,16 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:29487503
-            marker_type: TRANSCRIPT
-            method: transgenic (Chrna2-Cre)
+            marker_type: TRANSGENE_REPORTER
+            method: "Chrna2-Cre transgenic"
             scope: mouse CA1
             quote_key: 3591966_644f1e68
           - ref: PMID:31420995
             marker_type: TRANSCRIPT
-            method: single-cell RT-PCR
+            method: "single-cell RNA-seq"
             scope: mouse OLM
             quote_key: 201041756_bd56f851
-          - marker_type: TRANSCRIPT
+          - marker_type: TRANSGENE_REPORTER
             ref: "PMID:23042082"
             method: "Chrna2-Cre transgenic line + optogenetics"
             scope: "mouse hippocampus"
@@ -353,15 +355,15 @@ nodes:
         sources:
           - ref: PMID:31420995
             marker_type: TRANSCRIPT
-            method: single-cell RT-PCR
+            method: "single-cell RNA-seq"
             scope: mouse OLM
             quote_key: 201041756_2d5a5fb3
       - symbol: mGluR1
         ncbi_gene_id:
         sources:
-          - marker_type: PROTEIN
+          - marker_type: TRANSCRIPT
             ref: "PMID:10804195"
-            method: "electrophysiology + in situ hybridization"
+            method: "electrophysiology + single-cell RT-PCR"
             scope: "mouse CA1"
             quote_key: "6652630_17d10a9e"
           - marker_type: TRANSCRIPT
@@ -394,7 +396,7 @@ nodes:
         sources:
           - ref: PMID:31420995
             marker_type: TRANSCRIPT
-            method: single-cell RT-PCR
+            method: "single-cell RNA-seq"
             scope: mouse OLM
             quote_key: 201041756_2d5a5fb3
           - marker_type: TRANSCRIPT
@@ -407,7 +409,7 @@ nodes:
         sources:
           - ref: PMID:31420995
             marker_type: TRANSCRIPT
-            method: single-cell RT-PCR
+            method: "single-cell RNA-seq"
             scope: mouse OLM
             quote_key: 201041756_8d16e821
           - marker_type: TRANSCRIPT
@@ -420,7 +422,7 @@ nodes:
         sources:
           - ref: PMID:31420995
             marker_type: TRANSCRIPT
-            method: single-cell RT-PCR
+            method: "single-cell RNA-seq"
             scope: mouse OLM
             quote_key: 201041756_1d20426d
           - marker_type: TRANSCRIPT

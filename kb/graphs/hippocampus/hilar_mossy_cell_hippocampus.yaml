@@ -108,10 +108,10 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:27375434
-            method: review
+            method: "review statement"
             scope: rat hippocampus
             quote_key: 14854554_ed1bdc00
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Drd2
         ncbi_gene_id:
         sources:
@@ -119,12 +119,12 @@ nodes:
             method: Cre-dependent viral labeling (Drd2-Cre)
             scope: mouse
             quote_key: 231953329_ceaf8acb
-            marker_type: PROTEIN
+            marker_type: TRANSGENE_REPORTER
           - ref: PMID:37546856
-            method: transcriptomics
+            method: "background citation"
             scope: mouse ventral hippocampus
             quote_key: 260336826_494cac70
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
       - symbol: Calcrl
         ncbi_gene_id:
         sources:
@@ -132,7 +132,7 @@ nodes:
             method: Cre-dependent viral labeling (Crlr-Cre)
             scope: mouse
             quote_key: 231953329_ceaf8acb
-            marker_type: PROTEIN
+            marker_type: TRANSGENE_REPORTER
       - symbol: Reln
         ncbi_gene_id:
         sources:
@@ -200,10 +200,10 @@ nodes:
         ncbi_gene_id:
         sources:
           - ref: PMID:23420672
-            method: review
+            method: "review"
             scope: dentate hilus
             quote_key: 11290620_c6e60ece
-            marker_type: PROTEIN
+            marker_type: NOT_STATED
     notes: "[Migrated from asta-ingest stub `dg_mossy_cell` on 2026-06-10]\n\nDorsal vs. ventral mossy cells differ in axonal projection (dorsal: IML+MML; ventral: IML only). Reelin-positive mossy cells in the dentate hilus are predominantly glutamatergic (in contrast to GABAergic reelin+ cells in the molecular layer). HETEROGENEITY: dorsal/ventral subtypes likely warrant separate atlas correspondence.\n\nCL mapping note: No CL term found for hilar mossy cell. Children of CL:4023062 (dentate gyrus neuron) include granule cell (CL:2000089), basket cell (CL:2000087), kisspeptin neuron (CL:4023124) and stellate cell (CL:2000090); none matches mossy cell. Potential CL contribution."
     synonyms:
       - term: dg_mossy_cell
