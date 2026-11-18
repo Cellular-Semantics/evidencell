@@ -150,7 +150,7 @@ default_range: string
 #                   own canonical labels in scientific usage; case reflects species
 #                   convention, e.g. Sst vs SST);
 #                   ncbi_gene_id = id (cross-species stable identifier;
-#                   strongly recommended — use NodeNormalization to look up)
+#                   strongly recommended)
 #
 #   Regions:        anatomical_location = OntologyTerm (id + label + name_in_source);
 #                   name_in_source = region name as in the source paper or atlas;
@@ -1050,8 +1050,6 @@ classes:
         description: >
           NCBI Gene ID as CURIE, e.g. NCBIGene:20604 (Mus musculus Sst).
           Species-specific; preferred for multi-species use.
-          Use Translator NodeNormalization for cross-species mapping:
-          https://github.com/NCATSTranslator/NodeNormalization
       hgnc_id:
         pattern: "^HGNC:[0-9]+$"
         description: >
@@ -1111,8 +1109,7 @@ classes:
   #                    when species-neutral identity is the priority
   #   Future:          HOMBA (Allen multi-species neuro-anatomy ontology) — not yet released;
   #                    migrate to HOMBA terms when available
-  # Look up terms via OLS4 (OLS4 MCP tool available). Allen terms carry UBERON
-  # cross-references. Both MBA and DHBA terms are findable in OLS under their prefixes.
+  # Allen terms carry UBERON cross-references.
   # name_in_source carries the region name as it appears in the source paper or atlas.
 
   HasMarkerType:
@@ -1133,12 +1130,6 @@ classes:
           no assay. Required so that every source records an explicit choice;
           NOT_STATED is a valid choice, a guessed PROTEIN/TRANSCRIPT is not.
           The specific technique goes in PropertySource.method (free text).
-        annotations:
-          ingest_phase: properties
-          ingest_question: >-
-            Does this source say how the marker was detected: antibody (protein),
-            RNA (transcript), or a reporter or Cre line? If it does not say,
-            the answer is NOT_STATED.
 
   PropertySource:
     description: >
@@ -1185,25 +1176,20 @@ classes:
           E.g. "adult mouse GPi", "human GPi post-mortem tissue",
           "P21 mouse cerebellum". Populate where context affects
           generalisability of the claim.
-        annotations:
-          ingest_phase: properties
-          ingest_question: >-
-            In what species, age, brain region and preparation did this source
-            make the observation?
       snippet:
         description: >
           Verbatim quote from the cited source supporting this assertion.
-          Strongly recommended — primary material for reviewers at the
-          evidence gate. Must be exact text from the source, no paraphrase.
-          If quote_key is set, snippet may be omitted (dereferenceable from
-          references.json). If both are present, snippet is the verified text.
+          Must be exact text from the source, no paraphrase. Prefer quote_key,
+          which points to the quote in the region's reference store; when
+          quote_key is set, omit snippet. If both are present, snippet is the
+          verified text.
       quote_key:
         description: >
           Content-hashed key into the region's references.json quote store.
           Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars
           of SHA-256 of the normalised quote text. Allows quote lookup without
-          embedding full text in the KB YAML. Set by asta-report-ingest and
-          cite-traverse workflows. Reports dereference to include snippet text.
+          embedding full text in the KB YAML. Reports dereference it to include
+          the quote text.
       notes:
         description: >
           Curator-derived analysis notes for this source: computed statistics,
@@ -1215,8 +1201,7 @@ classes:
         range: EvidenceSupport
         description: >
           Whether this source supports, refutes, or is ambiguous for the
-          property assertion. Set by cite-traverse and evidence-extraction
-          workflows. Omit when support level is implicit (e.g. all sources
+          property assertion. Omit when support level is implicit (e.g. all sources
           on a property are assumed SUPPORT unless stated otherwise).
       source:
         description: >
@@ -1236,9 +1221,8 @@ classes:
       atlas labels, informal community terms. Sources cite the papers where this name
       is used or defined, enabling synonym-expanded queries in lit mining.
 
-      Population guidance: extract synonyms as the first processing step for each paper.
-      Set snippet to the passage where the name is introduced or defined. Multiple
-      sources if the term appears across several papers.
+      Each source cites the passage where the name is introduced or used for
+      this type. Multiple sources if the term appears across several papers.
     attributes:
       term:
         required: true
@@ -1257,8 +1241,8 @@ classes:
         range: PropertySource
         description: >
           Papers where this synonym is used for this cell type. Each PropertySource:
-          ref = citing paper; snippet = passage where name is defined or first used
-          (quote_key also accepted); method = how the name is used in context
+          ref = citing paper; quote_key = passage where name is defined or first
+          used; method = how the name is used in context
           (e.g. "primary label throughout", "defined in introduction as abbreviation").
           Multiple sources if the term appears across multiple papers.
 
@@ -1300,8 +1284,7 @@ classes:
   ElectrophysiologyProfile:
     description: >
       Electrophysiological characterisation of a cell type: e-type classification
-      and firing properties, with evidence provenance. Replaces the former
-      electrophysiology_class string + ephys_sources list pair.
+      and firing properties, with evidence provenance.
     attributes:
       description:
         required: true
@@ -1322,8 +1305,7 @@ classes:
   MorphologyProfile:
     description: >
       Morphological characterisation of a cell type: key structural features
-      with evidence provenance. Replaces the former morphology_notes string +
-      morphology_sources list pair.
+      with evidence provenance.
     attributes:
       description:
         required: true
@@ -1346,8 +1328,7 @@ classes:
       naming triple: name_in_source (verbatim source label) + cl_terms (CL
       ontology identifiers) + sources (evidence provenance).
 
-      Used for both classical and atlas nodes — replaces the previous split
-      between nt_type (free string) and atlas_nt_type (verbatim string).
+      Used for both classical and atlas nodes.
 
       For dual/co-transmitter types, list both CL terms in cl_terms. The
       name_in_source captures the compound label as written in the source
@@ -1514,17 +1495,17 @@ classes:
 # GRAPH NODES
 # ══════════════════════════════════════════════════════════════════
 
-  # ── Ingest questions (#202) ─────────────────────────────────────
+  # ── Ingest order ─────────────────────────────────────────────────
   #
-  # Slots an ingest agent fills carry two annotations:
-  #   ingest_question — the question whose answer fills the slot. Workflows
-  #     read it from the generated schema slice (`just schema-slice`), never
-  #     from hand-written prompt text.
-  #   ingest_phase    — identity (who is this type; how does it relate to
-  #     the KB) or properties (what is it like). Workflows map phases to
-  #     steps; step numbers never appear in the schema.
-  # Descriptions next to a question are read by agents: state current
-  # meaning only, not rename history.
+  # CellTypeNode slots an ingest workflow writes carry an ingest_phase
+  # annotation, filled in this order:
+  #   identity       — what is this type (name, synonyms, basis, species)
+  #   classification — its Cell Ontology term
+  #   properties     — what the sources say about it
+  # Workflows map phases to steps; step numbers never appear here.
+  # Agents read these descriptions (`just schema-subset`): state current
+  # meaning and constraints only. No change history, and no tool names:
+  # which lookup tool to use is the workflow's business.
 
   CellTypeNode:
     description: >
@@ -1544,12 +1525,12 @@ classes:
           references it.
       name:
         required: true
-        description: Human-readable name, e.g. "Lugaro cell", "1145 CB PLI Gly-Gaba_2"
+        description: >
+          Human-readable name, e.g. "Lugaro cell", "1145 CB PLI Gly-Gaba_2".
+          For a literature type, the name the sources most often use, as
+          written; other names go in synonyms.
         annotations:
           ingest_phase: identity
-          ingest_question: >-
-            What name do the sources most often use for this cell type? Use it
-            as written; record the other names under synonyms.
       reference_stub:
         range: ReferenceStubKind
         description: >
@@ -1563,10 +1544,9 @@ classes:
         multivalued: true
         inlined_as_list: true
         description: >
-          Alternative names and abbreviations for this cell type, with evidence provenance.
-          Populated during literature mining — synonym extraction is the first processing
-          step for each paper (both survey and targeted paths). Used to expand queries
-          in subsequent searches.
+          Alternative names and abbreviations for this cell type. Each synonym
+          cites a passage where the name is used for this type. Used to expand
+          literature queries.
 
           Include all forms that appear in the literature or atlases: abbreviations
           (OLM), long forms if non-obvious, historical names, atlas labels used as
@@ -1576,31 +1556,25 @@ classes:
           only if that label is used as a cell type name in at least one non-atlas paper.
         annotations:
           ingest_phase: identity
-          ingest_question: >-
-            What other names or abbreviations do the sources use for this cell
-            type? Cite, for each, a passage where the name is used for this type.
       definition_basis:
         required: true
         range: DefinitionBasis
+        description: >
+          The kind of evidence that defines this type in the sources.
         annotations:
           ingest_phase: identity
-          ingest_question: >-
-            What kind of evidence defines this type in the sources: anatomy or
-            morphology, electrophysiology, neurochemistry, prior transcriptomic
-            clustering, or several of these together?
       species:
         range: OntologyTerm
         bindings:
           - binds_value_of: id
             range: NCBITaxonClassTerm
             obligation_level: REQUIRED
-        description: NCBITaxon term
+        description: >
+          NCBITaxon term for the species this type is described in. When the
+          sources span several species, give the species of the defining
+          description here and each source's species in its scope.
         annotations:
           ingest_phase: identity
-          ingest_question: >-
-            Which species do the sources describe this type in? If the sources
-            span several species, record the species of the defining description
-            here and give each source's species in its scope.
       anatomical_location:
         range: AnatomicalLocation
         multivalued: true
@@ -1613,7 +1587,8 @@ classes:
           Anatomical location(s) of this cell type. Each entry is an
           AnatomicalLocation (OntologyTerm + optional compartment).
           Prefer Allen atlas terms (MBA for mouse; DHBA or HBA for human/primate);
-          use UBERON as fallback. Look up via OLS4. name_in_source carries the
+          use UBERON as fallback. Give the most specific structure the sources
+          support. name_in_source carries the
           region name as written in the source (e.g. "GPi shell region", "GPi").
           Multiple entries for types that span regions or are defined relative
           to multiple structures. Set compartment (SOMA, AXON_TARGET, DENDRITE)
@@ -1622,10 +1597,6 @@ classes:
           not compartment-specific or compartment is unknown.
         annotations:
           ingest_phase: properties
-          ingest_question: >-
-            Where are this type's cell bodies? If the type is defined partly by
-            where its axon or dendrites go, where do they go? Give the most
-            specific structure the sources support.
       colocated_types:
         range: CellTypeColocation
         multivalued: true
@@ -1636,9 +1607,6 @@ classes:
           anatomical location above (e.g. "adjacent to GPi core neurons").
         annotations:
           ingest_phase: properties
-          ingest_question: >-
-            Which other cell types do the sources describe as intermingled with,
-            or adjacent to, this type?
       cl_mapping:
         range: CLMapping
         description: >
@@ -1648,10 +1616,7 @@ classes:
           BROAD: this node is a subtype; a ProposedCLTerm would be a new child of the cl_term.
           Terminal nodes (atlas cell sets) may also have a cl_mapping once cognate CL terms exist.
         annotations:
-          ingest_phase: identity
-          ingest_question: >-
-            Which Cell Ontology term is this type? If none matches exactly,
-            which is the closest broader CL term?
+          ingest_phase: classification
       proposed_cl_term:
         range: ProposedCLTerm
         description: >
@@ -1677,18 +1642,14 @@ classes:
           the atlas (cluster.markers.combo or equivalent).
         annotations:
           ingest_phase: properties
-          ingest_question: >-
-            Which genes or proteins do the sources use to identify this type,
-            and how was each one detected in each source?
       negative_markers:
         range: GeneDescriptor
         multivalued: true
-        description: Markers explicitly shown to be absent (all node types).
+        description: >
+          Markers the sources explicitly show to be absent (all node types).
+          A marker that is simply not mentioned is not absent.
         annotations:
           ingest_phase: properties
-          ingest_question: >-
-            Which markers do the sources explicitly show to be absent from this
-            type? A marker that is simply not mentioned is not absent.
       neuropeptides:
         range: GeneDescriptor
         multivalued: true
@@ -1703,8 +1664,6 @@ classes:
           Examples: Sst, Vip, Cck, Npy, Pnoc.
         annotations:
           ingest_phase: properties
-          ingest_question: >-
-            Which neuropeptides do the sources report this type expressing?
       at_source_sets:
         range: AtSourceSet
         multivalued: true
@@ -1726,36 +1685,29 @@ classes:
         inlined: true
         description: >
           Neurotransmitter type of this cell type. Applies to both classical
-          and atlas terminal nodes (unified field, replaces atlas_nt_type).
-          Carries the naming triple: name_in_source (verbatim source label),
-          cl_terms (CL identifiers), sources (evidence provenance).
+          and atlas terminal nodes. Carries the naming triple: name_in_source
+          (verbatim source label), cl_terms (CL identifiers), sources (evidence
+          provenance). Each source's method says whether the transmitter was
+          shown directly or inferred.
         annotations:
           ingest_phase: properties
-          ingest_question: >-
-            Which neurotransmitter does this type release? Is that shown
-            directly in the sources, or inferred from context?
       electrophysiology:
         range: ElectrophysiologyProfile
         inlined: true
         description: >
-          Electrophysiological characterisation with nested evidence sources.
-          Replaces former electrophysiology_class (string) + ephys_sources (list) pair.
+          Intrinsic electrophysiological characterisation (firing pattern, sag,
+          adaptation, bursting), with nested evidence sources. Each source's
+          scope gives the preparation.
         annotations:
           ingest_phase: properties
-          ingest_question: >-
-            How do the sources describe this type's intrinsic electrical
-            properties (firing pattern, sag, adaptation, bursting), and in
-            what preparation were they recorded?
       morphology:
         range: MorphologyProfile
         inlined: true
         description: >
-          Morphological characterisation with nested evidence sources.
-          Replaces former morphology_notes (string) + morphology_sources (list) pair.
+          Morphological characterisation (soma, dendrites, axon), with nested
+          evidence sources.
         annotations:
           ingest_phase: properties
-          ingest_question: >-
-            How do the sources describe this type's soma, dendrites and axon?
 
       # ── For PRIOR_TRANSCRIPTOMIC nodes ───────────────────────────
       prior_dataset_accession:
@@ -1850,9 +1802,6 @@ classes:
           AtlasMetadataEvidence instead.
         annotations:
           ingest_phase: properties
-          ingest_question: >-
-            Which papers first established, or best characterise, this cell
-            type?
 
       precomputed_expression:
         range: PrecomputedExpression
@@ -1873,14 +1822,12 @@ classes:
           DOIs cited as rationale for this cell set's designation in the
           source CAS taxonomy. From CAS-format taxonomy metadata.
       notes:
-        description: Any caveats or observations not captured by other fields
+        description: >
+          Caveats that no other field can hold: contradictions between sources,
+          claims that differ by species, suspected heterogeneity. A finding that
+          fits another field belongs in that field, not here.
         annotations:
           ingest_phase: properties
-          ingest_question: >-
-            What caveats remain that no other field can hold, such as
-            contradictions between sources, claims that differ by species, or
-            suspected heterogeneity? Findings that answer another question
-            belong in that question's field, not here.
 
 
 # ══════════════════════════════════════════════════════════════════

@@ -116,13 +116,13 @@ gen-models:
     uv run gen-pydantic {{schema}} > src/evidencell/_models.py
     @echo "Regenerated src/evidencell/_models.py from {{schema}}"
 
-# Render the schema slice for one ingest phase (identity | properties): each
-# slot's ingest_question, description, range and values, plus reachable class
-# shapes. Workflow prompts include this instead of hand-written field lists.
-# Usage: just schema-slice identity
+# Write the part of the schema needed to author a node file (graph header,
+# CellTypeNode, and every class and enum they reach) as LinkML YAML.
+# Workflow prompts give agents this instead of hand-written field lists.
+# Usage: just schema-subset -o research/{region}/{run}/schema_subset.yaml
 [group('schema')]
-schema-slice phase *ARGS:
-    @uv run python -m evidencell.schema_slice {{phase}} {{ARGS}}
+schema-subset *ARGS:
+    @uv run python -m evidencell.schema_subset {{ARGS}}
 
 # Regenerate the reference-store Pydantic models from schema/references.yaml
 [group('schema')]
