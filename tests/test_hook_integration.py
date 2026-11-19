@@ -265,6 +265,94 @@ edges:
 # ── Markdown report hook tests ────────────────────────────────────────────────
 
 
+# ── Workflow run files (#236) ─────────────────────────────────────────────────
+
+_PLAN = """\
+run_id: run1
+types:
+  - node_id: type_a
+    action: NEW
+    file: kb/graphs/test_region/type_a.yaml
+    report_sections: [Overview]
+    reconciliation_note: No existing node describes it.
+    subtype_hypotheses:
+      - parent: type_b
+        kind: EMPIRICAL
+        quote_keys: [{key}]
+"""
+
+
+def _run_file_payload(tmp_path: Path, rel: str, content: str) -> dict:
+    """Write payload for research/test_region/run1/{rel}, with a reference
+    store holding quotes 201041756_aabb1234 and 201041756_12345678."""
+    refs_dir = tmp_path / "references" / "test_region"
+    refs_dir.mkdir(parents=True)
+    _split(refs_dir, {"201041756": {"pmid": "31420995", "quotes": {
+        "201041756_aabb1234": {"text": "OLM cells express Sst."},
+        "201041756_12345678": {"text": "OLM cells are in stratum oriens."},
+    }}})
+    path = tmp_path / "research" / "test_region" / "run1" / rel
+    path.parent.mkdir(parents=True)
+    return _write_payload(content, file_path=str(path))
+
+
+def test_ingest_plan_valid_passes(tmp_path: Path):
+    payload = _run_file_payload(
+        tmp_path, "ingest_plan.yaml", _PLAN.format(key="201041756_aabb1234"))
+    r = _run_hook(payload)
+    assert r.returncode == 0, r.stderr
+
+
+def test_ingest_plan_all_digit_key_unquoted_blocked(tmp_path: Path):
+    """YAML 1.1 reads 201041756_12345678 as an integer; the schema rejects it."""
+    payload = _run_file_payload(
+        tmp_path, "ingest_plan.yaml", _PLAN.format(key="201041756_12345678"))
+    r = _run_hook(payload)
+    assert r.returncode == 2, r.stderr
+    assert "not of type 'string'" in r.stderr
+
+
+def test_ingest_plan_unknown_quote_key_blocked(tmp_path: Path):
+    payload = _run_file_payload(
+        tmp_path, "ingest_plan.yaml", _PLAN.format(key="201041756_deadbeef"))
+    r = _run_hook(payload)
+    assert r.returncode == 2, r.stderr
+    assert "201041756_deadbeef" in r.stderr
+
+
+def test_ingest_plan_section_header_with_colon_blocked(tmp_path: Path):
+    """An unquoted 'Header: subtitle' list item is a mapping, not a string."""
+    content = _PLAN.format(key="201041756_aabb1234").replace(
+        "report_sections: [Overview]",
+        "report_sections:\n      - Connectivity: afferents and efferents")
+    payload = _run_file_payload(tmp_path, "ingest_plan.yaml", content)
+    r = _run_hook(payload)
+    assert r.returncode == 2, r.stderr
+
+
+def test_unplaced_file_valid_passes(tmp_path: Path):
+    content = """\
+node_id: type_a
+findings:
+  - finding: Position within the nucleus is not defined.
+    quote_keys: ["201041756_12345678"]
+    closest_field: anatomical_location
+"""
+    payload = _run_file_payload(tmp_path, "unplaced/type_a.yaml", content)
+    r = _run_hook(payload)
+    assert r.returncode == 0, r.stderr
+
+
+def test_unplaced_file_bare_list_blocked(tmp_path: Path):
+    content = """\
+- finding: Position within the nucleus is not defined.
+  quote_keys: ["201041756_aabb1234"]
+"""
+    payload = _run_file_payload(tmp_path, "unplaced/type_a.yaml", content)
+    r = _run_hook(payload)
+    assert r.returncode == 2, r.stderr
+
+
 def _make_refs_and_md(tmp_path: Path, md_content: str) -> dict:
     """Create reports/{region}/ plus a split reference store; return payload."""
     region = "test_region"

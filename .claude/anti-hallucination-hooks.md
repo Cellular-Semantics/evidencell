@@ -23,6 +23,13 @@ Agent attempts Edit/Write
         │     → PMID/DOI existence in references.json
         │     → LinkML schema conformance (subprocess; skipped if schema absent)
         │
+        ├─ Ingest run files (research/{region}/{run}/ingest_plan.yaml,
+        │                    research/{region}/{run}/unplaced/*.yaml)  — #236
+        │     → YAML parse validity
+        │     → quote_keys existence in references/{region}/
+        │     → LinkML conformance against schema/workflow_schema.yaml
+        │       (IngestPlan / UnplacedFindings)
+        │
         └─ Report files (reports/{region}/*.md)
               → unannotated blockquote detection
               → quote_key existence in references.json

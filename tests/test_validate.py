@@ -19,6 +19,7 @@ from evidencell.validate import (
     simulate_edit,
     structural_checks,
     validate_terms,
+    workflow_run_file,
 )
 
 
@@ -409,6 +410,25 @@ def test_collect_quote_keys_nested():
     }
     keys = _collect_quote_keys(doc)
     assert keys == ["abc_11223344", "def_aabbccdd"]
+
+
+def test_collect_quote_keys_includes_quote_keys_lists():
+    doc = {"types": [{"subtype_hypotheses": [
+        {"quote_keys": ["1_aabbccdd", 25102132617100715, "2_11223344"]}]}]}
+    # Non-strings are left to schema validation, which rejects them.
+    assert _collect_quote_keys(doc) == ["1_aabbccdd", "2_11223344"]
+
+
+@pytest.mark.parametrize("path,expected", [
+    ("/r/research/thalamus/run1/ingest_plan.yaml", ("thalamus", "IngestPlan")),
+    ("/r/research/thalamus/run1/unplaced/pvt1_gao.yaml", ("thalamus", "UnplacedFindings")),
+    ("/r/research/thalamus/run1/cl_mappings.json", None),
+    ("/r/research/thalamus/ingest_plan.yaml", None),
+    ("/r/research/thalamus/run1/unplaced/notes.md", None),
+    ("/r/kb/graphs/thalamus/ingest_plan.yaml", None),
+])
+def test_workflow_run_file(path, expected):
+    assert workflow_run_file(Path(path)) == expected
 
 
 def test_collect_quote_keys_empty():

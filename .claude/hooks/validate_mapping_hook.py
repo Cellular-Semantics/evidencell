@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-PreToolUse hook: validates kb/**/*.yaml and reports/**/*.md BEFORE edits are applied.
+PreToolUse hook: validates kb/**/*.yaml, reports/**/*.md and ingest run files
+BEFORE edits are applied.
 
 YAML checks (in order):
 1. YAML parse validity
@@ -11,6 +12,13 @@ YAML checks (in order):
    provenance rule, for fields that hold bare citation strings rather than
    `ref:`-keyed objects
 6. LinkML schema conformance (subprocess; skipped if schema file absent)
+
+Workflow run files holding KB-pending content (#236) —
+research/{region}/{run}/ingest_plan.yaml and .../unplaced/*.yaml:
+1. YAML parse validity
+2. Quote key provenance (quote_keys lists) against references/{region}/
+3. LinkML conformance against schema/workflow_schema.yaml
+   (IngestPlan / UnplacedFindings)
 
 Markdown report checks:
 1. Unannotated blockquotes (missing <!-- quote_key: X --> annotation)
@@ -53,6 +61,7 @@ try:
         check_run_refs,
         linkml_validate,
         validate_terms,
+        workflow_run_file,
         parse_md_annotations,
         check_md_ids,
         check_ontology_terms,
@@ -194,7 +203,13 @@ def main():
         or (file_path.suffix == ".json" and file_path.parent.name in ("papers", "quotes"))
     )
 
-    if not is_yaml and not is_report and not is_refs:
+    # Workflow run files that hold KB-pending content (asta-report-ingest's
+    # ingest_plan.yaml and unplaced/*.yaml). They had no schema and no check,
+    # so a quote key whose hash is all digits was read back as an integer and
+    # section headers containing ": " as mappings (#236).
+    workflow_file = workflow_run_file(file_path)
+
+    if not is_yaml and not is_report and not is_refs and workflow_file is None:
         sys.exit(0)
 
     # ── Reference-store integrity ─────────────────────────────────────────
@@ -352,6 +367,55 @@ def main():
                     _emit_block()
 
         print("Validation passed (integrity + append-only) - allowing edit", file=sys.stderr)
+        print("=" * 60 + "\n", file=sys.stderr)
+        sys.exit(0)
+
+    # ── Workflow run files ────────────────────────────────────────────────
+    if workflow_file is not None:
+        region, target_class = workflow_file
+        print("\n" + "=" * 60, file=sys.stderr)
+        print(f"Pre-Edit Validation: {file_path.name} ({target_class})", file=sys.stderr)
+        print("=" * 60, file=sys.stderr)
+        simulated = simulate_edit(tool_name, tool_input, file_path)
+        errors_found = False
+
+        parts = file_path.resolve().parts
+        refs_path = Path(*parts[:parts.index("research")]) / "references" / region
+
+        try:
+            doc = yaml.safe_load(simulated)
+        except yaml.YAMLError as exc:
+            print(f"YAML parse error: {exc}", file=sys.stderr)
+            _emit_block()
+
+        if isinstance(doc, dict):
+            qk_errors = check_quote_keys(doc, refs_path)
+            if qk_errors:
+                print("Quote key errors:", file=sys.stderr)
+                for e in qk_errors:
+                    print(f"  - {e}", file=sys.stderr)
+                errors_found = True
+
+        ok, output = linkml_validate(
+            simulated,
+            _project_root / "schema" / "workflow_schema.yaml",
+            file_path.name,
+            target_class=target_class,
+        )
+        if output.strip():
+            print(output.strip(), file=sys.stderr)
+        if not ok:
+            errors_found = True
+
+        if not store_exists(refs_path):
+            print("", file=sys.stderr)
+            print("Checks NOT run for this file:", file=sys.stderr)
+            print(f"  - quote_key — no reference store for region '{region}'",
+                  file=sys.stderr)
+
+        if errors_found:
+            _emit_block()
+        print("Validation passed - allowing edit", file=sys.stderr)
         print("=" * 60 + "\n", file=sys.stderr)
         sys.exit(0)
 

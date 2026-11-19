@@ -112,13 +112,16 @@ def structural_checks(doc: dict) -> list[str]:
 # ── Quote key provenance check ─────────────────────────────────────────────────
 
 def _collect_quote_keys(obj: object, result: list[str] | None = None) -> list[str]:
-    """Recursively collect all 'quote_key' values from a nested dict/list."""
+    """Recursively collect all 'quote_key' values, and the members of
+    'quote_keys' lists (workflow run files), from a nested dict/list."""
     if result is None:
         result = []
     if isinstance(obj, dict):
         for k, v in obj.items():
             if k == "quote_key" and isinstance(v, str) and v:
                 result.append(v)
+            elif k == "quote_keys" and isinstance(v, list):
+                result.extend(q for q in v if isinstance(q, str) and q)
             else:
                 _collect_quote_keys(v, result)
     elif isinstance(obj, list):
@@ -741,6 +744,27 @@ def simulate_edit(tool_name: str, tool_input: dict, file_path: Path) -> str:
 
 # ── LinkML schema validation (subprocess) ──────────────────────────────────────
 
+def workflow_run_file(file_path: Path) -> tuple[str, str] | None:
+    """
+    (region, target class in workflow_schema.yaml) for a workflow run file that
+    holds KB-pending content, or None for any other path.
+
+    research/{region}/{run}/ingest_plan.yaml          → IngestPlan
+    research/{region}/{run}/unplaced/{node_id}.yaml   → UnplacedFindings
+    """
+    parts = file_path.parts
+    if "research" not in parts:
+        return None
+    i = parts.index("research")
+    # region, run, then the file (or unplaced/file)
+    rest = parts[i + 1:]
+    if len(rest) == 3 and rest[2] == "ingest_plan.yaml":
+        return rest[0], "IngestPlan"
+    if len(rest) == 4 and rest[2] == "unplaced" and file_path.suffix == ".yaml":
+        return rest[0], "UnplacedFindings"
+    return None
+
+
 def _target_class_for_kb_path(file_path: Path) -> str | None:
     """
     Pick the LinkML target_class for a KB YAML file by its location.
@@ -787,24 +811,25 @@ def linkml_validate(
     schema_path: Path,
     original_name: str = "input.yaml",
     file_path: Path | None = None,
+    target_class: str | None = None,
 ) -> tuple[bool, str]:
     """
     Validate YAML content against a LinkML schema.
 
     Writes content to a temp file and runs linkml-validate as a subprocess.
-    The target_class is chosen by file_path location when provided; defaults
-    to CellTypeMappingGraph otherwise.
+    An explicit target_class wins; otherwise it is chosen by file_path
+    location when provided, and defaults to CellTypeMappingGraph.
 
     Returns (passed: bool, output_text: str).
     """
     if not schema_path.exists():
         return True, f"(schema not found at {schema_path} — linkml-validate skipped)"
 
-    if file_path is not None:
+    if target_class is None and file_path is not None:
         target_class = _target_class_for_kb_path(file_path)
         if target_class is None:
             return True, f"(no schema class for {file_path} — linkml-validate skipped)"
-    else:
+    elif target_class is None:
         target_class = "CellTypeMappingGraph"
 
     with tempfile.TemporaryDirectory() as tmpdir:

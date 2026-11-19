@@ -430,6 +430,7 @@ INPUT FILES:
 - {output_dir}/schema_subset.yaml     the schema for a node file: each field's
                                       description, shape, allowed values and
                                       ingest_phase
+- schema/workflow_schema.yaml         IngestPlan: the schema for ingest_plan.yaml
 - .claude/skills/term-grounding.md    how to find and write species terms
 
 ## Part A: Identify
@@ -470,11 +471,8 @@ INPUT FILES:
    one proposed in this run or one in existing_nodes.yaml — record it in
    ingest_plan.yaml under subtype_hypotheses. The schema has no field for it yet
    (#183), so it goes nowhere else: not in notes, not as an edge. For each, give
-   the kind:
-   - DEFINITIONAL — the child is defined as the parent narrowed by an extra
-     criterion (a nucleus, a marker, a projection target, one end of a gradient).
-   - EMPIRICAL — the child is defined independently (e.g. by a transgenic line
-     or a clustering) and the sources report that it falls within the parent.
+   the kind, DEFINITIONAL or EMPIRICAL, as SubtypeHypothesisKind in
+   workflow_schema.yaml defines them.
 
 ## Part D: Write
 
@@ -516,22 +514,21 @@ INPUT FILES:
    value. If the report contradicts an existing identity value, leave the file
    unchanged and record the conflict in identity_conflicts.
 
-8. Write {output_dir}/ingest_plan.yaml, one entry per proposed type:
+8. Write {output_dir}/ingest_plan.yaml with the Write tool, one entry per
+   proposed type. Its shape and field meanings are the IngestPlan class in
+   workflow_schema.yaml; the pre-edit hook validates the file against it and
+   checks every quote key against the reference store. Outline:
 
    run_id: {run_id}
    types:
-     - node_id: <id; for ENRICH/DUPLICATE the existing id>
-       action: NEW | ENRICH | DUPLICATE
-       file: kb/graphs/{region}/<id>.yaml      # null for DUPLICATE
-       report_sections: [<report section headers that characterise this type>]
-       reconciliation_note: <why this action; name the existing nodes considered>
-       subtype_hypotheses:
-         - parent: <node id>
-           kind: DEFINITIONAL | EMPIRICAL
-           quote_keys: [...]
-           note: <caveats: gradient pole, single study, inferred, ...>
-       identity_conflicts: [<ENRICH only: report value vs existing value>]
-       unplaced: [{finding: ..., quote_keys: [...]}]   # identity findings with no field
+     - node_id: ...
+       action: ...
+       file: ...
+       report_sections: [...]
+       reconciliation_note: ...
+       subtype_hypotheses: [{parent: ..., kind: ..., quote_keys: [...], note: ...}]
+       identity_conflicts: [...]
+       unplaced: [{finding: ..., quote_keys: [...], closest_field: ...}]
 
 9. If the pre-edit hook blocks a write, fix the reported problem and retry.
    Never write through a shell command — `cp`, `cat >` and `sed -i` are not
@@ -644,6 +641,7 @@ INPUT FILES:
 - {output_dir}/schema_subset.yaml     the schema for a node file: each field's
                                       description, shape, allowed values and
                                       ingest_phase
+- schema/workflow_schema.yaml         UnplacedFindings: the schema for unplaced files
 - .claude/skills/term-grounding.md    how to find and write anatomy and
                                       transmitter terms
 - {pdf_file}                          the report, for the sections in report_sections
@@ -688,11 +686,15 @@ INPUT FILES:
    - definition_references: the 3-5 most informative resolved refs.
 
 5. notes: caveats only, as the notes description says. A finding that fits no
-   field goes to {output_dir}/unplaced/{node_id}.yaml:
+   field goes to {output_dir}/unplaced/{node_id}.yaml, written with the Write
+   tool. Its shape is the UnplacedFindings class in workflow_schema.yaml, and
+   the pre-edit hook validates it:
 
-   - finding: <what the sources say>
-     quote_keys: [...]
-     closest_field: <field it nearly fits, or null>
+   node_id: {node_id}
+   findings:
+     - finding: ...
+       quote_keys: [...]
+       closest_field: ...
 
 6. If the pre-edit hook blocks a write, fix the reported problem and retry.
    Never write through a shell command — `cp`, `cat >` and `sed -i` are not
@@ -828,6 +830,10 @@ concurrently in a separate session.
   `evidence-extraction` after primary verification.
 - **No edges at ingest.** Subtype relations go to `ingest_plan.yaml` until the
   schema has a field for them (#183).
+- **Run files that hold KB-pending content are validated too.**
+  `ingest_plan.yaml` and `unplaced/*.yaml` have schema classes in
+  `schema/workflow_schema.yaml` (`IngestPlan`, `UnplacedFindings`), and the
+  pre-edit hook checks them and their quote keys like a KB file (#236).
 - **Nodes are DRAFT until verified.** Property assertions come from ASTA report
   quotes, which are paraphrase until `survey` / `evidence-extraction` confirms
   them against primary text. Say so in the node header comment.
