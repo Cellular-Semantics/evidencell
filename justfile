@@ -116,6 +116,14 @@ gen-models:
     uv run gen-pydantic {{schema}} > src/evidencell/_models.py
     @echo "Regenerated src/evidencell/_models.py from {{schema}}"
 
+# Write the part of the schema needed to author a node file (graph header,
+# CellTypeNode, and every class and enum they reach) as LinkML YAML.
+# Workflow prompts give agents this instead of hand-written field lists.
+# Usage: just schema-subset -o research/{region}/{run}/schema_subset.yaml
+[group('schema')]
+schema-subset *ARGS:
+    @uv run python -m evidencell.schema_subset {{ARGS}}
+
 # Regenerate the reference-store Pydantic models from schema/references.yaml
 [group('schema')]
 gen-refs-models:
@@ -332,8 +340,8 @@ ingest-report region pdf_file:
     echo "Region: {{region}}"
     echo "PDF:    {{pdf_file}}"
     echo ""
-    echo "Existing KB nodes in region (if any):"
-    grep -rh "^  - id:" kb/ --include="*.yaml" 2>/dev/null | grep -i "{{region}}" | sed 's/  - id: /    /' | sort || echo "    (none yet)"
+    echo "Existing KB nodes in region (from the KB index):"
+    uv run python -m evidencell.kb_index region "{{region}}" | grep '^- id:' | sed 's/^- id: /    /' || echo "    (none yet)"
     echo ""
     echo "Inputs validated. Proceeding with workflows/asta-report-ingest.md"
 
