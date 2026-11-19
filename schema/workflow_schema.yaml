@@ -7,12 +7,16 @@
 ## Version history:
 ## Version: 0.1.0 (2026-04-21) — LiteratureSummary class (all_summaries.json format);
 ##                               NodeRelevance + SourceMethod enums
+## Version: 0.2.0 (2026-11-19) — IngestPlan + UnplacedFindings (asta-report-ingest
+##                               ingest_plan.yaml and unplaced/{node_id}.yaml), #236
 
 id: https://bican.org/schema/celltype-evidence/workflow/v0.1
 name: EvidencellWorkflow
 description: >
   Schema for evidencell workflow intermediate files. Covers all_summaries.json
-  and related formats produced by survey and cite-traverse workflows.
+  and related formats produced by survey and cite-traverse workflows, and the
+  asta-report-ingest run files that hold KB-pending content (ingest_plan.yaml,
+  unplaced/{node_id}.yaml).
 
 prefixes:
   linkml: https://w3id.org/linkml/
@@ -21,6 +25,17 @@ default_range: string
 
 imports:
   - linkml:types
+
+types:
+
+  QuoteKey:
+    typeof: string
+    pattern: "^[0-9]+_[0-9a-f]{8}$"
+    description: >
+      Key into the region's reference store: {corpus_id}_{hash8}, where hash8
+      is the first 8 hex characters of the SHA-256 of the normalised quote
+      text. A string, never a number: a key whose hash is all digits is still
+      a string.
 
 enums:
 
@@ -44,6 +59,36 @@ enums:
         description: Retrieved via EuropePMC full-text fetch (fallback for gap papers)
       ASTA_REPORT:
         description: Derived from the ASTA deep research PDF report (asta-report-ingest)
+
+  IngestAction:
+    description: How a type proposed by an ingest run relates to the KB.
+    permissible_values:
+      NEW:
+        description: >
+          No existing node describes this population. A narrower population
+          inside an existing node is NEW, with the relation recorded as a
+          subtype hypothesis.
+      ENRICH:
+        description: >
+          An existing node describes the same population (the sources would let
+          you swap one name for the other) and the report adds names or
+          evidence for it. Never chosen on name similarity alone.
+      DUPLICATE:
+        description: >
+          An existing node describes the same population and the report adds
+          nothing new. Nothing is written for it.
+
+  SubtypeHypothesisKind:
+    description: How a subtype relation was arrived at.
+    permissible_values:
+      DEFINITIONAL:
+        description: >
+          The child is defined as the parent narrowed by an extra criterion
+          (a nucleus, a marker, a projection target, one end of a gradient).
+      EMPIRICAL:
+        description: >
+          The child is defined independently (e.g. by a transgenic line or a
+          clustering) and the sources report that it falls within the parent.
 
 classes:
 
@@ -139,3 +184,109 @@ classes:
           Used as the quote when writing TypeSynonym.sources in evidence-extraction.
       section:
         description: Paper section where the term was found
+
+  IngestPlan:
+    description: >
+      ingest_plan.yaml, written by asta-report-ingest Step 3: one entry per
+      cell type the report characterises, with its reconciliation against the
+      KB. Holds KB-pending content (subtype hypotheses, identity conflicts,
+      unplaced identity findings) and is validated by the pre-edit hook like a
+      KB file.
+    tree_root: true
+    attributes:
+      run_id:
+        required: true
+      types:
+        range: IngestPlanType
+        multivalued: true
+        inlined_as_list: true
+        required: true
+
+  IngestPlanType:
+    description: One proposed type and how it relates to the KB.
+    attributes:
+      node_id:
+        required: true
+        description: >
+          For NEW, a minted id (lowercase_underscored, describing the
+          population, unique across the KB). For ENRICH and DUPLICATE, the
+          existing node's id.
+      action:
+        required: true
+        range: IngestAction
+      file:
+        description: >
+          The node file, kb/graphs/{region}/{node_id}.yaml. Omitted for
+          DUPLICATE.
+      report_sections:
+        multivalued: true
+        description: Report section headers that characterise this type.
+      reconciliation_note:
+        required: true
+        description: Why this action; names the existing nodes considered.
+      subtype_hypotheses:
+        range: SubtypeHypothesis
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Parent types this type is reported to fall within. Held here until
+          the KB schema has a field for it (#183); not recorded in notes or as
+          an edge.
+      identity_conflicts:
+        multivalued: true
+        description: >
+          ENRICH only. Each entry states a report value that contradicts an
+          existing identity value on the node, and that value. The node file is
+          left unchanged.
+      unplaced:
+        range: UnplacedFinding
+        multivalued: true
+        inlined_as_list: true
+        description: Identity findings that fit no node field.
+
+  SubtypeHypothesis:
+    description: A reported relation between a type and a parent type.
+    attributes:
+      parent:
+        required: true
+        description: >
+          Id of the parent node, proposed in the same run or already in the KB.
+      kind:
+        required: true
+        range: SubtypeHypothesisKind
+      quote_keys:
+        required: true
+        multivalued: true
+        range: QuoteKey
+        description: Quotes that support the relation.
+      note:
+        description: Caveats (gradient pole, single study, inferred, ...).
+
+  UnplacedFindings:
+    description: >
+      unplaced/{node_id}.yaml, written by asta-report-ingest Step 5: findings
+      about one node that fit no node field. Validated by the pre-edit hook.
+    tree_root: true
+    attributes:
+      node_id:
+        required: true
+      findings:
+        range: UnplacedFinding
+        multivalued: true
+        inlined_as_list: true
+        required: true
+
+  UnplacedFinding:
+    description: >
+      A finding the sources support that fits no field of the node schema.
+      Kept so review can decide whether the schema needs a field for it.
+    attributes:
+      finding:
+        required: true
+        description: What the sources say.
+      quote_keys:
+        required: true
+        multivalued: true
+        range: QuoteKey
+      closest_field:
+        description: The node field the finding nearly fits, if any.
