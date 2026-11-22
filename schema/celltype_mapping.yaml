@@ -11,6 +11,8 @@
 # Version: 0.8.1 (2026-11-15) — ADDITIVE: MarkerType gains TRANSGENE_REPORTER and NOT_STATED (#196);
 #                               marker_type stays required, but a source that names no assay is
 #                               recorded as NOT_STATED rather than a guessed PROTEIN/TRANSCRIPT.
+# Version: 0.8.2 (2026-11-22) — ADDITIVE, DRAFT: CellTypeNode.subtype_of + SubtypeAssertion (#183);
+#                               lit-to-lit subtype relations on the child node, quote-keyed.
 # Version: 0.3  (2026-02-25) — added CLMapping (EXACT/BROAD), Allen anatomy terms,
 #                               ProposedCLTerm.parent_cl_term,
 #                               AnnotationTransferEvidence.source_cell_set_accession (cross-Allen-taxonomy)
@@ -1098,6 +1100,36 @@ classes:
       notes:
         description: Free-text context or citation supporting this colocation claim
 
+  SubtypeAssertion:
+    description: >
+      DRAFT (#183). States that the owning type is defined as a subset of
+      `parent`: every cell of the owning type is a cell of the parent, picked
+      out by additional criteria (a nucleus, a marker, a projection target, a
+      gradient pole). Semantics are rdfs:subClassOf. Makes no claim that
+      sibling subtypes are disjoint or that together they cover the parent;
+      say so in notes where it matters.
+
+      Not for empirical correspondences between independently defined types,
+      e.g. a transgene-defined or clustering-defined population later found to
+      fall within a classical type. Record those as MappingEdges.
+    attributes:
+      parent:
+        required: true
+        range: CellTypeNode
+        description: >
+          id of the parent literature type: a canonical node (not a stub, not
+          an atlas node) defined in any kb/graphs file. It may be proposed in
+          the same ingest run.
+      sources:
+        range: PropertySource
+        multivalued: true
+        inlined_as_list: true
+        description: Quote-keyed sources stating or implying the subset relation.
+      notes:
+        description: >
+          Caveats on this assertion: gradient pole, single study, subset claim
+          inferred from a structural subdivision, and similar.
+
   # ── Property provenance ─────────────────────────────────────────
   #
   # ANATOMICAL LOCATION ONTOLOGY PREFERENCE:
@@ -1561,6 +1593,18 @@ classes:
         range: DefinitionBasis
         description: >
           The kind of evidence that defines this type in the sources.
+        annotations:
+          ingest_phase: identity
+      subtype_of:
+        range: SubtypeAssertion
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          DRAFT (#183). Literature types this type is defined as a subset of
+          (its genus, in CL terms): another type narrowed by an extra
+          criterion such as a nucleus, a marker, a projection target or one
+          end of a gradient. Recorded on the child; a node's children are
+          computed from the KB index.
         annotations:
           ingest_phase: identity
       species:
