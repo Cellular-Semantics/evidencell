@@ -187,6 +187,21 @@ missing key at render time.
 
 ---
 
+### subtype_of parents
+
+**Check** (`check_subtype_parents`, #183)
+- Every `subtype_of[].parent` is a canonical (non-stub) node, either in the
+  document being written or in another `kb/graphs` file (via the KB index).
+- The parent is not an atlas node (atlas hierarchy lives in the taxonomy) and
+  not the child itself.
+- The on-disk copy of the file being written does not count; the new content
+  replaces it. A NEW parent's file must therefore be written before its
+  children's.
+
+**Status:** Implemented in the hook and in the `qc-content` sweep.
+
+---
+
 ## Markdown report annotation standard
 
 Reports in `reports/{region}/*.md` embed machine-readable annotations so the hook can

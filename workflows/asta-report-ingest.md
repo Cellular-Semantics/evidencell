@@ -70,8 +70,9 @@ PDF
  ├─ Step 3:  identify + reconcile       (identity fields)
  │           → kb/graphs/{region}/{node_id}.yaml   identity fields: new files,
  │                                                  or additions to existing ones
- │           → ingest_plan.yaml                     action per type, subtype
- │                                                  hypotheses, unplaced findings
+ │                                                  (incl. subtype_of)
+ │           → ingest_plan.yaml                     action per type, unplaced
+ │                                                  findings
  │
  ├─ Step 4:  CL mapping → cl_mapping on each node file; cl_mappings.json
  │
@@ -450,7 +451,7 @@ INPUT FILES:
      the report adds nothing new. Nothing is written for it.
    Two nodes describe the same population when the sources would let you swap
    one name for the other. A narrower population inside an existing node is NEW,
-   not ENRICH; record the relation as a subtype hypothesis (step 5).
+   not ENRICH; record the relation in subtype_of (step 5).
    Never choose ENRICH on name similarity alone. If unsure between NEW and
    ENRICH, choose NEW and say why in reconciliation_note; review merges.
 
@@ -466,15 +467,17 @@ INPUT FILES:
    says. Cite sources by quote_key from run_quotes.json, with ref copied from
    the same entry. Use only entries whose ref is not null.
 
-5. Subtype relations. If the report describes a type as part of another type —
-   one proposed in this run or one in existing_nodes.yaml — record it in
-   ingest_plan.yaml under subtype_hypotheses. The schema has no field for it yet
-   (#183), so it goes nowhere else: not in notes, not as an edge. For each, give
-   the kind:
-   - DEFINITIONAL — the child is defined as the parent narrowed by an extra
-     criterion (a nucleus, a marker, a projection target, one end of a gradient).
-   - EMPIRICAL — the child is defined independently (e.g. by a transgenic line
-     or a clustering) and the sources report that it falls within the parent.
+5. Subtype relations. If the sources place a type inside another literature
+   type — one proposed in this run or one in existing_nodes.yaml — write it on
+   the child as subtype_of. kind, confidence, sources and notes are described
+   in schema_subset.yaml (SubtypeAssertion, SubtypeKind, SubtypeConfidence,
+   SubtypeSource). Workflow policy:
+   - Use the narrowest parent the sources support.
+   - Overlap that is not containment (a population that straddles two types)
+     is not a subtype. Record it as an unplaced finding in ingest_plan.yaml.
+   - The parent must be a canonical node, never an atlas node; the hook checks.
+     Write a NEW parent's file before its children's.
+   - Not in notes, and not as an edge.
 
 ## Part D: Write
 
@@ -505,6 +508,7 @@ INPUT FILES:
        definition_basis: ...
        species: ...
        synonyms: [...]
+       subtype_of: [...]       # only where step 5 applies
    edges: []
 
    Property fields (markers, location, NT type, morphology, electrophysiology,
@@ -512,7 +516,8 @@ INPUT FILES:
    cl_mapping in Step 4. Do not add them here.
 
 7. ENRICH: edit the existing node file with the Edit tool. You may ADD a synonym
-   not already present, and species if absent. Never change or remove an existing
+   not already present, species if absent, and a subtype_of entry for a parent
+   not already listed. Never change or remove an existing
    value. If the report contradicts an existing identity value, leave the file
    unchanged and record the conflict in identity_conflicts.
 
@@ -525,11 +530,6 @@ INPUT FILES:
        file: kb/graphs/{region}/<id>.yaml      # null for DUPLICATE
        report_sections: [<report section headers that characterise this type>]
        reconciliation_note: <why this action; name the existing nodes considered>
-       subtype_hypotheses:
-         - parent: <node id>
-           kind: DEFINITIONAL | EMPIRICAL
-           quote_keys: [...]
-           note: <caveats: gradient pole, single study, inferred, ...>
        identity_conflicts: [<ENRICH only: report value vs existing value>]
        unplaced: [{finding: ..., quote_keys: [...]}]   # identity findings with no field
 
@@ -538,7 +538,7 @@ INPUT FILES:
    intercepted by the hook, and a write that bypasses it is unvalidated KB content.
 
 RETURN:
-"Proposed {T} type(s): NEW {n}, ENRICH {e}, DUPLICATE {d}. Subtype hypotheses: {s}.
+"Proposed {T} type(s): NEW {n}, ENRICH {e}, DUPLICATE {d}. Subtype relations: {s}.
 Wrote {w} new node file(s), edited {x}. See ingest_plan.yaml."
 
 DO NOT:
@@ -637,7 +637,7 @@ REGION: {region}
 INPUT FILES:
 - {file}                              the node as Steps 3 and 4 left it; read it first
 - {output_dir}/ingest_plan.yaml       this node's entry: report_sections,
-                                      subtype_hypotheses, reconciliation_note
+                                      reconciliation_note
 - {output_dir}/run_quotes.json        this run's quotes (the main pool)
 - references/{region}/quotes/         the region's full quote store (an ENRICH node
                                       may already cite earlier quotes)
@@ -704,8 +704,8 @@ RETURN:
 
 DO NOT:
 - Edit any other node's file
-- Change identity fields or cl_mapping
-- Write edges, or record a subtype relation anywhere
+- Change identity fields (including subtype_of) or cl_mapping
+- Write edges, or record a subtype relation in notes
 - Put quote text in the KB YAML
 - Invent property values not supported by the quotes or the report's text
 ```
@@ -726,7 +726,7 @@ hand review to the operator:
 Types: NEW {n}, ENRICH {e}, DUPLICATE {d}
   {node_id}.yaml — {action} — {name} — CL: {term or "none"} — {P} properties cited
   ...
-Subtype hypotheses: {s} (in ingest_plan.yaml; not yet KB content, see #183)
+Subtype relations: {s} (subtype_of on the child node files)
 Unplaced findings: {u} (in unplaced/)
 
 References: {R} papers, {Q} quotes ({U} UNRESOLVED)
@@ -749,9 +749,12 @@ Points for the reviewer beyond the diff:
 - **Reconciliation.** Check each NEW / ENRICH / DUPLICATE decision and its
   `reconciliation_note` in `ingest_plan.yaml`. A wrong NEW is a duplicate node; a
   wrong ENRICH merges two populations.
-- **Subtype hypotheses and unplaced findings** are the run's record of what the
-  schema could not hold. They are inputs to schema decisions (#183, #202), so
-  keep them with the run artifacts.
+- **Subtype relations.** Check each subtype_of: is the parent the narrowest
+  one the sources support, is kind right (does the child's definition name the
+  parent, or is containment a finding?), and does confidence match the sources?
+- **Unplaced findings** are the run's record of what the schema could not hold.
+  They are inputs to schema decisions (#202), so keep them with the run
+  artifacts.
 
 **Reviewer note:** KB YAML carries `quote_key` values, not quote text. To read
 the evidence behind an assertion, dereference the key against
@@ -826,8 +829,8 @@ concurrently in a separate session.
 - **No evidence items at ingest.** Nodes carry property fields with `sources`
   entries pointing at quote_keys. `LiteratureEvidence` items are created by
   `evidence-extraction` after primary verification.
-- **No edges at ingest.** Subtype relations go to `ingest_plan.yaml` until the
-  schema has a field for them (#183).
+- **No edges at ingest.** Subtype relations go in `subtype_of` on the child
+  node (#183), an interim field planned to migrate to lit-to-lit edges.
 - **Nodes are DRAFT until verified.** Property assertions come from ASTA report
   quotes, which are paraphrase until `survey` / `evidence-extraction` confirms
   them against primary text. Say so in the node header comment.

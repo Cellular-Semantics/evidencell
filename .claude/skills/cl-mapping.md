@@ -78,8 +78,8 @@ label. A label from memory is the commonest rejection; copy it from the lookup.
    - Every non-terminal node gets a `cl_mapping`. If nothing better fits, map
      BROAD to the nearest general term that the node does satisfy (e.g.
      "glutamatergic neuron", "neuron").
-   - Definitional subtypes in the KB usually share their parent's CL term as a
-     BROAD mapping. That is expected, not a reason to stretch to EXACT.
+   - A node with `subtype_of` usually shares its parent's CL term as a BROAD
+     mapping. That is expected, not a reason to stretch to EXACT.
 
 5. **Write `mapping_notes`:** the searches run, the candidates rejected and why,
    and what the node would need for an EXACT match.

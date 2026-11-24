@@ -12,7 +12,9 @@
 #                               marker_type stays required, but a source that names no assay is
 #                               recorded as NOT_STATED rather than a guessed PROTEIN/TRANSCRIPT.
 # Version: 0.8.2 (2026-11-22) — ADDITIVE, DRAFT: CellTypeNode.subtype_of + SubtypeAssertion (#183);
-#                               lit-to-lit subtype relations on the child node, quote-keyed.
+#                               lit-to-lit subtype relations on the child node, with kind
+#                               (DEFINITIONAL/EMPIRICAL), confidence and SubtypeSource
+#                               sources. Interim: planned to migrate to lit-to-lit edges.
 # Version: 0.3  (2026-02-25) — added CLMapping (EXACT/BROAD), Allen anatomy terms,
 #                               ProposedCLTerm.parent_cl_term,
 #                               AnnotationTransferEvidence.source_cell_set_accession (cross-Allen-taxonomy)
@@ -484,6 +486,38 @@ enums:
         description: >
           Provenance not recorded. Use sparingly; prefer one of the
           other values when known.
+
+  # ── Subtype assertions (#183) ───────────────────────────────────
+  SubtypeKind:
+    description: How the owning type comes to be a subset of the parent.
+    permissible_values:
+      DEFINITIONAL:
+        description: >
+          The type is defined as the parent narrowed by an extra criterion (a
+          nucleus, a marker, a projection target, one end of a gradient), so
+          containment holds by definition: a cell of the type that is not a
+          cell of the parent would contradict the type's definition. Exports
+          as rdfs:subClassOf.
+      EMPIRICAL:
+        description: >
+          The type is defined independently of the parent (e.g. by a
+          transgenic line or a clustering) and the sources report that its
+          cells fall within the parent. Containment is a finding that further
+          data could overturn.
+
+  SubtypeConfidence:
+    description: >
+      Judgement on the sources of a SubtypeAssertion. The mapping rubric (AT
+      F1, location bands) does not apply.
+    permissible_values:
+      HIGH:
+        description: Stated explicitly by two or more independent sources.
+      MODERATE:
+        description: Stated explicitly by one source.
+      LOW:
+        description: >
+          Inferred, e.g. from a structural subdivision, or from the parent's
+          defining criterion holding for the type without being stated.
 
   # ── Mapping confidence ──────────────────────────────────────────
   MappingConfidence:
@@ -1102,16 +1136,19 @@ classes:
 
   SubtypeAssertion:
     description: >
-      DRAFT (#183). States that the owning type is defined as a subset of
-      `parent`: every cell of the owning type is a cell of the parent, picked
-      out by additional criteria (a nucleus, a marker, a projection target, a
-      gradient pole). Semantics are rdfs:subClassOf. Makes no claim that
-      sibling subtypes are disjoint or that together they cover the parent;
-      say so in notes where it matters.
+      DRAFT (#183). States that every cell of the owning type is a cell of
+      `parent`, either by definition or as reported (see kind). Makes no
+      claim that sibling subtypes are disjoint or that together they cover
+      the parent; say so in notes where it matters. Overlap that is not
+      containment is not a subtype; it stays a MappingEdge (e.g.
+      evidencell:CrossCuttingMatch).
 
-      Not for empirical correspondences between independently defined types,
-      e.g. a transgene-defined or clustering-defined population later found to
-      fall within a classical type. Record those as MappingEdges.
+      Interim. Lit-to-lit relations are planned to move to MappingEdges once
+      edges to operational taxonomy nodes are distinguished from other edges.
+      Each field maps onto an edge: owning node -> lit_type, parent ->
+      taxonomy_type, kind -> relationship (DEFINITIONAL -> a definitional
+      subtype predicate, EMPIRICAL -> skos:broadMatch), confidence ->
+      confidence, sources -> evidence, notes -> caveats.
     attributes:
       parent:
         required: true
@@ -1120,15 +1157,45 @@ classes:
           id of the parent literature type: a canonical node (not a stub, not
           an atlas node) defined in any kb/graphs file. It may be proposed in
           the same ingest run.
+      kind:
+        required: true
+        range: SubtypeKind
+      confidence:
+        required: true
+        range: SubtypeConfidence
       sources:
-        range: PropertySource
+        range: SubtypeSource
         multivalued: true
         inlined_as_list: true
-        description: Quote-keyed sources stating or implying the subset relation.
+        description: >
+          Sources stating or implying the subset relation: quote-keyed
+          literature, or other evidence such as a published taxonomy's
+          hierarchy (see SubtypeSource.evidence_type).
       notes:
         description: >
           Caveats on this assertion: gradient pole, single study, subset claim
-          inferred from a structural subdivision, and similar.
+          inferred from a structural subdivision, partial overlap with a
+          sibling, and similar.
+
+  SubtypeSource:
+    is_a: PropertySource
+    description: >
+      Evidence source for a SubtypeAssertion. Extends PropertySource with an
+      optional evidence_type, so that evidence other than a quoted paper can
+      support the relation. Every source still needs a citable ref (PMID or
+      DOI).
+
+      Example, a published taxonomy's hierarchy:
+        - evidence_type: ATLAS_METADATA
+          ref: "https://doi.org/10.1038/..."
+          notes: "Cluster X (child) sits under supercluster Y (parent) at rank 1"
+    attributes:
+      evidence_type:
+        range: EvidenceType
+        description: >
+          Kind of evidence. Absent means LITERATURE, cited by quote_key. For a
+          published taxonomy's hierarchy use ATLAS_METADATA, with the
+          taxonomy's DOI as ref and the parent and child accessions in notes.
 
   # ── Property provenance ─────────────────────────────────────────
   #
@@ -1600,11 +1667,12 @@ classes:
         multivalued: true
         inlined_as_list: true
         description: >
-          DRAFT (#183). Literature types this type is defined as a subset of
-          (its genus, in CL terms): another type narrowed by an extra
-          criterion such as a nucleus, a marker, a projection target or one
-          end of a gradient. Recorded on the child; a node's children are
-          computed from the KB index.
+          DRAFT (#183). Literature types whose cells include all of this
+          type's cells, by definition or as reported (see
+          SubtypeAssertion.kind). Use the narrowest parent the sources
+          support. Recorded on the child; a node's children are computed from
+          the KB index. Not for atlas (ATLAS_TRANSCRIPTOMIC) nodes, whose
+          hierarchy lives in the taxonomy.
         annotations:
           ingest_phase: identity
       species:

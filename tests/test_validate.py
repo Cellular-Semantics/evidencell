@@ -925,3 +925,83 @@ def test_validate_terms_skips_path_with_no_schema_class(tmp_path: Path):
     assert ok is True
     assert "term check skipped" in msg
     run.assert_not_called()
+
+
+# ── check_subtype_parents (#183) ──────────────────────────────────────────────
+
+import yaml as _yaml
+
+from evidencell import kb_index as _kb_index
+from evidencell import paths as _paths
+from evidencell.validate import check_subtype_parents
+
+_LIT_PARENT = {"id": "parent_type", "definition_basis": "CLASSICAL_MULTIMODAL"}
+
+
+def _subtype_doc(parent: str, extra_nodes: list | None = None) -> dict:
+    child = {
+        "id": "child_type",
+        "definition_basis": "CLASSICAL_ANATOMICAL",
+        "subtype_of": [{"parent": parent, "kind": "DEFINITIONAL", "confidence": "LOW"}],
+    }
+    return {"nodes": [child, *(extra_nodes or [])], "edges": []}
+
+
+@pytest.fixture
+def subtype_kb(tmp_path, monkeypatch):
+    """An isolated kb/graphs tree holding one canonical parent in another file."""
+    (tmp_path / "schema").mkdir()
+    monkeypatch.setattr(_paths, "repo_root", lambda: tmp_path)
+    _kb_index.clear_cache()
+    kb = tmp_path / "kb" / "graphs" / "thalamus"
+    kb.mkdir(parents=True)
+    (kb / "parent_type.yaml").write_text(
+        _yaml.safe_dump({"nodes": [_LIT_PARENT], "edges": []}), encoding="utf-8"
+    )
+    yield kb
+    _kb_index.clear_cache()
+
+
+def test_subtype_parent_in_another_file_resolves(subtype_kb):
+    assert check_subtype_parents(_subtype_doc("parent_type"), subtype_kb / "child_type.yaml") == []
+
+
+def test_subtype_parent_in_same_document_resolves(subtype_kb):
+    doc = _subtype_doc("local_parent", [{"id": "local_parent", "definition_basis": "CLASSICAL_ANATOMICAL"}])
+    assert check_subtype_parents(doc, subtype_kb / "child_type.yaml") == []
+
+
+def test_subtype_parent_missing_is_rejected(subtype_kb):
+    errors = check_subtype_parents(_subtype_doc("no_such_type"), subtype_kb / "child_type.yaml")
+    assert len(errors) == 1 and "no_such_type" in errors[0]
+
+
+def test_subtype_parent_stub_does_not_count(subtype_kb):
+    """A lit stub of the parent in the child's file is not the parent's record."""
+    stub = {"id": "elsewhere", "definition_basis": "CLASSICAL_ANATOMICAL", "reference_stub": True}
+    errors = check_subtype_parents(_subtype_doc("elsewhere", [stub]), subtype_kb / "child_type.yaml")
+    assert len(errors) == 1 and "not a canonical node" in errors[0]
+
+
+def test_subtype_parent_atlas_node_is_rejected(subtype_kb):
+    atlas = {"id": "CS_1", "definition_basis": "ATLAS_TRANSCRIPTOMIC"}
+    errors = check_subtype_parents(_subtype_doc("CS_1", [atlas]), subtype_kb / "child_type.yaml")
+    assert len(errors) == 1 and "atlas node" in errors[0]
+
+
+def test_subtype_parent_self_is_rejected(subtype_kb):
+    errors = check_subtype_parents(_subtype_doc("child_type"), subtype_kb / "child_type.yaml")
+    assert len(errors) == 1 and "itself" in errors[0]
+
+
+def test_subtype_parent_only_in_file_being_replaced_is_rejected(subtype_kb):
+    """The on-disk copy of the file being written does not vouch for a parent the new doc drops."""
+    errors = check_subtype_parents(_subtype_doc("parent_type"), subtype_kb / "parent_type.yaml")
+    assert len(errors) == 1
+
+
+def test_no_subtype_of_skips_index(monkeypatch):
+    def boom():
+        raise AssertionError("index should not be built")
+    monkeypatch.setattr(_kb_index, "get_index", boom)
+    assert check_subtype_parents({"nodes": [_LIT_PARENT]}) == []
