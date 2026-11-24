@@ -65,7 +65,8 @@ nodes:
           scope: adult rat BNSTALG; all neurons tested expressed GAD67, none expressed VGLUT1-3
           quote_key: 4940077_5b783374
     defining_markers:
-      - symbol: Crh
+      - name_in_source: Crh
+        symbol: Crh
         ncbi_gene_id: "NCBIGene:81648"
         sources:
           - marker_type: TRANSCRIPT
@@ -78,7 +79,8 @@ nodes:
             method: single-cell RT-PCR after chronic social stress
             scope: adult rat BNSTALG; only Type III neurons increase Crf mRNA after CSS
             quote_key: 76666373_ccffc91d
-      - symbol: Oxtr
+      - name_in_source: Oxtr
+        symbol: Oxtr
         ncbi_gene_id: "NCBIGene:25342"
         sources:
           - marker_type: TRANSCRIPT
@@ -86,7 +88,8 @@ nodes:
             method: single-cell RT-PCR
             scope: adult rat; 18/19 (95%) Type III neurons OTR+; 0% of PVN parvocellular CRF neurons
             quote_key: 4940077_383bf7ef
-      - symbol: Gad1
+      - name_in_source: Gad1
+        symbol: Gad1
         ncbi_gene_id: "NCBIGene:24379"
         sources:
           - marker_type: TRANSCRIPT
@@ -94,7 +97,8 @@ nodes:
             method: single-cell RT-PCR (GAD67)
             scope: adult rat BNSTALG, all physiological types
             quote_key: 4940077_5b783374
-      - symbol: Cacna1i
+      - name_in_source: Cacna1i
+        symbol: Cacna1i
         modifier: HIGH
         ncbi_gene_id: "NCBIGene:56827"
         sources:
@@ -104,7 +108,8 @@ nodes:
             scope: adult rat BNSTALG; Cav3.3 mRNA in 100% of Type III (vs 47% Type II, 17% Type I)
             quote_key: 8615463_a14b307e
             notes: Reported as Cav3.3 (IT channel alpha subunit).
-      - symbol: Hcn4
+      - name_in_source: Hcn4
+        symbol: Hcn4
         ncbi_gene_id: "NCBIGene:59266"
         sources:
           - marker_type: TRANSCRIPT
@@ -115,7 +120,8 @@ nodes:
               '
             quote_key: 8615463_6a67aab1
             notes: HCN4 is the only Ih alpha subunit in the Type III cluster profile.
-      - symbol: Kcnd2
+      - name_in_source: Kcnd2
+        symbol: Kcnd2
         ncbi_gene_id: "NCBIGene:65180"
         sources:
           - marker_type: TRANSCRIPT
@@ -124,7 +130,8 @@ nodes:
             scope: adult rat; Kv4.2 in the Type III cluster profile (9/11 Type III neurons)
             quote_key: 8615463_6a67aab1
             notes: Reported as Kv4.2 (IA channel alpha subunit).
-      - symbol: Kcnj12
+      - name_in_source: Kcnj12
+        symbol: Kcnj12
         modifier: ENRICHED
         ncbi_gene_id: "NCBIGene:117052"
         sources:
@@ -134,7 +141,8 @@ nodes:
             scope: adult rat; Kir2.2 highest in Type III (64%) vs Type II (20%) and Type I (0%)
             quote_key: 8615463_bc844471
             notes: Reported as Kir2.2 (IK(IR) channel alpha subunit).
-      - symbol: Kcnj4
+      - name_in_source: Kcnj4
+        symbol: Kcnj4
         modifier: ENRICHED
         ncbi_gene_id: "NCBIGene:116649"
         sources:
@@ -145,7 +153,8 @@ nodes:
             quote_key: 8615463_bc844471
             notes: Reported as Kir2.3 (IK(IR) channel alpha subunit).
     negative_markers:
-      - symbol: Oxt
+      - name_in_source: Oxt
+        symbol: Oxt
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:25504"
         sources:
@@ -157,7 +166,8 @@ nodes:
             notes: 'SCOPE LIMITATION: contrast is with PVN parvocellular CRF neurons, not with other BNST cell types.
 
               '
-      - symbol: Cacna1g
+      - name_in_source: Cacna1g
+        symbol: Cacna1g
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:29717"
         sources:
@@ -171,7 +181,8 @@ nodes:
             method: single-cell RT-PCR (Table 3)
             scope: adult rat; only Type II co-express the Cav3.1 IT channel subunit
             quote_key: 8615463_1de4a71c
-      - symbol: Kcna4
+      - name_in_source: Kcna4
+        symbol: Kcna4
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:25469"
         sources:
@@ -180,7 +191,8 @@ nodes:
             method: single-cell RT-PCR
             scope: adult rat; Kv1.4 expressed only in Type II neurons (6%)
             quote_key: 8615463_3be541ed
-      - symbol: Htr7
+      - name_in_source: Htr7
+        symbol: Htr7
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:65032"
         sources:
@@ -189,7 +201,8 @@ nodes:
             method: "prior work cited (Hammack et al., 2009); assay not stated in this paper"
             scope: adult rat; Type I and II express 5-HT7 receptors, Type III does not
             quote_key: 8615463_1de4a71c
-      - symbol: Slc17a7
+      - name_in_source: Slc17a7
+        symbol: Slc17a7
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:116638"
         sources:
@@ -198,7 +211,8 @@ nodes:
             method: single-cell RT-PCR (VGLUT1)
             scope: adult rat BNSTALG; no neuron tested expressed VGLUT1-3
             quote_key: 4940077_5b783374
-      - symbol: Slc17a6
+      - name_in_source: Slc17a6
+        symbol: Slc17a6
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:84487"
         sources:
@@ -207,7 +221,8 @@ nodes:
             method: single-cell RT-PCR (VGLUT2)
             scope: adult rat BNSTALG; no neuron tested expressed VGLUT1-3
             quote_key: 4940077_5b783374
-      - symbol: Slc17a8
+      - name_in_source: Slc17a8
+        symbol: Slc17a8
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:266767"
         sources:
@@ -217,7 +232,8 @@ nodes:
             scope: adult rat BNSTALG; no neuron tested expressed VGLUT1-3
             quote_key: 4940077_5b783374
     neuropeptides:
-      - symbol: Crh
+      - name_in_source: Crh
+        symbol: Crh
         ncbi_gene_id: "NCBIGene:81648"
         sources:
           - marker_type: TRANSCRIPT

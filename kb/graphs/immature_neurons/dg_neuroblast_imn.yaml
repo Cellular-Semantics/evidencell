@@ -46,7 +46,8 @@ nodes:
           scope: "dentate gyrus lineage"
           quote_key: "8479504_a44f9b22"
     defining_markers:
-      - symbol: DCX
+      - name_in_source: DCX
+        symbol: Dcx
         ncbi_gene_id: "NCBIGene:13193"
         sources:
           - ref: "https://doi.org/10.5114/ppn.2021.111950"
@@ -59,7 +60,7 @@ nodes:
             scope: "adult dentate gyrus — type-3 neuroblast"
             quote_key: "279046466_b2e95c41"
             marker_type: NOT_STATED
-      - symbol: PSA-NCAM
+      - name_in_source: PSA-NCAM
         ncbi_gene_id:
         sources:
           - ref: "https://doi.org/10.5114/ppn.2021.111950"
@@ -67,7 +68,8 @@ nodes:
             scope: "adult dentate gyrus migrating neuroblasts"
             quote_key: "252063749_e1c84f70"
             marker_type: NOT_STATED
-      - symbol: Ki67
+      - name_in_source: Ki67
+        symbol: Mki67
         modifier: "proliferative marker"
         ncbi_gene_id: "NCBIGene:17345"
         sources:
@@ -76,7 +78,8 @@ nodes:
             scope: "adult dentate gyrus neuroblasts"
             quote_key: "252063749_e1c84f70"
             marker_type: NOT_STATED
-      - symbol: Nestin
+      - name_in_source: Nestin
+        symbol: Nes
         modifier: "type-2b stage only (co-expressed with DCX)"
         ncbi_gene_id: "NCBIGene:18008"
         sources:
@@ -85,7 +88,8 @@ nodes:
             scope: "adult dentate gyrus — type-2b stage"
             quote_key: "279046466_b2e95c41"
             marker_type: NOT_STATED
-      - symbol: Tbr2
+      - name_in_source: Tbr2
+        symbol: Eomes
         modifier: "intermediate progenitor (type-2) stage"
         ncbi_gene_id: "NCBIGene:13813"
         sources:
@@ -94,7 +98,8 @@ nodes:
             scope: "adult mouse hippocampus intermediate progenitors"
             quote_key: "15994456_c3a87b12"
             marker_type: PROTEIN
-      - symbol: Tis21
+      - name_in_source: Tis21
+        symbol: Btg2
         modifier: "type-2/3 progenitors (transit-amplifying stages)"
         ncbi_gene_id: "NCBIGene:12227"
         sources:
@@ -104,13 +109,16 @@ nodes:
             quote_key: "13799502_a8f3d219"
             marker_type: TRANSGENE_REPORTER
     negative_markers:
-      - symbol: NeuN
+      - name_in_source: NeuN
+        symbol: Rbfox3
         modifier: "NeuN negative at type-3 neuroblast stage"
         ncbi_gene_id: "NCBIGene:52897"
-      - symbol: Calbindin
+      - name_in_source: Calbindin
+        symbol: Calb1
         modifier: "absent until stage 6 (mature granule cell)"
         ncbi_gene_id: "NCBIGene:12307"
-      - symbol: GFAP
+      - name_in_source: GFAP
+        symbol: Gfap
         modifier: "absent in type-2/3 neuroblasts (distinguishes from type-1 RGL)"
         ncbi_gene_id: "NCBIGene:14580"
     neuropeptides: []

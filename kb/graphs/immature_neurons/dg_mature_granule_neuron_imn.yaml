@@ -46,7 +46,8 @@ nodes:
           scope: "dentate gyrus terminal fate"
           quote_key: "13752593_c44e8b77"
     defining_markers:
-      - symbol: Calbindin
+      - name_in_source: Calbindin
+        symbol: Calb1
         modifier: "stage 6 — terminally differentiated"
         ncbi_gene_id: "NCBIGene:12307"
         sources:
@@ -55,7 +56,8 @@ nodes:
             scope: "adult dentate gyrus — mature granule neuron"
             quote_key: "279046466_b2e95c41"
             marker_type: NOT_STATED
-      - symbol: NeuN
+      - name_in_source: NeuN
+        symbol: Rbfox3
         modifier: "mature pan-neuronal marker"
         ncbi_gene_id: "NCBIGene:52897"
         sources:
@@ -64,7 +66,8 @@ nodes:
             scope: "adult dentate gyrus — mature granule neuron"
             quote_key: "279046466_b2e95c41"
             marker_type: NOT_STATED
-      - symbol: Tbr1
+      - name_in_source: Tbr1
+        symbol: Tbr1
         modifier: "terminal TF cascade marker (Pax6 > Ngn2 > Tbr2 > NeuroD > Tbr1)"
         ncbi_gene_id: "NCBIGene:21375"
         sources:
@@ -74,13 +77,15 @@ nodes:
             quote_key: "15994456_c3a87b12"
             marker_type: NOT_STATED
     negative_markers:
-      - symbol: DCX
+      - name_in_source: DCX
+        symbol: Dcx
         modifier: "downregulated at stage 6"
         ncbi_gene_id: "NCBIGene:13193"
-      - symbol: Nestin
+      - name_in_source: Nestin
+        symbol: Nes
         modifier: "absent at terminal differentiation"
         ncbi_gene_id: "NCBIGene:18008"
-      - symbol: PSA-NCAM
+      - name_in_source: PSA-NCAM
         modifier: "downregulated at stage 6"
         ncbi_gene_id:
     neuropeptides: []

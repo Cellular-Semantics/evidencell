@@ -39,7 +39,8 @@ nodes:
           scope: "mouse CA1"
           quote_key: "269246896_c87fdbd0"
     defining_markers:
-      - symbol: Sst
+      - name_in_source: Sst
+        symbol: Sst
         ncbi_gene_id: "NCBIGene:20604"
         sources:
           - marker_type: TRANSCRIPT
@@ -47,7 +48,8 @@ nodes:
             method: "Chamberland 2024 gene-pair rule (Sst+/Chrna2+ > 0)"
             scope: "mouse CA1 (defined on Harris 2018 expression by Chamberland 2024)"
             quote_key: "269246896_c87fdbd0"
-      - symbol: Chrna2
+      - name_in_source: Chrna2
+        symbol: Chrna2
         ncbi_gene_id: "NCBIGene:110902"
         sources:
           - marker_type: TRANSCRIPT
@@ -114,7 +116,8 @@ nodes:
           scope: "mouse CA1"
           quote_key: "269246896_c87fdbd0"
     defining_markers:
-      - symbol: Sst
+      - name_in_source: Sst
+        symbol: Sst
         ncbi_gene_id: "NCBIGene:20604"
         sources:
           - marker_type: TRANSCRIPT
@@ -122,7 +125,8 @@ nodes:
             method: "Chamberland 2024 gene-pair rule (Sst+/Ndnf+ above threshold)"
             scope: "mouse CA1"
             quote_key: "269246896_53fb33cc"
-      - symbol: Ndnf
+      - name_in_source: Ndnf
+        symbol: Ndnf
         ncbi_gene_id: "NCBIGene:68169"
         sources:
           - marker_type: TRANSCRIPT
@@ -130,7 +134,8 @@ nodes:
             method: "Chamberland 2024 gene-pair rule"
             scope: "mouse CA1"
             quote_key: "269246896_c084d5c0"
-      - symbol: Nkx2-1
+      - name_in_source: Nkx2-1
+        symbol: Nkx2-1
         ncbi_gene_id: "NCBIGene:21869"
         sources:
           - marker_type: TRANSGENE_REPORTER
@@ -296,7 +301,8 @@ nodes:
           scope: "mouse hippocampus"
           quote_key: "13398453_9154fc23"
     defining_markers:
-      - symbol: Sst
+      - name_in_source: Sst
+        symbol: Sst
         ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: PMID:31420995
@@ -336,7 +342,8 @@ nodes:
             method: "single-cell RNA-seq"
             scope: "mouse hippocampus"
             quote_key: "201041756_69dc904d"
-      - symbol: Chrna2
+      - name_in_source: Chrna2
+        symbol: Chrna2
         ncbi_gene_id: "NCBIGene:110902"
         sources:
           - ref: PMID:29487503
@@ -359,7 +366,8 @@ nodes:
             method: "scRNA-seq raw counts (GSE124847, re-analysis)"
             scope: "mouse hippocampus OLM cells"
             notes: "Detected in 16/46 cells (35%); sparse expression. Htr3a-OLM 43% vs Sst-OLM 26%. Consistent with scattered Chrna2 at Sst Gaba_3 supertype level in WMBv1."
-      - symbol: Reln
+      - name_in_source: Reln
+        symbol: Reln
         ncbi_gene_id: "NCBIGene:19699"
         sources:
           - ref: PMID:31420995
@@ -367,7 +375,8 @@ nodes:
             method: "single-cell RNA-seq"
             scope: mouse OLM
             quote_key: 201041756_2d5a5fb3
-      - symbol: mGluR1
+      - name_in_source: mGluR1
+        symbol: Grm1
         ncbi_gene_id: "NCBIGene:14816"
         sources:
           - marker_type: TRANSCRIPT
@@ -381,26 +390,33 @@ nodes:
             scope: "mouse hippocampus OLM cells"
             notes: "Grm1 detected in 44/46 cells (96%); mean counts 3901. Near-universal expression confirms mGluR1 as a robust OLM transcript-level marker."
     negative_markers:
-      - symbol: Pvalb
+      - name_in_source: Pvalb
+        symbol: Pvalb
         modifier: LOW
         ncbi_gene_id: "NCBIGene:19293"
-      - symbol: PV
+      - name_in_source: PV
+        symbol: Pvalb
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:19293"
-      - symbol: CB
+      - name_in_source: CB
+        symbol: Calb1
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:12307"
-      - symbol: CR
+      - name_in_source: CR
+        symbol: Calb2
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:12308"
-      - symbol: NOS
+      - name_in_source: NOS
+        symbol: Nos1
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:18125"
-      - symbol: VIP
+      - name_in_source: VIP
+        symbol: Vip
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:22353"
     neuropeptides:
-      - symbol: Sst
+      - name_in_source: Sst
+        symbol: Sst
         ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: PMID:31420995
@@ -413,7 +429,8 @@ nodes:
             method: "scRNA-seq raw counts (GSE124847, re-analysis)"
             scope: "mouse hippocampus OLM cells"
             notes: "Detected in 46/46 cells (100%); see defining_markers.Sst for full detail."
-      - symbol: Npy
+      - name_in_source: Npy
+        symbol: Npy
         ncbi_gene_id: "NCBIGene:109648"
         sources:
           - ref: PMID:31420995
@@ -426,7 +443,8 @@ nodes:
             method: "scRNA-seq raw counts (GSE124847, re-analysis)"
             scope: "mouse hippocampus OLM cells"
             notes: "Detected in 37/46 cells (80%); mean counts 18709. Present in both subtypes (Sst-OLM 70%, Htr3a-OLM 91%)."
-      - symbol: Pnoc
+      - name_in_source: Pnoc
+        symbol: Pnoc
         ncbi_gene_id: "NCBIGene:18155"
         sources:
           - ref: PMID:31420995

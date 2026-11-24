@@ -34,7 +34,8 @@ nodes:
           label: GABAergic neuron
           name_in_source: GABAergic
     defining_markers:
-      - symbol: Nos1
+      - name_in_source: Nos1
+        symbol: Nos1
         ncbi_gene_id: "NCBIGene:18125"
         sources:
           - ref: PMID:20147544
@@ -67,7 +68,8 @@ nodes:
             support: SUPPORT
             source: cite_traverse_2026_04_10
             marker_type: PROTEIN
-      - symbol: Npy
+      - name_in_source: Npy
+        symbol: Npy
         ncbi_gene_id: "NCBIGene:109648"
         sources:
           - ref: PMID:20147544
@@ -75,10 +77,12 @@ nodes:
             method: "scPCR + immunohistochemistry"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
-      - symbol: Lamp5
+      - name_in_source: Lamp5
+        symbol: Lamp5
         ncbi_gene_id: "NCBIGene:76161"
     negative_markers:
-      - symbol: Pvalb
+      - name_in_source: Pvalb
+        symbol: Pvalb
         ncbi_gene_id: "NCBIGene:19293"
         sources:
           - ref: PMID:20147544
@@ -86,7 +90,8 @@ nodes:
             method: "single-cell RT-PCR"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
-      - symbol: Sst
+      - name_in_source: Sst
+        symbol: Sst
         ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: PMID:20147544
@@ -94,7 +99,8 @@ nodes:
             method: "single-cell RT-PCR"
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
-      - symbol: Calb2
+      - name_in_source: Calb2
+        symbol: Calb2
         ncbi_gene_id: "NCBIGene:12308"
         sources:
           - ref: PMID:20147544
@@ -103,7 +109,8 @@ nodes:
             scope: mouse hippocampus
             quote_key: 2405079_6850b924
     neuropeptides:
-      - symbol: Npy
+      - name_in_source: Npy
+        symbol: Npy
         ncbi_gene_id: "NCBIGene:109648"
         sources:
           - ref: PMID:20147544

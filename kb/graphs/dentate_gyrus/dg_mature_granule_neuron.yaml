@@ -37,7 +37,8 @@ nodes:
           scope: adult dentate gyrus
           quote_key: 625292_ff3f8b1d
     defining_markers:
-      - symbol: Calbindin
+      - name_in_source: Calbindin
+        symbol: Calb1
         ncbi_gene_id: "NCBIGene:12307"
         sources:
           - ref: PMID:40519263
@@ -45,7 +46,8 @@ nodes:
             scope: adult dentate gyrus — stage 6
             quote_key: 279046466_998847af
             marker_type: NOT_STATED
-      - symbol: NeuN
+      - name_in_source: NeuN
+        symbol: Rbfox3
         ncbi_gene_id: "NCBIGene:52897"
         sources:
           - ref: PMID:40519263
@@ -53,7 +55,8 @@ nodes:
             scope: adult dentate gyrus — stage 6
             quote_key: 279046466_998847af
             marker_type: NOT_STATED
-      - symbol: Tbr1
+      - name_in_source: Tbr1
+        symbol: Tbr1
         ncbi_gene_id: "NCBIGene:21375"
         sources:
           - ref: PMID:18385329
@@ -62,11 +65,13 @@ nodes:
             quote_key: 15727849_56e1c8ef
             marker_type: NOT_STATED
     negative_markers:
-      - symbol: DCX
+      - name_in_source: DCX
+        symbol: Dcx
         ncbi_gene_id: "NCBIGene:13193"
-      - symbol: Nestin
+      - name_in_source: Nestin
+        symbol: Nes
         ncbi_gene_id: "NCBIGene:18008"
-      - symbol: PSA-NCAM
+      - name_in_source: PSA-NCAM
         ncbi_gene_id:
     neuropeptides: []
     cl_mapping:

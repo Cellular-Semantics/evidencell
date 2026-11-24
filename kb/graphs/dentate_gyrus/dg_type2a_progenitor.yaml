@@ -28,7 +28,8 @@ nodes:
           label: glutamatergic neuron
           name_in_source: glutamatergic
     defining_markers:
-      - symbol: Nestin
+      - name_in_source: Nestin
+        symbol: Nes
         ncbi_gene_id: "NCBIGene:18008"
         sources:
           - ref: PMID:40519263
@@ -36,7 +37,8 @@ nodes:
             scope: adult dentate gyrus
             quote_key: 279046466_998847af
             marker_type: NOT_STATED
-      - symbol: Sox2
+      - name_in_source: Sox2
+        symbol: Sox2
         ncbi_gene_id: "NCBIGene:20674"
         sources:
           - ref: PMID:40519263
@@ -45,9 +47,11 @@ nodes:
             quote_key: 279046466_998847af
             marker_type: NOT_STATED
     negative_markers:
-      - symbol: DCX
+      - name_in_source: DCX
+        symbol: Dcx
         ncbi_gene_id: "NCBIGene:13193"
-      - symbol: GFAP
+      - name_in_source: GFAP
+        symbol: Gfap
         ncbi_gene_id: "NCBIGene:14580"
     neuropeptides: []
     cl_mapping:

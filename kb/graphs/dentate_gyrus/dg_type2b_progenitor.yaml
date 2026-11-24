@@ -28,7 +28,8 @@ nodes:
           label: glutamatergic neuron
           name_in_source: glutamatergic
     defining_markers:
-      - symbol: Nestin
+      - name_in_source: Nestin
+        symbol: Nes
         ncbi_gene_id: "NCBIGene:18008"
         sources:
           - ref: PMID:40519263
@@ -41,7 +42,8 @@ nodes:
             scope: adult mouse hippocampus
             quote_key: 15727849_21c476fd
             marker_type: TRANSGENE_REPORTER
-      - symbol: DCX
+      - name_in_source: DCX
+        symbol: Dcx
         ncbi_gene_id: "NCBIGene:13193"
         sources:
           - ref: PMID:40519263
@@ -54,7 +56,8 @@ nodes:
             scope: adult mouse hippocampus
             quote_key: 15727849_237d8f24
             marker_type: NOT_STATED
-      - symbol: Eomes
+      - name_in_source: Eomes
+        symbol: Eomes
         ncbi_gene_id: "NCBIGene:13813"
         sources:
           - ref: PMID:18385329
@@ -63,9 +66,11 @@ nodes:
             quote_key: 15727849_21c476fd
             marker_type: PROTEIN
     negative_markers:
-      - symbol: NeuN
+      - name_in_source: NeuN
+        symbol: Rbfox3
         ncbi_gene_id: "NCBIGene:52897"
-      - symbol: Calbindin
+      - name_in_source: Calbindin
+        symbol: Calb1
         ncbi_gene_id: "NCBIGene:12307"
     neuropeptides: []
     cl_mapping:

@@ -88,7 +88,8 @@ nodes:
             "Similar to mouse EP, we found 1) SST+/SLC17A6+/SLC32A1+, 2)
             PVALB+/SLC17A6−/SLC32A1+, and 3) SLC17A6+/SLC32A1− neurons in the human GPi"
     neuropeptides:
-      - symbol: Sst
+      - name_in_source: Sst
+        symbol: Sst
         ncbi_gene_id: "NCBIGene:20604"
     cl_mapping:
       cl_term: {id: CL:4310096, label: GPi Shell internal globus pallidus shell projection neuron (Primate), name_in_source: internal globus pallidus shell projection neuron}
@@ -99,11 +100,11 @@ nodes:
         type, supported by cross-species conservation (Wallace et al. 2017) and
         MapMyCells transfer from the primate HMBA group.
     defining_markers:
-      - {symbol: Tbr1, ncbi_gene_id: "NCBIGene:21375"}
-      - {symbol: Cngb3, ncbi_gene_id: "NCBIGene:30952"}  # NCBIGene ID for Mus musculus Cngb3 to be verified
-      - {symbol: Sst, ncbi_gene_id: "NCBIGene:20604"}
+      - {name_in_source: Tbr1, symbol: Tbr1, ncbi_gene_id: "NCBIGene:21375"}
+      - {name_in_source: Cngb3, symbol: Cngb3, ncbi_gene_id: "NCBIGene:30952"}  # NCBIGene ID for Mus musculus Cngb3 to be verified
+      - {name_in_source: Sst, symbol: Sst, ncbi_gene_id: "NCBIGene:20604"}
     negative_markers:
-      - {symbol: Pvalb, modifier: ABSENT, ncbi_gene_id: "NCBIGene:19293"}
+      - {name_in_source: Pvalb, symbol: Pvalb, modifier: ABSENT, ncbi_gene_id: "NCBIGene:19293"}
     is_terminal: false
     proposed_cl_term:
       cl_id: CL:4310096
@@ -168,14 +169,14 @@ edges:
               label: GABAergic neuron
               name_in_source: "GABA"
         defining_markers:
-          - {symbol: Cngb3}
-          - {symbol: Tbr1, ncbi_gene_id: "NCBIGene:21375"}
-          - {symbol: Pax6}
+          - {name_in_source: Cngb3}
+          - {name_in_source: Tbr1, symbol: Tbr1, ncbi_gene_id: "NCBIGene:21375"}
+          - {name_in_source: Pax6}
         merfish_markers:
-          - {symbol: Pax6}
-          - {symbol: Lhx9}
+          - {name_in_source: Pax6}
+          - {name_in_source: Lhx9}
         neuropeptides:
-          - {symbol: Sst, ncbi_gene_id: "NCBIGene:20604"}
+          - {name_in_source: Sst, symbol: Sst, ncbi_gene_id: "NCBIGene:20604"}
         metadata_url: "https://doi.org/10.1038/s41586-023-06812-z"
 
       - evidence_type: ANNOTATION_TRANSFER

@@ -42,7 +42,8 @@ nodes:
           scope: "adult murine piriform cortex"
           quote_key: "235300723_e71a4b88"
     defining_markers:
-      - symbol: DCX
+      - name_in_source: DCX
+        symbol: Dcx
         ncbi_gene_id: "NCBIGene:13193"
         sources:
           - ref: "PMID:29688272"
@@ -65,7 +66,7 @@ nodes:
             scope: "adult rat paleocortex layer II"
             quote_key: "18166210_f74d2a66"
             marker_type: PROTEIN
-      - symbol: PSA-NCAM
+      - name_in_source: PSA-NCAM
         ncbi_gene_id:
         sources:
           - ref: "PMID:29688272"
@@ -78,7 +79,8 @@ nodes:
             scope: "adult rat paleocortex layer II"
             quote_key: "18166210_f74d2a66"
             marker_type: PROTEIN
-      - symbol: TBR1
+      - name_in_source: TBR1
+        symbol: Tbr1
         modifier: "upon resumption of maturation"
         ncbi_gene_id: "NCBIGene:21375"
         sources:
@@ -87,7 +89,7 @@ nodes:
             scope: "adult murine piriform cortex"
             quote_key: "235300723_e71a4b88"
             marker_type: PROTEIN
-      - symbol: CaMKII
+      - name_in_source: CaMKII
         modifier: "upon resumption of maturation"
         ncbi_gene_id:
         sources:
@@ -96,7 +98,8 @@ nodes:
             scope: "adult murine piriform cortex"
             quote_key: "235300723_e71a4b88"
             marker_type: PROTEIN
-      - symbol: CRMP-4
+      - name_in_source: CRMP-4
+        symbol: Dpysl3
         modifier: "TOAD/Ulip/CRMP-4"
         ncbi_gene_id: "NCBIGene:22240"
         sources:
@@ -105,7 +108,7 @@ nodes:
             scope: "adult rat paleocortex layer II"
             quote_key: "18166210_f74d2a66"
             marker_type: PROTEIN
-      - symbol: phospho-CREB
+      - name_in_source: phospho-CREB
         ncbi_gene_id:
         sources:
           - ref: "PMID:18245040"
@@ -114,21 +117,26 @@ nodes:
             quote_key: "18166210_f74d2a66"
             marker_type: PROTEIN
     negative_markers:
-      - symbol: NeuN
+      - name_in_source: NeuN
+        symbol: Rbfox3
         ncbi_gene_id: "NCBIGene:52897"
-      - symbol: c-Fos
+      - name_in_source: c-Fos
+        symbol: Fos
         modifier: "no activity marker expression"
         ncbi_gene_id: "NCBIGene:14281"
-      - symbol: Arc
+      - name_in_source: Arc
+        symbol: Arc
         modifier: "no activity marker expression"
         ncbi_gene_id: "NCBIGene:11838"
-      - symbol: NMDA-receptor
+      - name_in_source: NMDA-receptor
         modifier: "no NMDA receptors"
         ncbi_gene_id:
-      - symbol: glucocorticoid-receptor
+      - name_in_source: glucocorticoid-receptor
+        symbol: Nr3c1
         modifier: "no glucocorticoid receptors"
         ncbi_gene_id: "NCBIGene:14815"
-      - symbol: GFAP
+      - name_in_source: GFAP
+        symbol: Gfap
         modifier: "no glial markers"
         ncbi_gene_id: "NCBIGene:14580"
     neuropeptides: []

@@ -51,7 +51,8 @@ nodes:
           scope: mouse forebrain
           quote_key: 16859318_009e9f36
     defining_markers:
-      - symbol: Cck
+      - name_in_source: Cck
+        symbol: Cck
         ncbi_gene_id: "NCBIGene:12424"
         sources:
           - ref: PMID:10341254
@@ -80,7 +81,8 @@ nodes:
             method: patch-seq (single-cell RNA-seq + patch-clamp)
             scope: mouse neocortex CCK+ interneurons
             quote_key: 7738817_f3d2a066
-      - symbol: Cnr1
+      - name_in_source: Cnr1
+        symbol: Cnr1
         ncbi_gene_id: "NCBIGene:12801"
         sources:
           - ref: PMID:10341254
@@ -88,10 +90,12 @@ nodes:
             method: immunohistochemistry
             scope: rat hippocampus
             quote_key: 480205_62cd73ae
-      - symbol: Vglut3
+      - name_in_source: Vglut3
+        symbol: Slc17a8
         ncbi_gene_id: "NCBIGene:216227"
     negative_markers:
-      - symbol: Pvalb
+      - name_in_source: Pvalb
+        symbol: Pvalb
         ncbi_gene_id: "NCBIGene:19293"
         sources:
           - ref: PMID:25018703
@@ -100,7 +104,8 @@ nodes:
             scope: rat hippocampus
             quote_key: 10540334_418c51dd
     neuropeptides:
-      - symbol: Cck
+      - name_in_source: Cck
+        symbol: Cck
         ncbi_gene_id: "NCBIGene:12424"
         sources:
           - ref: PMID:10341254

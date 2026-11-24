@@ -46,7 +46,8 @@ nodes:
           scope: "dentate gyrus lineage"
           quote_key: "13752593_c44e8b77"
     defining_markers:
-      - symbol: DCX
+      - name_in_source: DCX
+        symbol: Dcx
         modifier: "stage 5 — immature postmitotic"
         ncbi_gene_id: "NCBIGene:13193"
         sources:
@@ -60,7 +61,8 @@ nodes:
             scope: "adult dentate gyrus immature neurons"
             quote_key: "252063749_e1c84f70"
             marker_type: NOT_STATED
-      - symbol: NeuN
+      - name_in_source: NeuN
+        symbol: Rbfox3
         modifier: "stage 5 onward — co-expressed with DCX"
         ncbi_gene_id: "NCBIGene:52897"
         sources:
@@ -74,7 +76,7 @@ nodes:
             scope: "adult dentate gyrus immature neurons"
             quote_key: "252063749_e1c84f70"
             marker_type: NOT_STATED
-      - symbol: PSA-NCAM
+      - name_in_source: PSA-NCAM
         ncbi_gene_id:
         sources:
           - ref: "https://doi.org/10.5114/ppn.2021.111950"
@@ -82,7 +84,8 @@ nodes:
             scope: "adult dentate gyrus immature neurons"
             quote_key: "252063749_e1c84f70"
             marker_type: NOT_STATED
-      - symbol: Tis21
+      - name_in_source: Tis21
+        symbol: Btg2
         modifier: "reappears during maturation phase (stage 5)"
         ncbi_gene_id: "NCBIGene:12227"
         sources:
@@ -92,7 +95,8 @@ nodes:
             quote_key: "13799502_a8f3d219"
             marker_type: TRANSGENE_REPORTER
     negative_markers:
-      - symbol: Calbindin
+      - name_in_source: Calbindin
+        symbol: Calb1
         modifier: "absent at immature stage; appears only at stage 6"
         ncbi_gene_id: "NCBIGene:12307"
     neuropeptides: []

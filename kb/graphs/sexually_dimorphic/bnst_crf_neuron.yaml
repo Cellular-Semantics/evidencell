@@ -151,7 +151,8 @@ nodes:
 
             '
     defining_markers:
-      - symbol: Crh
+      - name_in_source: Crh
+        symbol: Crh
         ncbi_gene_id: NCBIGene:12918
         sources:
           - marker_type: TRANSCRIPT
@@ -164,7 +165,8 @@ nodes:
             method: Crh-IRES-Cre driver + Cre-dependent viral labelling
             scope: adult mouse dlBNST
             quote_key: 215732537_b9bcb599
-      - symbol: Gad1
+      - name_in_source: Gad1
+        symbol: Gad1
         ncbi_gene_id: "NCBIGene:14415"
         sources:
           - marker_type: TRANSCRIPT
@@ -173,7 +175,8 @@ nodes:
             scope: adult rat BNSTALG; all neurons tested, irrespective of physiological type
             quote_key: 4940077_5b783374
             notes: Reported as GAD67; ncbi_gene_id left null pending species-specific ID assignment.
-      - symbol: Oxtr
+      - name_in_source: Oxtr
+        symbol: Oxtr
         ncbi_gene_id: "NCBIGene:18430"
         sources:
           - marker_type: TRANSCRIPT
@@ -184,7 +187,8 @@ nodes:
             notes: 'Measured in Type III neurons specifically, i.e. in the subset captured by bnstalg_type_iii_crf_neuron — not in the whole BNST CRF population.
 
               '
-      - symbol: Grin2d
+      - name_in_source: Grin2d
+        symbol: Grin2d
         ncbi_gene_id: "NCBIGene:14814"
         sources:
           - marker_type: NOT_STATED
@@ -194,10 +198,12 @@ nodes:
             quote_key: 215732537_a72b2aee
             notes: Functional (channel-level) evidence; not a transcript quantification.
     negative_markers:
-      - symbol: Calb1
+      - name_in_source: Calb1
+        symbol: Calb1
         modifier: ABSENT
         ncbi_gene_id: NCBIGene:12307
-      - symbol: Oxt
+      - name_in_source: Oxt
+        symbol: Oxt
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:18429"
         sources:
@@ -209,7 +215,8 @@ nodes:
             notes: 'SCOPE LIMITATION: the evidential role of Oxt-negativity is CONTRAST WITH PVN PARVOCELLULAR CRF NEURONS, not discrimination among BNST cell types. No BNST population is reported as Oxt-positive, so this marker does not separate this node from its BNST neighbours.
 
               '
-      - symbol: Slc17a7
+      - name_in_source: Slc17a7
+        symbol: Slc17a7
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:72961"
         sources:
@@ -218,7 +225,8 @@ nodes:
             method: single-cell RT-PCR (VGLUT1)
             scope: adult rat BNSTALG; no neuron tested expressed VGLUT1-3
             quote_key: 4940077_5b783374
-      - symbol: Slc17a6
+      - name_in_source: Slc17a6
+        symbol: Slc17a6
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:140919"
         sources:
@@ -227,7 +235,8 @@ nodes:
             method: single-cell RT-PCR (VGLUT2)
             scope: adult rat BNSTALG; no neuron tested expressed VGLUT1-3
             quote_key: 4940077_5b783374
-      - symbol: Slc17a8
+      - name_in_source: Slc17a8
+        symbol: Slc17a8
         modifier: ABSENT
         ncbi_gene_id: "NCBIGene:216227"
         sources:
@@ -237,7 +246,8 @@ nodes:
             scope: adult rat BNSTALG; no neuron tested expressed VGLUT1-3
             quote_key: 4940077_5b783374
     neuropeptides:
-      - symbol: Crh
+      - name_in_source: Crh
+        symbol: Crh
         ncbi_gene_id: NCBIGene:12918
         sources:
           - marker_type: NOT_STATED
