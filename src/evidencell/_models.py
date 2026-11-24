@@ -460,7 +460,7 @@ class EvidenceSupport(str, Enum):
     """
     WEAK = "WEAK"
     """
-    Non-zero but weak evidence — e.g. marker match with anatomical mismatch, or a speculative assignment retained as placeholder.
+    Non-zero but weak evidence — e.g. marker match with anatomical mismatch, a speculative assignment retained as placeholder, or indirect projection evidence (correlation, not tracing) for an AXON_TARGET location (see CellCompartment.AXON_TARGET).
 
     """
     NO_EVIDENCE = "NO_EVIDENCE"
@@ -557,7 +557,12 @@ class CellCompartment(str, Enum):
     """
     AXON_TARGET = "AXON_TARGET"
     """
-    Axonal projection target region
+    Axonal projection target region: a region where axons of this type terminate.
+    Direct evidence: anterograde or retrograde tracing of the type's cells, single-cell axon reconstruction, or projection-seq / retro-seq. Sources carrying it set support: SUPPORT (or omit support).
+    Indirect evidence is allowed, marked as weak. Examples: gene-expression correlation with a projection atlas (e.g. ThalamoSeq); co-clustering with retrogradely labelled cells in an integrated dataset; a target reported for a broader population that contains the type. Each such source sets support: WEAK and a method naming the inference, e.g. "inferred from correlation with ThalamoSeq projection patterns, not traced".
+    Where the source reports a target jointly for several types (e.g. "PVT1/PVT3"), say so in the source's scope.
+    Not AXON_TARGET: afferent inputs to the type; targets reached only through a further synapse (disynaptic targets); regions the type's axons only pass through.
+
     """
     DENDRITE = "DENDRITE"
     """
@@ -1481,7 +1486,7 @@ For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only
                        'obligation_level': 'REQUIRED',
                        'range': 'NCBITaxonClassTerm'}],
          'domain_of': ['CellTypeNode', 'CellTypeMappingGraph', 'BulkDataset']} })
-    anatomical_location: Optional[list[AnatomicalLocation]] = Field(default=None, description="""Anatomical location(s) of this cell type. Each entry is an AnatomicalLocation (OntologyTerm + optional compartment). Prefer Allen atlas terms (MBA for mouse; DHBA or HBA for human/primate); use UBERON as fallback. Give the most specific structure the sources support. name_in_source carries the region name as written in the source (e.g. \"GPi shell region\", \"GPi\"). Multiple entries for types that span regions or are defined relative to multiple structures. Set compartment (SOMA, AXON_TARGET, DENDRITE) when a type has different compartments in different regions (e.g. OLM: soma in SO, axon in SLM). Leave compartment absent when location is not compartment-specific or compartment is unknown.
+    anatomical_location: Optional[list[AnatomicalLocation]] = Field(default=None, description="""Anatomical location(s) of this cell type. Each entry is an AnatomicalLocation (OntologyTerm + optional compartment). Prefer Allen atlas terms (MBA for mouse; DHBA or HBA for human/primate); use UBERON as fallback. Give the most specific structure the sources support. name_in_source carries the region name as written in the source (e.g. \"GPi shell region\", \"GPi\"). Multiple entries for types that span regions or are defined relative to multiple structures. Set compartment (SOMA, AXON_TARGET, DENDRITE) when a type has different compartments in different regions (e.g. OLM: soma in SO, axon in SLM). Leave compartment absent when location is not compartment-specific or compartment is unknown. For which evidence an AXON_TARGET entry needs, and when its sources set support: WEAK, see CellCompartment.AXON_TARGET. AXON_TARGET and DENDRITE entries are excluded from soma-location matching against atlas nodes, so recording a weakly supported projection target does not affect candidate scoring.
 """, json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
                                           'value': 'properties'}},
          'bindings': [{'binds_value_of': 'id',
