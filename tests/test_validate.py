@@ -5,7 +5,10 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
+import yaml as _yaml
 
+from evidencell import kb_index as _kb_index
+from evidencell import paths as _paths
 from evidencell.validate import (
     PLACEHOLDER_SNIPPETS,
     _collect_quote_keys,
@@ -13,6 +16,7 @@ from evidencell.validate import (
     check_md_ids,
     check_quote_keys,
     check_ref_pmids,
+    check_subtype_parents,
     linkml_validate,
     oak_dbs_available,
     parse_md_annotations,
@@ -928,12 +932,6 @@ def test_validate_terms_skips_path_with_no_schema_class(tmp_path: Path):
 
 
 # ── check_subtype_parents (#183) ──────────────────────────────────────────────
-
-import yaml as _yaml
-
-from evidencell import kb_index as _kb_index
-from evidencell import paths as _paths
-from evidencell.validate import check_subtype_parents
 
 _LIT_PARENT = {"id": "parent_type", "definition_basis": "CLASSICAL_MULTIMODAL"}
 
