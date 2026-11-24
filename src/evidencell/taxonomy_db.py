@@ -3522,7 +3522,8 @@ def _cmd_find_candidates(
                 + ")"
                 for g, r in sorted(expr.not_measured.items())
             )
-            + " — set the marker's ncbi_gene_id (just resolve-gene-names)",
+            + " — set the marker's ncbi_gene_id: see the gene-id-curation skill"
+            " (.claude/skills/gene-id-curation/SKILL.md)",
             file=sys.stderr,
         )
 

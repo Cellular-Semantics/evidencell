@@ -130,7 +130,8 @@ specification):
   `mGluR1` → Grm1). A name several genes claim is `AMBIGUOUS_SYMBOL` (the
   stderr line lists them) and scores 0 until the marker's `ncbi_gene_id` is
   set. `gene_resolution` in the discovery JSON records how each name
-  resolved.
+  resolved. To fix a `NOT MEASURED` marker: Load the `gene-id-curation` skill (or
+  read `.claude/skills/gene-id-curation/SKILL.md`).
 - **Soft scoring** within the surviving pool:
   - **Graded region score** from `region_fraction_100um`:
     +2 if ≥ 0.5, +1 if ≥ 0.1, +0.5 if > 0, else 0.

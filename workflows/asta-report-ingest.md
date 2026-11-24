@@ -542,12 +542,11 @@ Quotes can validate these node property fields:
      neurons are GABAergic, for example). If it is genuinely unresolvable, say
      so in `notes`: find-candidates scores on NT type, and a silently missing
      value weakens candidate retrieval with no signal to the mapper.
-   - defining_markers: symbol as the report writes it; ncbi_gene_id from
-     `just resolve-gene-names {taxonomy_id|NCBITaxon:…} {symbol…}` in the
-     organism the report describes (CLAUDE.md § "Gene IDs on classical
-     markers"). Accept EXACT_SYMBOL / CASE_INSENSITIVE_SYMBOL /
-     UNIQUE_SYNONYM / OVERRIDE; leave it null for AMBIGUOUS or NO_MATCH —
-     evidence-extraction settles those from the primary paper
+   - defining_markers: symbol as the report writes it, with ncbi_gene_id.
+     Load the `gene-id-curation` skill (or read
+      `.claude/skills/gene-id-curation/SKILL.md`).
+     AMBIGUOUS names stay null here — evidence-extraction settles them from
+     the primary paper
    - negative_markers, neuropeptides: as identified
    - morphology: {description: "...", sources: [...]}
    - electrophysiology: {description: "...", sources: [...]}

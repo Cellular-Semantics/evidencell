@@ -916,7 +916,7 @@ def check_marker_gene_ids(
             errors.append(
                 f"{where} is {rec['label']}; {symbol!r} is not its label or a known "
                 "synonym. Check the ID, or resolve the name with "
-                "`just resolve-gene-names`."
+                "`just resolve-gene-names` (see the gene-id-curation skill)."
             )
     return errors, unchecked
 

@@ -178,7 +178,8 @@ in `src/evidencell/expression_cache.py`.
   `just fetch-mapmycells {taxonomy_id}`. There is no metadata-only fallback.
 - Names that can't be measured are recorded and reported — never a silent
   `{}`: `NO_ENSEMBL_MAPPING` (no gene of the taxonomy has that name) or
-  `AMBIGUOUS_SYMBOL` (several do; set the marker's `ncbi_gene_id`).
+  `AMBIGUOUS_SYMBOL` (several do). Either way, set the marker's
+  `ncbi_gene_id` with the `gene-id-curation` skill.
 - Marker scoring in `find-candidates` uses expression only. The atlas
   node's metadata marker lists are cross-checked and disagreements reported
   as `marker_discrepancies` (carried into Stage B property-comparison notes).
@@ -192,6 +193,7 @@ in `src/evidencell/expression_cache.py`.
 | Skill | When to invoke |
 |---|---|
 | `query-taxonomy-db` | Any taxonomy candidate search, field coverage check, or DB exploration. **Do not read taxonomy YAML files directly for query purposes** — the DB is the query interface; YAML is the edit interface. Atlas expression is not in YAML: read it through `TaxonomyDB.expression()`, which loads uncached genes from the MapMyCells stats file into the DB's `node_expression` table on demand (#189). Querying `node_expression` directly only sees genes already cached. |
+| `gene-id-curation` | Giving a classical marker an `ncbi_gene_id`, or fixing a `NOT MEASURED` (`AMBIGUOUS_SYMBOL` / `NO_ENSEMBL_MAPPING`) marker. The single source for literature marker → gene ID rules. |
 | `retrieve-dataset` | Downloading and inspecting an expression dataset (h5ad, RDS, loom, mtx). | Any time an orchestrator is added, removed, renamed, or its status changes, update `WORKFLOW.md` in the same commit. The overview table, inputs table, and typical workflow diagram must all reflect the current state. Never leave a stale status entry or a duplicate section.
 ### Provenance
 
@@ -283,19 +285,9 @@ network). `build-taxonomy-db` loads it offline.
 ### Gene IDs on classical markers
 
 Every classical marker (`defining_markers`, `negative_markers`,
-`neuropeptides`) should carry `ncbi_gene_id`, in the node's species (a gene
-of a descendant species is fine on a higher-taxon node, e.g. a mouse gene on
-a Murinae node). Get it from `just resolve-gene-names {taxonomy_id|NCBITaxon:…}
-NAME…`: `EXACT_SYMBOL` / `CASE_INSENSITIVE_SYMBOL` / `UNIQUE_SYNONYM` /
-`OVERRIDE` can be taken as given; `AMBIGUOUS` lists the genes that claim the
-name — pick one from that list using the paper (quote its definition if it
-gives one), never another gene; `NO_MATCH` means it is not a gene name
-(antibody clone, PTM state, glycoform, exogenous label, gene family) —
-classify it and leave `ncbi_gene_id` empty. A reviewed name → gene decision
-that should apply everywhere goes in `kb/taxonomy/{taxonomy_id}/gene_overrides.tsv`
-with a rationale. The pre-edit hook checks every `ncbi_gene_id` (exists,
-right species, symbol is the gene's label or a known name); markers that
-can't take an ID are listed in `research/gene_identity_216/unresolvable_markers.tsv`.
+`neuropeptides`) should carry `ncbi_gene_id`, in the node's species. Before
+adding or editing one, or when a marker is reported `NOT MEASURED`:
+Load the `gene-id-curation` skill (or read `.claude/skills/gene-id-curation/SKILL.md`).
 
 ---
 
