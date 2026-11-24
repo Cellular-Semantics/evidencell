@@ -99,7 +99,7 @@ def test_ingest_phase_tags():
                 tagged.setdefault(str(ann["ingest_phase"].value), []).append(slot.name)
     assert set(tagged) == set(PHASES)
     assert tagged["classification"] == ["cl_mapping"]
-    assert {"name", "synonyms", "definition_basis", "species"} == set(tagged["identity"])
+    assert {"name", "synonyms", "definition_basis", "subtype_of", "species"} == set(tagged["identity"])
 
 
 def test_schema_names_no_tools():
