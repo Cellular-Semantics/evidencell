@@ -345,9 +345,9 @@ def test_non_co_locating_edge_gets_a_thin_lit_stub():
     doc = _doc(
         [
             {"id": "a", "name": "A", "definition_basis": "CLASSICAL_MULTIMODAL",
-             "defining_markers": [{"symbol": "Sst"}], "notes": "lots of curated content"},
+             "defining_markers": [{"name_in_source": "Sst"}], "notes": "lots of curated content"},
             {"id": "b", "name": "B", "definition_basis": "CLASSICAL_MULTIMODAL",
-             "defining_markers": [{"symbol": "Pvalb"}], "notes": "also lots"},
+             "defining_markers": [{"name_in_source": "Pvalb"}], "notes": "also lots"},
         ],
         [_rel_edge("e1", "a", "b", "skos:closeMatch")],
     )
@@ -364,7 +364,7 @@ def test_non_co_locating_edge_gets_a_thin_lit_stub():
     assert "notes" not in stub
     # and the canonical record is untouched in its own file
     canon = [n for n in by_rep["b"]["nodes"] if n["id"] == "b"][0]
-    assert canon["defining_markers"] == [{"symbol": "Pvalb"}]
+    assert canon["defining_markers"] == [{"name_in_source": "Pvalb"}]
     assert "reference_stub" not in canon
 
 

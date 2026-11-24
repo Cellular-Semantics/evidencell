@@ -16,13 +16,18 @@ from evidencell.gene_identity import (
     AMBIGUOUS,
     CASE_INSENSITIVE_SYMBOL,
     EXACT_SYMBOL,
+    NO_GENE,
+    NO_GENE_ID,
     NO_MATCH,
     OVERRIDE,
     PINNED_ID,
     UNIQUE_SYNONYM,
+    Pin,
     check_marker_gene_ids,
     load_gene_tables,
+    marker_display,
     marker_gene_ids,
+    marker_name,
     normalise_name,
     read_gene_ids,
     resolve_names,
@@ -153,6 +158,18 @@ def test_pinned_id_of_another_species_falls_back_to_name(con):
     assert (m.method, m.gene.stats_symbol) == (CASE_INSENSITIVE_SYMBOL, "Sst")
 
 
+def test_pin_of_another_species_resolves_by_official_symbol(con):
+    """A rat CB marker pinned to rat Calb1 reaches mouse Calb1 through its
+    official symbol, not the ambiguous source wording (#244)."""
+    m = resolve_names(con, ["CB"], {"CB": Pin("NCBIGene:83839", "Calb1")})["CB"]
+    assert (m.method, m.gene.stats_symbol) == (EXACT_SYMBOL, "Calb1")
+
+
+def test_curated_marker_without_gene_is_not_resolved_by_name(con):
+    m = resolve_names(con, ["PV"], {"PV": NO_GENE})["PV"]
+    assert m.method == NO_GENE_ID and m.gene is None
+
+
 def test_override_takes_precedence(tmp_path, tax_dir):
     (tax_dir / "gene_overrides.tsv").write_text(
         "# reviewed overrides\n"
@@ -185,11 +202,42 @@ def test_override_without_review_is_rejected(tax_dir):
 
 def test_marker_gene_ids():
     node = {
-        "defining_markers": [{"symbol": "PV", "ncbi_gene_id": "NCBIGene:19293"}, {"symbol": "X"}],
-        "negative_markers": [{"symbol": "CB", "ncbi_gene_id": "NCBIGene:12307"}],
+        "defining_markers": [
+            {"name_in_source": "PV", "symbol": "Pvalb", "ncbi_gene_id": "NCBIGene:19293"},
+            {"name_in_source": "PSA-NCAM"},
+        ],
+        "negative_markers": [
+            {"name_in_source": "CB", "symbol": "Calb1", "ncbi_gene_id": "NCBIGene:12307"},
+        ],
         "neuropeptides": ["Sst"],
     }
-    assert marker_gene_ids(node) == {"PV": "NCBIGene:19293", "CB": "NCBIGene:12307"}
+    assert marker_gene_ids(node) == {
+        "PV": Pin("NCBIGene:19293", "Pvalb"),
+        "PSA-NCAM": NO_GENE,
+        "CB": Pin("NCBIGene:12307", "Calb1"),
+    }
+
+
+def test_marker_gene_ids_reads_pre_244_markers():
+    """Legacy read path: ``symbol`` was the source wording; an ID pins it,
+    and a marker without one is left to resolve by name."""
+    node = {"defining_markers": [{"symbol": "PV", "ncbi_gene_id": "NCBIGene:19293"},
+                                 {"symbol": "X"}]}
+    assert marker_gene_ids(node) == {"PV": Pin("NCBIGene:19293", None)}
+
+
+@pytest.mark.parametrize(
+    "marker, name, display",
+    [
+        ({"name_in_source": "NeuN", "symbol": "Rbfox3"}, "NeuN", "NeuN (Rbfox3)"),
+        ({"name_in_source": "SST", "symbol": "Sst"}, "SST", "SST"),
+        ({"name_in_source": "PSA-NCAM"}, "PSA-NCAM", "PSA-NCAM"),
+        ({"symbol": "PV"}, "PV", "PV"),  # pre-#244: symbol was the wording
+        ("Sst", "Sst", "Sst"),
+    ],
+)
+def test_marker_name_and_display(marker, name, display):
+    assert (marker_name(marker), marker_display(marker)) == (name, display)
 
 
 # ── Translator response parsing + fetch (network mocked) ─────────────────────
@@ -281,8 +329,14 @@ def test_resolve_for_curation_local(tmp_path, tax_dir, monkeypatch):
 # ── Hook check ───────────────────────────────────────────────────────────────
 
 
-def _graph(symbol: str, gid: str, species: str | None = "NCBITaxon:10090") -> dict:
-    node: dict = {"id": "n1", "defining_markers": [{"symbol": symbol, "ncbi_gene_id": gid}]}
+def _graph(symbol: str | None, gid: str | None, species: str | None = "NCBITaxon:10090",
+           name: str = "PV") -> dict:
+    m: dict = {"name_in_source": name}
+    if symbol:
+        m["symbol"] = symbol
+    if gid:
+        m["ncbi_gene_id"] = gid
+    node: dict = {"id": "n1", "defining_markers": [m]}
     if species:
         node["species"] = {"id": species, "label": "x"}
     return {"nodes": [node]}
@@ -307,18 +361,42 @@ def _check(doc, cache, tmp_path, taxslim=None):
     )
 
 
-def test_hook_check_accepts_synonym_symbol(cache, tmp_path):
-    assert _check(_graph("PV", "NCBIGene:19293"), cache, tmp_path) == ([], [])
+def test_hook_check_accepts_official_symbol(cache, tmp_path):
+    assert _check(_graph("Pvalb", "NCBIGene:19293"), cache, tmp_path) == ([], [])
+
+
+def test_hook_check_ignores_name_in_source(cache, tmp_path):
+    """The source's wording is never checked — any name may pin any gene
+    as long as symbol is that gene's official symbol (#244)."""
+    doc = _graph("Pvalb", "NCBIGene:19293", name="anti-PV clone 235")
+    assert _check(doc, cache, tmp_path) == ([], [])
 
 
 def test_hook_check_rejects_nonexistent_id(cache, tmp_path):
-    errors, _ = _check(_graph("PV", "NCBIGene:999999999"), cache, tmp_path)
+    errors, _ = _check(_graph("Pvalb", "NCBIGene:999999999"), cache, tmp_path)
     assert len(errors) == 1 and "does not resolve" in errors[0]
 
 
 def test_hook_check_rejects_symbol_mismatch(cache, tmp_path):
     errors, _ = _check(_graph("Sst", "NCBIGene:19293"), cache, tmp_path)
-    assert len(errors) == 1 and "'Sst' is not its label or a known synonym" in errors[0]
+    assert len(errors) == 1 and "symbol must be its official symbol 'Pvalb', not 'Sst'" in errors[0]
+
+
+def test_hook_check_rejects_synonym_as_symbol(cache, tmp_path):
+    """A known synonym is not the official symbol: it belongs in name_in_source."""
+    errors, _ = _check(_graph("PV", "NCBIGene:19293"), cache, tmp_path)
+    assert len(errors) == 1 and "official symbol 'Pvalb', not 'PV'" in errors[0]
+
+
+@pytest.mark.parametrize("symbol, gid, lack", [("Pvalb", None, "no ncbi_gene_id"),
+                                               (None, "NCBIGene:19293", "no symbol")])
+def test_hook_check_requires_symbol_and_id_together(cache, tmp_path, symbol, gid, lack):
+    errors, _ = _check(_graph(symbol, gid), cache, tmp_path)
+    assert len(errors) == 1 and lack in errors[0]
+
+
+def test_hook_check_accepts_marker_with_no_gene(cache, tmp_path):
+    assert _check(_graph(None, None, name="PSA-NCAM"), cache, tmp_path) == ([], [])
 
 
 @pytest.fixture
@@ -336,13 +414,13 @@ def taxslim(tmp_path: Path, monkeypatch) -> Path:
 
 def test_hook_check_rejects_species_mismatch(cache, tmp_path, taxslim):
     errors, _ = _check(
-        _graph("PV", "NCBIGene:19293", "NCBITaxon:10116"), cache, tmp_path, taxslim
+        _graph("Pvalb", "NCBIGene:19293", "NCBITaxon:10116"), cache, tmp_path, taxslim
     )
     assert len(errors) == 1 and "but the node's species is NCBITaxon:10116" in errors[0]
 
 
 def test_hook_check_species_comes_from_graph_when_node_has_none(cache, tmp_path, taxslim):
-    doc = _graph("PV", "NCBIGene:19293", species=None)
+    doc = _graph("Pvalb", "NCBIGene:19293", species=None)
     doc["species"] = {"id": "NCBITaxon:10116"}
     errors, _ = _check(doc, cache, tmp_path, taxslim)
     assert len(errors) == 1 and "NCBITaxon:10116" in errors[0]
@@ -350,15 +428,15 @@ def test_hook_check_species_comes_from_graph_when_node_has_none(cache, tmp_path,
 
 def test_hook_check_without_taxslim_reports_species_unchecked(cache, tmp_path, monkeypatch):
     monkeypatch.setattr(gi, "_TAXON_PARENTS", None)
-    errors, unchecked = _check(_graph("PV", "NCBIGene:19293", "NCBITaxon:10116"), cache, tmp_path)
+    errors, unchecked = _check(_graph("Pvalb", "NCBIGene:19293", "NCBITaxon:10116"), cache, tmp_path)
     assert errors == []
     assert unchecked and "just fetch-oak-dbs" in unchecked[0]
 
 
 def test_hook_check_accepts_gene_of_descendant_taxon(cache, tmp_path, taxslim):
     obo = taxslim
-    assert _check(_graph("PV", "NCBIGene:5816", "NCBITaxon:9443"), cache, tmp_path, obo)[0] == []
-    errors, _ = _check(_graph("PV", "NCBIGene:5816", "NCBITaxon:10090"), cache, tmp_path, obo)
+    assert _check(_graph("PVALB", "NCBIGene:5816", "NCBITaxon:9443"), cache, tmp_path, obo)[0] == []
+    errors, _ = _check(_graph("PVALB", "NCBIGene:5816", "NCBITaxon:10090"), cache, tmp_path, obo)
     assert errors and "NCBITaxon:9606 gene" in errors[0]
 
 
@@ -382,8 +460,8 @@ def test_hook_check_looks_up_and_caches_new_ids(cache, tmp_path, monkeypatch):
 
     monkeypatch.setattr(gi, "nodenorm", fake_nodenorm)
     monkeypatch.setattr(gi, "nameres_synonyms", lambda ids, **kw: {"NCBIGene:14415": ["GAD67"]})
-    assert _check(_graph("GAD67", "NCBIGene:14415"), cache, tmp_path) == ([], [])
-    assert _check(_graph("GAD67", "NCBIGene:14415"), cache, tmp_path) == ([], [])
+    assert _check(_graph("Gad1", "NCBIGene:14415", name="GAD67"), cache, tmp_path) == ([], [])
+    assert _check(_graph("Gad1", "NCBIGene:14415", name="GAD67"), cache, tmp_path) == ([], [])
     assert calls == [["NCBIGene:14415"]]  # second check served from the cache file
     assert json.loads(cache.read_text())["NCBIGene:14415"]["label"] == "Gad1"
 
@@ -394,7 +472,7 @@ def test_hook_check_seeds_from_committed_gene_ids(tmp_path, tax_dir, monkeypatch
 
     monkeypatch.setattr(gi, "nodenorm", offline)
     errors, unchecked = check_marker_gene_ids(
-        _graph("calbindin", "NCBIGene:12307"), cache_path=tmp_path / "c.json",
+        _graph("Calb1", "NCBIGene:12307", name="calbindin"), cache_path=tmp_path / "c.json",
         taxonomy_root=tax_dir.parent, taxslim=tmp_path / "no.obo",
     )
     assert (errors, unchecked) == ([], [])
@@ -453,17 +531,3 @@ def test_duplicate_symbol_prefers_the_gene_with_an_ncbi_id(tmp_path):
     load_gene_tables(c, d)
     m = resolve_names(c, ["Kiss1"])["Kiss1"]
     assert (m.method, m.gene.ensembl_id) == (EXACT_SYMBOL, "ENSMUSG09")
-
-
-def test_hook_check_accepts_reviewed_override_name(cache, tmp_path):
-    tax = tmp_path / "taxroot" / "T"
-    tax.mkdir(parents=True)
-    (tax / "gene_overrides.tsv").write_text(
-        "name\tncbi_gene_id\tsymbol\trationale\treviewed_by\n"
-        "Parv-ab\tNCBIGene:19293\tPvalb\tantibody name\tDOS\n"
-    )
-    errors, _ = check_marker_gene_ids(
-        _graph("Parv-ab", "NCBIGene:19293"), cache_path=cache,
-        taxonomy_root=tmp_path / "taxroot", taxslim=tmp_path / "no.obo",
-    )
-    assert errors == []

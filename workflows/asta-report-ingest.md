@@ -542,7 +542,8 @@ Quotes can validate these node property fields:
      neurons are GABAergic, for example). If it is genuinely unresolvable, say
      so in `notes`: find-candidates scores on NT type, and a silently missing
      value weakens candidate retrieval with no signal to the mapper.
-   - defining_markers: symbol as the report writes it, with ncbi_gene_id.
+   - defining_markers: name_in_source as the report writes it, with symbol +
+     ncbi_gene_id for the gene it means.
      Load the `gene-id-curation` skill (or read
       `.claude/skills/gene-id-curation/SKILL.md`).
      AMBIGUOUS names stay null here — evidence-extraction settles them from

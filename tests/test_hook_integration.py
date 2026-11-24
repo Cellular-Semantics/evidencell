@@ -219,7 +219,7 @@ nodes:
   - id: type_a
     name: Type A
     defining_markers:
-      - symbol: Sst
+      - name_in_source: Sst
         sources:
           - ref: "PMID:31420995"
             quote_key: "INVENTED_KEY_deadbeef00"
@@ -245,7 +245,7 @@ nodes:
   - id: type_a
     name: Type A
     defining_markers:
-      - symbol: FakeMarker
+      - name_in_source: FakeMarker
         sources:
           - ref: "PMID:00000001"
   - id: type_b
@@ -478,14 +478,20 @@ def test_valid_kb_file_passes():
 # ── Gene IDs on markers (#216) ────────────────────────────────────────────────
 
 
-def _fixture_with_sst_gene_id(gene_id: str) -> str:
-    """Valid fixture with the first node's SST marker pointed at ``gene_id``."""
+def _sst_marker(data: dict) -> dict:
+    node = next(n for n in data["nodes"] if n.get("defining_markers"))
+    return next(m for m in node["defining_markers"] if m["name_in_source"] == "SST")
+
+
+def _fixture_with_sst_gene_id(gene_id: str, symbol: str = "SST") -> str:
+    """Valid fixture with the first node's SST marker pointed at ``gene_id``
+    (``symbol`` = the official symbol written alongside it)."""
     import yaml
 
     data = yaml.safe_load(VALID_KB_FIXTURE.read_text())
-    node = next(n for n in data["nodes"] if n.get("defining_markers"))
-    marker = next(m for m in node["defining_markers"] if m["symbol"] == "SST")
+    marker = _sst_marker(data)
     marker["ncbi_gene_id"] = gene_id
+    marker["symbol"] = symbol
     return yaml.safe_dump(data, sort_keys=False)
 
 
@@ -501,8 +507,8 @@ def _offline_gene_env(tmp_path: Path, cache: dict) -> dict[str, str]:
 
 
 def test_gene_id_naming_another_gene_blocked(tmp_path: Path):
-    """An ncbi_gene_id whose gene isn't the marker's symbol is blocked
-    (cached lookup; no network)."""
+    """An ncbi_gene_id whose official symbol isn't the marker's symbol is
+    blocked (cached lookup; no network)."""
     if not VALID_KB_FIXTURE.exists():
         pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
     env = _offline_gene_env(tmp_path, {
@@ -511,7 +517,21 @@ def test_gene_id_naming_another_gene_blocked(tmp_path: Path):
     r = _run_hook(_write_payload(_fixture_with_sst_gene_id("NCBIGene:5816")), env_extra=env)
     assert r.returncode == 2, r.stderr
     assert "Gene ID errors" in r.stderr
-    assert "NCBIGene:5816 is PVALB; 'SST' is not its label or a known synonym" in r.stderr
+    assert "NCBIGene:5816 is PVALB; symbol must be its official symbol 'PVALB', not 'SST'" in r.stderr
+
+
+def test_symbol_without_gene_id_blocked(tmp_path: Path):
+    """symbol and ncbi_gene_id come together (#244): a symbol alone is blocked."""
+    import yaml
+
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    data = yaml.safe_load(VALID_KB_FIXTURE.read_text())
+    _sst_marker(data).pop("ncbi_gene_id")
+    env = _offline_gene_env(tmp_path, {})
+    r = _run_hook(_write_payload(yaml.safe_dump(data, sort_keys=False)), env_extra=env)
+    assert r.returncode == 2, r.stderr
+    assert "marker 'SST' has symbol but no ncbi_gene_id" in r.stderr
 
 
 def test_gene_id_that_does_not_exist_blocked(tmp_path: Path):
@@ -974,3 +994,81 @@ def test_refs_paper_corpus_id_stem_mismatch_blocked(tmp_path: Path):
     region_dir, _ = _refs_region(tmp_path)
     r = _hook_write(region_dir / "papers" / "99999.json", _PAPER)
     assert r.returncode == 2
+
+
+# ── Antibody RRIDs on marker sources (#244) ───────────────────────────────────
+
+
+def _fixture_with_sst_antibody(rrid: str) -> str:
+    """Valid fixture with a PROTEIN source naming an antibody on the SST marker."""
+    import yaml
+
+    data = yaml.safe_load(VALID_KB_FIXTURE.read_text())
+    _sst_marker(data)["sources"] = [{
+        "ref": "https://doi.org/10.1016/j.neuron.2017.03.017",
+        "marker_type": "PROTEIN",
+        "method": "IHC",
+        "antibody": {"name_in_source": "anti-SST", "rrid": rrid},
+    }]
+    return yaml.safe_dump(data, sort_keys=False)
+
+
+def _offline_rrid_env(tmp_path: Path, cache: dict) -> dict[str, str]:
+    cache_file = tmp_path / "rrid_cache.json"
+    cache_file.write_text(json.dumps(cache))
+    return {
+        **_offline_gene_env(tmp_path, {}),
+        "EVIDENCELL_RRID_CACHE": str(cache_file),
+        "EVIDENCELL_RRID_URL": "http://127.0.0.1:9",
+    }
+
+
+def test_unknown_rrid_blocked(tmp_path: Path):
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = _offline_rrid_env(tmp_path, {"RRID:AB_999999999": {"missing": True}})
+    r = _run_hook(_write_payload(_fixture_with_sst_antibody("RRID:AB_999999999")), env_extra=env)
+    assert r.returncode == 2, r.stderr
+    assert "Antibody RRID errors" in r.stderr
+    assert "RRID:AB_999999999 is not in the Antibody Registry" in r.stderr
+
+
+def test_rrid_check_bypass_env(tmp_path: Path):
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = _offline_rrid_env(tmp_path, {"RRID:AB_999999999": {"missing": True}})
+    env["EVIDENCELL_SKIP_RRID_CHECK"] = "1"
+    r = _run_hook(_write_payload(_fixture_with_sst_antibody("RRID:AB_999999999")), env_extra=env)
+    assert "Antibody RRID check bypassed via EVIDENCELL_SKIP_RRID_CHECK=1" in r.stderr
+    assert "not in the Antibody Registry" not in r.stderr
+
+
+@pytest.mark.integration
+def test_rrid_check_soft_skips_offline_and_says_so(tmp_path: Path):
+    """Offline with nothing cached: the edit is allowed, and the RRID is
+    listed under "Checks NOT run"."""
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = _offline_rrid_env(tmp_path, {})
+    r = _run_hook(_write_payload(_fixture_with_sst_antibody("RRID:AB_10711040")), env_extra=env)
+    assert r.returncode == 0, r.stderr
+    assert "Checks NOT run for this file:" in r.stderr
+    assert "antibody RRID:AB_10711040: SciCrunch resolver unreachable" in r.stderr
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize("rrid, ok", [("RRID:AB_10711040", True), ("RRID:AB_999999999", False)])
+def test_rrid_checked_via_scicrunch(tmp_path: Path, rrid: str, ok: bool):
+    """End-to-end against the live SciCrunch resolver: a registered RRID
+    passes, a hallucinated one is blocked."""
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = {"EVIDENCELL_RRID_CACHE": str(tmp_path / "rrid_cache.json")}
+    r = _run_hook(_write_payload(_fixture_with_sst_antibody(rrid)), env_extra=env)
+    if "SciCrunch resolver unreachable" in r.stderr:
+        pytest.skip("SciCrunch resolver unreachable")
+    if ok:
+        assert r.returncode == 0, r.stderr
+    else:
+        assert r.returncode == 2, r.stderr
+        assert f"{rrid} is not in the Antibody Registry" in r.stderr

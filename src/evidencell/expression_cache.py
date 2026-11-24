@@ -18,8 +18,9 @@ through :mod:`evidencell.gene_identity` (the ``genes`` / ``gene_synonyms``
 tables), and this module reads the resolved genes' stats columns. A name
 that doesn't resolve is reported in ``not_measured`` with the reason
 (``NO_ENSEMBL_MAPPING``: no gene of the taxonomy has that name;
-``AMBIGUOUS_SYMBOL``: several do) — a recorded gap, never a silent empty
-result.
+``AMBIGUOUS_SYMBOL``: several do; ``NO_GENE_ID``: a curated marker with no
+``ncbi_gene_id``, not resolved by name) — a recorded gap, never a silent
+empty result.
 
 ``just build-taxonomy-db`` creates both cache tables empty; they fill on
 use. Consumers go through :meth:`TaxonomyDB.expression`.
@@ -61,6 +62,7 @@ if TYPE_CHECKING:
 
 NO_ENSEMBL_MAPPING = "NO_ENSEMBL_MAPPING"
 AMBIGUOUS_SYMBOL = "AMBIGUOUS_SYMBOL"
+NO_GENE_ID = "NO_GENE_ID"  # curated marker without ncbi_gene_id (#244)
 
 _FINGERPRINT_KEY = "expression_stats_fingerprint"
 
@@ -368,12 +370,15 @@ def query(
     every node is returned. Call :func:`ensure_genes` first.
     """
     from evidencell.gene_identity import AMBIGUOUS
+    from evidencell.gene_identity import NO_GENE_ID as _NO_GENE
+
+    reasons = {AMBIGUOUS: AMBIGUOUS_SYMBOL, _NO_GENE: NO_GENE_ID}
 
     out = ExpressionLookup(genes=dict(matches))
     by_ensembl: dict[str, list[str]] = {}
     for name, m in matches.items():
         if m.gene is None:
-            out.not_measured[name] = AMBIGUOUS_SYMBOL if m.method == AMBIGUOUS else NO_ENSEMBL_MAPPING
+            out.not_measured[name] = reasons.get(m.method, NO_ENSEMBL_MAPPING)
         else:
             by_ensembl.setdefault(m.gene.ensembl_id, []).append(name)
     if not by_ensembl:

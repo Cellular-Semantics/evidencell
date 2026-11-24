@@ -158,9 +158,9 @@ def test_property_comparisons_basic_olm_synthetic():
         "anatomical_location": [
             {"id": "UBERON:0005371", "label": "CA1 stratum oriens", "compartment": "SOMA"},
         ],
-        "defining_markers": [{"symbol": "Sst"}, {"symbol": "Chrna2"}],
-        "negative_markers": [{"symbol": "PV"}],
-        "neuropeptides": [{"symbol": "Npy"}],
+        "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Chrna2"}],
+        "negative_markers": [{"name_in_source": "PV"}],
+        "neuropeptides": [{"name_in_source": "Npy"}],
     }
     atlas = {
         "nt_type": {"name_in_source": "GABA"},
@@ -173,7 +173,7 @@ def test_property_comparisons_basic_olm_synthetic():
         "gene_symbols": {"Sst": "Sst", "Chrna2": "Chrna2", "PV": "Pvalb", "Npy": "Npy"},
         "not_measured": {},
         "expression_source": "stats.h5",
-        "markers": [{"symbol": "Sst", "category": "NEUROPEPTIDE"}],
+        "markers": [{"name_in_source": "Sst", "category": "NEUROPEPTIDE"}],
     }
     candidate = {
         "node_id": "CS20230722_CLUS_0768",
@@ -228,7 +228,7 @@ def test_property_comparisons_basic_olm_synthetic():
 def test_stage_a_values_cite_the_discovery_stats_file():
     """A value taken from the discovery JSON cites the file Stage A read,
     even if the emit-time accessor reports another."""
-    classical = {"defining_markers": [{"symbol": "Sst"}, {"symbol": "Npy"}]}
+    classical = {"defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Npy"}]}
     atlas = {
         "expression": {"Sst": 12.7, "Npy": 7.58},
         "not_measured": {},
@@ -256,7 +256,7 @@ def test_property_comparisons_not_measured_and_discrepancy_notes():
     """#189: NOT_ASSESSED only for genes recorded as not measured (with the
     reason), and Stage A metadata/expression discrepancies land in notes."""
     classical = {
-        "defining_markers": [{"symbol": "Sst"}, {"symbol": "Fakegene"}],
+        "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Fakegene"}],
     }
     atlas = {
         "expression": {"Sst": 0.02},
@@ -292,8 +292,8 @@ def test_classical_expression_symbols_are_names_as_written_and_deduped():
     from evidencell.stage_b_emit import _classical_expression_symbols
 
     classical = {
-        "defining_markers": [{"symbol": "Sst"}, {"symbol": "PV"}],
-        "negative_markers": [{"symbol": "Pvalb"}],
+        "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "PV"}],
+        "negative_markers": [{"name_in_source": "Pvalb"}],
         "neuropeptides": ["Npy"],
     }
     assert _classical_expression_symbols(classical) == ["Sst", "PV", "Pvalb", "Npy"]

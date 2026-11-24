@@ -145,7 +145,7 @@ def test_markers_by_category(tmp_path):
         # NEUROPEPTIDE entries carry expression_score
         np_entries = [m for m in markers if m["category"] == "NEUROPEPTIDE"]
         assert all("expression_score" in m for m in np_entries)
-        assert any(m["symbol"] == "Grp" and abs(m["expression_score"] - 7.5) < 0.01 for m in np_entries)
+        assert any(m["name_in_source"] == "Grp" and abs(m["expression_score"] - 7.5) < 0.01 for m in np_entries)
         break
 
 
@@ -587,8 +587,8 @@ def test_min_detectable_constant():
 def test_classical_positive_markers_includes_neuropeptides():
     """Defining markers and neuropeptides are folded into one channel (gap 3)."""
     classical = {
-        "defining_markers": [{"symbol": "Sst"}, {"symbol": "Calb1"}],
-        "neuropeptides": [{"symbol": "Npy"}, {"symbol": "Pnoc"}],
+        "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Calb1"}],
+        "neuropeptides": [{"name_in_source": "Npy"}, {"name_in_source": "Pnoc"}],
     }
     result = _classical_positive_markers(classical)
     assert result == ["Sst", "Calb1", "Npy", "Pnoc"]
@@ -598,8 +598,8 @@ def test_classical_positive_markers_dedup_defining_priority():
     """A symbol present in both defining and neuropeptides appears once;
     defining-marker order takes priority."""
     classical = {
-        "defining_markers": [{"symbol": "Sst"}],
-        "neuropeptides": [{"symbol": "Sst"}, {"symbol": "Npy"}],
+        "defining_markers": [{"name_in_source": "Sst"}],
+        "neuropeptides": [{"name_in_source": "Sst"}, {"name_in_source": "Npy"}],
     }
     assert _classical_positive_markers(classical) == ["Sst", "Npy"]
 
@@ -619,16 +619,16 @@ def test_protein_name_markers_are_scored_in_stage_a():
     """#216: protein names reach Stage A; gene identity resolves them in
     ``TaxonomyDB.expression`` (they were held back pending #216 in PR #207)."""
     classical = {
-        "defining_markers": [{"symbol": "Sst"}, {"symbol": "mGluR1"}],
-        "neuropeptides": [{"symbol": "SST"}],
-        "negative_markers": [{"symbol": "Pvalb"}, {"symbol": "PV"}, {"symbol": "CB"}],
+        "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "mGluR1"}],
+        "neuropeptides": [{"name_in_source": "SST"}],
+        "negative_markers": [{"name_in_source": "Pvalb"}, {"name_in_source": "PV"}, {"name_in_source": "CB"}],
     }
     assert _classical_positive_markers(classical) == ["Sst", "mGluR1", "SST"]
     assert _classical_negative_markers(classical) == ["Pvalb", "PV", "CB"]
 
 
 def test_classical_negative_markers():
-    classical = {"negative_markers": [{"symbol": "Pvalb"}, {"symbol": "Vip"}]}
+    classical = {"negative_markers": [{"name_in_source": "Pvalb"}, {"name_in_source": "Vip"}]}
     assert _classical_negative_markers(classical) == ["Pvalb", "Vip"]
     assert _classical_negative_markers({}) == []
 

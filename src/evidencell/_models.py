@@ -786,6 +786,8 @@ class OntologyTerm(ConfiguredBaseModel):
   - source \"internal segment of globus pallidus\" → label same
     (populate identically when no discrepancy)
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'GeneDescriptor',
+                       'Antibody',
                        'NeurotransmitterType',
                        'AnnotationTransferEvidence']} })
 
@@ -860,6 +862,8 @@ Stage B mapping subagents + report-time agents should caveat `lower_bound` rollu
   - source \"internal segment of globus pallidus\" → label same
     (populate identically when no discrepancy)
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'GeneDescriptor',
+                       'Antibody',
                        'NeurotransmitterType',
                        'AnnotationTransferEvidence']} })
 
@@ -895,12 +899,18 @@ class CLMapping(ConfiguredBaseModel):
 
 class GeneDescriptor(ConfiguredBaseModel):
     """
-    A gene identified by the universal naming triple (name_in_source | id | label). For genes, symbol fills both the name_in_source and label roles: gene symbols ARE their own canonical labels in scientific usage, and recording the symbol as written in the source preserves species case convention (Sst vs SST) and the exact source wording. ncbi_gene_id is the stable cross-species identifier (the id role). Evidence sources for the marker assertion are recorded in the sources list.
+    A marker, identified by the universal naming triple (name_in_source | id | label): name_in_source is the marker as the source writes it; ncbi_gene_id (id) and symbol (label) record the gene it means. symbol and ncbi_gene_id are set together or not at all. A marker with no single gene — an antibody against a modified form (PSA-NCAM, phospho-CREB) or a gene family (CaMKII) — carries name_in_source only, with the antibody on its sources. Atlas metadata markers carry name_in_source only; their gene is resolved in the taxonomy DB. Evidence sources for the marker assertion are recorded in the sources list.
 
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
-    symbol: str = Field(default=..., description="""Gene symbol exactly as it appears in the source: e.g. Sst, Pvalb, Slc17a6 (mouse convention) or SST, PVALB, SLC17A6 (human convention). Serves as both name_in_source and label — gene symbols are their own canonical identifiers in scientific usage. ncbi_gene_id gives the stable cross-species identifier.
+    name_in_source: str = Field(default=..., description="""The marker exactly as the source writes it: a paper's wording (PV, CB, NeuN, mGluR1, PSA-NCAM) or an atlas metadata column's spelling (including outdated symbols such as Prrxl1). Free text; not checked.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'GeneDescriptor',
+                       'Antibody',
+                       'NeurotransmitterType',
+                       'AnnotationTransferEvidence']} })
+    symbol: Optional[str] = Field(default=None, description="""Official symbol of the ncbi_gene_id gene in its species (Pvalb, Calb1, Rbfox3; PVALB in human). Set together with ncbi_gene_id, never alone. The pre-edit hook checks it equals the gene's current symbol.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDescriptor', 'GeneExpression']} })
     modifier: Optional[str] = Field(default=None, description="""Expression context: HIGH, LOW, ABSENT, ENRICHED""", json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDescriptor']} })
     ncbi_gene_id: Optional[str] = Field(default=None, description="""NCBI Gene ID as CURIE, e.g. NCBIGene:20604 (Mus musculus Sst). Species-specific; preferred for multi-species use. Use Translator NodeNormalization for cross-species mapping: https://github.com/NCATSTranslator/NodeNormalization
@@ -943,6 +953,36 @@ class GeneDescriptor(ConfiguredBaseModel):
                     raise ValueError(err_msg)
         elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid hgnc_id format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+
+class Antibody(ConfiguredBaseModel):
+    """
+    The antibody a protein marker was detected with, as the source names it, optionally with its Research Resource Identifier. Recorded on MarkerSource: how the marker was detected, not what it is. Other detail (target epitope, host, dilution) goes in the MarkerSource notes.
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    name_in_source: str = Field(default=..., description="""The antibody as the source names it: a clone or product name (TuJ1, \"anti-NeuN clone A60\", \"anti-PSA-NCAM 12E3\"). Free text.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'GeneDescriptor',
+                       'Antibody',
+                       'NeurotransmitterType',
+                       'AnnotationTransferEvidence']} })
+    rrid: Optional[str] = Field(default=None, description="""Antibody Registry RRID, e.g. RRID:AB_2298772. Only when the source states it or its catalogue entry identifies it unambiguously. The pre-edit hook checks it resolves (SciCrunch resolver).
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['Antibody']} })
+
+    @field_validator('rrid')
+    def pattern_rrid(cls, v):
+        pattern=re.compile(r"^RRID:AB_[0-9]+$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.search(element):
+                    err_msg = f"Invalid rrid format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.search(v):
+            err_msg = f"Invalid rrid format: {v}"
             raise ValueError(err_msg)
         return v
 
@@ -1074,13 +1114,18 @@ class TypeSynonym(ConfiguredBaseModel):
 
 class MarkerSource(PropertySource, HasMarkerType):
     """
-    Evidence source for a marker assertion. Extends PropertySource with a controlled marker_type field (see MarkerType). Use in GeneDescriptor.sources. marker_type is required; use NOT_STATED when neither the quote nor the cited paper's methods name an assay.
+    Evidence source for a marker assertion. Extends PropertySource with a controlled marker_type field (see MarkerType). Use in GeneDescriptor.sources. marker_type is required; use NOT_STATED when neither the quote nor the cited paper's methods name an assay. For PROTEIN evidence, record the antibody when the source names it.
     Examples:
       - marker_type: PROTEIN
         method: \"IHC (SST antibody)\"
         scope: \"adult human GPi\"
         snippet: \"SST+/SLC17A6+/SLC32A1+ neurons are located on the borders of the GPi\"
         ref: \"https://doi.org/10.1016/j.neuron.2017.03.017\"
+
+      - marker_type: PROTEIN
+        method: \"IHC\"
+        antibody: {name_in_source: \"TuJ1\", rrid: \"RRID:AB_xxxxxxx\"}
+        ref: \"PMID:xxxxxxxx\"
 
       - marker_type: TRANSCRIPT
         method: \"snRNA-seq\"
@@ -1104,6 +1149,8 @@ class MarkerSource(PropertySource, HasMarkerType):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5',
          'mixins': ['HasMarkerType']})
 
+    antibody: Optional[Antibody] = Field(default=None, description="""The antibody used to detect the marker (PROTEIN evidence), when the source names it. For a marker with no single gene (PSA-NCAM, phospho-CREB, CaMKII) this is the marker's identity.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSource']} })
     marker_type: MarkerType = Field(default=..., description="""How expression was established, as stated by this source: PROTEIN, TRANSCRIPT, TRANSGENE_REPORTER, or NOT_STATED when the source names no assay. Required so that every source records an explicit choice; NOT_STATED is a valid choice, a guessed PROTEIN/TRANSCRIPT is not. The specific technique goes in PropertySource.method (free text).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['HasMarkerType']} })
     ref: str = Field(default=..., description="""DOI (https://doi.org/...) or PMID (PMID:xxxxxxxx)""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
@@ -1222,6 +1269,8 @@ class NeurotransmitterType(ConfiguredBaseModel):
 
     name_in_source: str = Field(default=..., description="""NT label exactly as written in the source paper or atlas, e.g. \"GABA\", \"Glut-GABA\", \"GABA-Glut (dual)\", \"GABA/Glycine\", \"Glut\". Preserves source naming convention including ordering, which can differ between atlases for the same biology.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'GeneDescriptor',
+                       'Antibody',
                        'NeurotransmitterType',
                        'AnnotationTransferEvidence']} })
     cl_terms: Optional[list[OntologyTerm]] = Field(default=None, description="""CL ontology terms for this NT type. One entry per transmitter (e.g. two entries for a dual-transmitter type). Each OntologyTerm carries id, label, and name_in_source (the individual substance name as it appears in the source, e.g. \"GABA\", \"Glut\"). Strongly recommended for classical nodes; optional for atlas terminal nodes where atlas naming is primary.
@@ -1722,6 +1771,8 @@ class AnnotationTransferEvidence(EvidenceItem):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AtlasMetadataEvidence', 'AnnotationTransferEvidence']} })
     name_in_source: Optional[str] = Field(default=None, description="""Label of the target cluster as it appears in the target taxonomy (the name the source cluster was mapped to). Preserves the exact source wording for review. E.g. \"49_Vip\", \"7_Lamp5 Lhx6\".
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'GeneDescriptor',
+                       'Antibody',
                        'NeurotransmitterType',
                        'AnnotationTransferEvidence']} })
     tool_version: Optional[str] = Field(default=None, description="""Version of tool used, e.g. \"MapMyCells v1.2\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
@@ -2782,6 +2833,7 @@ OntologyTerm.model_rebuild()
 AnatomicalLocation.model_rebuild()
 CLMapping.model_rebuild()
 GeneDescriptor.model_rebuild()
+Antibody.model_rebuild()
 CellTypeColocation.model_rebuild()
 HasMarkerType.model_rebuild()
 PropertySource.model_rebuild()

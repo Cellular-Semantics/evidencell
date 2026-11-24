@@ -33,6 +33,7 @@ from evidencell.gene_identity import (
     GENE_OVERRIDES_FILE,
     load_gene_tables,
     marker_gene_ids,
+    marker_name,
 )
 
 # Always-latest release of the BICAN Mouse Brain Atlas Ontology (OBO JSON / Obograph)
@@ -712,18 +713,18 @@ def _parse_np_markers(np_markers: str | None) -> list[dict]:
         if ":" in part:
             sym, score_str = part.rsplit(":", 1)
             try:
-                entries.append({"symbol": sym.strip(), "category": "NEUROPEPTIDE",
+                entries.append({"name_in_source": sym.strip(), "category": "NEUROPEPTIDE",
                                  "expression_score": float(score_str)})
                 continue
             except ValueError:
                 pass
-        entries.append({"symbol": part, "category": "NEUROPEPTIDE"})
+        entries.append({"name_in_source": part, "category": "NEUROPEPTIDE"})
     return entries
 
 
 def _parse_np_markers_symbols(np_markers: str | None) -> list[str]:
     """Extract just the gene symbols from a packed np_markers string."""
-    return [e["symbol"] for e in _parse_np_markers(np_markers) if e.get("symbol")]
+    return [e["name_in_source"] for e in _parse_np_markers(np_markers) if e.get("name_in_source")]
 
 
 def _parse_json_list(value: str | None) -> list[str]:
@@ -754,13 +755,13 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
     # Unified markers list
     markers: list[dict] = []
     for sym in n.defining_markers:
-        markers.append({"symbol": sym, "category": "DEFINING"})
+        markers.append({"name_in_source": sym, "category": "DEFINING"})
     for sym in n.defining_markers_scoped:
-        markers.append({"symbol": sym, "category": "DEFINING_SCOPED"})
+        markers.append({"name_in_source": sym, "category": "DEFINING_SCOPED"})
     for sym in n.tf_markers:
-        markers.append({"symbol": sym, "category": "TF"})
+        markers.append({"name_in_source": sym, "category": "TF"})
     for sym in n.merfish_markers:
-        markers.append({"symbol": sym, "category": "MERFISH"})
+        markers.append({"name_in_source": sym, "category": "MERFISH"})
     markers.extend(_parse_np_markers(n.np_markers))
 
     # NeurotransmitterType
@@ -2070,12 +2071,13 @@ class TaxonomyDB:
 
         # Markers by category
         markers = nd.get("markers") or []
-        defining_markers = [m["symbol"] for m in markers if m.get("category") == "DEFINING"]
-        defining_markers_scoped = [m["symbol"] for m in markers if m.get("category") == "DEFINING_SCOPED"]
-        tf_markers = [m["symbol"] for m in markers if m.get("category") == "TF"]
-        merfish_markers = [m["symbol"] for m in markers if m.get("category") == "MERFISH"]
+        # marker_name reads pre-#244 YAML (symbol) as well as name_in_source.
+        defining_markers = [marker_name(m) for m in markers if m.get("category") == "DEFINING"]
+        defining_markers_scoped = [marker_name(m) for m in markers if m.get("category") == "DEFINING_SCOPED"]
+        tf_markers = [marker_name(m) for m in markers if m.get("category") == "TF"]
+        merfish_markers = [marker_name(m) for m in markers if m.get("category") == "MERFISH"]
         np_pairs = [
-            (m["symbol"], m.get("expression_score"))
+            (marker_name(m), m.get("expression_score"))
             for m in markers if m.get("category") == "NEUROPEPTIDE"
         ]
         np_markers: str | None = (
@@ -3100,11 +3102,11 @@ def _classical_positive_markers(classical: dict) -> list[str]:
     """
     out: list[str] = []
     for m in classical.get("defining_markers") or []:
-        sym = m.get("symbol") if isinstance(m, dict) else m
+        sym = marker_name(m)
         if sym:
             out.append(sym)
     for m in classical.get("neuropeptides") or []:
-        sym = m.get("symbol") if isinstance(m, dict) else m
+        sym = marker_name(m)
         if sym and sym not in out:
             out.append(sym)
     return out
@@ -3114,7 +3116,7 @@ def _classical_negative_markers(classical: dict) -> list[str]:
     """Extract symbols for the negative-marker channel from a classical node."""
     out: list[str] = []
     for m in classical.get("negative_markers") or []:
-        sym = m.get("symbol") if isinstance(m, dict) else m
+        sym = marker_name(m)
         if sym:
             out.append(sym)
     return out
@@ -3522,8 +3524,9 @@ def _cmd_find_candidates(
                 + ")"
                 for g, r in sorted(expr.not_measured.items())
             )
-            + " — set the marker's ncbi_gene_id: see the gene-id-curation skill"
-            " (.claude/skills/gene-id-curation/SKILL.md)",
+            + " — to give a marker its gene, see the gene-id-curation skill"
+            " (.claude/skills/gene-id-curation/SKILL.md); NO_GENE_ID markers that"
+            " name no single gene (glycoform, PTM, gene family) stay unmeasured",
             file=sys.stderr,
         )
 

@@ -125,11 +125,14 @@ specification):
   mapping, or absent from the stats file) are listed as `NOT MEASURED` on
   stderr and under `not_measured_genes` in the discovery JSON; they score 0.
   Each marker name resolves to a gene through the gene identity tables
-  (#216): its `ncbi_gene_id` if set, else a reviewed override, an exact or
-  case-insensitive symbol, or a synonym only one gene claims (`PV` → Pvalb,
-  `mGluR1` → Grm1). A name several genes claim is `AMBIGUOUS_SYMBOL` (the
-  stderr line lists them) and scores 0 until the marker's `ncbi_gene_id` is
-  set. `gene_resolution` in the discovery JSON records how each name
+  (#216, #244): its `ncbi_gene_id` (a gene of another species resolves by
+  the marker's official `symbol`). A classical marker with no
+  `ncbi_gene_id` is `NO_GENE_ID` — not resolved by name — and scores 0: it
+  is either curated as having no single gene (PSA-NCAM, CaMKII) or still
+  needs its ID. Pre-#244 markers (`symbol` only) resolve by name as
+  before: a reviewed override, an exact or case-insensitive symbol, or a
+  synonym only one gene claims; several claimants is `AMBIGUOUS_SYMBOL`.
+  `gene_resolution` in the discovery JSON records how each name
   resolved. To fix a `NOT MEASURED` marker: Load the `gene-id-curation` skill (or
   read `.claude/skills/gene-id-curation/SKILL.md`).
 - **Soft scoring** within the surviving pool:
@@ -272,7 +275,8 @@ warning.
       CONSISTENT, otherwise DISCORDANT;
     - `NOT_ASSESSED` (`node_b_value: not measured`) only for a gene
       recorded as not measured — the notes give the reason
-      (`NO_ENSEMBL_MAPPING` / `AMBIGUOUS_SYMBOL`) and the stats file.
+      (`NO_ENSEMBL_MAPPING` / `AMBIGUOUS_SYMBOL` / `NO_GENE_ID`) and
+      the stats file.
     The candidate's Stage A `marker_discrepancies` entry for the gene,
     if any, is appended to the notes (`METADATA DISCREPANCY …`) so
     gen-facts and report synthesis can see it. It does not change

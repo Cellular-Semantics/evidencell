@@ -58,6 +58,7 @@ try:
         check_ontology_terms,
     )
     from evidencell.gene_identity import check_marker_gene_ids  # noqa: E402
+    from evidencell.rrid import check_antibody_rrids  # noqa: E402
     from evidencell.paths import at_run_index_path  # noqa: E402
     from evidencell.references import store_exists  # noqa: E402
 except ImportError as exc:
@@ -367,6 +368,7 @@ def main():
 
     errors_found = False
     _genes_unchecked: list[str] = []  # gene IDs the YAML check couldn't look up
+    _rrids_unchecked: list[str] = []  # antibody RRIDs the YAML check couldn't look up
 
     # Derive refs_path from new directory layout.
     # Infer the repo root from the file path (not __file__) so tests with
@@ -517,6 +519,21 @@ def main():
                         print(f"  - {e}", file=sys.stderr)
                     errors_found = True
 
+        # 3d. Antibody RRIDs on marker sources (#244): each must exist in the
+        # Antibody Registry. Cached in conf/rrid_cache.json; offline +
+        # uncached → soft skip, reported below.
+        if isinstance(doc, dict):
+            if os.environ.get("EVIDENCELL_SKIP_RRID_CHECK"):
+                print("Antibody RRID check bypassed via EVIDENCELL_SKIP_RRID_CHECK=1",
+                      file=sys.stderr)
+            else:
+                rrid_errors, _rrids_unchecked = check_antibody_rrids(doc)
+                if rrid_errors:
+                    print("Antibody RRID errors:", file=sys.stderr)
+                    for e in rrid_errors:
+                        print(f"  - {e}", file=sys.stderr)
+                    errors_found = True
+
         # 4. LinkML schema validation (subprocess)
         ok, output = linkml_validate(simulated, schema_path, file_path.name, file_path=file_path)
         if output.strip():
@@ -558,6 +575,8 @@ def main():
             skipped.append(f"gene ID {item}")
         if len(_genes_unchecked) > 6:
             skipped.append(f"… and {len(_genes_unchecked) - 6} more gene ID check(s)")
+    if is_yaml:
+        skipped.extend(f"antibody {item}" for item in _rrids_unchecked)
     if is_report:
         for prefix, info in sorted(_curie_unavailable.items()):
             skipped.append(

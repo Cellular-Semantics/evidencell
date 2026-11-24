@@ -236,7 +236,7 @@ def _build_yaml_files(repo: Path) -> None:
         "id": "lit_test",
         "name": "Test lit type",
         "definition_basis": "ARTIFICIAL",
-        "defining_markers": [{"symbol": "Sst"}],
+        "defining_markers": [{"name_in_source": "Sst"}],
         "nt_type": {"name_in_source": "GABAergic"},
         "anatomical_location": [
             {"id": "UBERON:0000999",

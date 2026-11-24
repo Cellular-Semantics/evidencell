@@ -104,21 +104,23 @@ adapters that aren't cached.
 
 ### Gene symbols and IDs
 
-**Storage format**
+**Storage format** (#244)
 ```yaml
-symbol: "CB"                       # as the source writes it
+name_in_source: "CB"               # as the source writes it — never checked
+symbol: "Calb1"                    # the gene's official symbol
 ncbi_gene_id: "NCBIGene:12307"     # species-specific NCBI Gene CURIE
 ```
 
 **Check** (`gene_identity.check_marker_gene_ids`, hook step 3c), for every
-GeneDescriptor in a `kb/graphs` file that carries `ncbi_gene_id`:
+GeneDescriptor in a `kb/graphs` file:
+- `symbol` and `ncbi_gene_id` are both set or both absent;
 - the ID exists in Translator NodeNormalization as an NCBI gene;
 - its taxon is the node's `species` (or the graph's), or a descendant of it
   (a human gene on a Primates node, a mouse gene on a Murinae node) — via
   the NCBITaxon slim;
-- `symbol` is the gene's label, one of its Name Resolver names, or a reviewed
-  override name in a `kb/taxonomy/*/gene_overrides.tsv` (compared
-  case/space/hyphen-insensitively). Catches a plausible ID for the wrong gene.
+- `symbol` equals the gene's official symbol (its NodeNormalization label)
+  exactly. Catches a plausible ID for the wrong gene; the free-text
+  `name_in_source` carries the source's wording and is not checked.
 
 **Verification source:** Translator NodeNormalization + Name Resolver,
 cached in `conf/gene_id_cache.json` (gitignored) and seeded offline from the
@@ -128,10 +130,39 @@ committed `kb/taxonomy/*/gene_ids.tsv.gz`.
 comparison without `conf/oak_dbs/taxslim.obo`, is allowed and listed under
 "Checks NOT run" with the fix. Bypass: `EVIDENCELL_SKIP_GENE_CHECK=1`.
 
-**Status:** Implemented end-to-end (#216). Tests: `tests/test_gene_identity.py`
-(unit, offline cache), `tests/test_hook_integration.py` (through the hook:
-seeded-cache blocks, offline soft skip, and live NodeNorm rejection of a
+**Status:** Implemented end-to-end (#216; official-symbol rule #244). Tests:
+`tests/test_gene_identity.py` (unit, offline cache),
+`tests/test_hook_integration.py` (through the hook: seeded-cache blocks, a
+symbol without an ID, offline soft skip, and live NodeNorm rejection of a
 hallucinated ID and of a mouse gene on a Primates node, marked
+`integration`).
+
+---
+
+### Antibody RRIDs
+
+**Storage format** (#244), on a marker's evidence:
+```yaml
+sources:
+  - marker_type: PROTEIN
+    antibody:
+      name_in_source: "anti-NeuN clone A60"   # as the source names it — not checked
+      rrid: "RRID:AB_2298772"                 # optional
+```
+
+**Check** (`rrid.check_antibody_rrids`, hook step 3d): every `rrid` on a
+`MarkerSource.antibody` must resolve in the Antibody Registry.
+
+**Verification source:** SciCrunch resolver
+(`https://scicrunch.org/resolver/{RRID}.json`), cached in
+`conf/rrid_cache.json` (gitignored).
+
+**Soft skip:** an uncached RRID with the resolver unreachable is allowed and
+listed under "Checks NOT run". Bypass: `EVIDENCELL_SKIP_RRID_CHECK=1`.
+
+**Status:** Implemented end-to-end (#244). Tests: `tests/test_rrid.py`
+(unit), `tests/test_hook_integration.py` (through the hook: cached block,
+bypass, offline soft skip, live pass/block against SciCrunch, marked
 `integration`).
 
 ---

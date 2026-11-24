@@ -23,6 +23,7 @@ from typing import Any
 
 import yaml
 
+from evidencell.gene_identity import Pin, marker_gene_ids, marker_name
 from evidencell.paths import (
     at_run_index_path,
     at_runs_dir,
@@ -383,10 +384,11 @@ def _collect_run_refs(obj: object, result: list[str] | None = None) -> list[str]
 
 # ── CLI ──────────────────────────────────────────────────────────────────────
 
-def collect_kb_marker_union() -> dict[str, str | None]:
+def collect_kb_marker_union() -> dict[str, Pin | None]:
     """Scan kb/graphs/**/*.yaml for non-atlas nodes and return the union of
-    all marker gene symbols mentioned across them, each with the first
-    curated ``ncbi_gene_id`` seen for it (None when no marker carries one).
+    all marker names mentioned across them, each with the first curated
+    gene pin seen for it (:func:`gene_identity.marker_gene_ids`; None for a
+    pre-#244 marker with no ID, which resolves by name).
 
     Drives ``warm_expression_cache``. The set covers every gene any
     classical/literature node carries on its `defining_markers`,
@@ -416,13 +418,12 @@ def collect_kb_marker_union() -> dict[str, str | None]:
                 continue
             if nd.get("definition_basis") == "ATLAS_TRANSCRIPTOMIC":
                 continue
+            pins = marker_gene_ids(nd)
             for field in ("defining_markers", "neuropeptides", "negative_markers"):
                 for m in nd.get(field) or []:
-                    sym = m.get("symbol") if isinstance(m, dict) else m
-                    if sym:
-                        gid = m.get("ncbi_gene_id") if isinstance(m, dict) else None
-                        if out.get(sym) is None:
-                            out[sym] = gid
+                    sym = marker_name(m)
+                    if sym and out.get(sym) is None:
+                        out[sym] = pins.get(sym)
     return out
 
 
@@ -439,7 +440,7 @@ def warm_expression_cache(taxonomy_id: str) -> dict[str, Any]:
     genes = sorted(union)
     db = TaxonomyDB(require_taxonomy_db(taxonomy_id))
     lookup = db.expression(
-        genes, accessions=[], gene_ids={s: g for s, g in union.items() if g}
+        genes, accessions=[], gene_ids={s: g for s, g in union.items() if g is not None}
     )
     return {
         "taxonomy_id": taxonomy_id,

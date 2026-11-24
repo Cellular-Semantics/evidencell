@@ -37,7 +37,7 @@ from evidencell.at_metrics import (
 )
 from evidencell.expression_cache import ExpressionUnavailable
 from evidencell.kb_io import roundtrip_yaml
-from evidencell.gene_identity import marker_gene_ids
+from evidencell.gene_identity import marker_gene_ids, marker_name
 from evidencell.paths import repo_root
 from evidencell.taxonomy_db import MIN_DETECTABLE
 
@@ -294,7 +294,7 @@ def _property_comparisons(
         }
 
     for m in (classical.get("defining_markers") or []):
-        sym = m.get("symbol") if isinstance(m, dict) else m
+        sym = marker_name(m)
         if not sym:
             continue
         canon = str(gene_symbols.get(sym) or sym)
@@ -308,7 +308,7 @@ def _property_comparisons(
         ))
 
     for m in (classical.get("negative_markers") or []):
-        sym = m.get("symbol") if isinstance(m, dict) else m
+        sym = marker_name(m)
         if not sym:
             continue
         canon = str(gene_symbols.get(sym) or sym)
@@ -322,7 +322,7 @@ def _property_comparisons(
         ))
 
     for m in (classical.get("neuropeptides") or []):
-        sym = m.get("symbol") if isinstance(m, dict) else m
+        sym = marker_name(m)
         if not sym:
             continue
         canon = str(gene_symbols.get(sym) or sym)
@@ -424,7 +424,7 @@ def _classical_expression_symbols(classical: dict) -> list[str]:
     out: list[str] = []
     for field in ("defining_markers", "negative_markers", "neuropeptides"):
         for m in classical.get(field) or []:
-            sym = m.get("symbol") if isinstance(m, dict) else m
+            sym = marker_name(m)
             if sym and sym not in out:
                 out.append(sym)
     return out
@@ -436,7 +436,7 @@ def _atlas_marker_categories(atlas: dict | None) -> dict[str, str]:
         return {}
     out: dict[str, str] = {}
     for m in atlas.get("markers") or []:
-        sym = m.get("symbol")
+        sym = marker_name(m)
         cat = m.get("category")
         if sym and cat and sym not in out:
             out[sym] = cat
@@ -993,7 +993,7 @@ def _load_atlas_node(
         },
         "expression_source": expr.source_file,
         "markers": [
-            {"symbol": sym, "category": cat}
+            {"name_in_source": sym, "category": cat}
             for sym, cat in marker_cats.items()
         ],
     }

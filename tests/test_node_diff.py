@@ -21,13 +21,13 @@ nodes:
     nt_type:
       name_in_source: GABAergic
     defining_markers:
-      - symbol: Th
+      - name_in_source: Th
         sources:
           - ref: "PMID:11111111"
             quote_key: "123_aaaaaaaa"
           - ref: "PMID:22222222"
             quote_key: "456_bbbbbbbb"
-      - symbol: Dbh
+      - name_in_source: Dbh
     morphology:
       description: >
         Small round soma with
@@ -53,13 +53,13 @@ nodes:
     morphology:
       description: Small round soma with sparse dendrites.
     defining_markers:
-      - symbol: Dbh
+      - name_in_source: Dbh
       - sources:
           - quote_key: "456_bbbbbbbb"
             ref: "PMID:22222222"
           - ref: "PMID:11111111"
             quote_key: "123_aaaaaaaa"
-        symbol: Th
+        name_in_source: Th
     definition_basis: CLASSICAL_NEUROCHEMICAL
     nt_type: {name_in_source: GABAergic}
 """
@@ -85,8 +85,8 @@ def test_empty_values_are_equivalent():
 
 
 def test_added_source_is_one_source_change():
-    head = BASE_NODE.replace("      - symbol: Dbh", """\
-      - symbol: Dbh
+    head = BASE_NODE.replace("      - name_in_source: Dbh", """\
+      - name_in_source: Dbh
         sources:
           - ref: "PMID:11111111"
             quote_key: "123_aaaaaaaa\"""")
@@ -106,7 +106,7 @@ def test_nt_type_change_is_identity_and_sorted_first():
 
 
 def test_marker_added_and_removed_are_list_items():
-    head = BASE_NODE.replace("      - symbol: Dbh", "      - symbol: Npy")
+    head = BASE_NODE.replace("      - name_in_source: Dbh", "      - name_in_source: Npy")
     ops = sorted((c.op, c.kind, c.path[-1]) for c in _diff(BASE_NODE, head))
     assert ops == [("added", "list_item", "Npy"), ("removed", "list_item", "Dbh")]
 
@@ -182,7 +182,7 @@ nodes:
     name: Child neuron
     definition_basis: CLASSICAL_NEUROCHEMICAL
     defining_markers:
-      - symbol: Npy
+      - name_in_source: Npy
         sources:
           - ref: "PMID:11111111"
             quote_key: "123_aaaaaaaa"
@@ -238,8 +238,8 @@ def test_non_verbatim_snippet_is_flagged(repo: Path):
 def test_modified_node_renders_compact_change_lines(repo: Path):
     f = repo / "kb/graphs/r/n1.yaml"
     f.write_text(BASE_NODE.replace("GABAergic", "glutamatergic").replace(
-        "      - symbol: Dbh", """\
-      - symbol: Dbh
+        "      - name_in_source: Dbh", """\
+      - name_in_source: Dbh
         sources:
           - ref: "PMID:11111111"
             quote_key: "123_aaaaaaaa\""""))
@@ -287,7 +287,7 @@ def test_budget_keeps_change_lines_and_balanced_folds(repo: Path):
     srcs = "\n".join(f'          - ref: "PMID:11111111"\n            quote_key: "123_{i:08x}"'
                      for i in range(40))
     (repo / "kb/graphs/r/n1.yaml").write_text(BASE_NODE.replace(
-        "      - symbol: Dbh", "      - symbol: Dbh\n        sources:\n" + srcs))
+        "      - name_in_source: Dbh", "      - name_in_source: Dbh\n        sources:\n" + srcs))
     r = compute_diff("main", repo)
     full = render_diff(r, budget=0)
     budget = len(full.encode()) // 3

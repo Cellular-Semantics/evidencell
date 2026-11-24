@@ -170,16 +170,17 @@ in `src/evidencell/expression_cache.py`.
   through the `genes` / `gene_synonyms` tables, loaded by `build-taxonomy-db`
   from the committed `kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz` (Translator
   NodeNormalization + Name Resolver; refresh with `just build-gene-ids`) and
-  the reviewed `gene_overrides.tsv`. A marker's `ncbi_gene_id` pins its gene;
-  otherwise the name resolves by override, exact symbol, case-insensitive
+  the reviewed `gene_overrides.tsv`. A classical marker's `ncbi_gene_id` pins
+  its gene; one without an ID is `NO_GENE_ID` and not resolved by name.
+  Atlas metadata names resolve by override, exact symbol, case-insensitive
   symbol, or a synonym exactly one gene claims. See
   `src/evidencell/gene_identity.py`.
 - **Fails closed**: an uncached gene with no stats file stops the run with
   `just fetch-mapmycells {taxonomy_id}`. There is no metadata-only fallback.
 - Names that can't be measured are recorded and reported — never a silent
-  `{}`: `NO_ENSEMBL_MAPPING` (no gene of the taxonomy has that name) or
-  `AMBIGUOUS_SYMBOL` (several do). Either way, set the marker's
-  `ncbi_gene_id` with the `gene-id-curation` skill.
+  `{}`: `NO_ENSEMBL_MAPPING` (no gene of the taxonomy has that name),
+  `AMBIGUOUS_SYMBOL` (several do) or `NO_GENE_ID` (a classical marker with
+  no `ncbi_gene_id`). Set the marker's gene with the `gene-id-curation` skill.
 - Marker scoring in `find-candidates` uses expression only. The atlas
   node's metadata marker lists are cross-checked and disagreements reported
   as `marker_discrepancies` (carried into Stage B property-comparison notes).
@@ -284,8 +285,10 @@ network). `build-taxonomy-db` loads it offline.
 
 ### Gene IDs on classical markers
 
-Every classical marker (`defining_markers`, `negative_markers`,
-`neuropeptides`) should carry `ncbi_gene_id`, in the node's species. Before
+Every marker records `name_in_source` (the source's wording). A classical
+marker (`defining_markers`, `negative_markers`, `neuropeptides`) that names
+one gene also carries that gene's `ncbi_gene_id`, in the node's species, and
+its official `symbol` — both or neither. Before
 adding or editing one, or when a marker is reported `NOT MEASURED`:
 Load the `gene-id-curation` skill (or read `.claude/skills/gene-id-curation/SKILL.md`).
 

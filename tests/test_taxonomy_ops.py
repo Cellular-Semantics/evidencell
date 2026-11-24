@@ -43,8 +43,8 @@ def tmp_taxonomy(tmp_path: Path) -> Path:
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
                 "is_terminal": True,
                 "markers": [
-                    {"symbol": "Sst", "category": "DEFINING"},
-                    {"symbol": "Gad1", "category": "DEFINING"},
+                    {"name_in_source": "Sst", "category": "DEFINING"},
+                    {"name_in_source": "Gad1", "category": "DEFINING"},
                 ],
             },
             {
@@ -56,7 +56,7 @@ def tmp_taxonomy(tmp_path: Path) -> Path:
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
                 "is_terminal": True,
                 "markers": [
-                    {"symbol": "Pvalb", "category": "DEFINING"},
+                    {"name_in_source": "Pvalb", "category": "DEFINING"},
                 ],
                 # Pre-existing enrichment
                 "electrophysiology": {"firing_pattern": "fast-spiking"},
@@ -124,7 +124,7 @@ class TestMergeNodes:
             {
                 "cell_set_accession": "ACC_1",
                 "name": "Old Name",
-                "markers": [{"symbol": "X"}],
+                "markers": [{"name_in_source": "X"}],
                 "electrophysiology": {"firing_pattern": "old"},
             },
         ]
@@ -132,13 +132,13 @@ class TestMergeNodes:
             {
                 "cell_set_accession": "ACC_1",
                 "name": "New Name",
-                "markers": [{"symbol": "Y"}],
+                "markers": [{"name_in_source": "Y"}],
             },
         ]
         merged, stats = _merge_nodes(old, new, ENRICHMENT_FIELDS)
         assert len(merged) == 1
         assert merged[0]["name"] == "New Name"
-        assert merged[0]["markers"] == [{"symbol": "Y"}]
+        assert merged[0]["markers"] == [{"name_in_source": "Y"}]
         assert merged[0]["electrophysiology"]["firing_pattern"] == "old"
         assert stats["updated"] == 1
 
@@ -218,7 +218,7 @@ class TestReingest:
                 "taxonomy_level": "CLUSTER",
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
                 "is_terminal": True,
-                "markers": [{"symbol": "Sst", "category": "DEFINING"}],
+                "markers": [{"name_in_source": "Sst", "category": "DEFINING"}],
             },
             {
                 "id": "TEST:CLUS_002",
@@ -228,7 +228,7 @@ class TestReingest:
                 "taxonomy_level": "CLUSTER",
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
                 "is_terminal": True,
-                "markers": [{"symbol": "Pvalb", "category": "DEFINING"}],
+                "markers": [{"name_in_source": "Pvalb", "category": "DEFINING"}],
                 # No electrophysiology in new source
             },
             {
@@ -377,15 +377,15 @@ def _make_kb_graphs(tmp_path: Path) -> Path:
                 "id": "lit_alpha",
                 "name": "Alpha cell",
                 "definition_basis": "ARTIFICIAL",
-                "defining_markers": [{"symbol": "Sst"}, {"symbol": "Calb1"}],
-                "neuropeptides": [{"symbol": "Npy"}],
-                "negative_markers": [{"symbol": "Pvalb"}],
+                "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Calb1"}],
+                "neuropeptides": [{"name_in_source": "Npy"}],
+                "negative_markers": [{"name_in_source": "Pvalb"}],
             },
             {
                 "id": "lit_beta",
                 "name": "Beta cell",
                 "definition_basis": "ARTIFICIAL",
-                "defining_markers": [{"symbol": "Sst"}, {"symbol": "Vip"}],
+                "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Vip"}],
                 "neuropeptides": [],
                 "negative_markers": [],
             },
@@ -393,8 +393,8 @@ def _make_kb_graphs(tmp_path: Path) -> Path:
                 "id": "atlas_node",
                 "name": "Atlas cluster",
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
-                "defining_markers": [{"symbol": "Foo"}],  # must be ignored
-                "neuropeptides": [{"symbol": "Bar"}],     # must be ignored
+                "defining_markers": [{"name_in_source": "Foo"}],  # must be ignored
+                "neuropeptides": [{"name_in_source": "Bar"}],     # must be ignored
             },
         ]
     }
@@ -432,7 +432,7 @@ def test_collect_kb_marker_union_skips_unparseable(tmp_path, monkeypatch):
         "nodes": [{
             "id": "x",
             "definition_basis": "ARTIFICIAL",
-            "defining_markers": [{"symbol": "Sst"}],
+            "defining_markers": [{"name_in_source": "Sst"}],
         }]
     }))
     monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)

@@ -21,6 +21,9 @@ Three parts:
   taxonomy, in this order:
 
   1. ``PINNED_ID``: the marker's ``ncbi_gene_id`` is a gene of this taxonomy.
+     A pin from another species resolves by the marker's official ``symbol``
+     instead (rat Calb1 → the mouse gene named Calb1). A curated marker with
+     no ``ncbi_gene_id`` is ``NO_GENE_ID`` and is not resolved by name (#244).
   2. ``OVERRIDE``: a reviewed override names exactly one gene.
   3. ``EXACT_SYMBOL``: the name is a gene's symbol (stats symbol or current
      label), case-sensitive; then ``CASE_INSENSITIVE_SYMBOL``, compared
@@ -36,8 +39,10 @@ Three parts:
 
 The hook check (:func:`check_marker_gene_ids`) validates every
 ``ncbi_gene_id`` written to ``kb/graphs`` against NodeNormalization: the ID
-exists, belongs to the node's species, and the marker's symbol is its label
-or one of its names. Lookups are cached in ``conf/gene_id_cache.json``
+exists, belongs to the node's species, and the marker's ``symbol`` is the
+gene's official symbol (#244). ``symbol`` and ``ncbi_gene_id`` are set
+together or not at all; ``name_in_source`` (the source's wording) is never
+checked. Lookups are cached in ``conf/gene_id_cache.json``
 (gitignored) and seeded from the committed ``gene_ids.tsv.gz`` files, so the
 check runs offline for genes already seen; it soft-skips, loudly, when an
 uncached ID can't be looked up.
@@ -88,6 +93,7 @@ CASE_INSENSITIVE_SYMBOL = "CASE_INSENSITIVE_SYMBOL"
 UNIQUE_SYNONYM = "UNIQUE_SYNONYM"
 AMBIGUOUS = "AMBIGUOUS"
 NO_MATCH = "NO_MATCH"
+NO_GENE_ID = "NO_GENE_ID"  # curated marker with no ncbi_gene_id: not resolved by name
 ACCEPTED_METHODS = (PINNED_ID, OVERRIDE, EXACT_SYMBOL, CASE_INSENSITIVE_SYMBOL, UNIQUE_SYNONYM)
 
 GENE_DDL = """\
@@ -579,14 +585,33 @@ def has_gene_tables(con: sqlite3.Connection) -> bool:
         return False
 
 
-def resolve_name(con: sqlite3.Connection, name: str, ncbi_gene_id: str | None = None) -> GeneMatch:
-    """Resolve one marker name (optionally pinned to an NCBIGene ID)."""
+@dataclass(frozen=True)
+class Pin:
+    """A curated marker's gene: ``ncbi_gene_id`` and its official ``symbol``.
+    Both None means the marker is curated as having no single gene."""
+
+    ncbi_gene_id: str | None
+    symbol: str | None = None
+
+
+NO_GENE = Pin(None, None)
+
+
+def resolve_name(
+    con: sqlite3.Connection, name: str, ncbi_gene_id: str | None = None,
+    symbol: str | None = None,
+) -> GeneMatch:
+    """Resolve one marker name, optionally pinned to an NCBIGene ID (with
+    the gene's official ``symbol``)."""
     if ncbi_gene_id:
         hits = _one_per_ncbi(_genes(con, "ncbi_gene_id = ?", (ncbi_gene_id,)))
         if hits:
             return GeneMatch(name, PINNED_ID, hits[0])
-        # An ID from another species: fall through to the name, which is
-        # how a rat or human marker reaches a mouse taxonomy's genes.
+        # An ID from another species: resolve its official symbol instead,
+        # which is how a rat or human marker reaches a mouse taxonomy's genes.
+        if symbol:
+            m = resolve_name(con, symbol)
+            return GeneMatch(name, m.method, m.gene, m.claimants)
     norm = normalise_name(name)
 
     over = _one_per_ncbi(_genes(
@@ -631,7 +656,7 @@ def resolve_name(con: sqlite3.Connection, name: str, ncbi_gene_id: str | None = 
 def resolve_names(
     con: sqlite3.Connection,
     names: Iterable[str],
-    gene_ids: Mapping[str, str] | None = None,
+    gene_ids: Mapping[str, str | Pin] | None = None,
 ) -> dict[str, GeneMatch]:
     """Resolve marker names; ``gene_ids`` pins a name to its curated
     ``ncbi_gene_id``. Raises :class:`GeneIdsUnavailable` when the DB has no
@@ -642,8 +667,20 @@ def resolve_names(
             f"kb/taxonomy/{{tid}}/{GENE_IDS_FILE} (just build-gene-ids {{tid}}) and rebuild "
             "with just build-taxonomy-db {tid}."
         )
-    gene_ids = gene_ids or {}
-    return {n: resolve_name(con, n, gene_ids.get(n)) for n in dict.fromkeys(names) if n}
+    out: dict[str, GeneMatch] = {}
+    for n in dict.fromkeys(names):
+        if not n:
+            continue
+        pin = (gene_ids or {}).get(n)
+        if isinstance(pin, str):
+            pin = Pin(pin)
+        if pin is None:
+            out[n] = resolve_name(con, n)
+        elif pin.ncbi_gene_id is None:
+            out[n] = GeneMatch(n, NO_GENE_ID)
+        else:
+            out[n] = resolve_name(con, n, pin.ncbi_gene_id, pin.symbol)
+    return out
 
 
 # ── Classical-node helpers ───────────────────────────────────────────────────
@@ -651,14 +688,45 @@ def resolve_names(
 MARKER_FIELDS = ("defining_markers", "negative_markers", "neuropeptides")
 
 
-def marker_gene_ids(node: dict) -> dict[str, str]:
-    """``{symbol: ncbi_gene_id}`` for a classical node's markers that carry
-    a curated ID — the pins passed to :func:`resolve_names`."""
-    out: dict[str, str] = {}
+def marker_name(m: Any) -> str:
+    """A marker's name as its source writes it — the key consumers query and
+    report by. Reads pre-#244 YAML, where ``symbol`` held the source wording."""
+    if isinstance(m, str):
+        return m
+    if not isinstance(m, dict):
+        return ""
+    return m.get("name_in_source") or m.get("symbol") or ""
+
+
+def marker_display(m: Any) -> str:
+    """``NeuN (Rbfox3)`` when the source wording differs from the official
+    symbol, else the name alone."""
+    name = marker_name(m)
+    sym = m.get("symbol") if isinstance(m, dict) and "name_in_source" in m else None
+    if sym and normalise_name(sym) != normalise_name(name):
+        return f"{name} ({sym})"
+    return name
+
+
+def marker_gene_ids(node: dict) -> dict[str, Pin]:
+    """``{name: Pin}`` for a classical node's markers — the pins passed to
+    :func:`resolve_names`, keyed by :func:`marker_name`.
+
+    A marker with ``ncbi_gene_id`` pins its gene (with its official symbol
+    for cross-species fall-back). A ``name_in_source`` marker without one
+    is curated as having no single gene (:data:`NO_GENE`) and is not
+    resolved by name. Pre-#244 markers (``symbol`` only) without an ID are
+    left out, so they resolve by name as before."""
+    out: dict[str, Pin] = {}
     for key in MARKER_FIELDS:
         for m in node.get(key) or []:
-            if isinstance(m, dict) and m.get("symbol") and m.get("ncbi_gene_id"):
-                out.setdefault(m["symbol"], m["ncbi_gene_id"])
+            if not isinstance(m, dict) or not (name := marker_name(m)):
+                continue
+            if m.get("ncbi_gene_id"):
+                sym = m.get("symbol") if "name_in_source" in m else None
+                out.setdefault(name, Pin(m["ncbi_gene_id"], sym))
+            elif "name_in_source" in m:
+                out.setdefault(name, NO_GENE)
     return out
 
 
@@ -799,9 +867,9 @@ class _GeneRecordCache:
             pass
 
 
-def _iter_marker_ids(doc: dict) -> Iterator[tuple[str, str, str, str | None]]:
-    """(node_id, symbol, ncbi_gene_id, species) for every GeneDescriptor in a
-    KB graph that carries an ``ncbi_gene_id``."""
+def _iter_marker_ids(doc: dict) -> Iterator[tuple[str, dict, str | None]]:
+    """(node_id, marker, species) for every GeneDescriptor in a KB graph
+    that carries an ``ncbi_gene_id`` or a ``symbol``."""
     def sid(x: Any) -> str | None:
         return x.get("id") if isinstance(x, dict) else x
 
@@ -812,8 +880,8 @@ def _iter_marker_ids(doc: dict) -> Iterator[tuple[str, str, str, str | None]]:
         species = sid(node.get("species")) or graph_species
         for key in (*MARKER_FIELDS, "merfish_markers", "markers"):
             for m in node.get(key) or []:
-                if isinstance(m, dict) and m.get("ncbi_gene_id"):
-                    yield node.get("id", "?"), m.get("symbol") or "", m["ncbi_gene_id"], species
+                if isinstance(m, dict) and (m.get("ncbi_gene_id") or m.get("symbol")):
+                    yield node.get("id", "?"), m, species
 
 
 _TAXON_PARENTS: dict[str, str] | None = None
@@ -854,14 +922,15 @@ def check_marker_gene_ids(
     taxonomy_root: Path | None = None,
     taxslim: Path | None = None,
 ) -> tuple[list[str], list[str]]:
-    """Validate every ``ncbi_gene_id`` on a KB graph's markers.
+    """Validate every ``ncbi_gene_id`` and ``symbol`` on a KB graph's markers.
 
-    Each ID must exist in NodeNormalization as an NCBIGene gene, belong to
-    the node's species (or graph species; a gene of a descendant taxon is
-    accepted, e.g. a human gene on a Primates node), and the marker's
-    ``symbol`` must be the gene's label, one of its names, or a reviewed
-    override name for it in a ``kb/taxonomy/*/gene_overrides.tsv``
-    (compared after :func:`normalise_name`).
+    ``symbol`` and ``ncbi_gene_id`` must be set together (#244). Each ID must
+    exist in NodeNormalization as an NCBIGene gene, belong to the node's
+    species (or graph species; a gene of a descendant taxon is accepted,
+    e.g. a human gene on a Primates node), and ``symbol`` must be the gene's
+    official symbol exactly (its NodeNormalization label). ``name_in_source``
+    — the source's wording — is not checked. (A pre-#244 marker without
+    ``name_in_source`` fails schema validation before this runs.)
 
     Returns ``(errors, unchecked)``: ``unchecked`` lists ``"ID: reason"``
     for checks that could not run — the ID could not be looked up (offline
@@ -873,28 +942,39 @@ def check_marker_gene_ids(
     entries = list(_iter_marker_ids(doc))
     if not entries:
         return [], []
+    errors: list[str] = []
+    paired = []
+    for node_id, m, species in entries:
+        name = marker_name(m)
+        if bool(m.get("symbol")) != bool(m.get("ncbi_gene_id")):
+            have, lack = ("symbol", "ncbi_gene_id") if m.get("symbol") else ("ncbi_gene_id", "symbol")
+            errors.append(
+                f"{node_id}: marker {name!r} has {have} but no {lack} — set both (the gene "
+                "and its official symbol) or neither; the source's wording goes in "
+                "name_in_source (see the gene-id-curation skill)"
+            )
+        elif m.get("ncbi_gene_id"):
+            paired.append((node_id, m, species))
+    entries = paired
+    if not entries:
+        return errors, []
     root = repo_root()
     cache = _GeneRecordCache(
         cache_path or gene_id_cache_path(),
         taxonomy_root if taxonomy_root is not None else root / "kb" / "taxonomy",
     )
     taxslim = taxslim if taxslim is not None else root / "conf" / "oak_dbs" / "taxslim.obo"
-    records, unreachable = cache.get({e[2] for e in entries})
+    records, unreachable = cache.get({e[1]["ncbi_gene_id"] for e in entries})
     cache.save()
-    # Reviewed overrides are curated names for their gene (TuJ1 → Tubb3).
-    override_names: dict[str, set[str]] = {}
-    tax_root = cache.taxonomy_root
-    for f in sorted(tax_root.glob(f"*/{GENE_OVERRIDES_FILE}")) if tax_root else []:
-        for o in read_overrides(f):
-            override_names.setdefault(o["ncbi_gene_id"], set()).add(normalise_name(o["name"]))
 
     unchecked = [f"{i}: Translator NodeNormalization unreachable, not cached" for i in unreachable]
-    errors: list[str] = []
-    for node_id, symbol, nid, species in entries:
+    for node_id, m, species in entries:
+        nid = m["ncbi_gene_id"]
+        symbol = m.get("symbol") or ""
         rec = records.get(nid)
         if rec is None:
             continue
-        where = f"{node_id}: marker {symbol!r} ncbi_gene_id {nid}"
+        where = f"{node_id}: marker {marker_name(m)!r} ncbi_gene_id {nid}"
         if rec.get("missing"):
             errors.append(f"{where} does not resolve to an NCBI gene (NodeNormalization)")
             continue
@@ -910,13 +990,11 @@ def check_marker_gene_ids(
                     f"{nid}: species {rec['taxon']} vs node {species} not compared — "
                     "taxslim OBO missing (run `just fetch-oak-dbs`)"
                 )
-        names = {normalise_name(n) for n in [rec.get("label") or "", *rec.get("names", [])]}
-        names |= override_names.get(nid, set())
-        if symbol and normalise_name(symbol) not in names:
+        if symbol != rec.get("label"):
             errors.append(
-                f"{where} is {rec['label']}; {symbol!r} is not its label or a known "
-                "synonym. Check the ID, or resolve the name with "
-                "`just resolve-gene-names` (see the gene-id-curation skill)."
+                f"{where} is {rec['label']}; symbol must be its official symbol "
+                f"{rec['label']!r}, not {symbol!r}. The source's wording goes in "
+                "name_in_source (see the gene-id-curation skill)."
             )
     return errors, unchecked
 
