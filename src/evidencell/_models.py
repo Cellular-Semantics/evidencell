@@ -1009,8 +1009,7 @@ class CellTypeColocation(ConfiguredBaseModel):
 
 class SubtypeAssertion(ConfiguredBaseModel):
     """
-    DRAFT (#183). States that every cell of the owning type is a cell of `parent`, either by definition or as reported (see kind). Makes no claim that sibling subtypes are disjoint or that together they cover the parent; say so in notes where it matters. Overlap that is not containment is not a subtype; it stays a MappingEdge (e.g. evidencell:CrossCuttingMatch).
-    Interim. Lit-to-lit relations are planned to move to MappingEdges once edges to operational taxonomy nodes are distinguished from other edges. Each field maps onto an edge: owning node -> lit_type, parent -> taxonomy_type, kind -> relationship (DEFINITIONAL -> a definitional subtype predicate, EMPIRICAL -> skos:broadMatch), confidence -> confidence, sources -> evidence, notes -> caveats.
+    States that every cell of the owning type is a cell of `parent`, either by definition or as reported (see kind). Makes no claim that sibling subtypes are disjoint or that together they cover the parent; say so in notes where it matters. Overlap that is not containment is not a subtype; it stays a MappingEdge (e.g. evidencell:CrossCuttingMatch).
 
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
@@ -1473,7 +1472,7 @@ For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only
     definition_basis: DefinitionBasis = Field(default=..., description="""The kind of evidence that defines this type in the sources.
 """, json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'}},
          'domain_of': ['CellTypeNode']} })
-    subtype_of: Optional[list[SubtypeAssertion]] = Field(default=None, description="""DRAFT (#183). Literature types whose cells include all of this type's cells, by definition or as reported (see SubtypeAssertion.kind). Use the narrowest parent the sources support. Recorded on the child; a node's children are computed from the KB index. Not for atlas (ATLAS_TRANSCRIPTOMIC) nodes, whose hierarchy lives in the taxonomy.
+    subtype_of: Optional[list[SubtypeAssertion]] = Field(default=None, description="""Literature types whose cells include all of this type's cells, by definition or as reported (see SubtypeAssertion.kind). Use the narrowest parent the sources support. Recorded on the child; a node's children are computed from the KB index. Not for atlas (ATLAS_TRANSCRIPTOMIC) nodes, whose hierarchy lives in the taxonomy.
 """, json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'}},
          'domain_of': ['CellTypeNode']} })
     species: Optional[OntologyTerm] = Field(default=None, description="""NCBITaxon term for the species this type is described in. When the sources span several species, give the species of the defining description here and each source's species in its scope.

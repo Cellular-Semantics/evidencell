@@ -11,10 +11,10 @@
 # Version: 0.8.1 (2026-11-15) — ADDITIVE: MarkerType gains TRANSGENE_REPORTER and NOT_STATED (#196);
 #                               marker_type stays required, but a source that names no assay is
 #                               recorded as NOT_STATED rather than a guessed PROTEIN/TRANSCRIPT.
-# Version: 0.8.2 (2026-11-22) — ADDITIVE, DRAFT: CellTypeNode.subtype_of + SubtypeAssertion (#183);
+# Version: 0.8.2 (2026-11-22) — ADDITIVE: CellTypeNode.subtype_of + SubtypeAssertion (#183);
 #                               lit-to-lit subtype relations on the child node, with kind
 #                               (DEFINITIONAL/EMPIRICAL), confidence and SubtypeSource
-#                               sources. Interim: planned to migrate to lit-to-lit edges.
+#                               sources.
 # Version: 0.3  (2026-02-25) — added CLMapping (EXACT/BROAD), Allen anatomy terms,
 #                               ProposedCLTerm.parent_cl_term,
 #                               AnnotationTransferEvidence.source_cell_set_accession (cross-Allen-taxonomy)
@@ -487,7 +487,7 @@ enums:
           Provenance not recorded. Use sparingly; prefer one of the
           other values when known.
 
-  # ── Subtype assertions (#183) ───────────────────────────────────
+  # ── Subtype assertions ─────────────────────────────────────────
   SubtypeKind:
     description: How the owning type comes to be a subset of the parent.
     permissible_values:
@@ -1136,19 +1136,12 @@ classes:
 
   SubtypeAssertion:
     description: >
-      DRAFT (#183). States that every cell of the owning type is a cell of
-      `parent`, either by definition or as reported (see kind). Makes no
-      claim that sibling subtypes are disjoint or that together they cover
-      the parent; say so in notes where it matters. Overlap that is not
-      containment is not a subtype; it stays a MappingEdge (e.g.
+      States that every cell of the owning type is a cell of `parent`,
+      either by definition or as reported (see kind). Makes no claim that
+      sibling subtypes are disjoint or that together they cover the parent;
+      say so in notes where it matters. Overlap that is not containment is
+      not a subtype; it stays a MappingEdge (e.g.
       evidencell:CrossCuttingMatch).
-
-      Interim. Lit-to-lit relations are planned to move to MappingEdges once
-      edges to operational taxonomy nodes are distinguished from other edges.
-      Each field maps onto an edge: owning node -> lit_type, parent ->
-      taxonomy_type, kind -> relationship (DEFINITIONAL -> a definitional
-      subtype predicate, EMPIRICAL -> skos:broadMatch), confidence ->
-      confidence, sources -> evidence, notes -> caveats.
     attributes:
       parent:
         required: true
@@ -1667,7 +1660,7 @@ classes:
         multivalued: true
         inlined_as_list: true
         description: >
-          DRAFT (#183). Literature types whose cells include all of this
+          Literature types whose cells include all of this
           type's cells, by definition or as reported (see
           SubtypeAssertion.kind). Use the narrowest parent the sources
           support. Recorded on the child; a node's children are computed from

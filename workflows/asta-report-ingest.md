@@ -469,14 +469,10 @@ INPUT FILES:
 
 5. Subtype relations. If the sources place a type inside another literature
    type — one proposed in this run or one in existing_nodes.yaml — write it on
-   the child as subtype_of. kind, confidence, sources and notes are described
-   in schema_subset.yaml (SubtypeAssertion, SubtypeKind, SubtypeConfidence,
-   SubtypeSource). Workflow policy:
-   - Use the narrowest parent the sources support.
-   - Overlap that is not containment (a population that straddles two types)
-     is not a subtype. Record it as an unplaced finding in ingest_plan.yaml.
-   - The parent must be a canonical node, never an atlas node; the hook checks.
-     Write a NEW parent's file before its children's.
+   the child as subtype_of, as schema_subset.yaml describes. Workflow policy:
+   - Overlap that is not containment goes to unplaced in ingest_plan.yaml.
+   - Write a NEW parent's file before its children's; the hook checks that
+     the parent exists.
    - Not in notes, and not as an edge.
 
 ## Part D: Write
@@ -749,12 +745,9 @@ Points for the reviewer beyond the diff:
 - **Reconciliation.** Check each NEW / ENRICH / DUPLICATE decision and its
   `reconciliation_note` in `ingest_plan.yaml`. A wrong NEW is a duplicate node; a
   wrong ENRICH merges two populations.
-- **Subtype relations.** Check each subtype_of: is the parent the narrowest
-  one the sources support, is kind right (does the child's definition name the
-  parent, or is containment a finding?), and does confidence match the sources?
+- **Subtype relations.** Check each subtype_of: parent, kind and confidence.
 - **Unplaced findings** are the run's record of what the schema could not hold.
-  They are inputs to schema decisions (#202), so keep them with the run
-  artifacts.
+  They are inputs to schema decisions, so keep them with the run artifacts.
 
 **Reviewer note:** KB YAML carries `quote_key` values, not quote text. To read
 the evidence behind an assertion, dereference the key against
@@ -830,7 +823,7 @@ concurrently in a separate session.
   entries pointing at quote_keys. `LiteratureEvidence` items are created by
   `evidence-extraction` after primary verification.
 - **No edges at ingest.** Subtype relations go in `subtype_of` on the child
-  node (#183), an interim field planned to migrate to lit-to-lit edges.
+  node.
 - **Nodes are DRAFT until verified.** Property assertions come from ASTA report
   quotes, which are paraphrase until `survey` / `evidence-extraction` confirms
   them against primary text. Say so in the node header comment.
