@@ -26,6 +26,18 @@ nodes:
   - id: igl_enkephalinergic_geniculogeniculate_neuron
     name: "Intergeniculate leaflet enkephalinergic geniculo-geniculate neuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
+    subtype_of:
+      - parent: igl_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:23103793"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:27916729"
+            quote_key: "27232578_7306b2da"
+        notes: >
+          One of two main GABAergic subpopulations of the IGL, picked out by
+          enkephalin and projection target. Rat.
     species:
       id: NCBITaxon:10116
       label: "Rattus norvegicus"
@@ -178,9 +190,6 @@ nodes:
       - "PMID:27208616"
     is_terminal: false
     notes: >
-      PARENT TYPE: one of the two main GABAergic subpopulations of the IGL;
-      subtype of igl_gabaergic_neuron (see edge below).
-
       INFERRED-IDENTITY CAVEAT: the enkephalinergic identity of the
       electrophysiologically defined group is partly inferred. Chrobok et
       al., 2016 (PMID:27208616, quote 12882742_30978228) define the I_T group
@@ -214,43 +223,4 @@ nodes:
 
       SPECIES: rat.
 
-  - id: igl_gabaergic_neuron
-    name: "Intergeniculate leaflet (IGL) GABAergic neuron"
-    definition_basis: CLASSICAL_ANATOMICAL
-    reference_stub: LIT_TYPE
-edges:
-  - id: edge_igl_enkephalinergic_geniculogeniculate_neuron_to_igl_gabaergic_neuron
-    lit_type: igl_enkephalinergic_geniculogeniculate_neuron
-    taxonomy_type: igl_gabaergic_neuron
-    relationship: skos:broadMatch
-    mapping_cardinality: "1:n"
-    mapping_justification: semapv:UnreviewedManualMapping
-    confidence: MODERATE
-    evidence:
-      - evidence_type: LITERATURE
-        supports: SUPPORT
-        reference: "PMID:27916729"
-        snippet: >-
-          In rat, two main GABAergic subpopulations can be distinguished in
-          the IGL: neurons synthesizing neuropeptide Y (NPY), which directly
-          innervates the suprachiasmatic nuclei, and enkephalinergic cells,
-          which connect contralaterally located leaflets
-        explanation: >
-          Names enkephalinergic, contralaterally projecting cells as one of two
-          GABAergic subpopulations of the IGL. That places this node inside
-          the IGL GABAergic neuron population as a proper subset, because the
-          NPY cells are the sibling subset.
-        study_type: ELECTROPHYSIOLOGICAL
-      - evidence_type: LITERATURE
-        supports: SUPPORT
-        reference: "PMID:23103793"
-        snippet: >-
-          the other population comprises enkephalin-positive (ENK) neurons
-          giving rise to the geniculo-geniculate tract innervating the
-          contralateral IGL (cIGL)
-        explanation: >
-          The same source describes the IGL as a population of GABAergic
-          neurons divided into two distinct populations. Enkephalin-positive
-          geniculo-geniculate neurons are the second of these, so they are a
-          subset of the IGL GABAergic neuron.
-        study_type: MULTIMODAL
+edges: []

@@ -22,6 +22,19 @@ nodes:
   - id: trn_spp1_core_neuron
     name: "TRN Spp1+ core GABAergic neuron"
     definition_basis: CLASSICAL_MULTIMODAL
+    subtype_of:
+      - parent: trn_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:32699411"
+            quote_key: "220696191_9b59d333"
+          - ref: "PMID:39630580"
+            quote_key: "274495776_ea6ec372"
+        notes: >
+          The Spp1+ pole of a continuous Spp1/Ecel1 gradient within the TRN.
+          Cells between the poles belong to the parent but to neither pole
+          node, so the poles do not cover the parent.
     species:       # To be confirmed from primary literature — mouse primary evidence
     anatomical_location:
       - id: UBERON:0001903
@@ -163,7 +176,7 @@ nodes:
       - "PMID:41622438"
     is_terminal: false
     notes: >
-      PARENT / GRADIENT POLE: subtype of trn_gabaergic_neuron. This node is
+      GRADIENT POLE: this node is
       one pole of a continuous Spp1/Ecel1 transcriptomic gradient within
       trn_gabaergic_neuron, not a discrete cluster. Li et al. 2020
       (PMID:32699411, quote 220696191_0d9ab57d) describe TRN heterogeneity as

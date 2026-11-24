@@ -26,6 +26,18 @@ nodes:
   - id: igl_npy_geniculohypothalamic_neuron
     name: "Intergeniculate leaflet NPY-positive geniculohypothalamic neuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
+    subtype_of:
+      - parent: igl_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:23103793"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:27916729"
+            quote_key: "27232578_7306b2da"
+        notes: >
+          One of two main GABAergic subpopulations of the IGL, picked out by
+          NPY and projection target. Rat.
     species:
       id: NCBITaxon:10116
       label: "Rattus norvegicus"
@@ -176,9 +188,6 @@ nodes:
       - "PMID:27208616"
     is_terminal: false
     notes: >
-      PARENT TYPE: one of the two main GABAergic subpopulations of the IGL;
-      subtype of igl_gabaergic_neuron (see edge below).
-
       HETEROGENEITY / THANKACHAN CLASSES: Thankachan & Rusak 2005
       (PMID:16207879, quote 9130790_8fa09d39) describe Type II IGL/VLG
       neurons (large amounts of NPY throughout the soma; light responses of
@@ -204,45 +213,4 @@ nodes:
 
       SPECIES: rat.
 
-  - id: igl_gabaergic_neuron
-    name: "Intergeniculate leaflet (IGL) GABAergic neuron"
-    definition_basis: CLASSICAL_ANATOMICAL
-    reference_stub: LIT_TYPE
-edges:
-  - id: edge_igl_npy_geniculohypothalamic_neuron_to_igl_gabaergic_neuron
-    lit_type: igl_npy_geniculohypothalamic_neuron
-    taxonomy_type: igl_gabaergic_neuron
-    relationship: skos:broadMatch
-    mapping_cardinality: "1:n"
-    mapping_justification: semapv:UnreviewedManualMapping
-    confidence: MODERATE
-    evidence:
-      - evidence_type: LITERATURE
-        supports: SUPPORT
-        reference: "PMID:27916729"
-        snippet: >-
-          In rat, two main GABAergic subpopulations can be distinguished in
-          the IGL: neurons synthesizing neuropeptide Y (NPY), which directly
-          innervates the suprachiasmatic nuclei, and enkephalinergic cells,
-          which connect contralaterally located leaflets
-        explanation: >
-          Names NPY-synthesising, SCN-innervating neurons as one of two
-          GABAergic subpopulations of the IGL. That places this node inside
-          the IGL GABAergic neuron population as a proper subset, because the
-          enkephalinergic cells are the sibling subset.
-        study_type: ELECTROPHYSIOLOGICAL
-      - evidence_type: LITERATURE
-        supports: SUPPORT
-        reference: "PMID:23103793"
-        snippet: >-
-          The intergeniculate leaflet (IGL) of the lateral geniculate body in
-          the rat is a population of GABAergic neurons that can be divided
-          into two, anatomically and neurochemically distinct populations. One
-          population comprises neuropeptide-Y (NPY)-positive neurons that form
-          the geniculohypothalamic tract innervating the suprachiasmatic
-          nuclei (SCN)
-        explanation: >
-          An independent source makes the same division: the IGL GABAergic
-          population divides into two distinct populations, and the
-          NPY-positive geniculohypothalamic neurons are one of them.
-        study_type: MULTIMODAL
+edges: []

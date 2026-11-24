@@ -22,6 +22,20 @@ nodes:
   - id: anteroventral_thalamic_nucleus_excitatory_neuron
     name: "Anteroventral thalamic nucleus (AV) excitatory projection neuron"
     definition_basis: CLASSICAL_ANATOMICAL
+    subtype_of:
+      - parent: anterior_thalamic_nucleus_excitatory_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:40593635"
+            quote_key: "279797062_33751aaa"
+          - ref: "PMID:32132227"
+            quote_key: "212418354_37235d66"
+        notes: >
+          Defined by nucleus: the ATN comprise AD, AV and AM, so ATN
+          excitatory neurons in AV are a subset by definition. The sources
+          state the nuclear subdivision; the cell-level subset follows from
+          it.
     species:       # To be confirmed from primary literature — cited evidence is mouse and rat
     anatomical_location:
       - id: UBERON:0002685
@@ -131,8 +145,7 @@ nodes:
       - "PMID:32964131"
     is_terminal: false
     notes: >
-      HIERARCHY: subtype of anterior_thalamic_nucleus_excitatory_neuron
-      (ATN); shared ATN properties (Slc17a6, glutamatergic identity, relay-cell
+      INHERITED: shared ATN properties (Slc17a6, glutamatergic identity, relay-cell
       morphology, Papez-circuit placement) are recorded on the parent.
       Slc17a6 applies here by inheritance.
 

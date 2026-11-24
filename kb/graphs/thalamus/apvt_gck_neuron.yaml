@@ -22,6 +22,20 @@ nodes:
   - id: apvt_gck_neuron
     name: "Glucokinase-expressing anterior PVT (Gck+ aPVT) glutamatergic neuron"
     definition_basis: CLASSICAL_MULTIMODAL
+    subtype_of:
+      - parent: pvt_glutamatergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:35303367"
+            quote_key: "247548117_93d5fc5f"
+          - ref: "PMID:34220458"
+            quote_key: "235466185_0d1595b7"
+        notes: >
+          Gaspari 2022 defines a subpopulation of PVT neurons by Gck
+          expression (anterior PVT). Membership of the glutamatergic parent
+          is inferred from PVT-wide vGLUT2 expression, not shown for Gck+
+          cells. Mouse, single study.
     species:       # To be confirmed from primary literature — single source is mouse
     anatomical_location:
       - id: UBERON:0001920
@@ -80,11 +94,6 @@ nodes:
       - "PMID:35303367"
     is_terminal: false
     notes: >
-      SUBSET OF pvt_glutamatergic_neuron: this is a marker-defined
-      subpopulation of the PVT glutamatergic projection neuron (anterior PVT).
-      The schema has no parent/subtype slot on CellTypeNode, so the
-      relationship is recorded here only.
-
       NT TYPE INFERRED: glutamatergic identity is inferred from PVT
       principal-cell context (PVT-wide vGLUT2 expression and absence of
       intrinsic GABAergic neurons), not shown directly for Gck+ cells by the
