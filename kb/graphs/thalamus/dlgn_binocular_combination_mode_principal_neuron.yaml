@@ -55,4 +55,40 @@ nodes:
         CL:4023068 (excitatory neuron with soma in the thalamic complex)
         contains the type and is the most specific such term. EXACT would need
         a CL term for this connectivity-defined class.
+    anatomical_location:
+      - id: MBA:170
+        label: "Dorsal part of the lateral geniculate complex"
+        name_in_source: "mouse lateral geniculate nucleus (LGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:28231464"
+            quote_key: "10004494_03dd7881"
+            method: "single-cell-initiated transsynaptic rabies tracing from targeted LGN principal cells"
+            scope: "mouse LGN principal cells; binocular combination-mode cells are those with up to 91 RGC inputs from both eyes"
+    nt_type:
+      name_in_source: "principal cells (thalamocortical relay cells; excitatory)"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "excitatory projection neurons"
+      sources:
+        - ref: "PMID:28231464"
+          quote_key: "10004494_03dd7881"
+          method: "inferred — binocular combination-mode cells are LGN principal cells; transmitter not examined for this subtype"
+          scope: "mouse LGN principal cells"
+        - ref: "PMID:28965517"
+          quote_key: "4601077_8f3fc6a4"
+          method: "review statement — dLGN principal (TC relay) cells are excitatory projection neurons; glutamatergic transmitter inferred, not shown directly for binocular combination-mode cells"
+          scope: "rodent dLGN TC relay cells"
+    definition_references:
+      - "PMID:28231464"
+    notes: >
+      Single primary study (Rompani et al. 2017); no independent study in
+      the sources characterises binocular combination-mode cells. Rompani
+      describe input "modes" of individually traced principal cells, so
+      whether binocular combination mode marks a stable cell type or a
+      connectivity state is unsettled. The sources do not place these cells
+      relative to the ipsilateral-recipient zone, core/shell or X/Y/W-like
+      morphology, and no marker or transcriptomic identity is established,
+      so no morphology, marker or sub-nuclear location is recorded here.
 edges: []
