@@ -57,4 +57,79 @@ nodes:
         neuron term (CL:4023068) was not assumed. The nearest general term the
         node satisfies in full is neuron. If the cells are shown to be relay
         cells, CL:4023068 would be the more specific BROAD parent.
+    anatomical_location:
+      - id: MBA:496345664
+        label: "Dorsal part of the lateral geniculate complex, shell"
+        name_in_source: "superficial 75μm region"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:23177957"
+            quote_key: "3598591_8c3025f0"
+            method: "in vivo two-photon calcium imaging"
+            scope: "mouse dLGN, superficial 75 um; the source names a depth band, not the shell"
+          - ref: "PMID:23486939"
+            quote_key: "36416152_7fcc72ba"
+            method: "in vivo multisite extracellular recording"
+            scope: "mouse LGN; direction- and orientation-selective units enriched where direction-selective RGCs terminate"
+          - ref: "PMID:26727264"
+            quote_key: "14389058_e2e97d92"
+            method: "introduction statement summarising DS-RGC axon labelling and calbindin staining literature"
+            scope: "mouse dLGN; the superficial DS-RGC lamina coincides with the calbindin-positive shell (links the superficial band to the shell term)"
+    colocated_types:
+      - neighboring_type: "non-direction-selective dLGN neurons"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          In the superficial 75 um of dLGN, anterior- and posterior-direction-selective
+          neurons are intermingled with non-direction-selective neurons (Marshel
+          et al. 2012, PMID:23177957, quote 3598591_8c3025f0).
+    nt_type:
+      name_in_source: "excitatory"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "excitatory"
+      sources:
+        - ref: "PMID:41814933"
+          quote_key: "286491924_f2e9799b"
+          method: "INFERRED, not shown for this type — dLGN thalamocortical relay cells are excitatory and are 80-90% of dLGN neurons; glutamatergic identity assumes that most recorded direction-selective units are relay cells"
+          scope: "mouse dLGN thalamocortical relay cells (general statement, not about direction-selective neurons)"
+          support: WEAK
+    electrophysiology:
+      description: >
+        Defined by visual response tuning, not intrinsic firing properties.
+        Direction-selective to anterior or posterior (horizontal) motion; in the
+        superficial ~75 um of dLGN, upward- and downward-selective neurons are
+        nearly absent. The authors interpret dLGN as maintaining and sharpening
+        retinal direction selectivity. Direction-selective responses are also
+        found in extracellular recordings of mouse LGN, where direction- and
+        orientation-selective units form a substantial population beyond
+        center-surround cells. Intrinsic properties (firing pattern, bursting)
+        are not reported for these neurons.
+      sources:
+        - ref: "PMID:23177957"
+          quote_key: "3598591_8c3025f0"
+          method: "in vivo two-photon calcium imaging of visual responses"
+          scope: "mouse dLGN, superficial 75 um"
+        - ref: "PMID:23177957"
+          quote_key: "3598591_b52f6d24"
+          method: "authors' interpretation of imaging results"
+          scope: "mouse dLGN, superficial 75 um"
+        - ref: "PMID:23486939"
+          quote_key: "36416152_7fcc72ba"
+          method: "in vivo multisite extracellular recording"
+          scope: "mouse LGN"
+    definition_references:
+      - "PMID:23177957"
+      - "PMID:23486939"
+      - "PMID:26727264"
+    notes: >
+      Location: Marshel et al. imaged the superficial 75 um of dLGN; placing the
+      cells in the shell rests on other sources equating the superficial
+      direction-selective RGC lamina with the calbindin-positive shell, not on
+      Marshel's own description. Cell class: the sources identify these cells by
+      tuning only. They are not shown to be relay (thalamocortical) cells, and
+      dLGN interneurons are also feature selective, so the glutamatergic nt_type
+      is a weak inference from relay cells being the large majority of dLGN
+      neurons. SUSPECTED HETEROGENEITY: anterior- and posterior-preferring cells
+      are grouped here; whether they are distinct types is not addressed.
 edges: []
