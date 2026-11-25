@@ -58,4 +58,43 @@ nodes:
         notes: >
           Defined as the vLGN GABAergic neuron narrowed to locally projecting
           (interneuron) cells; containment holds by definition.
+    anatomical_location:
+      - id: MBA:178
+        label: "Ventral part of the lateral geniculate complex"
+        name_in_source: "ventral LGN (vLGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:31964831"
+            method: "statement in introduction citing prior work (dLGN, vLGN and IGL each contain local GABAergic interneurons)"
+            scope: "rodent visual thalamus"
+            quote_key: "210870509_2b108b46"
+          - ref: "PMID:36342840"
+            method: "statement citing prior work (presence and distribution of local interneurons in both dLGN and vLGN)"
+            scope: "mouse visual thalamus"
+            quote_key: "247085323_880b2f54"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:31964831"
+          method: "statement in introduction citing prior work (local GABAergic interneurons in vLGN); transmitter not shown directly in this source"
+          scope: "rodent visual thalamus"
+          quote_key: "210870509_2b108b46"
+        - ref: "PMID:36342840"
+          method: "statement citing prior work (local interneurons of dLGN and vLGN referred to as GABAergic neurons)"
+          scope: "mouse visual thalamus"
+          quote_key: "247085323_880b2f54"
+    definition_references:
+      - "PMID:31964831"
+      - "PMID:36342840"
+    notes: >
+      The sources assert the presence of local GABAergic interneurons in vLGN
+      only in introductory statements citing older work (Harrington 1997;
+      Moore 1994; Arcelli 1997); no quote gives markers, morphology or
+      physiology that distinguish them from vLGN GABAergic projection neurons,
+      which make up most of the nucleus. The population may not be separable
+      from vlgn_gabaergic_neuron on current evidence.
 edges: []
