@@ -170,17 +170,21 @@ in `src/evidencell/expression_cache.py`.
   through the `genes` / `gene_synonyms` tables, loaded by `build-taxonomy-db`
   from the committed `kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz` (Translator
   NodeNormalization + Name Resolver; refresh with `just build-gene-ids`).
-  A classical marker's `ncbi_gene_id` pins its gene; one without an ID is
-  `NO_GENE_ID` and not resolved by name. Atlas metadata names resolve by
-  exact symbol, case-insensitive symbol, or a synonym exactly one gene
-  claims. See
-  `src/evidencell/gene_identity.py`.
+  A classical marker's `ncbi_gene_id` pins its gene (a gene of another
+  species reaches the taxonomy through its official symbol only); one
+  without an ID is `NO_GENE_ID` and not resolved by name. A pin is one
+  marker's gene, never applied to another marker by shared wording. Atlas
+  metadata names resolve by exact symbol, case-insensitive symbol, or a
+  synonym exactly one gene claims. See `src/evidencell/gene_identity.py`.
 - **Fails closed**: an uncached gene with no stats file stops the run with
   `just fetch-mapmycells {taxonomy_id}`. There is no metadata-only fallback.
 - Names that can't be measured are recorded and reported — never a silent
   `{}`: `NO_ENSEMBL_MAPPING` (no gene of the taxonomy has that name),
-  `AMBIGUOUS_SYMBOL` (several do) or `NO_GENE_ID` (a classical marker with
-  no `ncbi_gene_id`). Set the marker's gene per `docs/marker_gene_ids.md`.
+  `AMBIGUOUS_SYMBOL` (several do), `NO_GENE_ID` (a classical marker with
+  no `ncbi_gene_id`), `PIN_NOT_IN_TAXONOMY` (its gene isn't in the
+  taxonomy, nor its official symbol) or `CONFLICTING_PINS` (markers of one
+  node share a name but not a gene). Set the marker's gene per
+  `docs/marker_gene_ids.md`.
 - Marker scoring in `find-candidates` uses expression only. The atlas
   node's metadata marker lists are cross-checked and disagreements reported
   as `marker_discrepancies` (carried into Stage B property-comparison notes).

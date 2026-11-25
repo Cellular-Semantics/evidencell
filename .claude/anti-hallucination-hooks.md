@@ -112,9 +112,14 @@ ncbi_gene_id: "NCBIGene:12307"     # species-specific NCBI Gene CURIE
 ```
 
 **Check** (`gene_identity.check_marker_gene_ids`, hook step 3c), for every
-GeneDescriptor in a `kb/graphs` file:
+GeneDescriptor on a node (`nodes[*]`) in a `kb/graphs` file. Markers on edge
+evidence (`edges[*].evidence[*]`) are **not checked**: a gene on an edge
+should be checked for consistency with the two nodes it links (taxonomy DB
+node and graph node), which — with cross-species mapping — is future work.
 - `symbol` and `ncbi_gene_id` are both set or both absent;
-- the ID exists in Translator NodeNormalization as an NCBI gene;
+- the ID exists in Translator NodeNormalization as an NCBI gene (an ID that
+  NodeNorm answers with another NCBIGene ID — merged or replaced — is
+  rejected naming the replacement);
 - its taxon is the node's `species` (or the graph's), or a descendant of it
   (a human gene on a Primates node, a mouse gene on a Murinae node) — via
   the NCBITaxon slim;
@@ -124,16 +129,21 @@ GeneDescriptor in a `kb/graphs` file:
 
 **Verification source:** Translator NodeNormalization + Name Resolver,
 cached in `conf/gene_id_cache.json` (gitignored) and seeded offline from the
-committed `kb/taxonomy/*/gene_ids.tsv.gz`.
+committed `kb/taxonomy/*/gene_ids.tsv.gz`. Only genes that were found are
+cached; an ID NodeNorm doesn't know is looked up again on the next edit, so
+a passing Translator gap never becomes a lasting block.
 
-**Soft skip:** an uncached ID with Translator unreachable, or a taxon
-comparison without `conf/oak_dbs/taxslim.obo`, is allowed and listed under
-"Checks NOT run" with the fix. Bypass: `EVIDENCELL_SKIP_GENE_CHECK=1`.
+**Soft skip:** an uncached ID with Translator unreachable, a taxon
+comparison without `conf/oak_dbs/taxslim.obo`, a marker on a node with no
+species (and no graph species), or a gene NodeNorm gives no taxon, is
+allowed and listed under "Checks NOT run". Bypass:
+`EVIDENCELL_SKIP_GENE_CHECK=1`.
 
 **Status:** Implemented end-to-end (#216; official-symbol rule #244). Tests:
 `tests/test_gene_identity.py` (unit, offline cache),
 `tests/test_hook_integration.py` (through the hook: seeded-cache blocks, a
-symbol without an ID, offline soft skip, and live NodeNorm rejection of a
+stub NodeNorm that knows no IDs (blocked, not cached), a symbol without an
+ID, offline soft skip, and live NodeNorm rejection of a
 hallucinated ID and of a mouse gene on a Primates node, marked
 `integration`).
 
@@ -151,11 +161,12 @@ sources:
 ```
 
 **Check** (`rrid.check_antibody_rrids`, hook step 3d): every `rrid` on a
-`MarkerSource.antibody` must resolve in the Antibody Registry.
+`MarkerSource.antibody` — on node and edge-evidence markers — must resolve
+in the Antibody Registry.
 
 **Verification source:** SciCrunch resolver
-(`https://scicrunch.org/resolver/{RRID}.json`), cached in
-`conf/rrid_cache.json` (gitignored).
+(`https://scicrunch.org/resolver/{RRID}.json`); RRIDs it knows are cached in
+`conf/rrid_cache.json` (gitignored), unknown ones are looked up again.
 
 **Soft skip:** an uncached RRID with the resolver unreachable is allowed and
 listed under "Checks NOT run". Bypass: `EVIDENCELL_SKIP_RRID_CHECK=1`.

@@ -33,6 +33,12 @@ Marker names (``mGluR1``, ``PV``, ``Sst``) resolve to atlas genes in
 ``TaxonomyDB.expression`` through the gene identity tables (#216), pinned
 by the classical marker's ``ncbi_gene_id`` where it has one. The rewritten
 value names the atlas gene symbol the name resolved to.
+
+A PC whose property names a curated marker (one with a pin, or curated as
+having no single gene) is looked up by that marker only. Otherwise words
+from ``node_a_value`` are tried too, but a word counts only as an exact
+gene symbol: free text is not run through synonym or case-insensitive
+matching (``In`` is a synonym of Ahr).
 """
 
 from __future__ import annotations
@@ -41,9 +47,9 @@ import argparse
 import re
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
-from .gene_identity import marker_gene_ids
+from .gene_identity import EXACT_SYMBOL, marker_gene_ids
 from .kb_io import roundtrip_yaml
 from .paths import repo_root
 
@@ -61,22 +67,28 @@ def _looks_stale(node_b_value: str) -> bool:
     return bool(_STALE_PATTERN.search(node_b_value))
 
 
-def _candidate_gene_symbols(pc: dict) -> list[str]:
-    """Return candidate gene symbols to look up atlas expression for
-    this PC, ordered by likelihood.
+def _candidate_gene_symbols(
+    pc: dict, gene_ids: Mapping[str, Any] | None = None
+) -> list[tuple[str, bool]]:
+    """Return ``(name, from_text)`` candidates to look up atlas expression
+    for this PC, ordered by likelihood.
 
     Sources, in order:
     1. PC's ``property`` suffix (e.g. ``marker_Grm1`` → ``Grm1``,
        ``marker_mGluR1`` → ``mGluR1``, resolved to Grm1 downstream).
+       When the suffix is a curated marker (a key of ``gene_ids``), it is
+       the only candidate: its pin decides, and a marker curated as having
+       no single gene stays unmeasured.
     2. Tokens extracted from ``node_a_value`` matching a mouse-gene
-       capitalisation pattern.
+       capitalisation pattern (``from_text``; accepted downstream only as
+       an exact gene symbol).
     """
-    out: list[str] = []
+    out: list[tuple[str, bool]] = []
     seen: set[str] = set()
 
-    def push(sym: str) -> None:
+    def push(sym: str, from_text: bool) -> None:
         if sym and sym not in seen:
-            out.append(sym)
+            out.append((sym, from_text))
             seen.add(sym)
 
     prop = pc.get("property") or ""
@@ -86,12 +98,14 @@ def _candidate_gene_symbols(pc: dict) -> list[str]:
         prop,
     )
     if suffix:
-        push(suffix)
+        push(suffix, False)
+        if suffix in (gene_ids or {}):
+            return out
 
     node_a = pc.get("node_a_value") or ""
     if isinstance(node_a, str):
         for m in _GENE_TOKEN_PATTERN.finditer(node_a):
-            push(m.group(1))
+            push(m.group(1), True)
     return out
 
 
@@ -99,18 +113,20 @@ def _load_expression(
     taxonomy_id: str,
     accession: str,
     symbols: list[str],
-    gene_ids: dict[str, str] | None = None,
-) -> tuple[dict[str, float], dict[str, str]]:
-    """``({name: mean_expression}, {name: atlas gene symbol})`` for one
-    atlas node, through the on-demand accessor (uncached genes load from
-    the stats file)."""
+    gene_ids: Mapping[str, Any] | None = None,
+) -> tuple[dict[str, float], dict[str, str], dict[str, str]]:
+    """``({name: mean_expression}, {name: atlas gene symbol},
+    {name: resolution method})`` for one atlas node, through the on-demand
+    accessor (uncached genes load from the stats file)."""
     from evidencell.taxonomy_db import TaxonomyDB, require_taxonomy_db
 
     db = TaxonomyDB(require_taxonomy_db(taxonomy_id))
     lookup = db.expression(symbols, accessions=[accession], gene_ids=gene_ids)
-    return lookup.for_node(accession), {
-        name: sym for name in symbols if (sym := lookup.gene_symbol(name)) is not None
-    }
+    return (
+        lookup.for_node(accession),
+        {name: sym for name in symbols if (sym := lookup.gene_symbol(name)) is not None},
+        {name: m.method for name, m in lookup.genes.items()},
+    )
 
 
 def _format_expression_value(gene: str, mean: float) -> str:
@@ -127,7 +143,7 @@ _MARKER_FAMILY = (
 
 
 def refresh_edge(
-    edge: dict, taxonomy_id: str, gene_ids: dict[str, str] | None = None
+    edge: dict, taxonomy_id: str, gene_ids: Mapping[str, Any] | None = None
 ) -> list[dict[str, Any]]:
     """Inspect each marker-family PC on this edge; for any with a
     stale ``node_b_value``, look up the atlas-side expression and
@@ -141,7 +157,7 @@ def refresh_edge(
     if not taxonomy_type:
         return changes
 
-    stale: list[tuple[dict, list[str]]] = []
+    stale: list[tuple[dict, list[tuple[str, bool]]]] = []
     for pc in edge.get("property_comparisons") or []:
         if not isinstance(pc, dict):
             continue
@@ -150,18 +166,22 @@ def refresh_edge(
             continue
         if not _looks_stale(pc.get("node_b_value") or ""):
             continue
-        stale.append((pc, _candidate_gene_symbols(pc)))
+        stale.append((pc, _candidate_gene_symbols(pc, gene_ids)))
     if not stale:
         return changes
 
-    symbols = list(dict.fromkeys(sym for _, cands in stale for sym in cands))
-    expr, atlas_symbols = _load_expression(taxonomy_id, taxonomy_type, symbols, gene_ids)
+    symbols = list(dict.fromkeys(sym for _, cands in stale for sym, _ in cands))
+    expr, atlas_symbols, methods = _load_expression(
+        taxonomy_id, taxonomy_type, symbols, gene_ids
+    )
     if not expr:
         return changes
 
     for pc, candidates in stale:
         old_b = pc.get("node_b_value") or ""
-        for sym in candidates:
+        for sym, from_text in candidates:
+            if from_text and methods.get(sym) != EXACT_SYMBOL:
+                continue
             if sym in expr:
                 gene = atlas_symbols.get(sym, sym)
                 new_b = _format_expression_value(gene, expr[sym])

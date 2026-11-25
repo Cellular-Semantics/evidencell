@@ -19,8 +19,10 @@ tables), and this module reads the resolved genes' stats columns. A name
 that doesn't resolve is reported in ``not_measured`` with the reason
 (``NO_ENSEMBL_MAPPING``: no gene of the taxonomy has that name;
 ``AMBIGUOUS_SYMBOL``: several do; ``NO_GENE_ID``: a curated marker with no
-``ncbi_gene_id``, not resolved by name) — a recorded gap, never a silent
-empty result.
+``ncbi_gene_id``, not resolved by name; ``PIN_NOT_IN_TAXONOMY``: a marker's
+``ncbi_gene_id`` isn't a gene of the taxonomy and its official symbol isn't
+exactly one; ``CONFLICTING_PINS``: markers of one node share the name but
+not the gene) — a recorded gap, never a silent empty result.
 
 ``just build-taxonomy-db`` creates both cache tables empty; they fill on
 use. Consumers go through :meth:`TaxonomyDB.expression`.
@@ -63,6 +65,8 @@ if TYPE_CHECKING:
 NO_ENSEMBL_MAPPING = "NO_ENSEMBL_MAPPING"
 AMBIGUOUS_SYMBOL = "AMBIGUOUS_SYMBOL"
 NO_GENE_ID = "NO_GENE_ID"  # curated marker without ncbi_gene_id (#244)
+PIN_NOT_IN_TAXONOMY = "PIN_NOT_IN_TAXONOMY"  # pinned gene not here, nor its symbol
+CONFLICTING_PINS = "CONFLICTING_PINS"  # one name, different genes on one node
 
 _FINGERPRINT_KEY = "expression_stats_fingerprint"
 
@@ -370,9 +374,14 @@ def query(
     every node is returned. Call :func:`ensure_genes` first.
     """
     from evidencell.gene_identity import AMBIGUOUS
+    from evidencell.gene_identity import CONFLICTING_PINS as _CONFLICT
     from evidencell.gene_identity import NO_GENE_ID as _NO_GENE
+    from evidencell.gene_identity import PIN_NOT_IN_TAXONOMY as _NOT_HERE
 
-    reasons = {AMBIGUOUS: AMBIGUOUS_SYMBOL, _NO_GENE: NO_GENE_ID}
+    reasons = {
+        AMBIGUOUS: AMBIGUOUS_SYMBOL, _NO_GENE: NO_GENE_ID,
+        _NOT_HERE: PIN_NOT_IN_TAXONOMY, _CONFLICT: CONFLICTING_PINS,
+    }
 
     out = ExpressionLookup(genes=dict(matches))
     by_ensembl: dict[str, list[str]] = {}

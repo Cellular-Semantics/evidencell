@@ -15,12 +15,17 @@ from evidencell import gene_identity as gi
 from evidencell.gene_identity import (
     AMBIGUOUS,
     CASE_INSENSITIVE_SYMBOL,
+    CONFLICT,
+    CONFLICTING_PINS,
     EXACT_SYMBOL,
     NO_GENE,
     NO_GENE_ID,
     NO_MATCH,
+    PIN_NOT_IN_TAXONOMY,
     PINNED_ID,
+    PINNED_SYMBOL,
     UNIQUE_SYNONYM,
+    GeneIdsUnavailable,
     Pin,
     check_marker_gene_ids,
     load_gene_tables,
@@ -152,16 +157,49 @@ def test_pinned_id_wins(con):
     assert (m.method, m.gene.stats_symbol) == (PINNED_ID, "Calb1")
 
 
-def test_pinned_id_of_another_species_falls_back_to_name(con):
+def test_pin_without_symbol_is_never_resolved_by_name(con):
+    """Review #1: a pin missing from the taxonomy, with no official symbol,
+    fails visibly — it does not fall back to the marker's wording."""
     m = resolve_names(con, ["SST"], {"SST": "NCBIGene:6750"})["SST"]
-    assert (m.method, m.gene.stats_symbol) == (CASE_INSENSITIVE_SYMBOL, "Sst")
+    assert m.method == PIN_NOT_IN_TAXONOMY and m.gene is None
 
 
 def test_pin_of_another_species_resolves_by_official_symbol(con):
     """A rat CB marker pinned to rat Calb1 reaches mouse Calb1 through its
     official symbol, not the ambiguous source wording (#244)."""
     m = resolve_names(con, ["CB"], {"CB": Pin("NCBIGene:83839", "Calb1")})["CB"]
-    assert (m.method, m.gene.stats_symbol) == (EXACT_SYMBOL, "Calb1")
+    assert (m.method, m.gene.stats_symbol) == (PINNED_SYMBOL, "Calb1")
+
+
+def test_pin_of_another_species_matches_its_symbol_ignoring_case(con):
+    """Human PVALB on a mouse taxonomy reaches Pvalb."""
+    m = resolve_names(con, ["PV"], {"PV": Pin("NCBIGene:5816", "PVALB")})["PV"]
+    assert (m.method, m.gene.stats_symbol) == (PINNED_SYMBOL, "Pvalb")
+
+
+@pytest.mark.parametrize("symbol", ["parvalbumin", "Sst1"])
+def test_pin_symbol_fallback_never_uses_synonyms(con, symbol):
+    """Review #1: the fallback is the official symbol only. A symbol that is
+    merely some gene's synonym (or nobody's) is PIN_NOT_IN_TAXONOMY, never a
+    UNIQUE_SYNONYM guess."""
+    m = resolve_names(con, ["x"], {"x": Pin("NCBIGene:1", symbol)})["x"]
+    assert m.method == PIN_NOT_IN_TAXONOMY and m.gene is None
+
+
+def test_pin_not_in_taxonomy_is_reported_as_its_own_reason(con):
+    from evidencell import expression_cache as ec
+
+    matches = resolve_names(con, ["x"], {"x": Pin("NCBIGene:1", None)})
+    assert ec.query(con, matches).not_measured == {"x": ec.PIN_NOT_IN_TAXONOMY}
+
+
+def test_missing_gene_tables_message_names_the_taxonomy():
+    """Review #9: the message carries the taxonomy id, not a literal {tid}."""
+    c = sqlite3.connect(":memory:")
+    with pytest.raises(GeneIdsUnavailable) as exc:
+        resolve_names(c, ["Pvalb"], taxonomy_id="CCN20250428")
+    msg = str(exc.value)
+    assert "{tid}" not in msg and msg.count("CCN20250428") == 3
 
 
 def test_curated_marker_without_gene_is_not_resolved_by_name(con):
@@ -199,6 +237,34 @@ def test_marker_gene_ids():
         "PSA-NCAM": NO_GENE,
         "CB": Pin("NCBIGene:12307", "Calb1"),
     }
+
+
+def test_markers_sharing_a_name_keep_their_own_pins():
+    """Review #3: one node's CB (Calb1) and CB (Cnr1) must not share a pin.
+    Neither is measured rather than one gene standing for both."""
+    node = {
+        "defining_markers": [
+            {"name_in_source": "CB", "symbol": "Calb1", "ncbi_gene_id": "NCBIGene:12307"},
+        ],
+        "negative_markers": [
+            {"name_in_source": "CB", "symbol": "Cnr1", "ncbi_gene_id": "NCBIGene:12801"},
+        ],
+    }
+    assert marker_gene_ids(node) == {"CB": CONFLICT}
+
+
+def test_same_pin_twice_is_not_a_conflict():
+    pv = {"name_in_source": "PV", "symbol": "Pvalb", "ncbi_gene_id": "NCBIGene:19293"}
+    node = {"defining_markers": [pv], "neuropeptides": [dict(pv)]}
+    assert marker_gene_ids(node) == {"PV": Pin("NCBIGene:19293", "Pvalb")}
+
+
+def test_conflicting_pins_are_not_measured(con):
+    from evidencell import expression_cache as ec
+
+    matches = resolve_names(con, ["CB"], {"CB": CONFLICT})
+    assert matches["CB"].method == CONFLICTING_PINS and matches["CB"].gene is None
+    assert ec.query(con, matches).not_measured == {"CB": ec.CONFLICTING_PINS}
 
 
 def test_marker_gene_ids_reads_pre_244_markers():
@@ -332,9 +398,21 @@ def cache(tmp_path: Path) -> Path:
         "NCBIGene:19293": {"label": "Pvalb", "taxon": "NCBITaxon:10090",
                            "names": ["PV", "parvalbumin"]},
         "NCBIGene:5816": {"label": "PVALB", "taxon": "NCBITaxon:9606", "names": ["PV"]},
-        "NCBIGene:999999999": {"missing": True},
+        "NCBIGene:12307": {"label": "Calb1", "taxon": None, "names": []},
     }))
     return p
+
+
+def _nodenorm_returns(monkeypatch, answer: dict):
+    calls: list = []
+
+    def fake(ids, **kw):
+        calls.append(list(ids))
+        return {i: answer.get(i) for i in ids}
+
+    monkeypatch.setattr(gi, "nodenorm", fake)
+    monkeypatch.setattr(gi, "nameres_synonyms", lambda ids, **kw: {})
+    return calls
 
 
 def _check(doc, cache, tmp_path, taxslim=None):
@@ -355,9 +433,45 @@ def test_hook_check_ignores_name_in_source(cache, tmp_path):
     assert _check(doc, cache, tmp_path) == ([], [])
 
 
-def test_hook_check_rejects_nonexistent_id(cache, tmp_path):
+def test_hook_check_rejects_nonexistent_id(cache, tmp_path, monkeypatch):
+    _nodenorm_returns(monkeypatch, {})
     errors, _ = _check(_graph("Pvalb", "NCBIGene:999999999"), cache, tmp_path)
     assert len(errors) == 1 and "does not resolve" in errors[0]
+
+
+def test_hook_check_does_not_cache_a_failed_lookup(cache, tmp_path, monkeypatch):
+    """Review #6: a gene NodeNorm doesn't return (a passing gap) is looked
+    up again next time, not stored as missing for good."""
+    calls = _nodenorm_returns(monkeypatch, {})
+    doc = _graph("Pvalb", "NCBIGene:999999999")
+    assert _check(doc, cache, tmp_path)[0]
+    assert _check(doc, cache, tmp_path)[0]
+    assert calls == [["NCBIGene:999999999"], ["NCBIGene:999999999"]]
+    assert "NCBIGene:999999999" not in json.loads(cache.read_text())
+
+
+def test_hook_check_drops_old_negative_entries(cache, tmp_path, monkeypatch):
+    """Review #6: a {"missing": true} left by an older version is looked up
+    again (here the gene is found, so the edit passes)."""
+    data = json.loads(cache.read_text())
+    data["NCBIGene:14415"] = {"missing": True}
+    cache.write_text(json.dumps(data))
+    _nodenorm_returns(monkeypatch, {"NCBIGene:14415": {
+        "ncbi_gene_id": "NCBIGene:14415", "label": "Gad1", "taxon": "NCBITaxon:10090",
+        "equivalent_ids": [],
+    }})
+    assert _check(_graph("Gad1", "NCBIGene:14415", "NCBITaxon:10090"), cache, tmp_path)[0] == []
+
+
+def test_hook_check_reports_a_replaced_id(cache, tmp_path, monkeypatch):
+    """Review #6: NodeNorm answering with another NCBIGene ID (merged or
+    replaced record) names the replacement."""
+    _nodenorm_returns(monkeypatch, {"NCBIGene:1": {
+        "ncbi_gene_id": "NCBIGene:2", "label": "Gad1", "taxon": "NCBITaxon:10090",
+        "equivalent_ids": [],
+    }})
+    errors, _ = _check(_graph("Gad1", "NCBIGene:1"), cache, tmp_path)
+    assert len(errors) == 1 and "NodeNormalization gives NCBIGene:2" in errors[0]
 
 
 def test_hook_check_rejects_symbol_mismatch(cache, tmp_path):
@@ -407,6 +521,39 @@ def test_hook_check_species_comes_from_graph_when_node_has_none(cache, tmp_path,
     doc["species"] = {"id": "NCBITaxon:10116"}
     errors, _ = _check(doc, cache, tmp_path, taxslim)
     assert len(errors) == 1 and "NCBITaxon:10116" in errors[0]
+
+
+def test_hook_check_reports_species_unchecked_when_node_has_none(cache, tmp_path, taxslim):
+    """Review #5: no node or graph species → the species check is listed
+    as not run, never skipped silently."""
+    errors, unchecked = _check(_graph("Pvalb", "NCBIGene:19293", species=None), cache,
+                               tmp_path, taxslim)
+    assert errors == []
+    assert unchecked == [
+        "NCBIGene:19293: species not compared — n1 has no species and the graph has none"
+    ]
+
+
+def test_hook_check_reports_species_unchecked_when_gene_has_no_taxon(cache, tmp_path, taxslim):
+    errors, unchecked = _check(_graph("Calb1", "NCBIGene:12307", "NCBITaxon:10090"), cache,
+                               tmp_path, taxslim)
+    assert errors == []
+    assert unchecked == ["NCBIGene:12307: species not compared — no taxon in NodeNormalization"]
+
+
+def test_hook_check_leaves_edge_evidence_markers_unchecked(cache, tmp_path, taxslim):
+    """Review #4 (deferred): a gene on an edge must be checked for
+    consistency with the two nodes it links, not looked up on its own (the
+    graph's species is wrong for atlas genes). Until that lands, edge
+    markers are not checked."""
+    doc = {"species": {"id": "NCBITaxon:10090"}, "nodes": [], "edges": [{
+        "id": "e1", "evidence": [{"evidence_type": "ATLAS_METADATA", "defining_markers": [
+            {"name_in_source": "Sst", "symbol": "Pvalb"},
+            {"name_in_source": "Pvalb", "symbol": "Sst", "ncbi_gene_id": "NCBIGene:19293"},
+            {"name_in_source": "PVALB", "symbol": "PVALB", "ncbi_gene_id": "NCBIGene:5816"},
+        ]}],
+    }]}
+    assert _check(doc, cache, tmp_path, taxslim) == ([], [])
 
 
 def test_hook_check_without_taxslim_reports_species_unchecked(cache, tmp_path, monkeypatch):
@@ -498,7 +645,9 @@ def test_nodenorm_label_without_ncbi_drops_taxon_suffix():
     assert gi._ncbi_from_nodenorm(entry)["label"] == "Gm2164"
 
 
-def test_duplicate_symbol_prefers_the_gene_with_an_ncbi_id(tmp_path):
+@pytest.mark.parametrize("name, method", [("Kiss1", EXACT_SYMBOL),
+                                          ("KISS1", CASE_INSENSITIVE_SYMBOL)])
+def test_duplicate_symbol_prefers_the_gene_with_an_ncbi_id(tmp_path, name, method):
     d = tmp_path / "T3"
     d.mkdir()
     rows = _rows() + [
@@ -512,5 +661,7 @@ def test_duplicate_symbol_prefers_the_gene_with_an_ncbi_id(tmp_path):
     write_gene_ids(d / "gene_ids.tsv.gz", {}, rows)
     c = sqlite3.connect(":memory:")
     load_gene_tables(c, d)
-    m = resolve_names(c, ["Kiss1"])["Kiss1"]
-    assert (m.method, m.gene.ensembl_id) == (EXACT_SYMBOL, "ENSMUSG09")
+    m = resolve_names(c, [name])[name]
+    # Review #2: the case-insensitive branch collapses duplicate Ensembl
+    # models of one locus too, instead of calling them AMBIGUOUS.
+    assert (m.method, m.gene.ensembl_id) == (method, "ENSMUSG09")

@@ -17,7 +17,7 @@ from evidencell.expression_cache import (
     NO_ENSEMBL_MAPPING,
     ExpressionUnavailable,
 )
-from evidencell.gene_identity import load_gene_tables, write_gene_ids
+from evidencell.gene_identity import Pin, load_gene_tables, write_gene_ids
 from evidencell.taxonomy_db import _DDL, TaxonomyDB
 
 # Tiny taxonomy: SUBC_1 ─┬─ SUPT_1 ─┬─ CLUS_1
@@ -187,11 +187,21 @@ def test_curated_ncbi_gene_id_settles_an_ambiguous_name(db):
     assert out.genes["CB"].method == "PINNED_ID"
 
 
-def test_foreign_species_id_falls_back_to_the_name(db):
-    """A human SST ID isn't a mouse gene: the name resolves instead."""
-    out = db.expression(["SST"], accessions=["CLUS_1"], gene_ids={"SST": "NCBIGene:6750"})
+def test_foreign_species_id_resolves_by_its_official_symbol(db):
+    """A human SST ID isn't a mouse gene: its official symbol resolves."""
+    out = db.expression(
+        ["SST"], accessions=["CLUS_1"], gene_ids={"SST": Pin("NCBIGene:6750", "SST")}
+    )
     assert out.values == {"CLUS_1": {"SST": 10.0}}
-    assert out.genes["SST"].method == "CASE_INSENSITIVE_SYMBOL"
+    assert out.genes["SST"].method == "PINNED_SYMBOL"
+
+
+def test_foreign_species_id_without_symbol_is_not_measured(db):
+    """Review #1: with no official symbol the pin is not re-guessed from
+    the marker's name."""
+    out = db.expression(["SST"], accessions=["CLUS_1"], gene_ids={"SST": "NCBIGene:6750"})
+    assert out.values == {}
+    assert out.not_measured == {"SST": "PIN_NOT_IN_TAXONOMY"}
 
 
 def test_new_stats_release_is_refused_until_gene_ids_refresh(db, stats):

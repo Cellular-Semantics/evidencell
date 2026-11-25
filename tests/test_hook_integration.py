@@ -12,7 +12,10 @@ import json
 import os
 import subprocess
 import sys
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
+from typing import Iterator
 
 import pytest
 
@@ -506,6 +509,36 @@ def _offline_gene_env(tmp_path: Path, cache: dict) -> dict[str, str]:
     }
 
 
+class _NotFoundHandler(BaseHTTPRequestHandler):
+    """Translator / SciCrunch stand-in that knows no IDs: NodeNorm answers
+    null for every CURIE, the RRID resolver 404s."""
+
+    def do_POST(self) -> None:  # noqa: N802
+        body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+        out = json.dumps({c: None for c in body.get("curies", [])}).encode()
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(out)))
+        self.end_headers()
+        self.wfile.write(out)
+
+    def do_GET(self) -> None:  # noqa: N802
+        self.send_response(404)
+        self.end_headers()
+
+    def log_message(self, *args: object) -> None:
+        pass
+
+
+@pytest.fixture
+def not_found_server() -> Iterator[str]:
+    server = HTTPServer(("127.0.0.1", 0), _NotFoundHandler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    yield f"http://127.0.0.1:{server.server_address[1]}"
+    server.shutdown()
+
+
 def test_gene_id_naming_another_gene_blocked(tmp_path: Path):
     """An ncbi_gene_id whose official symbol isn't the marker's symbol is
     blocked (cached lookup; no network)."""
@@ -534,13 +567,18 @@ def test_symbol_without_gene_id_blocked(tmp_path: Path):
     assert "marker 'SST' has symbol but no ncbi_gene_id" in r.stderr
 
 
-def test_gene_id_that_does_not_exist_blocked(tmp_path: Path):
+def test_gene_id_that_does_not_exist_blocked(tmp_path: Path, not_found_server: str):
+    """Blocked on NodeNorm's answer, and not cached: a later edit asks again
+    (review #6 — a passing Translator gap must not become a lasting block)."""
     if not VALID_KB_FIXTURE.exists():
         pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
-    env = _offline_gene_env(tmp_path, {"NCBIGene:999999999": {"missing": True}})
+    env = _offline_gene_env(tmp_path, {})
+    env["EVIDENCELL_NODENORM_URL"] = not_found_server
     r = _run_hook(_write_payload(_fixture_with_sst_gene_id("NCBIGene:999999999")), env_extra=env)
     assert r.returncode == 2, r.stderr
     assert "NCBIGene:999999999 does not resolve to an NCBI gene" in r.stderr
+    cache = json.loads(Path(env["EVIDENCELL_GENE_ID_CACHE"]).read_text() or "{}")
+    assert "NCBIGene:999999999" not in cache
 
 
 def test_gene_id_check_bypass_env(tmp_path: Path):
@@ -1023,10 +1061,11 @@ def _offline_rrid_env(tmp_path: Path, cache: dict) -> dict[str, str]:
     }
 
 
-def test_unknown_rrid_blocked(tmp_path: Path):
+def test_unknown_rrid_blocked(tmp_path: Path, not_found_server: str):
     if not VALID_KB_FIXTURE.exists():
         pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
-    env = _offline_rrid_env(tmp_path, {"RRID:AB_999999999": {"missing": True}})
+    env = _offline_rrid_env(tmp_path, {})
+    env["EVIDENCELL_RRID_URL"] = not_found_server
     r = _run_hook(_write_payload(_fixture_with_sst_antibody("RRID:AB_999999999")), env_extra=env)
     assert r.returncode == 2, r.stderr
     assert "Antibody RRID errors" in r.stderr

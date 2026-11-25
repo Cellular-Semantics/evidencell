@@ -23,6 +23,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from typing import Mapping
 
 import yaml
 from ruamel.yaml import YAML
@@ -37,7 +38,7 @@ from evidencell.at_metrics import (
 )
 from evidencell.expression_cache import ExpressionUnavailable
 from evidencell.kb_io import roundtrip_yaml
-from evidencell.gene_identity import marker_gene_ids, marker_name
+from evidencell.gene_identity import Pin, marker_gene_ids, marker_name
 from evidencell.paths import repo_root
 from evidencell.taxonomy_db import MIN_DETECTABLE
 
@@ -936,7 +937,7 @@ def _load_atlas_node(
     accession: str,
     rank: int,
     symbols: list[str] | None = None,
-    gene_ids: dict[str, str] | None = None,
+    gene_ids: Mapping[str, str | Pin] | None = None,
 ) -> dict | None:
     """Load the atlas node dict for a given accession from the taxonomy DB.
 

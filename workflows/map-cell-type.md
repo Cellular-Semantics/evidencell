@@ -126,7 +126,9 @@ specification):
   stderr and under `not_measured_genes` in the discovery JSON; they score 0.
   Each marker name resolves to a gene through the gene identity tables
   (#216, #244): its `ncbi_gene_id` (a gene of another species resolves by
-  the marker's official `symbol`). A classical marker with no
+  the marker's official `symbol` only — `PINNED_SYMBOL`; no single match is
+  `PIN_NOT_IN_TAXONOMY`). Markers of one node that share a name but not a
+  gene are `CONFLICTING_PINS`. A classical marker with no
   `ncbi_gene_id` is `NO_GENE_ID` — not resolved by name — and scores 0: it
   is either curated as having no single gene (PSA-NCAM, CaMKII) or still
   needs its ID. Pre-#244 markers (`symbol` only) resolve by name as
@@ -275,7 +277,8 @@ warning.
       CONSISTENT, otherwise DISCORDANT;
     - `NOT_ASSESSED` (`node_b_value: not measured`) only for a gene
       recorded as not measured — the notes give the reason
-      (`NO_ENSEMBL_MAPPING` / `AMBIGUOUS_SYMBOL` / `NO_GENE_ID`) and
+      (`NO_ENSEMBL_MAPPING` / `AMBIGUOUS_SYMBOL` / `NO_GENE_ID` /
+      `PIN_NOT_IN_TAXONOMY` / `CONFLICTING_PINS`) and
       the stats file.
     The candidate's Stage A `marker_discrepancies` entry for the gene,
     if any, is appended to the notes (`METADATA DISCREPANCY …`) so

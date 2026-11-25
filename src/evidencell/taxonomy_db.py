@@ -30,6 +30,7 @@ from evidencell.expression_cache import ExpressionLookup, ExpressionUnavailable
 from evidencell.gene_identity import (
     GENE_DDL,
     GENE_IDS_FILE,
+    Pin,
     load_gene_tables,
     marker_gene_ids,
     marker_name,
@@ -2301,7 +2302,7 @@ class TaxonomyDB:
         accessions: Iterable[str] | None = None,
         ranks: Iterable[int] | None = None,
         *,
-        gene_ids: Mapping[str, str] | None = None,
+        gene_ids: Mapping[str, str | Pin] | None = None,
     ) -> ExpressionLookup:
         """Mean expression of ``symbols`` on atlas nodes — the one accessor
         every expression consumer goes through (#189).
@@ -2331,7 +2332,7 @@ class TaxonomyDB:
         tid = self.taxonomy_id()
         stats = self._stats_path or ec.stats_h5_path(tid)
         with self._connect() as con:
-            matches = resolve_names(con, wanted, gene_ids)
+            matches = resolve_names(con, wanted, gene_ids, taxonomy_id=tid)
             ec.ensure_genes(
                 con, tid, [m.gene for m in matches.values() if m.gene], stats_path=stats,
             )

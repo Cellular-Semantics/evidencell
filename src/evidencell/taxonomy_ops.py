@@ -386,9 +386,15 @@ def _collect_run_refs(obj: object, result: list[str] | None = None) -> list[str]
 
 def collect_kb_marker_union() -> dict[str, Pin | None]:
     """Scan kb/graphs/**/*.yaml for non-atlas nodes and return the union of
-    all marker names mentioned across them, each with the first curated
-    gene pin seen for it (:func:`gene_identity.marker_gene_ids`; None for a
-    pre-#244 marker with no ID, which resolves by name).
+    their markers as ``{query key: pin}`` — each marker with its own pin
+    (``Pin(ncbi_gene_id, symbol)``; :data:`gene_identity.NO_GENE` for a
+    marker curated as having no single gene; None for a pre-#244 marker
+    with no ID, which resolves by name).
+
+    The key is the marker's name. A name that carries different pins on
+    different markers (``CB`` as Calb1 in one paper, Cnr1 in another) gets
+    one key per pin, ``"CB [NCBIGene:12307]"``, so each marker's gene is
+    warmed rather than the first one seen.
 
     Drives ``warm_expression_cache``. The set covers every gene any
     classical/literature node carries on its `defining_markers`,
@@ -405,7 +411,7 @@ def collect_kb_marker_union() -> dict[str, Pin | None]:
     if not graphs_dir.exists():
         return {}
 
-    out: dict[str, str | None] = {}
+    pins_by_name: dict[str, list[Pin | None]] = {}
     for yaml_path in sorted(graphs_dir.rglob("*.yaml")):
         try:
             doc = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
@@ -418,12 +424,23 @@ def collect_kb_marker_union() -> dict[str, Pin | None]:
                 continue
             if nd.get("definition_basis") == "ATLAS_TRANSCRIPTOMIC":
                 continue
-            pins = marker_gene_ids(nd)
             for field in ("defining_markers", "neuropeptides", "negative_markers"):
                 for m in nd.get(field) or []:
-                    sym = marker_name(m)
-                    if sym and out.get(sym) is None:
-                        out[sym] = pins.get(sym)
+                    if not (sym := marker_name(m)):
+                        continue
+                    pin = marker_gene_ids({field: [m]}).get(sym)
+                    pins = pins_by_name.setdefault(sym, [])
+                    if pin not in pins:
+                        pins.append(pin)
+    out: dict[str, Pin | None] = {}
+    for sym, pins in pins_by_name.items():
+        if len(pins) == 1:
+            out[sym] = pins[0]
+            continue
+        for pin in pins:
+            # An unpinned (pre-#244) marker resolves by its key, so keep the name.
+            key = f"{sym} [{pin.ncbi_gene_id or 'no gene'}]" if pin else sym
+            out[key] = pin
     return out
 
 

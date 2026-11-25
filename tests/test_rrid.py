@@ -28,7 +28,6 @@ def cache(tmp_path: Path) -> Path:
     p = tmp_path / "rrid_cache.json"
     p.write_text(json.dumps({
         "RRID:AB_10711040": {"name": "Anti-NeuN antibody [1B7]"},
-        "RRID:AB_999999999": {"missing": True},
     }))
     return p
 
@@ -41,10 +40,34 @@ def test_cached_known_rrid_passes(cache):
     assert check_antibody_rrids(_graph("RRID:AB_10711040"), cache_path=cache) == ([], [])
 
 
-def test_cached_missing_rrid_is_an_error(cache):
-    errors, _ = check_antibody_rrids(_graph("RRID:AB_999999999"), cache_path=cache)
-    assert len(errors) == 1
-    assert "antibody RRID:AB_999999999 is not in the Antibody Registry" in errors[0]
+def test_unknown_rrid_is_an_error_and_is_not_cached(cache, monkeypatch):
+    """Review #6: an RRID the resolver doesn't know is an error, and is looked
+    up again next time rather than stored as missing for good."""
+    calls: list[str] = []
+    monkeypatch.setattr(rr, "lookup_rrid", lambda r: calls.append(r) or {"missing": True})
+    for _ in range(2):
+        errors, _ = check_antibody_rrids(_graph("RRID:AB_999999999"), cache_path=cache)
+        assert len(errors) == 1
+        assert "antibody RRID:AB_999999999 is not in the Antibody Registry" in errors[0]
+    assert calls == ["RRID:AB_999999999"] * 2
+    assert "RRID:AB_999999999" not in json.loads(cache.read_text())
+
+
+def test_old_negative_entries_are_looked_up_again(cache, monkeypatch):
+    data = json.loads(cache.read_text())
+    data["RRID:AB_5"] = {"missing": True}
+    cache.write_text(json.dumps(data))
+    monkeypatch.setattr(rr, "lookup_rrid", lambda r: {"name": "Anti-X"})
+    assert check_antibody_rrids(_graph("RRID:AB_5"), cache_path=cache) == ([], [])
+
+
+def test_edge_evidence_rrids_are_checked(cache, monkeypatch):
+    """Review #4: antibodies on edge-evidence markers are checked too."""
+    monkeypatch.setattr(rr, "lookup_rrid", lambda r: {"missing": True})
+    node_marker = _graph("RRID:AB_7")["nodes"][0]["defining_markers"][0]
+    doc = {"nodes": [], "edges": [{"id": "e1", "evidence": [{"defining_markers": [node_marker]}]}]}
+    errors, _ = check_antibody_rrids(doc, cache_path=cache)
+    assert len(errors) == 1 and errors[0].startswith("e1 evidence[0]: marker 'TuJ1'")
 
 
 def test_offline_uncached_rrid_is_reported_unchecked(cache, monkeypatch):

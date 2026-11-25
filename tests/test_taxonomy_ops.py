@@ -415,6 +415,28 @@ def test_collect_kb_marker_union_unions_lit_node_markers(tmp_path, monkeypatch):
     assert "Bar" not in union
 
 
+def test_collect_kb_marker_union_keeps_each_markers_pin(tmp_path, monkeypatch):
+    """Review #3: CB means Calb1 in one node and Cnr1 in another. Each pin
+    gets its own key so both genes are warmed, not the first one seen."""
+    import evidencell.paths as paths_mod
+    from evidencell.gene_identity import NO_GENE, Pin
+
+    g_dir = tmp_path / "kb" / "graphs" / "r"
+    g_dir.mkdir(parents=True)
+    calb1 = {"name_in_source": "CB", "symbol": "Calb1", "ncbi_gene_id": "NCBIGene:12307"}
+    cnr1 = {"name_in_source": "CB", "symbol": "Cnr1", "ncbi_gene_id": "NCBIGene:12801"}
+    (g_dir / "g.yaml").write_text(yaml.safe_dump({"nodes": [
+        {"id": "a", "defining_markers": [calb1, {"name_in_source": "PSA-NCAM"}]},
+        {"id": "b", "negative_markers": [cnr1], "defining_markers": [dict(calb1)]},
+    ]}))
+    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
+    assert collect_kb_marker_union() == {
+        "CB [NCBIGene:12307]": Pin("NCBIGene:12307", "Calb1"),
+        "CB [NCBIGene:12801]": Pin("NCBIGene:12801", "Cnr1"),
+        "PSA-NCAM": NO_GENE,
+    }
+
+
 def test_collect_kb_marker_union_handles_no_kb_dir(tmp_path, monkeypatch):
     """No kb/graphs directory → empty result, no error."""
     import evidencell.paths as paths_mod

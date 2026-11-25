@@ -3,10 +3,11 @@
 A marker's evidence may name the antibody it was detected with
 (``MarkerSource.antibody``), optionally with an Antibody Registry RRID.
 :func:`check_antibody_rrids` confirms every such RRID exists, via the
-SciCrunch resolver. Lookups are cached in ``conf/rrid_cache.json``
-(gitignored) so the check runs offline for RRIDs already seen; an uncached
-RRID that can't be looked up is reported as unchecked (a soft skip, printed
-by the hook), never passed silently.
+SciCrunch resolver. Found RRIDs are cached in ``conf/rrid_cache.json``
+(gitignored) so the check runs offline for RRIDs already seen; an RRID the
+resolver doesn't know is not cached, so it is looked up again next time. An
+uncached RRID that can't be looked up is reported as unchecked (a soft skip,
+printed by the hook), never passed silently.
 """
 
 from __future__ import annotations
@@ -21,9 +22,6 @@ from typing import Iterator
 # Overridable for tests (e.g. an unreachable URL to exercise the soft skip).
 RRID_RESOLVER_URL = os.environ.get("EVIDENCELL_RRID_URL", "https://scicrunch.org/resolver")
 
-_MARKER_FIELDS = ("defining_markers", "negative_markers", "neuropeptides", "markers")
-
-
 def rrid_cache_path() -> Path:
     """``conf/rrid_cache.json``, or ``$EVIDENCELL_RRID_CACHE``."""
     from evidencell.paths import repo_root
@@ -33,19 +31,15 @@ def rrid_cache_path() -> Path:
 
 
 def _iter_rrids(doc: dict) -> Iterator[tuple[str, str, str]]:
-    """(node_id, marker name, rrid) for every antibody RRID in a KB graph."""
-    for node in doc.get("nodes") or []:
-        if not isinstance(node, dict):
-            continue
-        for key in _MARKER_FIELDS:
-            for m in node.get(key) or []:
-                if not isinstance(m, dict):
-                    continue
-                name = m.get("name_in_source") or m.get("symbol") or "?"
-                for src in m.get("sources") or []:
-                    ab = src.get("antibody") if isinstance(src, dict) else None
-                    if isinstance(ab, dict) and ab.get("rrid"):
-                        yield node.get("id", "?"), name, ab["rrid"]
+    """(holder id, marker name, rrid) for every antibody RRID in a KB graph,
+    on node and edge-evidence markers alike."""
+    from evidencell.gene_identity import iter_gene_descriptors, marker_name
+
+    for holder_id, m, _ in iter_gene_descriptors(doc):
+        for src in m.get("sources") or []:
+            ab = src.get("antibody") if isinstance(src, dict) else None
+            if isinstance(ab, dict) and ab.get("rrid"):
+                yield holder_id, marker_name(m) or "?", ab["rrid"]
 
 
 def lookup_rrid(rrid: str, *, timeout: float = 20) -> dict:
@@ -85,14 +79,24 @@ def check_antibody_rrids(
         cache: dict[str, dict] = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         cache = {}
-    dirty = False
+    # Negative entries from older versions: look those RRIDs up again.
+    stale = [k for k, v in cache.items() if not isinstance(v, dict) or v.get("missing")]
+    for k in stale:
+        del cache[k]
+    dirty = bool(stale)
     unreachable: set[str] = set()
+    not_found: set[str] = set()
     for rrid in sorted({e[2] for e in entries} - set(cache)):
         try:
-            cache[rrid] = lookup_rrid(rrid)
-            dirty = True
+            rec = lookup_rrid(rrid)
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, OSError):
             unreachable.add(rrid)
+            continue
+        if rec.get("missing"):
+            not_found.add(rrid)
+        else:
+            cache[rrid] = rec
+            dirty = True
     if dirty:
         try:
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -103,7 +107,7 @@ def check_antibody_rrids(
         f"{node_id}: marker {name!r} antibody {rrid} is not in the Antibody Registry "
         "(SciCrunch resolver). Use the RRID the source states, or omit rrid."
         for node_id, name, rrid in entries
-        if cache.get(rrid, {}).get("missing")
+        if rrid in not_found
     ]
     unchecked = [f"{r}: SciCrunch resolver unreachable, not cached" for r in sorted(unreachable)]
     return errors, unchecked

@@ -56,8 +56,14 @@ Unresolvable list: `research/gene_identity_216/unresolvable_markers.tsv`
 
 - `find-candidates` / Stage B score a marker on the atlas expression of its
   `ncbi_gene_id`. A gene of another species is matched through its official
-  `symbol` (rat Calb1 → mouse Calb1); `gene_resolution` in the discovery JSON
-  shows how (`PINNED_ID` = the ID itself matched).
+  `symbol` only — ignoring case, never synonyms or the marker's wording
+  (rat Calb1 → mouse Calb1, human PVALB → mouse Pvalb); `gene_resolution` in
+  the discovery JSON shows how (`PINNED_ID` = the ID itself matched,
+  `PINNED_SYMBOL` = its symbol did). A pin that reaches no single gene is
+  `PIN_NOT_IN_TAXONOMY`: not measured.
+- A gene is one marker's. Two markers on a node with the same
+  `name_in_source` but different genes are `CONFLICTING_PINS`: neither is
+  measured.
 - A classical marker without an ID is `NO_GENE_ID`: not measured, never
   resolved by its name. The `NOT MEASURED` line on stderr lists them.
 
