@@ -76,4 +76,77 @@ nodes:
         term. CL:4023187 koniocellular cell was rejected (defined by LGN
         koniocellular layer, a different criterion). EXACT would need a CL term
         for dLGN X-like relay cell.
+    anatomical_location:
+      - id: MBA:170
+        label: "Dorsal part of the lateral geniculate complex"
+        name_in_source: "monocular ventral region of dLGN"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:22131405"
+            quote_key: "16328698_cc12bb7a"
+            method: "mapping of soma positions of filled, morphologically classified relay cells"
+            scope: "mouse dLGN, early postnatal to adult — X-like cells confined primarily to the monocular ventral region; no MBA term for this subregion"
+          - ref: "PMID:22131405"
+            quote_key: "16328698_79efc008"
+            method: "mapping of soma positions of filled, morphologically classified relay cells"
+            scope: "mouse dLGN — X-like (with Y-like) cells show an anterior-to-posterior gradient"
+      - id: MBA:496345668
+        label: "Dorsal part of the lateral geniculate complex, core"
+        name_in_source: "ventromedial dLGN core"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "review statement citing Krahe et al. 2011"
+            scope: "mouse dLGN — X- and Y-like cells occupy the ventromedial core"
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "review statement citing Krahe et al. 2011"
+            scope: "mouse dLGN — X- and Y-like TRCs occupy the core; no clear laminar distribution"
+    nt_type:
+      name_in_source: "excitatory"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "excitatory"
+      sources:
+        - ref: "PMID:41814933"
+          quote_key: "286491924_f2e9799b"
+          method: "review statement — TRCs (divided into W-, X- and Y-like types) described as excitatory; glutamatergic transmitter inferred from excitatory thalamocortical identity, not shown directly for X-like cells"
+          scope: "mouse dLGN thalamocortical relay cells"
+        - ref: "PMID:28965517"
+          quote_key: "4601077_8f3fc6a4"
+          method: "review statement — TC relay cells, which differentiate into X-, Y- and W-like classes, are excitatory projection neurons; glutamatergic transmitter inferred, not shown directly for X-like cells"
+          scope: "rodent dLGN TC relay cells"
+    morphology:
+      description: >
+        Biconical dendritic architecture, resembling cat X cells. Tends to be
+        smaller than Y- and W-like relay cells. Dendritic fields show no
+        orientation bias with respect to the optic tract or dLGN boundaries.
+        Classifiable by dendritic morphology from early postnatal ages.
+      sources:
+        - ref: "PMID:22131405"
+          quote_key: "16328698_cc12bb7a"
+          method: "quantitative analysis of dendritic architecture of dye-filled relay cells"
+          scope: "mouse dLGN, early postnatal to adult"
+        - ref: "PMID:28965517"
+          quote_key: "4601077_8f3fc6a4"
+          method: "review statement citing Krahe et al. 2011 and Ling et al. 2012"
+          scope: "nocturnal rodent dLGN — biconical X-like cells"
+        - ref: "PMID:41814933"
+          quote_key: "286491924_f2e9799b"
+          method: "review statement citing Krahe et al. 2011"
+          scope: "mouse dLGN — X-like TRCs are biconical"
+    definition_references:
+      - "PMID:22131405"
+      - "PMID:28965517"
+      - "PMID:41814933"
+    notes: >
+      Location sources disagree: the primary study (Krahe et al. 2011) places
+      X-like cells primarily in the monocular ventral region of dLGN, while
+      reviews (Monavarfeshani et al. 2017; Stebbins et al. 2026) summarise X-
+      and Y-like cells as occupying the ventromedial core. Krahe et al. found no
+      electrophysiological properties distinguishing X-like from Y- and W-like
+      relay cells, and the sources give no molecular marker, so the class is
+      defined by dendritic morphology and position only.
 edges: []
