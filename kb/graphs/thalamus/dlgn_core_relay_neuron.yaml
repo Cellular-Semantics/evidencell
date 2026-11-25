@@ -1,0 +1,49 @@
+# dLGN core relay neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/dLGN_relay.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "dLGN Core Relay Neuron"
+description: >
+  Evidence graph component for thalamocortical relay neurons of the
+  ventromedial core of mouse dLGN, proposed from the ASTA deep research report
+  dLGN_relay.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dlgn_core_relay_neuron
+    name: "dLGN core relay neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: dlgn_relay_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "review statement"
+            scope: "rodent dLGN — X- and Y-like TC relay cells occupy the ventromedial core"
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "review statement"
+            scope: "mouse dLGN — X- and Y-like TRCs occupy the core"
+        notes: >
+          Defined as the dLGN relay neurons whose somata lie in the ventromedial
+          core subdivision, so containment holds by definition. The sources
+          give no positive molecular marker for core relay cells; core is
+          defined as the non-shell part of dLGN.
+edges: []

@@ -1,0 +1,45 @@
+# dLGN direction-selective neuron (DSLGN) — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/dLGN_relay.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "dLGN Direction-Selective Neuron (DSLGN)"
+description: >
+  Evidence graph component for direction-selective neurons of the superficial
+  (shell) region of mouse dLGN, proposed from the ASTA deep research report
+  dLGN_relay.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dlgn_direction_selective_neuron
+    name: "dLGN direction-selective neuron"
+    definition_basis: CLASSICAL_ELECTROPHYSIOLOGICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "DSLGN"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:23177957"
+            quote_key: "3598591_8c3025f0"
+            method: "abbreviation defined in text"
+            scope: "mouse dLGN, superficial 75 um, two-photon calcium imaging"
+      - term: "direction-selective neuron"
+        sources:
+          - ref: "PMID:23177957"
+            quote_key: "3598591_8c3025f0"
+            method: "primary label"
+            scope: "mouse dLGN, superficial 75 um"
+edges: []

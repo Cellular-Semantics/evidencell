@@ -26,6 +26,96 @@ nodes:
       id: NCBITaxon:314146
       label: Euarchontoglires
       name_in_source: "Macaca mulatta; Mice (MeSH organisms of cited primary papers; inferred, #216)"
+    synonyms:
+      - term: "thalamocortical relay cell"
+        sources:
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "defined in introduction as the principal retinorecipient neurons of dLGN"
+            scope: "mouse dLGN"
+      - term: "TRC"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "abbreviation of thalamocortical relay cell"
+            scope: "mouse dLGN"
+      - term: "TC relay cell"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "used as equivalent of dLGN principal neuron"
+            scope: "rodent dLGN review"
+      - term: "principal neuron"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "principal neurons of dLGN equated with TC relay cells"
+            scope: "rodent dLGN review"
+      - term: "thalamocortical (TC) relay neuron"
+        sources:
+          - ref: "PMID:28965513"
+            quote_key: "4807205_9a361c91"
+            method: "primary label in review abstract"
+            scope: "dLGN retinogeniculate transmission review"
+      - term: "relay cell"
+        sources:
+          - ref: "PMID:27203421"
+            quote_key: "3626777_ca418205"
+            method: "principal cells of dLGN called relay cells (RCs)"
+            scope: "dLGN circuit model"
+      - term: "RC"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:27203421"
+            quote_key: "3626777_ca418205"
+            method: "abbreviation of relay cell"
+            scope: "dLGN circuit model"
+      - term: "relay neuron"
+        sources:
+          - ref: "PMID:25011644"
+            quote_key: "1225644_425d38ca"
+            method: "primary label"
+            scope: "mouse dLGN"
+      - term: "thalamocortical neuron"
+        sources:
+          - ref: "PMID:38917805"
+            quote_key: "257758447_a28e7746"
+            method: "excitatory thalamocortical neurons in the dLGN (TCNs)"
+            scope: "mouse dLGN"
+          - ref: "PMID:29252999"
+            quote_key: "26076888_f728831d"
+            method: "primary label"
+            scope: "mouse dLGN"
+      - term: "TCN"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:38917805"
+            quote_key: "257758447_a28e7746"
+            method: "abbreviation of thalamocortical neuron"
+            scope: "mouse dLGN"
+    subtype_of:
+      - parent: thalamic_glutamatergic_projection_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "review statement"
+            scope: "rodent dLGN — principal (TC relay) neurons are excitatory projection neurons from the thalamic ventricular zone"
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "review statement in atlas paper"
+            scope: "mouse dLGN — TRCs are excitatory neurons"
+          - ref: "PMID:38917805"
+            quote_key: "257758447_a28e7746"
+            method: "introduction statement"
+            scope: "mouse dLGN — excitatory thalamocortical neurons projecting to V1"
+        notes: >
+          The dLGN relay neuron is the thalamic glutamatergic projection neuron
+          narrowed to the dorsal lateral geniculate nucleus.
     anatomical_location:
       - id: UBERON:0002479
         label: "dorsal lateral geniculate nucleus"

@@ -1,0 +1,65 @@
+# dLGN Y-like relay cell — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/dLGN_relay.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "dLGN Y-like Relay Cell"
+description: >
+  Evidence graph component for the Y-like (radially symmetrical) morphological
+  class of mouse dLGN thalamocortical relay cells, proposed from the ASTA deep
+  research report dLGN_relay.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dlgn_y_like_relay_cell
+    name: "dLGN Y-like relay cell"
+    definition_basis: CLASSICAL_MORPHOLOGICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Y-like cell"
+        sources:
+          - ref: "PMID:22131405"
+            quote_key: "16328698_cc12bb7a"
+            method: "defining label (symmetrical dendritic architecture)"
+            scope: "mouse dLGN relay cells, early postnatal to adult"
+      - term: "Y-like TRC"
+        sources:
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "label in introduction"
+            scope: "mouse dLGN"
+    subtype_of:
+      - parent: dlgn_relay_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:22131405"
+            quote_key: "16328698_cc12bb7a"
+            method: "quantitative dendritic morphology of filled relay cells"
+            scope: "mouse dLGN — relay cells classified as X-, Y- or W-like"
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "review statement"
+            scope: "mouse dLGN — TRCs divided into W-, X- and Y-like types"
+          - ref: "PMID:26174426"
+            quote_key: "5842285_4ec71661"
+            method: "morphology of filled relay cells"
+            scope: "mouse dLGN — relay cells classified as X-, Y- or W-like"
+        notes: >
+          Y-like cells are one of three morphological classes into which dLGN
+          relay cells are divided. Krahe et al. 2011 classified filled relay cells
+          only, so containment holds by definition.
+edges: []

@@ -1,0 +1,56 @@
+# dLGN relay-mode principal neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/dLGN_relay.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "dLGN Relay-Mode Principal Neuron"
+description: >
+  Evidence graph component for mouse dLGN principal neurons whose retinal
+  input comes from 1-5 ganglion cells of mostly the same type from one eye
+  (relay mode), proposed from the ASTA deep research report dLGN_relay.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dlgn_relay_mode_principal_neuron
+    name: "dLGN relay-mode principal neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "relay-mode neuron"
+        sources:
+          - ref: "PMID:38386556"
+            quote_key: "267806869_6f6c417b"
+            method: "label in introduction, citing Rompani et al. 2017"
+            scope: "mouse dLGN TC neurons"
+    subtype_of:
+      - parent: dlgn_relay_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:28231464"
+            quote_key: "10004494_03dd7881"
+            method: "single-cell-initiated transsynaptic rabies tracing"
+            scope: "mouse LGN principal cells"
+          - ref: "PMID:38386556"
+            quote_key: "267806869_6f6c417b"
+            method: "review statement citing Rompani et al. 2017 (not independent)"
+            scope: "mouse dLGN TC neurons"
+        notes: >
+          Defined as dLGN principal (relay) neurons narrowed by retinal input
+          convergence mode; single primary study. Rompani et al. describe
+          "modes of integration" of individual principal cells; whether these
+          are stable cell types rather than connectivity states is not settled.
+edges: []

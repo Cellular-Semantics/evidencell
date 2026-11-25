@@ -1,0 +1,54 @@
+# dLGN shell relay neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/dLGN_relay.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "dLGN Shell Relay Neuron"
+description: >
+  Evidence graph component for thalamocortical relay neurons of the
+  dorsolateral (calbindin-positive) shell of mouse dLGN, proposed from the
+  ASTA deep research report dLGN_relay.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dlgn_shell_relay_neuron
+    name: "dLGN shell relay neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: dlgn_relay_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "review statement"
+            scope: "rodent dLGN — W-like TC relay cells occupy the dorsolateral shell"
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "review statement"
+            scope: "mouse dLGN — W-like TRCs occupy the shell region"
+          - ref: "PMID:37913772"
+            quote_key: "264598574_32e8c9a5"
+            method: "review of retrograde tracing"
+            scope: "mouse dLGN — L1-projecting thalamocortical neurons originate in the shell"
+        notes: >
+          Defined as the dLGN relay neurons whose somata lie in the dorsolateral
+          shell subdivision, so containment holds by definition. Shell and core
+          are anatomical subdivisions; the sources do not give a shell-specific
+          positive molecular marker for the relay cells themselves (calbindin
+          defines the shell zone).
+edges: []

@@ -1,0 +1,264 @@
+run_id: 20261125_thalamus_dlgn_report_ingest
+types:
+  - node_id: dlgn_relay_neuron
+    action: ENRICH
+    file: kb/graphs/thalamus/dlgn_relay_neuron.yaml
+    report_sections:
+      - Introduction
+      - Structure, abundance, and anatomical location
+      - Developmental origin and postnatal maturation
+      - Connectivity and circuit organization
+      - Function and physiological properties
+      - Neurotransmitters, neuropeptides, and synaptic signaling
+      - Markers of relay neurons, core/shell, and subtype context
+      - Transcriptomic and related cell-type datasets
+      - Heterogeneity and subtype summary
+    reconciliation_note: >
+      The report's subject (dLGN principal thalamocortical relay neurons) is the
+      same population as existing dlgn_relay_neuron (names interchangeable:
+      "TC relay cell", "TRC", "relay cell", "thalamocortical neuron"). Considered
+      thalamic_glutamatergic_projection_neuron (broader family, becomes parent)
+      and dlgn_gabaergic_interneuron (different population). Added 11 synonyms
+      (node had none) and subtype_of thalamic_glutamatergic_projection_neuron
+      (DEFINITIONAL, HIGH; three sources state dLGN relay cells are excitatory
+      thalamocortical projection neurons). Existing species, at_source_sets,
+      cl_mapping and property fields untouched.
+    identity_conflicts:
+      - >
+        Species: the report is mouse-only (mouse dLGN throughout); the existing
+        node has species Euarchontoglires (mouse, macaque and human pooled).
+        Not a contradiction (mouse is within Euarchontoglires); left unchanged.
+    unplaced:
+      - finding: >
+          Relay neurons make up ~80-90% of mouse dLGN neurons (~20,000 of
+          ~21,200 neurons in C57BL/6); Heiberg et al. give 75-80%.
+        quote_keys: [286491924_f2e9799b, 4792744_89d92cb0, 4792744_68bb30ae, 3626777_ca418205]
+      - finding: >
+          Relay neurons originate from the caudal progenitor domain of the
+          thalamic ventricular zone (prosomere 2).
+        quote_keys: [4601077_8f3fc6a4]
+      - finding: >
+          The report presents three partly overlapping subtype axes
+          (morphology X/Y/W-like; core vs shell; retinal convergence mode) and
+          states no one-to-one mapping between them is established.
+        quote_keys: [16328698_cc12bb7a, 10004494_03dd7881, 264598574_32e8c9a5]
+
+  - node_id: dlgn_x_like_relay_cell
+    action: NEW
+    file: kb/graphs/thalamus/dlgn_x_like_relay_cell.yaml
+    report_sections:
+      - Structure, abundance, and anatomical location
+      - Developmental origin and postnatal maturation
+      - Function and physiological properties
+      - Heterogeneity and subtype summary
+    reconciliation_note: >
+      Morphological class (biconical dendrites) within dLGN relay cells (Krahe
+      et al. 2011). Narrower than dlgn_relay_neuron, so NEW with subtype_of
+      dlgn_relay_neuron (DEFINITIONAL, HIGH). No existing node describes it.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Relation to dlgn_core_relay_neuron is regional bias, not containment:
+          Krahe et al. place X-like cells "primarily" in the monocular ventral
+          region (possibly a third domain), while Monavarfeshani/Stebbins
+          reviews say X- and Y-like cells occupy the core. Not recorded as
+          subtype_of core.
+        quote_keys: [16328698_cc12bb7a, 16328698_79efc008, 4601077_8f3fc6a4, 286491924_f2e9799b]
+      - finding: >
+          Krahe et al. found no distinguishing electrophysiological properties
+          among X-, Y- and W-like classes; the classes are morphological/spatial,
+          with no validated molecular marker.
+        quote_keys: [16328698_cc12bb7a, 16328698_8dd6d882]
+      - finding: Cross-species correspondence to cat X cells (dendritic architecture resembles cat X-cells).
+        quote_keys: [16328698_79efc008, 4601077_8f3fc6a4]
+
+  - node_id: dlgn_y_like_relay_cell
+    action: NEW
+    file: kb/graphs/thalamus/dlgn_y_like_relay_cell.yaml
+    report_sections:
+      - Structure, abundance, and anatomical location
+      - Developmental origin and postnatal maturation
+      - Function and physiological properties
+      - Heterogeneity and subtype summary
+    reconciliation_note: >
+      Morphological class (radially symmetrical dendrites), the most common
+      dLGN relay-cell class (Krahe et al. 2011). Narrower than
+      dlgn_relay_neuron, so NEW with subtype_of dlgn_relay_neuron
+      (DEFINITIONAL, HIGH). No existing node describes it.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Y-like cells occupy a central core including the ipsilateral-eye
+          zone; relation to dlgn_core_relay_neuron is enrichment/regional bias
+          as reported, not a stated containment, so not recorded as subtype_of.
+        quote_keys: [16328698_cc12bb7a, 4601077_8f3fc6a4, 286491924_f2e9799b]
+      - finding: Cross-species correspondence to cat Y cells.
+        quote_keys: [16328698_79efc008, 4601077_8f3fc6a4]
+
+  - node_id: dlgn_w_like_relay_cell
+    action: NEW
+    file: kb/graphs/thalamus/dlgn_w_like_relay_cell.yaml
+    report_sections:
+      - Structure, abundance, and anatomical location
+      - Developmental origin and postnatal maturation
+      - Heterogeneity and subtype summary
+    reconciliation_note: >
+      Morphological class (hemispheric dendrites) within dLGN relay cells
+      (Krahe et al. 2011). Narrower than dlgn_relay_neuron, so NEW with
+      subtype_of dlgn_relay_neuron (DEFINITIONAL, HIGH). No existing node
+      describes it.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          W-like cells lie along the dLGN perimeter / dorsolateral shell.
+          Reviews state W-like cells "occupy" the shell, but Krahe et al. say
+          "along the perimeter" and the report frames it as enrichment, and
+          the shell may also contain non-W-like relay cells, so W-like vs
+          dlgn_shell_relay_neuron is overlap, not recorded containment.
+        quote_keys: [16328698_cc12bb7a, 16328698_79efc008, 4601077_8f3fc6a4, 286491924_f2e9799b]
+      - finding: Cross-species correspondence to cat W cells.
+        quote_keys: [16328698_79efc008, 4601077_8f3fc6a4]
+
+  - node_id: dlgn_shell_relay_neuron
+    action: NEW
+    file: kb/graphs/thalamus/dlgn_shell_relay_neuron.yaml
+    report_sections:
+      - Structure, abundance, and anatomical location
+      - Connectivity and circuit organization
+      - Function and physiological properties
+      - Markers of relay neurons, core/shell, and subtype context
+      - Heterogeneity and subtype summary
+    reconciliation_note: >
+      Relay neurons of the dorsolateral calbindin-positive shell, characterised
+      by location, L1-projecting output and direction-selective retinal input
+      (report's "shell-associated motion pathway subtype" and Wang et al.'s
+      "shell pathway" are folded into this node). Narrower than
+      dlgn_relay_neuron, so NEW with subtype_of dlgn_relay_neuron
+      (DEFINITIONAL, HIGH). The existing TRN shell node (trn_ecel1_shell_neuron)
+      is a different nucleus and was not considered a match.
+    identity_conflicts: []
+    unplaced:
+      - finding: Shell coincides with calbindin-positive zone and a superficial cryptic lamina targeted by DS-RGC / tOFF-alpha RGC axons.
+        quote_keys: [14389058_e2e97d92, 1519009_e1b7a237]
+      - finding: Shell is the source of the dLGN projection to V1 layer 1 and also receives superior colliculus input.
+        quote_keys: [264598574_32e8c9a5]
+      - finding: Shell pathway is described as dedicated to motion processing.
+        quote_keys: [267806869_b9eccf69, 36416152_7fcc72ba]
+      - finding: >
+          Leiwe et al. suggest 4-6 cryptic laminae along the projection column,
+          implying subdivision finer than core/shell; not characterised as
+          named types.
+        quote_keys: [14389058_a291147c]
+
+  - node_id: dlgn_core_relay_neuron
+    action: NEW
+    file: kb/graphs/thalamus/dlgn_core_relay_neuron.yaml
+    report_sections:
+      - Structure, abundance, and anatomical location
+      - Connectivity and circuit organization
+      - Markers of relay neurons, core/shell, and subtype context
+      - Heterogeneity and subtype summary
+    reconciliation_note: >
+      Relay neurons of the ventromedial core, characterised by location and
+      dense V1 layer 4 projection. Narrower than dlgn_relay_neuron, so NEW
+      with subtype_of dlgn_relay_neuron (DEFINITIONAL, HIGH). No existing node
+      describes it.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Core is the main source of the dense L4 geniculocortical projection;
+          the supporting quote (Huang 2023) states dLGN axons target L4 densely
+          but attributes only the L1 projection to a subdivision (shell) — the
+          core-to-L4 attribution is the report's inference.
+        quote_keys: [264598574_32e8c9a5, 44977478_e2adb19c]
+
+  - node_id: dlgn_relay_mode_principal_neuron
+    action: NEW
+    file: kb/graphs/thalamus/dlgn_relay_mode_principal_neuron.yaml
+    report_sections:
+      - Connectivity and circuit organization
+      - Function and physiological properties
+      - Transcriptomic and related cell-type datasets
+      - Heterogeneity and subtype summary
+    reconciliation_note: >
+      Input-defined subclass (1-5 mostly same-type RGCs from one eye; Rompani
+      et al. 2017), presented by the report as a relay-cell subclass. NEW with
+      subtype_of dlgn_relay_neuron (DEFINITIONAL, MODERATE; one primary
+      study). definition_basis CLASSICAL_ANATOMICAL is the closest value for a
+      connectivity-defined class. Reviewer should confirm these convergence
+      "modes" warrant cell-type nodes.
+    identity_conflicts: []
+    unplaced:
+      - finding: No mapping between convergence modes and X/Y/W-like morphology or core/shell location is established.
+        quote_keys: [10004494_03dd7881]
+
+  - node_id: dlgn_combination_mode_principal_neuron
+    action: NEW
+    file: kb/graphs/thalamus/dlgn_combination_mode_principal_neuron.yaml
+    report_sections:
+      - Connectivity and circuit organization
+      - Function and physiological properties
+      - Heterogeneity and subtype summary
+    reconciliation_note: >
+      Input-defined subclass (6-36 RGCs of different types from one eye;
+      Rompani et al. 2017). NEW with subtype_of dlgn_relay_neuron
+      (DEFINITIONAL, MODERATE). Same caveat as relay-mode node.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: dlgn_binocular_combination_mode_principal_neuron
+    action: NEW
+    file: kb/graphs/thalamus/dlgn_binocular_combination_mode_principal_neuron.yaml
+    report_sections:
+      - Connectivity and circuit organization
+      - Function and physiological properties
+      - Heterogeneity and subtype summary
+    reconciliation_note: >
+      Input-defined subclass (up to 91 RGCs from both eyes, specialised
+      ipsilateral inputs added to broad contralateral input; Rompani et al.
+      2017). NEW with subtype_of dlgn_relay_neuron (DEFINITIONAL, MODERATE).
+      Same caveat as relay-mode node.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: dlgn_direction_selective_neuron
+    action: NEW
+    file: kb/graphs/thalamus/dlgn_direction_selective_neuron.yaml
+    report_sections:
+      - Function and physiological properties
+      - Heterogeneity and subtype summary
+    reconciliation_note: >
+      Direction-selective dLGN neurons (DSLGNs; Marshel et al. 2012) of the
+      superficial ~75 um, characterised by anterior/posterior direction
+      tuning and horizontal motion-axis selectivity. The report treats them as
+      relay neurons, but the sources record dLGN neurons by tuning without
+      identifying them as relay cells (dLGN interneurons are also feature
+      selective), so no subtype_of was written. Considered
+      dlgn_shell_relay_neuron (overlap — enriched in superficial/shell zone,
+      intermingled with non-DS cells; not same population) and
+      dlgn_relay_neuron.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Probable but unstated containment in dlgn_relay_neuron (relay cells
+          are 80-90% of dLGN neurons); overlap with dlgn_shell_relay_neuron
+          (DS/OS responses enriched in DS-RGC termination zones in superficial
+          dLGN).
+        quote_keys: [3598591_8c3025f0, 3598591_b52f6d24, 36416152_7fcc72ba]
+
+out_of_scope:
+  - name: dLGN local GABAergic interneuron (IN; F1/F2 terminals, triadic synapses)
+    closest_existing_node: dlgn_gabaergic_interneuron
+    reason: Characterised as relay-cell input (feedforward/triadic inhibition); another session's scope.
+  - name: Thalamic reticular nucleus GABAergic neuron (visual sector)
+    closest_existing_node: trn_gabaergic_neuron
+    reason: Characterised only as source of feedback inhibition onto relay cells; TRN out of scope.
+  - name: Transient OFF-alpha retinal ganglion cell (tOFF-alphaRGC) / direction-selective RGCs
+    closest_existing_node: null
+    reason: Retinal types characterised as inputs to dLGN; not thalamic.
+  - name: V1 layer 1 neurogliaform cell
+    closest_existing_node: null
+    reason: Cortical target of dLGN shell axons (Ibrahim et al. 2021); not thalamic.
+  - name: Cat X, Y and W relay cells
+    closest_existing_node: dlgn_x_like_relay_cell / dlgn_y_like_relay_cell / dlgn_w_like_relay_cell
+    reason: Mentioned only as cross-species comparators for the mouse X/Y/W-like classes; not characterised.
