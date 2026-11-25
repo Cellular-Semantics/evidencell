@@ -21,10 +21,10 @@ nodes:
   - id: thalamic_glutamatergic_projection_neuron
     name: "Thalamic glutamatergic projection (thalamocortical relay) neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:  # To be confirmed from primary literature — mouse sources dominate; human snRNA-seq pooled for markers
-      id: NCBITaxon:314146
-      label: Euarchontoglires
-      name_in_source: "Mice; Humans (MeSH organisms of cited primary papers; inferred, #216)"
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
     anatomical_location:
       - id: UBERON:0004703
         label: "dorsal thalamus"
@@ -250,4 +250,9 @@ nodes:
       116906088 (Phillips et al., 2017) both resolve to doi 10.1101/241315 —
       two versions of the same bioRxiv preprint; the published version is
       PMID:31527803.
+
+      SPECIES: mouse: mouse sources dominate the defining description (e.g. PMID:31527803); human
+      snRNA-seq is pooled for markers. Each source's species is in its scope. Previously the clade
+      Euarchontoglires, inferred from the MeSH organisms of the cited primary papers (#216);
+      narrowed to the species of the defining description per the schema's species rule.
 edges: []

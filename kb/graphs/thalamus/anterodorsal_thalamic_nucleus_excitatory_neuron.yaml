@@ -22,10 +22,10 @@ nodes:
   - id: anterodorsal_thalamic_nucleus_excitatory_neuron
     name: "Anterodorsal thalamic nucleus (AD) excitatory projection neuron"
     definition_basis: CLASSICAL_ANATOMICAL
-    species:  # To be confirmed from primary literature — cited evidence is mouse and rat
-      id: NCBITaxon:39107
-      label: Murinae
-      name_in_source: "Mice; Rats (MeSH organisms of cited primary papers; inferred, #216)"
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
     anatomical_location:
       - id: UBERON:0002679
         label: "anterodorsal nucleus of thalamus"
@@ -164,4 +164,9 @@ nodes:
 
       SPECIES: cited evidence mixes mouse (markers, projection types) and
       rat (bifurcation, head-direction recordings); species left null.
+
+      SPECIES: mouse: the defining sources are mouse studies (PMID:40593635, PMID:38427564); some
+      cited evidence is rat. Each source's species is in its scope. Previously the clade Murinae,
+      inferred from the MeSH organisms of the cited primary papers (#216); narrowed to the species
+      of the defining description per the schema's species rule.
 edges: []

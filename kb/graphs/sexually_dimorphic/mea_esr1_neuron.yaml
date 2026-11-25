@@ -27,6 +27,10 @@ nodes:
   - id: mea_esr1_neuron
     name: Medial amygdala estrogen-receptor alpha neuron
     definition_basis: PRIOR_TRANSCRIPTOMIC
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
     sex_bias: MALE_BIASED
     notes: >
       CANDIDATE classical type proposed from bulk-correlation evidence
@@ -36,6 +40,9 @@ nodes:
       (mating, aggression). Not in the original asta-report-ingest yield —
       added here as a stub so the bulk-correlation evidence can land as an
       edge. Literature ingest needed before this can move past LOW confidence.
+
+      SPECIES: mouse: the defining source (Knoedler et al. 2022, PMID:35143761) is a mouse study,
+      matching the graph-level species.
     anatomical_location:
       - id: "MBA:403"
         label: Medial amygdalar nucleus

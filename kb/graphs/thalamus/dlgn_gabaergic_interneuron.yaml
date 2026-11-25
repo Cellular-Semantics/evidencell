@@ -24,10 +24,10 @@ nodes:
   - id: dlgn_gabaergic_interneuron
     name: "Dorsal lateral geniculate nucleus (dLGN) local GABAergic interneuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:  # To be confirmed from primary literature — mostly mouse primary sources; cat/ferret/primate cross-species notes
-      id: NCBITaxon:314146
-      label: Euarchontoglires
-      name_in_source: "Mice; Rats; Macaca mulatta (MeSH organisms of cited primary papers; inferred, #216)"
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
     anatomical_location:
       - id: UBERON:0002479
         label: "dorsal lateral geniculate nucleus"
@@ -330,4 +330,10 @@ nodes:
       not transfer cleanly to primate.
 
       SPECIES: species left null; most cited primary data are from mouse.
+
+      SPECIES: mouse: the defining sources are mostly mouse (e.g. PMID:27121468, PMID:24359973,
+      PMID:32142646); cat, ferret and primate findings are cross-species notes. Each source's
+      species is in its scope. Previously the clade Euarchontoglires, inferred from the MeSH
+      organisms of the cited primary papers (#216); narrowed to the species of the defining
+      description per the schema's species rule.
 edges: []
