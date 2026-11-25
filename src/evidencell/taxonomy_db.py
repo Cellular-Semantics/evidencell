@@ -3524,8 +3524,8 @@ def _cmd_find_candidates(
                 + ")"
                 for g, r in sorted(expr.not_measured.items())
             )
-            + " — to give a marker its gene, see the gene-id-curation skill"
-            " (.claude/skills/gene-id-curation/SKILL.md); NO_GENE_ID markers that"
+            + " — to give a marker its gene, see docs/marker_gene_ids.md;"
+            " NO_GENE_ID markers that"
             " name no single gene (glycoform, PTM, gene family) stay unmeasured",
             file=sys.stderr,
         )

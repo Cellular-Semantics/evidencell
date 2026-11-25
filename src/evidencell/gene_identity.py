@@ -951,7 +951,7 @@ def check_marker_gene_ids(
             errors.append(
                 f"{node_id}: marker {name!r} has {have} but no {lack} — set both (the gene "
                 "and its official symbol) or neither; the source's wording goes in "
-                "name_in_source (see the gene-id-curation skill)"
+                "name_in_source (see docs/marker_gene_ids.md)"
             )
         elif m.get("ncbi_gene_id"):
             paired.append((node_id, m, species))
@@ -994,7 +994,7 @@ def check_marker_gene_ids(
             errors.append(
                 f"{where} is {rec['label']}; symbol must be its official symbol "
                 f"{rec['label']!r}, not {symbol!r}. The source's wording goes in "
-                "name_in_source (see the gene-id-curation skill)."
+                "name_in_source (see docs/marker_gene_ids.md)."
             )
     return errors, unchecked
 

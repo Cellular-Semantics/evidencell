@@ -543,11 +543,9 @@ Quotes can validate these node property fields:
      so in `notes`: find-candidates scores on NT type, and a silently missing
      value weakens candidate retrieval with no signal to the mapper.
    - defining_markers: name_in_source as the report writes it, with symbol +
-     ncbi_gene_id for the gene it means.
-     Load the `gene-id-curation` skill (or read
-      `.claude/skills/gene-id-curation/SKILL.md`).
-     AMBIGUOUS names stay null here — evidence-extraction settles them from
-     the primary paper
+     ncbi_gene_id for the gene it means. Follow `docs/marker_gene_ids.md`
+     (it calls the `gene-id-curation` skill); ambiguous names stay
+     unresolved here — evidence-extraction settles them from the primary paper
    - negative_markers, neuropeptides: as identified
    - morphology: {description: "...", sources: [...]}
    - electrophysiology: {description: "...", sources: [...]}

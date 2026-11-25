@@ -159,10 +159,9 @@ For marker claims, use MarkerSource (extends PropertySource):
   GeneDescriptor.sources → add a MarkerSource entry on the specific gene
   marker_type: PROTEIN   → IHC, immunofluorescence, Western blot
   marker_type: TRANSCRIPT → scRNA-seq, smFISH, ISH, qPCR
-  A marker you add (or one still without an ID) also gets ncbi_gene_id —
-  settle AMBIGUOUS names from this paper's wording.
-  Load the `gene-id-curation` skill (or read
-   `.claude/skills/gene-id-curation/SKILL.md`).
+  A marker you add (or one still without an ID) also gets its gene —
+  settle ambiguous names from this paper's wording, passing the quote as
+  evidence. Follow `docs/marker_gene_ids.md` (it calls the `gene-id-curation` skill).
 
 For annotation-transfer source correspondence, use at_source_sets[].sources:
   at_source_sets[].sources → per-correspondence evidence (nested on each

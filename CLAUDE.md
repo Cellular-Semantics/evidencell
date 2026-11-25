@@ -180,7 +180,7 @@ in `src/evidencell/expression_cache.py`.
 - Names that can't be measured are recorded and reported — never a silent
   `{}`: `NO_ENSEMBL_MAPPING` (no gene of the taxonomy has that name),
   `AMBIGUOUS_SYMBOL` (several do) or `NO_GENE_ID` (a classical marker with
-  no `ncbi_gene_id`). Set the marker's gene with the `gene-id-curation` skill.
+  no `ncbi_gene_id`). Set the marker's gene per `docs/marker_gene_ids.md`.
 - Marker scoring in `find-candidates` uses expression only. The atlas
   node's metadata marker lists are cross-checked and disagreements reported
   as `marker_discrepancies` (carried into Stage B property-comparison notes).
@@ -194,7 +194,7 @@ in `src/evidencell/expression_cache.py`.
 | Skill | When to invoke |
 |---|---|
 | `query-taxonomy-db` | Any taxonomy candidate search, field coverage check, or DB exploration. **Do not read taxonomy YAML files directly for query purposes** — the DB is the query interface; YAML is the edit interface. Atlas expression is not in YAML: read it through `TaxonomyDB.expression()`, which loads uncached genes from the MapMyCells stats file into the DB's `node_expression` table on demand (#189). Querying `node_expression` directly only sees genes already cached. |
-| `gene-id-curation` | Giving a classical marker an `ncbi_gene_id`, or fixing a `NOT MEASURED` (`AMBIGUOUS_SYMBOL` / `NO_ENSEMBL_MAPPING`) marker. The single source for literature marker → gene ID rules. |
+| `gene-id-curation` | Gene or protein name as a source writes it + taxon → NCBI Gene ID and official symbol (or why it names no single gene). Generic; how its result goes into the KB is `docs/marker_gene_ids.md`. |
 | `retrieve-dataset` | Downloading and inspecting an expression dataset (h5ad, RDS, loom, mtx). | Any time an orchestrator is added, removed, renamed, or its status changes, update `WORKFLOW.md` in the same commit. The overview table, inputs table, and typical workflow diagram must all reflect the current state. Never leave a stale status entry or a duplicate section.
 ### Provenance
 
@@ -288,9 +288,8 @@ network). `build-taxonomy-db` loads it offline.
 Every marker records `name_in_source` (the source's wording). A classical
 marker (`defining_markers`, `negative_markers`, `neuropeptides`) that names
 one gene also carries that gene's `ncbi_gene_id`, in the node's species, and
-its official `symbol` — both or neither. Before
-adding or editing one, or when a marker is reported `NOT MEASURED`:
-Load the `gene-id-curation` skill (or read `.claude/skills/gene-id-curation/SKILL.md`).
+its official `symbol` — both or neither. Before adding or editing one, or
+when a marker is reported `NOT MEASURED`: Follow `docs/marker_gene_ids.md` (it calls the `gene-id-curation` skill).
 
 ---
 

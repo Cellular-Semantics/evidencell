@@ -133,8 +133,8 @@ specification):
   before: a reviewed override, an exact or case-insensitive symbol, or a
   synonym only one gene claims; several claimants is `AMBIGUOUS_SYMBOL`.
   `gene_resolution` in the discovery JSON records how each name
-  resolved. To fix a `NOT MEASURED` marker: Load the `gene-id-curation` skill (or
-  read `.claude/skills/gene-id-curation/SKILL.md`).
+  resolved. To fix a `NOT MEASURED` marker: follow
+  `docs/marker_gene_ids.md`.
 - **Soft scoring** within the surviving pool:
   - **Graded region score** from `region_fraction_100um`:
     +2 if ≥ 0.5, +1 if ≥ 0.1, +0.5 if > 0, else 0.

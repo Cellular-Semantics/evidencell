@@ -477,8 +477,8 @@ build-gene-ids taxonomy_id:
 
 # Candidate genes for classical marker names (protein names, abbreviations,
 # symbols), as JSON — for setting a marker's ncbi_gene_id at curation time.
-# How to choose the target and act on each method: the gene-id-curation skill
-# (.claude/skills/gene-id-curation/SKILL.md).
+# The lookup tool of the gene-id-curation skill; recording the result in the
+# KB: docs/marker_gene_ids.md.
 # Pass a taxonomy id to resolve offline against its genes, or an NCBITaxon CURIE
 # to query Name Resolver over that species' genes (network).
 # Usage: just resolve-gene-names CCN20230722 PV CB mGluR1
