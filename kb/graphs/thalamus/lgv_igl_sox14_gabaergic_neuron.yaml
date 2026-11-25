@@ -25,6 +25,19 @@ nodes:
   - id: lgv_igl_sox14_gabaergic_neuron
     name: "LGv/IGL Sox14+ GABAergic projection neuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: GABAergic neuron
+        name_in_source: "LGv/IGL Sox14+ GABAergic projection neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / projecting terms; no
+        term describes Sox14+ pTH-R-derived LGv/IGL projection neurons. CL:0011005
+        (GABAergic interneuron) rejected: these are projection neurons. CL:0000617
+        (neuron that uses GABA as a vesicular neurotransmitter) is the most
+        specific containing term. EXACT would need a CL term defined by LGv/IGL
+        location and Sox14 expression.
     species:
       id: NCBITaxon:10090
       label: "Mus musculus"

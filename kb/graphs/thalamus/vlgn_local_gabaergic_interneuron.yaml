@@ -24,6 +24,20 @@ nodes:
   - id: vlgn_local_gabaergic_interneuron
     name: "vLGN local GABAergic interneuron"
     definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0011005
+        label: GABAergic interneuron
+        name_in_source: "vLGN local GABAergic interneuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / interneuron terms. CL
+        has no thalamic or geniculate GABAergic interneuron term (CL:0010011
+        cerebral cortex GABAergic interneuron is cortical; CL:4042026/4042027 are
+        nigral). CL:0011005 (An interneuron that uses GABA as a vesicular
+        neurotransmitter) is the most specific term the node satisfies in full:
+        a local GABAergic interneuron of vLGN. EXACT would need a CL term defined
+        by vLGN location.
     species:
       id: NCBITaxon:10090
       label: "Mus musculus"

@@ -25,6 +25,18 @@ nodes:
   - id: lgv_igl_lpbn_projecting_gabaergic_neuron
     name: "Lateral parabrachial nucleus-projecting vLGN/IGL GABAergic neuron"
     definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: GABAergic neuron
+        name_in_source: "Lateral parabrachial nucleus-projecting vLGN/IGL GABAergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / projecting terms; no
+        term describes a lateral parabrachial nucleus-projecting vLGN/IGL GABAergic
+        neuron. CL:0000617 (neuron that uses GABA as a vesicular neurotransmitter)
+        is the most specific term the node satisfies in full. EXACT would need a
+        CL term defined by location and lateral parabrachial projection.
     species:
       id: NCBITaxon:10090
       label: "Mus musculus"

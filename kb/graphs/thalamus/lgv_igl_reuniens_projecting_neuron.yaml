@@ -24,6 +24,21 @@ nodes:
   - id: lgv_igl_reuniens_projecting_neuron
     name: "Nucleus reuniens-projecting vLGN/IGL neuron"
     definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000540
+        label: neuron
+        name_in_source: "Nucleus reuniens-projecting vLGN/IGL neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Transmitter identity is unresolved in the sources (the report lists the
+        Re channel among vLGN GABAergic outputs, but Huang 2020 describes
+        CaMKIIa neurons that activate Re neurons), so neither CL:0000617 (GABAergic
+        neuron) nor CL:0000679 (glutamatergic neuron) nor CL:4023068 (thalamic
+        excitatory neuron) can be asserted. Searched CL for thalamic / geniculate /
+        projecting terms; none fits. CL:0000540 (neuron) is the most specific term
+        the node satisfies in full. Revise to CL:0000617 or CL:0000679 once the
+        transmitter is settled.
     species:
       id: NCBITaxon:10090
       label: "Mus musculus"

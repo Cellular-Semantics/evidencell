@@ -24,6 +24,19 @@ nodes:
   - id: vlgn_gabaergic_neuron
     name: "Ventral lateral geniculate nucleus (vLGN) GABAergic neuron"
     definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: GABAergic neuron
+        name_in_source: "Ventral lateral geniculate nucleus (vLGN) GABAergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / interneuron terms; no
+        term describes a vLGN GABAergic neuron. CL:0011005 (GABAergic interneuron)
+        rejected: the population includes projection neurons. CL:4023068 (thalamic
+        excitatory neuron) rejected: glutamatergic. CL:0000617 (neuron that uses
+        GABA as a vesicular neurotransmitter) is the most specific containing term.
+        EXACT would need a CL term defined by vLGN location.
     species:
       id: NCBITaxon:10090
       label: "Mus musculus"

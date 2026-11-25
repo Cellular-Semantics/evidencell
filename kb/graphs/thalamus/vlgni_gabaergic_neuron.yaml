@@ -24,6 +24,18 @@ nodes:
   - id: vlgni_gabaergic_neuron
     name: "Internal vLGN (vLGNi) non-retinorecipient GABAergic neuron"
     definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: GABAergic neuron
+        name_in_source: "Internal vLGN (vLGNi) non-retinorecipient GABAergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / interneuron terms; none
+        describes a non-retinorecipient vLGNi GABAergic neuron. CL:0000617 (neuron
+        that uses GABA as a vesicular neurotransmitter) is the most specific term
+        the node satisfies in full; the parent node vlgn_gabaergic_neuron shares
+        it. EXACT would need a CL term defined by vLGNi location.
     species:
       id: NCBITaxon:10090
       label: "Mus musculus"
