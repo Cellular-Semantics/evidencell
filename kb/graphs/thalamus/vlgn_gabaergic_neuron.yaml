@@ -73,4 +73,183 @@ nodes:
           Containment inferred from structural subdivision: the parent pools
           GABAergic neurons of LGv and IGL; this node restricts it to the vLGN
           (LGv) alone.
+    anatomical_location:
+      - id: MBA:178
+        label: "Ventral part of the lateral geniculate complex"
+        name_in_source: "ventral lateral geniculate nucleus (vLGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:32497303"
+            method: "labelling with canonical and novel cell type-specific markers; spatial distribution analysis"
+            scope: "mouse vLGN — GABAergic cells in both vLGNe and vLGNi"
+            quote_key: "219328889_a1d23e11"
+          - ref: "PMID:36609305"
+            method: "statement citing prior work (virtually all vLGN neurons GABAergic)"
+            scope: "mouse vLGN"
+            quote_key: "255502436_f64915a5"
+          - ref: "PMID:28965517"
+            method: "review statement (vLGN contains a vastly higher population of GABAergic neurons than dLGN)"
+            scope: "rodent vLGN (vLGNe and vLGNi laminae)"
+            quote_key: "4601077_b2845e93"
+      - id: UBERON:0001945
+        label: "superior colliculus"
+        name_in_source: "superior colliculus (SC)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:37949869"
+            method: "statement of vLGN GABAergic axon projection; tracing method not named in quote"
+            scope: "mouse vLGN"
+            quote_key: "265121419_e12d5dfd"
+          - ref: "PMID:32350041"
+            method: "statement of long-range inhibitory vLGN projection to SC (citing prior work)"
+            scope: "mouse vLGN"
+            quote_key: "217593649_83051103"
+      - id: MBA:186
+        label: "Lateral habenula"
+        name_in_source: "lateral habenula"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:32497303"
+            method: "statement citing prior circuit work (Huang et al., 2019): some vLGN GABAergic cells project to LHb"
+            scope: "mouse vLGN; GABAergic subtype not identified"
+            quote_key: "219328889_9273e4f7"
+          - ref: "PMID:30795900"
+            method: "circuit study of LHb-projecting vLGN/IGL GABA neurons; tracing method not named in quote"
+            scope: "mouse vLGN/IGL, pooled"
+            quote_key: "72332556_28081399"
+          - ref: "PMID:35385673"
+            method: "review statement (citing Huang et al., 2019)"
+            scope: "mouse vLGN and IGL GABAergic neurons, pooled"
+            quote_key: "248001630_8eed194e"
+      - id: MBA:1100
+        label: "Pretectal region"
+        name_in_source: "nucleus of the optic tract and other pretectal nuclei"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:32497303"
+            method: "target reported for vLGN neurons generally (citing prior tracing studies), not for GABAergic neurons specifically"
+            scope: "vLGN neurons, species of the cited tracing not stated in quote"
+            quote_key: "219328889_9273e4f7"
+            support: WEAK
+      - id: MBA:797
+        label: "Zona incerta"
+        name_in_source: "zona incerta"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:32497303"
+            method: "target reported for vLGN neurons generally (citing prior tracing studies), not for GABAergic neurons specifically"
+            scope: "vLGN neurons, species of the cited tracing not stated in quote"
+            quote_key: "219328889_9273e4f7"
+            support: WEAK
+      - id: MBA:881
+        label: "Parabrachial nucleus, lateral division"
+        name_in_source: "LPBN"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:38865246"
+            method: "circuit study; vLGN/IGL GABAergic neurons reported to inhibit LPBN neurons (tracing method not named in quote); target reported for a pooled vLGN/IGL population"
+            scope: "mouse vLGN/IGL, pooled; RGC-innervated subset"
+            quote_key: "270412585_53f9c770"
+            support: WEAK
+      - id: MBA:181
+        label: "Nucleus of reuniens"
+        name_in_source: "nucleus reuniens (Re)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34610302"
+            method: "vLGN→Re circuit described in a study of vLGN GABA neurons; the quote does not state that the Re-projecting cells are GABAergic"
+            scope: "mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+            support: WEAK
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:32497303"
+          method: "labelling with canonical and cell type-specific markers (high percentage of vLGN cells GABAergic)"
+          scope: "mouse vLGNe and vLGNi"
+          quote_key: "219328889_a1d23e11"
+        - ref: "PMID:36609305"
+          method: "statement citing prior work (virtually all vLGN neurons GABAergic, including projection neurons)"
+          scope: "mouse vLGN"
+          quote_key: "255502436_f64915a5"
+        - ref: "PMID:40166303"
+          method: "whole-brain quantitative cell-type density atlas (LGv among thalamic areas with highest GABAergic proportion)"
+          scope: "adult mouse LGv"
+          quote_key: "273180341_cfc546fc"
+    morphology:
+      description: >
+        Population includes GABAergic projection neurons (virtually all vLGN
+        neurons are GABAergic, including the projection neurons; Govindaiah et
+        al., 2023). vLGN neurons have wide dendritic arbors that span the length
+        and/or width of the nucleus and are often asymmetric, unlike the compact
+        arbors of dLGN (Ciftcioglu et al., 2020; recorded vLGN cells, not
+        identified as GABAergic in the quote). Cell size differs by lamina:
+        the external vLGN (vLGNe) is magnocellular with large cells, the
+        internal vLGN (vLGNi) parvocellular (Monavarfeshani et al., 2017).
+      sources:
+        - ref: "PMID:36609305"
+          method: "statement citing prior work (vLGN projection neurons are GABAergic)"
+          scope: "mouse vLGN"
+          quote_key: "255502436_f64915a5"
+        - ref: "PMID:32350041"
+          method: "dendritic arbor reconstruction of recorded vLGN cells"
+          scope: "adult mouse vLGN, both sexes"
+          quote_key: "217593649_83051103"
+        - ref: "PMID:28965517"
+          method: "review of cytoarchitecture (magnocellular vLGNe, parvocellular vLGNi)"
+          scope: "nocturnal rodent vLGN"
+          quote_key: "4601077_b2845e93"
+    defining_markers:
+      - name_in_source: "Gata2"
+        ncbi_gene_id: "NCBIGene:14461"
+        symbol: "Gata2"
+        sources:
+          - ref: "PMID:36280260"
+            marker_type: NOT_STATED
+            method: "statement citing prior work (transcription factor absent in dLGN); assay not named in quote"
+            scope: "mouse IGL/LGv vs dLGN, pooled IGL and LGv"
+            quote_key: "247159795_aeeef91c"
+    colocated_types:
+      - neighboring_type: "vLGN VGLUT-expressing glutamatergic neuron"
+        spatial_relationship: "same nucleus (vLGN); relative position not stated"
+        notes: >
+          vLGN has only a limited number of vesicular glutamate
+          transporter-expressing glutamatergic neurons (Monavarfeshani et al.,
+          2017; PMID:28965517, quote 4601077_b2845e93). A vLGN snRNA-seq atlas
+          reports 20 candidate neuron types including at least two excitatory
+          types (Stebbins et al., 2026; PMID:41814933, quote 286491924_d7a92ebc).
+    definition_references:
+      - "PMID:32497303"
+      - "PMID:36609305"
+      - "PMID:34610302"
+      - "PMID:41814933"
+      - "PMID:28965517"
+    notes: >
+      SUSPECTED HETEROGENEITY: properties here pool transcriptomically distinct
+      GABAergic populations of the retinorecipient external vLGN (vLGNe) and
+      the non-retinorecipient internal vLGN (vLGNi); vLGNe GABAergic types
+      occupy at least four adjacent sublaminae (Sabbagh et al., 2020, quote
+      219328889_a1d23e11; Stebbins et al., 2024, quote 271906359_1bfec86c).
+      Sources also differ on cell class: Su et al. 2020 (quote
+      210870509_2b108b46) state that vLGN contains local GABAergic
+      interneurons, while others emphasise GABAergic projection neurons, so
+      the population likely mixes local and projection neurons.
+
+      MARKERS: Sox14 is not recorded as a defining marker although Brock et al.
+      2022 (quote 247159795_aeeef91c) list it with Gata2 for IGL/LGv: Sox14+
+      cells are enriched in vLGNi and sparse in vLGNe (quote
+      247159795_a2cf4a69), and mark the dorsal pTH-R-derived component only
+      (quote 247159795_d79097dc). Gata2 comes from a statement about pooled
+      IGL/LGv citing prior work; whether it covers the ventral prethalamic-
+      derived LGv cells is not stated.
+
+      TRANSMITTER CAVEAT: Huang et al. 2020 (quote 226284065_834809d9)
+      describe CaMKIIα vLGN/IGL neurons that activate nucleus reuniens
+      neurons, an excitatory output that does not fit a GABAergic population;
+      the Re AXON_TARGET entry is therefore WEAK. Several projection targets
+      (LHb, LPBN) are reported for vLGN/IGL pooled.
 edges: []
