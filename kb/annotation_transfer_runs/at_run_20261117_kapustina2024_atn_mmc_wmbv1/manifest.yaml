@@ -1,0 +1,92 @@
+id: at_run_20261117_kapustina2024_atn_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE227627"
+source_cluster_label: >
+  Kapustina et al. 2024 (PMID:38427564) anterior thalamic nuclei (ATN)
+  single-cell RNA-seq, scored as ONE label, "ATN": every retained cell
+  manually picked from microdissected ATN of 3 adult wild-type B6 mice
+  (GEO sample annotation "tissue: Anterior thalamic nuclei"; well metadata
+  `source` = "Mark_Anterior Thalamus_<date>_<n>"). GEO deposits no per-cell
+  cluster, cell-type or nucleus label, so the authors' three excitatory
+  clusters (AD / AV / AM) cannot be scored here; see the companion run
+  at_run_20261117_kapustina2024_atn_derivedk3_mmc_wmbv1 for a re-derived,
+  neutrally named 3-group partition.
+  SOURCE-LABEL PURITY: pure by dissection, MIXED by nucleus and cell type.
+  The label spans AD, AV and AM plus neighbouring-nucleus edge catches and
+  a few contaminated wells. F1 is therefore only meaningful at class level;
+  below that, read the per-cluster distribution (label_distribution.tsv).
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.5, hierarchical, default
+  parameters, raw normalization) via `annotation-transfer map-local`.
+  Query: GSE227627_merged_counts.txt.gz (UMI counts; Janelia barcoded 3'
+  RT protocol on hand-picked cells). Kept the 1,216 ATN wells (dropped 128
+  ERCC / qRNA / blank control wells), then cells with >= 1,000 detected
+  genes (912). Genes keyed by the deposited Ensembl IDs (NCBIM37); 30,930
+  of 52,647 non-ERCC IDs occur in the WMBv1 stats and were kept (6,513 of
+  6,558 WMBv1 marker genes present). F1 scored with `annotation-transfer
+  score` at bootstrap threshold 0.8 against labels_atn.json. Build script:
+  scripts/build_kapustina2024_h5ad.py; distribution summary:
+  scripts/summarise_label_distribution.py (copied from the Phillips 2019
+  run).
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 1216
+n_cells_after_filter: 912
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: "3.13"
+  packages: [cell_type_mapper, anndata, h5py, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "86bfcc0 (branch base; run 2026-11-17)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Single-label run. Every cell carries "ATN", so purity is 1.0 by
+  construction and F1 reduces to coverage. Class-level coverage is the
+  robust read-out: 850 of the 885 cells passing the class bootstrap
+  threshold map to 18 TH Glut (F1 0.98). Below class, the label is a
+  mixture by design. Best supertype 0642 AV Col27a1 Glut_1 holds only 48%
+  of cells (F1 0.68), so do not read that F1 as an AV-specific result.
+  (2) The supertype split is 0642 AV 48%, 0662 (AM-dominant in WMB MERFISH)
+  22%, 0652 CM-IAD-CL-PCN (MD/IAD) 8%, 0641 AD Serpinb7 4%, 0658 (LD) 3%,
+  with a remainder of RE, VAL/VM, RT, oligodendrocyte and endothelial
+  supertypes. The non-ATN components are most likely dissection-edge
+  catches (IAD, LD, PT/PVT/RE border) and contaminated wells. The nucleus
+  names come from WMBv1 MERFISH anatomy, not from the source data.
+  (3) AD is under-represented relative to its anatomical share: only 38
+  cells (4%) map to 0641 AD Serpinb7. Treat AD-related numbers from this
+  dataset as thin.
+  (4) No QC filter was published with the GEO files. The >= 1,000-gene cut
+  is ours, and the authors' retained cell count may differ.
+  (5) Adult wild-type B6 mice, acute slices, hand-picked cells after
+  dissociation. Dissociation stress genes are likely present.
+  (6) mmc_results.csv is shared with
+  at_run_20261117_kapustina2024_atn_derivedk3_mmc_wmbv1.
+
+metadata: >
+  source_paper=PMID:38427564; doi=10.1016/j.celrep.2024.113842;
+  source_files=GSE227627_merged_counts.txt.gz, GSE227627_metadata.txt.gz;
+  geo_counts_sha256=246e0307f66dca32e9eb1f87ab350e8050c1bc6bc92d5ef2372055731883643a;
+  geo_metadata_sha256=ee8bae1158b9ce94b8bb53aec0615f8ea1128eba419421d1dad807d18f79a4d0;
+  input_h5ad_sha256=2ec6b2bafff49e118299ce1a27002dc3272540d3d39838a2f9c3a46f67d238fa;
+  marker_lookup=mouse_markers_230821.json;
+  marker_lookup_sha256=3e2a6a7beb9ab265ff545e9f8dc993b2c0ac6ae66b5e8825c42f8166a2f51035;
+  mmc_results=mmc_results.csv; label_distribution=label_distribution.tsv;
+  out_of_scope=GEO:GSE255953 (Xenium companion), Visium objects in GSE227627

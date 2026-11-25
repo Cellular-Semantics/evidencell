@@ -1,0 +1,72 @@
+id: at_run_20261117_bakken2021_lgn_dlgnin_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE182211"
+source_cluster_label: >
+  DERIVED label scheme on Bakken et al. 2021 (PMID:34473054) mouse SMART-seq
+  v4 cells: the three published GABAergic clusters the authors assign to
+  dLGN (GEO `cluster_label` Chrna1 146, Chrna2 252, Chrna3 54;
+  Chrna6/Sox14-expressing) pooled as "dLGN GABA (Chrna1-3)" (452 cells).
+  Every other non-"Low Quality" cell is labelled "other (non-dLGN-IN)"
+  (1,662 cells), so purity is measured against the whole dataset. Labels
+  are chosen not to collide with the published-label run.
+  SOURCE-LABEL PURITY: pure by type (the dLGN local interneuron, quote-backed
+  by the authors' assignment plus Sox14/Chrna6/Otx2/Gad1 co-expression in
+  these counts). It contains three transcriptomic subtypes, so expect F1 to
+  peak at subclass/supertype and fall at cluster.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  Same MapMyCells output as at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1
+  (mmc_results.csv lives in that run record). F1 scored with
+  `annotation-transfer score` at bootstrap threshold 0.8 against
+  labels_dlgnin.json.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 2187
+n_cells_after_filter: 2114
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: ../at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1/README.md
+  python_version: ">=3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "86bfcc0 (branch base; run 2026-11-17)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Derived pooled label, declared as the at_source_sets correspondence of
+  dlgn_gabaergic_interneuron. Per-subtype numbers are in the published-label
+  run (at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1).
+  (2) Target breadth: 452/452 cells map to WMB subclass 213 SCsg Gabrr2 Gaba
+  (F1 0.999) and 443 to supertype 0872 (F1 0.998). WMB places this subclass
+  mainly in superior colliculus (midbrain about 0.85 of MERFISH cells). Its
+  clusters 3797/3798/3802/3803 have LGd as top thalamic nucleus, and 3798
+  is about half thalamic. Purity 1.0 is within this dataset only: the WMB
+  target also holds SC superficial-grey GABAergic neurons. So this supports
+  dLGN interneuron ⊂ 213/0872, not equivalence. The grouping fits the
+  tectal (Sox14/Otx2) origin of dLGN interneurons.
+  (3) Cluster level: cells spread over 3798 (123), 3797 (115), 3799 (62),
+  3804, 3802, 3801. Best cluster F1 0.50 (3798) reflects that spread, not a
+  mismatch.
+  (4) Same platform caveats as the cluster run (SMART-seq v4 read counts vs
+  UMI reference, no gene-length correction); cells not in WMBv1 training.
+
+metadata: >
+  source_paper=PMID:34473054;
+  mmc_results=../at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1/mmc_results.csv;
+  mmc_results_sha256=779f37d7ef13948f55f54bd260cb0807412db1ce6cf566598d2fb2d050b2d78d;
+  label_distribution=label_distribution.tsv
