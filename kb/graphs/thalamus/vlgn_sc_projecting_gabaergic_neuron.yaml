@@ -56,4 +56,89 @@ nodes:
         notes: >
           Defined as the vLGN GABAergic neuron narrowed by projection target
           (superior colliculus).
+    anatomical_location:
+      - id: MBA:178
+        label: "Ventral part of the lateral geniculate complex"
+        name_in_source: "ventral lateral geniculate nucleus (vLGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:37949869"
+            method: "statement in source (vLGN sends GABAergic axons to SC)"
+            scope: "mouse vLGN; lamina of origin (vLGNe/vLGNi) not stated"
+            quote_key: "265121419_e12d5dfd"
+          - ref: "PMID:34610302"
+            method: "projection-defined vLGN-to-SC circuit"
+            scope: "adult mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+      - id: UBERON:0001945
+        label: "superior colliculus"
+        name_in_source: "superior colliculus (SC)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:37949869"
+            method: "statement of vLGN GABAergic axon projection to SC; tracing method not named in quote"
+            scope: "mouse vLGN"
+            quote_key: "265121419_e12d5dfd"
+          - ref: "PMID:34610302"
+            method: "projection-defined vLGN-to-SC circuit described in a study of vLGN GABA neurons; tracing method not named in quote"
+            scope: "adult mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+          - ref: "PMID:32350041"
+            method: "statement of long-range inhibitory vLGN projection to SC (citing prior work)"
+            scope: "mouse vLGN"
+            quote_key: "217593649_83051103"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:37949869"
+          method: "statement in source (vLGN axons to SC are GABAergic)"
+          scope: "mouse vLGN"
+          quote_key: "265121419_e12d5dfd"
+        - ref: "PMID:36609305"
+          method: "statement citing prior work (virtually all vLGN neurons GABAergic, including projection neurons)"
+          scope: "mouse vLGN"
+          quote_key: "255502436_f64915a5"
+        - ref: "PMID:32350041"
+          method: "statement of inhibitory vLGN projections to SC (citing prior work)"
+          scope: "mouse vLGN"
+          quote_key: "217593649_83051103"
+    morphology:
+      description: >
+        Long-range GABAergic projection neuron whose axons leave the vLGN and
+        terminate in the superior colliculus (Li et al., 2023; Ciftcioglu et
+        al., 2020). Virtually all vLGN neurons, including the projection
+        neurons, are GABAergic (Govindaiah et al., 2023). Somatodendritic
+        morphology of identified SC-projecting cells is not described in the
+        sources.
+      sources:
+        - ref: "PMID:37949869"
+          method: "statement in source (prominent GABAergic axons to SC)"
+          scope: "mouse vLGN"
+          quote_key: "265121419_e12d5dfd"
+        - ref: "PMID:32350041"
+          method: "statement of long-range inhibitory vLGN projection to SC (citing prior work)"
+          scope: "mouse vLGN"
+          quote_key: "217593649_83051103"
+        - ref: "PMID:36609305"
+          method: "statement citing prior work (vLGN projection neurons are GABAergic)"
+          scope: "mouse vLGN"
+          quote_key: "255502436_f64915a5"
+    definition_references:
+      - "PMID:37949869"
+      - "PMID:34610302"
+      - "PMID:32350041"
+      - "PMID:36609305"
+    notes: >
+      SUSPECTED HETEROGENEITY / OPEN IDENTITY: the sublamina of origin (vLGNe
+      vs vLGNi) and the molecular identity of SC-projecting vLGN GABAergic
+      neurons are not stated in the sources. Sox14+ LGv/IGL neurons also
+      project heavily to the SC (Brock et al., 2022, quote 247159795_9ed56c01);
+      whether they overlap this population is unknown. The Salay et al. 2021
+      abstract (quote 238410529_5d954f1d) describes the vLGN-to-SC circuit in
+      a study of vLGN GABA neurons but does not explicitly state that the
+      SC-projecting cells are GABAergic.
 edges: []
