@@ -24,7 +24,10 @@ nodes:
   - id: dlgn_gabaergic_interneuron
     name: "Dorsal lateral geniculate nucleus (dLGN) local GABAergic interneuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:       # To be confirmed from primary literature — mostly mouse primary sources; cat/ferret/primate cross-species notes
+    species:  # To be confirmed from primary literature — mostly mouse primary sources; cat/ferret/primate cross-species notes
+      id: NCBITaxon:314146
+      label: Euarchontoglires
+      name_in_source: "Mice; Rats; Macaca mulatta (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0002479
         label: "dorsal lateral geniculate nucleus"
@@ -75,8 +78,9 @@ nodes:
           scope: "mouse dLGN"
           quote_key: "264044014_7ca82914"
     defining_markers:
-      - symbol: Gad1
-        ncbi_gene_id: null
+      - name_in_source: Gad1
+        symbol: Gad1
+        ncbi_gene_id: "NCBIGene:14415"
         sources:
           - ref: "PMID:24359973"
             marker_type: TRANSGENE_REPORTER
@@ -88,24 +92,27 @@ nodes:
             method: "GAD67-GFP transgenic reporter"
             scope: "mouse dLGN, developing and adult"
             quote_key: "73481430_aac25d77"
-      - symbol: Sox14
-        ncbi_gene_id: null
+      - name_in_source: Sox14
+        symbol: Sox14
+        ncbi_gene_id: "NCBIGene:20669"
         sources:
           - ref: "PMID:27929058"
             marker_type: TRANSGENE_REPORTER
             method: "Sox14Gfp/+ knock-in reporter / Sox14cre fate mapping"
             scope: "mouse — Sox14/Otx2-expressing precursors migrate from dorsal midbrain to generate dLGN-INs (early postnatal)"
             quote_key: "264044014_f908cf73"
-      - symbol: Otx2
-        ncbi_gene_id: null
+      - name_in_source: Otx2
+        symbol: Otx2
+        ncbi_gene_id: "NCBIGene:18424"
         sources:
           - ref: "PMID:27929058"
             marker_type: TRANSCRIPT
             method: "in situ hybridization (Otx2)"
             scope: "mouse — expression stated for precursor cells of dLGN-INs; adult expression not stated in quote"
             quote_key: "264044014_f908cf73"
-      - symbol: Grm5
-        ncbi_gene_id: null
+      - name_in_source: Grm5
+        symbol: Grm5
+        ncbi_gene_id: "NCBIGene:108071"
         sources:
           - ref: "PMID:23392677"
             marker_type: NOT_STATED
@@ -117,8 +124,9 @@ nodes:
             method: "pharmacology (DHPG agonist; MPEP antagonist) - no expression assay"
             scope: "rodent dLGN slices — mGluR5-dependent increase in interneuron-derived sIPSCs"
             quote_key: "11022573_0af766e8"
-      - symbol: Hcn3
-        ncbi_gene_id: null
+      - name_in_source: Hcn3
+        symbol: Hcn3
+        ncbi_gene_id: "NCBIGene:15168"
         sources:
           - ref: "PMID:27121468"
             marker_type: TRANSCRIPT

@@ -18,7 +18,10 @@ nodes:
 - id: bla_npy_neurogliaform_cell
   name: Basolateral amygdala NPY neurogliaform cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
   nt_type:
     name_in_source: GABAergic
     sources:
@@ -41,8 +44,9 @@ nodes:
     name_in_source: basolateral amygdala
     compartment: SOMA
   defining_markers:
-  - symbol: Npy
-    ncbi_gene_id: null
+  - name_in_source: Npy
+    symbol: Npy
+    ncbi_gene_id: "NCBIGene:109648"
     sources:
     - ref: PMID:33837051
       method: asta_report
@@ -55,8 +59,9 @@ nodes:
       quote_key: 4940771_a33e9b67
       marker_type: PROTEIN
   neuropeptides:
-  - symbol: Npy
-    ncbi_gene_id: null
+  - name_in_source: Npy
+    symbol: Npy
+    ncbi_gene_id: "NCBIGene:109648"
     sources:
     - ref: PMID:33837051
       method: asta_report
@@ -74,8 +79,9 @@ nodes:
       quote_key: 232283078_00bb8003
       marker_type: PROTEIN
   negative_markers:
-  - symbol: Pvalb
-    ncbi_gene_id: null
+  - name_in_source: Pvalb
+    symbol: Pvalb
+    ncbi_gene_id: "NCBIGene:19293"
     sources:
     - ref: PMID:33837051
       method: asta_snippet — Vereczki 2021 census establishes PVALB+ cells as a distinct population from
@@ -83,8 +89,9 @@ nodes:
       scope: mouse lateral and basal amygdala, stereological quantification
       quote_key: 232283078_d4238834
       marker_type: PROTEIN
-  - symbol: Sst
-    ncbi_gene_id: null
+  - name_in_source: Sst
+    symbol: Sst
+    ncbi_gene_id: "NCBIGene:20604"
     sources:
     - ref: PMID:33837051
       method: asta_snippet — Vereczki 2021 census establishes SST+ cells as a distinct population from

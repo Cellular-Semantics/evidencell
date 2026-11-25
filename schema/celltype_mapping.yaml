@@ -8,9 +8,19 @@
 # Non-terminal nodes = classical types, prior transcriptomic types, or intermediate types.
 # Edges = evidenced mapping assertions between nodes; can be chained transitively.
 #
+# Version: 0.9.0 (2026-11-24) — BREAKING: GeneDescriptor splits wording from identity (#244).
+#                               name_in_source (required) = the marker as the source writes it;
+#                               symbol (now optional) = official symbol of the ncbi_gene_id gene,
+#                               set together with ncbi_gene_id or not at all. Atlas metadata
+#                               markers carry name_in_source only (identity resolved in the
+#                               taxonomy DB). ADDITIVE: MarkerSource.antibody (Antibody class).
 # Version: 0.8.1 (2026-11-15) — ADDITIVE: MarkerType gains TRANSGENE_REPORTER and NOT_STATED (#196);
 #                               marker_type stays required, but a source that names no assay is
 #                               recorded as NOT_STATED rather than a guessed PROTEIN/TRANSCRIPT.
+# Version: 0.8.2 (2026-11-22) — ADDITIVE: CellTypeNode.subtype_of + SubtypeAssertion (#183);
+#                               lit-to-lit subtype relations on the child node, with kind
+#                               (DEFINITIONAL/EMPIRICAL), confidence and SubtypeSource
+#                               sources.
 # Version: 0.3  (2026-02-25) — added CLMapping (EXACT/BROAD), Allen anatomy terms,
 #                               ProposedCLTerm.parent_cl_term,
 #                               AnnotationTransferEvidence.source_cell_set_accession (cross-Allen-taxonomy)
@@ -146,11 +156,12 @@ default_range: string
 #   OntologyTerm:   id, label, name_in_source — all three fields required
 #                   (used for species, anatomy, CL terms, etc.)
 #
-#   GeneDescriptor: symbol = name_in_source AND label (gene symbols ARE their
-#                   own canonical labels in scientific usage; case reflects species
-#                   convention, e.g. Sst vs SST);
-#                   ncbi_gene_id = id (cross-species stable identifier;
-#                   strongly recommended — use NodeNormalization to look up)
+#   GeneDescriptor: name_in_source = the marker as the source writes it (PV, NeuN,
+#                   PSA-NCAM, or an atlas metadata spelling); never checked.
+#                   ncbi_gene_id = id; symbol = label (the gene's official symbol).
+#                   symbol and ncbi_gene_id are set together or not at all; the
+#                   pre-edit hook checks both. Atlas metadata markers carry
+#                   name_in_source only — identity is resolved in the taxonomy DB.
 #
 #   Regions:        anatomical_location = OntologyTerm (id + label + name_in_source);
 #                   name_in_source = region name as in the source paper or atlas;
@@ -483,6 +494,38 @@ enums:
           Provenance not recorded. Use sparingly; prefer one of the
           other values when known.
 
+  # ── Subtype assertions ─────────────────────────────────────────
+  SubtypeKind:
+    description: How the owning type comes to be a subset of the parent.
+    permissible_values:
+      DEFINITIONAL:
+        description: >
+          The type is defined as the parent narrowed by an extra criterion (a
+          nucleus, a marker, a projection target, one end of a gradient), so
+          containment holds by definition: a cell of the type that is not a
+          cell of the parent would contradict the type's definition. Exports
+          as rdfs:subClassOf.
+      EMPIRICAL:
+        description: >
+          The type is defined independently of the parent (e.g. by a
+          transgenic line or a clustering) and the sources report that its
+          cells fall within the parent. Containment is a finding that further
+          data could overturn.
+
+  SubtypeConfidence:
+    description: >
+      Judgement on the sources of a SubtypeAssertion. The mapping rubric (AT
+      F1, location bands) does not apply.
+    permissible_values:
+      HIGH:
+        description: Stated explicitly by two or more independent sources.
+      MODERATE:
+        description: Stated explicitly by one source.
+      LOW:
+        description: >
+          Inferred, e.g. from a structural subdivision, or from the parent's
+          defining criterion holding for the type without being stated.
+
   # ── Mapping confidence ──────────────────────────────────────────
   MappingConfidence:
     permissible_values:
@@ -557,7 +600,9 @@ enums:
       WEAK:
         description: >
           Non-zero but weak evidence — e.g. marker match with anatomical
-          mismatch, or a speculative assignment retained as placeholder.
+          mismatch, a speculative assignment retained as placeholder, or
+          indirect projection evidence (correlation, not tracing) for an
+          AXON_TARGET location (see CellCompartment.AXON_TARGET).
       NO_EVIDENCE:
         description: Assessed but no relevant evidence found
 
@@ -656,7 +701,30 @@ enums:
       SOMA:
         description: Cell body location
       AXON_TARGET:
-        description: Axonal projection target region
+        description: >
+          Axonal projection target region: a region where axons of this
+          type terminate.
+
+          Direct evidence: anterograde or retrograde tracing of the type's
+          cells, single-cell axon reconstruction, or projection-seq /
+          retro-seq. Sources carrying it set support: SUPPORT (or omit
+          support).
+
+          Indirect evidence is allowed, marked as weak. Examples:
+          gene-expression correlation with a projection atlas (e.g.
+          ThalamoSeq); co-clustering with retrogradely labelled cells in
+          an integrated dataset; a target reported for a broader
+          population that contains the type. Each such source sets
+          support: WEAK and a method naming the inference, e.g. "inferred
+          from correlation with ThalamoSeq projection patterns, not
+          traced".
+
+          Where the source reports a target jointly for several types
+          (e.g. "PVT1/PVT3"), say so in the source's scope.
+
+          Not AXON_TARGET: afferent inputs to the type; targets reached
+          only through a further synapse (disynaptic targets); regions
+          the type's axons only pass through.
       DENDRITE:
         description: Dendritic arbor region
 
@@ -1027,22 +1095,32 @@ classes:
 
   GeneDescriptor:
     description: >
-      A gene identified by the universal naming triple (name_in_source | id | label).
-      For genes, symbol fills both the name_in_source and label roles: gene symbols
-      ARE their own canonical labels in scientific usage, and recording the symbol
-      as written in the source preserves species case convention (Sst vs SST) and
-      the exact source wording. ncbi_gene_id is the stable cross-species identifier
-      (the id role). Evidence sources for the marker assertion are recorded in
-      the sources list.
+      A marker, identified by the universal naming triple (name_in_source | id | label):
+      name_in_source is the marker as the source writes it; ncbi_gene_id (id) and
+      symbol (label) record the gene it means. symbol and ncbi_gene_id are set
+      together or not at all. A marker with no single gene — an antibody against a
+      modified form (PSA-NCAM, phospho-CREB) or a gene family (CaMKII) — carries
+      name_in_source only, with the antibody on its sources. A marker whose gene the
+      source leaves unsettled (an abbreviation several genes claim) also carries
+      name_in_source only, with the reason in the node's notes. When settling the
+      gene took judgement (an ambiguous name, the source's own definition, an
+      antibody's target), say how in the source's notes. Exogenous labels (BrdU,
+      tracers) and region names are not markers: say what a label shows in the
+      node's notes, and put a region in anatomical_location. Atlas metadata markers
+      carry name_in_source only; their gene is resolved in the taxonomy DB.
+      Evidence sources for the marker assertion are recorded in the sources list.
     attributes:
-      symbol:
+      name_in_source:
         required: true
         description: >
-          Gene symbol exactly as it appears in the source: e.g. Sst, Pvalb,
-          Slc17a6 (mouse convention) or SST, PVALB, SLC17A6 (human convention).
-          Serves as both name_in_source and label — gene symbols are their own
-          canonical identifiers in scientific usage. ncbi_gene_id gives the
-          stable cross-species identifier.
+          The marker exactly as the source writes it: a paper's wording (PV, CB,
+          NeuN, mGluR1, PSA-NCAM) or an atlas metadata column's spelling
+          (including outdated symbols such as Prrxl1). Free text; not checked.
+      symbol:
+        description: >
+          Official symbol of the ncbi_gene_id gene in its species (Pvalb, Calb1,
+          Rbfox3; PVALB in human). Set together with ncbi_gene_id, never alone.
+          The pre-edit hook checks it equals the gene's current symbol.
       modifier:
         description: "Expression context: HIGH, LOW, ABSENT, ENRICHED"
       ncbi_gene_id:
@@ -1050,8 +1128,6 @@ classes:
         description: >
           NCBI Gene ID as CURIE, e.g. NCBIGene:20604 (Mus musculus Sst).
           Species-specific; preferred for multi-species use.
-          Use Translator NodeNormalization for cross-species mapping:
-          https://github.com/NCATSTranslator/NodeNormalization
       hgnc_id:
         pattern: "^HGNC:[0-9]+$"
         description: >
@@ -1082,6 +1158,25 @@ classes:
           atlas node markers (atlas_markers, merfish_markers) — provenance is
           implicit from the parent node's atlas + cell_set_accession.
 
+  Antibody:
+    description: >
+      The antibody a protein marker was detected with, as the source names it,
+      optionally with its Research Resource Identifier. Recorded on MarkerSource:
+      how the marker was detected, not what it is. Other detail (target epitope,
+      host, dilution) goes in the MarkerSource notes.
+    attributes:
+      name_in_source:
+        required: true
+        description: >
+          The antibody as the source names it: a clone or product name
+          (TuJ1, "anti-NeuN clone A60", "anti-PSA-NCAM 12E3"). Free text.
+      rrid:
+        pattern: "^RRID:AB_[0-9]+$"
+        description: >
+          Antibody Registry RRID, e.g. RRID:AB_2298772. Only when the source
+          states it or its catalogue entry identifies it unambiguously. The
+          pre-edit hook checks it resolves (SciCrunch resolver).
+
   CellTypeColocation:
     description: >
       A cell type that co-localises with or is spatially associated with the type
@@ -1100,6 +1195,62 @@ classes:
       notes:
         description: Free-text context or citation supporting this colocation claim
 
+  SubtypeAssertion:
+    description: >
+      States that every cell of the owning type is a cell of `parent`,
+      either by definition or as reported (see kind). Makes no claim that
+      sibling subtypes are disjoint or that together they cover the parent;
+      say so in notes where it matters. Overlap that is not containment is
+      not a subtype; it stays a MappingEdge (e.g.
+      evidencell:CrossCuttingMatch).
+    attributes:
+      parent:
+        required: true
+        range: CellTypeNode
+        description: >
+          id of the parent literature type: a canonical node (not a stub, not
+          an atlas node) defined in any kb/graphs file. It may be proposed in
+          the same ingest run.
+      kind:
+        required: true
+        range: SubtypeKind
+      confidence:
+        required: true
+        range: SubtypeConfidence
+      sources:
+        range: SubtypeSource
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Sources stating or implying the subset relation: quote-keyed
+          literature, or other evidence such as a published taxonomy's
+          hierarchy (see SubtypeSource.evidence_type).
+      notes:
+        description: >
+          Caveats on this assertion: gradient pole, single study, subset claim
+          inferred from a structural subdivision, partial overlap with a
+          sibling, and similar.
+
+  SubtypeSource:
+    is_a: PropertySource
+    description: >
+      Evidence source for a SubtypeAssertion. Extends PropertySource with an
+      optional evidence_type, so that evidence other than a quoted paper can
+      support the relation. Every source still needs a citable ref (PMID or
+      DOI).
+
+      Example, a published taxonomy's hierarchy:
+        - evidence_type: ATLAS_METADATA
+          ref: "https://doi.org/10.1038/..."
+          notes: "Cluster X (child) sits under supercluster Y (parent) at rank 1"
+    attributes:
+      evidence_type:
+        range: EvidenceType
+        description: >
+          Kind of evidence. Absent means LITERATURE, cited by quote_key. For a
+          published taxonomy's hierarchy use ATLAS_METADATA, with the
+          taxonomy's DOI as ref and the parent and child accessions in notes.
+
   # ── Property provenance ─────────────────────────────────────────
   #
   # ANATOMICAL LOCATION ONTOLOGY PREFERENCE:
@@ -1111,8 +1262,7 @@ classes:
   #                    when species-neutral identity is the priority
   #   Future:          HOMBA (Allen multi-species neuro-anatomy ontology) — not yet released;
   #                    migrate to HOMBA terms when available
-  # Look up terms via OLS4 (OLS4 MCP tool available). Allen terms carry UBERON
-  # cross-references. Both MBA and DHBA terms are findable in OLS under their prefixes.
+  # Allen terms carry UBERON cross-references.
   # name_in_source carries the region name as it appears in the source paper or atlas.
 
   HasMarkerType:
@@ -1182,17 +1332,17 @@ classes:
       snippet:
         description: >
           Verbatim quote from the cited source supporting this assertion.
-          Strongly recommended — primary material for reviewers at the
-          evidence gate. Must be exact text from the source, no paraphrase.
-          If quote_key is set, snippet may be omitted (dereferenceable from
-          references.json). If both are present, snippet is the verified text.
+          Must be exact text from the source, no paraphrase. Prefer quote_key,
+          which points to the quote in the region's reference store; when
+          quote_key is set, omit snippet. If both are present, snippet is the
+          verified text.
       quote_key:
         description: >
           Content-hashed key into the region's references.json quote store.
           Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars
           of SHA-256 of the normalised quote text. Allows quote lookup without
-          embedding full text in the KB YAML. Set by asta-report-ingest and
-          cite-traverse workflows. Reports dereference to include snippet text.
+          embedding full text in the KB YAML. Reports dereference it to include
+          the quote text.
       notes:
         description: >
           Curator-derived analysis notes for this source: computed statistics,
@@ -1204,8 +1354,7 @@ classes:
         range: EvidenceSupport
         description: >
           Whether this source supports, refutes, or is ambiguous for the
-          property assertion. Set by cite-traverse and evidence-extraction
-          workflows. Omit when support level is implicit (e.g. all sources
+          property assertion. Omit when support level is implicit (e.g. all sources
           on a property are assumed SUPPORT unless stated otherwise).
       source:
         description: >
@@ -1225,9 +1374,8 @@ classes:
       atlas labels, informal community terms. Sources cite the papers where this name
       is used or defined, enabling synonym-expanded queries in lit mining.
 
-      Population guidance: extract synonyms as the first processing step for each paper.
-      Set snippet to the passage where the name is introduced or defined. Multiple
-      sources if the term appears across several papers.
+      Each source cites the passage where the name is introduced or used for
+      this type. Multiple sources if the term appears across several papers.
     attributes:
       term:
         required: true
@@ -1246,8 +1394,8 @@ classes:
         range: PropertySource
         description: >
           Papers where this synonym is used for this cell type. Each PropertySource:
-          ref = citing paper; snippet = passage where name is defined or first used
-          (quote_key also accepted); method = how the name is used in context
+          ref = citing paper; quote_key = passage where name is defined or first
+          used; method = how the name is used in context
           (e.g. "primary label throughout", "defined in introduction as abbreviation").
           Multiple sources if the term appears across multiple papers.
 
@@ -1260,6 +1408,7 @@ classes:
       a controlled marker_type field (see MarkerType). Use in
       GeneDescriptor.sources. marker_type is required; use NOT_STATED when
       neither the quote nor the cited paper's methods name an assay.
+      For PROTEIN evidence, record the antibody when the source names it.
 
       Examples:
         - marker_type: PROTEIN
@@ -1267,6 +1416,11 @@ classes:
           scope: "adult human GPi"
           snippet: "SST+/SLC17A6+/SLC32A1+ neurons are located on the borders of the GPi"
           ref: "https://doi.org/10.1016/j.neuron.2017.03.017"
+
+        - marker_type: PROTEIN
+          method: "IHC"
+          antibody: {name_in_source: "TuJ1", rrid: "RRID:AB_xxxxxxx"}
+          ref: "PMID:xxxxxxxx"
 
         - marker_type: TRANSCRIPT
           method: "snRNA-seq"
@@ -1285,12 +1439,19 @@ classes:
           scope: "mouse TRN"
           quote_key: "<corpus_id>_<hash>"
           ref: "PMID:xxxxxxxx"
+    attributes:
+      antibody:
+        range: Antibody
+        inlined: true
+        description: >
+          The antibody used to detect the marker (PROTEIN evidence), when the
+          source names it. For a marker with no single gene (PSA-NCAM,
+          phospho-CREB, CaMKII) this is the marker's identity.
 
   ElectrophysiologyProfile:
     description: >
       Electrophysiological characterisation of a cell type: e-type classification
-      and firing properties, with evidence provenance. Replaces the former
-      electrophysiology_class string + ephys_sources list pair.
+      and firing properties, with evidence provenance.
     attributes:
       description:
         required: true
@@ -1311,8 +1472,7 @@ classes:
   MorphologyProfile:
     description: >
       Morphological characterisation of a cell type: key structural features
-      with evidence provenance. Replaces the former morphology_notes string +
-      morphology_sources list pair.
+      with evidence provenance.
     attributes:
       description:
         required: true
@@ -1335,8 +1495,7 @@ classes:
       naming triple: name_in_source (verbatim source label) + cl_terms (CL
       ontology identifiers) + sources (evidence provenance).
 
-      Used for both classical and atlas nodes — replaces the previous split
-      between nt_type (free string) and atlas_nt_type (verbatim string).
+      Used for both classical and atlas nodes.
 
       For dual/co-transmitter types, list both CL terms in cl_terms. The
       name_in_source captures the compound label as written in the source
@@ -1503,6 +1662,18 @@ classes:
 # GRAPH NODES
 # ══════════════════════════════════════════════════════════════════
 
+  # ── Ingest order ─────────────────────────────────────────────────
+  #
+  # CellTypeNode slots an ingest workflow writes carry an ingest_phase
+  # annotation, filled in this order:
+  #   identity       — what is this type (name, synonyms, basis, species)
+  #   classification — its Cell Ontology term
+  #   properties     — what the sources say about it
+  # Workflows map phases to steps; step numbers never appear here.
+  # Agents read these descriptions (`just schema-subset`): state current
+  # meaning and constraints only. No change history, and no tool names:
+  # which lookup tool to use is the workflow's business.
+
   CellTypeNode:
     description: >
       A named cell type at any level of description: classical, prior transcriptomic,
@@ -1521,7 +1692,12 @@ classes:
           references it.
       name:
         required: true
-        description: Human-readable name, e.g. "Lugaro cell", "1145 CB PLI Gly-Gaba_2"
+        description: >
+          Human-readable name, e.g. "Lugaro cell", "1145 CB PLI Gly-Gaba_2".
+          For a literature type, the name the sources most often use, as
+          written; other names go in synonyms.
+        annotations:
+          ingest_phase: identity
       reference_stub:
         range: ReferenceStubKind
         description: >
@@ -1535,10 +1711,9 @@ classes:
         multivalued: true
         inlined_as_list: true
         description: >
-          Alternative names and abbreviations for this cell type, with evidence provenance.
-          Populated during literature mining — synonym extraction is the first processing
-          step for each paper (both survey and targeted paths). Used to expand queries
-          in subsequent searches.
+          Alternative names and abbreviations for this cell type. Each synonym
+          cites a passage where the name is used for this type. Used to expand
+          literature queries.
 
           Include all forms that appear in the literature or atlases: abbreviations
           (OLM), long forms if non-obvious, historical names, atlas labels used as
@@ -1546,16 +1721,40 @@ classes:
 
           For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms
           only if that label is used as a cell type name in at least one non-atlas paper.
+        annotations:
+          ingest_phase: identity
       definition_basis:
         required: true
         range: DefinitionBasis
+        description: >
+          The kind of evidence that defines this type in the sources.
+        annotations:
+          ingest_phase: identity
+      subtype_of:
+        range: SubtypeAssertion
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Literature types whose cells include all of this
+          type's cells, by definition or as reported (see
+          SubtypeAssertion.kind). Use the narrowest parent the sources
+          support. Recorded on the child; a node's children are computed from
+          the KB index. Not for atlas (ATLAS_TRANSCRIPTOMIC) nodes, whose
+          hierarchy lives in the taxonomy.
+        annotations:
+          ingest_phase: identity
       species:
         range: OntologyTerm
         bindings:
           - binds_value_of: id
             range: NCBITaxonClassTerm
             obligation_level: REQUIRED
-        description: NCBITaxon term
+        description: >
+          NCBITaxon term for the species this type is described in. When the
+          sources span several species, give the species of the defining
+          description here and each source's species in its scope.
+        annotations:
+          ingest_phase: identity
       anatomical_location:
         range: AnatomicalLocation
         multivalued: true
@@ -1568,13 +1767,21 @@ classes:
           Anatomical location(s) of this cell type. Each entry is an
           AnatomicalLocation (OntologyTerm + optional compartment).
           Prefer Allen atlas terms (MBA for mouse; DHBA or HBA for human/primate);
-          use UBERON as fallback. Look up via OLS4. name_in_source carries the
+          use UBERON as fallback. Give the most specific structure the sources
+          support. name_in_source carries the
           region name as written in the source (e.g. "GPi shell region", "GPi").
           Multiple entries for types that span regions or are defined relative
           to multiple structures. Set compartment (SOMA, AXON_TARGET, DENDRITE)
           when a type has different compartments in different regions (e.g. OLM:
           soma in SO, axon in SLM). Leave compartment absent when location is
           not compartment-specific or compartment is unknown.
+          For which evidence an AXON_TARGET entry needs, and when its
+          sources set support: WEAK, see CellCompartment.AXON_TARGET.
+          AXON_TARGET and DENDRITE entries are excluded from soma-location
+          matching against atlas nodes, so recording a weakly supported
+          projection target does not affect candidate scoring.
+        annotations:
+          ingest_phase: properties
       colocated_types:
         range: CellTypeColocation
         multivalued: true
@@ -1583,6 +1790,8 @@ classes:
           Other cell types that co-localise with or are spatially adjacent to
           this type. Records relative positional context separately from the
           anatomical location above (e.g. "adjacent to GPi core neurons").
+        annotations:
+          ingest_phase: properties
       cl_mapping:
         range: CLMapping
         description: >
@@ -1591,6 +1800,8 @@ classes:
           EXACT: this node IS this CL term (modulo species).
           BROAD: this node is a subtype; a ProposedCLTerm would be a new child of the cl_term.
           Terminal nodes (atlas cell sets) may also have a cl_mapping once cognate CL terms exist.
+        annotations:
+          ingest_phase: classification
       proposed_cl_term:
         range: ProposedCLTerm
         description: >
@@ -1614,10 +1825,16 @@ classes:
           Markers used to define this type. For classical/literature nodes: markers
           from the original type description. For atlas nodes: defining markers from
           the atlas (cluster.markers.combo or equivalent).
+        annotations:
+          ingest_phase: properties
       negative_markers:
         range: GeneDescriptor
         multivalued: true
-        description: Markers explicitly shown to be absent (all node types).
+        description: >
+          Markers the sources explicitly show to be absent (all node types).
+          A marker that is simply not mentioned is not absent.
+        annotations:
+          ingest_phase: properties
       neuropeptides:
         range: GeneDescriptor
         multivalued: true
@@ -1630,6 +1847,8 @@ classes:
           functional property — though a gene may appear in both lists (e.g. Sst as
           a defining marker AND as a neuropeptide co-transmitter).
           Examples: Sst, Vip, Cck, Npy, Pnoc.
+        annotations:
+          ingest_phase: properties
       at_source_sets:
         range: AtSourceSet
         multivalued: true
@@ -1651,21 +1870,29 @@ classes:
         inlined: true
         description: >
           Neurotransmitter type of this cell type. Applies to both classical
-          and atlas terminal nodes (unified field, replaces atlas_nt_type).
-          Carries the naming triple: name_in_source (verbatim source label),
-          cl_terms (CL identifiers), sources (evidence provenance).
+          and atlas terminal nodes. Carries the naming triple: name_in_source
+          (verbatim source label), cl_terms (CL identifiers), sources (evidence
+          provenance). Each source's method says whether the transmitter was
+          shown directly or inferred.
+        annotations:
+          ingest_phase: properties
       electrophysiology:
         range: ElectrophysiologyProfile
         inlined: true
         description: >
-          Electrophysiological characterisation with nested evidence sources.
-          Replaces former electrophysiology_class (string) + ephys_sources (list) pair.
+          Intrinsic electrophysiological characterisation (firing pattern, sag,
+          adaptation, bursting), with nested evidence sources. Each source's
+          scope gives the preparation.
+        annotations:
+          ingest_phase: properties
       morphology:
         range: MorphologyProfile
         inlined: true
         description: >
-          Morphological characterisation with nested evidence sources.
-          Replaces former morphology_notes (string) + morphology_sources (list) pair.
+          Morphological characterisation (soma, dendrites, axon), with nested
+          evidence sources.
+        annotations:
+          ingest_phase: properties
 
       # ── For PRIOR_TRANSCRIPTOMIC nodes ───────────────────────────
       prior_dataset_accession:
@@ -1758,6 +1985,8 @@ classes:
           anatomical_location, nt_type, and marker GeneDescriptors.
           Not needed for atlas terminal nodes — use metadata_url on
           AtlasMetadataEvidence instead.
+        annotations:
+          ingest_phase: properties
 
       precomputed_expression:
         range: PrecomputedExpression
@@ -1778,7 +2007,12 @@ classes:
           DOIs cited as rationale for this cell set's designation in the
           source CAS taxonomy. From CAS-format taxonomy metadata.
       notes:
-        description: Any caveats or observations not captured by other fields
+        description: >
+          Caveats that no other field can hold: contradictions between sources,
+          claims that differ by species, suspected heterogeneity. A finding that
+          fits another field belongs in that field, not here.
+        annotations:
+          ingest_phase: properties
 
 
 # ══════════════════════════════════════════════════════════════════

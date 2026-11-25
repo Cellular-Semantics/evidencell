@@ -13,6 +13,9 @@ nodes:
     name: Basolateral amygdala VIP/calretinin interneuron-selective interneuron
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     nt_type:
       name_in_source: GABAergic
       cl_terms:
@@ -43,8 +46,9 @@ nodes:
             scope: amygdala/hippocampus literature synthesis
             quote_key: 232283078_d4238834
     defining_markers:
-      - symbol: Vip
-        ncbi_gene_id:
+      - name_in_source: Vip
+        symbol: Vip
+        ncbi_gene_id: "NCBIGene:22353"
         sources:
           - ref: PMID:22837739
             method: asta_report
@@ -61,8 +65,9 @@ nodes:
             scope: mouse amygdala scRNA-seq
             quote_key: 264517392_039d73c7
             marker_type: TRANSCRIPT
-      - symbol: Calb2
-        ncbi_gene_id:
+      - name_in_source: Calb2
+        symbol: Calb2
+        ncbi_gene_id: "NCBIGene:12308"
         sources:
           - ref: PMID:22837739
             method: asta_report
@@ -79,8 +84,9 @@ nodes:
             scope: human/macaque/baboon amygdala snRNA-seq
             quote_key: 273531817_447a3097
             marker_type: TRANSCRIPT
-      - symbol: Cck
-        ncbi_gene_id:
+      - name_in_source: Cck
+        symbol: Cck
+        ncbi_gene_id: "NCBIGene:12424"
         sources:
           - ref: PMID:22837739
             method: asta_report
@@ -93,8 +99,9 @@ nodes:
             quote_key: 232283078_d4238834
             marker_type: PROTEIN
     neuropeptides:
-      - symbol: Vip
-        ncbi_gene_id:
+      - name_in_source: Vip
+        symbol: Vip
+        ncbi_gene_id: "NCBIGene:22353"
         sources:
           - ref: PMID:22837739
             method: asta_report
@@ -106,8 +113,9 @@ nodes:
             scope: neuropeptide synthesis from ASTA report
             quote_key: 232283078_d4238834
             marker_type: PROTEIN
-      - symbol: Cck
-        ncbi_gene_id:
+      - name_in_source: Cck
+        symbol: Cck
+        ncbi_gene_id: "NCBIGene:12424"
         sources:
           - ref: PMID:22837739
             method: asta_report
@@ -120,16 +128,18 @@ nodes:
             quote_key: 232283078_d4238834
             marker_type: PROTEIN
     negative_markers:
-      - symbol: Pvalb
-        ncbi_gene_id:
+      - name_in_source: Pvalb
+        symbol: Pvalb
+        ncbi_gene_id: "NCBIGene:19293"
         sources:
           - ref: PMID:33837051
             method: asta_snippet — Vereczki 2021 census establishes PVALB+ cells as a distinct population from this VIP/calretinin class
             scope: mouse lateral and basal amygdala, stereological quantification
             quote_key: 232283078_d4238834
             marker_type: PROTEIN
-      - symbol: Sst
-        ncbi_gene_id:
+      - name_in_source: Sst
+        symbol: Sst
+        ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: PMID:33837051
             method: asta_snippet — Vereczki 2021 census establishes SST+ cells as a distinct population from this VIP/calretinin class

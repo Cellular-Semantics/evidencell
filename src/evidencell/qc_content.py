@@ -59,6 +59,7 @@ from evidencell.validate import (
     check_rationale_currency,
     check_ref_pmids,
     check_run_refs,
+    check_subtype_parents,
     parse_md_annotations,
     structural_checks,
 )
@@ -220,6 +221,9 @@ def sweep_kb_file(path: Path, root: Path) -> list[Finding]:
 
     for msg in check_run_refs(doc, at_run_index_path()):
         findings.append(Finding(rel, ERROR, "run_ref", msg))
+
+    for msg in check_subtype_parents(doc, path):
+        findings.append(Finding(rel, ERROR, "subtype_parent", msg))
 
     region = _region_of(path, root)
     if region is not None:
@@ -666,6 +670,9 @@ _SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
     "flat_citation":       (r"'((?:PMID|DOI):[^']+)'",),
     "ref_pmid":            (r"'((?:PMID|DOI):[^']+)'",),
     "run_ref":             (r"run_ref '([^']+)'",),
+    # child -> parent pair: a child may name several parents.
+    "subtype_parent":      (r"Node '([^']+)': subtype_of parent '([^']+)'",
+                            r"Node '([^']+)'", r"(Cannot resolve subtype_of parents)"),
     "source_method":       (r"quote '([^']+)'",),
     "source_document":     (r"quote '([^']+)'", r"paper '([^']+)'"),
     "store_schema":        (r"(?:paper|quote) '([^']+)'",),
@@ -695,7 +702,7 @@ def _subject(f: Finding) -> str:
     for pattern in _SUBJECT_PATTERNS.get(f.check, ()):
         m = re.search(pattern, f.message)
         if m:
-            return m.group(1)
+            return " -> ".join(m.groups())
     if f.check in _SUBJECTLESS_CHECKS:
         return ""
     # No rule for this check: fall back to the full message. Correct, just

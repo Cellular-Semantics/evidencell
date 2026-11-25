@@ -64,7 +64,7 @@ Milestones: `@Allen` (Allen Institute deliverable, date TBC) · `@BICAN` (BICAN 
 
 - [ ] **Verify HDF5 download in `at-download-taxonomy`** — the command runs `cd annotation_transfer && uv run annotation-transfer taxonomy-setup CCN20230722 --download` and writes to `annotation_transfer/conf/mapmycells/{id}/precomputed_stats.h5`. During the sexually_dimorphic mapping pilot, the download wrote to an empty directory because the working-directory shift means the file lands in `annotation_transfer/conf/mapmycells/` rather than the repo-root `conf/mapmycells/`. The existing file at `scratch/olm-at/precomputed_stats_ABC_revision_230821.h5` was found manually. Fix: either run `taxonomy-setup` from repo root, or symlink / update sync-mapmycells-paths to point to the actual file wherever it lives.
 - [ ] **Standardise HDF5 canonical path** — define one authoritative location for `precomputed_stats.h5` per taxonomy (e.g. `conf/mapmycells/{taxonomy_id}/precomputed_stats.h5` from repo root) and document it in `CLAUDE.md` / orchestrator preamble. Agents and workflows that need the HDF5 should look there first, with a fallback scan. Currently the path is implicit and differs between runs.
-- [ ] **Pre-run HDF5 check in `map-cell-type.md`** — add a Step 0 preflight: confirm `precomputed_stats.h5` and `conf/gene_mapping_{taxonomy_id}.tsv` exist; if not, print the download command and abort cleanly rather than silently skipping expression cross-check.
+- [ ] **Pre-run HDF5 check in `map-cell-type.md`** — add a Step 0 preflight: confirm `precomputed_stats.h5` and `kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz` exist; if not, print the download command and abort cleanly rather than silently skipping expression cross-check.
 
 ---
 

@@ -18,7 +18,10 @@ nodes:
 - id: bla_glutamatergic_principal_neuron
   name: Basolateral amygdala glutamatergic principal neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:1437010
+    label: Boreoeutheria
+    name_in_source: "Mice; Macaca mulatta; Rats; Cats (MeSH organisms of cited primary papers; inferred, #216)"
   nt_type:
     name_in_source: Glutamatergic
     sources:
@@ -61,8 +64,9 @@ nodes:
     name_in_source: basolateral amygdala
     compartment: SOMA
   defining_markers:
-  - symbol: Slc17a7
-    ncbi_gene_id: null
+  - name_in_source: Slc17a7
+    symbol: Slc17a7
+    ncbi_gene_id: "NCBIGene:72961"
     sources:
     - ref: PMID:34177472
       method: asta_report
@@ -79,8 +83,9 @@ nodes:
       scope: mouse pallial amygdala snRNA-seq
       quote_key: 280713728_0fe69282
       marker_type: TRANSCRIPT
-  - symbol: Camk2a
-    ncbi_gene_id: null
+  - name_in_source: Camk2a
+    symbol: Camk2a
+    ncbi_gene_id: "NCBIGene:12322"
     sources:
     - ref: PMID:34177472
       method: asta_report

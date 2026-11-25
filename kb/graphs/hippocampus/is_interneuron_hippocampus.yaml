@@ -14,6 +14,9 @@ nodes:
     name: Interneuron-specific (IS) interneuron
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0014552
         label: CA1 stratum oriens
@@ -73,8 +76,9 @@ nodes:
           label: GABAergic neuron
           name_in_source: GABAergic
     defining_markers:
-      - symbol: Calb2
-        ncbi_gene_id:
+      - name_in_source: Calb2
+        symbol: Calb2
+        ncbi_gene_id: "NCBIGene:12308"
         sources:
           - ref: PMID:37467748
             marker_type: NOT_STATED
@@ -103,8 +107,9 @@ nodes:
             source: cite_traverse_2026_04_10
             quote_key: "23480858_7922942f"
             marker_type: PROTEIN
-      - symbol: Vip
-        ncbi_gene_id:
+      - name_in_source: Vip
+        symbol: Vip
+        ncbi_gene_id: "NCBIGene:22353"
         sources:
           - ref: PMID:37467748
             marker_type: NOT_STATED
@@ -118,8 +123,9 @@ nodes:
             quote_key: 262127573_d140faf4
     negative_markers: []
     neuropeptides:
-      - symbol: Vip
-        ncbi_gene_id:
+      - name_in_source: Vip
+        symbol: Vip
+        ncbi_gene_id: "NCBIGene:22353"
         sources:
           - ref: PMID:37467748
             marker_type: NOT_STATED

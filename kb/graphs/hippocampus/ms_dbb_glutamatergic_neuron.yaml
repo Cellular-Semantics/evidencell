@@ -12,6 +12,9 @@ nodes:
     name: medial septal / diagonal band of Broca glutamatergic neuron
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0002421
         label: hippocampal formation
@@ -41,16 +44,18 @@ nodes:
           scope: rodent MS-DBB
           quote_key: 21358766_0c242fdc
     defining_markers:
-      - symbol: Slc17a7
-        ncbi_gene_id:
+      - name_in_source: Slc17a7
+        symbol: Slc17a7
+        ncbi_gene_id: "NCBIGene:72961"
         sources:
           - ref: PMID:29250747
             method: review
             scope: rodent MS-DBB
             quote_key: 21358766_0c242fdc
             marker_type: NOT_STATED
-      - symbol: Slc17a6
-        ncbi_gene_id:
+      - name_in_source: Slc17a6
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
         sources:
           - ref: PMID:29250747
             method: review
@@ -63,16 +68,18 @@ nodes:
             quote_key: 212418354_02349d4e
             marker_type: NOT_STATED
     negative_markers:
-      - symbol: Chat
-        ncbi_gene_id:
+      - name_in_source: Chat
+        symbol: Chat
+        ncbi_gene_id: "NCBIGene:12647"
         sources:
           - ref: PMID:29250747
             method: review
             scope: rodent MS-DBB
             quote_key: 21358766_0c242fdc
             marker_type: NOT_STATED
-      - symbol: Gad1
-        ncbi_gene_id:
+      - name_in_source: Gad1
+        symbol: Gad1
+        ncbi_gene_id: "NCBIGene:14415"
         sources:
           - ref: PMID:29250747
             method: review
