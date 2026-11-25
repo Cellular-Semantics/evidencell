@@ -46,4 +46,16 @@ nodes:
           core subdivision, so containment holds by definition. The sources
           give no positive molecular marker for core relay cells; core is
           defined as the non-shell part of dLGN.
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "dLGN core relay neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for geniculate, relay, thalamic and thalamocortical terms;
+        no term describes dLGN core relay neurons. CL:4023068 (excitatory neuron
+        with soma in the thalamic complex) contains the type and is the most
+        specific such term. EXACT would need a CL term for dLGN core relay
+        neuron.
 edges: []

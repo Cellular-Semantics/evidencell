@@ -51,4 +51,19 @@ nodes:
           are anatomical subdivisions; the sources do not give a shell-specific
           positive molecular marker for the relay cells themselves (calbindin
           defines the shell zone).
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "dLGN shell relay neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for geniculate, relay, thalamic, thalamocortical and
+        koniocellular terms. CL:4023068 (excitatory neuron with soma in the
+        thalamic complex) contains the type and is the most specific such term.
+        CL:4023187 koniocellular cell (neuron in a koniocellular layer of the
+        LGN; primate-oriented) overlaps the calbindin-positive shell but is
+        defined by layer, and mouse shell is not established as koniocellular
+        layers, so it was not chosen as a containing term. EXACT would need a
+        CL term for dLGN shell relay neuron.
 edges: []

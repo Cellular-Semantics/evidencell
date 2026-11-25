@@ -53,4 +53,16 @@ nodes:
           convergence mode; single primary study. Rompani et al. describe
           "modes of integration" of individual principal cells; whether these
           are stable cell types rather than connectivity states is not settled.
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "dLGN relay-mode principal neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for geniculate, relay, thalamic and thalamocortical terms;
+        no term describes an input-defined dLGN principal-cell class.
+        CL:4023068 (excitatory neuron with soma in the thalamic complex)
+        contains the type and is the most specific such term. EXACT would need
+        a CL term for this connectivity-defined class.
 edges: []

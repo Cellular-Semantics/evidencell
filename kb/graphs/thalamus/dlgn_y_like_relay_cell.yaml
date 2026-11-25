@@ -62,4 +62,18 @@ nodes:
           Y-like cells are one of three morphological classes into which dLGN
           relay cells are divided. Krahe et al. 2011 classified filled relay cells
           only, so containment holds by definition.
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "dLGN Y-like relay cell"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for geniculate, relay, thalamic, thalamocortical and
+        Y-cell terms; no term describes a dLGN morphological relay-cell class.
+        CL:4023068 (excitatory neuron with soma in the thalamic complex) contains
+        the type and is the most specific such term; parent type shares this
+        term. CL:4023187 koniocellular cell was rejected (defined by LGN
+        koniocellular layer, a different criterion). EXACT would need a CL term
+        for dLGN Y-like relay cell.
 edges: []

@@ -42,4 +42,19 @@ nodes:
             quote_key: "3598591_8c3025f0"
             method: "primary label"
             scope: "mouse dLGN, superficial 75 um"
+    cl_mapping:
+      cl_term:
+        id: CL:0000540
+        label: "neuron"
+        name_in_source: "dLGN direction-selective neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for direction-selective, geniculate, relay and thalamic
+        terms; no CL term describes a functionally defined dLGN neuron. The
+        sources record dLGN neurons by tuning (two-photon calcium imaging)
+        without establishing that they are excitatory relay cells (dLGN
+        interneurons are also feature selective), so the thalamic excitatory
+        neuron term (CL:4023068) was not assumed. The nearest general term the
+        node satisfies in full is neuron. If the cells are shown to be relay
+        cells, CL:4023068 would be the more specific BROAD parent.
 edges: []
