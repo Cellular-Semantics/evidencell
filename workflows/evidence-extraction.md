@@ -10,6 +10,18 @@ exists in the reference store before the KB write proceeds.
 
 Called after: `workflows/asta-report-ingest.md` or `workflows/survey.md`
 
+**Field guidance comes from the schema.** Step 0 writes `schema_subset.yaml`
+(`just schema-subset`): `CellTypeNode` and every class and enum it uses, with
+their descriptions and allowed values. The subagent reads field meanings and
+shapes there; this prompt carries workflow policy only. If a field's guidance
+is wrong, fix its description in the schema, not here.
+
+| Need | Use |
+|---|---|
+| Field meanings, shapes, allowed values (`PropertySource`, `MarkerSource`, `AtSourceSet`, …) | `{output_dir}/schema_subset.yaml` |
+| A marker's gene (`ncbi_gene_id` + `symbol`) | `.claude/skills/gene-id-curation/SKILL.md`; how its result is recorded: `docs/marker_gene_ids.md` |
+| Adding quotes to the reference store | `evidencell.references.write_quote_to_refs()` |
+
 **Paper selection gate (Step 1):** Optional — only invoke for noisy corpora (cite-traverse,
 lit-review). Skip for ASTA survey runs: ASTA papers are pre-curated and the extraction
 subagent handles relevance filtering internally.
@@ -49,7 +61,12 @@ PARAMS:
    If present, read it — it provides paper metadata (title, year, authors, PMID, DOI)
    used when writing new entries to the reference store.
 
-4. Locate the reference store for this node's region:
+4. Write the schema subset the subagent reads for field shapes:
+   ```
+   just schema-subset -o {output_dir}/schema_subset.yaml
+   ```
+
+5. Locate the reference store for this node's region:
    ```
    uv run python -c "
    from evidencell.paths import find_node_file, refs_dir_for_graph
@@ -147,48 +164,33 @@ EXCLUDED CORPUS IDS:  {excluded_ids}   (comma-separated, or "none")
 PAPER CATALOGUE:      {paper_catalogue_path}   (path, or "none" if absent)
 ADDED_BY:             evidence_extraction_{node_id}_{date}
 
-## KB fields that accept PropertySource lists
+INPUT FILES:
+- {output_dir}/schema_subset.yaml     the schema for a node file: each field's
+                                      description, shape and allowed values
+                                      (PropertySource, MarkerSource, AtSourceSet, …)
+- .claude/skills/gene-id-curation/SKILL.md
+                                      how to find the gene a marker name means
+- docs/marker_gene_ids.md             how to record its result on the marker
 
-  anatomical_location[].sources → per-location evidence (nested on each AnatomicalLocation entry)
-  electrophysiology.sources     → electrophysiology claims (nested on ElectrophysiologyProfile)
-  morphology.sources            → morphology claims (nested on MorphologyProfile)
-  nt_type.sources               → neurotransmitter type claims
-  synonyms[N].sources           → synonym usage evidence (for a specific synonym entry)
+## Workflow policy (applies on top of the schema)
 
-For marker claims, use MarkerSource (extends PropertySource):
-  GeneDescriptor.sources → add a MarkerSource entry on the specific gene
-  marker_type: PROTEIN   → IHC, immunofluorescence, Western blot
-  marker_type: TRANSCRIPT → scRNA-seq, smFISH, ISH, qPCR
-  A marker you add (or one still without an ID) also gets its gene —
-  settle ambiguous names from this paper's wording, passing the quote as
-  evidence. Follow `docs/marker_gene_ids.md` (it calls the `gene-id-curation` skill).
+Fields that take this paper's evidence, as sources lists:
+  anatomical_location[].sources, electrophysiology.sources, morphology.sources,
+  nt_type.sources, synonyms[N].sources, a marker's sources (MarkerSource), and
+  at_source_sets[].sources.
 
-For annotation-transfer source correspondence, use at_source_sets[].sources:
-  at_source_sets[].sources → per-correspondence evidence (nested on each
-  AtSourceSet entry). This is the home for the *agentic judgement* of which
-  annotated cell set in an external dataset corresponds to this classical type
-  (issue #126) — a judgement that requires reading the dataset's describing
-  paper, not transcriptomic overlap. Author an at_source_sets entry once the
-  dataset's annotation labels are available:
-    dataset_accession: e.g. "ArrayExpress:E-MTAB-12096"
-    source_label:      the annotated cluster label from the paper
-                       (e.g. "GABA-52-Calb2-Rgs12")
-    correspondence:    EXACT | PARTIAL | SUPERSET | SUBSET
-    sources[]:         quote-backed justification (same shape as markers)
-  Do NOT record a run_ref here — the AT run is resolved operationally at map
-  time from (dataset_accession, target_taxonomy, source_label). emit-stage-b
-  attaches one ANNOTATION_TRANSFER evidence item per declared source set.
-
-PropertySource fields:
-  ref:       required — "PMID:xxxxxxxx" or "https://doi.org/..."
-             Resolve from paper_catalogue.json externalIds (PubMed → PMID,
-             DOI field). Fallback: "CorpusId:{source_corpus_id}".
-  method:    how the property was detected (free text)
-             e.g. "IHC (somatostatin antibody)", "patch-clamp (acute slice)",
-             "scRNA-seq (Gad2 expression)", "biocytin fill + confocal"
-  scope:     species, age, preparation
-             e.g. "adult mouse CA1", "P21 rat hippocampus, acute slice"
-  quote_key: content-hashed key into the reference store (set in step 3 below)
+- Markers: a marker you add, or one still without ncbi_gene_id, gets its gene
+  from gene-id-curation (taxon = the node's species, evidence = this quote and
+  its ref). This paper's wording is what settles names that asta-report-ingest
+  left as name_in_source only. Record the result as docs/marker_gene_ids.md
+  says.
+- at_source_sets: author an entry only once the dataset's annotation labels
+  are available, and only from the dataset's describing paper — it is a
+  reading judgement, not transcriptomic overlap. Never record a run_ref: the AT
+  run is resolved at map time.
+- ref: resolve from paper_catalogue.json externalIds (PubMed → "PMID:{id}",
+  DOI → "https://doi.org/{doi}"); fallback "CorpusId:{source_corpus_id}".
+- quote_key comes from the reference store write in step 3d below.
 
 ## Task
 
@@ -255,13 +257,9 @@ PropertySource fields:
         use externalIds.PubMed → "PMID:{id}" or DOI → "https://doi.org/{doi}"
       - Fallback: "CorpusId:{source_corpus_id}"
 
-   f. Build the PropertySource / MarkerSource entry:
-      ```yaml
-      ref: "PMID:xxxxxxxx"
-      method: "patch-clamp (acute slice)"
-      scope: "adult mouse CA1"
-      quote_key: "{QUOTE_KEY}"
-      ```
+   f. Build the PropertySource / MarkerSource entry with the fields and
+      allowed values schema_subset.yaml gives (quote_key = QUOTE_KEY, ref from
+      step e).
 
    g. Edit {kb_file} to append this entry to the correct field list on node
       {node_id}. Edit only the relevant list — do NOT rewrite the entire file.
