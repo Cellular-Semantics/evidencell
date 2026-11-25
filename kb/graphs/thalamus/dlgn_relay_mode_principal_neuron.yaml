@@ -65,4 +65,44 @@ nodes:
         CL:4023068 (excitatory neuron with soma in the thalamic complex)
         contains the type and is the most specific such term. EXACT would need
         a CL term for this connectivity-defined class.
+    anatomical_location:
+      - id: MBA:170
+        label: "Dorsal part of the lateral geniculate complex"
+        name_in_source: "mouse lateral geniculate nucleus (LGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:28231464"
+            quote_key: "10004494_03dd7881"
+            method: "single-cell-initiated transsynaptic rabies tracing from targeted LGN principal cells"
+            scope: "mouse LGN principal cells; relay-mode cells are those with 1-5 mostly same-type RGC inputs from one eye"
+          - ref: "PMID:38386556"
+            quote_key: "267806869_6f6c417b"
+            method: "review statement citing Rompani et al. 2017 (not independent)"
+            scope: "mouse dLGN TC neurons operating in relay mode"
+    nt_type:
+      name_in_source: "principal cells (thalamocortical relay cells; excitatory)"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "excitatory projection neurons"
+      sources:
+        - ref: "PMID:28231464"
+          quote_key: "10004494_03dd7881"
+          method: "inferred — relay-mode cells are LGN principal cells; transmitter not examined for this subtype"
+          scope: "mouse LGN principal cells"
+        - ref: "PMID:28965517"
+          quote_key: "4601077_8f3fc6a4"
+          method: "review statement — dLGN principal (TC relay) cells are excitatory projection neurons; glutamatergic transmitter inferred, not shown directly for relay-mode cells"
+          scope: "rodent dLGN TC relay cells"
+    definition_references:
+      - "PMID:28231464"
+      - "PMID:38386556"
+    notes: >
+      Single primary study (Rompani et al. 2017); the Wang et al. (2024)
+      statement only restates it. Rompani describe input "modes" of
+      individually traced principal cells, so whether relay mode marks a
+      stable cell type or a connectivity state is unsettled. No mapping
+      between convergence modes and X/Y/W-like morphology, core/shell
+      location, markers or transcriptomic identity has been established, so
+      no morphology, marker or sub-nuclear location is recorded here.
 edges: []
