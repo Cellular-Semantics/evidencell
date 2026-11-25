@@ -1,0 +1,47 @@
+run_id: at_run_20261117_kapustina2024_atn_mmc_wmbv1
+taxonomy_id: CCN20230722
+normalisation: best
+source_csv_relpath: f1_matrix_best.csv
+generated_at: '2026-11-17T17:52:48+00:00'
+generator: src/evidencell/at_metrics.py::migrate_csv
+rows:
+- source_label: ATN
+  taxonomy_level: CLASS
+  taxonomy_rank: 3
+  target_name: 18 TH Glut
+  target_accession: CS20230722_CLAS_18
+  n_cells: 850
+  coverage: 0.96045197740113
+  purity: 1.0
+  f1: 0.9798270893371758
+  median_bootstrap: 1.0
+- source_label: ATN
+  taxonomy_level: SUBCLASS
+  taxonomy_rank: 2
+  target_name: 148 AV Col27a1 Glut
+  target_accession: CS20230722_SUBC_148
+  n_cells: 426
+  coverage: 0.5095693779904307
+  purity: 1.0
+  f1: 0.6751188589540412
+  median_bootstrap: 1.0
+- source_label: ATN
+  taxonomy_level: SUPERTYPE
+  taxonomy_rank: 1
+  target_name: 0642 AV Col27a1 Glut_1
+  target_accession: CS20230722_SUPT_0642
+  n_cells: 439
+  coverage: 0.5146541617819461
+  purity: 1.0
+  f1: 0.6795665634674922
+  median_bootstrap: 1.0
+- source_label: ATN
+  taxonomy_level: CLUSTER
+  taxonomy_rank: 0
+  target_name: 2615 AV Col27a1 Glut_1
+  target_accession: CS20230722_CLUS_2615
+  n_cells: 194
+  coverage: 0.2948328267477204
+  purity: 1.0
+  f1: 0.4553990610328638
+  median_bootstrap: 1.0
