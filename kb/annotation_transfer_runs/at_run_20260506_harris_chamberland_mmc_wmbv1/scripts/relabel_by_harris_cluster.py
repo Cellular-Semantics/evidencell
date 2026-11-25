@@ -23,7 +23,7 @@ import anndata as ad
 import numpy as np
 import pandas as pd
 
-ROOT = Path('/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell')
+ROOT = Path(__file__).resolve().parents[4]  # repo root (scripts/ → run → annotation_transfer_runs → kb)
 HD = ROOT / 'annotation_transfer/data/harris2018'
 A = ad.read_h5ad(HD/'harris_CA1_inhibitory.h5ad')
 print(f'cells={A.n_obs} genes={A.n_vars}')

@@ -672,6 +672,70 @@ def check_run_refs(doc: dict, index_path: Path) -> list[str]:
     return errors
 
 
+# ── subtype_of parent resolution (#183) ────────────────────────────────────────
+
+def check_subtype_parents(doc: dict, file_path: Path | None = None) -> list[str]:
+    """Check that every ``subtype_of`` parent is a canonical literature node.
+
+    A parent resolves if it is a non-stub node in this document, or a
+    canonical node in any other kb/graphs file (via the KB index). Stubs and
+    atlas nodes are not parents: a stub's real record lives elsewhere, and
+    atlas hierarchy lives in the taxonomy. ``file_path`` is the file being
+    written; its on-disk copy is ignored, since ``doc`` replaces it.
+
+    Returns a list of error strings; empty = OK.
+    """
+    from evidencell import kb_index, paths
+
+    claims = [
+        (node.get("id"), assertion.get("parent"))
+        for node in doc.get("nodes") or []
+        if isinstance(node, dict)
+        for assertion in node.get("subtype_of") or []
+        if isinstance(assertion, dict) and assertion.get("parent")
+    ]
+    if not claims:
+        return []
+
+    local = {
+        n["id"]: n for n in doc.get("nodes") or []
+        if isinstance(n, dict) and n.get("id")
+    }
+    this_file = file_path.resolve() if file_path else None
+    index = None
+    errors: list[str] = []
+    for child, parent in claims:
+        if parent == child:
+            errors.append(f"Node '{child}': subtype_of names itself as parent.")
+            continue
+        node = local.get(parent)
+        if node is not None and not kb_index.is_stub(node):
+            continue
+        if node is not None and node.get("definition_basis") == paths.ATLAS_BASIS:
+            errors.append(
+                f"Node '{child}': subtype_of parent '{parent}' is an atlas node. "
+                "Atlas hierarchy lives in the taxonomy; relate lit types to atlas "
+                "nodes with a MappingEdge."
+            )
+            continue
+        if index is None:
+            try:
+                index = kb_index.get_index()
+            except kb_index.KbIndexError as exc:
+                return [f"Cannot resolve subtype_of parents: {exc}"]
+        canonical = [
+            r for r in index.nodes.get(parent, [])
+            if not r.is_stub and r.source_file.resolve() != this_file
+        ]
+        if not canonical:
+            errors.append(
+                f"Node '{child}': subtype_of parent '{parent}' is not a canonical "
+                "node in this file or any kb/graphs file. Write the parent's node "
+                "file first, or check the id."
+            )
+    return errors
+
+
 # ── Edit simulation ────────────────────────────────────────────────────────────
 
 def check_rationale_currency(doc: dict) -> list[str]:

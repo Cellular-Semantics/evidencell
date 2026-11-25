@@ -18,7 +18,10 @@ nodes:
 - id: cea_som_neuron
   name: Central amygdala somatostatin-positive neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
   nt_type:
     name_in_source: GABAergic
     sources:
@@ -58,8 +61,9 @@ nodes:
     name_in_source: central amygdala
     compartment: SOMA
   negative_markers:
-  - symbol: Prkcd
-    ncbi_gene_id: null
+  - name_in_source: Prkcd
+    symbol: Prkcd
+    ncbi_gene_id: "NCBIGene:18753"
     sources:
     - ref: PMID:33188006
       method: asta_report
@@ -67,8 +71,9 @@ nodes:
       quote_key: 209598438_0bccee6a
       marker_type: PROTEIN
   neuropeptides:
-  - symbol: Sst
-    ncbi_gene_id: null
+  - name_in_source: Sst
+    symbol: Sst
+    ncbi_gene_id: "NCBIGene:20604"
     sources:
     - ref: PMID:23354330
       method: asta_report

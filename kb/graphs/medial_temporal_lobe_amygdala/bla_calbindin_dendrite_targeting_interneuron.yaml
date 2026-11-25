@@ -37,10 +37,14 @@ nodes:
     - id: CL:0000617
       label: GABAergic neuron
       name_in_source: GABAergic
-  species: null
+  species:
+    id: NCBITaxon:39107
+    label: Murinae
+    name_in_source: "Mice; Rats (MeSH organisms of cited primary papers; inferred, #216)"
   negative_markers:
-  - symbol: Pvalb
-    ncbi_gene_id: null
+  - name_in_source: Pvalb
+    symbol: Pvalb
+    ncbi_gene_id: "NCBIGene:19293"
     sources:
     - ref: PMID:28453642
       method: asta_report
@@ -48,8 +52,9 @@ nodes:
       quote_key: 17860491_f1ffddb9
       marker_type: PROTEIN
   defining_markers:
-  - symbol: Calb1
-    ncbi_gene_id: null
+  - name_in_source: Calb1
+    symbol: Calb1
+    ncbi_gene_id: "NCBIGene:12307"
     sources:
     - ref: PMID:22726836
       method: asta_report

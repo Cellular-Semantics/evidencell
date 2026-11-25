@@ -22,7 +22,10 @@ nodes:
   - id: apvt_gck_neuron
     name: "Glucokinase-expressing anterior PVT (Gck+ aPVT) glutamatergic neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — single source is mouse
+    species:  # To be confirmed from primary literature — single source is mouse
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
@@ -45,8 +48,9 @@ nodes:
           scope: "rodent PVT (whole nucleus)"
           quote_key: "235466185_0d1595b7"
     defining_markers:
-      - symbol: Gck
-        ncbi_gene_id:
+      - name_in_source: Gck
+        symbol: Gck
+        ncbi_gene_id: "NCBIGene:103988"
         sources:
           - ref: "PMID:35303367"
             method: "GckCre/+ knock-in + TRAP RNA-seq"

@@ -22,7 +22,10 @@ nodes:
   - id: dlgn_relay_neuron
     name: "Dorsal lateral geniculate nucleus (dLGN) principal thalamocortical relay neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — mouse, macaque and human pooled
+    species:  # To be confirmed from primary literature — mouse, macaque and human pooled
+      id: NCBITaxon:314146
+      label: Euarchontoglires
+      name_in_source: "Macaca mulatta; Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0002479
         label: "dorsal lateral geniculate nucleus"
@@ -53,27 +56,30 @@ nodes:
           scope: "adult mouse — central thalamus exclusively excitatory apart from LGd local interneurons"
           quote_key: "258464391_a576f421"
     defining_markers:
-      - symbol: Pvalb
+      - name_in_source: Pvalb
+        symbol: Pvalb
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:19293"
         sources:
           - ref: "PMID:34473054"
             method: "scRNA-seq"
             scope: "adult mouse dLGN — enriched in core neurons (align with primate M/P)"
             quote_key: "237389962_1dd0f6d1"
             marker_type: TRANSCRIPT
-      - symbol: Calb1
+      - name_in_source: Calb1
+        symbol: Calb1
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:12307"
         sources:
           - ref: "PMID:34473054"
             method: "scRNA-seq"
             scope: "adult mouse dLGN — enriched in shell neurons (align with primate K)"
             quote_key: "237389962_1dd0f6d1"
             marker_type: TRANSCRIPT
-      - symbol: Necab1
+      - name_in_source: Necab1
+        symbol: Necab1
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:69352"
         sources:
           - ref: "PMID:34473054"
             method: "scRNA-seq"

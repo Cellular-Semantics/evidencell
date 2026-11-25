@@ -22,7 +22,10 @@ nodes:
   - id: anteroventral_thalamic_nucleus_excitatory_neuron
     name: "Anteroventral thalamic nucleus (AV) excitatory projection neuron"
     definition_basis: CLASSICAL_ANATOMICAL
-    species:       # To be confirmed from primary literature — cited evidence is mouse and rat
+    species:  # To be confirmed from primary literature — cited evidence is mouse and rat
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0002685
         label: "anteroventral nucleus of thalamus"
@@ -57,16 +60,18 @@ nodes:
           scope: "developing mouse — glutamatergic thalamic nuclei incl. AD/AV/AM differentiate first"
           quote_key: "254404676_7a6fba23"
     defining_markers:
-      - symbol: C1ql2
-        ncbi_gene_id:
+      - name_in_source: C1ql2
+        symbol: C1ql2
+        ncbi_gene_id: "NCBIGene:226359"
         sources:
           - ref: "PMID:40593635"
             marker_type: NOT_STATED
             method: "marker statement (assay not stated)"
             scope: "adult mouse AV"
             quote_key: "279797062_7b604467"
-      - symbol: Bdnf
-        ncbi_gene_id:
+      - name_in_source: Bdnf
+        symbol: Bdnf
+        ncbi_gene_id: "NCBIGene:12064"
         sources:
           - ref: "PMID:40593635"
             marker_type: NOT_STATED

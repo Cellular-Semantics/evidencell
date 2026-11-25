@@ -1,0 +1,188 @@
+gic-01:
+  outcome: GENE
+  kind: null
+  accept:
+  - ncbi_gene_id: NCBIGene:13488
+    symbol: Drd1
+  taxon_basis: 'quote: "mouse ventral hippocampus"'
+  resolver_baseline:
+    lookup:
+      taxonomy_id: CCN20230722
+    method: UNIQUE_SYNONYM
+    gene: Dio1
+    claimants: []
+  tests: quote says "dopamine D1 ... receptors"
+gic-02:
+  outcome: GENE
+  kind: null
+  accept:
+  - ncbi_gene_id: NCBIGene:13488
+    symbol: Drd1
+  taxon_basis: 'paper: same study as gic-01 (mouse)'
+  resolver_baseline:
+    lookup:
+      taxonomy_id: CCN20230722
+    method: UNIQUE_SYNONYM
+    gene: Dio1
+    claimants: []
+  tests: 'bare "D1 and D2 cells": needs latent knowledge or wider context'
+gic-03:
+  outcome: GENE
+  kind: null
+  accept:
+  - ncbi_gene_id: NCBIGene:13489
+    symbol: Drd2
+  taxon_basis: 'quote: Drd2-Cre mouse lines'
+  resolver_baseline:
+    lookup:
+      taxonomy_id: CCN20230722
+    method: UNIQUE_SYNONYM
+    gene: Slc3a1
+    claimants: []
+  tests: quote spells out "dopamine receptor D2 (Drd2-Cre)"
+gic-04:
+  outcome: NOT_A_GENE_PRODUCT
+  kind: NON_GENE_TERM
+  accept: []
+  taxon_basis: 'abstract + MeSH: Mice'
+  resolver_baseline:
+    lookup:
+      taxonomy_id: CCN20230722
+    method: AMBIGUOUS
+    gene: null
+    claimants:
+    - Pax3
+    - Snap25
+    - Tac1
+    - Tff2
+  tests: SP = stratum pyramidale, not substance P
+gic-05:
+  outcome: NO_SINGLE_GENE
+  kind: GENE_FAMILY
+  accept: []
+  taxon_basis: 'title: "...nucleus reticularis thalami in the cat"'
+  resolver_baseline:
+    lookup:
+      taxon: NCBITaxon:9685
+    method: NO_MATCH
+    gene: null
+    claimants: []
+  tests: enzyme encoded by two genes
+gic-06:
+  outcome: GENE
+  kind: null
+  accept:
+  - ncbi_gene_id: NCBIGene:20604
+    symbol: Sst
+  taxon_basis: 'abstract: mice'
+  resolver_baseline:
+    lookup:
+      taxonomy_id: CCN20230722
+    method: AMBIGUOUS
+    gene: null
+    claimants:
+    - Grhl3
+    - Sst
+  tests: quote gives no definition
+gic-07:
+  outcome: GENE
+  kind: null
+  accept:
+  - ncbi_gene_id: NCBIGene:29237
+    symbol: Penk
+  taxon_basis: 'title: "...rat intergeniculate leaflet..."'
+  resolver_baseline:
+    lookup:
+      taxon: NCBITaxon:10116
+    method: UNIQUE_SYNONYM
+    gene: Penk
+    claimants: []
+  tests: quote defines "enkephalin-positive (ENK)"
+gic-08:
+  outcome: GENE
+  kind: null
+  accept:
+  - ncbi_gene_id: NCBIGene:12918
+    symbol: Crh
+  taxon_basis: 'abstract + MeSH: Mice, Transgenic'
+  resolver_baseline:
+    lookup:
+      taxonomy_id: CCN20230722
+    method: AMBIGUOUS
+    gene: null
+    claimants:
+    - Crh
+    - C1ql1
+  tests: no definition in quote
+gic-09:
+  outcome: GENE
+  kind: null
+  accept:
+  - ncbi_gene_id: NCBIGene:243764
+    symbol: Chrm2
+  - ncbi_gene_id: NCBIGene:81645
+    symbol: Chrm2
+  taxon_basis: 'abstract + MeSH: both mice and rats'
+  resolver_baseline:
+    lookup:
+      taxonomy_id: CCN20230722
+    method: AMBIGUOUS
+    gene: null
+    claimants:
+    - Chrm2
+    - Rasl2-9
+    - Rmst
+  tests: quote says "muscarinic M2 acetylcholine receptor"
+gic-10:
+  outcome: NO_SINGLE_GENE
+  kind: GENE_FAMILY
+  accept: []
+  taxon_basis: 'MeSH: Mice, Inbred C57BL'
+  resolver_baseline:
+    lookup:
+      taxonomy_id: CCN20230722
+    method: UNIQUE_SYNONYM
+    gene: Gabrg1
+    claimants: []
+  tests: receptor family
+gic-11:
+  outcome: GENE
+  kind: null
+  accept:
+  - ncbi_gene_id: NCBIGene:25504
+    symbol: Oxt
+  taxon_basis: background knowledge (Dabrowska et al. 2013, Rainnie lab rat BNST Type I-III); abstract
+    states no species
+  resolver_baseline:
+    lookup:
+      taxon: NCBITaxon:10116
+    method: UNIQUE_SYNONYM
+    gene: Oxt
+    claimants: []
+  tests: '"OT mRNA"'
+gic-12:
+  outcome: NOT_A_GENE_PRODUCT
+  kind: NON_GENE_TERM
+  accept: []
+  taxon_basis: 'quotes: mouse'
+  resolver_baseline:
+    lookup:
+      taxonomy_id: CCN20230722
+    method: CASE_INSENSITIVE_SYMBOL
+    gene: Th
+    claimants: []
+  tests: TH = thalamus (projection "TH → SC"; arrows lost in extraction); resolver says Th
+gic-13:
+  outcome: GENE
+  kind: null
+  accept:
+  - ncbi_gene_id: NCBIGene:21823
+    symbol: Th
+  taxon_basis: 'quotes + title: mice'
+  resolver_baseline:
+    lookup:
+      taxonomy_id: CCN20230722
+    method: CASE_INSENSITIVE_SYMBOL
+    gene: Th
+    claimants: []
+  tests: '"stained for TH": undefined in quote, field convention = tyrosine hydroxylase'

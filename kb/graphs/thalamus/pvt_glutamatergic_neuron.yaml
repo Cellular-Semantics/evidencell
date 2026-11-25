@@ -23,7 +23,10 @@ nodes:
   - id: pvt_glutamatergic_neuron
     name: "Paraventricular thalamic nucleus (PVT) glutamatergic projection neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — mouse, rat and human sources pooled
+    species:  # To be confirmed from primary literature — mouse, rat and human sources pooled
+      id: NCBITaxon:314146
+      label: Euarchontoglires
+      name_in_source: "Rats; Mice; Humans (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
@@ -160,8 +163,9 @@ nodes:
           scope: "adult mouse PVT"
           quote_key: "251021326_815dcc71"
     defining_markers:
-      - symbol: Calb1
-        ncbi_gene_id:
+      - name_in_source: Calb1
+        symbol: Calb1
+        ncbi_gene_id: "NCBIGene:12307"
         sources:
           - ref: "PMID:41501055"
             method: "snRNA-seq + spatial validation"
@@ -173,8 +177,9 @@ nodes:
             scope: "rodent thalamus — weak overall CALB in matrix-like nuclei, but positive cells present in PVT"
             quote_key: "23594973_c1b76e2f"
             marker_type: NOT_STATED
-      - symbol: Calb2
-        ncbi_gene_id:
+      - name_in_source: Calb2
+        symbol: Calb2
+        ncbi_gene_id: "NCBIGene:12308"
         sources:
           - ref: "PMID:41501055"
             method: "snRNA-seq + calretinin immunostaining"
@@ -191,8 +196,9 @@ nodes:
             scope: "adult mouse PVT — densely packed CR+ neurons define the PVT core (not the transition zone)"
             quote_key: "281243341_d0491f90"
             marker_type: PROTEIN
-      - symbol: Slc17a6
-        ncbi_gene_id:
+      - name_in_source: Slc17a6
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
         sources:
           - ref: "PMID:41501055"
             method: "snRNA-seq"
@@ -209,8 +215,9 @@ nodes:
             scope: "adult mouse PVT"
             quote_key: "251021326_815dcc71"
             marker_type: TRANSCRIPT
-      - symbol: Drd3
-        ncbi_gene_id:
+      - name_in_source: Drd3
+        symbol: Drd3
+        ncbi_gene_id: "NCBIGene:13490"
         sources:
           - ref: "PMID:36867023"
             method: "snRNA-seq + multiplex FISH"
@@ -223,16 +230,18 @@ nodes:
             quote_key: "3920351_308036ba"
             marker_type: TRANSCRIPT
     negative_markers:
-      - symbol: Gad1
-        ncbi_gene_id:
+      - name_in_source: Gad1
+        symbol: Gad1
+        ncbi_gene_id: "NCBIGene:14415"
         sources:
           - ref: "PMID:36867023"
             method: "snRNA-seq (selection criterion)"
             scope: "adult mouse PVT — neurons selected as Gad1/Gad2-negative"
             quote_key: "251021326_815dcc71"
             marker_type: TRANSCRIPT
-      - symbol: Gad2
-        ncbi_gene_id:
+      - name_in_source: Gad2
+        symbol: Gad2
+        ncbi_gene_id: "NCBIGene:14417"
         sources:
           - ref: "PMID:36867023"
             method: "snRNA-seq (selection criterion)"
@@ -240,8 +249,9 @@ nodes:
             quote_key: "251021326_815dcc71"
             marker_type: TRANSCRIPT
     neuropeptides:
-      - symbol: Gal
-        ncbi_gene_id:
+      - name_in_source: Gal
+        symbol: Gal
+        ncbi_gene_id: "NCBIGene:14419"
         sources:
           - ref: "PMID:36867023"
             method: "snRNA-seq + multiplex FISH"

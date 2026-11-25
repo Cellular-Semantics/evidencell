@@ -55,12 +55,12 @@ MINIMAL_GRAPH = {
             },
             "defining_markers": [
                 {
-                    "symbol": "Sst",
+                    "name_in_source": "Sst",
                     "sources": [{"ref": "PMID:12345678", "method": "ISH", "scope": "mouse"}],
                 }
             ],
-            "negative_markers": [{"symbol": "PV", "modifier": "ABSENT"}],
-            "neuropeptides": [{"symbol": "Sst", "sources": []}],
+            "negative_markers": [{"name_in_source": "PV", "modifier": "ABSENT"}],
+            "neuropeptides": [{"name_in_source": "Sst", "sources": []}],
             "anatomical_location": [
                 {"id": "UBERON:0014548", "label": "stratum oriens", "name_in_source": "CA1 SO",
                  "sources": [{"ref": "PMID:99999999", "method": "biocytin fill", "scope": "mouse"}]}
@@ -510,7 +510,7 @@ def test_extract_node_facts_classical_node():
     assert cn["id"] == "test_classical"
     assert cn["name"] == "Test cell type"
     assert cn["nt"] == "GABAergic"
-    assert any(m["symbol"] == "Sst" for m in cn["defining_markers"])
+    assert any(m["marker"] == "Sst" for m in cn["defining_markers"])
     assert "PV" in cn["negative_markers"]
 
 

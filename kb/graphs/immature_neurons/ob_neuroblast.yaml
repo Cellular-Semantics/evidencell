@@ -22,7 +22,10 @@ nodes:
   - id: ob_neuroblast
     name: "Olfactory Bulb Neuroblast / Immature Interneuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:       # To be confirmed — studies cite mouse, rat
+    species:  # To be confirmed — studies cite mouse, rat
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0004922
         label: "postnatal subventricular zone"
@@ -47,15 +50,16 @@ nodes:
           scope: "olfactory bulb interneurons"
           quote_key: "8479504_a44f9b22"
     defining_markers:
-      - symbol: DCX
-        ncbi_gene_id:
+      - name_in_source: DCX
+        symbol: Dcx
+        ncbi_gene_id: "NCBIGene:13193"
         sources:
           - ref: "https://doi.org/10.5114/ppn.2021.111950"
             method: "review (marker classification)"
             scope: "adult SVZ"
             quote_key: "252063749_e1c84f70"
             marker_type: NOT_STATED
-      - symbol: PSA-NCAM
+      - name_in_source: PSA-NCAM
         ncbi_gene_id:
         sources:
           - ref: "PMID:9185542"
@@ -63,17 +67,19 @@ nodes:
             scope: "adult mouse SVZ type A cells"
             quote_key: "625292_d93a2b77"
             marker_type: PROTEIN
-      - symbol: TuJ1
+      - name_in_source: TuJ1
+        symbol: Tubb3
         modifier: "beta-tubulin"
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:22152"
         sources:
           - ref: "PMID:9185542"
             method: "IHC"
             scope: "adult mouse SVZ type A cells"
             quote_key: "625292_d93a2b77"
             marker_type: PROTEIN
-      - symbol: Nestin
-        ncbi_gene_id:
+      - name_in_source: Nestin
+        symbol: Nes
+        ncbi_gene_id: "NCBIGene:18008"
         sources:
           - ref: "PMID:9185542"
             method: "IHC"
@@ -81,10 +87,12 @@ nodes:
             quote_key: "625292_d93a2b77"
             marker_type: PROTEIN
     negative_markers:
-      - symbol: GFAP
-        ncbi_gene_id:
-      - symbol: vimentin
-        ncbi_gene_id:
+      - name_in_source: GFAP
+        symbol: Gfap
+        ncbi_gene_id: "NCBIGene:14580"
+      - name_in_source: vimentin
+        symbol: Vim
+        ncbi_gene_id: "NCBIGene:22352"
     neuropeptides: []
     colocated_types:
       - neighboring_type: "Type B1/B2 astrocytes (SVZ)"

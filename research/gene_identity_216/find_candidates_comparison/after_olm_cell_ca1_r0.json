@@ -1,0 +1,2150 @@
+{
+  "classical_node_id": "olm_cell_ca1",
+  "classical_node_name": "Oriens-Lacunosum Moleculare (O-LM) cell",
+  "taxonomy_id": "CCN20230722",
+  "rank": 0,
+  "n_candidates": 10,
+  "expression_source": "precomputed_stats_ABC_revision_230821.h5",
+  "not_measured_genes": {},
+  "gene_resolution": {
+    "Sst": {
+      "method": "PINNED_ID",
+      "symbol": "Sst",
+      "ncbi_gene_id": "NCBIGene:20604"
+    },
+    "Chrna2": {
+      "method": "PINNED_ID",
+      "symbol": "Chrna2",
+      "ncbi_gene_id": "NCBIGene:110902"
+    },
+    "Reln": {
+      "method": "PINNED_ID",
+      "symbol": "Reln",
+      "ncbi_gene_id": "NCBIGene:19699"
+    },
+    "mGluR1": {
+      "method": "PINNED_ID",
+      "symbol": "Grm1",
+      "ncbi_gene_id": "NCBIGene:14816"
+    },
+    "Npy": {
+      "method": "PINNED_ID",
+      "symbol": "Npy",
+      "ncbi_gene_id": "NCBIGene:109648"
+    },
+    "Pnoc": {
+      "method": "PINNED_ID",
+      "symbol": "Pnoc",
+      "ncbi_gene_id": "NCBIGene:18155"
+    },
+    "Pvalb": {
+      "method": "PINNED_ID",
+      "symbol": "Pvalb",
+      "ncbi_gene_id": "NCBIGene:19293"
+    },
+    "PV": {
+      "method": "PINNED_ID",
+      "symbol": "Pvalb",
+      "ncbi_gene_id": "NCBIGene:19293"
+    },
+    "CB": {
+      "method": "PINNED_ID",
+      "symbol": "Calb1",
+      "ncbi_gene_id": "NCBIGene:12307"
+    },
+    "CR": {
+      "method": "PINNED_ID",
+      "symbol": "Calb2",
+      "ncbi_gene_id": "NCBIGene:12308"
+    },
+    "NOS": {
+      "method": "PINNED_ID",
+      "symbol": "Nos1",
+      "ncbi_gene_id": "NCBIGene:18125"
+    },
+    "VIP": {
+      "method": "PINNED_ID",
+      "symbol": "Vip",
+      "ncbi_gene_id": "NCBIGene:22353"
+    }
+  },
+  "candidates": [
+    {
+      "node_id": "CS20230722_CLUS_0768",
+      "label": "0768 Sst Gaba_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0216",
+      "male_female_ratio": 1.13,
+      "discovery_score": {
+        "score": 8,
+        "rank_in_cohort": 1,
+        "cohort_size": 10,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:399,MBA:399",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Sst",
+            "val": 12.7020122049218,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.992
+              }
+            ]
+          },
+          {
+            "gene": "Chrna2",
+            "val": 0.571493456381855,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.95
+              }
+            ]
+          },
+          {
+            "gene": "Reln",
+            "val": 10.6468921586307,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.975
+              }
+            ]
+          },
+          {
+            "gene": "mGluR1",
+            "val": 10.2667789586928,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.958
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 7.58380897076457,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.857
+              }
+            ]
+          },
+          {
+            "gene": "Pnoc",
+            "val": 2.51406095682783,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.496
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 3.12104502330215,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.866
+              }
+            ]
+          },
+          {
+            "gene": "-PV",
+            "val": 3.12104502330215,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.866
+              }
+            ]
+          },
+          {
+            "gene": "-CB",
+            "val": 3.86815930030498,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.681
+              }
+            ]
+          },
+          {
+            "gene": "-CR",
+            "val": 2.29574426592188,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.756
+              }
+            ]
+          },
+          {
+            "gene": "-NOS",
+            "val": 0.761762162186793,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.378
+              }
+            ]
+          },
+          {
+            "gene": "-VIP",
+            "val": 0.313661331253698,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.454
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.458,
+        "region_fraction_100um": 0.818,
+        "region_evidence": "SELF",
+        "at_signal": {
+          "f1": 0.4444444444444445,
+          "n_cells": 10,
+          "target_level": "cluster",
+          "target_name": "0768 Sst Gaba_3",
+          "score": 2
+        }
+      },
+      "marker_discrepancies": [
+        {
+          "gene": "Reln",
+          "kind": "EXPRESSED_NOT_LISTED",
+          "val": 10.647,
+          "sibling_pct": 0.944
+        }
+      ],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0770",
+      "label": "0770 Sst Gaba_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0216",
+      "male_female_ratio": 1.04,
+      "discovery_score": {
+        "score": 7,
+        "rank_in_cohort": 2,
+        "cohort_size": 10,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:399,MBA:399",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Sst",
+            "val": 10.5403039001867,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.807
+              }
+            ]
+          },
+          {
+            "gene": "Chrna2",
+            "val": 0.518955241402651,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.941
+              }
+            ]
+          },
+          {
+            "gene": "Reln",
+            "val": 8.81794048422686,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.857
+              }
+            ]
+          },
+          {
+            "gene": "mGluR1",
+            "val": 9.20607957834173,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.882
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 1.04485323785189,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.361
+              }
+            ]
+          },
+          {
+            "gene": "Pnoc",
+            "val": 6.97754135118932,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.941
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-PV",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-CB",
+            "val": 7.74721807672863,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.857
+              }
+            ]
+          },
+          {
+            "gene": "-CR",
+            "val": 0.840699759084401,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.647
+              }
+            ]
+          },
+          {
+            "gene": "-NOS",
+            "val": 3.65137670861277,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.756
+              }
+            ]
+          },
+          {
+            "gene": "-VIP",
+            "val": 0.15755417874981,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.269
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.302,
+        "region_fraction_100um": 0.506,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0611",
+      "label": "0611 OB-STR-CTX Inh IMN_4",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0169",
+      "male_female_ratio": 1.22,
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 3,
+        "cohort_size": 10,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:399,MBA:399",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Sst",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Chrna2",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Reln",
+            "val": 0.408474271904357,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.21
+              }
+            ]
+          },
+          {
+            "gene": "mGluR1",
+            "val": 1.04061143778214,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.176
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 0.135327737613588,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.059
+              }
+            ]
+          },
+          {
+            "gene": "Pnoc",
+            "val": 0.40199225738468,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.311
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-PV",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-CB",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-CR",
+            "val": 1.44487000048267,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.731
+              }
+            ]
+          },
+          {
+            "gene": "-NOS",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-VIP",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_fraction_100um": 0.01,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0622",
+      "label": "0622 OB-STR-CTX Inh IMN_7",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_0172",
+      "male_female_ratio": 0.52,
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 4,
+        "cohort_size": 10,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:399,MBA:399",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Sst",
+            "val": 0.69934055856274,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.277
+              }
+            ]
+          },
+          {
+            "gene": "Chrna2",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Reln",
+            "val": 2.41272582628445,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.496
+              }
+            ]
+          },
+          {
+            "gene": "mGluR1",
+            "val": 1.08094549408213,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.185
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 0.278781708848949,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.16
+              }
+            ]
+          },
+          {
+            "gene": "Pnoc",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-PV",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-CB",
+            "val": 0.22546643049693,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.084
+              }
+            ]
+          },
+          {
+            "gene": "-CR",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-NOS",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-VIP",
+            "val": 0.455672278918656,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.555
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.009,
+        "region_fraction_100um": 0.153,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0597",
+      "label": "0597 OB-STR-CTX Inh IMN_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_0166",
+      "male_female_ratio": 0.69,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 5,
+        "cohort_size": 10,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:399,MBA:399",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Sst",
+            "val": 0.236856731351966,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.034
+              }
+            ]
+          },
+          {
+            "gene": "Chrna2",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Reln",
+            "val": 0.62539395378524,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.244
+              }
+            ]
+          },
+          {
+            "gene": "mGluR1",
+            "val": 2.76976859162131,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.286
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 0.128635892741677,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.05
+              }
+            ]
+          },
+          {
+            "gene": "Pnoc",
+            "val": 0.0418280083361034,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.16
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.0333910667178493,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.16
+              }
+            ]
+          },
+          {
+            "gene": "-PV",
+            "val": 0.0333910667178493,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.16
+              }
+            ]
+          },
+          {
+            "gene": "-CB",
+            "val": 0.57937470101119,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.361
+              }
+            ]
+          },
+          {
+            "gene": "-CR",
+            "val": 0.246073019924128,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.303
+              }
+            ]
+          },
+          {
+            "gene": "-NOS",
+            "val": 0.0322929017557946,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.042
+              }
+            ]
+          },
+          {
+            "gene": "-VIP",
+            "val": 0.0356474653617031,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.126
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.004,
+        "region_fraction_100um": 0.043,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [
+        {
+          "gene": "CB",
+          "kind": "EXPRESSED_NOT_LISTED",
+          "val": 0.579,
+          "sibling_pct": 0.938
+        }
+      ],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0599",
+      "label": "0599 OB-STR-CTX Inh IMN_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_0166",
+      "male_female_ratio": 0.72,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 6,
+        "cohort_size": 10,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:399,MBA:399",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Sst",
+            "val": 0.790486114974892,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.303
+              }
+            ]
+          },
+          {
+            "gene": "Chrna2",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Reln",
+            "val": 0.793816994397359,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.277
+              }
+            ]
+          },
+          {
+            "gene": "mGluR1",
+            "val": 0.515048472398228,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.118
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 0.25895494162492,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.134
+              }
+            ]
+          },
+          {
+            "gene": "Pnoc",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.0533531771562087,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.218
+              }
+            ]
+          },
+          {
+            "gene": "-PV",
+            "val": 0.0533531771562087,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.218
+              }
+            ]
+          },
+          {
+            "gene": "-CB",
+            "val": 0.527943663540121,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.353
+              }
+            ]
+          },
+          {
+            "gene": "-CR",
+            "val": 0.0941304625461022,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.143
+              }
+            ]
+          },
+          {
+            "gene": "-NOS",
+            "val": 0.362741196354073,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.252
+              }
+            ]
+          },
+          {
+            "gene": "-VIP",
+            "val": 0.0506495945161239,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.16
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.003,
+        "region_fraction_100um": 0.035,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [
+        {
+          "gene": "Sst",
+          "kind": "EXPRESSED_NOT_LISTED",
+          "val": 0.79,
+          "sibling_pct": 0.938
+        }
+      ],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0609",
+      "label": "0609 OB-STR-CTX Inh IMN_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0168",
+      "male_female_ratio": 1.08,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 7,
+        "cohort_size": 10,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:399,MBA:399",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Sst",
+            "val": 0.335403185127183,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.118
+              }
+            ]
+          },
+          {
+            "gene": "Chrna2",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Reln",
+            "val": 0.248578495713024,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.118
+              }
+            ]
+          },
+          {
+            "gene": "mGluR1",
+            "val": 1.18880204832556,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.21
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 0.140825481267572,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.067
+              }
+            ]
+          },
+          {
+            "gene": "Pnoc",
+            "val": 0.0447854340122827,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.168
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-PV",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-CB",
+            "val": 0.510484896140959,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.328
+              }
+            ]
+          },
+          {
+            "gene": "-CR",
+            "val": 0.39666142726781,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.471
+              }
+            ]
+          },
+          {
+            "gene": "-NOS",
+            "val": 0.0535077406932911,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.05
+              }
+            ]
+          },
+          {
+            "gene": "-VIP",
+            "val": 0.0235706725604863,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.118
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.004,
+        "region_fraction_100um": 0.068,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0778",
+      "label": "0778 Sst Gaba_4",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0217",
+      "male_female_ratio": 2.03,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 8,
+        "cohort_size": 10,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:399,MBA:399",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Sst",
+            "val": 11.0290315802706,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.882
+              }
+            ]
+          },
+          {
+            "gene": "Chrna2",
+            "val": 2.48633799714849,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.983
+              }
+            ]
+          },
+          {
+            "gene": "Reln",
+            "val": 10.2690112381559,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.958
+              }
+            ]
+          },
+          {
+            "gene": "mGluR1",
+            "val": 9.97659581451904,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.941
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 3.06244835294439,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.655
+              }
+            ]
+          },
+          {
+            "gene": "Pnoc",
+            "val": 0.22593477673086,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.252
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.237123863358284,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.454
+              }
+            ]
+          },
+          {
+            "gene": "-PV",
+            "val": 0.237123863358284,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.454
+              }
+            ]
+          },
+          {
+            "gene": "-CB",
+            "val": 7.67423906328872,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.849
+              }
+            ]
+          },
+          {
+            "gene": "-CR",
+            "val": 0.0649023058699146,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.118
+              }
+            ]
+          },
+          {
+            "gene": "-NOS",
+            "val": 0.101169242611676,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.076
+              }
+            ]
+          },
+          {
+            "gene": "-VIP",
+            "val": 0.328179849615367,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.462
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.016,
+        "region_fraction_100um": 0.027,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0807",
+      "label": "0807 Sst Gaba_12",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0225",
+      "male_female_ratio": 1.08,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 9,
+        "cohort_size": 10,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:399,MBA:399",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Sst",
+            "val": 10.5730347380855,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.815
+              }
+            ]
+          },
+          {
+            "gene": "Chrna2",
+            "val": 0.661778544934394,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.966
+              }
+            ]
+          },
+          {
+            "gene": "Reln",
+            "val": 9.37851480753019,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.899
+              }
+            ]
+          },
+          {
+            "gene": "mGluR1",
+            "val": 10.6207970924163,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.992
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 1.12603236321029,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.395
+              }
+            ]
+          },
+          {
+            "gene": "Pnoc",
+            "val": 1.83991009368647,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.437
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.345472111749051,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.58
+              }
+            ]
+          },
+          {
+            "gene": "-PV",
+            "val": 0.345472111749051,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.58
+              }
+            ]
+          },
+          {
+            "gene": "-CB",
+            "val": 6.04450420973407,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.807
+              }
+            ]
+          },
+          {
+            "gene": "-CR",
+            "val": 0.366228722883495,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.445
+              }
+            ]
+          },
+          {
+            "gene": "-NOS",
+            "val": 0.394726642435623,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.286
+              }
+            ]
+          },
+          {
+            "gene": "-VIP",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.004,
+        "region_fraction_100um": 0.004,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_1292",
+      "label": "1292 MEA-BST Lhx6 Nfib Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0358",
+      "male_female_ratio": 1.78,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 10,
+        "cohort_size": 10,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:399,MBA:399",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Sst",
+            "val": 2.78224855838415,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.681
+              }
+            ]
+          },
+          {
+            "gene": "Chrna2",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Reln",
+            "val": 2.82575312242029,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.513
+              }
+            ]
+          },
+          {
+            "gene": "mGluR1",
+            "val": 8.62156558021318,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.782
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 1.83865301527127,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.513
+              }
+            ]
+          },
+          {
+            "gene": "Pnoc",
+            "val": 5.27866076111439,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.748
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-PV",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-CB",
+            "val": 9.15356815249826,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.916
+              }
+            ]
+          },
+          {
+            "gene": "-CR",
+            "val": 1.25181003556078,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.714
+              }
+            ]
+          },
+          {
+            "gene": "-NOS",
+            "val": 3.15808591842774,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.714
+              }
+            ]
+          },
+          {
+            "gene": "-VIP",
+            "val": 0.0569582411154488,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.176
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.014,
+        "region_fraction_100um": 0.027,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [
+        {
+          "gene": "Sst",
+          "kind": "EXPRESSED_NOT_LISTED",
+          "val": 2.782,
+          "sibling_pct": 0.929
+        },
+        {
+          "gene": "mGluR1",
+          "kind": "EXPRESSED_NOT_LISTED",
+          "val": 8.622,
+          "sibling_pct": 0.929
+        },
+        {
+          "gene": "Npy",
+          "kind": "EXPRESSED_NOT_LISTED",
+          "val": 1.839,
+          "sibling_pct": 0.929
+        }
+      ],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    }
+  ]
+}

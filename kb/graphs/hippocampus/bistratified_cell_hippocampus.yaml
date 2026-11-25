@@ -14,6 +14,9 @@ nodes:
     name: Bistratified cell
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0014548
         label: pyramidal layer of CA1
@@ -78,8 +81,9 @@ nodes:
           scope: hippocampus
           quote_key: 38778375_462ec931
     defining_markers:
-      - symbol: Pvalb
-        ncbi_gene_id:
+      - name_in_source: Pvalb
+        symbol: Pvalb
+        ncbi_gene_id: "NCBIGene:19293"
         sources:
           - ref: PMID:33150866
             marker_type: PROTEIN
@@ -101,16 +105,18 @@ nodes:
             method: patch-seq
             scope: mouse CA1 hippocampus
             quote_key: 230508306_e8cc8c19
-      - symbol: Sst
-        ncbi_gene_id:
+      - name_in_source: Sst
+        symbol: Sst
+        ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: PMID:38640347
             marker_type: TRANSGENE_REPORTER
             method: "intersectional genetics (Sst;;Tac1 reporter)"
             scope: mouse hippocampus
             quote_key: 269246896_c084d5c0
-      - symbol: Tac1
-        ncbi_gene_id:
+      - name_in_source: Tac1
+        symbol: Tac1
+        ncbi_gene_id: "NCBIGene:21333"
         sources:
           - ref: PMID:38640347
             marker_type: TRANSGENE_REPORTER
@@ -119,8 +125,9 @@ nodes:
             quote_key: 269246896_c084d5c0
     negative_markers: []
     neuropeptides:
-      - symbol: Sst
-        ncbi_gene_id:
+      - name_in_source: Sst
+        symbol: Sst
+        ncbi_gene_id: "NCBIGene:20604"
         sources:
           - ref: PMID:38640347
             marker_type: TRANSGENE_REPORTER

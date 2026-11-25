@@ -459,8 +459,8 @@ TASK:
        cl_terms: []               # leave empty — CL lookup deferred
      neuropeptides: []            # from confirmed NP field, gene symbols only
      defining_markers:
-       - symbol: "{gene}"
-         ncbi_gene_id: null       # leave null — ID resolution deferred
+       - name_in_source: "{gene}"  # as the source column spells it; no symbol /
+                                   # ncbi_gene_id — identity resolves in the DB
          # sources: {comma-separated list of source columns this gene appeared in}
      negative_markers: []
      anatomical_location: []      # leave empty — complex; preserve source as comment

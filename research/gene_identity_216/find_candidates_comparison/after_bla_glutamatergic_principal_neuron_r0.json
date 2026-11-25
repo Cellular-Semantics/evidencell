@@ -1,0 +1,673 @@
+{
+  "classical_node_id": "bla_glutamatergic_principal_neuron",
+  "classical_node_name": "Basolateral amygdala glutamatergic principal neuron",
+  "taxonomy_id": "CCN20230722",
+  "rank": 0,
+  "n_candidates": 10,
+  "expression_source": "precomputed_stats_ABC_revision_230821.h5",
+  "not_measured_genes": {},
+  "gene_resolution": {
+    "Slc17a7": {
+      "method": "PINNED_ID",
+      "symbol": "Slc17a7",
+      "ncbi_gene_id": "NCBIGene:72961"
+    },
+    "Camk2a": {
+      "method": "PINNED_ID",
+      "symbol": "Camk2a",
+      "ncbi_gene_id": "NCBIGene:12322"
+    }
+  },
+  "candidates": [
+    {
+      "node_id": "CS20230722_CLUS_0245",
+      "label": "0245 LA-BLA-BMA-PA Glut_5",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0064",
+      "male_female_ratio": 1.5,
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 1,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Slc17a7",
+            "val": 10.3421645609463,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.957
+              }
+            ]
+          },
+          {
+            "gene": "Camk2a",
+            "val": 10.2096043617983,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.86
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.421,
+        "region_fraction_100um": 0.703,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0023",
+      "label": "0023 L5/6 IT TPE-ENT Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0007",
+      "male_female_ratio": 1.78,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 2,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Slc17a7",
+            "val": 10.5909633932987,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.989
+              }
+            ]
+          },
+          {
+            "gene": "Camk2a",
+            "val": 9.76235946651552,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.581
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.092,
+        "region_fraction_100um": 0.128,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0142",
+      "label": "0142 L2/3 IT PIR-ENTl Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0039",
+      "male_female_ratio": 1.08,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 3,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Slc17a7",
+            "val": 9.47652929340246,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.57
+              }
+            ]
+          },
+          {
+            "gene": "Camk2a",
+            "val": 10.213836244041,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.871
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.384,
+        "region_fraction_100um": 0.646,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0143",
+      "label": "0143 L2/3 IT PIR-ENTl Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0039",
+      "male_female_ratio": 1.13,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 4,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Slc17a7",
+            "val": 9.67163206732391,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.742
+              }
+            ]
+          },
+          {
+            "gene": "Camk2a",
+            "val": 10.6000537818538,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.968
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.11,
+        "region_fraction_100um": 0.249,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0201",
+      "label": "0201 MEA Slc17a7 Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0056",
+      "male_female_ratio": 1.38,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 5,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Slc17a7",
+            "val": 9.28400807512875,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.452
+              }
+            ]
+          },
+          {
+            "gene": "Camk2a",
+            "val": 10.0171099228653,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.71
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.345,
+        "region_fraction_100um": 0.621,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [
+        {
+          "gene": "Camk2a",
+          "kind": "EXPRESSED_NOT_LISTED",
+          "val": 10.017,
+          "sibling_pct": 0.958
+        }
+      ],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0230",
+      "label": "0230 LA-BLA-BMA-PA Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0061",
+      "male_female_ratio": 2.45,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 6,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Slc17a7",
+            "val": 9.24537080780722,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.409
+              }
+            ]
+          },
+          {
+            "gene": "Camk2a",
+            "val": 9.16898980059299,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.355
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.331,
+        "region_fraction_100um": 0.532,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0231",
+      "label": "0231 LA-BLA-BMA-PA Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0061",
+      "male_female_ratio": 1.63,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 7,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Slc17a7",
+            "val": 9.70629798409669,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.774
+              }
+            ]
+          },
+          {
+            "gene": "Camk2a",
+            "val": 10.2802480493871,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.903
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.66,
+        "region_fraction_100um": 0.769,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [
+        {
+          "gene": "Slc17a7",
+          "kind": "EXPRESSED_NOT_LISTED",
+          "val": 9.706,
+          "sibling_pct": 0.917
+        },
+        {
+          "gene": "Camk2a",
+          "kind": "EXPRESSED_NOT_LISTED",
+          "val": 10.28,
+          "sibling_pct": 0.917
+        }
+      ],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0232",
+      "label": "0232 LA-BLA-BMA-PA Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0061",
+      "male_female_ratio": 2.03,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 8,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Slc17a7",
+            "val": 9.47706673929773,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.581
+              }
+            ]
+          },
+          {
+            "gene": "Camk2a",
+            "val": 10.0042326930852,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.699
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.565,
+        "region_fraction_100um": 0.768,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0233",
+      "label": "0233 LA-BLA-BMA-PA Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0061",
+      "male_female_ratio": 1.04,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 9,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Slc17a7",
+            "val": 9.31691541282829,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.484
+              }
+            ]
+          },
+          {
+            "gene": "Camk2a",
+            "val": 9.56019319772982,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.473
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.437,
+        "region_fraction_100um": 0.669,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    },
+    {
+      "node_id": "CS20230722_CLUS_0234",
+      "label": "0234 LA-BLA-BMA-PA Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0061",
+      "male_female_ratio": 2.12,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 10,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Slc17a7",
+            "val": 9.31044953195846,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.462
+              }
+            ]
+          },
+          {
+            "gene": "Camk2a",
+            "val": 9.5227053502931,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.452
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.558,
+        "region_fraction_100um": 0.755,
+        "region_evidence": "SELF"
+      },
+      "marker_discrepancies": [],
+      "expression_source": "precomputed_stats_ABC_revision_230821.h5"
+    }
+  ]
+}
