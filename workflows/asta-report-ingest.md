@@ -48,6 +48,7 @@ here and in the skills, never in the schema.
 | Field meanings, shapes, allowed values, fill order | `{output_dir}/schema_subset.yaml` (Step 0, `just schema-subset`) |
 | The node's Cell Ontology anchor (`cl_mapping`) | `.claude/skills/cl-mapping.md` |
 | Any other ontology term: species, anatomy, transmitter CL terms | `.claude/skills/term-grounding.md` |
+| A marker's gene (`ncbi_gene_id` + `symbol`) | `.claude/skills/gene-id-curation/SKILL.md`; how its result is recorded: `docs/marker_gene_ids.md` |
 | Paper metadata for corpus IDs | `mcp__Asta_semanticscholar__get_paper_batch`, `just fetch-reference` |
 | Adding quotes to the reference store | `evidencell.references.write_quote_to_refs()` |
 | The region's existing nodes | `uv run python -m evidencell.kb_index region {region}` |
@@ -642,6 +643,9 @@ INPUT FILES:
                                       ingest_phase
 - .claude/skills/term-grounding.md    how to find and write anatomy and
                                       transmitter terms
+- .claude/skills/gene-id-curation/SKILL.md
+                                      how to find the gene a marker name means
+- docs/marker_gene_ids.md             how to record its result on the marker
 - {pdf_file}                          the report, for the sections in report_sections
 
 ## Part A: Match quotes to fields
@@ -678,11 +682,12 @@ INPUT FILES:
      well-established facts (e.g. BNST CRF neurons are GABAergic) and say it is
      inferred. find-candidates scores on NT type, so a silently missing value
      weakens retrieval.
-   - defining_markers / negative_markers / neuropeptides: name_in_source as the
-     report writes it, with symbol + ncbi_gene_id for the gene it means. Follow
-     `docs/marker_gene_ids.md` (it calls the `gene-id-curation` skill);
-     ambiguous names stay unresolved here — evidence-extraction settles them
-     from the primary paper.
+   - defining_markers / negative_markers / neuropeptides: look up each marker
+     with gene-id-curation (taxon = the node's species, evidence = the quote
+     asserting the marker) and record the result as docs/marker_gene_ids.md
+     says. An UNRESOLVED name, or any marker on a node with no species, gets
+     name_in_source only: evidence-extraction settles it from the primary
+     paper.
    - anatomical_location and nt_type.cl_terms: ground terms as
      term-grounding.md says; every CURIE must resolve (the hook checks).
    - definition_references: the 3-5 most informative resolved refs.
