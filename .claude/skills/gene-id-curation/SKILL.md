@@ -5,6 +5,17 @@ description: Given a gene or protein name as a source writes it (PV, CB, mGluR1,
 
 # Skill: gene or protein name → NCBI Gene
 
+## Purpose
+
+The lookup tool (below) matches strings, and for a clear symbol or a
+distinctive name (`Sst`, `PV`, `VGLUT1`) its answer is all that is needed.
+This skill exists for the names it cannot settle: abbreviations that several
+genes claim (`SOM` → Sst or Grhl3, `CRF` → Crh or C1ql1), and abbreviations
+it maps confidently to the wrong gene (`D1` → Dio1, `GAD` → Uchl1) or to a
+gene when the source means a region (`CA1`, `SP`). Its main job is to
+disambiguate these, using the evidence quote first and knowledge of the
+field's naming conventions where the quote leaves it open.
+
 ## Input
 
 | Field | Required | Notes |
@@ -12,6 +23,7 @@ description: Given a gene or protein name as a source writes it (PV, CB, mGluR1,
 | `name` | yes | Exactly as the source writes it. One or several names. |
 | `taxon` | yes | NCBITaxon CURIE of the organism the name refers to. Set by the caller; this skill does not infer it. A taxon above species (Rodentia, Murinae) is allowed: a gene of any descendant species is then a valid answer. |
 | `evidence` | no | The sentence(s) in which the source uses the name, and the source's ID. Strongly recommended: it is what settles abbreviations and what lets a reviewer check the call. |
+| `title` | no | Title of the source. Context only, e.g. it tells you a paper is about dopamine receptor neurons; never quote it as `evidence`. |
 
 ## Output
 
@@ -63,6 +75,10 @@ with `name` still as written:
   class III beta-tubulin, `NeuN` → Rbfox3): look up the target gene;
   `method` is `ANTIBODY_TARGET`, and `rationale` says what the antibody
   detects so a reviewer can check it.
+- The evidence doesn't define it, but it is a standard abbreviation in the
+  source's field for a gene the lookup of the name would not give (`D1` and
+  `D2` for dopamine receptors, `SOM` for somatostatin): look up that gene;
+  `method` is `FIELD_CONVENTION`, and `rationale` states the convention.
 
 The gene ID and symbol still come from the lookup, never from memory.
 
@@ -72,9 +88,10 @@ The lookup tool is described under **Lookup tool** below.
 
 | `method` | Action |
 |---|---|
-| `EXACT_SYMBOL`, `UNIQUE_SYNONYM`, `OVERRIDE` | `GENE`: take the gene's ID and official symbol. |
+| `EXACT_SYMBOL`, `OVERRIDE` | `GENE`: take the gene's ID and official symbol. |
+| `UNIQUE_SYNONYM` | `GENE`, after checking the gene fits the evidence and the field. One claimant means only that one gene lists the string, not that the source means it: `D1` → Dio1, `GAD` → Uchl1, `GABAA` → Gabrg1 are all single matches. If it doesn't fit, go back to Step 1 or 2. |
 | `CASE_INSENSITIVE_SYMBOL` | `GENE`, unless a caution below applies or other genes also claim the name — then check the evidence means this one. |
-| `AMBIGUOUS` | Pick **one gene from the claimants**, never another, using the evidence; quote it. If the evidence doesn't settle it: `UNRESOLVED` (`AMBIGUOUS`), with the claimants. |
+| `AMBIGUOUS` | Pick **one gene from the claimants**, never another. Use the evidence first and quote it; where it doesn't define the name, the field's convention may settle it (`SOM` in a neuroscience source is Sst, not Grhl3) — say so in `rationale`. If neither settles it: `UNRESOLVED` (`AMBIGUOUS`), with the claimants. |
 | `NO_MATCH` | Not a name of any gene in the species. If the evidence names the gene, look that up (Step 2). Otherwise reconsider Step 1; if still unclear, `UNRESOLVED` (`NO_MATCH`). |
 
 Never return a gene the lookup did not produce, and never fill in an ID from
@@ -83,9 +100,18 @@ memory.
 ## Cautions
 
 - **Tokens that look like genes but aren't.** A case-insensitive hit on a
-  region or other non-gene token is a red flag: `CA1` → Car1 (carbonic
-  anhydrase 1), `CA3` → Car3. Use the evidence to check the source means a
-  gene. This is why the evidence quote matters.
+  region or other non-gene token is a red flag: `CA1` → Ca1 (carbonic
+  anhydrase 1, formerly Car1), `CA3` → Ca3; `SP`, `SO`, `SR` are hippocampal
+  layers (stratum pyramidale, oriens, radiatum), not substance P. Use the
+  evidence to check the source means a gene. This is why the evidence quote
+  matters.
+- **Families behind one abbreviation.** `GAD` (Gad1 + Gad2), `GABAA`,
+  `nAChR`, `CaMKII` name several genes; the lookup may still return one.
+  Unless the source names a subunit or isoform (`GAD67`, `CaMKIIα`), it is
+  `NO_SINGLE_GENE` (`GENE_FAMILY`).
+- **Field convention vs evidence.** Where the decision rests on the field's
+  conventions rather than the quote, say so in `rationale`, so a reviewer
+  can tell a reading of the source from background knowledge.
 - **Species case.** `SST` (human style) in a mouse paper means Sst; the
   official symbol follows the gene's species, not the source.
 
