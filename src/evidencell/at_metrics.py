@@ -800,6 +800,51 @@ def resolve_run_for_source(
     return chosen
 
 
+def runs_on_other_taxonomies(
+    dataset_accession: str,
+    target_taxonomy: str,
+    source_label: str,
+    *,
+    runs_root: Path | None = None,
+) -> list[dict]:
+    """List AT runs of ``(dataset_accession, source_label)`` against any
+    taxonomy *other than* ``target_taxonomy``.
+
+    A node's ``at_source_sets`` entry names no taxonomy, so when
+    :func:`resolve_run_for_source` finds nothing, "no run at all" and "a run
+    exists, against a different taxonomy" look the same. This tells them
+    apart. It never substitutes for a resolved run: the caller still has no
+    run against ``target_taxonomy``.
+
+    Returns ``[{taxonomy_id, run_ref}]`` sorted by taxonomy then run id.
+    """
+    runs_root = runs_root or (repo_root() / "kb" / "annotation_transfer_runs")
+    if not runs_root.is_dir():
+        return []
+
+    found: list[dict] = []
+    for manifest in sorted(runs_root.glob("*/manifest.yaml")):
+        try:
+            data = yaml.safe_load(manifest.read_text(encoding="utf-8")) or {}
+        except Exception:  # noqa: BLE001 — skip unreadable manifest
+            continue
+        taxonomy = data.get("target_taxonomy_id")
+        if (
+            data.get("source_dataset_accession") != dataset_accession
+            or not taxonomy
+            or taxonomy == target_taxonomy
+        ):
+            continue
+        run_ref = data.get("id") or manifest.parent.name
+        try:
+            rs = load_result_set(run_ref, runs_root=runs_root)
+        except Exception:  # noqa: BLE001 — un-migrated / missing YAML
+            continue
+        if any(row.source_label == source_label for row in rs.rows):
+            found.append({"taxonomy_id": taxonomy, "run_ref": run_ref})
+    return sorted(found, key=lambda r: (r["taxonomy_id"], r["run_ref"]))
+
+
 def lookup_metrics(
     result_set: AnnotationTransferResultSet,
     source_label: str,
@@ -1377,95 +1422,191 @@ def print_refresh_report(summary: dict) -> None:
 
 
 def at_coverage(
-    graph_file: Path,
     taxonomy_id: str,
     *,
+    node_ids: list[str] | None = None,
+    region: str | None = None,
     runs_root: Path | None = None,
-) -> list[dict]:
-    """Report AT-run coverage for a graph's classical nodes.
+) -> dict:
+    """Report AT-run coverage for classical nodes, chosen by id or region.
 
     For each classical node (``definition_basis`` starting ``CLASSICAL``)
-    that declares ``at_source_sets``, resolve every declared
+    in scope, resolve every declared ``at_source_sets`` entry
     ``(dataset_accession, source_label)`` against ``taxonomy_id`` via
     :func:`resolve_run_for_source`. This is the pre-mapping trigger check
     (issue #126 follow-up): an UNRESOLVED row means a curator asserted a
     dataset correspondence for which no AT run exists yet — the signal to
     run ``workflows/annotation-transfer.md`` before programmatic mapping.
 
-    Report-only: it does not fetch, run AT, or gate mapping. Nodes with no
-    ``at_source_sets`` are skipped (that is an evidence-extraction gap, not
-    this check's concern).
+    Scope is a set of nodes, read through the KB index: ``node_ids`` names
+    them, ``region`` takes every classical node under ``kb/graphs/{region}/``,
+    and neither takes every classical node in the KB. Files play no part, so a
+    narrow run cannot pass for a wide one (#162). Raises ValueError for an
+    unknown taxonomy, region or node id, or a named node that is not
+    classical.
 
-    Returns one row dict per declared source set:
-    ``{node_id, dataset_accession, source_label, run_ref}`` where
-    ``run_ref`` is the resolved run id or ``None`` (UNRESOLVED).
+    Every row is resolved against the one ``taxonomy_id`` given: an
+    ``at_source_sets`` entry names no taxonomy, and nothing on a node says
+    which taxonomies it is meant to map to. So a scope that spans nodes
+    mapped to different taxonomies (the whole KB, or a mixed region such as
+    ``BG``) reports a node's source as unresolved when its run targets
+    another taxonomy. Such rows carry ``other_taxonomy_runs`` so they can be
+    told apart from a source with no run anywhere, but they still count as
+    unresolved: the tool cannot know the node was not meant for
+    ``taxonomy_id`` too.
+
+    Report-only: it does not fetch, run AT, or gate mapping.
+
+    Returns ``{scope, checked, undeclared, rows}``: ``checked`` is every node
+    id in scope, ``undeclared`` those declaring no ``at_source_sets`` (an
+    evidence-extraction gap, listed so it is not mistaken for coverage), and
+    ``rows`` one dict per declared source set,
+    ``{node_id, dataset_accession, source_label, run_ref,
+    other_taxonomy_runs}``, where ``run_ref`` is the resolved run id or
+    ``None`` (UNRESOLVED) and ``other_taxonomy_runs`` is
+    ``[{taxonomy_id, run_ref}]`` for an unresolved source that has runs
+    against other taxonomies (empty otherwise).
     """
-    doc = yaml.safe_load(Path(graph_file).read_text(encoding="utf-8")) or {}
+    from . import paths
+    from .kb_index import get_index
+
+    if node_ids and region:
+        raise ValueError("Give node ids or a region, not both.")
+    if not paths.taxonomy_dir(taxonomy_id).is_dir():
+        raise ValueError(
+            f"Unknown taxonomy {taxonomy_id!r}: no store under kb/taxonomy/."
+        )
+
+    index = get_index()
+
+    def classical(node_id: str) -> dict | None:
+        for record in index.nodes.get(node_id, []):
+            basis = record.node.get("definition_basis") or ""
+            if not record.is_stub and basis.startswith("CLASSICAL"):
+                return record.node
+        return None
+
+    if node_ids:
+        candidates = list(dict.fromkeys(node_ids))
+        scope = f"{len(candidates)} named node(s)"
+        for node_id in candidates:
+            if node_id not in index.nodes:
+                raise ValueError(f"No KB node has id {node_id!r}.")
+            if classical(node_id) is None:
+                raise ValueError(f"{node_id!r} is not a classical node.")
+    elif region:
+        if region not in index.by_region:
+            known = ", ".join(sorted(index.by_region))
+            raise ValueError(f"Unknown region {region!r}. Known: {known}.")
+        scope = f"region {region}"
+        candidates = index.by_region[region]
+    else:
+        scope = "whole KB"
+        candidates = sorted(index.nodes)
+
+    checked: list[str] = []
+    undeclared: list[str] = []
     rows: list[dict] = []
-    for node in doc.get("nodes") or []:
-        if not isinstance(node, dict):
+    for node_id in candidates:
+        node = classical(node_id)
+        if node is None:
             continue
-        basis = node.get("definition_basis") or ""
-        if not basis.startswith("CLASSICAL"):
-            continue
-        for src in node.get("at_source_sets") or []:
-            if not isinstance(src, dict):
-                continue
+        checked.append(node_id)
+        sources = [s for s in node.get("at_source_sets") or [] if isinstance(s, dict)]
+        if not sources:
+            undeclared.append(node_id)
+        for src in sources:
             dataset_accession = src.get("dataset_accession")
             source_label = src.get("source_label")
             run_ref = None
+            other_taxonomy_runs: list[dict] = []
             if dataset_accession and source_label:
                 run_ref = resolve_run_for_source(
                     dataset_accession, taxonomy_id, source_label,
                     runs_root=runs_root,
                 )
+                if run_ref is None:
+                    other_taxonomy_runs = runs_on_other_taxonomies(
+                        dataset_accession, taxonomy_id, source_label,
+                        runs_root=runs_root,
+                    )
             rows.append({
-                "node_id": node.get("id"),
+                "node_id": node_id,
                 "dataset_accession": dataset_accession,
                 "source_label": source_label,
                 "run_ref": run_ref,
+                "other_taxonomy_runs": other_taxonomy_runs,
             })
-    return rows
+    return {"scope": scope, "checked": checked, "undeclared": undeclared, "rows": rows}
 
 
-def format_at_coverage(rows: list[dict], taxonomy_id: str) -> str:
-    """Render :func:`at_coverage` rows as a human-readable table."""
-    if not rows:
-        return (
-            f"No classical nodes declare at_source_sets (taxonomy "
-            f"{taxonomy_id}). Nothing to attempt."
-        )
-    unresolved = [r for r in rows if not r["run_ref"]]
-    w_node = max(len("node"), *(len(r["node_id"] or "") for r in rows))
-    w_ds = max(len("dataset_accession"),
-               *(len(r["dataset_accession"] or "") for r in rows))
-    w_lbl = max(len("source_label"),
-                *(len(r["source_label"] or "") for r in rows))
+def format_at_coverage(report: dict, taxonomy_id: str) -> str:
+    """Render an :func:`at_coverage` report as a human-readable table."""
+    rows = report["rows"]
+    checked = report["checked"]
+    undeclared = report["undeclared"]
     lines = [
-        f"AT coverage for {len(rows)} declared source set(s) "
-        f"(taxonomy {taxonomy_id}):",
-        "",
-        f"{'node':<{w_node}}  {'dataset_accession':<{w_ds}}  "
-        f"{'source_label':<{w_lbl}}  run",
-        f"{'─' * w_node}  {'─' * w_ds}  {'─' * w_lbl}  {'─' * 30}",
+        f"AT coverage (taxonomy {taxonomy_id}, scope: {report['scope']}): "
+        f"{len(checked)} classical node(s) checked, "
+        f"{len(checked) - len(undeclared)} declare {len(rows)} source set(s).",
     ]
-    for r in rows:
-        run = r["run_ref"] if r["run_ref"] else "✗ UNRESOLVED"
-        mark = "✓ " if r["run_ref"] else ""
-        lines.append(
-            f"{(r['node_id'] or ''):<{w_node}}  "
-            f"{(r['dataset_accession'] or ''):<{w_ds}}  "
-            f"{(r['source_label'] or ''):<{w_lbl}}  {mark}{run}"
-        )
+    if rows:
+        w_node = max(len("node"), *(len(r["node_id"] or "") for r in rows))
+        w_ds = max(len("dataset_accession"),
+                   *(len(r["dataset_accession"] or "") for r in rows))
+        w_lbl = max(len("source_label"),
+                    *(len(r["source_label"] or "") for r in rows))
+        lines += [
+            "",
+            f"{'node':<{w_node}}  {'dataset_accession':<{w_ds}}  "
+            f"{'source_label':<{w_lbl}}  run",
+            f"{'─' * w_node}  {'─' * w_ds}  {'─' * w_lbl}  {'─' * 30}",
+        ]
+        for r in rows:
+            mark = "✓ " if r["run_ref"] else ""
+            if r["run_ref"]:
+                run = r["run_ref"]
+            elif r.get("other_taxonomy_runs"):
+                others = ", ".join(
+                    f"{o['taxonomy_id']}: {o['run_ref']}"
+                    for o in r["other_taxonomy_runs"]
+                )
+                run = f"✗ NO RUN ON {taxonomy_id} (run on {others})"
+            else:
+                run = "✗ UNRESOLVED"
+            lines.append(
+                f"{(r['node_id'] or ''):<{w_node}}  "
+                f"{(r['dataset_accession'] or ''):<{w_ds}}  "
+                f"{(r['source_label'] or ''):<{w_lbl}}  {mark}{run}"
+            )
     lines.append("")
+    if undeclared:
+        lines.append(
+            f"{len(undeclared)} node(s) declare no at_source_sets, so there is "
+            f"nothing to check for them (an evidence-extraction gap, not "
+            f"coverage): {', '.join(undeclared)}"
+        )
+    missing = [r for r in rows if not r["run_ref"]]
+    elsewhere = [r for r in missing if r.get("other_taxonomy_runs")]
+    unresolved = [r for r in missing if not r.get("other_taxonomy_runs")]
     if unresolved:
         lines.append(
             f"{len(unresolved)} UNRESOLVED → run `annotation-transfer` for "
             f"these datasets before mapping (retrieve_dataset preflight gates "
-            f"the load). Nodes with no at_source_sets are skipped."
+            f"the load)."
         )
-    else:
+    if elsewhere:
+        lines.append(
+            f"{len(elsewhere)} with NO RUN ON {taxonomy_id} but a run on "
+            f"another taxonomy → at_source_sets names no taxonomy, so check "
+            f"whether the node is meant to map to {taxonomy_id}. If it is, "
+            f"run `annotation-transfer` against it; if not, the row is out "
+            f"of scope for this taxonomy (still counted in the exit status)."
+        )
+    if rows and not missing:
         lines.append("All declared AT sources resolve to a run.")
+    elif not checked:
+        lines.append("No classical nodes in scope. Nothing to attempt.")
     return "\n".join(lines)
 
 
@@ -1527,12 +1668,19 @@ def main(argv: list[str] | None = None) -> int:
     p_cov = sub.add_parser(
         "at-coverage",
         help=(
-            "Report AT-run coverage for a graph's classical nodes' declared "
-            "at_source_sets. Report-only; exits non-zero if any UNRESOLVED."
+            "Report AT-run coverage for classical nodes' declared "
+            "at_source_sets. Scope: the named node ids, --region, or the "
+            "whole KB. Every row is checked against TAXONOMY_ID only. "
+            "Report-only; exits non-zero if any declared source has no run "
+            "against it."
         ),
     )
-    p_cov.add_argument("graph_file", type=Path)
     p_cov.add_argument("taxonomy_id")
+    p_cov.add_argument("node_ids", nargs="*", metavar="node_id")
+    p_cov.add_argument(
+        "--region", default=None,
+        help="Every classical node under kb/graphs/REGION/.",
+    )
 
     args = parser.parse_args(argv)
 
@@ -1562,11 +1710,17 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.cmd == "at-coverage":
-        rows = at_coverage(args.graph_file, args.taxonomy_id)
-        print(format_at_coverage(rows, args.taxonomy_id))
+        try:
+            report = at_coverage(
+                args.taxonomy_id, node_ids=args.node_ids, region=args.region,
+            )
+        except ValueError as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 2
+        print(format_at_coverage(report, args.taxonomy_id))
         # Non-zero when any declared source lacks a resolvable run, so the
         # check can gate a scripted pipeline. Report-only otherwise.
-        return 1 if any(not r["run_ref"] for r in rows) else 0
+        return 1 if any(not r["run_ref"] for r in report["rows"]) else 0
 
     return 1
 

@@ -178,6 +178,25 @@ def test_invalid_yaml_syntax_blocked():
 # ── Quote key and PMID provenance checks ─────────────────────────────────────
 
 
+def test_subtype_of_unknown_parent_blocked():
+    """A subtype_of parent that is no canonical KB node must be blocked (#183)."""
+    bad_yaml = """\
+nodes:
+  - id: type_a
+    name: Type A
+    subtype_of:
+      - parent: no_such_parent_type
+        kind: DEFINITIONAL
+        confidence: LOW
+edges: []
+"""
+    r = _run_hook(_write_payload(bad_yaml))
+    assert r.returncode == 2, (
+        f"Expected exit 2 for unknown subtype_of parent, got {r.returncode}\n{r.stderr}"
+    )
+    assert "no_such_parent_type" in r.stderr
+
+
 def _split(region_dir, store):
     """Write a store in the split layout from a legacy-shaped dict."""
     (region_dir / "papers").mkdir(parents=True, exist_ok=True)

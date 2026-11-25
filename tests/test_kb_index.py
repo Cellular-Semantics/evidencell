@@ -140,3 +140,38 @@ def test_real_kb_indexes_every_file():
         for r in records:
             for end in ("lit_type", "taxonomy_type"):
                 assert r.edge.get(end) in idx.nodes, (r.edge["id"], end)
+
+
+def test_region_summary_lists_canonical_identity_fields_only(tmp_path, monkeypatch):
+    kb = _repo(tmp_path, monkeypatch)
+    node = {
+        "id": "olm", "name": "OLM cell", "definition_basis": "CLASSICAL_MULTIMODAL",
+        "synonyms": [{"term": "O-LM"}],
+        "species": {"id": "NCBITaxon:10090", "label": "Mus musculus"},
+        "cl_mapping": {"cl_term": {"id": "CL:4023017", "label": "OLM neuron"},
+                       "mapping_type": "EXACT"},
+        "defining_markers": [{"symbol": "Sst"}],
+    }
+    _write(kb, "hippocampus/olm.yaml", [node, ATLAS], [EDGE])
+    _write(kb, "cerebellum/lugaro.yaml", [{"id": "lugaro", "definition_basis": "CLASSICAL_MORPHOLOGICAL"}])
+
+    summary = kb_index.region_summary("hippocampus")
+
+    assert summary == [{
+        "id": "olm", "name": "OLM cell", "definition_basis": "CLASSICAL_MULTIMODAL",
+        "file": "kb/graphs/hippocampus/olm.yaml", "synonyms": ["O-LM"],
+        "species": "Mus musculus", "cl_mapping": "CL:4023017 OLM neuron (EXACT)",
+    }]
+
+
+def test_region_summary_of_unknown_region_is_empty(tmp_path, monkeypatch):
+    kb = _repo(tmp_path, monkeypatch)
+    _write(kb, "hippocampus/olm.yaml", [LIT])
+    assert kb_index.region_summary("thalamus") == []
+
+
+def test_region_summary_finds_nodes_whose_ids_lack_the_region_name():
+    # The old ingest-report listing grepped ids for the region string, so it
+    # printed nothing for thalamus, where ids are e.g. pvt_glutamatergic_neuron.
+    ids = {e["id"] for e in kb_index.region_summary("thalamus")}
+    assert "pvt_glutamatergic_neuron" in ids

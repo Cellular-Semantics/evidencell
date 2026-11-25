@@ -199,6 +199,8 @@ in `src/evidencell/expression_cache.py`.
 |---|---|
 | `query-taxonomy-db` | Any taxonomy candidate search, field coverage check, or DB exploration. **Do not read taxonomy YAML files directly for query purposes** — the DB is the query interface; YAML is the edit interface. Atlas expression is not in YAML: read it through `TaxonomyDB.expression()`, which loads uncached genes from the MapMyCells stats file into the DB's `node_expression` table on demand (#189). Querying `node_expression` directly only sees genes already cached. |
 | `gene-id-curation` | Gene or protein name as a source writes it + taxon → NCBI Gene ID and official symbol (or why it names no single gene). Generic; how its result goes into the KB is `docs/marker_gene_ids.md`. |
+| `cl-mapping` | Setting, checking or acting on a node's `cl_mapping` (`.claude/skills/cl-mapping.md`): CL term search, EXACT / BROAD / RELATED, what each means for `cl-term-request`. |
+| `term-grounding` | Writing any other ontology term into KB YAML (`.claude/skills/term-grounding.md`): which ontology each field takes, which tool finds it, how to pass the hook. |
 | `retrieve-dataset` | Downloading and inspecting an expression dataset (h5ad, RDS, loom, mtx). | Any time an orchestrator is added, removed, renamed, or its status changes, update `WORKFLOW.md` in the same commit. The overview table, inputs table, and typical workflow diagram must all reflect the current state. Never leave a stale status entry or a duplicate section.
 ### Provenance
 
@@ -304,7 +306,7 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 | Orchestrator | Location | Phase | Status | When to run |
 |---|---|---|---|---|
 | `ingest-taxonomy` | `workflows/ingest-taxonomy.md` | Discovery | **Ready** | Ingest a taxonomy table → atlas cluster CellTypeNode stubs |
-| `asta-report-ingest` | `workflows/asta-report-ingest.md` | Literature | **Ready** | Start here when you have an ASTA deep research PDF — writes one classical CellTypeNode file per proposed type into `kb/graphs/{region}/`. Review by PR; `gate: true` adds in-session sign-off. Hands off to `survey` |
+| `asta-report-ingest` | `workflows/asta-report-ingest.md` | Literature | **Ready** | Start here when you have an ASTA deep research PDF — reconciles each proposed type against the region's existing nodes (NEW / ENRICH / DUPLICATE), then writes a new node file or adds to the existing one in `kb/graphs/{region}/`. Field guidance comes from the schema (`just schema-subset`); CL anchors and ontology terms via the `cl-mapping` and `term-grounding` skills. Review by PR; `gate: true` adds in-session sign-off. Hands off to `survey` |
 | `survey` | `workflows/survey.md` | Literature | **Ready** | Broad snippet scan of ASTA corpus for a region → all_summaries.json; no synthesis, no KB write |
 | `lit-review` | `workflows/lit-review.md` | Literature | **Experimental stub** | Seed discovery when starting without a report; may be revived; do not use in regular workflows |
 | `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Needs re-engineering** | Citation traversal + synthesis. Removed from the `asta-report-ingest` handoff (2026-10-27) — it is not in the regular path. May be folded back in later; do not wire new workflows to it |
@@ -388,9 +390,9 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 ```
 ── Discovery ──────────────────────────────────────────────────────────────────
 
-1a. just ingest-report {region} {pdf_file}      # ASTA report → one classical
-    → workflows/asta-report-ingest.md            # CellTypeNode file per proposed type,
-                                                 # written straight to kb/graphs/{region}/
+1a. just ingest-report {region} {pdf_file}      # ASTA report → reconcile against the
+    → workflows/asta-report-ingest.md            # region's nodes; new node files or
+                                                 # additions to existing ones in kb/graphs/{region}/
     review as a PR (default), or pass gate: true for in-session sign-off
 
 1b. just ingest-taxonomy-db {taxonomy_file} {taxonomy_id}  # full taxonomy → YAML + SQLite
@@ -413,7 +415,8 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 
 ── AT coverage (before mapping) ────────────────────────────────────────────────
 
-3.5 just at-coverage {graph_file} {taxonomy_id}  # declared at_source_sets → AT run?
+3.5 just at-coverage {taxonomy_id} {node_id}...  # declared at_source_sets → AT run?
+    # (or --region {region}; with neither, the whole KB)
     # Report-only. Lists each classical node's at_source_sets correspondence
     # (dataset_accession + source_label, authored in evidence-extraction) and
     # whether an AT run already exists for it. For each UNRESOLVED row, run
@@ -421,7 +424,11 @@ parallel where possible (taxonomy ingest + report ingest are independent).
     # dataset_accession/source_label) BEFORE mapping — otherwise emit-stage-b
     # emits NO_EVIDENCE and you re-map after. No new gate: the retrieve_dataset
     # preflight is the single resource checkpoint. Nodes with no at_source_sets
-    # are skipped (proceed; AT simply absent).
+    # are listed separately (proceed; AT simply absent) — the header states how
+    # many nodes were checked, so a narrow run cannot pass for a region sweep.
+    # Rows are checked against the one taxonomy given: a source whose run
+    # targets another taxonomy shows as "NO RUN ON {taxonomy_id}" (still
+    # non-zero exit) — check whether the node is meant to map to it.
 
 ── Mapping ────────────────────────────────────────────────────────────────────
 
@@ -432,7 +439,7 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 ── Reports + community ────────────────────────────────────────────────────────
 
 5.  just gen-facts {graph_file} {node_id}        # extract structured facts
-    just pool-candidates {graph_file} --node {node_id} > ...
+    just pool-candidates --node {node_id} > ...
     → workflows/gen-report.md                    # single session: filter (top-K → ≤3) +
                                                  # AT-pooling + synth + verdict write-back
     [GATE] biologist reviews, executes proposed experiments

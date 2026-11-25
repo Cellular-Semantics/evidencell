@@ -349,6 +349,42 @@ class MappingJustification(str, Enum):
     """
 
 
+class SubtypeKind(str, Enum):
+    """
+    How the owning type comes to be a subset of the parent.
+    """
+    DEFINITIONAL = "DEFINITIONAL"
+    """
+    The type is defined as the parent narrowed by an extra criterion (a nucleus, a marker, a projection target, one end of a gradient), so containment holds by definition: a cell of the type that is not a cell of the parent would contradict the type's definition. Exports as rdfs:subClassOf.
+
+    """
+    EMPIRICAL = "EMPIRICAL"
+    """
+    The type is defined independently of the parent (e.g. by a transgenic line or a clustering) and the sources report that its cells fall within the parent. Containment is a finding that further data could overturn.
+
+    """
+
+
+class SubtypeConfidence(str, Enum):
+    """
+    Judgement on the sources of a SubtypeAssertion. The mapping rubric (AT F1, location bands) does not apply.
+
+    """
+    HIGH = "HIGH"
+    """
+    Stated explicitly by two or more independent sources.
+    """
+    MODERATE = "MODERATE"
+    """
+    Stated explicitly by one source.
+    """
+    LOW = "LOW"
+    """
+    Inferred, e.g. from a structural subdivision, or from the parent's defining criterion holding for the type without being stated.
+
+    """
+
+
 class MappingConfidence(str, Enum):
     HIGH = "HIGH"
     """
@@ -424,7 +460,7 @@ class EvidenceSupport(str, Enum):
     """
     WEAK = "WEAK"
     """
-    Non-zero but weak evidence — e.g. marker match with anatomical mismatch, or a speculative assignment retained as placeholder.
+    Non-zero but weak evidence — e.g. marker match with anatomical mismatch, a speculative assignment retained as placeholder, or indirect projection evidence (correlation, not tracing) for an AXON_TARGET location (see CellCompartment.AXON_TARGET).
 
     """
     NO_EVIDENCE = "NO_EVIDENCE"
@@ -521,7 +557,12 @@ class CellCompartment(str, Enum):
     """
     AXON_TARGET = "AXON_TARGET"
     """
-    Axonal projection target region
+    Axonal projection target region: a region where axons of this type terminate.
+    Direct evidence: anterograde or retrograde tracing of the type's cells, single-cell axon reconstruction, or projection-seq / retro-seq. Sources carrying it set support: SUPPORT (or omit support).
+    Indirect evidence is allowed, marked as weak. Examples: gene-expression correlation with a projection atlas (e.g. ThalamoSeq); co-clustering with retrogradely labelled cells in an integrated dataset; a target reported for a broader population that contains the type. Each such source sets support: WEAK and a method naming the inference, e.g. "inferred from correlation with ThalamoSeq projection patterns, not traced".
+    Where the source reports a target jointly for several types (e.g. "PVT1/PVT3"), say so in the source's scope.
+    Not AXON_TARGET: afferent inputs to the type; targets reached only through a further synapse (disynaptic targets); regions the type's axons only pass through.
+
     """
     DENDRITE = "DENDRITE"
     """
@@ -836,6 +877,7 @@ Stage B mapping subagents + report-time agents should caveat `lower_bound` rollu
     sources: Optional[list[PropertySource]] = Field(default=None, description="""Evidence sources for this specific anatomical location assertion. Populate for classical and prior-transcriptomic nodes, especially for sub-regional claims where location is specific or contested. scope is critical where location is context-dependent. Leave empty for atlas terminal nodes (provenance implicit from atlas + cell_set_accession).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
                        'GeneDescriptor',
+                       'SubtypeAssertion',
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
@@ -913,7 +955,7 @@ class GeneDescriptor(ConfiguredBaseModel):
     symbol: Optional[str] = Field(default=None, description="""Official symbol of the ncbi_gene_id gene in its species (Pvalb, Calb1, Rbfox3; PVALB in human). Set together with ncbi_gene_id, never alone. The pre-edit hook checks it equals the gene's current symbol.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDescriptor', 'GeneExpression']} })
     modifier: Optional[str] = Field(default=None, description="""Expression context: HIGH, LOW, ABSENT, ENRICHED""", json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDescriptor']} })
-    ncbi_gene_id: Optional[str] = Field(default=None, description="""NCBI Gene ID as CURIE, e.g. NCBIGene:20604 (Mus musculus Sst). Species-specific; preferred for multi-species use. Use Translator NodeNormalization for cross-species mapping: https://github.com/NCATSTranslator/NodeNormalization
+    ncbi_gene_id: Optional[str] = Field(default=None, description="""NCBI Gene ID as CURIE, e.g. NCBIGene:20604 (Mus musculus Sst). Species-specific; preferred for multi-species use.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDescriptor']} })
     hgnc_id: Optional[str] = Field(default=None, description="""HGNC ID (human-only). Deprecated in favour of ncbi_gene_id; retained for backward compatibility.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDescriptor']} })
@@ -924,6 +966,7 @@ class GeneDescriptor(ConfiguredBaseModel):
     sources: Optional[list[MarkerSource]] = Field(default=None, description="""Evidence sources for this marker assertion. Multiple sources allowed — e.g. protein evidence from one paper and transcript evidence from another. Populate for classical and prior-transcriptomic nodes. Leave empty for atlas node markers (atlas_markers, merfish_markers) — provenance is implicit from the parent node's atlas + cell_set_accession.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
                        'GeneDescriptor',
+                       'SubtypeAssertion',
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
@@ -999,6 +1042,39 @@ class CellTypeColocation(ConfiguredBaseModel):
     spatial_relationship: Optional[str] = Field(default=None, description="""Spatial relationship descriptor. Suggested values: ADJACENT, PROXIMAL, DISTAL, INTERSPERSED, SAME_LAYER, LAYER_BORDER. Free text also acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation']} })
     notes: Optional[str] = Field(default=None, description="""Free-text context or citation supporting this colocation claim""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
+                       'PropertySource',
+                       'PropertyComparison',
+                       'CellTypeNode',
+                       'ManualCurationMarker',
+                       'CellTypeMappingGraph',
+                       'AtSourceSet',
+                       'BulkDataset']} })
+
+
+class SubtypeAssertion(ConfiguredBaseModel):
+    """
+    States that every cell of the owning type is a cell of `parent`, either by definition or as reported (see kind). Makes no claim that sibling subtypes are disjoint or that together they cover the parent; say so in notes where it matters. Overlap that is not containment is not a subtype; it stays a MappingEdge (e.g. evidencell:CrossCuttingMatch).
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    parent: str = Field(default=..., description="""id of the parent literature type: a canonical node (not a stub, not an atlas node) defined in any kb/graphs file. It may be proposed in the same ingest run.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeAssertion']} })
+    kind: SubtypeKind = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeAssertion', 'DiscoveryContext']} })
+    confidence: SubtypeConfidence = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeAssertion', 'MappingEdge']} })
+    sources: Optional[list[SubtypeSource]] = Field(default=None, description="""Sources stating or implying the subset relation: quote-keyed literature, or other evidence such as a published taxonomy's hierarchy (see SubtypeSource.evidence_type).
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
+                       'GeneDescriptor',
+                       'SubtypeAssertion',
+                       'TypeSynonym',
+                       'ElectrophysiologyProfile',
+                       'MorphologyProfile',
+                       'NeurotransmitterType',
+                       'AtSourceSet']} })
+    notes: Optional[str] = Field(default=None, description="""Caveats on this assertion: gradient pole, single study, subset claim inferred from a structural subdivision, partial overlap with a sibling, and similar.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
@@ -1054,12 +1130,13 @@ class PropertySource(ConfiguredBaseModel):
                        'AnnotationTransferRun']} })
     scope: Optional[str] = Field(default=None, description="""Experimental context: species, age, brain region, preparation. E.g. \"adult mouse GPi\", \"human GPi post-mortem tissue\", \"P21 mouse cerebellum\". Populate where context affects generalisability of the claim.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
-    snippet: Optional[str] = Field(default=None, description="""Verbatim quote from the cited source supporting this assertion. Strongly recommended — primary material for reviewers at the evidence gate. Must be exact text from the source, no paraphrase. If quote_key is set, snippet may be omitted (dereferenceable from references.json). If both are present, snippet is the verified text.
+    snippet: Optional[str] = Field(default=None, description="""Verbatim quote from the cited source supporting this assertion. Must be exact text from the source, no paraphrase. Prefer quote_key, which points to the quote in the region's reference store; when quote_key is set, omit snippet. If both are present, snippet is the verified text.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource', 'LiteratureEvidence']} })
-    quote_key: Optional[str] = Field(default=None, description="""Content-hashed key into the region's references.json quote store. Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars of SHA-256 of the normalised quote text. Allows quote lookup without embedding full text in the KB YAML. Set by asta-report-ingest and cite-traverse workflows. Reports dereference to include snippet text.
+    quote_key: Optional[str] = Field(default=None, description="""Content-hashed key into the region's references.json quote store. Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars of SHA-256 of the normalised quote text. Allows quote lookup without embedding full text in the KB YAML. Reports dereference it to include the quote text.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     notes: Optional[str] = Field(default=None, description="""Curator-derived analysis notes for this source: computed statistics, re-analysis observations, cross-subtype comparisons. Distinct from snippet (which must be a verbatim quote from the cited source). Examples: \"Detected in 46/46 cells (100%); mean counts 305273\", \"Htr3a-OLM 43% vs Sst-OLM 26% — subtype-specific expression\".
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
@@ -1067,7 +1144,67 @@ class PropertySource(ConfiguredBaseModel):
                        'CellTypeMappingGraph',
                        'AtSourceSet',
                        'BulkDataset']} })
-    support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Set by cite-traverse and evidence-extraction workflows. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
+    support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
+    source: Optional[str] = Field(default=None, description="""Workflow provenance tag identifying when/how this source was added. E.g. \"cite_traverse_2026_04_10\", \"asta_survey_2026_03\". Machine-set; not for human editing.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+                       'GeneDiscoveryDetail',
+                       'PrecomputedExpression']} })
+    added_by: Optional[str] = Field(default=None, description="""Identifier of the agent or workflow run that wrote this entry. E.g. \"evidence_extraction_olm_cell_ca1_2026-04-22\". Machine-set; not for human editing.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
+
+    @field_validator('ref')
+    def pattern_ref(cls, v):
+        pattern=re.compile(r"^(PMID:[0-9]+|https://doi\.org/.+)$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.search(element):
+                    err_msg = f"Invalid ref format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.search(v):
+            err_msg = f"Invalid ref format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+
+class SubtypeSource(PropertySource):
+    """
+    Evidence source for a SubtypeAssertion. Extends PropertySource with an optional evidence_type, so that evidence other than a quoted paper can support the relation. Every source still needs a citable ref (PMID or DOI).
+    Example, a published taxonomy's hierarchy:
+      - evidence_type: ATLAS_METADATA
+        ref: \"https://doi.org/10.1038/...\"
+        notes: \"Cluster X (child) sits under supercluster Y (parent) at rank 1\"
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    evidence_type: Optional[EvidenceType] = Field(default=None, description="""Kind of evidence. Absent means LITERATURE, cited by quote_key. For a published taxonomy's hierarchy use ATLAS_METADATA, with the taxonomy's DOI as ref and the parent and child accessions in notes.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
+    ref: str = Field(default=..., description="""DOI (https://doi.org/...) or PMID (PMID:xxxxxxxx)""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
+    method: Optional[str] = Field(default=None, description="""How this property was detected or established. Free text. Examples: \"IHC\", \"patch-clamp (acute slice)\", \"Golgi stain\", \"scRNA-seq\", \"smFISH\", \"retrograde tracing + scRNA-seq\".
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+                       'AnnotationTransferEvidence',
+                       'ProjectionSeqEvidence',
+                       'MarkerAnalysisEvidence',
+                       'CorrelationRun',
+                       'AnnotationTransferRun']} })
+    scope: Optional[str] = Field(default=None, description="""Experimental context: species, age, brain region, preparation. E.g. \"adult mouse GPi\", \"human GPi post-mortem tissue\", \"P21 mouse cerebellum\". Populate where context affects generalisability of the claim.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
+    snippet: Optional[str] = Field(default=None, description="""Verbatim quote from the cited source supporting this assertion. Must be exact text from the source, no paraphrase. Prefer quote_key, which points to the quote in the region's reference store; when quote_key is set, omit snippet. If both are present, snippet is the verified text.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource', 'LiteratureEvidence']} })
+    quote_key: Optional[str] = Field(default=None, description="""Content-hashed key into the region's references.json quote store. Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars of SHA-256 of the normalised quote text. Allows quote lookup without embedding full text in the KB YAML. Reports dereference it to include the quote text.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
+    notes: Optional[str] = Field(default=None, description="""Curator-derived analysis notes for this source: computed statistics, re-analysis observations, cross-subtype comparisons. Distinct from snippet (which must be a verbatim quote from the cited source). Examples: \"Detected in 46/46 cells (100%); mean counts 305273\", \"Htr3a-OLM 43% vs Sst-OLM 26% — subtype-specific expression\".
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
+                       'PropertySource',
+                       'PropertyComparison',
+                       'CellTypeNode',
+                       'ManualCurationMarker',
+                       'CellTypeMappingGraph',
+                       'AtSourceSet',
+                       'BulkDataset']} })
+    support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     source: Optional[str] = Field(default=None, description="""Workflow provenance tag identifying when/how this source was added. E.g. \"cite_traverse_2026_04_10\", \"asta_survey_2026_03\". Machine-set; not for human editing.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
@@ -1093,7 +1230,7 @@ class PropertySource(ConfiguredBaseModel):
 class TypeSynonym(ConfiguredBaseModel):
     """
     An alternative name or abbreviation for a cell type, with evidence provenance. Captures the name as used in specific sources — abbreviations, historical terms, atlas labels, informal community terms. Sources cite the papers where this name is used or defined, enabling synonym-expanded queries in lit mining.
-    Population guidance: extract synonyms as the first processing step for each paper. Set snippet to the passage where the name is introduced or defined. Multiple sources if the term appears across several papers.
+    Each source cites the passage where the name is introduced or used for this type. Multiple sources if the term appears across several papers.
 
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
@@ -1102,9 +1239,10 @@ class TypeSynonym(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['TypeSynonym']} })
     synonym_type: Optional[SynonymType] = Field(default=None, description="""Category of synonym — ABBREVIATION, HISTORICAL, ATLAS_LABEL, CROSS_SPECIES, or INFORMAL. Omit if unclear.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['TypeSynonym']} })
-    sources: Optional[list[PropertySource]] = Field(default=None, description="""Papers where this synonym is used for this cell type. Each PropertySource: ref = citing paper; snippet = passage where name is defined or first used (quote_key also accepted); method = how the name is used in context (e.g. \"primary label throughout\", \"defined in introduction as abbreviation\"). Multiple sources if the term appears across multiple papers.
+    sources: Optional[list[PropertySource]] = Field(default=None, description="""Papers where this synonym is used for this cell type. Each PropertySource: ref = citing paper; quote_key = passage where name is defined or first used; method = how the name is used in context (e.g. \"primary label throughout\", \"defined in introduction as abbreviation\"). Multiple sources if the term appears across multiple papers.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
                        'GeneDescriptor',
+                       'SubtypeAssertion',
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
@@ -1163,12 +1301,13 @@ class MarkerSource(PropertySource, HasMarkerType):
                        'AnnotationTransferRun']} })
     scope: Optional[str] = Field(default=None, description="""Experimental context: species, age, brain region, preparation. E.g. \"adult mouse GPi\", \"human GPi post-mortem tissue\", \"P21 mouse cerebellum\". Populate where context affects generalisability of the claim.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
-    snippet: Optional[str] = Field(default=None, description="""Verbatim quote from the cited source supporting this assertion. Strongly recommended — primary material for reviewers at the evidence gate. Must be exact text from the source, no paraphrase. If quote_key is set, snippet may be omitted (dereferenceable from references.json). If both are present, snippet is the verified text.
+    snippet: Optional[str] = Field(default=None, description="""Verbatim quote from the cited source supporting this assertion. Must be exact text from the source, no paraphrase. Prefer quote_key, which points to the quote in the region's reference store; when quote_key is set, omit snippet. If both are present, snippet is the verified text.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource', 'LiteratureEvidence']} })
-    quote_key: Optional[str] = Field(default=None, description="""Content-hashed key into the region's references.json quote store. Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars of SHA-256 of the normalised quote text. Allows quote lookup without embedding full text in the KB YAML. Set by asta-report-ingest and cite-traverse workflows. Reports dereference to include snippet text.
+    quote_key: Optional[str] = Field(default=None, description="""Content-hashed key into the region's references.json quote store. Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars of SHA-256 of the normalised quote text. Allows quote lookup without embedding full text in the KB YAML. Reports dereference it to include the quote text.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     notes: Optional[str] = Field(default=None, description="""Curator-derived analysis notes for this source: computed statistics, re-analysis observations, cross-subtype comparisons. Distinct from snippet (which must be a verbatim quote from the cited source). Examples: \"Detected in 46/46 cells (100%); mean counts 305273\", \"Htr3a-OLM 43% vs Sst-OLM 26% — subtype-specific expression\".
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
@@ -1176,7 +1315,7 @@ class MarkerSource(PropertySource, HasMarkerType):
                        'CellTypeMappingGraph',
                        'AtSourceSet',
                        'BulkDataset']} })
-    support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Set by cite-traverse and evidence-extraction workflows. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
+    support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     source: Optional[str] = Field(default=None, description="""Workflow provenance tag identifying when/how this source was added. E.g. \"cite_traverse_2026_04_10\", \"asta_survey_2026_03\". Machine-set; not for human editing.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
@@ -1201,7 +1340,7 @@ class MarkerSource(PropertySource, HasMarkerType):
 
 class ElectrophysiologyProfile(ConfiguredBaseModel):
     """
-    Electrophysiological characterisation of a cell type: e-type classification and firing properties, with evidence provenance. Replaces the former electrophysiology_class string + ephys_sources list pair.
+    Electrophysiological characterisation of a cell type: e-type classification and firing properties, with evidence provenance.
 
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
@@ -1217,6 +1356,7 @@ class ElectrophysiologyProfile(ConfiguredBaseModel):
     sources: Optional[list[PropertySource]] = Field(default=None, description="""Evidence sources for this electrophysiology characterisation. ref to the recording study; snippet from the e-type description. scope should note age, temperature, and preparation type (e.g. \"P21 mouse, acute slice, 32°C\").
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
                        'GeneDescriptor',
+                       'SubtypeAssertion',
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
@@ -1226,7 +1366,7 @@ class ElectrophysiologyProfile(ConfiguredBaseModel):
 
 class MorphologyProfile(ConfiguredBaseModel):
     """
-    Morphological characterisation of a cell type: key structural features with evidence provenance. Replaces the former morphology_notes string + morphology_sources list pair.
+    Morphological characterisation of a cell type: key structural features with evidence provenance.
 
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
@@ -1242,6 +1382,7 @@ class MorphologyProfile(ConfiguredBaseModel):
     sources: Optional[list[PropertySource]] = Field(default=None, description="""Evidence sources for this morphology characterisation. method e.g. \"Golgi stain\", \"biocytin fill + confocal\", \"electron microscopy\". Snippet from cell description section.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
                        'GeneDescriptor',
+                       'SubtypeAssertion',
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
@@ -1252,7 +1393,7 @@ class MorphologyProfile(ConfiguredBaseModel):
 class NeurotransmitterType(ConfiguredBaseModel):
     """
     The neurotransmitter identity of a cell type, recorded as the universal naming triple: name_in_source (verbatim source label) + cl_terms (CL ontology identifiers) + sources (evidence provenance).
-    Used for both classical and atlas nodes — replaces the previous split between nt_type (free string) and atlas_nt_type (verbatim string).
+    Used for both classical and atlas nodes.
     For dual/co-transmitter types, list both CL terms in cl_terms. The name_in_source captures the compound label as written in the source (e.g. \"Glut-GABA\", \"GABA-Glut (dual)\") — ordering may differ between atlases (WMBv1 lists dominant NT first; HMBA BG lists GABA first by convention). Use name_in_source to preserve this exactly; the cl_terms list is order-independent.
     CL terms for common neurotransmitter types:
       CL:0000617  GABAergic neuron
@@ -1281,6 +1422,7 @@ class NeurotransmitterType(ConfiguredBaseModel):
     sources: Optional[list[PropertySource]] = Field(default=None, description="""Evidence sources establishing this NT type. One or more PropertySource entries with ref, method, scope, snippet. method should describe how NT type was established, e.g. \"IHC (GABA antibody)\", \"scRNA-seq (Gad2/Slc17a6 co-expression)\", \"electrophysiology (inhibitory PSPs recorded)\". scope is important — NT type can differ across species or developmental stage. Leave empty on ATLAS_TRANSCRIPTOMIC nodes (provenance implicit).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
                        'GeneDescriptor',
+                       'SubtypeAssertion',
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
@@ -1305,6 +1447,7 @@ class PropertyComparison(ConfiguredBaseModel):
     alignment: PropertyAlignment = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['PropertyComparison']} })
     notes: Optional[str] = Field(default=None, description="""Brief explanation of the alignment call. Required for APPROXIMATE and DISCORDANT. E.g. \"Same biology; WMBv1 orders dual NT with dominant first (Glut-GABA vs GABA-Glut), convention difference only.\"
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
@@ -1370,44 +1513,73 @@ class CellTypeNode(ConfiguredBaseModel):
                        'CorrelationContrast',
                        'AnnotationTransferRunSummary',
                        'AnnotationTransferRun']} })
-    name: str = Field(default=..., description="""Human-readable name, e.g. \"Lugaro cell\", \"1145 CB PLI Gly-Gaba_2\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['HierarchyNode', 'CellTypeNode', 'CellTypeMappingGraph']} })
+    name: str = Field(default=..., description="""Human-readable name, e.g. \"Lugaro cell\", \"1145 CB PLI Gly-Gaba_2\". For a literature type, the name the sources most often use, as written; other names go in synonyms.
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'}},
+         'domain_of': ['HierarchyNode', 'CellTypeNode', 'CellTypeMappingGraph']} })
     reference_stub: Optional[ReferenceStubKind] = Field(default=None, description="""Present when this node is a placeholder for a type defined elsewhere, not a definition in its own right. Carry only id, name, definition_basis and (for taxonomy references) taxonomy_id and cell_set_accession; everything else belongs on the canonical record. Absent means this node is canonical.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
-    synonyms: Optional[list[TypeSynonym]] = Field(default=None, description="""Alternative names and abbreviations for this cell type, with evidence provenance. Populated during literature mining — synonym extraction is the first processing step for each paper (both survey and targeted paths). Used to expand queries in subsequent searches.
+    synonyms: Optional[list[TypeSynonym]] = Field(default=None, description="""Alternative names and abbreviations for this cell type. Each synonym cites a passage where the name is used for this type. Used to expand literature queries.
 Include all forms that appear in the literature or atlases: abbreviations (OLM), long forms if non-obvious, historical names, atlas labels used as cell type names. Do NOT include the canonical name field value itself.
 For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only if that label is used as a cell type name in at least one non-atlas paper.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
-    definition_basis: DefinitionBasis = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
-    species: Optional[OntologyTerm] = Field(default=None, description="""NCBITaxon term""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'}},
+         'domain_of': ['CellTypeNode']} })
+    definition_basis: DefinitionBasis = Field(default=..., description="""The kind of evidence that defines this type in the sources.
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'}},
+         'domain_of': ['CellTypeNode']} })
+    subtype_of: Optional[list[SubtypeAssertion]] = Field(default=None, description="""Literature types whose cells include all of this type's cells, by definition or as reported (see SubtypeAssertion.kind). Use the narrowest parent the sources support. Recorded on the child; a node's children are computed from the KB index. Not for atlas (ATLAS_TRANSCRIPTOMIC) nodes, whose hierarchy lives in the taxonomy.
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'}},
+         'domain_of': ['CellTypeNode']} })
+    species: Optional[OntologyTerm] = Field(default=None, description="""NCBITaxon term for the species this type is described in. When the sources span several species, give the species of the defining description here and each source's species in its scope.
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase', 'value': 'identity'}},
+         'bindings': [{'binds_value_of': 'id',
                        'obligation_level': 'REQUIRED',
                        'range': 'NCBITaxonClassTerm'}],
          'domain_of': ['CellTypeNode', 'CellTypeMappingGraph', 'BulkDataset']} })
-    anatomical_location: Optional[list[AnatomicalLocation]] = Field(default=None, description="""Anatomical location(s) of this cell type. Each entry is an AnatomicalLocation (OntologyTerm + optional compartment). Prefer Allen atlas terms (MBA for mouse; DHBA or HBA for human/primate); use UBERON as fallback. Look up via OLS4. name_in_source carries the region name as written in the source (e.g. \"GPi shell region\", \"GPi\"). Multiple entries for types that span regions or are defined relative to multiple structures. Set compartment (SOMA, AXON_TARGET, DENDRITE) when a type has different compartments in different regions (e.g. OLM: soma in SO, axon in SLM). Leave compartment absent when location is not compartment-specific or compartment is unknown.
-""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+    anatomical_location: Optional[list[AnatomicalLocation]] = Field(default=None, description="""Anatomical location(s) of this cell type. Each entry is an AnatomicalLocation (OntologyTerm + optional compartment). Prefer Allen atlas terms (MBA for mouse; DHBA or HBA for human/primate); use UBERON as fallback. Give the most specific structure the sources support. name_in_source carries the region name as written in the source (e.g. \"GPi shell region\", \"GPi\"). Multiple entries for types that span regions or are defined relative to multiple structures. Set compartment (SOMA, AXON_TARGET, DENDRITE) when a type has different compartments in different regions (e.g. OLM: soma in SO, axon in SLM). Leave compartment absent when location is not compartment-specific or compartment is unknown. For which evidence an AXON_TARGET entry needs, and when its sources set support: WEAK, see CellCompartment.AXON_TARGET. AXON_TARGET and DENDRITE entries are excluded from soma-location matching against atlas nodes, so recording a weakly supported projection target does not affect candidate scoring.
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'properties'}},
+         'bindings': [{'binds_value_of': 'id',
                        'obligation_level': 'REQUIRED',
                        'range': 'AnatomyTerm'}],
          'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     colocated_types: Optional[list[CellTypeColocation]] = Field(default=None, description="""Other cell types that co-localise with or are spatially adjacent to this type. Records relative positional context separately from the anatomical location above (e.g. \"adjacent to GPi core neurons\").
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'properties'}},
+         'domain_of': ['CellTypeNode']} })
     cl_mapping: Optional[CLMapping] = Field(default=None, description="""CL term binding with mapping type (EXACT or BROAD). Every non-terminal node should have a cl_mapping. EXACT: this node IS this CL term (modulo species). BROAD: this node is a subtype; a ProposedCLTerm would be a new child of the cl_term. Terminal nodes (atlas cell sets) may also have a cl_mapping once cognate CL terms exist.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'classification'}},
+         'domain_of': ['CellTypeNode']} })
     proposed_cl_term: Optional[ProposedCLTerm] = Field(default=None, description="""Draft CL term for this node — populated when authoring a new or revised CL entry. For BROAD cl_mapping nodes: proposed_cl_term.parent_cl_term = cl_mapping.cl_term. For EXACT cl_mapping nodes: proposed_cl_term.cl_id = cl_mapping.cl_term.id (updating an existing term).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     is_terminal: Optional[bool] = Field(default=None, description="""True if this node is a cell set in the community target atlas (the mapping destination). Terminal nodes should have cell_set_accession populated.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     defining_markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""Markers used to define this type. For classical/literature nodes: markers from the original type description. For atlas nodes: defining markers from the atlas (cluster.markers.combo or equivalent).
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
-    negative_markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""Markers explicitly shown to be absent (all node types).""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'properties'}},
+         'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+    negative_markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""Markers the sources explicitly show to be absent (all node types). A marker that is simply not mentioned is not absent.
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'properties'}},
+         'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     neuropeptides: Optional[list[GeneDescriptor]] = Field(default=None, description="""Neuropeptide co-transmitters expressed by this cell type (all node types). For classical nodes: from literature (populate sources on each GeneDescriptor). For atlas nodes: from atlas np.markers column (sources left empty). Separate from defining_markers because neuropeptide identity is a distinct functional property — though a gene may appear in both lists (e.g. Sst as a defining marker AND as a neuropeptide co-transmitter). Examples: Sst, Vip, Cck, Npy, Pnoc.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'properties'}},
+         'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     at_source_sets: Optional[list[AtSourceSet]] = Field(default=None, description="""Annotated cell set(s), in external dataset(s), that correspond to this classical cell type — the result of an agentic judgement made by reading the dataset's describing paper (NOT inferable from transcriptomic overlap alone). Authored by lit-ingest / evidence-extraction once a dataset's annotation labels are available. Each entry names a (dataset_accession, source_label) pair plus the nature of the correspondence, and carries quote-backed `sources` exactly like defining_markers. `emit-stage-b` iterates these to attach ANNOTATION_TRANSFER evidence, resolving the AT run operationally from (dataset_accession, target_taxonomy, source_label). Distinct from prior_dataset_accession/prior_cluster_label, which assert that the node *is* a prior transcriptomic cluster.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
-    nt_type: Optional[NeurotransmitterType] = Field(default=None, description="""Neurotransmitter type of this cell type. Applies to both classical and atlas terminal nodes (unified field, replaces atlas_nt_type). Carries the naming triple: name_in_source (verbatim source label), cl_terms (CL identifiers), sources (evidence provenance).
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
-    electrophysiology: Optional[ElectrophysiologyProfile] = Field(default=None, description="""Electrophysiological characterisation with nested evidence sources. Replaces former electrophysiology_class (string) + ephys_sources (list) pair.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
-    morphology: Optional[MorphologyProfile] = Field(default=None, description="""Morphological characterisation with nested evidence sources. Replaces former morphology_notes (string) + morphology_sources (list) pair.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
+    nt_type: Optional[NeurotransmitterType] = Field(default=None, description="""Neurotransmitter type of this cell type. Applies to both classical and atlas terminal nodes. Carries the naming triple: name_in_source (verbatim source label), cl_terms (CL identifiers), sources (evidence provenance). Each source's method says whether the transmitter was shown directly or inferred.
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'properties'}},
+         'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+    electrophysiology: Optional[ElectrophysiologyProfile] = Field(default=None, description="""Intrinsic electrophysiological characterisation (firing pattern, sag, adaptation, bursting), with nested evidence sources. Each source's scope gives the preparation.
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'properties'}},
+         'domain_of': ['CellTypeNode']} })
+    morphology: Optional[MorphologyProfile] = Field(default=None, description="""Morphological characterisation (soma, dendrites, axon), with nested evidence sources.
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'properties'}},
+         'domain_of': ['CellTypeNode']} })
     prior_dataset_accession: Optional[str] = Field(default=None, description="""Dataset accession where this T-type was defined, e.g. SCP795, GEO:GSE173954. Used when definition_basis = PRIOR_TRANSCRIPTOMIC.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     prior_cluster_label: Optional[str] = Field(default=None, description="""Cluster label in the prior dataset, e.g. \"PLI3\", \"MLI1\". Used when definition_basis = PRIOR_TRANSCRIPTOMIC.
@@ -1451,14 +1623,20 @@ For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only
     sex_bias: Optional[SexBias] = Field(default=None, description="""Expected direction of sexual dimorphism in cell number or defining-marker expression. Set on classical nodes only. Used by find-candidates to score atlas clusters whose male_female_ratio matches the expected direction. Leave absent when sex dimorphism is not documented for this type.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     definition_references: Optional[list[str]] = Field(default=None, description="""General source citations for this node's defining properties — the key papers that established or characterised this cell type. DOI or PMID strings. Not property-scoped; for property-specific provenance use the nested sources on electrophysiology, morphology, anatomical_location, nt_type, and marker GeneDescriptors. Not needed for atlas terminal nodes — use metadata_url on AtlasMetadataEvidence instead.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'properties'}},
+         'domain_of': ['CellTypeNode']} })
     precomputed_expression: Optional[PrecomputedExpression] = Field(default=None, description="""Precomputed expression statistics for key genes from the atlas taxonomy. Used for property comparison scoring on mapping edges. Populated by the precomputed-stats workflow for atlas terminal nodes. Leave absent for classical/prior-transcriptomic nodes.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     cell_set_designation: Optional[str] = Field(default=None, description="""CAS taxonomy designation string for this cell set (e.g. \"Vip\", \"49_Vip\"). From CAS-format taxonomy ingest. Distinct from name which may be editorially adjusted.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     rationale_dois: Optional[list[str]] = Field(default=None, description="""DOIs cited as rationale for this cell set's designation in the source CAS taxonomy. From CAS-format taxonomy metadata.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
-    notes: Optional[str] = Field(default=None, description="""Any caveats or observations not captured by other fields""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+    notes: Optional[str] = Field(default=None, description="""Caveats that no other field can hold: contradictions between sources, claims that differ by species, suspected heterogeneity. A finding that fits another field belongs in that field, not here.
+""", json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
+                                          'value': 'properties'}},
+         'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
@@ -1488,7 +1666,7 @@ class EvidenceItem(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True,
          'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1516,7 +1694,7 @@ class LiteratureEvidence(EvidenceItem):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource', 'LiteratureEvidence']} })
     study_type: Optional[str] = Field(default=None, description="""Type of study: MORPHOLOGICAL, ELECTROPHYSIOLOGICAL, TRANSCRIPTOMIC, MULTIMODAL, FUNCTIONAL, REVIEW
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['LiteratureEvidence']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1574,7 +1752,7 @@ class AtlasMetadataEvidence(EvidenceItem):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     merfish_markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""MERFISH panel markers for this cell set (from merfish.markers.combo)""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     metadata_url: Optional[str] = Field(default=None, description="""URL or accession of the metadata file used""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtlasMetadataEvidence']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1609,7 +1787,7 @@ class AtlasQueryEvidence(EvidenceItem):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AtlasQueryEvidence']} })
     atlas_version: Optional[str] = Field(default=None, description="""Explicit data version string from the atlas if distinct from the atlas name, e.g. \"20231215\" or \"WMBv1.0.0\".
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AtlasQueryEvidence']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1782,7 +1960,7 @@ class AnnotationTransferEvidence(EvidenceItem):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
     source_groups: Optional[list[SourceGroup]] = Field(default=None, description="""Optional. When this evidence's metrics were computed by pooling multiple raw source clusters into one pseudo-source, record the composition here. Absence means per-source metrics keyed by source_cluster_label.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1844,7 +2022,7 @@ class SpatialColocationEvidence(EvidenceItem):
     colocation_value: Optional[float] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['SpatialColocationEvidence']} })
     registration_method: Optional[str] = Field(default=None, description="""How cells/spots were registered to CCF, if applicable""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpatialColocationEvidence']} })
     registration_uncertainty: Optional[bool] = Field(default=None, description="""Set true if registration accuracy is a known concern (adds MERFISH_REGISTRATION_UNCERTAINTY caveat)""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpatialColocationEvidence']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1878,7 +2056,7 @@ class PatchSeqEvidence(EvidenceItem):
     morphology_features: Optional[list[str]] = Field(default=None, description="""Morphological features consistent with the type, e.g. \"axonal arborisation in Purkinje layer\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['PatchSeqEvidence']} })
     ephys_features: Optional[list[str]] = Field(default=None, description="""Key E-type features, e.g. \"fast-spiking\", \"Rin: 120-180 MOhm\", \"no adaptation\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['PatchSeqEvidence']} })
     matched_cluster_id: Optional[str] = Field(default=None, description="""Atlas cluster ID matched by these patch-seq cells""", json_schema_extra = { "linkml_meta": {'domain_of': ['PatchSeqEvidence']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1918,7 +2096,7 @@ class ProjectionSeqEvidence(EvidenceItem):
                        'MarkerAnalysisEvidence',
                        'CorrelationRun',
                        'AnnotationTransferRun']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1948,7 +2126,7 @@ class ElectrophysiologyEvidence(EvidenceItem):
                        'AtSourceSet']} })
     etype_label: Optional[str] = Field(default=None, description="""E-type classification label""", json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyEvidence']} })
     key_features: Optional[list[str]] = Field(default=None, description="""Quantitative features matching the classical type""", json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyEvidence', 'MorphologyEvidence']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1978,7 +2156,7 @@ class MorphologyEvidence(EvidenceItem):
                        'AtSourceSet']} })
     imaging_method: Optional[str] = Field(default=None, description="""Golgi stain, biocytin fill, EM, expansion microscopy""", json_schema_extra = { "linkml_meta": {'domain_of': ['MorphologyEvidence']} })
     key_features: Optional[list[str]] = Field(default=None, description="""Morphological features, e.g. \"ascending axon collateral\", \"beaded dendrites\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyEvidence', 'MorphologyEvidence']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -2016,7 +2194,7 @@ class MarkerAnalysisEvidence(EvidenceItem):
                        'MarkerAnalysisEvidence',
                        'CorrelationRun',
                        'AnnotationTransferRun']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -2047,7 +2225,7 @@ class BulkCorrelationEvidence(EvidenceItem):
     target_accession: str = Field(default=..., description="""WMBv1 (or other atlas) cluster/supertype accession the evidence supports""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow', 'BulkCorrelationEvidence']} })
     statistics: Optional[str] = Field(default=None, description="""Free-form name:value map of statistic name → numeric value. YAML-inline mapping. Validated structurally only — key names are conventional, not enforced.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['BulkCorrelationEvidence']} })
-    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeSource', 'EvidenceItem']} })
     supports: EvidenceSupport = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
     explanation: str = Field(default=..., description="""Why this evidence supports/refutes/partially supports the mapping. Should be concise and citable — this text feeds the CL comment.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -2096,6 +2274,7 @@ class ManualCurationMarker(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['ManualCurationMarker']} })
     notes: Optional[str] = Field(default=None, description="""Optional free-text rationale for the manual override. Useful when the manual entry contradicts what a mechanical re-emit would produce.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
@@ -2123,7 +2302,7 @@ class DiscoveryContext(ConfiguredBaseModel):
                        'CorrelationContrast',
                        'AnnotationTransferRunSummary',
                        'AnnotationTransferRun']} })
-    kind: DiscoveryContextKind = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryContext']} })
+    kind: DiscoveryContextKind = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeAssertion', 'DiscoveryContext']} })
     rank: Optional[int] = Field(default=None, description="""Taxonomy rank at which the context is defined (0 = leaf cluster, 1 = supertype, …). For SURVIVAL_COHORT must match the parent DiscoveryScore.rank.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryContext', 'DiscoveryScore']} })
     n_members: int = Field(default=..., description="""Number of candidates in this context. Required for interpreting any percentile — 0.95 of 12 is much weaker discriminator than 0.95 of 500.
@@ -2266,7 +2445,7 @@ class MappingEdge(ConfiguredBaseModel):
     mapping_justification: Optional[MappingJustification] = Field(default=None, description="""Provenance of the mapping decision. Default for new edges: semapv:UnreviewedManualMapping. Promote to semapv:ManualMappingCuration on curator review. Phase 2 schema overhaul (2026-05-12).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge']} })
     confidence: Optional[MappingConfidence] = Field(default=None, description="""Ordinal mapping verdict. Phase 3 (2026-05-13): authority for this slot moved from Stage B (map-cell-type Step 3 synthesis) to report time (gen-report synthesis). Set by the report-gen agent alongside `confidence_score`, `rationale`, and the `rationale_*` provenance fields. Optional (`required: false`) because edges that have not been through report generation carry no headline verdict — honest state, not a regression. Pre-Phase-3 edges were swept clear of `confidence` in the Phase 3 invalidation migration; they regain it on the first gen-report pass. Spreadsheet / CAP exports should render edges with no confidence as \"(verdict pending)\".
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge']} })
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['SubtypeAssertion', 'MappingEdge']} })
     confidence_score: Optional[float] = Field(default=None, description="""Numeric confidence (0-1). Phase 3 (2026-05-13): written by the report-time agent alongside the ordinal `confidence`; the two agree by construction. Not curator-derived; no ordinal → numeric fallback. SSSOM-compatible.
 """, ge=0.0, le=1.0, json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge']} })
     rationale: Optional[str] = Field(default=None, description="""Short prose verdict distilled from the full report by the report-time agent. Phase 3 (2026-05-13). Format constraint: must cite specific structured fields (F1 values, accessions, marker counts) rather than free-form claims; an automated post-write check parses these citations and verifies them against the edge's structured data and references. The agent MUST NOT read prior `rationale` / `confidence` / `confidence_score` as input when regenerating — inputs are structured data + evidence + property_comparisons + the pool-candidates pre-pass.
@@ -2327,6 +2506,7 @@ class CellTypeMappingGraph(ConfiguredBaseModel):
     creation_date: Optional[date] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge', 'CellTypeMappingGraph']} })
     updated_date: Optional[date] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge', 'CellTypeMappingGraph']} })
     notes: Optional[str] = Field(default=None, description="""Free-text notes about scope, limitations, or outstanding issues""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
@@ -2397,6 +2577,7 @@ class AtSourceSet(ConfiguredBaseModel):
     sources: Optional[list[PropertySource]] = Field(default=None, description="""Quote-backed provenance for the correspondence — the verbatim paper quote(s) justifying \"this annotated cell set corresponds to this classical type\". Same shape and validation as defining_markers / anatomical_location sources (hook-validated against references.json). The load-bearing justification lives here, not in notes.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
                        'GeneDescriptor',
+                       'SubtypeAssertion',
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
@@ -2404,6 +2585,7 @@ class AtSourceSet(ConfiguredBaseModel):
                        'AtSourceSet']} })
     notes: Optional[str] = Field(default=None, description="""Free-text colour (heterogeneity observations, cross-references). Not the load-bearing justification — that belongs in sources.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
@@ -2522,6 +2704,7 @@ class BulkDataset(ConfiguredBaseModel):
     data_files: Optional[list[BulkDataFile]] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['BulkDataset']} })
     pools: Optional[list[BulkPool]] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['BulkDataset']} })
     notes: Optional[str] = Field(default=None, description="""Free-text notes (caveats, related datasets, scope limitations)""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
@@ -2835,8 +3018,10 @@ CLMapping.model_rebuild()
 GeneDescriptor.model_rebuild()
 Antibody.model_rebuild()
 CellTypeColocation.model_rebuild()
+SubtypeAssertion.model_rebuild()
 HasMarkerType.model_rebuild()
 PropertySource.model_rebuild()
+SubtypeSource.model_rebuild()
 TypeSynonym.model_rebuild()
 MarkerSource.model_rebuild()
 ElectrophysiologyProfile.model_rebuild()

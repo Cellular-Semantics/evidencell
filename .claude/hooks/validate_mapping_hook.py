@@ -51,6 +51,7 @@ try:
         check_flat_ref_pmids,
         check_ref_pmids,
         check_run_refs,
+        check_subtype_parents,
         linkml_validate,
         validate_terms,
         parse_md_annotations,
@@ -533,6 +534,15 @@ def main():
                     for e in rrid_errors:
                         print(f"  - {e}", file=sys.stderr)
                     errors_found = True
+
+        # 3e. subtype_of parents resolve to canonical lit nodes (KB index; #183)
+        if isinstance(doc, dict):
+            parent_errors = check_subtype_parents(doc, file_path)
+            if parent_errors:
+                print("subtype_of parent errors:", file=sys.stderr)
+                for e in parent_errors:
+                    print(f"  - {e}", file=sys.stderr)
+                errors_found = True
 
         # 4. LinkML schema validation (subprocess)
         ok, output = linkml_validate(simulated, schema_path, file_path.name, file_path=file_path)
