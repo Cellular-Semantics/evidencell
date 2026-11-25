@@ -43,7 +43,7 @@ def _sample_lit_node() -> dict:
     return {
         "id": "olm_cell_ca1",
         "definition_basis": "CLASSICAL_MULTIMODAL",
-        "defining_markers": [{"symbol": "Sst"}, {"symbol": "Chrna2"}],
+        "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Chrna2"}],
     }
 
 
@@ -110,7 +110,7 @@ def test_hash_changes_on_marker_edit():
     h_base = compute_hash(_sample_edge(), _sample_lit_node(), _sample_tax_node())
 
     lit_node_changed = _sample_lit_node()
-    lit_node_changed["defining_markers"] = [{"symbol": "Sst"}]  # dropped Chrna2
+    lit_node_changed["defining_markers"] = [{"name_in_source": "Sst"}]  # dropped Chrna2
     h_changed = compute_hash(
         _sample_edge(), lit_node_changed, _sample_tax_node()
     )
@@ -156,7 +156,7 @@ def test_is_stale_after_marker_drift():
     )
     assert not is_stale(edge, lit_node, _sample_tax_node())
 
-    lit_node["defining_markers"].append({"symbol": "Reln"})
+    lit_node["defining_markers"].append({"name_in_source": "Reln"})
     assert is_stale(edge, lit_node, _sample_tax_node())
 
 

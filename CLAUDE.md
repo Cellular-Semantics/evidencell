@@ -163,16 +163,28 @@ means** — the same as the former YAML values, but not cell-weighted. Details
 in `src/evidencell/expression_cache.py`.
 
 - `just build-taxonomy-db` creates the cache tables **empty**; they refill on
-  use. A new stats release (different sha256), a regenerated gene mapping TSV
-  or a change to the protein-alias table drops and reloads the cache.
-- Stage A (`find-candidates`) does not score protein-name markers (`PV`,
-  `CB`, `mGluR1` …) that resolve to a gene only through `marker_aliases`;
-  they are listed as `unscored_protein_alias_markers` until gene identity is
-  resolved properly (#216). Stage B still resolves them for its comparisons.
+  use. The cache is keyed by Ensembl ID. A new stats release (different
+  sha256) drops it, and is refused until `gene_ids.tsv.gz` is refreshed for
+  that file (its column indices would otherwise be untrusted).
+- **Gene identity (#216).** Marker names resolve to the stats file's genes
+  through the `genes` / `gene_synonyms` tables, loaded by `build-taxonomy-db`
+  from the committed `kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz` (Translator
+  NodeNormalization + Name Resolver; refresh with `just build-gene-ids`).
+  A classical marker's `ncbi_gene_id` pins its gene (a gene of another
+  species reaches the taxonomy through its official symbol only); one
+  without an ID is `NO_GENE_ID` and not resolved by name. A pin is one
+  marker's gene, never applied to another marker by shared wording. Atlas
+  metadata names resolve by exact symbol, case-insensitive symbol, or a
+  synonym exactly one gene claims. See `src/evidencell/gene_identity.py`.
 - **Fails closed**: an uncached gene with no stats file stops the run with
   `just fetch-mapmycells {taxonomy_id}`. There is no metadata-only fallback.
-- Genes that can't be measured (no Ensembl mapping, absent from the stats
-  file) are recorded as not measured and reported — never a silent `{}`.
+- Names that can't be measured are recorded and reported — never a silent
+  `{}`: `NO_ENSEMBL_MAPPING` (no gene of the taxonomy has that name),
+  `AMBIGUOUS_SYMBOL` (several do), `NO_GENE_ID` (a classical marker with
+  no `ncbi_gene_id`), `PIN_NOT_IN_TAXONOMY` (its gene isn't in the
+  taxonomy, nor its official symbol) or `CONFLICTING_PINS` (markers of one
+  node share a name but not a gene). Set the marker's gene per
+  `docs/marker_gene_ids.md`.
 - Marker scoring in `find-candidates` uses expression only. The atlas
   node's metadata marker lists are cross-checked and disagreements reported
   as `marker_discrepancies` (carried into Stage B property-comparison notes).
@@ -186,6 +198,7 @@ in `src/evidencell/expression_cache.py`.
 | Skill | When to invoke |
 |---|---|
 | `query-taxonomy-db` | Any taxonomy candidate search, field coverage check, or DB exploration. **Do not read taxonomy YAML files directly for query purposes** — the DB is the query interface; YAML is the edit interface. Atlas expression is not in YAML: read it through `TaxonomyDB.expression()`, which loads uncached genes from the MapMyCells stats file into the DB's `node_expression` table on demand (#189). Querying `node_expression` directly only sees genes already cached. |
+| `gene-id-curation` | Gene or protein name as a source writes it + taxon → NCBI Gene ID and official symbol (or why it names no single gene). Generic; how its result goes into the KB is `docs/marker_gene_ids.md`. |
 | `cl-mapping` | Setting, checking or acting on a node's `cl_mapping` (`.claude/skills/cl-mapping.md`): CL term search, EXACT / BROAD / RELATED, what each means for `cl-term-request`. |
 | `term-grounding` | Writing any other ontology term into KB YAML (`.claude/skills/term-grounding.md`): which ontology each field takes, which tool finds it, how to pass the hook. |
 | `retrieve-dataset` | Downloading and inspecting an expression dataset (h5ad, RDS, loom, mtx). | Any time an orchestrator is added, removed, renamed, or its status changes, update `WORKFLOW.md` in the same commit. The overview table, inputs table, and typical workflow diagram must all reflect the current state. Never leave a stale status entry or a duplicate section.
@@ -271,8 +284,18 @@ Two things to know before using them:
   (`Human.` / `Macaque.` / `Marmoset.precomputed_stats.20250507.h5`) — use
   those directly if you need a single-species reference.
 
-The accessor also needs `conf/gene_mapping_{taxonomy_id}.tsv` (symbol →
-Ensembl; committed for CCN20230722, otherwise `just generate-gene-mapping`).
+The accessor also needs the taxonomy's gene identity table,
+`kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz` (committed for CCN20230722;
+otherwise `just build-gene-ids {taxonomy_id}`, which needs the stats file and
+network). `build-taxonomy-db` loads it offline.
+
+### Gene IDs on classical markers
+
+Every marker records `name_in_source` (the source's wording). A classical
+marker (`defining_markers`, `negative_markers`, `neuropeptides`) that names
+one gene also carries that gene's `ncbi_gene_id`, in the node's species, and
+its official `symbol` — both or neither. Before adding or editing one, or
+when a marker is reported `NOT MEASURED`: Follow `docs/marker_gene_ids.md` (it calls the `gene-id-curation` skill).
 
 ---
 

@@ -41,6 +41,7 @@ from typing import Any, Union
 import yaml
 
 from evidencell import node_diff as nd
+from evidencell.gene_identity import marker_display
 from evidencell.paths import refs_dir_for_graph
 from evidencell.references import load_papers, load_quotes, store_exists
 from evidencell.split_graph import is_stub
@@ -226,7 +227,7 @@ def _node_pieces(node: dict, quotes: dict, papers: dict, fold: bool,
             continue
         L += [f"{h} {title}", ""]
         for m in items:
-            sym = m.get("name_in_source") or m.get("symbol") or "?"
+            sym = marker_display(m) or "?"
             L += [f"**{sym}**", ""]
             L += _sources_pieces(m.get("sources"), quotes, papers, fold)
         L.append("")

@@ -8,6 +8,12 @@
 # Non-terminal nodes = classical types, prior transcriptomic types, or intermediate types.
 # Edges = evidenced mapping assertions between nodes; can be chained transitively.
 #
+# Version: 0.9.0 (2026-11-24) — BREAKING: GeneDescriptor splits wording from identity (#244).
+#                               name_in_source (required) = the marker as the source writes it;
+#                               symbol (now optional) = official symbol of the ncbi_gene_id gene,
+#                               set together with ncbi_gene_id or not at all. Atlas metadata
+#                               markers carry name_in_source only (identity resolved in the
+#                               taxonomy DB). ADDITIVE: MarkerSource.antibody (Antibody class).
 # Version: 0.8.1 (2026-11-15) — ADDITIVE: MarkerType gains TRANSGENE_REPORTER and NOT_STATED (#196);
 #                               marker_type stays required, but a source that names no assay is
 #                               recorded as NOT_STATED rather than a guessed PROTEIN/TRANSCRIPT.
@@ -150,11 +156,12 @@ default_range: string
 #   OntologyTerm:   id, label, name_in_source — all three fields required
 #                   (used for species, anatomy, CL terms, etc.)
 #
-#   GeneDescriptor: symbol = name_in_source AND label (gene symbols ARE their
-#                   own canonical labels in scientific usage; case reflects species
-#                   convention, e.g. Sst vs SST);
-#                   ncbi_gene_id = id (cross-species stable identifier;
-#                   strongly recommended)
+#   GeneDescriptor: name_in_source = the marker as the source writes it (PV, NeuN,
+#                   PSA-NCAM, or an atlas metadata spelling); never checked.
+#                   ncbi_gene_id = id; symbol = label (the gene's official symbol).
+#                   symbol and ncbi_gene_id are set together or not at all; the
+#                   pre-edit hook checks both. Atlas metadata markers carry
+#                   name_in_source only — identity is resolved in the taxonomy DB.
 #
 #   Regions:        anatomical_location = OntologyTerm (id + label + name_in_source);
 #                   name_in_source = region name as in the source paper or atlas;
@@ -1088,22 +1095,32 @@ classes:
 
   GeneDescriptor:
     description: >
-      A gene identified by the universal naming triple (name_in_source | id | label).
-      For genes, symbol fills both the name_in_source and label roles: gene symbols
-      ARE their own canonical labels in scientific usage, and recording the symbol
-      as written in the source preserves species case convention (Sst vs SST) and
-      the exact source wording. ncbi_gene_id is the stable cross-species identifier
-      (the id role). Evidence sources for the marker assertion are recorded in
-      the sources list.
+      A marker, identified by the universal naming triple (name_in_source | id | label):
+      name_in_source is the marker as the source writes it; ncbi_gene_id (id) and
+      symbol (label) record the gene it means. symbol and ncbi_gene_id are set
+      together or not at all. A marker with no single gene — an antibody against a
+      modified form (PSA-NCAM, phospho-CREB) or a gene family (CaMKII) — carries
+      name_in_source only, with the antibody on its sources. A marker whose gene the
+      source leaves unsettled (an abbreviation several genes claim) also carries
+      name_in_source only, with the reason in the node's notes. When settling the
+      gene took judgement (an ambiguous name, the source's own definition, an
+      antibody's target), say how in the source's notes. Exogenous labels (BrdU,
+      tracers) and region names are not markers: say what a label shows in the
+      node's notes, and put a region in anatomical_location. Atlas metadata markers
+      carry name_in_source only; their gene is resolved in the taxonomy DB.
+      Evidence sources for the marker assertion are recorded in the sources list.
     attributes:
-      symbol:
+      name_in_source:
         required: true
         description: >
-          Gene symbol exactly as it appears in the source: e.g. Sst, Pvalb,
-          Slc17a6 (mouse convention) or SST, PVALB, SLC17A6 (human convention).
-          Serves as both name_in_source and label — gene symbols are their own
-          canonical identifiers in scientific usage. ncbi_gene_id gives the
-          stable cross-species identifier.
+          The marker exactly as the source writes it: a paper's wording (PV, CB,
+          NeuN, mGluR1, PSA-NCAM) or an atlas metadata column's spelling
+          (including outdated symbols such as Prrxl1). Free text; not checked.
+      symbol:
+        description: >
+          Official symbol of the ncbi_gene_id gene in its species (Pvalb, Calb1,
+          Rbfox3; PVALB in human). Set together with ncbi_gene_id, never alone.
+          The pre-edit hook checks it equals the gene's current symbol.
       modifier:
         description: "Expression context: HIGH, LOW, ABSENT, ENRICHED"
       ncbi_gene_id:
@@ -1140,6 +1157,25 @@ classes:
           Populate for classical and prior-transcriptomic nodes. Leave empty for
           atlas node markers (atlas_markers, merfish_markers) — provenance is
           implicit from the parent node's atlas + cell_set_accession.
+
+  Antibody:
+    description: >
+      The antibody a protein marker was detected with, as the source names it,
+      optionally with its Research Resource Identifier. Recorded on MarkerSource:
+      how the marker was detected, not what it is. Other detail (target epitope,
+      host, dilution) goes in the MarkerSource notes.
+    attributes:
+      name_in_source:
+        required: true
+        description: >
+          The antibody as the source names it: a clone or product name
+          (TuJ1, "anti-NeuN clone A60", "anti-PSA-NCAM 12E3"). Free text.
+      rrid:
+        pattern: "^RRID:AB_[0-9]+$"
+        description: >
+          Antibody Registry RRID, e.g. RRID:AB_2298772. Only when the source
+          states it or its catalogue entry identifies it unambiguously. The
+          pre-edit hook checks it resolves (SciCrunch resolver).
 
   CellTypeColocation:
     description: >
@@ -1372,6 +1408,7 @@ classes:
       a controlled marker_type field (see MarkerType). Use in
       GeneDescriptor.sources. marker_type is required; use NOT_STATED when
       neither the quote nor the cited paper's methods name an assay.
+      For PROTEIN evidence, record the antibody when the source names it.
 
       Examples:
         - marker_type: PROTEIN
@@ -1379,6 +1416,11 @@ classes:
           scope: "adult human GPi"
           snippet: "SST+/SLC17A6+/SLC32A1+ neurons are located on the borders of the GPi"
           ref: "https://doi.org/10.1016/j.neuron.2017.03.017"
+
+        - marker_type: PROTEIN
+          method: "IHC"
+          antibody: {name_in_source: "TuJ1", rrid: "RRID:AB_xxxxxxx"}
+          ref: "PMID:xxxxxxxx"
 
         - marker_type: TRANSCRIPT
           method: "snRNA-seq"
@@ -1397,6 +1439,14 @@ classes:
           scope: "mouse TRN"
           quote_key: "<corpus_id>_<hash>"
           ref: "PMID:xxxxxxxx"
+    attributes:
+      antibody:
+        range: Antibody
+        inlined: true
+        description: >
+          The antibody used to detect the marker (PROTEIN evidence), when the
+          source names it. For a marker with no single gene (PSA-NCAM,
+          phospho-CREB, CaMKII) this is the marker's identity.
 
   ElectrophysiologyProfile:
     description: >

@@ -104,20 +104,77 @@ adapters that aren't cached.
 
 ### Gene symbols and IDs
 
-**Storage format**
+**Storage format** (#244)
 ```yaml
-symbol: "Chrna2"
-ncbi_gene_id: 11440           # MGI or NCBI, species-specific
+name_in_source: "CB"               # as the source writes it — never checked
+symbol: "Calb1"                    # the gene's official symbol
+ncbi_gene_id: "NCBIGene:12307"     # species-specific NCBI Gene CURIE
 ```
 
-**Check**
-- `symbol` resolves to `ncbi_gene_id` in the reference gene database.
-- Gene symbols alone are not sufficient — the same symbol can refer to different genes
-  across species (e.g. human CHRNA2 vs mouse Chrna2 have different NCBITaxon-scoped IDs).
+**Check** (`gene_identity.check_marker_gene_ids`, hook step 3c), for every
+GeneDescriptor on a node (`nodes[*]`) in a `kb/graphs` file. Markers on edge
+evidence (`edges[*].evidence[*]`) are **not checked**: a gene on an edge
+should be checked for consistency with the two nodes it links (taxonomy DB
+node and graph node), which — with cross-species mapping — is future work.
+- `symbol` and `ncbi_gene_id` are both set or both absent;
+- the ID exists in Translator NodeNormalization as an NCBI gene (an ID that
+  NodeNorm answers with another NCBIGene ID — merged or replaced — is
+  rejected naming the replacement);
+- its taxon is the node's `species` (or the graph's), or a descendant of it
+  (a human gene on a Primates node, a mouse gene on a Murinae node) — via
+  the NCBITaxon slim;
+- `symbol` equals the gene's official symbol (its NodeNormalization label)
+  exactly. Catches a plausible ID for the wrong gene; the free-text
+  `name_in_source` carries the source's wording and is not checked.
 
-**Verification source:** NCBI Gene (via API) or OAK HGNC/MGI adapter.
+**Verification source:** Translator NodeNormalization + Name Resolver,
+cached in `conf/gene_id_cache.json` (gitignored) and seeded offline from the
+committed `kb/taxonomy/*/gene_ids.tsv.gz`. Only genes that were found are
+cached; an ID NodeNorm doesn't know is looked up again on the next edit, so
+a passing Translator gap never becomes a lasting block.
 
-**Status:** Schema has `ncbi_gene_id` field. Hook check — *not yet implemented*.
+**Soft skip:** an uncached ID with Translator unreachable, a taxon
+comparison without `conf/oak_dbs/taxslim.obo`, a marker on a node with no
+species (and no graph species), or a gene NodeNorm gives no taxon, is
+allowed and listed under "Checks NOT run". Bypass:
+`EVIDENCELL_SKIP_GENE_CHECK=1`.
+
+**Status:** Implemented end-to-end (#216; official-symbol rule #244). Tests:
+`tests/test_gene_identity.py` (unit, offline cache),
+`tests/test_hook_integration.py` (through the hook: seeded-cache blocks, a
+stub NodeNorm that knows no IDs (blocked, not cached), a symbol without an
+ID, offline soft skip, and live NodeNorm rejection of a
+hallucinated ID and of a mouse gene on a Primates node, marked
+`integration`).
+
+---
+
+### Antibody RRIDs
+
+**Storage format** (#244), on a marker's evidence:
+```yaml
+sources:
+  - marker_type: PROTEIN
+    antibody:
+      name_in_source: "anti-NeuN clone A60"   # as the source names it — not checked
+      rrid: "RRID:AB_2298772"                 # optional
+```
+
+**Check** (`rrid.check_antibody_rrids`, hook step 3d): every `rrid` on a
+`MarkerSource.antibody` — on node and edge-evidence markers — must resolve
+in the Antibody Registry.
+
+**Verification source:** SciCrunch resolver
+(`https://scicrunch.org/resolver/{RRID}.json`); RRIDs it knows are cached in
+`conf/rrid_cache.json` (gitignored), unknown ones are looked up again.
+
+**Soft skip:** an uncached RRID with the resolver unreachable is allowed and
+listed under "Checks NOT run". Bypass: `EVIDENCELL_SKIP_RRID_CHECK=1`.
+
+**Status:** Implemented end-to-end (#244). Tests: `tests/test_rrid.py`
+(unit), `tests/test_hook_integration.py` (through the hook: cached block,
+bypass, offline soft skip, live pass/block against SciCrunch, marked
+`integration`).
 
 ---
 

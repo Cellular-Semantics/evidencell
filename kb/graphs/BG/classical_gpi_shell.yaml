@@ -84,7 +84,8 @@ nodes:
             of the GPi whereas the pure GABAergic (PVALB+/SLC32A1+) cells are
             located in the center of the nucleus."
     neuropeptides:
-      - symbol: SST
+      - name_in_source: SST
+        symbol: SST
         ncbi_gene_id: "NCBIGene:6750"
     cl_mapping:
       cl_term: {id: CL:4310096, label: GPi Shell internal globus pallidus shell projection neuron (Primate), name_in_source: internal globus pallidus shell projection neuron}
@@ -92,11 +93,11 @@ nodes:
       mapping_notes: >
         CL:4310096 was created specifically for this type; this node IS that term.
     defining_markers:
-      - {symbol: SST, ncbi_gene_id: "NCBIGene:6750"}
-      - {symbol: TBR1, ncbi_gene_id: "NCBIGene:10716"}
-      - {symbol: SLC17A6, ncbi_gene_id: "NCBIGene:57084"}
+      - {name_in_source: SST, symbol: SST, ncbi_gene_id: "NCBIGene:6750"}
+      - {name_in_source: TBR1, symbol: TBR1, ncbi_gene_id: "NCBIGene:10716"}
+      - {name_in_source: SLC17A6, symbol: SLC17A6, ncbi_gene_id: "NCBIGene:57084"}
     negative_markers:
-      - {symbol: PVALB, modifier: ABSENT, ncbi_gene_id: "NCBIGene:5816"}
+      - {name_in_source: PVALB, symbol: PVALB, modifier: ABSENT, ncbi_gene_id: "NCBIGene:5816"}
     is_terminal: false
     proposed_cl_term:
       cl_id: CL:4310096
@@ -145,14 +146,18 @@ nodes:
           label: glutamatergic neuron
           name_in_source: Glut
     defining_markers:
-      - symbol: SST
+      - name_in_source: SST
+        symbol: SST
         ncbi_gene_id: NCBIGene:6750
-      - symbol: TBR1
+      - name_in_source: TBR1
+        symbol: TBR1
         ncbi_gene_id: NCBIGene:10716
-      - symbol: SLC17A6
+      - name_in_source: SLC17A6
+        symbol: SLC17A6
         ncbi_gene_id: NCBIGene:57084
     neuropeptides:
-      - symbol: SST
+      - name_in_source: SST
+        symbol: SST
         ncbi_gene_id: NCBIGene:6750
     is_terminal: true
 edges:
@@ -185,11 +190,11 @@ edges:
               label: glutamatergic neuron
               name_in_source: "Glut"
         defining_markers:
-          - {symbol: Sst}
-          - {symbol: Tbr1}
-          - {symbol: Slc17a6}
+          - {name_in_source: Sst}
+          - {name_in_source: Tbr1}
+          - {name_in_source: Slc17a6}
         negative_markers:
-          - {symbol: Pvalb, modifier: ABSENT}
+          - {name_in_source: Pvalb, modifier: ABSENT}
         metadata_url: "https://alleninstitute.github.io/HMBA_BasalGanglia_Consensus_Taxonomy/"
 
       - evidence_type: LITERATURE

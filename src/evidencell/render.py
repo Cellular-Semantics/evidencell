@@ -26,6 +26,7 @@ from pathlib import Path
 
 import yaml
 
+from evidencell.gene_identity import marker_display, marker_name
 from evidencell.references import load_store, store_exists
 
 
@@ -1011,12 +1012,12 @@ def build_reference_index(
             if src.get("ref"):
                 _add_lit(src["ref"], "neurotransmitter type")
         for marker in node.get("defining_markers", []):
-            sym = marker.get("symbol", "")
+            sym = marker_display(marker)
             for src in marker.get("sources", []):
                 if src.get("ref"):
                     _add_lit(src["ref"], f"{sym} marker")
         for marker in node.get("neuropeptides", []):
-            sym = marker.get("symbol", "")
+            sym = marker_display(marker)
             for src in marker.get("sources", []):
                 if src.get("ref"):
                     _add_lit(src["ref"], f"{sym} neuropeptide")
@@ -1661,15 +1662,15 @@ def extract_node_facts(
             "nt_refs": nt_sources_labels,
             "defining_markers": [
                 {
-                    "symbol": m.get("symbol", ""),
+                    "marker": marker_display(m),
                     "refs": _marker_refs(m),
                 }
                 for m in node.get("defining_markers", [])
             ],
-            "negative_markers": [m.get("symbol", "") for m in node.get("negative_markers", [])],
+            "negative_markers": [marker_display(m) for m in node.get("negative_markers", [])],
             "neuropeptides": [
                 {
-                    "symbol": m.get("symbol", ""),
+                    "marker": marker_display(m),
                     "refs": _marker_refs(m),
                 }
                 for m in node.get("neuropeptides", [])
@@ -1726,11 +1727,11 @@ def render_summary(
     lines.append("## Classical type")
     lines.append("")
     markers_str = ", ".join(
-        f"{m['symbol']}+"
+        f"{m['marker']}+"
         for m in cn["defining_markers"]
     )
     neg_str = ", ".join(f"{s}−" for s in cn["negative_markers"])
-    np_str = ", ".join(m["symbol"] for m in cn["neuropeptides"])
+    np_str = ", ".join(m["marker"] for m in cn["neuropeptides"])
     def _loc_label(loc: dict) -> str:
         name = loc.get("name_in_source") or loc.get("label") or loc.get("id", "")
         loc_id = loc.get("id", "")
@@ -2073,7 +2074,7 @@ def render_drilldown(
                 _, bare = _ref_identifier(ref) if ref else ("", "")
                 if bare == pmid or bare == doi or bare == corpus_id:
                     node_marker_refs.append(
-                        {"symbol": m.get("symbol", ""), "quote_key": src.get("quote_key", "")}
+                        {"marker": marker_name(m), "quote_key": src.get("quote_key", "")}
                     )
     for np in node.get("neuropeptides", []):
         if isinstance(np, dict):
@@ -2082,7 +2083,7 @@ def render_drilldown(
                 _, bare = _ref_identifier(ref) if ref else ("", "")
                 if bare == pmid or bare == doi or bare == corpus_id:
                     node_marker_refs.append(
-                        {"symbol": np.get("symbol", ""), "quote_key": src.get("quote_key", "")}
+                        {"marker": marker_name(np), "quote_key": src.get("quote_key", "")}
                     )
 
     # If paper only cited in node markers, it applies to all edges for this node
@@ -2153,7 +2154,7 @@ def render_drilldown(
     lines.append("|---|---|---|---|")
     seen_qk: set[str] = set()
     for mr in node_marker_refs:
-        symbol = mr["symbol"]
+        symbol = mr["marker"]
         qk = mr.get("quote_key", "")
         if qk in seen_qk:
             continue

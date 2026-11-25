@@ -17,7 +17,6 @@ from evidencell.stage_b_emit import (
     _caveats,
     _location_alignment,
     _marker_alignment,
-    _resolve_symbol,
     _property_comparisons,
     emit_stage_b,
 )
@@ -32,23 +31,6 @@ OLM_DISCOVERY_RANK0 = (
     / "map_olm_20260603"
     / "discovery_candidates_rank0.json"
 )
-
-
-# ── _resolve_symbol ─────────────────────────────────────────────────────────
-
-
-def test_resolve_symbol_aliases():
-    assert _resolve_symbol("PV") == "Pvalb"
-    assert _resolve_symbol("CB") == "Calb1"
-    assert _resolve_symbol("CR") == "Calb2"
-    assert _resolve_symbol("NOS") == "Nos1"
-    assert _resolve_symbol("VIP") == "Vip"
-
-
-def test_resolve_symbol_passthrough():
-    assert _resolve_symbol("Sst") == "Sst"
-    assert _resolve_symbol("Chrna2") == "Chrna2"
-    assert _resolve_symbol("Grm1") == "Grm1"
 
 
 # ── _location_alignment tier rules ──────────────────────────────────────────
@@ -176,9 +158,9 @@ def test_property_comparisons_basic_olm_synthetic():
         "anatomical_location": [
             {"id": "UBERON:0005371", "label": "CA1 stratum oriens", "compartment": "SOMA"},
         ],
-        "defining_markers": [{"symbol": "Sst"}, {"symbol": "Chrna2"}],
-        "negative_markers": [{"symbol": "PV"}],
-        "neuropeptides": [{"symbol": "Npy"}],
+        "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Chrna2"}],
+        "negative_markers": [{"name_in_source": "PV"}],
+        "neuropeptides": [{"name_in_source": "Npy"}],
     }
     atlas = {
         "nt_type": {"name_in_source": "GABA"},
@@ -186,10 +168,12 @@ def test_property_comparisons_basic_olm_synthetic():
             {"id": "MBA:399", "label": "stratum oriens",
              "count_in_or_near_100um": 250, "cell_count_completeness": None},
         ],
-        "expression": {"Sst": 12.7, "Chrna2": 0.57, "Pvalb": 3.12, "Npy": 7.58},
+        # Keyed by the classical marker name; PV resolved to Pvalb (#216).
+        "expression": {"Sst": 12.7, "Chrna2": 0.57, "PV": 3.12, "Npy": 7.58},
+        "gene_symbols": {"Sst": "Sst", "Chrna2": "Chrna2", "PV": "Pvalb", "Npy": "Npy"},
         "not_measured": {},
         "expression_source": "stats.h5",
-        "markers": [{"symbol": "Sst", "category": "NEUROPEPTIDE"}],
+        "markers": [{"name_in_source": "Sst", "category": "NEUROPEPTIDE"}],
     }
     candidate = {
         "node_id": "CS20230722_CLUS_0768",
@@ -228,7 +212,7 @@ def test_property_comparisons_basic_olm_synthetic():
     # marker_Chrna2 CONSISTENT (top-cohort presence)
     assert by_prop["marker_Chrna2"]["alignment"] == "CONSISTENT"
 
-    # negative_marker_PV DISCORDANT (Pvalb 3.12 in atlas; alias resolved)
+    # negative_marker_PV DISCORDANT (Pvalb 3.12 in atlas; PV resolved to Pvalb)
     assert by_prop["negative_marker_PV"]["alignment"] == "DISCORDANT"
     # node_b_value should cite the Pvalb value (alias-resolved).
     assert "3.12" in by_prop["negative_marker_PV"]["node_b_value"]
@@ -244,7 +228,7 @@ def test_property_comparisons_basic_olm_synthetic():
 def test_stage_a_values_cite_the_discovery_stats_file():
     """A value taken from the discovery JSON cites the file Stage A read,
     even if the emit-time accessor reports another."""
-    classical = {"defining_markers": [{"symbol": "Sst"}, {"symbol": "Npy"}]}
+    classical = {"defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Npy"}]}
     atlas = {
         "expression": {"Sst": 12.7, "Npy": 7.58},
         "not_measured": {},
@@ -272,7 +256,7 @@ def test_property_comparisons_not_measured_and_discrepancy_notes():
     """#189: NOT_ASSESSED only for genes recorded as not measured (with the
     reason), and Stage A metadata/expression discrepancies land in notes."""
     classical = {
-        "defining_markers": [{"symbol": "Sst"}, {"symbol": "Fakegene"}],
+        "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Fakegene"}],
     }
     atlas = {
         "expression": {"Sst": 0.02},
@@ -302,15 +286,17 @@ def test_property_comparisons_not_measured_and_discrepancy_notes():
     assert "METADATA DISCREPANCY LISTED_NOT_EXPRESSED" in sst["notes"]
 
 
-def test_classical_expression_symbols_are_canonical_and_deduped():
+def test_classical_expression_symbols_are_names_as_written_and_deduped():
+    """#216: names go to TaxonomyDB.expression as written; gene identity
+    resolves them there (PV and Pvalb are both asked for, one gene)."""
     from evidencell.stage_b_emit import _classical_expression_symbols
 
     classical = {
-        "defining_markers": [{"symbol": "Sst"}, {"symbol": "PV"}],
-        "negative_markers": [{"symbol": "Pvalb"}],
+        "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "PV"}],
+        "negative_markers": [{"name_in_source": "Pvalb"}],
         "neuropeptides": ["Npy"],
     }
-    assert _classical_expression_symbols(classical) == ["Sst", "Pvalb", "Npy"]
+    assert _classical_expression_symbols(classical) == ["Sst", "PV", "Pvalb", "Npy"]
 
 
 # ── end-to-end emit against the real OLM rank-0 fixture ─────────────────────

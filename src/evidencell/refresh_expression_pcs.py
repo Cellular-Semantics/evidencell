@@ -29,9 +29,16 @@ CLI::
 Without ``--all``, only ``GRAPH_FILE`` is processed; with ``--all``,
 every YAML under ``kb/graphs/**`` is processed.
 
-Protein → gene aliases (``mGluR1`` → ``Grm1`` etc.) are mapped via
-``_PROTEIN_TO_GENE_ALIASES``. Extend as new aliases come up; the
-fallback is the property suffix taken literally.
+Marker names (``mGluR1``, ``PV``, ``Sst``) resolve to atlas genes in
+``TaxonomyDB.expression`` through the gene identity tables (#216), pinned
+by the classical marker's ``ncbi_gene_id`` where it has one. The rewritten
+value names the atlas gene symbol the name resolved to.
+
+A PC whose property names a curated marker (one with a pin, or curated as
+having no single gene) is looked up by that marker only. Otherwise words
+from ``node_a_value`` are tried too, but a word counts only as an exact
+gene symbol: free text is not run through synonym or case-insensitive
+matching (``In`` is a synonym of Ahr).
 """
 
 from __future__ import annotations
@@ -40,14 +47,10 @@ import argparse
 import re
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
-
-# Protein → gene alias map lives in :mod:`marker_aliases`. Import the
-# canonical mapping so the two refreshers (this module and
-# stage_b_emit) stay in sync.
+from .gene_identity import EXACT_SYMBOL, marker_gene_ids
 from .kb_io import roundtrip_yaml
-from .marker_aliases import PROTEIN_TO_GENE_ALIASES as _PROTEIN_TO_GENE_ALIASES
 from .paths import repo_root
 
 
@@ -64,23 +67,28 @@ def _looks_stale(node_b_value: str) -> bool:
     return bool(_STALE_PATTERN.search(node_b_value))
 
 
-def _candidate_gene_symbols(pc: dict) -> list[str]:
-    """Return candidate gene symbols to look up atlas expression for
-    this PC, ordered by likelihood.
+def _candidate_gene_symbols(
+    pc: dict, gene_ids: Mapping[str, Any] | None = None
+) -> list[tuple[str, bool]]:
+    """Return ``(name, from_text)`` candidates to look up atlas expression
+    for this PC, ordered by likelihood.
 
     Sources, in order:
-    1. PC's ``property`` suffix (e.g. ``marker_Grm1`` → ``Grm1``).
-    2. Protein-alias mapped from the suffix (``marker_mGluR1`` →
-       ``Grm1``).
-    3. Tokens extracted from ``node_a_value`` matching a mouse-gene
-       capitalisation pattern.
+    1. PC's ``property`` suffix (e.g. ``marker_Grm1`` → ``Grm1``,
+       ``marker_mGluR1`` → ``mGluR1``, resolved to Grm1 downstream).
+       When the suffix is a curated marker (a key of ``gene_ids``), it is
+       the only candidate: its pin decides, and a marker curated as having
+       no single gene stays unmeasured.
+    2. Tokens extracted from ``node_a_value`` matching a mouse-gene
+       capitalisation pattern (``from_text``; accepted downstream only as
+       an exact gene symbol).
     """
-    out: list[str] = []
+    out: list[tuple[str, bool]] = []
     seen: set[str] = set()
 
-    def push(sym: str) -> None:
+    def push(sym: str, from_text: bool) -> None:
         if sym and sym not in seen:
-            out.append(sym)
+            out.append((sym, from_text))
             seen.add(sym)
 
     prop = pc.get("property") or ""
@@ -90,29 +98,35 @@ def _candidate_gene_symbols(pc: dict) -> list[str]:
         prop,
     )
     if suffix:
-        push(suffix)
-        if suffix in _PROTEIN_TO_GENE_ALIASES:
-            push(_PROTEIN_TO_GENE_ALIASES[suffix])
+        push(suffix, False)
+        if suffix in (gene_ids or {}):
+            return out
 
     node_a = pc.get("node_a_value") or ""
     if isinstance(node_a, str):
         for m in _GENE_TOKEN_PATTERN.finditer(node_a):
-            tok = m.group(1)
-            push(tok)
-            if tok in _PROTEIN_TO_GENE_ALIASES:
-                push(_PROTEIN_TO_GENE_ALIASES[tok])
+            push(m.group(1), True)
     return out
 
 
 def _load_expression(
-    taxonomy_id: str, accession: str, symbols: list[str]
-) -> dict[str, float]:
-    """``{symbol: mean_expression}`` for one atlas node, through the
-    on-demand accessor (uncached genes load from the stats file)."""
+    taxonomy_id: str,
+    accession: str,
+    symbols: list[str],
+    gene_ids: Mapping[str, Any] | None = None,
+) -> tuple[dict[str, float], dict[str, str], dict[str, str]]:
+    """``({name: mean_expression}, {name: atlas gene symbol},
+    {name: resolution method})`` for one atlas node, through the on-demand
+    accessor (uncached genes load from the stats file)."""
     from evidencell.taxonomy_db import TaxonomyDB, require_taxonomy_db
 
     db = TaxonomyDB(require_taxonomy_db(taxonomy_id))
-    return db.expression(symbols, accessions=[accession]).for_node(accession)
+    lookup = db.expression(symbols, accessions=[accession], gene_ids=gene_ids)
+    return (
+        lookup.for_node(accession),
+        {name: sym for name in symbols if (sym := lookup.gene_symbol(name)) is not None},
+        {name: m.method for name, m in lookup.genes.items()},
+    )
 
 
 def _format_expression_value(gene: str, mean: float) -> str:
@@ -128,18 +142,22 @@ _MARKER_FAMILY = (
 )
 
 
-def refresh_edge(edge: dict, taxonomy_id: str) -> list[dict[str, Any]]:
+def refresh_edge(
+    edge: dict, taxonomy_id: str, gene_ids: Mapping[str, Any] | None = None
+) -> list[dict[str, Any]]:
     """Inspect each marker-family PC on this edge; for any with a
     stale ``node_b_value``, look up the atlas-side expression and
-    rewrite ``node_b_value`` if a gene match is found. Returns a list
-    of change records (one per updated PC) for the audit log.
+    rewrite ``node_b_value`` if a gene match is found. ``gene_ids`` pins
+    marker names to the classical node's curated ``ncbi_gene_id``.
+    Returns a list of change records (one per updated PC) for the audit
+    log.
     """
     changes: list[dict[str, Any]] = []
     taxonomy_type = edge.get("taxonomy_type")
     if not taxonomy_type:
         return changes
 
-    stale: list[tuple[dict, list[str]]] = []
+    stale: list[tuple[dict, list[tuple[str, bool]]]] = []
     for pc in edge.get("property_comparisons") or []:
         if not isinstance(pc, dict):
             continue
@@ -148,26 +166,31 @@ def refresh_edge(edge: dict, taxonomy_id: str) -> list[dict[str, Any]]:
             continue
         if not _looks_stale(pc.get("node_b_value") or ""):
             continue
-        stale.append((pc, _candidate_gene_symbols(pc)))
+        stale.append((pc, _candidate_gene_symbols(pc, gene_ids)))
     if not stale:
         return changes
 
-    symbols = list(dict.fromkeys(sym for _, cands in stale for sym in cands))
-    expr = _load_expression(taxonomy_id, taxonomy_type, symbols)
+    symbols = list(dict.fromkeys(sym for _, cands in stale for sym, _ in cands))
+    expr, atlas_symbols, methods = _load_expression(
+        taxonomy_id, taxonomy_type, symbols, gene_ids
+    )
     if not expr:
         return changes
 
     for pc, candidates in stale:
         old_b = pc.get("node_b_value") or ""
-        for sym in candidates:
+        for sym, from_text in candidates:
+            if from_text and methods.get(sym) != EXACT_SYMBOL:
+                continue
             if sym in expr:
-                new_b = _format_expression_value(sym, expr[sym])
+                gene = atlas_symbols.get(sym, sym)
+                new_b = _format_expression_value(gene, expr[sym])
                 pc["node_b_value"] = new_b
                 changes.append(
                     {
                         "edge_id": edge.get("id"),
                         "property": pc.get("property"),
-                        "gene": sym,
+                        "gene": gene,
                         "mean_expression": expr[sym],
                         "old_node_b_value": old_b,
                         "new_node_b_value": new_b,
@@ -209,7 +232,10 @@ def refresh_graph(
         taxonomy_id = tax_node.get("taxonomy_id")
         if not taxonomy_id:
             continue
-        changes = refresh_edge(edge, taxonomy_id)
+        classical = nodes_by_id.get(edge.get("lit_type") or "")
+        changes = refresh_edge(
+            edge, taxonomy_id, marker_gene_ids(classical) if isinstance(classical, dict) else None
+        )
         all_changes.extend(changes)
 
     if all_changes and not dry_run:

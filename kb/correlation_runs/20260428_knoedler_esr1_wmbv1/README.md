@@ -21,7 +21,9 @@ Three within-region male-vs-female contrasts (POA, VMH, BNST) all return the sam
 ## Reproduce
 
 ```
-python kb/correlation_runs/20260428_knoedler_esr1_wmbv1/correlate.py
+# The symbol → Ensembl TSV this run used was retired in #216; restore it first
+git show 7f39421:conf/gene_mapping_CCN20230722.tsv > conf/gene_mapping_CCN20230722.tsv
+uv run python kb/correlation_runs/20260428_knoedler_esr1_wmbv1/correlate.py
 ```
 
-Outputs in `ranked_contrasts/`. Inputs in `data/` (region CSVs from GEO; checksums in [manifest.yaml](manifest.yaml)) plus `conf/mapmycells/CCN20230722/precomputed_stats.h5` and `conf/gene_mapping_CCN20230722.tsv` (project-relative).
+Outputs in `ranked_contrasts/`. Inputs in `data/` (region CSVs from GEO; checksums in [manifest.yaml](manifest.yaml)) plus `conf/mapmycells/CCN20230722/precomputed_stats_ABC_revision_230821.h5` (`just fetch-mapmycells CCN20230722`) and the restored `conf/gene_mapping_CCN20230722.tsv` (project-relative).
