@@ -130,6 +130,37 @@ nodes:
             method: "scRNA-seq + snRNA-seq"
             scope: "adult mouse dLGN — graded core vs shell expression"
             quote_key: "237389962_1dd0f6d1"
+          - ref: "PMID:41814933"
+            method: "review statement in introduction"
+            scope: "mouse dLGN — TRCs are the principal retinorecipient neurons, 80-90% of dLGN neurons"
+            quote_key: "286491924_f2e9799b"
+          - ref: "PMID:25011644"
+            method: "introduction statement"
+            scope: "mouse dLGN relay neurons"
+            quote_key: "1225644_425d38ca"
+      - id: UBERON:0002436
+        label: "primary visual cortex"
+        name_in_source: "primary visual cortex (V1); L4 densely, also L1 and L5b/6"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:37913772"
+            method: "review statement summarising axonal imaging and retrograde tracing literature"
+            scope: "mouse dLGN → V1; dense in L4, extending to L1 and L5b/6 (L1 projection attributed to shell neurons)"
+            quote_key: "264598574_32e8c9a5"
+          - ref: "PMID:38917805"
+            method: "introduction statement"
+            scope: "mouse dLGN thalamocortical neurons project to primary visual cortex"
+            quote_key: "257758447_a28e7746"
+      - id: UBERON:0001903
+        label: "thalamic reticular nucleus"
+        name_in_source: "TRN (thalamocortical axon collaterals)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:38890758"
+            method: "inferred from a broader population: vGluT2-labelled thalamocortical axon collaterals in TRN and optogenetic stimulation of TC collaterals; not traced specifically from dLGN in the quote"
+            scope: "postnatal mouse thalamocortical projections through TRN (all modalities); collaterals emerge in the second postnatal week and strengthen through weeks 2-4"
+            quote_key: "270555191_96773b23"
+            support: WEAK
     nt_type:
       name_in_source: "glutamatergic"
       cl_terms:
@@ -145,6 +176,14 @@ nodes:
           method: "Epi-Retro-Seq + snmC-seq + scRNA-seq integration"
           scope: "adult mouse — central thalamus exclusively excitatory apart from LGd local interneurons"
           quote_key: "258464391_a576f421"
+        - ref: "PMID:28965517"
+          method: "review statement — relay cells described as excitatory projection neurons; glutamatergic transmitter inferred from excitatory thalamocortical identity, not shown directly"
+          scope: "rodent dLGN principal (TC relay) neurons"
+          quote_key: "4601077_8f3fc6a4"
+        - ref: "PMID:38917805"
+          method: "introduction statement — excitatory thalamocortical neurons; glutamatergic transmitter inferred, not shown directly"
+          scope: "mouse dLGN TCNs"
+          quote_key: "257758447_a28e7746"
     defining_markers:
       - name_in_source: Pvalb
         symbol: Pvalb
@@ -183,6 +222,12 @@ nodes:
         described in dLGN of mice, cats and primates, but transcriptomic
         differences between them are subtle relative to their differences in
         morphology and cortical projection targets.
+        In mouse, dLGN relay cells have highly stereotyped, complex dendritic
+        arbors, classifiable from quantitative dendritic architecture into
+        biconical, radially symmetrical and hemispheric (X-, Y- and W-like)
+        profiles; these features are present at early postnatal ages and
+        dendritic fields resemble the adult pattern after the first postnatal
+        week (El-Danaf et al., 2015; Krahe et al., 2011).
       sources:
         - ref: "PMID:34473054"
           method: "review of prior anatomy + transcriptomics"
@@ -192,17 +237,45 @@ nodes:
           method: "review"
           scope: "dLGN of mice, cats and primates"
           quote_key: "244102130_41b92975"
+        - ref: "PMID:26174426"
+          method: "analysis of relay-cell dendritic morphology across postnatal development"
+          scope: "postnatal mouse dLGN relay cells"
+          quote_key: "5842285_4ec71661"
+        - ref: "PMID:22131405"
+          method: "quantitative analysis of relay-cell dendritic architecture"
+          scope: "early postnatal mouse dLGN relay cells"
+          quote_key: "16328698_cc12bb7a"
     electrophysiology:
       description: >
         Intrinsic properties of mouse dLGN relay neurons are not described in
         the report. LGN in rodents and monkeys contains subpopulations
         distinguished by single-cell electrophysiological properties, spatial
         localisation and inputs from distinct retinal ganglion cell subtypes.
+        The 2026-11-25 mouse dLGN relay report adds: relay neurons fire in
+        tonic and burst modes, the balance between them regulated by
+        retinogeniculate synaptic dynamics (Kerschensteiner et al., 2017);
+        active membrane properties and spike firing mature rapidly over the
+        first postnatal week(s), before eye opening (El-Danaf et al., 2015);
+        and the morphologically distinct relay-cell classes showed no
+        additional distinguishing electrophysiological properties (Krahe et
+        al., 2011).
       sources:
         - ref: "PMID:35102334"
           method: "review"
           scope: "rodent and monkey LGN subpopulations"
           quote_key: "246443644_61cfc49b"
+        - ref: "PMID:28965524"
+          method: "review (special-issue introduction)"
+          scope: "mouse retinogeniculate pathway — tonic and burst firing of TC relay neurons"
+          quote_key: "5326680_4916b041"
+        - ref: "PMID:26174426"
+          method: "discussion statement summarising prior developmental recordings"
+          scope: "postnatal mouse dLGN relay cells"
+          quote_key: "5842285_4ec71661"
+        - ref: "PMID:22131405"
+          method: "electrophysiological analysis of morphologically classified relay cells"
+          scope: "early postnatal mouse dLGN relay cells"
+          quote_key: "16328698_cc12bb7a"
     at_source_sets:
       - dataset_accession: GEO:GSE182211
         source_label: LGd
@@ -230,6 +303,13 @@ nodes:
           of local GABAergic interneurons among its excitatory relay neurons.
           Supporting quote: 258464391_a576f421 (Zhou et al., 2023;
           https://doi.org/10.1101/2023.05.01.538832).
+          The interneurons are in direct synaptic apposition with relay
+          neurons: they inhibit them via axonal F1 terminals and via
+          presynaptic dendrites (F2 terminals) that form triads with a retinal
+          terminal on the relay-cell dendrite; local interneurons and TRN are
+          the main sources of inhibitory input to relay neurons in mouse
+          dLGN. Supporting quotes: 26076888_af7e5f6a, 26076888_f3def9a4
+          (Yang et al., 2017; PMID:29252999).
     cl_mapping:
       cl_term:
         id: CL:4023068
@@ -246,6 +326,7 @@ nodes:
       - "PMID:34831385"
       - "PMID:36476860"
       - "https://doi.org/10.1101/2023.05.01.538832"
+      - "PMID:22131405"
     is_terminal: false
     notes: >
       SUSPECTED HETEROGENEITY: in adult mouse, dLGN TC neurons cannot be
@@ -267,6 +348,15 @@ nodes:
       extreme of the TRN gradient.
 
       SPECIES: species left null.
+
+      SPECIES OF 2026-11-25 ADDITIONS: sources added from the mouse dLGN relay
+      report (inputs/deepsearch/dLGN_relay.pdf) are mouse (one rodent review),
+      scoped as such; they do not extend the primate claims. The pre-existing
+      electrophysiology sentence "not described in the report" refers to the
+      earlier thalamus report, not this one. The TRN axon-collateral target
+      is inferred from thalamocortical neurons in general (support WEAK).
+      The V1 layer-1 projection attributed to dLGN is shell-biased, not a
+      property of the whole relay population.
 
       Member of the thalamic_glutamatergic_projection_neuron family (primary
       end of the trans-thalamic transcriptional axis).
