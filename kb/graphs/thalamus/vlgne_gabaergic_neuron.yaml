@@ -64,4 +64,122 @@ nodes:
         notes: >
           Containment inferred from structural subdivision (vLGNe is one of
           the two major vLGN laminae).
+    anatomical_location:
+      - id: MBA:300
+        label: "Ventral part of the lateral geniculate complex, lateral zone"
+        name_in_source: "external vLGN (vLGNe)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:32497303"
+            method: "labelling with canonical and novel cell type-specific markers; spatial distribution analysis (transcriptomically distinct GABAergic types in vLGNe, in four adjacent sublaminae)"
+            scope: "mouse vLGNe"
+            quote_key: "219328889_a1d23e11"
+          - ref: "PMID:32497303"
+            method: "statement in source (four subtype-specific sublaminae of retinorecipient neurons in vLGNe)"
+            scope: "mouse vLGNe"
+            quote_key: "219328889_ea819292"
+          - ref: "PMID:39160068"
+            method: "developmental analysis of GABAergic laminae in vLGNe (laminae specified at or before birth)"
+            scope: "mouse vLGNe, perinatal and postnatal"
+            quote_key: "271906359_1bfec86c"
+          - ref: "PMID:36609305"
+            method: "statement in source (retinal axons terminate exclusively in vLGNe, the retinorecipient subdivision)"
+            scope: "mouse vLGN"
+            quote_key: "255502436_f820743a"
+      - id: MBA:186
+        label: "Lateral habenula"
+        name_in_source: "lateral habenula"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:32497303"
+            method: "statement citing prior circuit work (Huang et al., 2019): some retinorecipient vLGN GABAergic cells project to LHb; assigned to vLGNe by inference, since retinal axons terminate only in vLGNe"
+            scope: "mouse vLGN; lamina and GABAergic subtype not identified in quote"
+            quote_key: "219328889_9273e4f7"
+            support: WEAK
+          - ref: "PMID:30795900"
+            method: "circuit study of RGC-innervated, LHb-projecting vLGN/IGL GABA neurons; tracing method not named in quote; assigned to vLGNe by inference from retinal input"
+            scope: "mouse vLGN/IGL, pooled"
+            quote_key: "72332556_28081399"
+            support: WEAK
+      - id: MBA:881
+        label: "Parabrachial nucleus, lateral division"
+        name_in_source: "LPBN"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:38865246"
+            method: "circuit study; RGC-innervated vLGN/IGL GABAergic neurons reported to inhibit LPBN neurons (tracing method not named in quote); assigned to vLGNe by inference from retinal input"
+            scope: "mouse vLGN/IGL, pooled; RGC-innervated subset"
+            quote_key: "270412585_53f9c770"
+            support: WEAK
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:32497303"
+          method: "labelling with canonical and cell type-specific markers (transcriptomically distinct GABAergic types in vLGNe)"
+          scope: "mouse vLGNe"
+          quote_key: "219328889_a1d23e11"
+        - ref: "PMID:39160068"
+          method: "statement in source (vLGNe consists of transcriptionally distinct GABAergic subtypes)"
+          scope: "mouse vLGNe"
+          quote_key: "271906359_1bfec86c"
+        - ref: "PMID:36609305"
+          method: "statement citing prior work (virtually all vLGN neurons GABAergic, including projection neurons)"
+          scope: "mouse vLGN"
+          quote_key: "255502436_f64915a5"
+    morphology:
+      description: >
+        vLGNe is the magnocellular division of vLGN and contains large cells,
+        in contrast to the parvocellular vLGNi (Monavarfeshani et al., 2017;
+        review of rodent cytoarchitecture, cell class not specified in the
+        quote).
+      sources:
+        - ref: "PMID:28965517"
+          method: "review of cytoarchitecture (magnocellular vLGNe with large cells)"
+          scope: "nocturnal rodent vLGN"
+          quote_key: "4601077_b2845e93"
+    colocated_types:
+      - neighboring_type: "vlgni_gabaergic_neuron"
+        spatial_relationship: "ADJACENT"
+        notes: >
+          vLGNe and vLGNi are separated by a small neuron-free, fibre-rich
+          neuropil (Monavarfeshani et al., 2017; PMID:28965517, quote
+          4601077_b2845e93). vLGNi GABAergic types are transcriptomically
+          distinct from those of vLGNe (Sabbagh et al., 2020; PMID:32497303,
+          quote 219328889_a1d23e11).
+      - neighboring_type: "lgv_igl_sox14_gabaergic_neuron"
+        spatial_relationship: "INTERSPERSED"
+        notes: >
+          Sox14+ cells are sparse in the densely retinorecipient vLGNe and
+          enriched in vLGNi (Brock et al., 2022; PMID:36280260, quote
+          247159795_a2cf4a69).
+    definition_references:
+      - "PMID:32497303"
+      - "PMID:36609305"
+      - "PMID:39160068"
+      - "PMID:28965517"
+      - "PMID:36280260"
+    notes: >
+      SUSPECTED HETEROGENEITY: vLGNe contains transcriptionally distinct
+      GABAergic subtypes in at least four adjacent sublaminae (Sabbagh et al.,
+      2020, quotes 219328889_a1d23e11 and 219328889_ea819292; Stebbins et al.,
+      2024, quote 271906359_1bfec86c); properties here pool them. The sources
+      in this run name no markers for vLGNe GABAergic neurons as a whole, so
+      no defining markers are recorded. Sox14 is not one: Sox14+ cells are
+      sparse in vLGNe (quote 247159795_a2cf4a69), but sparse is not absent,
+      so it is not recorded as a negative marker either.
+
+      LOCATION: the sources name the external vLGN (vLGNe); MBA has no term
+      by that name. MBA:300 (LGv lateral zone) is used as the Allen
+      counterpart of vLGNe, the lateral-medial axis being the one along which
+      vLGN laminae are stratified (quote 255502436_f64915a5); the equivalence
+      is a curator judgement, not stated in the sources.
+
+      AXON TARGETS: LHb and LPBN projections are reported for RGC-innervated
+      vLGN/IGL GABAergic neurons pooled; they are attributed to vLGNe only
+      because retinal axons terminate exclusively there within vLGN, so
+      these entries are WEAK.
 edges: []
