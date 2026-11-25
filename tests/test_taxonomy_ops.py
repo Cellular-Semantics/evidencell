@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import textwrap
 from pathlib import Path
 from unittest.mock import patch
 
@@ -16,7 +15,6 @@ from evidencell.taxonomy_ops import (
     _index_nodes,
     _merge_nodes,
     collect_kb_marker_union,
-    load_gene_mapping,
     load_taxonomy_level,
     reingest,
     save_taxonomy_level,
@@ -45,8 +43,8 @@ def tmp_taxonomy(tmp_path: Path) -> Path:
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
                 "is_terminal": True,
                 "markers": [
-                    {"symbol": "Sst", "category": "DEFINING"},
-                    {"symbol": "Gad1", "category": "DEFINING"},
+                    {"name_in_source": "Sst", "category": "DEFINING"},
+                    {"name_in_source": "Gad1", "category": "DEFINING"},
                 ],
             },
             {
@@ -58,7 +56,7 @@ def tmp_taxonomy(tmp_path: Path) -> Path:
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
                 "is_terminal": True,
                 "markers": [
-                    {"symbol": "Pvalb", "category": "DEFINING"},
+                    {"name_in_source": "Pvalb", "category": "DEFINING"},
                 ],
                 # Pre-existing enrichment
                 "electrophysiology": {"firing_pattern": "fast-spiking"},
@@ -85,20 +83,6 @@ def tmp_taxonomy(tmp_path: Path) -> Path:
         yaml.dump(meta, fh, allow_unicode=True, sort_keys=False)
 
     return tax_dir
-
-
-@pytest.fixture
-def gene_mapping_tsv(tmp_path: Path) -> Path:
-    """Create a minimal gene mapping TSV."""
-    p = tmp_path / "gene_mapping.tsv"
-    p.write_text(textwrap.dedent("""\
-        ensembl_id\tsymbol
-        ENSMUSG00000004366\tSst
-        ENSMUSG00000026787\tGad1
-        ENSMUSG00000005716\tPvalb
-        ENSMUSG00000032532\tCck
-    """))
-    return p
 
 
 # ── Unit tests ────────────────────────────────────────────────────────────────
@@ -140,7 +124,7 @@ class TestMergeNodes:
             {
                 "cell_set_accession": "ACC_1",
                 "name": "Old Name",
-                "markers": [{"symbol": "X"}],
+                "markers": [{"name_in_source": "X"}],
                 "electrophysiology": {"firing_pattern": "old"},
             },
         ]
@@ -148,13 +132,13 @@ class TestMergeNodes:
             {
                 "cell_set_accession": "ACC_1",
                 "name": "New Name",
-                "markers": [{"symbol": "Y"}],
+                "markers": [{"name_in_source": "Y"}],
             },
         ]
         merged, stats = _merge_nodes(old, new, ENRICHMENT_FIELDS)
         assert len(merged) == 1
         assert merged[0]["name"] == "New Name"
-        assert merged[0]["markers"] == [{"symbol": "Y"}]
+        assert merged[0]["markers"] == [{"name_in_source": "Y"}]
         assert merged[0]["electrophysiology"]["firing_pattern"] == "old"
         assert stats["updated"] == 1
 
@@ -200,14 +184,6 @@ class TestMergeNodes:
         assert merged[0]["electrophysiology"]["firing_pattern"] == "new"
 
 
-class TestLoadGeneMapping:
-    def test_load(self, gene_mapping_tsv: Path):
-        mapping = load_gene_mapping(gene_mapping_tsv)
-        assert mapping["Sst"] == "ENSMUSG00000004366"
-        assert mapping["Pvalb"] == "ENSMUSG00000005716"
-        assert len(mapping) == 4
-
-
 class TestYamlIO:
     def test_load_save_roundtrip(self, tmp_taxonomy: Path):
         with patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path:
@@ -242,7 +218,7 @@ class TestReingest:
                 "taxonomy_level": "CLUSTER",
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
                 "is_terminal": True,
-                "markers": [{"symbol": "Sst", "category": "DEFINING"}],
+                "markers": [{"name_in_source": "Sst", "category": "DEFINING"}],
             },
             {
                 "id": "TEST:CLUS_002",
@@ -252,7 +228,7 @@ class TestReingest:
                 "taxonomy_level": "CLUSTER",
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
                 "is_terminal": True,
-                "markers": [{"symbol": "Pvalb", "category": "DEFINING"}],
+                "markers": [{"name_in_source": "Pvalb", "category": "DEFINING"}],
                 # No electrophysiology in new source
             },
             {
@@ -401,15 +377,15 @@ def _make_kb_graphs(tmp_path: Path) -> Path:
                 "id": "lit_alpha",
                 "name": "Alpha cell",
                 "definition_basis": "ARTIFICIAL",
-                "defining_markers": [{"symbol": "Sst"}, {"symbol": "Calb1"}],
-                "neuropeptides": [{"symbol": "Npy"}],
-                "negative_markers": [{"symbol": "Pvalb"}],
+                "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Calb1"}],
+                "neuropeptides": [{"name_in_source": "Npy"}],
+                "negative_markers": [{"name_in_source": "Pvalb"}],
             },
             {
                 "id": "lit_beta",
                 "name": "Beta cell",
                 "definition_basis": "ARTIFICIAL",
-                "defining_markers": [{"symbol": "Sst"}, {"symbol": "Vip"}],
+                "defining_markers": [{"name_in_source": "Sst"}, {"name_in_source": "Vip"}],
                 "neuropeptides": [],
                 "negative_markers": [],
             },
@@ -417,8 +393,8 @@ def _make_kb_graphs(tmp_path: Path) -> Path:
                 "id": "atlas_node",
                 "name": "Atlas cluster",
                 "definition_basis": "ATLAS_TRANSCRIPTOMIC",
-                "defining_markers": [{"symbol": "Foo"}],  # must be ignored
-                "neuropeptides": [{"symbol": "Bar"}],     # must be ignored
+                "defining_markers": [{"name_in_source": "Foo"}],  # must be ignored
+                "neuropeptides": [{"name_in_source": "Bar"}],     # must be ignored
             },
         ]
     }
@@ -434,16 +410,38 @@ def test_collect_kb_marker_union_unions_lit_node_markers(tmp_path, monkeypatch):
     monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
 
     union = collect_kb_marker_union()
-    assert union == {"Sst", "Calb1", "Npy", "Pvalb", "Vip"}
+    assert set(union) == {"Sst", "Calb1", "Npy", "Pvalb", "Vip"}
     assert "Foo" not in union  # atlas-node markers excluded
     assert "Bar" not in union
 
 
+def test_collect_kb_marker_union_keeps_each_markers_pin(tmp_path, monkeypatch):
+    """Review #3: CB means Calb1 in one node and Cnr1 in another. Each pin
+    gets its own key so both genes are warmed, not the first one seen."""
+    import evidencell.paths as paths_mod
+    from evidencell.gene_identity import NO_GENE, Pin
+
+    g_dir = tmp_path / "kb" / "graphs" / "r"
+    g_dir.mkdir(parents=True)
+    calb1 = {"name_in_source": "CB", "symbol": "Calb1", "ncbi_gene_id": "NCBIGene:12307"}
+    cnr1 = {"name_in_source": "CB", "symbol": "Cnr1", "ncbi_gene_id": "NCBIGene:12801"}
+    (g_dir / "g.yaml").write_text(yaml.safe_dump({"nodes": [
+        {"id": "a", "defining_markers": [calb1, {"name_in_source": "PSA-NCAM"}]},
+        {"id": "b", "negative_markers": [cnr1], "defining_markers": [dict(calb1)]},
+    ]}))
+    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
+    assert collect_kb_marker_union() == {
+        "CB [NCBIGene:12307]": Pin("NCBIGene:12307", "Calb1"),
+        "CB [NCBIGene:12801]": Pin("NCBIGene:12801", "Cnr1"),
+        "PSA-NCAM": NO_GENE,
+    }
+
+
 def test_collect_kb_marker_union_handles_no_kb_dir(tmp_path, monkeypatch):
-    """No kb/graphs directory → empty set, no error."""
+    """No kb/graphs directory → empty result, no error."""
     import evidencell.paths as paths_mod
     monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
-    assert collect_kb_marker_union() == set()
+    assert collect_kb_marker_union() == {}
 
 
 def test_collect_kb_marker_union_skips_unparseable(tmp_path, monkeypatch):
@@ -456,7 +454,7 @@ def test_collect_kb_marker_union_skips_unparseable(tmp_path, monkeypatch):
         "nodes": [{
             "id": "x",
             "definition_basis": "ARTIFICIAL",
-            "defining_markers": [{"symbol": "Sst"}],
+            "defining_markers": [{"name_in_source": "Sst"}],
         }]
     }))
     monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)

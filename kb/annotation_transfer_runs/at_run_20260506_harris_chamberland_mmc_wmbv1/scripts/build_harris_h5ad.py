@@ -6,6 +6,12 @@ Inputs:
   annotation_transfer/data/harris2018/analysis_results.tsv (Class, nbtSNE_x, nbtSNE_y, Latent_factor x cells)
   conf/gene_mapping_CCN20230722.tsv                      (ensembl_id -> symbol)
 
+One-off input-prep script for this run, kept as a provenance record. The gene
+mapping TSV was retired in #216 (gene identity now lives in
+kb/taxonomy/CCN20230722/gene_ids.tsv.gz); to re-run this script as it ran,
+restore the TSV first:
+  git show 7f39421:conf/gene_mapping_CCN20230722.tsv > conf/gene_mapping_CCN20230722.tsv
+
 Output:
   annotation_transfer/data/harris2018/harris_CA1_inhibitory.h5ad
 
@@ -21,7 +27,7 @@ import scipy.sparse as sp
 import pandas as pd
 import anndata as ad
 
-ROOT = Path('/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell')
+ROOT = Path(__file__).resolve().parents[4]  # repo root (scripts/ → run → annotation_transfer_runs → kb)
 HD = ROOT / 'annotation_transfer/data/harris2018'
 OUT = HD / 'harris_CA1_inhibitory.h5ad'
 

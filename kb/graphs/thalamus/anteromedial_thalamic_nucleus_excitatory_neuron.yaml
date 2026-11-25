@@ -22,7 +22,10 @@ nodes:
   - id: anteromedial_thalamic_nucleus_excitatory_neuron
     name: "Anteromedial thalamic nucleus (AM) excitatory projection neuron"
     definition_basis: CLASSICAL_ANATOMICAL
-    species:       # To be confirmed from primary literature — cited evidence is mouse and rat
+    species:  # To be confirmed from primary literature — cited evidence is mouse and rat
+      id: NCBITaxon:39107
+      label: Murinae
+      name_in_source: "Mice; Rats (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0002681
         label: "anteromedial nucleus of thalamus"
@@ -57,16 +60,18 @@ nodes:
           scope: "developing mouse — glutamatergic thalamic nuclei incl. AD/AV/AM differentiate first"
           quote_key: "254404676_7a6fba23"
     defining_markers:
-      - symbol: Rspo2
-        ncbi_gene_id:
+      - name_in_source: Rspo2
+        symbol: Rspo2
+        ncbi_gene_id: "NCBIGene:239405"
         sources:
           - ref: "PMID:40593635"
             marker_type: NOT_STATED
             method: "marker statement (assay not stated)"
             scope: "adult mouse AM"
             quote_key: "279797062_7b604467"
-      - symbol: Tnnt1
-        ncbi_gene_id:
+      - name_in_source: Tnnt1
+        symbol: Tnnt1
+        ncbi_gene_id: "NCBIGene:21955"
         sources:
           - ref: "PMID:40593635"
             marker_type: NOT_STATED

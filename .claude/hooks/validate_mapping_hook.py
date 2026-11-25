@@ -51,12 +51,15 @@ try:
         check_flat_ref_pmids,
         check_ref_pmids,
         check_run_refs,
+        check_subtype_parents,
         linkml_validate,
         validate_terms,
         parse_md_annotations,
         check_md_ids,
         check_ontology_terms,
     )
+    from evidencell.gene_identity import check_marker_gene_ids  # noqa: E402
+    from evidencell.rrid import check_antibody_rrids  # noqa: E402
     from evidencell.paths import at_run_index_path  # noqa: E402
     from evidencell.references import store_exists  # noqa: E402
 except ImportError as exc:
@@ -365,6 +368,8 @@ def main():
     print("=" * 60, file=sys.stderr)
 
     errors_found = False
+    _genes_unchecked: list[str] = []  # gene IDs the YAML check couldn't look up
+    _rrids_unchecked: list[str] = []  # antibody RRIDs the YAML check couldn't look up
 
     # Derive refs_path from new directory layout.
     # Infer the repo root from the file path (not __file__) so tests with
@@ -498,6 +503,47 @@ def main():
                     print(f"  - {e}", file=sys.stderr)
                 errors_found = True
 
+        # 3c. Gene IDs on markers (#216): every ncbi_gene_id must exist, belong
+        # to the node's species, and name the gene the marker's symbol means.
+        # Cached locally (conf/gene_id_cache.json, seeded from the committed
+        # kb/taxonomy/*/gene_ids.tsv.gz); uncached IDs go to Translator
+        # NodeNormalization. Offline + uncached → soft skip, reported below.
+        if isinstance(doc, dict):
+            if os.environ.get("EVIDENCELL_SKIP_GENE_CHECK"):
+                print("Gene ID check bypassed via EVIDENCELL_SKIP_GENE_CHECK=1",
+                      file=sys.stderr)
+            else:
+                gene_errors, _genes_unchecked = check_marker_gene_ids(doc)
+                if gene_errors:
+                    print("Gene ID errors (ncbi_gene_id):", file=sys.stderr)
+                    for e in gene_errors:
+                        print(f"  - {e}", file=sys.stderr)
+                    errors_found = True
+
+        # 3d. Antibody RRIDs on marker sources (#244): each must exist in the
+        # Antibody Registry. Cached in conf/rrid_cache.json; offline +
+        # uncached → soft skip, reported below.
+        if isinstance(doc, dict):
+            if os.environ.get("EVIDENCELL_SKIP_RRID_CHECK"):
+                print("Antibody RRID check bypassed via EVIDENCELL_SKIP_RRID_CHECK=1",
+                      file=sys.stderr)
+            else:
+                rrid_errors, _rrids_unchecked = check_antibody_rrids(doc)
+                if rrid_errors:
+                    print("Antibody RRID errors:", file=sys.stderr)
+                    for e in rrid_errors:
+                        print(f"  - {e}", file=sys.stderr)
+                    errors_found = True
+
+        # 3e. subtype_of parents resolve to canonical lit nodes (KB index; #183)
+        if isinstance(doc, dict):
+            parent_errors = check_subtype_parents(doc, file_path)
+            if parent_errors:
+                print("subtype_of parent errors:", file=sys.stderr)
+                for e in parent_errors:
+                    print(f"  - {e}", file=sys.stderr)
+                errors_found = True
+
         # 4. LinkML schema validation (subprocess)
         ok, output = linkml_validate(simulated, schema_path, file_path.name, file_path=file_path)
         if output.strip():
@@ -534,6 +580,13 @@ def main():
         skipped.append("AT run_ref — no annotation_transfer_runs/index.yaml")
     if is_yaml and not schema_path.exists():
         skipped.append("LinkML schema — schema file absent")
+    if is_yaml and _genes_unchecked:
+        for item in _genes_unchecked[:6]:
+            skipped.append(f"gene ID {item}")
+        if len(_genes_unchecked) > 6:
+            skipped.append(f"… and {len(_genes_unchecked) - 6} more gene ID check(s)")
+    if is_yaml:
+        skipped.extend(f"antibody {item}" for item in _rrids_unchecked)
     if is_report:
         for prefix, info in sorted(_curie_unavailable.items()):
             skipped.append(

@@ -100,7 +100,8 @@ nodes:
         - ref: PMID:26402459
           quote_key: 631148_96ad2908
     defining_markers:
-      - symbol: Wfs1
+      - name_in_source: Wfs1
+        symbol: Wfs1
         ncbi_gene_id: NCBIGene:22393
         sources:
           - ref: PMID:7722624
@@ -128,24 +129,27 @@ nodes:
             scope: rodent hippocampus
             quote_key: 34872919_d652553e
             marker_type: NOT_STATED
-      - symbol: Gria1
-        ncbi_gene_id:
+      - name_in_source: Gria1
+        symbol: Gria1
+        ncbi_gene_id: "NCBIGene:14799"
         sources:
           - ref: PMID:32009891
             method: immunohistochemistry
             scope: rat hippocampus
             quote_key: 210181642_7ac40176
             marker_type: PROTEIN
-      - symbol: Gria2
-        ncbi_gene_id:
+      - name_in_source: Gria2
+        symbol: Gria2
+        ncbi_gene_id: "NCBIGene:14800"
         sources:
           - ref: PMID:32009891
             method: immunohistochemistry
             scope: rat hippocampus
             quote_key: 210181642_88f001b0
             marker_type: PROTEIN
-      - symbol: Nptn
-        ncbi_gene_id:
+      - name_in_source: Nptn
+        symbol: Nptn
+        ncbi_gene_id: "NCBIGene:20320"
         sources:
           - ref: PMID:28779130
             method: immunohistochemistry
@@ -157,8 +161,9 @@ nodes:
             scope: human hippocampus
             quote_key: 3288675_d39d0506
             marker_type: PROTEIN
-      - symbol: Slc17a7
-        ncbi_gene_id:
+      - name_in_source: Slc17a7
+        symbol: Slc17a7
+        ncbi_gene_id: "NCBIGene:72961"
         sources:
           - ref: PMID:27375434
             method: "review statement"
@@ -222,8 +227,9 @@ nodes:
       - PMID:27678395
       - PMID:24319410
     negative_markers:
-      - symbol: Drd1
-        ncbi_gene_id:
+      - name_in_source: Drd1
+        symbol: Drd1
+        ncbi_gene_id: "NCBIGene:13488"
         sources:
           - ref: PMID:27678395
             method: "BAC transgenic Drd1-EGFP reporter"

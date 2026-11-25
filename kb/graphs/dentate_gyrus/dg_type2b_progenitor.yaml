@@ -14,6 +14,9 @@ nodes:
     name: Dentate Gyrus Type-2b Neural Progenitor
     definition_basis: CLASSICAL_NEUROCHEMICAL
     species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0009952
         label: dentate gyrus subgranular zone
@@ -25,8 +28,9 @@ nodes:
           label: glutamatergic neuron
           name_in_source: glutamatergic
     defining_markers:
-      - symbol: Nestin
-        ncbi_gene_id:
+      - name_in_source: Nestin
+        symbol: Nes
+        ncbi_gene_id: "NCBIGene:18008"
         sources:
           - ref: PMID:40519263
             method: review (marker classification)
@@ -38,8 +42,9 @@ nodes:
             scope: adult mouse hippocampus
             quote_key: 15727849_21c476fd
             marker_type: TRANSGENE_REPORTER
-      - symbol: DCX
-        ncbi_gene_id:
+      - name_in_source: DCX
+        symbol: Dcx
+        ncbi_gene_id: "NCBIGene:13193"
         sources:
           - ref: PMID:40519263
             method: review (marker classification)
@@ -51,8 +56,9 @@ nodes:
             scope: adult mouse hippocampus
             quote_key: 15727849_237d8f24
             marker_type: NOT_STATED
-      - symbol: Eomes
-        ncbi_gene_id:
+      - name_in_source: Eomes
+        symbol: Eomes
+        ncbi_gene_id: "NCBIGene:13813"
         sources:
           - ref: PMID:18385329
             method: "Tbr2 immunostaining (+ Tbr2-GFP transgene)"
@@ -60,10 +66,12 @@ nodes:
             quote_key: 15727849_21c476fd
             marker_type: PROTEIN
     negative_markers:
-      - symbol: NeuN
-        ncbi_gene_id:
-      - symbol: Calbindin
-        ncbi_gene_id:
+      - name_in_source: NeuN
+        symbol: Rbfox3
+        ncbi_gene_id: "NCBIGene:52897"
+      - name_in_source: Calbindin
+        symbol: Calb1
+        ncbi_gene_id: "NCBIGene:12307"
     neuropeptides: []
     cl_mapping:
       cl_term:

@@ -18,7 +18,10 @@ nodes:
 - id: medial_amygdala_lhx9_glutamatergic_neuron
   name: Medial amygdala Lhx9+ ventral pallial-derived glutamatergic neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
   nt_type:
     name_in_source: Glutamatergic
     sources:
@@ -45,8 +48,9 @@ nodes:
     name_in_source: medial amygdala
     compartment: SOMA
   defining_markers:
-  - symbol: Lhx9
-    ncbi_gene_id: null
+  - name_in_source: Lhx9
+    symbol: Lhx9
+    ncbi_gene_id: "NCBIGene:16876"
     sources:
     - ref: PMID:27160258
       method: asta_report

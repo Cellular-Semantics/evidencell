@@ -24,6 +24,7 @@ from typing import Any, Callable, Iterable
 
 import yaml
 
+from evidencell.gene_identity import marker_name
 from evidencell.split_graph import is_stub
 
 # ── Severity ────────────────────────────────────────────────────────────────
@@ -74,7 +75,7 @@ def _short_hash(s: Any) -> str:
 
 
 def _marker_key(m: dict) -> str | None:
-    return m.get("symbol") or m.get("name_in_source")
+    return marker_name(m) or None
 
 
 def _location_key(loc: dict) -> str | None:

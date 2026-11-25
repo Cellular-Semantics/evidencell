@@ -22,7 +22,10 @@ nodes:
   - id: str_immature_neuron
     name: "Striatum Immature Neuron (SVZ-derived)"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:       # To be confirmed — studies cite mouse, rat
+    species:  # To be confirmed — studies cite mouse, rat
+      id: NCBITaxon:10116
+      label: Rattus norvegicus
+      name_in_source: "Rats (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0002435
         label: "striatum"
@@ -35,20 +38,12 @@ nodes:
           name_in_source: GABAergic
       sources: []
     defining_markers:
-      - symbol: DCX
-        ncbi_gene_id:
+      - name_in_source: DCX
+        symbol: Dcx
+        ncbi_gene_id: "NCBIGene:84394"
         sources:
           - ref: "PMID:15684031"
             method: "IHC"
-            scope: "adult mouse striatum"
-            quote_key: "14221248_f77b1e11"
-            marker_type: PROTEIN
-      - symbol: BrdU
-        modifier: "birth-dating label (co-labeled with DCX)"
-        ncbi_gene_id:
-        sources:
-          - ref: "PMID:15684031"
-            method: "BrdU pulse-chase"
             scope: "adult mouse striatum"
             quote_key: "14221248_f77b1e11"
             marker_type: PROTEIN
@@ -78,10 +73,10 @@ nodes:
       interneurons by analogy with SVZ-derived OB interneurons, but final
       interneuron subtypes and developmental progression require further
       characterisation. NT type not directly supported by any quote for
-      striatal cells. BrdU is a thymidine analogue used as birth-dating
-      label (not a true protein/transcript marker); retained here with
-      marker_type=PROTEIN as an expedient for schema compliance — flag for
-      curator review.
+      striatal cells. Birth-dating: the DCX+ cells are BrdU-labelled after
+      pulse-chase (PMID:15684031, quote 14221248_f77b1e11), i.e. newly
+      generated. BrdU is a thymidine analogue, not a marker of the cell, so
+      it is recorded here rather than in defining_markers (#244).
 
   # ── Cerebral Cortex Layer II Immature Neuron ────────────────────
 

@@ -21,7 +21,10 @@ nodes:
   - id: lc_noradrenergic_neuron
     name: "Locus coeruleus noradrenergic (A6) neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:       # To be confirmed from primary literature — mouse, rat and human sources pooled
+    species:  # To be confirmed from primary literature — mouse, rat and human sources pooled
+      id: NCBITaxon:314146
+      label: Euarchontoglires
+      name_in_source: "Mice; Humans; Rats (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0002148
         label: "locus ceruleus"
@@ -77,8 +80,9 @@ nodes:
           scope: "LC vs peri-LC"
           quote_key: "273433369_45bcf7fc"
     defining_markers:
-      - symbol: Th
-        ncbi_gene_id:
+      - name_in_source: Th
+        symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
         sources:
           - ref: "PMID:29791834"
             method: "bacTRAP translational profiling"
@@ -95,8 +99,9 @@ nodes:
             scope: "locus coeruleus — TH as a noradrenergic LC marker"
             quote_key: "247944827_82efb1ad"
             marker_type: PROTEIN
-      - symbol: Dbh
-        ncbi_gene_id:
+      - name_in_source: Dbh
+        symbol: Dbh
+        ncbi_gene_id: "NCBIGene:13166"
         sources:
           - ref: "PMID:29791834"
             method: "bacTRAP translational profiling"
@@ -113,35 +118,39 @@ nodes:
             scope: "adult mouse LC localisation protocol"
             quote_key: "85497448_778eda88"
             marker_type: PROTEIN
-      - symbol: Slc6a2
+      - name_in_source: Slc6a2
+        symbol: Slc6a2
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:20538"
         sources:
           - ref: "PMID:29791834"
             method: "bacTRAP translational profiling"
             scope: "adult mouse LC translatome"
             quote_key: "44089056_03c032a1"
             marker_type: TRANSCRIPT
-      - symbol: Slc18a2
+      - name_in_source: Slc18a2
+        symbol: Slc18a2
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:214084"
         sources:
           - ref: "PMID:29791834"
             method: "bacTRAP translational profiling"
             scope: "adult mouse LC translatome"
             quote_key: "44089056_03c032a1"
             marker_type: TRANSCRIPT
-      - symbol: Gch1
+      - name_in_source: Gch1
+        symbol: Gch1
         modifier: ENRICHED
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:14528"
         sources:
           - ref: "PMID:29791834"
             method: "bacTRAP translational profiling"
             scope: "adult mouse LC translatome"
             quote_key: "44089056_03c032a1"
             marker_type: TRANSCRIPT
-      - symbol: Phox2a
-        ncbi_gene_id:
+      - name_in_source: Phox2a
+        symbol: Phox2a
+        ncbi_gene_id: "NCBIGene:11859"
         sources:
           - ref: "PMID:38364691"
             method: "IHC (Phox2a)"
@@ -153,8 +162,9 @@ nodes:
             scope: "rostral LC — Phox2a+/TH- 'resting noradrenergic' neurons"
             quote_key: "267366284_bb2513d7"
             marker_type: PROTEIN
-      - symbol: Gal
-        ncbi_gene_id:
+      - name_in_source: Gal
+        symbol: Gal
+        ncbi_gene_id: "NCBIGene:14419"
         sources:
           - ref: "PMID:37487094"
             method: "single-cell RNA-seq + electrophysiology"
@@ -167,9 +177,10 @@ nodes:
             quote_key: "273433369_78752938"
             marker_type: NOT_STATED
     negative_markers:
-      - symbol: Npy
+      - name_in_source: Npy
+        symbol: Npy
         modifier: ABSENT
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:109648"
         sources:
           - ref: "PMID:37487094"
             method: "single-cell RNA-seq"
@@ -182,8 +193,9 @@ nodes:
             quote_key: "273433369_78752938"
             marker_type: NOT_STATED
     neuropeptides:
-      - symbol: Gal
-        ncbi_gene_id:
+      - name_in_source: Gal
+        symbol: Gal
+        ncbi_gene_id: "NCBIGene:14419"
         sources:
           - ref: "PMID:37487094"
             method: "single-cell RNA-seq + electrophysiology"
@@ -195,8 +207,9 @@ nodes:
             scope: "LC cell bodies"
             quote_key: "16354027_26800417"
             marker_type: NOT_STATED
-      - symbol: Crh
-        ncbi_gene_id:
+      - name_in_source: Crh
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
         sources:
           - ref: "PMID:39427811"
             method: "review (LC neurochemistry)"
@@ -371,16 +384,16 @@ edges:
         nt_type:
           name_in_source: Nora
         defining_markers:
-          - symbol: Slc6a2
-          - symbol: Chrnb3
+          - name_in_source: Slc6a2
+          - name_in_source: Chrnb3
         merfish_markers:
-          - symbol: Dbh
-          - symbol: Chrnb3
-          - symbol: Calcr
+          - name_in_source: Dbh
+          - name_in_source: Chrnb3
+          - name_in_source: Calcr
         neuropeptides:
-          - symbol: Gal
-          - symbol: Calca
-          - symbol: Adcyap1
+          - name_in_source: Gal
+          - name_in_source: Calca
+          - name_in_source: Adcyap1
         ccf_distribution: >
           Of the 12 noradrenergic (nt_type Nora) clusters in WMBv1, this is the
           only one with any cells assigned to Locus ceruleus (MBA:147). It holds
