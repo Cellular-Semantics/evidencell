@@ -66,4 +66,98 @@ nodes:
         defined by layer, and mouse shell is not established as koniocellular
         layers, so it was not chosen as a containing term. EXACT would need a
         CL term for dLGN shell relay neuron.
+    anatomical_location:
+      - id: MBA:496345664
+        label: "Dorsal part of the lateral geniculate complex, shell"
+        name_in_source: "dorsolateral shell of mouse dLGN"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "review statement citing Krahe et al. 2011"
+            scope: "mouse dLGN — dorsolateral shell vs ventromedial core subdivision of TC relay cells"
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "review statement citing Krahe et al. 2011"
+            scope: "mouse dLGN — shell region vs core of TRCs"
+          - ref: "PMID:26727264"
+            quote_key: "14389058_e2e97d92"
+            method: "introduction statement summarising DS-RGC axon labelling and calbindin staining literature"
+            scope: "mouse dLGN — superficial cryptic lamina coincident with the calbindin-positive shell"
+          - ref: "PMID:34473054"
+            quote_key: "237389962_1dd0f6d1"
+            method: "scRNA-seq of microdissected dLGN core and shell"
+            scope: "adult mouse dLGN — TC neurons in shell vs core differ by graded gene expression"
+      - id: MBA:593
+        label: "Primary visual area, layer 1"
+        name_in_source: "L1 of V1"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:37913772"
+            quote_key: "264598574_32e8c9a5"
+            method: "review statement summarising retrograde tracing studies (Bickford 2015; Ibrahim 2021; Rubio-Garrido 2009; Peng 2021; Cruz-Martín 2014)"
+            scope: "mouse dLGN — projections to V1 layer 1 originate from the shell region"
+    colocated_types:
+      - neighboring_type: "dlgn_core_relay_neuron"
+        spatial_relationship: ADJACENT
+        notes: >
+          Shell (dorsolateral) and core (ventromedial) are complementary
+          subdivisions of mouse dLGN (Monavarfeshani et al. 2017, quote
+          4601077_8f3fc6a4; Huang et al. 2023, quote 264598574_32e8c9a5).
+    defining_markers:
+      - name_in_source: Calb1
+        symbol: Calb1
+        ncbi_gene_id: "NCBIGene:12307"
+        modifier: ENRICHED
+        sources:
+          - ref: "PMID:34473054"
+            quote_key: "237389962_1dd0f6d1"
+            method: "scRNA-seq"
+            scope: "adult mouse dLGN — Calb1-expressing TC neurons enriched in the shell (graded, not discrete)"
+            marker_type: TRANSCRIPT
+      - name_in_source: Necab1
+        symbol: Necab1
+        ncbi_gene_id: "NCBIGene:69352"
+        modifier: ENRICHED
+        sources:
+          - ref: "PMID:34473054"
+            quote_key: "237389962_1dd0f6d1"
+            method: "scRNA-seq"
+            scope: "adult mouse dLGN — Necab1-expressing TC neurons enriched in the shell (graded, not discrete)"
+            marker_type: TRANSCRIPT
+    nt_type:
+      name_in_source: "excitatory"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "excitatory"
+      sources:
+        - ref: "PMID:28965517"
+          quote_key: "4601077_8f3fc6a4"
+          method: "review statement — TC relay cells (of which shell cells are a subset) are excitatory projection neurons; glutamatergic transmitter inferred, not shown directly for shell neurons"
+          scope: "rodent dLGN TC relay cells"
+        - ref: "PMID:41814933"
+          quote_key: "286491924_f2e9799b"
+          method: "review statement — TRCs, including those of the shell region, are excitatory neurons; glutamatergic transmitter inferred, not shown directly for shell neurons"
+          scope: "mouse dLGN thalamocortical relay cells"
+    definition_references:
+      - "PMID:34473054"
+      - "PMID:37913772"
+      - "PMID:26727264"
+      - "PMID:28965517"
+      - "PMID:41814933"
+    notes: >
+      Calb1 and Necab1 are graded, not discrete: Bakken et al. (2021) find mouse
+      dLGN TC neurons cannot be split into discrete transcriptomic types, and
+      shell neurons show opposing gradients to Pvalb, which is enriched in the
+      core. Pvalb is therefore lower in shell than core but is not shown to be
+      absent, so it is not recorded as a negative marker. Classic accounts use
+      calbindin protein to delimit the shell zone itself (Leiwe et al. 2016);
+      whether every shell relay cell is calbindin-immunopositive is not stated.
+      SUSPECTED HETEROGENEITY: the shell is enriched for, but not exclusive to,
+      W-like relay cells (reviews citing Krahe et al. 2011), and the superficial
+      dLGN contains direction-selective neurons intermingled with
+      non-direction-selective neurons (Marshel et al. 2012). The V1 layer-1
+      target rests on a review of retrograde tracing; shell neurons are not
+      shown to project only to L1.
 edges: []
