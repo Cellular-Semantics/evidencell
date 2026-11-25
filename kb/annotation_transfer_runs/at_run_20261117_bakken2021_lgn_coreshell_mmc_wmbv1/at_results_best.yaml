@@ -1,0 +1,87 @@
+run_id: at_run_20261117_bakken2021_lgn_coreshell_mmc_wmbv1
+taxonomy_id: CCN20230722
+normalisation: best
+source_csv_relpath: f1_matrix_best.csv
+generated_at: '2026-11-17T17:57:21+00:00'
+generator: src/evidencell/at_metrics.py::migrate_csv
+rows:
+- source_label: LGd core
+  taxonomy_level: CLASS
+  taxonomy_rank: 3
+  target_name: 18 TH Glut
+  target_accession: CS20230722_CLAS_18
+  n_cells: 682
+  coverage: 1.0
+  purity: 0.6739130434782609
+  f1: 0.8051948051948052
+  median_bootstrap: 1.0
+- source_label: LGd core
+  taxonomy_level: SUBCLASS
+  taxonomy_rank: 2
+  target_name: 151 TH Prkcd Grin2c Glut
+  target_accession: CS20230722_SUBC_151
+  n_cells: 682
+  coverage: 1.0
+  purity: 0.6739130434782609
+  f1: 0.8051948051948052
+  median_bootstrap: 1.0
+- source_label: LGd core
+  taxonomy_level: SUPERTYPE
+  taxonomy_rank: 1
+  target_name: 0655 TH Prkcd Grin2c Glut_2
+  target_accession: CS20230722_SUPT_0655
+  n_cells: 636
+  coverage: 0.9906542056074766
+  purity: 0.6618106139438086
+  f1: 0.793512164691204
+  median_bootstrap: 1.0
+- source_label: LGd core
+  taxonomy_level: CLUSTER
+  taxonomy_rank: 0
+  target_name: 2650 TH Prkcd Grin2c Glut_2
+  target_accession: CS20230722_CLUS_2650
+  n_cells: 636
+  coverage: 0.9953051643192489
+  purity: 0.6618106139438086
+  f1: 0.795
+  median_bootstrap: 1.0
+- source_label: LGd shell
+  taxonomy_level: CLASS
+  taxonomy_rank: 3
+  target_name: 18 TH Glut
+  target_accession: CS20230722_CLAS_18
+  n_cells: 330
+  coverage: 1.0
+  purity: 0.32608695652173914
+  f1: 0.4918032786885246
+  median_bootstrap: 1.0
+- source_label: LGd shell
+  taxonomy_level: SUBCLASS
+  taxonomy_rank: 2
+  target_name: 151 TH Prkcd Grin2c Glut
+  target_accession: CS20230722_SUBC_151
+  n_cells: 330
+  coverage: 1.0
+  purity: 0.32608695652173914
+  f1: 0.4918032786885246
+  median_bootstrap: 1.0
+- source_label: LGd shell
+  taxonomy_level: SUPERTYPE
+  taxonomy_rank: 1
+  target_name: 0655 TH Prkcd Grin2c Glut_2
+  target_accession: CS20230722_SUPT_0655
+  n_cells: 325
+  coverage: 1.0
+  purity: 0.3381893860561915
+  f1: 0.505443234836703
+  median_bootstrap: 1.0
+- source_label: LGd shell
+  taxonomy_level: CLUSTER
+  taxonomy_rank: 0
+  target_name: 2650 TH Prkcd Grin2c Glut_2
+  target_accession: CS20230722_CLUS_2650
+  n_cells: 325
+  coverage: 1.0
+  purity: 0.3381893860561915
+  f1: 0.505443234836703
+  median_bootstrap: 1.0

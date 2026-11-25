@@ -210,6 +210,38 @@ nodes:
           method: "whole-cell recording + TTX / nimodipine pharmacology"
           scope: "rodent dLGN slices"
           quote_key: "13918038_86adfc87"
+    at_source_sets:
+      - dataset_accession: GEO:GSE182211
+        source_label: dLGN GABA (Chrna1-3)
+        correspondence: EXACT
+        sources:
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Bakken et al. 2021 assign three mouse GABAergic types to dLGN from marker genes checked against Allen Brain Atlas ISH; the rest to LP, LGv and RT"
+            scope: "adult male mouse dLGN, LP and LGv dissections, SMART-seq v4 single cells"
+            quote_key: "237389962_d5bb7157"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — cross-species integration names the mouse dLGN GABAergic types as Chrna6/Sox14-expressing"
+            scope: "mouse, macaque and human dLGN GABAergic types"
+            quote_key: "237389962_35ac48b3"
+        notes: >
+          Pooled label over the three published mouse clusters the authors
+          assign to dLGN: GEO cluster_label Chrna1 (146 cells), Chrna2 (252)
+          and Chrna3 (54); 452 cells in all. The paper text does not give the
+          three names; the link rests on the GEO names, on their marker
+          profile in the deposited counts (all three Gad1+, Sox14+, Chrna6+,
+          Otx2+, Slc17a6-; mean log2 CPM 7.5-8.0 for Sox14, 8.2-8.7 for
+          Chrna6) and on their dissection origin (310 of 452 cells from
+          dLGN-core, 114 shell, 24 LP, 4 LGv). The other six GABAergic
+          clusters (GABA1-6) lack Sox14 + Chrna6 co-expression and the authors
+          place them in adjacent nuclei (LP, LGv, IGL, RT), so they are
+          excluded even where some of their cells came from dLGN dissections
+          (imperfect microdissection). Pooled because the three clusters are subtypes of
+          this one classical type; scoring them separately dilutes each
+          label's purity with its two siblings (they share the same WMB
+          subclass). The pooled label is a derived relabel and is scored in
+          its own AT run. Caveat: GEO also carries an older label column
+          (org_cl.lab) in which the names Chrna1 and Chrna2 are swapped; the
+          pooled set is identical under both.
     colocated_types:
       - neighboring_type: "dlgn_relay_neuron"
         spatial_relationship: INTERSPERSED
