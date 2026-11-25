@@ -88,7 +88,7 @@ The lookup tool is described under **Lookup tool** below.
 
 | `method` | Action |
 |---|---|
-| `EXACT_SYMBOL`, `OVERRIDE` | `GENE`: take the gene's ID and official symbol. |
+| `EXACT_SYMBOL` | `GENE`: take the gene's ID and official symbol. |
 | `UNIQUE_SYNONYM` | `GENE`, after checking the gene fits the evidence and the field. One claimant means only that one gene lists the string, not that the source means it: `D1` → Dio1, `GAD` → Uchl1, `GABAA` → Gabrg1 are all single matches. If it doesn't fit, go back to Step 1 or 2. |
 | `CASE_INSENSITIVE_SYMBOL` | `GENE`, unless a caution below applies or other genes also claim the name — then check the evidence means this one. |
 | `AMBIGUOUS` | Pick **one gene from the claimants**, never another. Use the evidence first and quote it; where it doesn't define the name, the field's convention may settle it (`SOM` in a neuroscience source is Sst, not Grhl3) — say so in `rationale`. If neither settles it: `UNRESOLVED` (`AMBIGUOUS`), with the claimants. |

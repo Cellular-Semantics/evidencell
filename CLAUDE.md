@@ -169,11 +169,11 @@ in `src/evidencell/expression_cache.py`.
 - **Gene identity (#216).** Marker names resolve to the stats file's genes
   through the `genes` / `gene_synonyms` tables, loaded by `build-taxonomy-db`
   from the committed `kb/taxonomy/{taxonomy_id}/gene_ids.tsv.gz` (Translator
-  NodeNormalization + Name Resolver; refresh with `just build-gene-ids`) and
-  the reviewed `gene_overrides.tsv`. A classical marker's `ncbi_gene_id` pins
-  its gene; one without an ID is `NO_GENE_ID` and not resolved by name.
-  Atlas metadata names resolve by override, exact symbol, case-insensitive
-  symbol, or a synonym exactly one gene claims. See
+  NodeNormalization + Name Resolver; refresh with `just build-gene-ids`).
+  A classical marker's `ncbi_gene_id` pins its gene; one without an ID is
+  `NO_GENE_ID` and not resolved by name. Atlas metadata names resolve by
+  exact symbol, case-insensitive symbol, or a synonym exactly one gene
+  claims. See
   `src/evidencell/gene_identity.py`.
 - **Fails closed**: an uncached gene with no stats file stops the run with
   `just fetch-mapmycells {taxonomy_id}`. There is no metadata-only fallback.

@@ -130,7 +130,7 @@ specification):
   `ncbi_gene_id` is `NO_GENE_ID` — not resolved by name — and scores 0: it
   is either curated as having no single gene (PSA-NCAM, CaMKII) or still
   needs its ID. Pre-#244 markers (`symbol` only) resolve by name as
-  before: a reviewed override, an exact or case-insensitive symbol, or a
+  before: an exact or case-insensitive symbol, or a
   synonym only one gene claims; several claimants is `AMBIGUOUS_SYMBOL`.
   `gene_resolution` in the discovery JSON records how each name
   resolved. To fix a `NOT MEASURED` marker: follow

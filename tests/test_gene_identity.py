@@ -19,7 +19,6 @@ from evidencell.gene_identity import (
     NO_GENE,
     NO_GENE_ID,
     NO_MATCH,
-    OVERRIDE,
     PINNED_ID,
     UNIQUE_SYNONYM,
     Pin,
@@ -170,34 +169,18 @@ def test_curated_marker_without_gene_is_not_resolved_by_name(con):
     assert m.method == NO_GENE_ID and m.gene is None
 
 
-def test_override_takes_precedence(tmp_path, tax_dir):
+def test_no_taxonomy_wide_name_overrides(tax_dir):
+    """A name several genes claim stays AMBIGUOUS whatever files sit in the
+    taxonomy dir: it is settled per marker (symbol + ncbi_gene_id), not by a
+    taxonomy-wide table (gene_overrides.tsv was removed)."""
     (tax_dir / "gene_overrides.tsv").write_text(
-        "# reviewed overrides\n"
         "name\tncbi_gene_id\tsymbol\trationale\treviewed_by\n"
         "CB\tNCBIGene:12307\tCalb1\tcalbindin in neuron papers\tDOS\n"
     )
     c = sqlite3.connect(":memory:")
     load_gene_tables(c, tax_dir)
     m = resolve_names(c, ["CB"])["CB"]
-    assert (m.method, m.gene.stats_symbol) == (OVERRIDE, "Calb1")
-
-
-def test_override_to_unknown_gene_is_rejected(tax_dir):
-    (tax_dir / "gene_overrides.tsv").write_text(
-        "name\tncbi_gene_id\tsymbol\trationale\treviewed_by\n"
-        "CB\tNCBIGene:999\tX\twhy\tDOS\n"
-    )
-    with pytest.raises(ValueError, match="not a gene of this taxonomy"):
-        load_gene_tables(sqlite3.connect(":memory:"), tax_dir)
-
-
-def test_override_without_review_is_rejected(tax_dir):
-    (tax_dir / "gene_overrides.tsv").write_text(
-        "name\tncbi_gene_id\tsymbol\trationale\treviewed_by\n"
-        "CB\tNCBIGene:12307\tCalb1\tcalbindin\t\n"
-    )
-    with pytest.raises(ValueError, match="reviewed_by"):
-        load_gene_tables(sqlite3.connect(":memory:"), tax_dir)
+    assert m.method == AMBIGUOUS and m.gene is None
 
 
 def test_marker_gene_ids():

@@ -75,9 +75,10 @@ Unchecked IDs/RRIDs (service unreachable, not cached) are allowed and listed
 under "Checks NOT run". `EVIDENCELL_SKIP_GENE_CHECK=1` /
 `EVIDENCELL_SKIP_RRID_CHECK=1` bypass the checks — emergency only.
 
-## Overrides
+## No taxonomy-wide name → gene table
 
-`kb/taxonomy/{taxonomy_id}/gene_overrides.tsv` settles a name for the
-resolver in one taxonomy (atlas metadata names, lookup results). KB markers
-don't need it — their `symbol` + `ncbi_gene_id` record the decision. The
-override mechanism is due for review (hard-coded name → gene choices).
+A name the lookup can't settle (`CB`: Calb1 or Ctsb) is settled per marker,
+from its evidence, and recorded as that marker's `symbol` + `ncbi_gene_id`.
+There is no table that fixes a name to one gene for a whole taxonomy: the
+same string means different things in different sources (`CB` is calbindin
+in an interneuron paper and cerebellum in WMB neighbourhood names).

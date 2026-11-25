@@ -22,7 +22,7 @@ classical markers".
 | `EXACT_SYMBOL` | 252 |
 | `UNIQUE_SYNONYM` (`NeuN` → Rbfox3, `Tis21` → Btg2, `mGluR1` → Grm1 …) | 35 |
 | `CASE_INSENSITIVE_SYMBOL` (`DCX`, `GFAP`, `VIP` …) | 19 |
-| `OVERRIDE` (`CB`, `CR`, `NOS`, `TuJ1`; see `kb/taxonomy/CCN20230722/gene_overrides.tsv`) | 4 |
+| `OVERRIDE` (`CB`, `CR`, `NOS`, `TuJ1`; via `gene_overrides.tsv`, since removed in #245 — these markers now carry their own `symbol` + `ncbi_gene_id`) | 4 |
 | unresolvable | 13 |
 
 Mouse genes were resolved offline against the WMB gene table. Rat genes

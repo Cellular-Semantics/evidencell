@@ -15,8 +15,7 @@ Three parts:
   recording the Translator versions, fetch date and the stats file's sha256.
   Re-fetching is a deliberate refresh that shows up as a reviewed diff.
 - **Load** (offline, every ``build-taxonomy-db``) — :func:`load_gene_tables`
-  fills the ``genes`` and ``gene_synonyms`` tables from that file, plus the
-  curated overrides in ``kb/taxonomy/{tid}/gene_overrides.tsv``.
+  fills the ``genes`` and ``gene_synonyms`` tables from that file.
 - **Resolve** — :func:`resolve_names` turns marker names into genes of the
   taxonomy, in this order:
 
@@ -24,18 +23,18 @@ Three parts:
      A pin from another species resolves by the marker's official ``symbol``
      instead (rat Calb1 → the mouse gene named Calb1). A curated marker with
      no ``ncbi_gene_id`` is ``NO_GENE_ID`` and is not resolved by name (#244).
-  2. ``OVERRIDE``: a reviewed override names exactly one gene.
-  3. ``EXACT_SYMBOL``: the name is a gene's symbol (stats symbol or current
+  2. ``EXACT_SYMBOL``: the name is a gene's symbol (stats symbol or current
      label), case-sensitive; then ``CASE_INSENSITIVE_SYMBOL``, compared
      after :func:`normalise_name` (a symbol beats other genes' synonyms).
-  4. ``UNIQUE_SYNONYM``: exactly one gene lists the name as a synonym.
+  3. ``UNIQUE_SYNONYM``: exactly one gene lists the name as a synonym.
 
   Two or more claimants is ``AMBIGUOUS`` and none is ``NO_MATCH``: neither
-  is guessed. A curator (or curating agent) picks from the claimant list
-  and records the choice as the marker's ``ncbi_gene_id`` or as an
-  override. Claimant counting runs over the taxonomy's gene universe, which
-  is right for whole-transcriptome stats files (WMB, HMBA) but would give
-  false "unique" results for a targeted panel.
+  is guessed. A curator (or curating agent) settles the name per marker
+  and records the choice as the marker's ``symbol`` + ``ncbi_gene_id``;
+  there is no taxonomy-wide name → gene table. Claimant counting runs over
+  the taxonomy's gene universe, which is right for whole-transcriptome stats
+  files (WMB, HMBA) but would give false "unique" results for a targeted
+  panel.
 
 The hook check (:func:`check_marker_gene_ids`) validates every
 ``ncbi_gene_id`` written to ``kb/graphs`` against NodeNormalization: the ID
@@ -77,24 +76,21 @@ NODENORM_URL = os.environ.get(
 NAMERES_URL = os.environ.get("EVIDENCELL_NAMERES_URL", "https://name-resolution-sri.renci.org")
 
 GENE_IDS_FILE = "gene_ids.tsv.gz"
-GENE_OVERRIDES_FILE = "gene_overrides.tsv"
 
 GENE_IDS_COLUMNS = (
     "ensembl_id", "stats_symbol", "stats_col", "ncbi_gene_id", "label",
     "taxon", "equivalent_ids", "synonyms",
 )
-OVERRIDE_COLUMNS = ("name", "ncbi_gene_id", "symbol", "rationale", "reviewed_by")
 
 # Resolution methods (accepted) and failure reasons.
 PINNED_ID = "PINNED_ID"
-OVERRIDE = "OVERRIDE"
 EXACT_SYMBOL = "EXACT_SYMBOL"
 CASE_INSENSITIVE_SYMBOL = "CASE_INSENSITIVE_SYMBOL"
 UNIQUE_SYNONYM = "UNIQUE_SYNONYM"
 AMBIGUOUS = "AMBIGUOUS"
 NO_MATCH = "NO_MATCH"
 NO_GENE_ID = "NO_GENE_ID"  # curated marker with no ncbi_gene_id: not resolved by name
-ACCEPTED_METHODS = (PINNED_ID, OVERRIDE, EXACT_SYMBOL, CASE_INSENSITIVE_SYMBOL, UNIQUE_SYNONYM)
+ACCEPTED_METHODS = (PINNED_ID, EXACT_SYMBOL, CASE_INSENSITIVE_SYMBOL, UNIQUE_SYNONYM)
 
 GENE_DDL = """\
 CREATE TABLE IF NOT EXISTS genes (
@@ -260,12 +256,6 @@ def gene_ids_path(taxonomy_id: str) -> Path:
     return taxonomy_dir(taxonomy_id) / GENE_IDS_FILE
 
 
-def gene_overrides_path(taxonomy_id: str) -> Path:
-    from evidencell.paths import taxonomy_dir
-
-    return taxonomy_dir(taxonomy_id) / GENE_OVERRIDES_FILE
-
-
 def read_gene_ids(path: Path) -> tuple[dict[str, str], list[dict]]:
     """Read a ``gene_ids.tsv.gz``: ``(meta, rows)``.
 
@@ -313,20 +303,6 @@ def write_gene_ids(path: Path, meta: Mapping[str, Any], rows: Iterable[Mapping])
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("wb") as raw, gzip.GzipFile(filename="", fileobj=raw, mode="wb", mtime=0) as gz:
         gz.write(buf.getvalue().encode("utf-8"))
-
-
-def read_overrides(path: Path) -> list[dict]:
-    """Read ``gene_overrides.tsv`` (``#`` comment lines allowed)."""
-    if not path.is_file():
-        return []
-    with path.open(encoding="utf-8", newline="") as fh:
-        lines = [ln for ln in fh if not ln.startswith("#") and ln.strip()]
-    rows = list(csv.DictReader(lines, delimiter="\t"))
-    for r in rows:
-        missing = [c for c in ("name", "ncbi_gene_id", "rationale", "reviewed_by") if not r.get(c)]
-        if missing:
-            raise ValueError(f"{path}: override row {r} is missing {', '.join(missing)}")
-    return rows
 
 
 def choose_stats_symbol(prior: str | None, label: str | None, synonyms: list[str]) -> str | None:
@@ -449,7 +425,7 @@ def fetch_gene_ids(
 
 def load_gene_tables(con: sqlite3.Connection, taxonomy_dir: Path) -> int:
     """(Re)create and fill ``genes`` / ``gene_synonyms`` from the taxonomy's
-    committed ``gene_ids.tsv.gz`` and ``gene_overrides.tsv``. Returns the
+    committed ``gene_ids.tsv.gz``. Returns the
     number of genes loaded (0 when the taxonomy has no gene_ids file)."""
     con.executescript("DROP TABLE IF EXISTS gene_synonyms; DROP TABLE IF EXISTS genes;")
     con.executescript(GENE_DDL)
@@ -476,14 +452,6 @@ def load_gene_tables(con: sqlite3.Connection, taxonomy_dir: Path) -> int:
             continue
         for s in dict.fromkeys(r["synonyms"]):
             syn_rows.append((r["ncbi_gene_id"], s, normalise_name(s), "translator_nameres"))
-    known = {r["ncbi_gene_id"] for r in rows if r["ncbi_gene_id"]}
-    for o in read_overrides(taxonomy_dir / GENE_OVERRIDES_FILE):
-        if o["ncbi_gene_id"] not in known:
-            raise ValueError(
-                f"{taxonomy_dir / GENE_OVERRIDES_FILE}: override {o['name']!r} → "
-                f"{o['ncbi_gene_id']} is not a gene of this taxonomy ({GENE_IDS_FILE})"
-            )
-        syn_rows.append((o["ncbi_gene_id"], o["name"], normalise_name(o["name"]), "override"))
     con.executemany("INSERT INTO gene_synonyms VALUES (?, ?, ?, ?)", syn_rows)
     con.execute(
         "INSERT OR REPLACE INTO _meta VALUES (?, ?)", (_GENE_META_KEY, json.dumps(meta))
@@ -613,17 +581,6 @@ def resolve_name(
             m = resolve_name(con, symbol)
             return GeneMatch(name, m.method, m.gene, m.claimants)
     norm = normalise_name(name)
-
-    over = _one_per_ncbi(_genes(
-        con,
-        "ncbi_gene_id IN (SELECT ncbi_gene_id FROM gene_synonyms "
-        "WHERE synonym_norm = ? AND source = 'override')",
-        (norm,),
-    ))
-    if len(over) == 1:
-        return GeneMatch(name, OVERRIDE, over[0])
-    if len(over) > 1:
-        return GeneMatch(name, AMBIGUOUS, claimants=over)
 
     exact = _prefer_ncbi(_one_per_ncbi(_genes(con, "stats_symbol = ? OR label = ?", (name, name))))
     if len(exact) == 1:

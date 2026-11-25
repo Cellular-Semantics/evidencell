@@ -30,7 +30,6 @@ from evidencell.expression_cache import ExpressionLookup, ExpressionUnavailable
 from evidencell.gene_identity import (
     GENE_DDL,
     GENE_IDS_FILE,
-    GENE_OVERRIDES_FILE,
     load_gene_tables,
     marker_gene_ids,
     marker_name,
@@ -1503,12 +1502,11 @@ def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
             return True, reasons + [f"DB mtime unreadable at {db_path}"]
     # Both forms: the largest level ships gzipped (cluster.yaml.gz, to stay
     # under GitHub's file limit), and a *.yaml-only glob never saw it change.
-    # The gene identity sources (#216) load at build time too.
+    # The gene identity table (#216) loads at build time too.
     yaml_files = (
         [
             *yaml_dir.glob("*.yaml"), *yaml_dir.glob("*.yaml.gz"),
-            *(p for p in (yaml_dir / GENE_IDS_FILE, yaml_dir / GENE_OVERRIDES_FILE)
-              if p.is_file()),
+            *(p for p in (yaml_dir / GENE_IDS_FILE,) if p.is_file()),
         ]
         if yaml_dir.is_dir() else []
     )
@@ -1535,8 +1533,8 @@ def taxonomy_db_freshness(taxonomy_id: str) -> tuple[bool, list[str]]:
     Checks performed:
       1. DB exists at kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db
       2. _meta.schema_hash present and equal to current _SCHEMA_HASH
-      3. _meta.taxonomy_built_at ≥ newest YAML / gene_ids.tsv.gz /
-         gene_overrides.tsv mtime under kb/taxonomy/{taxonomy_id}/ (the DB
+      3. _meta.taxonomy_built_at ≥ newest YAML / gene_ids.tsv.gz
+         mtime under kb/taxonomy/{taxonomy_id}/ (the DB
          file's mtime only for DBs that predate that key — cache writes
          change the mtime, not the build)
 
@@ -2015,7 +2013,7 @@ class TaxonomyDB:
                 "CREATE TABLE IF NOT EXISTS _meta (key TEXT PRIMARY KEY, value TEXT);"
             )
             # Gene identity (#216): loaded offline from the committed
-            # gene_ids.tsv.gz + gene_overrides.tsv; absent for taxonomies
+            # gene_ids.tsv.gz; absent for taxonomies
             # without a stats file.
             load_gene_tables(con, taxonomy_dir)
             con.execute(

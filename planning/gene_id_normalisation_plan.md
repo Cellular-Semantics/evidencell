@@ -4,6 +4,8 @@
 > into the taxonomy DB's `genes` / `gene_synonyms` tables, a reviewed
 > `gene_overrides.tsv`, `just resolve-gene-names` for curation, and a
 > pre-edit hook check on `ncbi_gene_id`. Kept for its design history.
+> (`gene_overrides.tsv` was later removed in #245: ambiguous names are
+> settled per marker, not by a taxonomy-wide table.)
 
 # Gene symbol & ID normalisation for taxonomy nodes
 

@@ -194,17 +194,6 @@ def test_foreign_species_id_falls_back_to_the_name(db):
     assert out.genes["SST"].method == "CASE_INSENSITIVE_SYMBOL"
 
 
-def test_override_settles_an_ambiguous_name(tmp_path, tax_dir, stats):
-    (tax_dir / "gene_overrides.tsv").write_text(
-        "name\tncbi_gene_id\tsymbol\trationale\treviewed_by\n"
-        "CB\tNCBIGene:12307\tCalb1\tcalbindin in neuron papers\ttest\n"
-    )
-    db = _make_db(tmp_path / "O.db", tax_dir, stats)
-    out = db.expression(["CB"], accessions=["CLUS_3"])
-    assert out.values == {"CLUS_3": {"CB": 5.0}}
-    assert out.genes["CB"].method == "OVERRIDE"
-
-
 def test_new_stats_release_is_refused_until_gene_ids_refresh(db, stats):
     """A stats file other than the one gene_ids.tsv.gz was built from can't
     be trusted: its columns may have moved."""

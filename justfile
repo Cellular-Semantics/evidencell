@@ -347,7 +347,7 @@ ingest-taxonomy-yaml taxonomy_file taxonomy_id:
     uv run python -m evidencell.taxonomy_db ingest {{taxonomy_file}} {{taxonomy_id}}
 
 # Build SQLite query index from YAML reference files (no source JSON required).
-# Loads the gene identity tables from gene_ids.tsv.gz + gene_overrides.tsv (#216).
+# Loads the gene identity tables from gene_ids.tsv.gz (#216).
 # Expression cache tables start empty and fill on use from the stats HDF5.
 # Usage: just build-taxonomy-db CCN20230722
 [group('workflows')]
