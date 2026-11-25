@@ -27,6 +27,7 @@ from typing import Callable
 
 import yaml
 
+from evidencell.gene_identity import marker_gene_ids
 from evidencell.paths import repo_root, taxonomy_db_path
 from evidencell.taxonomy_db import (
     TaxonomyDB,
@@ -397,9 +398,11 @@ class ATBlindAudit(AuditDriver):
         db = self._get_db()
         # Queried rank + rank 0 (for leaf coverage), through the on-demand
         # accessor; genes load into the DB cache on first use.
-        expression_data = db.expression(
+        expr = db.expression(
             [*markers, *neg_markers], ranks={rank, 0},
-        ).values
+            gene_ids=marker_gene_ids(classical),
+        )
+        expression_data = expr.values
 
         fc_kwargs = dict(
             nt_type=nt_type,
@@ -408,6 +411,9 @@ class ATBlindAudit(AuditDriver):
             rank=rank,
             optional_criteria=optional_criteria,
             expression_data=expression_data or None,
+            gene_symbols={
+                n: g for n in expr.genes if (g := expr.gene_symbol(n)) is not None
+            },
             at_hits=None,        # blind: no AT scoring
             at_bypass=None,      # blind: no AT bypass on filters
         )

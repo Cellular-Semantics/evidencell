@@ -21,12 +21,20 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable, Iterator
+from typing import Any, Iterable, Iterator, Mapping
 
 import ijson
 import yaml
 
 from evidencell.expression_cache import ExpressionLookup, ExpressionUnavailable
+from evidencell.gene_identity import (
+    GENE_DDL,
+    GENE_IDS_FILE,
+    Pin,
+    load_gene_tables,
+    marker_gene_ids,
+    marker_name,
+)
 
 # Always-latest release of the BICAN Mouse Brain Atlas Ontology (OBO JSON / Obograph)
 MBA_ONTOLOGY_URL = (
@@ -705,18 +713,18 @@ def _parse_np_markers(np_markers: str | None) -> list[dict]:
         if ":" in part:
             sym, score_str = part.rsplit(":", 1)
             try:
-                entries.append({"symbol": sym.strip(), "category": "NEUROPEPTIDE",
+                entries.append({"name_in_source": sym.strip(), "category": "NEUROPEPTIDE",
                                  "expression_score": float(score_str)})
                 continue
             except ValueError:
                 pass
-        entries.append({"symbol": part, "category": "NEUROPEPTIDE"})
+        entries.append({"name_in_source": part, "category": "NEUROPEPTIDE"})
     return entries
 
 
 def _parse_np_markers_symbols(np_markers: str | None) -> list[str]:
     """Extract just the gene symbols from a packed np_markers string."""
-    return [e["symbol"] for e in _parse_np_markers(np_markers) if e.get("symbol")]
+    return [e["name_in_source"] for e in _parse_np_markers(np_markers) if e.get("name_in_source")]
 
 
 def _parse_json_list(value: str | None) -> list[str]:
@@ -747,13 +755,13 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
     # Unified markers list
     markers: list[dict] = []
     for sym in n.defining_markers:
-        markers.append({"symbol": sym, "category": "DEFINING"})
+        markers.append({"name_in_source": sym, "category": "DEFINING"})
     for sym in n.defining_markers_scoped:
-        markers.append({"symbol": sym, "category": "DEFINING_SCOPED"})
+        markers.append({"name_in_source": sym, "category": "DEFINING_SCOPED"})
     for sym in n.tf_markers:
-        markers.append({"symbol": sym, "category": "TF"})
+        markers.append({"name_in_source": sym, "category": "TF"})
     for sym in n.merfish_markers:
-        markers.append({"symbol": sym, "category": "MERFISH"})
+        markers.append({"name_in_source": sym, "category": "MERFISH"})
     markers.extend(_parse_np_markers(n.np_markers))
 
     # NeurotransmitterType
@@ -1225,19 +1233,18 @@ CREATE TABLE IF NOT EXISTS anat (
 );
 
 -- Expression cache (#189): empty after a build, filled on demand from the
--- MapMyCells stats HDF5 by evidencell.expression_cache.
+-- MapMyCells stats HDF5 by evidencell.expression_cache. Keyed by Ensembl ID:
+-- marker names resolve to genes through the genes / gene_synonyms tables
+-- (evidencell.gene_identity, #216).
 CREATE TABLE IF NOT EXISTS node_expression (
   node_id         TEXT NOT NULL REFERENCES nodes(node_id),
-  symbol          TEXT NOT NULL,
-  ensembl_id      TEXT,
+  ensembl_id      TEXT NOT NULL,
   mean_expression REAL NOT NULL,
-  PRIMARY KEY (node_id, symbol)
+  PRIMARY KEY (node_id, ensembl_id)
 );
 
 CREATE TABLE IF NOT EXISTS expression_genes (
-  symbol          TEXT PRIMARY KEY,
-  ensembl_id      TEXT,
-  status          TEXT NOT NULL,
+  ensembl_id      TEXT PRIMARY KEY,
   source_file     TEXT NOT NULL,
   source_sha256   TEXT NOT NULL,
   loaded_at       TEXT NOT NULL
@@ -1250,7 +1257,7 @@ CREATE INDEX IF NOT EXISTS idx_nodes_nt     ON nodes(nt_type);
 CREATE INDEX IF NOT EXISTS idx_anat_node    ON anat(node_id);
 CREATE INDEX IF NOT EXISTS idx_anat_region  ON anat(anat_id);
 CREATE INDEX IF NOT EXISTS idx_node_expr_node    ON node_expression(node_id);
-CREATE INDEX IF NOT EXISTS idx_node_expr_symbol  ON node_expression(symbol);
+CREATE INDEX IF NOT EXISTS idx_node_expr_gene    ON node_expression(ensembl_id);
 """
 
 _CLOSURE_DDL = """\
@@ -1285,7 +1292,7 @@ CREATE INDEX IF NOT EXISTS idx_terms_uberon        ON anat_terms(uberon_id);
 # DB was last built. Hash includes DDL only — index changes don't matter.
 def _compute_schema_hash() -> str:
     import hashlib
-    return hashlib.sha256((_DDL + _CLOSURE_DDL).encode("utf-8")).hexdigest()[:16]
+    return hashlib.sha256((_DDL + _CLOSURE_DDL + GENE_DDL).encode("utf-8")).hexdigest()[:16]
 
 
 _SCHEMA_HASH = _compute_schema_hash()
@@ -1496,8 +1503,13 @@ def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
             return True, reasons + [f"DB mtime unreadable at {db_path}"]
     # Both forms: the largest level ships gzipped (cluster.yaml.gz, to stay
     # under GitHub's file limit), and a *.yaml-only glob never saw it change.
+    # The gene identity table (#216) loads at build time too.
     yaml_files = (
-        [*yaml_dir.glob("*.yaml"), *yaml_dir.glob("*.yaml.gz")] if yaml_dir.is_dir() else []
+        [
+            *yaml_dir.glob("*.yaml"), *yaml_dir.glob("*.yaml.gz"),
+            *(p for p in (yaml_dir / GENE_IDS_FILE,) if p.is_file()),
+        ]
+        if yaml_dir.is_dir() else []
     )
     if yaml_files:
         newest_yaml = max(p.stat().st_mtime for p in yaml_files)
@@ -1522,9 +1534,10 @@ def taxonomy_db_freshness(taxonomy_id: str) -> tuple[bool, list[str]]:
     Checks performed:
       1. DB exists at kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db
       2. _meta.schema_hash present and equal to current _SCHEMA_HASH
-      3. _meta.taxonomy_built_at ≥ newest YAML mtime under
-         kb/taxonomy/{taxonomy_id}/ (the DB file's mtime only for DBs that
-         predate that key — cache writes change the mtime, not the build)
+      3. _meta.taxonomy_built_at ≥ newest YAML / gene_ids.tsv.gz
+         mtime under kb/taxonomy/{taxonomy_id}/ (the DB
+         file's mtime only for DBs that predate that key — cache writes
+         change the mtime, not the build)
 
     Failure mode 2 means the schema gained a column since the DB was built
     (e.g. a new INTEGER field on `nodes`). Failure mode 3 means the YAML
@@ -1778,10 +1791,12 @@ def _marker_discrepancies(
     listed: set[str],
     node_expr: dict[str, float],
     sibling_vals: dict[str, list[float]],
+    gene_symbols: Mapping[str, str] | None = None,
 ) -> list[dict]:
     """Compare a candidate's metadata marker lists with measured expression.
 
-    For each queried gene (aliases resolved for the "listed" check):
+    For each queried gene name (checked against the lists both as written
+    and as the atlas symbol it resolved to, ``gene_symbols``):
 
     - ``LISTED_NOT_EXPRESSED``: in the metadata lists, but mean expression
       is below ``MIN_DETECTABLE``, or in the bottom sibling band and under
@@ -1792,11 +1807,10 @@ def _marker_discrepancies(
     - ``LISTED_NO_EXPRESSION_DATA``: in the lists, but no expression value
       for this node, so the listing can't be checked.
     """
-    from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
-
+    gene_symbols = gene_symbols or {}
     out: list[dict] = []
     for g in genes:
-        is_listed = g in listed or resolve_to_canonical_gene_symbol(g) in listed
+        is_listed = g in listed or gene_symbols.get(g, g) in listed
         val = node_expr.get(g)
         if val is None:
             if is_listed:
@@ -1954,14 +1968,12 @@ class TaxonomyDB:
         db_path: Path,
         *,
         stats_path: Path | None = None,
-        gene_mapping_path: Path | None = None,
     ) -> None:
-        """``stats_path`` / ``gene_mapping_path`` override the registry-derived
-        expression sources (``expression_cache.stats_h5_path`` /
-        ``gene_mapping_path``); tests use them to point at a fixture file."""
+        """``stats_path`` overrides the registry-derived stats file
+        (``expression_cache.stats_h5_path``); tests use it to point at a
+        fixture file."""
         self.db_path = db_path
         self._stats_path = stats_path
-        self._gene_mapping_path = gene_mapping_path
 
     def build_from_yaml(self, taxonomy_dir: Path) -> None:
         """Populate DB from kb/taxonomy/{taxonomy_id}/*.yaml{,.gz}.
@@ -2001,6 +2013,10 @@ class TaxonomyDB:
             con.executescript(
                 "CREATE TABLE IF NOT EXISTS _meta (key TEXT PRIMARY KEY, value TEXT);"
             )
+            # Gene identity (#216): loaded offline from the committed
+            # gene_ids.tsv.gz; absent for taxonomies
+            # without a stats file.
+            load_gene_tables(con, taxonomy_dir)
             con.execute(
                 "INSERT OR REPLACE INTO _meta VALUES ('taxonomy_built_at', ?)",
                 (built_at,),
@@ -2054,12 +2070,13 @@ class TaxonomyDB:
 
         # Markers by category
         markers = nd.get("markers") or []
-        defining_markers = [m["symbol"] for m in markers if m.get("category") == "DEFINING"]
-        defining_markers_scoped = [m["symbol"] for m in markers if m.get("category") == "DEFINING_SCOPED"]
-        tf_markers = [m["symbol"] for m in markers if m.get("category") == "TF"]
-        merfish_markers = [m["symbol"] for m in markers if m.get("category") == "MERFISH"]
+        # marker_name reads pre-#244 YAML (symbol) as well as name_in_source.
+        defining_markers = [marker_name(m) for m in markers if m.get("category") == "DEFINING"]
+        defining_markers_scoped = [marker_name(m) for m in markers if m.get("category") == "DEFINING_SCOPED"]
+        tf_markers = [marker_name(m) for m in markers if m.get("category") == "TF"]
+        merfish_markers = [marker_name(m) for m in markers if m.get("category") == "MERFISH"]
         np_pairs = [
-            (m["symbol"], m.get("expression_score"))
+            (marker_name(m), m.get("expression_score"))
             for m in markers if m.get("category") == "NEUROPEPTIDE"
         ]
         np_markers: str | None = (
@@ -2284,38 +2301,42 @@ class TaxonomyDB:
         symbols: Iterable[str],
         accessions: Iterable[str] | None = None,
         ranks: Iterable[int] | None = None,
+        *,
+        gene_ids: Mapping[str, str | Pin] | None = None,
     ) -> ExpressionLookup:
         """Mean expression of ``symbols`` on atlas nodes — the one accessor
         every expression consumer goes through (#189).
 
-        Genes not yet cached are read from the MapMyCells stats HDF5 and
-        cached in this DB first (see :mod:`evidencell.expression_cache`).
-        Restrict nodes with ``accessions`` and/or ``ranks``. Genes that
-        can't be measured (no Ensembl mapping, absent from the stats file)
-        come back in ``not_measured`` with the reason — never as a silent
-        empty result.
+        Each name resolves to a gene of this taxonomy through the gene
+        identity tables (:func:`evidencell.gene_identity.resolve_names`);
+        ``gene_ids`` pins a name to its curated ``ncbi_gene_id`` (see
+        :func:`evidencell.gene_identity.marker_gene_ids`). Results are keyed
+        by the names asked for; ``genes`` on the result says how each one
+        resolved. Genes not yet cached are read from the MapMyCells stats
+        HDF5 and cached in this DB first (see
+        :mod:`evidencell.expression_cache`). Restrict nodes with
+        ``accessions`` and/or ``ranks``. Names that can't be measured (no
+        gene, or several candidate genes) come back in ``not_measured`` with
+        the reason — never as a silent empty result.
 
-        Raises :class:`ExpressionUnavailable` when an uncached gene can't be
-        loaded because the stats file or gene mapping is missing.
+        Raises :class:`ExpressionUnavailable` when the DB has no gene tables
+        or an uncached gene can't be loaded because the stats file is
+        missing.
         """
         from evidencell import expression_cache as ec
+        from evidencell.gene_identity import resolve_names
 
         wanted = [s for s in dict.fromkeys(symbols) if s]
         if not wanted:
             return ExpressionLookup()
-        tid: str | None = None
-        stats = self._stats_path
-        mapping = self._gene_mapping_path
-        if stats is None or mapping is None:
-            tid = self.taxonomy_id()
-            stats = stats or ec.stats_h5_path(tid)
-            mapping = mapping or ec.gene_mapping_path(tid)
+        tid = self.taxonomy_id()
+        stats = self._stats_path or ec.stats_h5_path(tid)
         with self._connect() as con:
+            matches = resolve_names(con, wanted, gene_ids, taxonomy_id=tid)
             ec.ensure_genes(
-                con, tid or self.taxonomy_id(), wanted,
-                stats_path=stats, mapping_path=mapping,
+                con, tid, [m.gene for m in matches.values() if m.gene], stats_path=stats,
             )
-            return ec.query(con, wanted, accessions=accessions, ranks=ranks)
+            return ec.query(con, matches, accessions=accessions, ranks=ranks)
 
     def get_node_marker_categories(
         self,
@@ -2493,6 +2514,7 @@ class TaxonomyDB:
         expression_data: dict[str, dict[str, float]] | None = None,
         at_bypass: set[str] | None = None,
         at_hits: dict[str, dict] | None = None,
+        gene_symbols: Mapping[str, str] | None = None,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
 
@@ -2967,6 +2989,7 @@ class TaxonomyDB:
                 }
                 nd["_marker_discrepancies"] = _marker_discrepancies(
                     discrepancy_genes, cand_markers, node_expr, sibling_vals,
+                    gene_symbols,
                 )
 
             # ── Annotation transfer (Stage A signal) ──────────────────────
@@ -3075,56 +3098,27 @@ def _classical_positive_markers(classical: dict) -> list[str]:
     they feed the same Stage A scoring path; the scoring function does not
     distinguish them. Order: defining markers first, then neuropeptides not
     already present (de-duped, defining-priority).
-
-    Protein-name markers (``PV``, ``CB``, ``mGluR1`` …) are left out: see
-    :func:`_classical_protein_alias_markers`.
     """
     out: list[str] = []
     for m in classical.get("defining_markers") or []:
-        sym = m.get("symbol") if isinstance(m, dict) else m
-        if sym and not _is_protein_alias(sym):
+        sym = marker_name(m)
+        if sym:
             out.append(sym)
     for m in classical.get("neuropeptides") or []:
-        sym = m.get("symbol") if isinstance(m, dict) else m
-        if sym and sym not in out and not _is_protein_alias(sym):
+        sym = marker_name(m)
+        if sym and sym not in out:
             out.append(sym)
     return out
 
 
 def _classical_negative_markers(classical: dict) -> list[str]:
-    """Extract symbols for the negative-marker channel from a classical node
-    (protein-name markers left out, as for positive markers)."""
+    """Extract symbols for the negative-marker channel from a classical node."""
     out: list[str] = []
     for m in classical.get("negative_markers") or []:
-        sym = m.get("symbol") if isinstance(m, dict) else m
-        if sym and not _is_protein_alias(sym):
+        sym = marker_name(m)
+        if sym:
             out.append(sym)
     return out
-
-
-def _classical_protein_alias_markers(classical: dict) -> list[str]:
-    """Marker symbols Stage A does not score because they are protein names
-    that only resolve to a gene through ``marker_aliases``.
-
-    That alias table is an ad hoc stopgap. Scoring through it changed
-    rankings (``olm_cell_ca1``, PR #207), so Stage A keeps its pre-#189
-    behaviour — these markers contribute nothing — until gene identity is
-    resolved properly (#216). Stage B still resolves them for its
-    property comparisons, as before.
-    """
-    out: list[str] = []
-    for key in ("defining_markers", "neuropeptides", "negative_markers"):
-        for m in classical.get(key) or []:
-            sym = m.get("symbol") if isinstance(m, dict) else m
-            if sym and _is_protein_alias(sym) and sym not in out:
-                out.append(sym)
-    return out
-
-
-def _is_protein_alias(symbol: str) -> bool:
-    from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
-
-    return resolve_to_canonical_gene_symbol(symbol) != symbol
 
 
 def _cmd_ingest(source: str, taxonomy_id: str) -> None:
@@ -3475,13 +3469,6 @@ def _cmd_find_candidates(
     # extraction is testable without a DB fixture.
     markers = _classical_positive_markers(classical)
     neg_markers = _classical_negative_markers(classical)
-    alias_markers = _classical_protein_alias_markers(classical)
-    if alias_markers:
-        print(
-            "  NOT SCORED (protein-name markers; gene identity pending #216): "
-            + ", ".join(alias_markers),
-            file=sys.stderr,
-        )
 
     nt_obj = classical.get("nt_type")
     nt_type: str | None = None
@@ -3509,9 +3496,11 @@ def _cmd_find_candidates(
     # Uncached genes load from the MapMyCells stats HDF5 on first use; if
     # that file is missing, stop with the fix rather than score from
     # metadata (#189).
+    # Names resolve to genes through the gene identity tables; a marker's
+    # curated ncbi_gene_id pins its gene (#216).
     queried = list(dict.fromkeys([*markers, *neg_markers]))
     try:
-        expr = db.expression(queried, ranks={rank, 0})
+        expr = db.expression(queried, ranks={rank, 0}, gene_ids=marker_gene_ids(classical))
     except ExpressionUnavailable as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         sys.exit(1)
@@ -3525,7 +3514,18 @@ def _cmd_find_candidates(
     if expr.not_measured:
         print(
             "  NOT MEASURED (score 0): "
-            + ", ".join(f"{g} ({r})" for g, r in sorted(expr.not_measured.items())),
+            + ", ".join(
+                f"{g} ({r}"
+                + (
+                    ": " + " / ".join(c.stats_symbol for c in expr.genes[g].claimants)
+                    if g in expr.genes and expr.genes[g].claimants else ""
+                )
+                + ")"
+                for g, r in sorted(expr.not_measured.items())
+            )
+            + " — to give a marker its gene, see docs/marker_gene_ids.md;"
+            " NO_GENE_ID markers that"
+            " name no single gene (glycoform, PTM, gene family) stay unmeasured",
             file=sys.stderr,
         )
 
@@ -3651,6 +3651,9 @@ def _cmd_find_candidates(
         expression_data=expression_data or None,
         at_hits=at_hits,
         at_bypass=at_bypass,
+        gene_symbols={
+            name: sym for name in queried if (sym := expr.gene_symbol(name)) is not None
+        },
     )
     try:
         candidates = db.find_candidates(
@@ -3787,7 +3790,14 @@ def _cmd_find_candidates(
         "n_candidates": cohort_size,
         "expression_source": expr.source_file,
         "not_measured_genes": dict(sorted(expr.not_measured.items())),
-        "unscored_protein_alias_markers": alias_markers,
+        "gene_resolution": {
+            name: {
+                "method": m.method,
+                "symbol": m.gene.stats_symbol if m.gene else None,
+                "ncbi_gene_id": m.gene.ncbi_gene_id if m.gene else None,
+            }
+            for name, m in expr.genes.items()
+        },
         "candidates": [
             {
                 "node_id": c["node_id"],

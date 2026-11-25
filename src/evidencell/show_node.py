@@ -12,6 +12,8 @@ from pathlib import Path
 
 import yaml
 
+from evidencell.gene_identity import marker_display
+
 
 def node_context(kb_file: Path, node_id: str) -> str:
     """Return a NODE_CONTEXT string for the given node, or raise ValueError."""
@@ -21,7 +23,7 @@ def node_context(kb_file: Path, node_id: str) -> str:
     if node is None:
         raise ValueError(f"Node '{node_id}' not found in {kb_file}")
 
-    markers = [m.get("symbol", "?") for m in (node.get("defining_markers") or [])]
+    markers = [marker_display(m) or "?" for m in (node.get("defining_markers") or [])]
     locs = [loc.get("label", "?") for loc in (node.get("anatomical_location") or [])]
     nt = (node.get("nt_type") or {}).get("name_in_source", "unknown")
 

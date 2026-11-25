@@ -35,6 +35,11 @@ PARAMS:
 
 Read `graph_file` with `yaml.safe_load()`. Locate the node by id.
 
+What each mapping type means, and how a `cl_mapping` should have been chosen,
+is in `.claude/skills/cl-mapping.md`. If the node's `cl_mapping` looks wrong by
+that skill (e.g. EXACT on a name match alone), say so and stop: fix the mapping
+in the KB before drafting a request.
+
 Gate:
 
 - `cl_mapping.mapping_type == EXACT` → STOP. No NTR needed; the existing CL term
@@ -118,8 +123,8 @@ already carries `id` and `label` (e.g. `MBA:1031`, `UBERON:0001950`). Pick the
 most specific entry from `facts.classical_nodes[0].soma_locations`.
 
 If only Allen-atlas (MBA/HBA/DHBA) terms are present and the CL editor
-convention is UBERON, look up the corresponding UBERON term with `mcp__ols4__searchClasses`
-(`ontology_id: "uberon"`) and record both. Do not invent IDs.
+convention is UBERON, find the corresponding UBERON term as
+`.claude/skills/term-grounding.md` says and record both. Do not invent IDs.
 
 ---
 

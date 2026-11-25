@@ -14,6 +14,9 @@ nodes:
     name: Dentate Gyrus Neuroblast (Type-3 Progenitor)
     definition_basis: CLASSICAL_NEUROCHEMICAL
     species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     anatomical_location:
       - id: UBERON:0009952
         label: dentate gyrus subgranular zone
@@ -25,8 +28,9 @@ nodes:
           label: glutamatergic neuron
           name_in_source: glutamatergic
     defining_markers:
-      - symbol: DCX
-        ncbi_gene_id:
+      - name_in_source: DCX
+        symbol: Dcx
+        ncbi_gene_id: "NCBIGene:13193"
         sources:
           - ref: PMID:40519263
             method: review (marker classification)
@@ -38,20 +42,22 @@ nodes:
             scope: adult hippocampal DG
             quote_key: 245432259_44d5c91b
             marker_type: NOT_STATED
-      - symbol: Ki67
-        ncbi_gene_id:
+      - name_in_source: Ki67
+        symbol: Mki67
+        ncbi_gene_id: "NCBIGene:17345"
         sources:
           - ref: PMID:37082558
             method: review (marker classification)
             scope: adult hippocampal DG
             quote_key: 245432259_44d5c91b
             marker_type: NOT_STATED
-      - symbol: PSA-NCAM
+      - name_in_source: PSA-NCAM
         ncbi_gene_id:
         sources: []
-      - symbol: Nestin
+      - name_in_source: Nestin
+        symbol: Nes
         modifier: type-2b stage only
-        ncbi_gene_id:
+        ncbi_gene_id: "NCBIGene:18008"
         sources:
           - ref: PMID:40519263
             method: review (marker classification)
@@ -59,12 +65,15 @@ nodes:
             quote_key: 279046466_998847af
             marker_type: NOT_STATED
     negative_markers:
-      - symbol: NeuN
-        ncbi_gene_id:
-      - symbol: Calbindin
-        ncbi_gene_id:
-      - symbol: GFAP
-        ncbi_gene_id:
+      - name_in_source: NeuN
+        symbol: Rbfox3
+        ncbi_gene_id: "NCBIGene:52897"
+      - name_in_source: Calbindin
+        symbol: Calb1
+        ncbi_gene_id: "NCBIGene:12307"
+      - name_in_source: GFAP
+        symbol: Gfap
+        ncbi_gene_id: "NCBIGene:14580"
     neuropeptides: []
     cl_mapping:
       cl_term:

@@ -23,6 +23,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from typing import Mapping
 
 import yaml
 from ruamel.yaml import YAML
@@ -37,7 +38,7 @@ from evidencell.at_metrics import (
 )
 from evidencell.expression_cache import ExpressionUnavailable
 from evidencell.kb_io import roundtrip_yaml
-from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
+from evidencell.gene_identity import Pin, marker_gene_ids, marker_name
 from evidencell.paths import repo_root
 from evidencell.taxonomy_db import MIN_DETECTABLE
 
@@ -67,18 +68,6 @@ _RANK_TO_LEVEL_NAME: dict[int, str] = {
     2: "subclass",
     3: "class",
 }
-
-def _resolve_symbol(sym: str) -> str:
-    """Map a marker symbol to its canonical gene symbol via the shared
-    alias table (:data:`marker_aliases.PROTEIN_TO_GENE_ALIASES`).
-    Returns the symbol verbatim if no alias is registered.
-
-    Used by ``_property_comparisons`` to translate classical-node
-    symbols (mGluR1, PV, GFAP, …) to the gene symbols actually used
-    on the atlas side (Grm1, Pvalb, Gfap, …).
-    """
-    return resolve_to_canonical_gene_symbol(sym)
-
 
 # ─── public entry ────────────────────────────────────────────────────────────
 
@@ -138,6 +127,7 @@ def emit_stage_b(
         atlas = _load_atlas_node(
             taxonomy_id, cand["node_id"], rank,
             symbols=_classical_expression_symbols(classical),
+            gene_ids=marker_gene_ids(classical),
         )
         edges.append(_build_edge(
             classical_node_id=classical_node_id,
@@ -283,6 +273,10 @@ def _property_comparisons(
     atlas_expr = (atlas or {}).get("expression") or {}
     not_measured = (atlas or {}).get("not_measured") or {}
     expr_source = (atlas or {}).get("expression_source")
+    # Classical marker name → the atlas symbol it resolved to (#216), for
+    # matching the atlas metadata marker lists. Expression is keyed by the
+    # classical name itself.
+    gene_symbols = (atlas or {}).get("gene_symbols") or {}
     atlas_marker_meta = _atlas_marker_categories(atlas)
     # Stage A metadata-vs-expression discrepancies, keyed by gene; copied
     # into the matching comparison's notes (#189). They don't change alignment.
@@ -292,19 +286,19 @@ def _property_comparisons(
 
     def _gene_ctx(sym: str, canon: str) -> dict:
         return {
-            "atlas_val": atlas_expr.get(canon),
-            "atlas_meta_category": atlas_marker_meta.get(canon),
-            "not_measured_reason": not_measured.get(canon) or not_measured.get(sym),
+            "atlas_val": atlas_expr.get(sym),
+            "atlas_meta_category": atlas_marker_meta.get(canon) or atlas_marker_meta.get(sym),
+            "not_measured_reason": not_measured.get(sym),
             "expression_source": expr_source,
             "stage_a_expression_source": candidate.get("expression_source"),
             "discrepancy": discrepancies.get(sym) or discrepancies.get(canon),
         }
 
     for m in (classical.get("defining_markers") or []):
-        sym = m.get("symbol") if isinstance(m, dict) else m
+        sym = marker_name(m)
         if not sym:
             continue
-        canon = _resolve_symbol(sym)
+        canon = str(gene_symbols.get(sym) or sym)
         out.append(_marker_comparison(
             property_name=f"marker_{sym}",
             symbol=sym,
@@ -315,10 +309,10 @@ def _property_comparisons(
         ))
 
     for m in (classical.get("negative_markers") or []):
-        sym = m.get("symbol") if isinstance(m, dict) else m
+        sym = marker_name(m)
         if not sym:
             continue
-        canon = _resolve_symbol(sym)
+        canon = str(gene_symbols.get(sym) or sym)
         out.append(_marker_comparison(
             property_name=f"negative_marker_{sym}",
             symbol=sym,
@@ -329,10 +323,10 @@ def _property_comparisons(
         ))
 
     for m in (classical.get("neuropeptides") or []):
-        sym = m.get("symbol") if isinstance(m, dict) else m
+        sym = marker_name(m)
         if not sym:
             continue
-        canon = _resolve_symbol(sym)
+        canon = str(gene_symbols.get(sym) or sym)
         out.append(_marker_comparison(
             property_name=f"neuropeptide_{sym}",
             symbol=sym,
@@ -424,16 +418,16 @@ def _atlas_location_summary(atlas: dict | None, ds: dict) -> str:
 
 
 def _classical_expression_symbols(classical: dict) -> list[str]:
-    """Canonical gene symbols of a classical node's defining markers,
-    negative markers and neuropeptides — the genes Stage B compares."""
+    """Marker names of a classical node's defining markers, negative
+    markers and neuropeptides — the genes Stage B compares. They resolve to
+    atlas genes in ``TaxonomyDB.expression`` (pinned by each marker's
+    ``ncbi_gene_id``; see :func:`gene_identity.marker_gene_ids`)."""
     out: list[str] = []
     for field in ("defining_markers", "negative_markers", "neuropeptides"):
         for m in classical.get(field) or []:
-            sym = m.get("symbol") if isinstance(m, dict) else m
-            if sym:
-                canon = _resolve_symbol(sym)
-                if canon not in out:
-                    out.append(canon)
+            sym = marker_name(m)
+            if sym and sym not in out:
+                out.append(sym)
     return out
 
 
@@ -443,7 +437,7 @@ def _atlas_marker_categories(atlas: dict | None) -> dict[str, str]:
         return {}
     out: dict[str, str] = {}
     for m in atlas.get("markers") or []:
-        sym = m.get("symbol")
+        sym = marker_name(m)
         cat = m.get("category")
         if sym and cat and sym not in out:
             out[sym] = cat
@@ -939,7 +933,11 @@ def _canonical_discovery_path(
 
 
 def _load_atlas_node(
-    taxonomy_id: str, accession: str, rank: int, symbols: list[str] | None = None,
+    taxonomy_id: str,
+    accession: str,
+    rank: int,
+    symbols: list[str] | None = None,
+    gene_ids: Mapping[str, str | Pin] | None = None,
 ) -> dict | None:
     """Load the atlas node dict for a given accession from the taxonomy DB.
 
@@ -949,8 +947,10 @@ def _load_atlas_node(
 
     Expression for ``symbols`` comes through ``TaxonomyDB.expression`` —
     the on-demand accessor (#189) — so genes not yet cached load from the
-    MapMyCells stats file. The returned dict carries ``expression``
-    (``{symbol: mean}``), ``not_measured`` (``{symbol: reason}``) and
+    MapMyCells stats file; ``gene_ids`` pins marker names to their curated
+    ``ncbi_gene_id``. The returned dict carries ``expression``
+    (``{symbol: mean}``), ``not_measured`` (``{symbol: reason}``),
+    ``gene_symbols`` (``{symbol: atlas symbol it resolved to}``) and
     ``expression_source`` (stats file name) alongside the nodes-table
     fields, ``anatomical_location`` and metadata ``markers``.
     """
@@ -964,7 +964,7 @@ def _load_atlas_node(
     if not node:
         return None
 
-    expr = db.expression(symbols or [], accessions=[accession])
+    expr = db.expression(symbols or [], accessions=[accession], gene_ids=gene_ids)
     anat_rows = db.get_node_anat_rows(accession)
     marker_cats = db.get_node_marker_categories(accession)
 
@@ -989,9 +989,12 @@ def _load_atlas_node(
         ],
         "expression": expr.for_node(accession),
         "not_measured": expr.not_measured,
+        "gene_symbols": {
+            name: sym for name in expr.genes if (sym := expr.gene_symbol(name)) is not None
+        },
         "expression_source": expr.source_file,
         "markers": [
-            {"symbol": sym, "category": cat}
+            {"name_in_source": sym, "category": cat}
             for sym, cat in marker_cats.items()
         ],
     }
@@ -1123,6 +1126,7 @@ def _cli() -> None:
             atlas = _load_atlas_node(
                 args.taxonomy_id, cand["node_id"], args.rank,
                 symbols=_classical_expression_symbols(classical),
+                gene_ids=marker_gene_ids(classical),
             )
             edges.append(_build_edge(
                 classical_node_id=args.classical_node_id,

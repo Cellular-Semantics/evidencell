@@ -196,7 +196,7 @@ def tiny_graph_files(tmp_path: Path) -> tuple[Path, Path]:
             {
                 "id": "lit_x",
                 "definition_basis": "CLASSICAL_MULTIMODAL",
-                "defining_markers": [{"symbol": "Sst"}],
+                "defining_markers": [{"name_in_source": "Sst"}],
             },
             {
                 "id": "CS20230722_SUPT_0216",

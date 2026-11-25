@@ -203,7 +203,7 @@ def kb_file(tmp_path: Path) -> Path:
             {
                 "id": "test_node",
                 "name": "Test Neuron",
-                "defining_markers": [{"symbol": "PVALB"}, {"symbol": "SST"}],
+                "defining_markers": [{"name_in_source": "PVALB"}, {"name_in_source": "SST"}],
                 "anatomical_location": [{"label": "Cerebellar cortex"}],
                 "nt_type": {"name_in_source": "GABA"},
             }
