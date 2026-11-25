@@ -22,6 +22,24 @@ nodes:
     name: "Ventral lateral geniculate nucleus / intergeniculate leaflet (LGv/IGL) GABAergic neuron"
     definition_basis: CLASSICAL_ANATOMICAL
     species:       # To be confirmed from primary literature — mouse evidence
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "vLGN/IGL GABAergic neurons"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:38865246"
+            method: "used in abstract"
+            scope: "mouse vLGN/IGL"
+            quote_key: "270412585_53f9c770"
+      - term: "vLGN/IGL GABA neurons"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:30795900"
+            method: "used in abstract (GABA neurons in the ... vLGN/IGL)"
+            scope: "mouse vLGN/IGL"
+            quote_key: "72332556_28081399"
     anatomical_location:
       - id: UBERON:0002480
         label: "ventral lateral geniculate nucleus"

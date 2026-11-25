@@ -1,0 +1,47 @@
+# vLGN local GABAergic interneuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "vLGN Local GABAergic Interneuron"
+description: >
+  Evidence graph component for the local GABAergic interneuron of the
+  ventral lateral geniculate nucleus (vLGN), proposed from the ASTA deep
+  research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: vlgn_local_gabaergic_interneuron
+    name: "vLGN local GABAergic interneuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: vlgn_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:31964831"
+            method: "statement in introduction (dLGN, vLGN and IGL each contain local GABAergic interneurons)"
+            scope: "rodent visual thalamus"
+            quote_key: "210870509_2b108b46"
+          - ref: "PMID:36342840"
+            method: "statement in source (presence and distribution of local interneurons in dLGN and vLGN)"
+            scope: "mouse visual thalamus"
+            quote_key: "247085323_880b2f54"
+        notes: >
+          Defined as the vLGN GABAergic neuron narrowed to locally projecting
+          (interneuron) cells; containment holds by definition.
+edges: []

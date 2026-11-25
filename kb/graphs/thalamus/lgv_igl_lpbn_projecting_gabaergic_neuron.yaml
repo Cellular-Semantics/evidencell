@@ -1,0 +1,44 @@
+# Lateral parabrachial nucleus-projecting vLGN/IGL GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Lateral Parabrachial Nucleus-projecting vLGN/IGL GABAergic Neuron"
+description: >
+  Evidence graph component for the lateral parabrachial nucleus
+  (LPBN)-projecting GABAergic neuron of the ventral lateral geniculate
+  nucleus and intergeniculate leaflet (vLGN/IGL), proposed from the ASTA deep
+  research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lgv_igl_lpbn_projecting_gabaergic_neuron
+    name: "Lateral parabrachial nucleus-projecting vLGN/IGL GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: lgv_igl_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:38865246"
+            method: "circuit tracing (RGC-innervated vLGN/IGL GABAergic neurons inhibit LPBN)"
+            scope: "mouse vLGN/IGL"
+            quote_key: "270412585_53f9c770"
+        notes: >
+          Defined as the LGv/IGL GABAergic neuron narrowed by projection
+          target (lateral parabrachial nucleus). Single study.
+edges: []

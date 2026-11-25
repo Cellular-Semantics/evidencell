@@ -1,0 +1,39 @@
+# Nucleus reuniens-projecting vLGN/IGL neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Nucleus Reuniens-projecting vLGN/IGL Neuron"
+description: >
+  Evidence graph component for the nucleus reuniens (Re)-projecting neuron
+  of the ventral lateral geniculate nucleus and intergeniculate leaflet
+  (vLGN/IGL), proposed from the ASTA deep research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lgv_igl_reuniens_projecting_neuron
+    name: "Nucleus reuniens-projecting vLGN/IGL neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Re-projecting vLGN/IGL neurons"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:33171117"
+            method: "used in abstract"
+            scope: "mouse vLGN/IGL"
+            quote_key: "226284065_834809d9"
+edges: []

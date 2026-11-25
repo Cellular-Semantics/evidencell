@@ -1,0 +1,63 @@
+# Ventral lateral geniculate nucleus (vLGN) GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Ventral Lateral Geniculate Nucleus (vLGN) GABAergic Neuron"
+description: >
+  Evidence graph component for the ventral lateral geniculate nucleus (vLGN)
+  GABAergic neuron, proposed from the ASTA deep research report
+  vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: vlgn_gabaergic_neuron
+    name: "Ventral lateral geniculate nucleus (vLGN) GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "vLGNGABA neuron"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:34610302"
+            method: "primary label in abstract (vLGN-GABA, subscript in original)"
+            scope: "adult mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+      - term: "LGv GABAergic projection neuron"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:36280260"
+            method: "used in introduction (LGv composed almost exclusively of GABAergic projection neurons)"
+            scope: "mouse IGL and LGv"
+            quote_key: "247159795_fb7a534b"
+    subtype_of:
+      - parent: lgv_igl_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:36609305"
+            method: "statement in source (virtually all vLGN neurons are GABAergic)"
+            scope: "mouse vLGN"
+            quote_key: "255502436_f64915a5"
+          - ref: "PMID:36280260"
+            method: "statement in source (IGL and LGv composed almost exclusively of GABAergic projection neurons)"
+            scope: "mouse IGL and LGv"
+            quote_key: "247159795_fb7a534b"
+        notes: >
+          Containment inferred from structural subdivision: the parent pools
+          GABAergic neurons of LGv and IGL; this node restricts it to the vLGN
+          (LGv) alone.
+edges: []

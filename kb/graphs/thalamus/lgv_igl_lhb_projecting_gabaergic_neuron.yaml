@@ -1,0 +1,57 @@
+# Lateral habenula-projecting vLGN/IGL GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Lateral Habenula-projecting vLGN/IGL GABAergic Neuron"
+description: >
+  Evidence graph component for the lateral habenula (LHb)-projecting
+  GABAergic neuron of the ventral lateral geniculate nucleus and
+  intergeniculate leaflet (vLGN/IGL), proposed from the ASTA deep research
+  report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lgv_igl_lhb_projecting_gabaergic_neuron
+    name: "Lateral habenula-projecting vLGN/IGL GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "LHb-projecting vLGN/IGL neurons"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:30795900"
+            method: "used in abstract"
+            scope: "mouse vLGN/IGL"
+            quote_key: "72332556_28081399"
+    subtype_of:
+      - parent: lgv_igl_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:30795900"
+            method: "viral circuit tracing + chemogenetics (GABA neurons in vLGN/IGL inhibit LHb)"
+            scope: "mouse vLGN/IGL"
+            quote_key: "72332556_28081399"
+          - ref: "PMID:35385673"
+            method: "review citing Huang et al., 2019"
+            scope: "mouse vLGN and IGL"
+            quote_key: "248001630_8eed194e"
+        notes: >
+          Defined as the LGv/IGL GABAergic neuron narrowed by projection
+          target (lateral habenula). The review source restates the primary
+          study, so the relation rests on one primary source.
+edges: []

@@ -1,0 +1,47 @@
+# Superior colliculus-projecting vLGN GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Superior Colliculus-projecting vLGN GABAergic Neuron"
+description: >
+  Evidence graph component for the superior colliculus (SC)-projecting
+  GABAergic neuron of the ventral lateral geniculate nucleus (vLGN), proposed
+  from the ASTA deep research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: vlgn_sc_projecting_gabaergic_neuron
+    name: "Superior colliculus-projecting vLGN GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: vlgn_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:37949869"
+            method: "statement in source (vLGN sends prominent GABAergic axons to the SC)"
+            scope: "mouse vLGN"
+            quote_key: "265121419_e12d5dfd"
+          - ref: "PMID:34610302"
+            method: "projection-defined circuit (vLGN-to-SC) of vLGN GABA neurons"
+            scope: "adult mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+        notes: >
+          Defined as the vLGN GABAergic neuron narrowed by projection target
+          (superior colliculus).
+edges: []

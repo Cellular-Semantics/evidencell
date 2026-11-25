@@ -1,0 +1,54 @@
+# LGv/IGL Sox14+ pTH-R-derived GABAergic projection neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "LGv/IGL Sox14+ GABAergic Projection Neuron"
+description: >
+  Evidence graph component for the Sox14-expressing, rostral thalamic
+  progenitor (pTH-R)-derived GABAergic projection neuron of the ventral
+  lateral geniculate nucleus and intergeniculate leaflet, proposed from the
+  ASTA deep research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lgv_igl_sox14_gabaergic_neuron
+    name: "LGv/IGL Sox14+ GABAergic projection neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Sox14+ neurons"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:36280260"
+            method: "defined in results as the label for pTH-R-derived cells in dorsal IGL/LGv"
+            scope: "mouse IGL/LGv"
+            quote_key: "247159795_d79097dc"
+    subtype_of:
+      - parent: lgv_igl_gabaergic_neuron
+        kind: EMPIRICAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:36280260"
+            method: "Sox14 reporter + pTH-R lineage reporter overlap"
+            scope: "mouse LGv and IGL"
+            quote_key: "247159795_0eefb318"
+        notes: >
+          Defined by Sox14 reporter expression and pTH-R lineage; one source
+          (Brock et al., 2022) reports these cells are GABAergic and located
+          in LGv and IGL. LGv/IGL also contain a ventral, prethalamic-derived
+          component outside this type.
+edges: []

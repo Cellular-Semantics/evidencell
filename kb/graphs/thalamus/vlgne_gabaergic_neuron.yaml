@@ -1,0 +1,55 @@
+# External vLGN (vLGNe) retinorecipient GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "External vLGN (vLGNe) Retinorecipient GABAergic Neuron"
+description: >
+  Evidence graph component for the retinorecipient GABAergic neuron of the
+  external division of the ventral lateral geniculate nucleus (vLGNe),
+  proposed from the ASTA deep research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: vlgne_gabaergic_neuron
+    name: "External vLGN (vLGNe) retinorecipient GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "retinorecipient neurons in vLGNe"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:32497303"
+            method: "used in abstract for the four subtype-specific sublaminae"
+            scope: "mouse vLGNe"
+            quote_key: "219328889_ea819292"
+    subtype_of:
+      - parent: vlgn_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:32497303"
+            method: "scRNA-seq + ISH + trans-synaptic tracing (GABAergic types reside in vLGNe and vLGNi)"
+            scope: "mouse vLGN"
+            quote_key: "219328889_a1d23e11"
+          - ref: "PMID:39160068"
+            method: "statement in source (vLGNe consists of transcriptionally distinct GABAergic subtypes)"
+            scope: "mouse vLGN"
+            quote_key: "271906359_1bfec86c"
+        notes: >
+          Containment inferred from structural subdivision (vLGNe is one of
+          the two major vLGN laminae).
+edges: []
