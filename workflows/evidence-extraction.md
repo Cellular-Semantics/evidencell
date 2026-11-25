@@ -19,7 +19,7 @@ is wrong, fix its description in the schema, not here.
 | Need | Use |
 |---|---|
 | Field meanings, shapes, allowed values (`PropertySource`, `MarkerSource`, `AtSourceSet`, …) | `{output_dir}/schema_subset.yaml` |
-| A marker's gene (`ncbi_gene_id` + `symbol`) | `.claude/skills/gene-id-curation/SKILL.md`; how its result is recorded: `docs/marker_gene_ids.md` |
+| A marker's gene (`ncbi_gene_id` + `symbol`) | `.claude/skills/gene-id-curation/SKILL.md` |
 | Adding quotes to the reference store | `evidencell.references.write_quote_to_refs()` |
 
 **Paper selection gate (Step 1):** Optional — only invoke for noisy corpora (cite-traverse,
@@ -170,7 +170,6 @@ INPUT FILES:
                                       (PropertySource, MarkerSource, AtSourceSet, …)
 - .claude/skills/gene-id-curation/SKILL.md
                                       how to find the gene a marker name means
-- docs/marker_gene_ids.md             how to record its result on the marker
 
 ## Workflow policy (applies on top of the schema)
 
@@ -182,8 +181,7 @@ Fields that take this paper's evidence, as sources lists:
 - Markers: a marker you add, or one still without ncbi_gene_id, gets its gene
   from gene-id-curation (taxon = the node's species, evidence = this quote and
   its ref). This paper's wording is what settles names that asta-report-ingest
-  left as name_in_source only. Record the result as docs/marker_gene_ids.md
-  says.
+  left as name_in_source only. Record its result in the marker fields.
 - at_source_sets: author an entry only once the dataset's annotation labels
   are available, and only from the dataset's describing paper — it is a
   reading judgement, not transcriptomic overlap. Never record a run_ref: the AT

@@ -10,8 +10,7 @@ this page says how to call it and where its result goes.
 
 - `name`: the marker as the paper writes it.
 - `taxon`: the node's `species` (or the graph's). Settle it before calling;
-  a node without a species gets `name_in_source` only, and a row in the
-  unresolvable list (`PENDING_SPECIES`).
+  a node without a species gets `name_in_source` only.
 - `evidence`: the quote that asserts the marker (from `references.json`)
   and its PMID/DOI.
 
@@ -31,9 +30,9 @@ this page says how to call it and where its result goes.
 | Skill `outcome` | KB |
 |---|---|
 | `GENE` | `name_in_source` + `symbol` + `ncbi_gene_id`; `rationale` in the source's `notes` when the call needed judgement (ambiguity, `PAPER_DEFINITION`, `ANTIBODY_TARGET`, higher taxon) |
-| `NO_SINGLE_GENE` | `name_in_source` only, `antibody` on the source if any; row in the unresolvable list with the `kind` |
+| `NO_SINGLE_GENE` | `name_in_source` only, `antibody` on the source if any |
 | `NOT_A_GENE_PRODUCT` | Not a marker. `EXOGENOUS_LABEL`: record what it shows (e.g. BrdU birth-dating) in the node's `notes`. `NON_GENE_TERM`: drop it, or put it where it belongs (a region in `anatomical_location`) |
-| `UNRESOLVED` | `name_in_source` only; the reason in the node's `notes`; row in the unresolvable list (`UNSETTLED_AMBIGUITY` / `NO_MATCH`) |
+| `UNRESOLVED` | `name_in_source` only; the reason in the node's `notes` |
 
 `symbol` and `ncbi_gene_id` are set together or not at all.
 `GeneDescriptor` has no `notes`; use the source's or the node's.
@@ -41,8 +40,11 @@ this page says how to call it and where its result goes.
 An antibody RRID goes in `antibody.rrid` only when the paper states it —
 never looked up from a product name.
 
-Unresolvable list: `research/gene_identity_216/unresolvable_markers.tsv`
-(`file  node_id  field  name_in_source  kind  reason`).
+These rules are in the `GeneDescriptor` schema description, which is what
+workflows read (via `schema_subset.yaml`); this page is the human reference.
+Markers left without a gene show up as `NOT MEASURED` in `find-candidates`.
+`research/gene_identity_216/unresolvable_markers.tsv` is the #216 backfill's
+work list, not maintained by workflows.
 
 ## Workflow notes
 
