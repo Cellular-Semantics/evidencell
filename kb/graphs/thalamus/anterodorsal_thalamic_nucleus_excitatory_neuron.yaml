@@ -26,6 +26,23 @@ nodes:
       id: NCBITaxon:10090
       label: Mus musculus
       name_in_source: "mouse"
+    subtype_of:
+      - parent: anterior_thalamic_nucleus_excitatory_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:38427564"
+            method: "scRNA-seq + spatial transcriptomics + multiplexed FISH"
+            scope: "adult mouse ATN — three discrete excitatory clusters corresponding to AD, AV, AM"
+            quote_key: "268122794_e9176ba6"
+          - ref: "PMID:40593635"
+            method: "statement in source (introduction)"
+            scope: "adult mouse — ATN encompass AD, AV and AM"
+            quote_key: "279797062_33751aaa"
+          - ref: "PMID:40593635"
+            method: "brain-wide connectomics + molecular markers"
+            scope: "adult mouse — AD1 and AD2 among the projection-defined ATN neuron types"
+            quote_key: "279797062_79c8b7ec"
     anatomical_location:
       - id: UBERON:0002679
         label: "anterodorsal nucleus of thalamus"
@@ -127,9 +144,9 @@ nodes:
       - "PMID:36089888"
     is_terminal: false
     notes: >
-      HIERARCHY: subtype of anterior_thalamic_nucleus_excitatory_neuron
-      (ATN); shared ATN properties (Slc17a6, glutamatergic identity, relay-cell
-      morphology, Papez-circuit placement) are recorded on the parent.
+      HIERARCHY: shared ATN properties (Slc17a6, glutamatergic identity,
+      relay-cell morphology, Papez-circuit placement) are recorded on the
+      parent.
       Slc17a6 applies here by inheritance.
 
       SUBTYPES NOTED (not separate nodes): Hintiryan et al. (2025;
