@@ -1,0 +1,100 @@
+id: at_run_20261126_gao2023_pvt_pooled_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE208707"
+source_cluster_label: >
+  DERIVED label "PVT" (5,373 nuclei): Gao et al. 2023 (PMID:36867023,
+  eLife 12:e81818) PVT neurons, pooled. GEO:GSE208707 deposits counts for
+  20,503 nuclei and only the paper's phase-1 labels (all cell types;
+  "Neurons (1)".."(8)"). The phase-2 neuron clusters and the PVT1-5 labels
+  are not deposited. The label was therefore re-derived here
+  (scripts/derive_gao2023_labels.py, Step A), without reading any WMBv1
+  output. The 10,307 phase-1 neurons with > 1000 genes (the paper's
+  phase-2 filter) were over-clustered with the paper's phase-2 parameters
+  (SCTransform-like Pearson residuals, Harmony on sample, 6 PCs). Each
+  cluster was named from the paper's own identity markers: PVT Gck / C1ql3
+  / Hcn1 (verified quote 251021326_f0709a5e), Hb Tac2, MD Adarb2, IMD
+  Cdh24, BSTpr Gpr101 (Figure 1-figure supplement 2 ISH).
+  Neighbour labels are scored in the same run, so purity is honest:
+  - MD neuron (derived) 2,334
+  - BSTpr neuron (derived) 852
+  - Hb neuron (derived) 821
+  - IMD neuron (derived) 805
+  - non-PVT neuron, unassigned (derived) 122
+  SOURCE-LABEL PURITY: dissection-pure for PVT by marker identity, but
+  mixed by subtype: PVT1-5 lie on antero-posterior / dorso-ventral /
+  medio-lateral gradients (251021326_072fd9a0).
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.5, hierarchical, default
+  parameters, raw counts) on all 10,307 phase-1 neuronal nuclei with
+  > 1000 genes. Gene symbols were mapped to WMBv1 Ensembl IDs by exact,
+  unique match to the taxonomy DB stats symbol: 29,099 of 33,502 genes
+  kept (scripts/build_gao2023_h5ad.py). Labels from
+  scripts/derive_gao2023_labels.py (scanpy 1.13.0, native Harmony flavour
+  harmony1 with rng=0, leidenalg 0.12.0). Two independent runs gave
+  byte-identical labels. F1 scored with `annotation-transfer score` at
+  bootstrap threshold 0.8.
+  This run's mmc_results.csv is shared with
+  at_run_20261126_gao2023_pvt_cluster_mmc_wmbv1 and
+  at_run_20261126_gao2023_pvt_ap_mmc_wmbv1.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 10307
+n_cells_after_filter: 10307
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: "3.13"
+  packages: [cell_type_mapper, scanpy, leidenalg, scikit-learn, anndata, pandas, numpy, openpyxl]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "20f69cd (branch base; run 2026-11-26)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Derived label. "PVT" is re-derived from the paper's methods and
+  identity markers, not read from a deposit. It has 5,373 nuclei; the
+  paper reports 5,737 of 9,845 neurons. The paper's counts come from
+  before the female samples were added in revision (the deposit has
+  20,503 nuclei; quote 251021326_c48ad581). The PVT / non-PVT boundary is
+  sensitive to the integration seed: two unseeded Harmony runs gave 5,579
+  and 5,668 PVT nuclei. Expect ~5% boundary churn, mostly against MD and
+  the 122 unassigned nuclei.
+  (2) Results, subclass level:
+  - "PVT" -> 149 PVT-PT Ntrk1 Glut: coverage 0.79, purity 0.86, F1 0.83.
+  - Most of the rest lands in 150 CM-IAD-CL-PCN Sema5b Glut, mainly
+    supertype 0650 (970 nuclei, 18% of PVT). 0650 is itself PVT-dominant
+    in WMBv1 MERFISH (PVT 0.34, MD 0.31), and 93% of the dataset's cells
+    in 0650 are PVT-labelled.
+  Read as: Gao PVT ~ 149 PVT-PT Ntrk1 Glut plus supertype 0650. Do not
+  read the subclass F1 alone as "PVT = 149".
+  (3) Purity of 149 is 0.86. Of the confidently mapped non-PVT nuclei in
+  149, 300 are derived IMD, 214 MD, 61 unassigned, 44 BSTpr and 6 Hb.
+  The derived IMD/MD split is the least reliable part of Step A (Cdh24 is
+  a weak IMD marker), and WMBv1 149 is PVT-PT, so some of this is real
+  midline (IMD/PT) overlap rather than mislabelling.
+  (4) WMBv1 independence. GSE208707 is NIMH data (Penzo lab, 10x 3'
+  snRNA-seq) and is not part of the WMBv1 (Yao et al. 2023, Allen
+  Institute) training data, so the mapping is not circular.
+  (5) Source/target mismatch. Single-nucleus query vs a mostly single-cell
+  reference; adult (8-12 week) male and female mice.
+
+metadata: >
+  source_paper=PMID:36867023;
+  labels=labels_pvt_pooled.json;
+  label_distribution=label_distribution.tsv;
+  derivation=../../../research/thalamus/annotation_transfer/gao2023_pvt/derived/derivation_report.md

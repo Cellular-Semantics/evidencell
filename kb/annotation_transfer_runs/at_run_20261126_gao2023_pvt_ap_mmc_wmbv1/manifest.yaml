@@ -1,0 +1,80 @@
+id: at_run_20261126_gao2023_pvt_ap_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE208707"
+source_cluster_label: >
+  DERIVED labels grouping the derived PVT1-5 labels
+  (at_run_20261126_gao2023_pvt_cluster_mmc_wmbv1) by the paper's own
+  antero-posterior assignment of its subtypes (multiplex ISH, Figure 3;
+  verified quote 251021326_d84aa264):
+  - "PVT1/Esr1 and PVT2/Col12a1 were significantly expressed in the pPVT".
+  - "PVT3/Npffr1 and PVT4/Hcrtr1 represented two aPVT biased cell types".
+  - PVT5/Drd3 is expressed "in a pan-PVT-like manner".
+  Labels:
+  - "pPVT-biased (PVT1+PVT2)": 2,325
+  - "aPVT-biased (PVT3+PVT4)": 1,966
+  - "pan-PVT (PVT5)": 1,082
+  - the non-PVT neighbour labels of the pooled run (MD 2,334; BSTpr 852;
+    Hb 821; IMD 805; unassigned 122)
+  The nuclei carry no AP coordinate: these are cluster-level AP biases,
+  not per-cell positions. The paper also notes that the aPVT-biased types
+  extend at low levels into dorsal pPVT.
+  SOURCE-LABEL PURITY: graded (see the cluster run).
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  Same MapMyCells output as at_run_20261126_gao2023_pvt_pooled_mmc_wmbv1
+  (cell_type_mapper v1.7.5 local, raw counts, 10,307 nuclei), not
+  re-mapped. Labels from scripts/derive_gao2023_labels.py in that run
+  record (label map AP in the script). F1 scored with
+  `annotation-transfer score` at bootstrap threshold 0.8 against
+  labels_pvt_ap.json.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 10307
+n_cells_after_filter: 10307
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: ../at_run_20261126_gao2023_pvt_pooled_mmc_wmbv1/README.md
+  python_version: "3.13"
+  packages: [cell_type_mapper, scanpy, leidenalg, scikit-learn, anndata, pandas, numpy, openpyxl]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "20f69cd (branch base; run 2026-11-26)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Derived labels, aggregated by the paper's cluster-level AP bias.
+  Inherit all caveats of the cluster run.
+  (2) Results:
+  - aPVT-biased (PVT3+PVT4) -> supertype 0645 PVT-PT Ntrk1 Glut_3:
+    coverage 0.61, purity 0.97, F1 0.75. Almost every confidently mapped
+    0645 nucleus is aPVT-biased.
+  - pPVT-biased (PVT1+PVT2) -> supertype 0644 PVT-PT Ntrk1 Glut_2: F1 0.57,
+    purity 0.57. Its PVT2 half goes mainly to 0650 CM-IAD-CL-PCN Sema5b
+    Glut_2.
+  - pan-PVT (PVT5) has no clean target (best 0650, F1 0.33).
+  (3) Does WMBv1 split PVT along the same axis? At supertype level, yes
+  for the anterior pole: 0645 is essentially aPVT-biased only. The
+  posterior side is split across 0644 and 0650, along the paper's
+  PVT1 / PVT2 (posterior core vs ventral edge) line, not along AP.
+  WMBv1 MERFISH nucleus ratios (label_distribution.tsv) do not resolve
+  aPVT vs pPVT, so this reading rests on the Gao labels, not on WMBv1
+  anatomy.
+
+metadata: >
+  source_paper=PMID:36867023;
+  shared_mmc_results=../at_run_20261126_gao2023_pvt_pooled_mmc_wmbv1/mmc_results.csv;
+  labels=labels_pvt_ap.json; label_distribution=label_distribution.tsv

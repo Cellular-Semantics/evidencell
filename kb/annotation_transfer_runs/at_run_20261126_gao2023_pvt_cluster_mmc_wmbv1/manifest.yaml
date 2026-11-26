@@ -1,0 +1,105 @@
+id: at_run_20261126_gao2023_pvt_cluster_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE208707"
+source_cluster_label: >
+  DERIVED labels PVT1-PVT5: Gao et al. 2023 (PMID:36867023) PVT neuronal
+  subtypes, re-assigned per nucleus because GEO:GSE208707 does not deposit
+  them. Counts: PVT1 1,373; PVT2 952; PVT3 1,013; PVT4 953; PVT5 1,082.
+  The non-PVT neighbour labels of the pooled run are also scored here
+  (MD 2,334; BSTpr 852; Hb 821; IMD 805; unassigned 122).
+  How the labels were made (scripts/derive_gao2023_labels.py, Step B):
+  - Unsupervised re-clustering of the PVT nuclei with the paper's phase-3
+    parameters (18 PCs) did not recover five discrete clusters matching
+    the published ones. Silhouette was 0.13 at five clusters. This is
+    reported as a diagnostic only.
+  - Each nucleus was therefore assigned from the paper's published PVT1-5
+    marker sets: Supplementary file 1c DEGs with pct.1 >= 0.3 and
+    pct_ratio >= 1.5, the top 30 per cluster by pct_ratio, which is the
+    paper's own marker statistic. Module scores were z-scored and each
+    nucleus took the arg-max.
+  - Names come only from those published tables. No WMBv1 output was read.
+  Validation against the paper (derivation_report.md, validation_heldout.tsv,
+  marker_check.tsv):
+  - Held-out DEGs (in no scoring set): the correlation of derived vs
+    published log pct-ratio is 0.77 / 0.93 / 0.95 / 0.94 / 0.87 for
+    PVT1-5.
+  - Held-out ISH markers, derived vs published pct.1:
+    - Esr1/PVT1 0.26 vs 0.24
+    - Npffr1/PVT3 0.19 vs 0.19
+    - Hcrtr1/PVT4 0.16 vs 0.20
+    - Drd3/PVT3 0.38 vs 0.38
+  - In-set markers: Col12a1/PVT2 0.77 vs 0.79; Drd3/PVT5 0.53 vs 0.59.
+  SOURCE-LABEL PURITY: graded. The median best-vs-second z margin is 0.71,
+  and 38% of nuclei have a margin < 0.5. The paper places the subtypes on
+  gradients (251021326_072fd9a0); Shima et al. 2023 report continuity
+  among five scRNA-seq types (264359607_bd93f8db). Read purity alongside
+  F1.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  Same MapMyCells output as at_run_20261126_gao2023_pvt_pooled_mmc_wmbv1
+  (cell_type_mapper v1.7.5 local, raw counts, 10,307 nuclei), not
+  re-mapped. Labels from scripts/derive_gao2023_labels.py in that run
+  record; the full recipe is in its README. F1 scored with
+  `annotation-transfer score` at bootstrap threshold 0.8 against
+  labels_pvt_clusters.json.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 10307
+n_cells_after_filter: 10307
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: ../at_run_20261126_gao2023_pvt_pooled_mmc_wmbv1/README.md
+  python_version: "3.13"
+  packages: [cell_type_mapper, scanpy, leidenalg, scikit-learn, anndata, pandas, numpy, openpyxl]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "20f69cd (branch base; run 2026-11-26)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Derived labels, made by marker-set assignment and not by the
+  authors' clustering. Cluster-level profiles reproduce the published
+  ones on held-out genes, but individual nuclei near a gradient boundary
+  may carry a different label than in the authors' object. Treat
+  per-label F1 as indicative. Use it as at_source_sets evidence only after
+  curator approval at the F1 gate.
+  (2) Results (best target; coverage / purity / F1):
+  - PVT3 -> CLUS 2624 PVT-PT Ntrk1 Glut_3: 0.60 / 0.94 / 0.73.
+  - PVT4 -> CLUS 2626 PVT-PT Ntrk1 Glut_3: 0.55 / 0.87 / 0.67.
+  - PVT3 and PVT4 share supertype 0645. Their pooled aPVT-biased label
+    reaches F1 0.75 there (companion AP run).
+  - PVT2 -> CLUS 2639 CM-IAD-CL-PCN Sema5b Glut_2: 0.63 / 0.80 / 0.71.
+    Supertype 0650 gives F1 0.55.
+  - PVT1 -> CLUS 2621 PVT-PT Ntrk1 Glut_2: 0.64 / 0.64 / 0.64.
+    Supertype 0644 gives F1 0.57.
+  - PVT5 is not clean. Its best target is CLUS 2637 CM-IAD-CL-PCN
+    Sema5b Glut_2 (0.28 / 0.83 / 0.42). The rest is spread over 2621,
+    2631 and 2628. No target reaches F1 0.5.
+  F1 rises from subclass to cluster for PVT1-4, which is the pure-label
+  pattern.
+  (3) PVT5 is the weakest derived label. It has the paper's lowest
+  marker specificity (Drd3 pct_ratio 3.4; Drd3 is also a PVT3 DEG), and
+  it is pan-PVT spatially.
+  (4) Shares mmc_results.csv with
+  at_run_20261126_gao2023_pvt_pooled_mmc_wmbv1. See that run's caveats on
+  the derived PVT boundary, WMBv1 independence and sex/age.
+
+metadata: >
+  source_paper=PMID:36867023;
+  shared_mmc_results=../at_run_20261126_gao2023_pvt_pooled_mmc_wmbv1/mmc_results.csv;
+  labels=labels_pvt_clusters.json; label_distribution=label_distribution.tsv;
+  derivation_report=derivation_report.md; validation=validation_heldout.tsv,marker_check.tsv
