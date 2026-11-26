@@ -376,6 +376,33 @@ nodes:
             method: "statement citing prior work (transcription factor absent in dLGN); assay not named in quote"
             scope: "mouse IGL/LGv vs dLGN"
             quote_key: "247159795_aeeef91c"
+    at_source_sets:
+      - dataset_accession: GEO:GSE182211
+        source_label: LGv/IGL GABA (GABA2-6)
+        correspondence: SUBSET
+        sources:
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Bakken et al. 2021 state the mouse GABA2-6 types are not in dLGN but only in adjacent nuclei (IGL, LGv, LP; Figure 4C)"
+            scope: "adult male mouse dLGN, LP and LGv dissections, SMART-seq v4 single cells"
+            quote_key: "237389962_6fbaf310"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Figure 4C legend: cluster locations from marker genes checked against Allen Brain Atlas ISH"
+            scope: "mouse dLGN and adjacent nuclei"
+            quote_key: "237389962_91b45608"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — GABA2-6 form the forebrain-derived GABAergic branch (Npy, Nkx2-2, Dlx1/2/5/6)"
+            scope: "mouse, macaque and human GABAergic types"
+            quote_key: "237389962_23c05f79"
+        notes: >
+          Pooled label over the five published GEO clusters GABA2 (26), GABA3
+          (42), GABA4 (19), GABA5 (126) and GABA6 (82); 295 cells, scored in
+          derived run at_run_20261126_bakken2021_lgn_lgvigl_mmc_wmbv1.
+          Figure 4C places G2, G3 and G5 in LGv, G6 in IGL and G4 in both; the
+          text also lists LP, but no GABA2-6 dot is in LP and only 3 of 295
+          cells came from the LP dissection. SUBSET because Figure 4C also
+          places Chrna2 (Sox14+ dLGN interneuron cluster, kept in the dLGN
+          interneuron pool) in LGv. Label key:
+          planning/content-notes/thalamus_bakken2021_labels.md.
     colocated_types:
       - neighboring_type: "vLGN VGLUT-expressing glutamatergic neuron"
         spatial_relationship: "same nucleus (vLGN); relative position not stated"

@@ -238,6 +238,85 @@ nodes:
             method: "statement citing prior work (transcription factor absent in dLGN); assay not named in quote"
             scope: "mouse IGL/LGv vs dLGN, pooled IGL and LGv"
             quote_key: "247159795_aeeef91c"
+    at_source_sets:
+      - dataset_accession: GEO:GSE182211
+        source_label: GABA3
+        correspondence: SUBSET
+        sources:
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Bakken et al. 2021 place mouse GABA2-6 outside dLGN, in IGL/LGv (Figure 4C); Figure 4C puts GABA3 (G3) in LGv only"
+            scope: "adult male mouse dLGN, LP and LGv dissections, SMART-seq v4 single cells"
+            quote_key: "237389962_6fbaf310"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Figure 4C legend: cluster locations from marker genes checked against Allen Brain Atlas ISH"
+            scope: "mouse dLGN and adjacent nuclei"
+            quote_key: "237389962_91b45608"
+        notes: >
+          Published GEO cluster_label GABA3 (42 cells; Figure 4A marker Htr1a;
+          2018 depositor label "vLGN Inh Shox2 Htr1a"). 31 of 42 cells from
+          the LGv dissection, 11 from dLGN dissections. Forebrain-derived
+          Sox14-negative branch (quote 237389962_23c05f79). SUBSET: one of
+          several LGv GABAergic clusters in this dataset. Label key and
+          cluster x dissection table:
+          planning/content-notes/thalamus_bakken2021_labels.md.
+      - dataset_accession: GEO:GSE182211
+        source_label: GABA5
+        correspondence: SUBSET
+        sources:
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Bakken et al. 2021 place mouse GABA2-6 outside dLGN, in IGL/LGv (Figure 4C); Figure 4C puts GABA5 (G5) in LGv only"
+            scope: "adult male mouse dLGN, LP and LGv dissections, SMART-seq v4 single cells"
+            quote_key: "237389962_6fbaf310"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Figure 4C legend: cluster locations from marker genes checked against Allen Brain Atlas ISH"
+            scope: "mouse dLGN and adjacent nuclei"
+            quote_key: "237389962_91b45608"
+        notes: >
+          Published GEO cluster_label GABA5 (126 cells; Figure 4A markers
+          Dlx5, Stc1; 2018 depositor label "vLGN Inh Dlx5 Cbln2"). 65 cells
+          from the LGv dissection, 58 from dLGN-core/shell, 3 from LP; the
+          authors note mouse microdissections are imperfect (quote
+          237389962_93431f28). SUBSET: one of several LGv GABAergic clusters.
+      - dataset_accession: GEO:GSE182211
+        source_label: GABA2
+        correspondence: SUBSET
+        sources:
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Bakken et al. 2021 place mouse GABA2-6 outside dLGN, in IGL/LGv (Figure 4C); Figure 4C puts GABA2 (G2) in LGv only"
+            scope: "adult male mouse dLGN, LP and LGv dissections, SMART-seq v4 single cells"
+            quote_key: "237389962_6fbaf310"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Figure 4C legend: cluster locations from marker genes checked against Allen Brain Atlas ISH"
+            scope: "mouse dLGN and adjacent nuclei"
+            quote_key: "237389962_91b45608"
+        notes: >
+          Published GEO cluster_label GABA2 (26 cells; Figure 4A marker
+          Spata20; Supplementary file 4 lists Pax6 among its top markers;
+          2018 depositor label "vLGN Inh Spata20"). CAVEAT: only 3 of 26
+          cells came from the LGv dissection (20 dLGN-core, 3 shell), so the
+          dissection does not corroborate the paper's LGv placement. Pax6
+          marks prethalamic derivatives (LGv and zona incerta alike), so a
+          zona incerta identity for some GABA2 cells is not excluded. Declared
+          on the paper's Figure 4C assignment; drop this entry if a
+          paper-and-dissection-agree rule is preferred.
+      - dataset_accession: GEO:GSE182211
+        source_label: GABA4
+        correspondence: PARTIAL
+        sources:
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Bakken et al. 2021 place mouse GABA2-6 outside dLGN, in IGL/LGv (Figure 4C); Figure 4C puts GABA4 (G4) in both IGL and LGv"
+            scope: "adult male mouse dLGN, LP and LGv dissections, SMART-seq v4 single cells"
+            quote_key: "237389962_6fbaf310"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Figure 4C legend: cluster locations from marker genes checked against Allen Brain Atlas ISH"
+            scope: "mouse dLGN and adjacent nuclei"
+            quote_key: "237389962_91b45608"
+        notes: >
+          Published GEO cluster_label GABA4 (19 cells; Figure 4A marker Penk;
+          2018 depositor label "vLGN Inh Shox2 Sox14"). 17 of 19 cells from
+          the LGv dissection. PARTIAL because Figure 4C places the type in
+          both IGL and LGv, so the cluster overlaps this node without being
+          contained in it. Thin label (n=19).
     colocated_types:
       - neighboring_type: "vLGN VGLUT-expressing glutamatergic neuron"
         spatial_relationship: "same nucleus (vLGN); relative position not stated"
