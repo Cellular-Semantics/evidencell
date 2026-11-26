@@ -1,0 +1,54 @@
+# Findings for dmh_grp_neuron that fit no CellTypeNode property field.
+# Run: 20261125_sexually_dimorphic_report_ingest_general_survey
+
+- finding: >
+    Causal behavioural role attributed to the Grp-expressing compact DMH
+    population: chemogenetic activation of the TRAP-labelled
+    refeeding-activated DMH neurons decreased food intake and produced a
+    conditioned place preference (an indicator of positive valence), while
+    activation or inhibition had no influence on whole-body glucose
+    metabolism. The schema has no field for a perturbation-based functional
+    role or for a behavioural valence effect. The attribution to this node is
+    indirect and weaker than for a marker-defined manipulation: the
+    manipulated population was defined by activity-dependent labelling, Grp
+    was one of four transcripts recovered from it, and the report states only
+    that a subset of Grp+ DMH neurons likely belongs to that population.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: null
+
+- finding: >
+    Activity state: the Grp-expressing compact DMH neurons were labelled
+    because they are activated by fasting followed by refeeding (Arc/Arg3.1
+    TRAP after an overnight fast and re-feeding). A subset of Grp+ DMH neurons
+    therefore carries a stimulus-dependent activity signature tied to
+    refeeding. No property field holds a stimulus-dependent activity state.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: null
+
+- finding: >
+    Co-expression partners: the same TRAP-labelled compact DMH population
+    expressed prodynorphin (Pdyn), cholecystokinin (Cck) and
+    thyrotropin-releasing hormone receptor (Trhr) alongside gastrin-releasing
+    peptide. These were recovered from one RNA-seq profile of a population, so
+    they are a marker set for that population rather than established
+    co-expression within Grp+ cells; they are recorded on
+    dmh_compact_refeeding_neuron rather than asserted as markers or
+    neuropeptides of this node.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: neuropeptides
+
+- finding: >
+    Other DMH-enriched regional markers from the same profiling study: Gpr50,
+    4930511J11Rik, Pcsk5, Sulf1 and Rorb were identified alongside Grp as the
+    six genes most highly expressed in the DMH relative to adjacent
+    hypothalamic regions, each validated by real-time PCR and in situ
+    hybridisation. The source establishes regional enrichment of each gene,
+    not co-expression with Grp in the same neurons, so they cannot be written
+    as markers of this node; the report treats them as a separate set of
+    DMH-enriched marker-defined populations.
+  quote_keys:
+    - "23874432_009c8e5b"
+  closest_field: defining_markers

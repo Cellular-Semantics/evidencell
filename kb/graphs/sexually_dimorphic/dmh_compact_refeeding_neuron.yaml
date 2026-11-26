@@ -53,4 +53,134 @@ nodes:
         fasting-refeeding), Pdyn/Grp/Cck/Trhr expression and PVN projection,
         none of which has a dedicated CL term. CL:0012001 (neuron of the
         forebrain) is the nearest containing term.
+    anatomical_location:
+      - id: MBA:830
+        label: "Dorsomedial nucleus of the hypothalamus"
+        name_in_source: "compact part of the dorsomedial hypothalamus (DMH)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            method: "Arc/Arg3.1-driven targeted recombination in active populations (TRAP) with 4-hydroxytamoxifen given 1 h after refeeding of overnight-fasted mice; the labelled cells were localised to the compact part of the DMH"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "The source places this population specifically in the compact part of the DMH. MBA has no compact-part term (MBA:830 subdivides only into anterior, posterior and ventral parts), so the soma location is recorded at the whole-DMH level and the compact-part restriction is preserved in name_in_source. The location is defined by where the activity-dependent label appeared, not by a cytoarchitectonic delineation performed in this study."
+      - id: MBA:38
+        label: "Paraventricular hypothalamic nucleus"
+        name_in_source: "paraventricular hypothalamic nucleus"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            method: "projection to the PVN reported for the TRAP-labelled refeeding-activated compact DMH neurons themselves; the quote does not name the anatomical method used to visualise the projection"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "Direct for this node, unlike the same claim on the sibling Pdyn, Grp and Cck DMH nodes: the projection is reported for the activity-labelled population that defines this type, not inferred from a broader marker-defined class that contains it. Terminal field extent within the PVN and any further downstream targets are not characterised in the supplied sources."
+    defining_markers:
+      - name_in_source: "prodynorphin (pdyn)"
+        symbol: Pdyn
+        ncbi_gene_id: "NCBIGene:18610"
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of the extracted TRAP-labelled refeeding-activated compact DMH neurons"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "The source writes 'prodynorphin (pdyn)', which names the single mouse gene Pdyn. Recovered from the same RNA-seq profile as Grp, Cck and Trhr: the four together form the marker set of this population, and no single one of them is claimed to define it."
+      - name_in_source: "gastrin-releasing peptide (GRP)"
+        symbol: Grp
+        ncbi_gene_id: "NCBIGene:225642"
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of the extracted TRAP-labelled refeeding-activated compact DMH neurons"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "The source writes the protein-style name 'gastrin-releasing peptide (GRP)' while stating that genes were identified by RNA sequencing, so the measurement is of the mouse transcript Grp."
+      - name_in_source: "cholecystokinin (CCK)"
+        symbol: Cck
+        ncbi_gene_id: "NCBIGene:12424"
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of the extracted TRAP-labelled refeeding-activated compact DMH neurons"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "The source writes the protein-style name 'cholecystokinin (CCK)' while stating that genes were identified by RNA sequencing, so the measurement is of the mouse transcript Cck."
+      - name_in_source: "thyrotropin-releasing hormone receptor (Trhr)"
+        symbol: Trhr
+        ncbi_gene_id: "NCBIGene:22045"
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of the extracted TRAP-labelled refeeding-activated compact DMH neurons"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "Trhr is a receptor transcript, not a peptide product, so it is recorded as a defining marker only and not under neuropeptides. It is the one member of this marker set that is not shared with the sibling marker-defined DMH classes in the supplied sources."
+    neuropeptides:
+      - name_in_source: "prodynorphin (pdyn)"
+        symbol: Pdyn
+        ncbi_gene_id: "NCBIGene:18610"
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of the extracted TRAP-labelled refeeding-activated compact DMH neurons"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "Pdyn encodes the dynorphin precursor prodynorphin, so transcript expression implies a dynorphin-peptidergic capability; peptide processing, storage and release are not characterised in the supplied sources."
+      - name_in_source: "gastrin-releasing peptide (GRP)"
+        symbol: Grp
+        ncbi_gene_id: "NCBIGene:225642"
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of the extracted TRAP-labelled refeeding-activated compact DMH neurons"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "Transcript evidence only; the supplied sources do not report GRP peptide in these neurons or in their PVN terminals."
+      - name_in_source: "cholecystokinin (CCK)"
+        symbol: Cck
+        ncbi_gene_id: "NCBIGene:12424"
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of the extracted TRAP-labelled refeeding-activated compact DMH neurons"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "Transcript evidence only; the supplied sources do not report CCK peptide in these neurons or in their PVN terminals."
+    definition_references:
+      - "PMID:34728342"
+      - "PMID:37624889"
+    notes: >
+      No neurotransmitter identity is recorded. An inference was attempted and
+      rejected: the defining source does not state a fast transmitter, none of
+      Pdyn, Grp, Cck or Trhr constrains one, and the DMH contains both
+      GABAergic and glutamatergic neurons, so neither can be assumed for the
+      compact part. Morphology, intrinsic electrophysiology and developmental
+      origin are likewise undefined in the supplied sources.
+      This node rests on a single primary source (PMID:34728342). Its identity
+      is a compound of three things that no one of the sibling marker-defined
+      DMH nodes carries together: restriction to the compact part of the DMH,
+      definition by activity-dependent labelling (Arc/Arg3.1 TRAP after an
+      overnight fast and refeeding) rather than by a marker, and co-expression
+      of all four of Pdyn, Grp, Cck and Trhr. Because the population was
+      defined by activity rather than by genotype, its boundaries depend on
+      the labelling protocol: cells active during that specific
+      fasting-refeeding window were captured, and the sources do not establish
+      that the labelled set is a stable, reproducible transcriptomic type or
+      that every cell meeting the marker signature was labelled.
+      The four markers were recovered from one RNA-seq profile of the pooled
+      labelled population, so the evidence is for a population-level marker
+      set, not for per-cell co-expression: it is not shown that individual
+      neurons express all four, nor what fraction of the population expresses
+      each. The report makes the same reservation, treating them as a marker
+      set rather than proof that each names a separate complete neuron type.
+      No negative markers are recorded. The neighbouring-nucleus exclusion
+      genes used by PMID:37624889 (Sim1, Slit3, Qrfpr, Arpp21, Nr5a1, Fezf1,
+      Prlr, Nr5a2, Pvalb, Klk6, Nts, Hdc) are cluster-selection criteria from
+      a snRNA-seq study that did not profile this activity-labelled
+      population, so they cannot be transferred here as measured absences.
+      PMID:37624889 is retained as a definition reference because it
+      independently establishes Pdyn, Cck and Grp as highly expressed DMH
+      genes, validated against Allen Brain Atlas in situ hybridization data,
+      which corroborates the anatomical plausibility of the marker set but
+      says nothing about this population directly.
 edges: []

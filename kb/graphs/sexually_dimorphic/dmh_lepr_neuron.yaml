@@ -45,4 +45,163 @@ nodes:
         neuron" in CL — no hits. CL:0012001 (neuron of the forebrain) is the
         nearest containing term; no Lepr-specific or DMH-specific CL term
         exists, and the source does not state a neurotransmitter identity.
+    anatomical_location:
+      - id: MBA:830
+        label: "Dorsomedial nucleus of the hypothalamus"
+        name_in_source: "dorsomedial hypothalamus (DMH)"
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            method: "snRNA-seq cluster selection restricted to the DMH; marker expression validated against Allen Brain Atlas mouse in situ hybridization data, and clusters enriched for neighbouring-nucleus signatures excluded"
+            scope: "mouse dorsomedial hypothalamus"
+    defining_markers:
+      - name_in_source: "Lepr"
+        symbol: Lepr
+        ncbi_gene_id: "NCBIGene:16847"
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster marker expression; marker validated via Allen Brain Atlas mouse in situ hybridization"
+            scope: "mouse dorsomedial hypothalamus"
+            notes: "Lepr is named among the known highly expressed DMH genes used to select DMH neuron types; it is a DMH marker in local anatomical context, not a DMH-exclusive marker."
+    negative_markers:
+      - name_in_source: "Sim1"
+        symbol: Sim1
+        ncbi_gene_id: "NCBIGene:20464"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as paraventricular nucleus (PVH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Slit3"
+        symbol: Slit3
+        ncbi_gene_id: "NCBIGene:20564"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Qrfpr"
+        symbol: Qrfpr
+        ncbi_gene_id: "NCBIGene:229214"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Arpp21"
+        symbol: Arpp21
+        ncbi_gene_id: "NCBIGene:74100"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Nr5a1"
+        symbol: Nr5a1
+        ncbi_gene_id: "NCBIGene:26423"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Fezf1"
+        symbol: Fezf1
+        ncbi_gene_id: "NCBIGene:73191"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Prlr"
+        symbol: Prlr
+        ncbi_gene_id: "NCBIGene:19116"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as arcuate nucleus (ARC) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Nr5a2"
+        symbol: Nr5a2
+        ncbi_gene_id: "NCBIGene:26424"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as arcuate nucleus (ARC) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Pvalb"
+        symbol: Pvalb
+        ncbi_gene_id: "NCBIGene:19293"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as lateral hypothalamus (LH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Klk6"
+        symbol: Klk6
+        ncbi_gene_id: "NCBIGene:19144"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as lateral hypothalamus (LH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Nts"
+        symbol: Nts
+        ncbi_gene_id: "NCBIGene:67405"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as lateral hypothalamus (LH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Hdc"
+        symbol: Hdc
+        ncbi_gene_id: "NCBIGene:15186"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as tuberomammillary nucleus signature"
+            scope: "mouse dorsomedial hypothalamus"
+    definition_references:
+      - "PMID:37624889"
+    notes: >
+      Thinly characterised: the supplied sources give Lepr transcript
+      expression and DMH location only. No neurotransmitter identity is
+      recorded because none of the sources states the fast transmitter or
+      peptide output of this population, and the broader DMH contains both
+      GABAergic and glutamatergic neurons, so no transmitter can be inferred
+      safely; morphology, intrinsic electrophysiology, connectivity and
+      developmental origin are likewise undefined in the sources. Lepr is
+      expressed in several other hypothalamic regions (ARC, LHA, VMH), so
+      assignment of a Lepr-expressing neuron to this type depends on
+      anatomical context rather than on the marker alone. The sources do not
+      establish whether all DMH Lepr+ neurons form one transcriptomic cluster
+      or several related subtypes. The negative markers are cluster-level
+      exclusion criteria applied when DMH neuron types were selected (clusters
+      enriched for a neighbouring-nucleus gene were discarded), not direct
+      per-cell absence measurements.
 edges: []

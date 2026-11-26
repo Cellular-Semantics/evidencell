@@ -50,4 +50,191 @@ nodes:
         neuron" in CL — no hits. CL:0012001 (neuron of the forebrain) is the
         nearest containing term; no PPP1R17-specific or DMH-specific CL term
         exists, and the source does not state a neurotransmitter identity.
+    anatomical_location:
+      - id: MBA:830
+        label: "Dorsomedial nucleus of the hypothalamus"
+        name_in_source: "dorsomedial hypothalamus (DMH)"
+        sources:
+          - ref: "PMID:33753517"
+            quote_key: "232322894_f82a28f8"
+            method: "PhosphoTRAP molecular profiling of leptin-responsive neurons followed by cFos mapping and chemogenetic manipulation of the PPP1R17 population in the DMH"
+            scope: "adult ob/ob and wild-type mouse dorsomedial hypothalamus"
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            method: "snRNA-seq cluster selection restricted to the DMH; marker expression validated against Allen Brain Atlas mouse in situ hybridization data, and clusters enriched for neighbouring-nucleus signatures excluded"
+            scope: "mouse dorsomedial hypothalamus"
+    defining_markers:
+      - name_in_source: "PPP1R17"
+        symbol: Ppp1r17
+        ncbi_gene_id: "NCBIGene:19051"
+        sources:
+          - ref: "PMID:33753517"
+            quote_key: "232322894_f82a28f8"
+            marker_type: NOT_STATED
+            method: "population identified by PhosphoTRAP profiling and targeted chemogenetically; the quoted passage names no detection assay for PPP1R17 itself"
+            scope: "adult ob/ob and wild-type mouse dorsomedial hypothalamus"
+            notes: "The source writes the marker as the protein name 'protein phosphatase 1 regulatory subunit 17 (PPP1R17)' and the population as DMHPpp1r17; both refer to the one mouse gene Ppp1r17."
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster marker expression; marker validated via Allen Brain Atlas mouse in situ hybridization"
+            scope: "mouse dorsomedial hypothalamus"
+            notes: "Ppp1r17 is named among the known highly expressed DMH genes used to select DMH neuron types; it is a DMH marker in local anatomical context, not a DMH-exclusive marker."
+    negative_markers:
+      - name_in_source: "leptin receptor"
+        symbol: Lepr
+        ncbi_gene_id: "NCBIGene:16847"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:33753517"
+            quote_key: "232322894_f82a28f8"
+            marker_type: NOT_STATED
+            method: "absence of leptin receptor expression reported for the DMH PPP1R17 population; the quoted passage names no detection assay"
+            scope: "adult ob/ob and wild-type mouse dorsomedial hypothalamus"
+            notes: "The authors use this absence to argue that the leptin effect on these neurons is indirect and secondary to reduced food intake."
+      - name_in_source: "Sim1"
+        symbol: Sim1
+        ncbi_gene_id: "NCBIGene:20464"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as paraventricular nucleus (PVH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Slit3"
+        symbol: Slit3
+        ncbi_gene_id: "NCBIGene:20564"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Qrfpr"
+        symbol: Qrfpr
+        ncbi_gene_id: "NCBIGene:229214"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Arpp21"
+        symbol: Arpp21
+        ncbi_gene_id: "NCBIGene:74100"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Nr5a1"
+        symbol: Nr5a1
+        ncbi_gene_id: "NCBIGene:26423"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Fezf1"
+        symbol: Fezf1
+        ncbi_gene_id: "NCBIGene:73191"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Prlr"
+        symbol: Prlr
+        ncbi_gene_id: "NCBIGene:19116"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as arcuate nucleus (ARC) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Nr5a2"
+        symbol: Nr5a2
+        ncbi_gene_id: "NCBIGene:26424"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as arcuate nucleus (ARC) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Pvalb"
+        symbol: Pvalb
+        ncbi_gene_id: "NCBIGene:19293"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as lateral hypothalamus (LH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Klk6"
+        symbol: Klk6
+        ncbi_gene_id: "NCBIGene:19144"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as lateral hypothalamus (LH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Nts"
+        symbol: Nts
+        ncbi_gene_id: "NCBIGene:67405"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as lateral hypothalamus (LH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Hdc"
+        symbol: Hdc
+        ncbi_gene_id: "NCBIGene:15186"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as tuberomammillary nucleus signature"
+            scope: "mouse dorsomedial hypothalamus"
+    definition_references:
+      - "PMID:33753517"
+      - "PMID:37624889"
+    notes: >
+      No neurotransmitter identity is recorded: the sources give Ppp1r17
+      expression, DMH location and absence of the leptin receptor only, and
+      neither states the fast transmitter or any peptide output of this
+      population. The DMH contains both GABAergic and glutamatergic neurons,
+      so no transmitter can be inferred safely for this type from the
+      supplied material. Morphology, intrinsic electrophysiology, projection
+      targets and developmental origin are likewise undefined in the sources.
+      The marker evidence is uneven: the primary functional paper
+      (PMID:33753517) names no detection assay for PPP1R17 in the quoted
+      passage, writing the marker as a protein name while labelling the
+      population DMHPpp1r17; only the later atlas-based selection
+      (PMID:37624889) ties Ppp1r17 to DMH transcript expression validated
+      against Allen in situ data. The exclusion markers listed as negative are
+      cluster-level selection criteria applied when DMH neuron types were
+      defined (clusters enriched for a neighbouring-nucleus gene were
+      discarded), not direct per-cell absence measurements in this population;
+      the leptin receptor entry is the one absence reported for the PPP1R17
+      cells themselves. Ppp1r17 is a DMH marker in local anatomical context
+      rather than a brain-wide exclusive marker, and the relation of this
+      population to the neighbouring Pdyn, Grp and Cck DMH classes is
+      unresolved in the supplied sources and may involve overlap.
 edges: []
