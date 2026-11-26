@@ -88,6 +88,11 @@ nodes:
             quote_key: "237389962_1dd0f6d1"
             method: "scRNA-seq of microdissected dLGN core and shell"
             scope: "adult mouse dLGN — TC neurons in shell vs core differ by graded gene expression"
+          - ref: "PMID:22131405"
+            quote_key: "16328698_4dcf4944"
+            method: "dye-filled relay cells classified by dendritic architecture, soma position mapped against dLGN boundaries and eye-specific domains"
+            scope: "early postnatal mouse dLGN — W-like relay cells found along the dLGN perimeter (shell), Y-like cells in the central core; covers W-like cells only, 'perimeter' not named as shell in the quote"
+            support: PARTIAL
       - id: MBA:593
         label: "Primary visual area, layer 1"
         name_in_source: "L1 of V1"
@@ -97,6 +102,14 @@ nodes:
             quote_key: "264598574_32e8c9a5"
             method: "review statement summarising retrograde tracing studies (Bickford 2015; Ibrahim 2021; Rubio-Garrido 2009; Peng 2021; Cruz-Martín 2014)"
             scope: "mouse dLGN — projections to V1 layer 1 originate from the shell region"
+          - ref: "PMID:26691828"
+            quote_key: "8247989_7810a2a4"
+            method: "discussion statement citing prior tracing studies (refs 29-31); L1-projecting dLGN neurons located in the dorsal shell, contrasted with the main dLGN input into L4"
+            scope: "mouse dLGN → V1 — L1-projecting neurons located in the dorsal shell of dLGN"
+          - ref: "PMID:28965517"
+            quote_key: "4601077_1ff46308"
+            method: "review statement citing Cruz-Martín et al. 2014 and Bickford et al. 2015; layer I target attributed to W-like relay cells of the dorsolateral shell"
+            scope: "mouse dLGN → V1 — W-like relay cells in the dorsolateral shell convey direction-selective information to layer I"
     colocated_types:
       - neighboring_type: "dlgn_core_relay_neuron"
         spatial_relationship: ADJACENT
