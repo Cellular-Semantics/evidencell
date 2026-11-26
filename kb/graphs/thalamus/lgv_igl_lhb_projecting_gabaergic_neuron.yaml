@@ -1,0 +1,177 @@
+# Lateral habenula-projecting vLGN/IGL GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Lateral Habenula-projecting vLGN/IGL GABAergic Neuron"
+description: >
+  Evidence graph component for the lateral habenula (LHb)-projecting
+  GABAergic neuron of the ventral lateral geniculate nucleus and
+  intergeniculate leaflet (vLGN/IGL), proposed from the ASTA deep research
+  report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lgv_igl_lhb_projecting_gabaergic_neuron
+    name: "Lateral habenula-projecting vLGN/IGL GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: GABAergic neuron
+        name_in_source: "Lateral habenula-projecting vLGN/IGL GABAergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / projecting terms; no
+        term describes a habenula-projecting vLGN/IGL GABAergic neuron.
+        CL:0000617 (neuron that uses GABA as a vesicular neurotransmitter) is the
+        most specific term the node satisfies in full. EXACT would need a CL term
+        defined by location and lateral habenula projection.
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "LHb-projecting vLGN/IGL neurons"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:30795900"
+            method: "used in abstract"
+            scope: "mouse vLGN/IGL"
+            quote_key: "72332556_28081399"
+    subtype_of:
+      - parent: lgv_igl_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:30795900"
+            method: "viral circuit tracing + chemogenetics (GABA neurons in vLGN/IGL inhibit LHb)"
+            scope: "mouse vLGN/IGL"
+            quote_key: "72332556_28081399"
+          - ref: "PMID:35385673"
+            method: "review citing Huang et al., 2019"
+            scope: "mouse vLGN and IGL"
+            quote_key: "248001630_8eed194e"
+        notes: >
+          Defined as the LGv/IGL GABAergic neuron narrowed by projection
+          target (lateral habenula). The review source restates the primary
+          study, so the relation rests on one primary source.
+    anatomical_location:
+      - id: UBERON:0002480
+        label: "ventral lateral geniculate nucleus"
+        name_in_source: "thalamic ventral lateral geniculate nucleus (vLGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:30795900"
+            method: "projection-defined circuit study (LHb-projecting vLGN/IGL GABA neurons)"
+            scope: "mouse vLGN/IGL, pooled; vLGN lamina (vLGNe/vLGNi) not stated"
+            quote_key: "72332556_28081399"
+          - ref: "PMID:35385673"
+            method: "review citing Huang et al., 2019"
+            scope: "mouse vLGN and IGL, pooled"
+            quote_key: "248001630_8eed194e"
+          - ref: "PMID:32497303"
+            method: "statement citing Huang et al., 2019"
+            scope: "mouse vLGN"
+            quote_key: "219328889_9273e4f7"
+      - id: UBERON:0035975
+        label: "intergeniculate leaflet of the lateral geniculate complex"
+        name_in_source: "intergeniculate leaflet (IGL)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:30795900"
+            method: "projection-defined circuit study (LHb-projecting vLGN/IGL GABA neurons)"
+            scope: "mouse vLGN/IGL, pooled"
+            quote_key: "72332556_28081399"
+          - ref: "PMID:35385673"
+            method: "review citing Huang et al., 2019"
+            scope: "mouse vLGN and IGL, pooled"
+            quote_key: "248001630_8eed194e"
+      - id: MBA:186
+        label: "Lateral habenula"
+        name_in_source: "lateral habenula (LHb)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:30795900"
+            method: "projection-defined circuit study; vLGN/IGL GABA neurons inhibit CaMKIIa LHb neurons; tracing method not named in quote"
+            scope: "mouse vLGN/IGL, pooled; postsynaptic LHb cells CaMKIIa+"
+            quote_key: "72332556_28081399"
+          - ref: "PMID:35385673"
+            method: "review citing Huang et al., 2019"
+            scope: "mouse vLGN and IGL, pooled"
+            quote_key: "248001630_8eed194e"
+          - ref: "PMID:32497303"
+            method: "statement citing Huang et al., 2019"
+            scope: "mouse vLGN"
+            quote_key: "219328889_9273e4f7"
+          - ref: "PMID:36280260"
+            method: "introduction statement citing Huang et al., 2019 (inhibitory synapses onto LHb neurons)"
+            scope: "mouse IGL/LGv neurons, pooled; GABAergic identity not restated in the passage"
+            quote_key: "247159795_80531464"
+            added_by: "evidence_extraction_lgv_igl_lhb_projecting_gabaergic_neuron_20261126"
+          - ref: "PMID:37949869"
+            method: "introduction statement on vLGN projections (citing prior work); target reported for vLGN neurons broadly, not traced from GABAergic cells"
+            scope: "mouse vLGN neurons, unspecified transmitter type; IGL not mentioned"
+            quote_key: "265121419_91b03b31"
+            support: WEAK
+            added_by: "evidence_extraction_lgv_igl_lhb_projecting_gabaergic_neuron_20261126"
+            notes: "Same passage attributes PAG and RE projections to other vLGN neurons; only the lateral habenula target applies to this node."
+    nt_type:
+      name_in_source: "GABA neurons"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABA neurons"
+      sources:
+        - ref: "PMID:30795900"
+          method: "statement in source (M4 RGCs innervate GABA neurons in vLGN/IGL that inhibit LHb neurons)"
+          scope: "mouse vLGN/IGL"
+          quote_key: "72332556_28081399"
+        - ref: "PMID:35385673"
+          method: "review citing Huang et al., 2019"
+          scope: "mouse vLGN and IGL"
+          quote_key: "248001630_8eed194e"
+        - ref: "PMID:32497303"
+          method: "statement citing Huang et al., 2019 (GABAergic vLGN cells project to LHb)"
+          scope: "mouse vLGN"
+          quote_key: "219328889_9273e4f7"
+    morphology:
+      description: >
+        Long-range GABAergic projection neuron whose axons leave the vLGN/IGL
+        and inhibit CaMKIIa-expressing neurons in the lateral habenula (Huang
+        et al., 2019; Kerschensteiner, 2022). Somatodendritic morphology of
+        identified LHb-projecting cells is not described in the sources.
+      sources:
+        - ref: "PMID:30795900"
+          method: "projection-defined circuit study (vLGN/IGL GABA neurons inhibit CaMKIIa LHb neurons)"
+          scope: "mouse vLGN/IGL"
+          quote_key: "72332556_28081399"
+        - ref: "PMID:35385673"
+          method: "review citing Huang et al., 2019"
+          scope: "mouse vLGN and IGL"
+          quote_key: "248001630_8eed194e"
+    definition_references:
+      - "PMID:30795900"
+      - "PMID:35385673"
+      - "PMID:32497303"
+    notes: >
+      SINGLE PRIMARY SOURCE / POOLED REGIONS: all properties rest on Huang et
+      al. 2019 (quote 72332556_28081399); the Kerschensteiner 2022 review and
+      Sabbagh et al. 2020 restate it. Sources pool vLGN and IGL, so the
+      relative contribution of each nucleus, and the vLGN lamina of origin,
+      are not stated. SUSPECTED HETEROGENEITY: which transcriptomic vLGN
+      GABAergic subtypes make up the LHb-projecting population is unresolved
+      (Sabbagh et al., 2020, quote 219328889_9273e4f7). Brock et al. 2022
+      report only a sparse LHb projection from Sox14+ LGv/IGL neurons (quote
+      247159795_f4eefc59); overlap with this population is unknown.
+edges: []

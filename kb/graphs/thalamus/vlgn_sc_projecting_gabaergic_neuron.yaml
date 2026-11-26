@@ -1,0 +1,214 @@
+# Superior colliculus-projecting vLGN GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Superior Colliculus-projecting vLGN GABAergic Neuron"
+description: >
+  Evidence graph component for the superior colliculus (SC)-projecting
+  GABAergic neuron of the ventral lateral geniculate nucleus (vLGN), proposed
+  from the ASTA deep research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: vlgn_sc_projecting_gabaergic_neuron
+    name: "Superior colliculus-projecting vLGN GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: GABAergic neuron
+        name_in_source: "Superior colliculus-projecting vLGN GABAergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / projecting terms; no
+        term describes a superior colliculus-projecting vLGN GABAergic neuron.
+        CL:0000617 (neuron that uses GABA as a vesicular neurotransmitter) is the
+        most specific term the node satisfies in full. EXACT would need a CL term
+        defined by vLGN location and superior colliculus projection.
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: vlgn_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:37949869"
+            method: "statement in source (vLGN sends prominent GABAergic axons to the SC)"
+            scope: "mouse vLGN"
+            quote_key: "265121419_e12d5dfd"
+          - ref: "PMID:34610302"
+            method: "projection-defined circuit (vLGN-to-SC) of vLGN GABA neurons"
+            scope: "adult mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+        notes: >
+          Defined as the vLGN GABAergic neuron narrowed by projection target
+          (superior colliculus).
+    anatomical_location:
+      - id: MBA:178
+        label: "Ventral part of the lateral geniculate complex"
+        name_in_source: "ventral lateral geniculate nucleus (vLGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:37949869"
+            method: "statement in source (vLGN sends GABAergic axons to SC)"
+            scope: "mouse vLGN; lamina of origin (vLGNe/vLGNi) not stated"
+            quote_key: "265121419_e12d5dfd"
+          - ref: "PMID:34610302"
+            method: "projection-defined vLGN-to-SC circuit"
+            scope: "adult mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+          - ref: "PMID:37949869"
+            method: "retrograde tracing (AAVretro injected into SC)"
+            scope: "mouse vLGN vs dLGN"
+            quote_key: "265121419_fe3d2790"
+            notes: >
+              Retrograde labelling from SC marks abundant somata in vLGN but not
+              in the neighbouring dLGN.
+      - id: UBERON:0001945
+        label: "superior colliculus"
+        name_in_source: "superior colliculus (SC)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:37949869"
+            method: "statement of vLGN GABAergic axon projection to SC; tracing method not named in quote"
+            scope: "mouse vLGN"
+            quote_key: "265121419_e12d5dfd"
+          - ref: "PMID:34610302"
+            method: "projection-defined vLGN-to-SC circuit described in a study of vLGN GABA neurons; tracing method not named in quote"
+            scope: "adult mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+          - ref: "PMID:32350041"
+            method: "statement of long-range inhibitory vLGN projection to SC (citing prior work)"
+            scope: "mouse vLGN"
+            quote_key: "217593649_83051103"
+          - ref: "PMID:34610302"
+            method: "two-color retrograde labeling from SC and nucleus reuniens (Re)"
+            scope: "adult mouse vLGN"
+            quote_key: "238410529_52ac87f4"
+            notes: >
+              vLGN cells projecting to SC and to Re form distinct output
+              pathways, i.e. the SC-projecting population is separate from
+              the Re-projecting population.
+          - ref: "PMID:1174957"
+            method: "autoradiographic anterograde tracing"
+            scope: "rat vLGN; species differs from node (mouse)"
+            quote_key: "6613291_e474fe8f"
+            notes: >
+              Projection runs through the brachium of the superior colliculus
+              and terminates in the ipsilateral SC. NT identity of the
+              projecting cells is not addressed.
+      - id: UBERON:0006791
+        label: "superficial layer of superior colliculus"
+        name_in_source: "superficial layers of SC (sSC, the visual SC)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:37949869"
+            method: "axon tracing of SC-projecting vLGN neurons"
+            scope: "mouse vLGN projection to SC"
+            quote_key: "265121419_80191403"
+            notes: >
+              sSC is the major target of vLGN axons; axons in intermediate and
+              deep (motor) SC layers are sparser.
+          - ref: "PMID:1174957"
+            method: "autoradiographic anterograde tracing"
+            scope: "rat vLGN; species differs from node (mouse)"
+            quote_key: "6613291_142b1b36"
+            notes: >
+              Strongest labelling in the stratum opticum, a layer of the
+              superficial SC.
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:37949869"
+          method: "statement in source (vLGN axons to SC are GABAergic)"
+          scope: "mouse vLGN"
+          quote_key: "265121419_e12d5dfd"
+        - ref: "PMID:36609305"
+          method: "statement citing prior work (virtually all vLGN neurons GABAergic, including projection neurons)"
+          scope: "mouse vLGN"
+          quote_key: "255502436_f64915a5"
+        - ref: "PMID:32350041"
+          method: "statement of inhibitory vLGN projections to SC (citing prior work)"
+          scope: "mouse vLGN"
+          quote_key: "217593649_83051103"
+        - ref: "PMID:41814933"
+          method: "statement in snRNA-seq atlas study (most vLGN neurons GABAergic, including projection neurons)"
+          scope: "mouse vLGN; region-level, not specific to SC-projecting cells"
+          quote_key: "286491924_a4bd5afb"
+    defining_markers:
+      - name_in_source: "Vgat"
+        ncbi_gene_id: "NCBIGene:22348"
+        symbol: "Slc32a1"
+        sources:
+          - ref: "PMID:34610302"
+            marker_type: NOT_STATED
+            method: "retrograde labeling from SC combined with Vgat cell-type identification; assay (Cre line or ISH) not named in quote"
+            scope: "adult mouse vLGN, SC-projecting cells"
+            quote_key: "238410529_39b71db1"
+            notes: >
+              ~90% of SC-projecting vLGN cells are Vgat+; the population
+              includes both Gad2 and Gad1 cell types.
+      - name_in_source: "Gad2"
+        ncbi_gene_id: "NCBIGene:14417"
+        symbol: "Gad2"
+        sources:
+          - ref: "PMID:34610302"
+            marker_type: NOT_STATED
+            method: "retrograde labeling from SC combined with Gad2 cell-type identification; assay not named in quote"
+            scope: "adult mouse vLGN, SC-projecting cells"
+            quote_key: "238410529_2ba8c879"
+            notes: >
+              Partial marker: ~65% of SC-projecting vLGN cells are Gad2+.
+    morphology:
+      description: >
+        Long-range GABAergic projection neuron whose axons leave the vLGN and
+        terminate in the superior colliculus (Li et al., 2023; Ciftcioglu et
+        al., 2020). Virtually all vLGN neurons, including the projection
+        neurons, are GABAergic (Govindaiah et al., 2023). Somatodendritic
+        morphology of identified SC-projecting cells is not described in the
+        sources.
+      sources:
+        - ref: "PMID:37949869"
+          method: "statement in source (prominent GABAergic axons to SC)"
+          scope: "mouse vLGN"
+          quote_key: "265121419_e12d5dfd"
+        - ref: "PMID:32350041"
+          method: "statement of long-range inhibitory vLGN projection to SC (citing prior work)"
+          scope: "mouse vLGN"
+          quote_key: "217593649_83051103"
+        - ref: "PMID:36609305"
+          method: "statement citing prior work (vLGN projection neurons are GABAergic)"
+          scope: "mouse vLGN"
+          quote_key: "255502436_f64915a5"
+    definition_references:
+      - "PMID:37949869"
+      - "PMID:34610302"
+      - "PMID:32350041"
+      - "PMID:36609305"
+    notes: >
+      SUSPECTED HETEROGENEITY / OPEN IDENTITY: the sublamina of origin (vLGNe
+      vs vLGNi) and the molecular identity of SC-projecting vLGN GABAergic
+      neurons are not stated in the sources. Sox14+ LGv/IGL neurons also
+      project heavily to the SC (Brock et al., 2022, quote 247159795_9ed56c01);
+      whether they overlap this population is unknown. The Salay et al. 2021
+      abstract (quote 238410529_5d954f1d) describes the vLGN-to-SC circuit in
+      a study of vLGN GABA neurons but does not explicitly state that the
+      SC-projecting cells are GABAergic.
+edges: []

@@ -22,7 +22,7 @@ nodes:
   - id: dg_neuroblast_imn
     name: "Dentate Gyrus Neuroblast (Type-3 Progenitor)"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:  # To be confirmed — studies cite mouse, rat, human
+    species:
       id: NCBITaxon:10090
       label: Mus musculus
       name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
@@ -147,6 +147,14 @@ nodes:
     is_terminal: false
     notes: >-
       HETEROGENEITY: The node captures type-3 neuroblasts primarily; type-2a (Nestin+/Sox2+) and type-2b (Nestin+/DCX+) earlier stages are related but distinct intermediate progenitors and may warrant separate sub-nodes. No dedicated UBERON term for subgranular zone; dentate gyrus (UBERON:0001885) used as container. DUPLICATE RECORD, MERGE DEFERRED: this node and 'dg_neuroblast' in kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml carry the identical name and describe the same cell type, curated independently in two contexts. This record was renamed from 'dg_neuroblast' so that each file defines a distinct node id; the dentate_gyrus record is the one carried by reports/dentate_gyrus/ and is the richer of the two on literature references. Whether to merge them, and which properties survive, is a curator decision that has not been made. Do not treat the two as independent types.
+
+      SPECIES: mouse: the defining sources are mouse studies (PMID:18385329, PMID:29335606); cited
+      studies also include rat and human. Each source's species is in its scope. Set from the MeSH
+      organisms of the cited primary papers (#216); to be confirmed from primary literature.
+
+      PSA-NCAM is polysialylated NCAM, a glycoform of NCAM1 (polysialic acid added by
+      St8sia2/St8sia4); it names no single gene, so it has no ncbi_gene_id and is not measured
+      against atlas expression.
 
   # ── Dentate Gyrus Immature Granule Neuron ───────────────────────
 

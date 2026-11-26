@@ -1,0 +1,243 @@
+run_id: 20261125_thalamus_lgv_report_ingest
+types:
+  - node_id: lgv_igl_gabaergic_neuron
+    action: ENRICH
+    file: kb/graphs/thalamus/lgv_igl_gabaergic_neuron.yaml
+    report_sections:
+      - Connectivity and circuit function of vLGN GABAergic neurons
+      - Molecular markers and anatomical context
+      - Developmental origin and developmental assembly
+    reconciliation_note: >
+      Several report sources treat vLGN and IGL GABAergic neurons as one pooled
+      population (Brock 2022 "IGL/LGv"; Huang 2019, Hu 2024 "vLGN/IGL"),
+      which is exactly the existing pooled node. Added node species (Mus
+      musculus; was empty) and two synonyms ("vLGN/IGL GABAergic neurons",
+      "vLGN/IGL GABA neurons"). No existing value changed. Graph-level species
+      left empty. Considered igl_gabaergic_neuron (IGL only, rat; out of
+      scope for this run) - not the same population.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          LGv and IGL each comprise a dorsal pTH-R (thalamic)-derived region
+          and a ventral region of prethalamic-derived cells; the prethalamic
+          component is mentioned but not characterised, so no node proposed.
+        quote_keys: [247159795_d79097dc]
+      - finding: >
+          Wong 2018: pTH-R (Ascl1+/Tal1+ progenitor domain) contributes to IGL
+          and vLG "inhibitory nuclei" - developmental origin, no identity field
+          (property-phase notes).
+        quote_keys: [13741105_cc00f279]
+    follow_up: >
+      Developmental (Sox14/Gata2, pTH-R) and projection data apply equally to
+      IGL nodes (igl_gabaergic_neuron, igl_npy_geniculohypothalamic_neuron,
+      igl_enkephalinergic_geniculogeniculate_neuron), which are being edited on
+      another branch and were not touched here.
+
+  - node_id: vlgn_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/thalamus/vlgn_gabaergic_neuron.yaml
+    report_sections:
+      - Introduction
+      - Structure, location, and subdivision of mouse vLGN
+      - Neurotransmitter and neurochemical identity
+      - Connectivity and circuit function of vLGN GABAergic neurons
+      - Heterogeneity and defined subtypes of vLGN GABAergic neurons
+    reconciliation_note: >
+      The report's subject. Most sources (Sabbagh 2020, Govindaiah 2023,
+      Salay 2021, Li 2023, Stebbins 2024/2026) describe vLGN alone, so the
+      name cannot be swapped for the pooled lgv_igl_gabaergic_neuron (which
+      also covers IGL). A narrower population inside the existing node ->
+      NEW with subtype_of lgv_igl_gabaergic_neuron (DEFINITIONAL, LOW).
+      Review may prefer to merge if the pooled node is later split into
+      LGv-only and IGL-only nodes. Considered dlgn_gabaergic_interneuron
+      (different nucleus) and trn_gabaergic_neuron (different nucleus).
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Stebbins 2026 snRNA-seq atlas: 20 candidate neuron types in mouse
+          vLGN, at least two excitatory; cluster names/markers not given in
+          the report, so no types proposed. Candidate AT/PRIOR_TRANSCRIPTOMIC
+          source for later steps.
+        quote_keys: [286491924_d7a92ebc, 286491924_d474808b]
+      - finding: >
+          vLGN contains a limited number of VGLUT-expressing glutamatergic
+          neurons (Monavarfeshani 2017) - non-GABAergic vLGN population, not
+          characterised further in the report.
+        quote_keys: [4601077_b2845e93]
+
+  - node_id: vlgne_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/thalamus/vlgne_gabaergic_neuron.yaml
+    report_sections:
+      - Structure, location, and subdivision of mouse vLGN
+      - Developmental origin and developmental assembly
+      - Heterogeneity and defined subtypes of vLGN GABAergic neurons
+    reconciliation_note: >
+      GABAergic neurons of the retinorecipient external vLGN (vLGNe),
+      characterised by direct retinal input, convergent retinal +
+      corticothalamic driver input and laminar organisation (Sabbagh 2020,
+      Govindaiah 2023, Stebbins 2024). No existing node is restricted to
+      vLGNe. NEW, subtype_of vlgn_gabaergic_neuron (DEFINITIONAL, LOW).
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          vLGNe contains at least four transcriptomically distinct GABAergic
+          subtypes in adjacent sublaminae, each receiving monosynaptic retinal
+          input. The report gives no names or markers for the four, so they
+          were not proposed as separate nodes (candidate NEW children of
+          vlgne_gabaergic_neuron once Sabbagh 2020 markers are extracted).
+        quote_keys: [219328889_ea819292, 219328889_a1d23e11, 271906359_1bfec86c]
+
+  - node_id: vlgni_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/thalamus/vlgni_gabaergic_neuron.yaml
+    report_sections:
+      - Structure, location, and subdivision of mouse vLGN
+      - Heterogeneity and defined subtypes of vLGN GABAergic neurons
+    reconciliation_note: >
+      GABAergic neurons of the non-retinorecipient internal vLGN (vLGNi),
+      transcriptionally distinct from vLGNe and driven only by
+      corticothalamic input (Sabbagh 2020, Govindaiah 2023). No existing
+      node. NEW, subtype_of vlgn_gabaergic_neuron (DEFINITIONAL, LOW).
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          The report describes a "Sox14-enriched" population within vLGNi;
+          Brock 2022 shows Sox14+ cells enriched in vLGNi but also present
+          (sparse) in vLGNe and in IGL. Overlap, not containment, between
+          vlgni_gabaergic_neuron and lgv_igl_sox14_gabaergic_neuron.
+        quote_keys: [247159795_a2cf4a69]
+
+  - node_id: vlgn_local_gabaergic_interneuron
+    action: NEW
+    file: kb/graphs/thalamus/vlgn_local_gabaergic_interneuron.yaml
+    report_sections:
+      - Introduction
+      - Developmental origin and developmental assembly
+    reconciliation_note: >
+      The report frames vLGN as one of few thalamic nuclei with local
+      GABAergic interneurons, recruited by an RGC-derived SHH-dependent
+      mechanism shared with dLGN (Su 2020, Somaiya 2022). Distinct from
+      dlgn_gabaergic_interneuron (dLGN, different nucleus; out of scope for
+      this run) and from the vLGN GABAergic projection neurons. NEW,
+      subtype_of vlgn_gabaergic_neuron (DEFINITIONAL, LOW). Unsure whether the
+      sources distinguish this population from vLGN projection neurons by
+      more than wording - review may merge into vlgn_gabaergic_neuron.
+    identity_conflicts: []
+    unplaced: []
+    follow_up: >
+      dlgn_gabaergic_interneuron (other branch, not edited) shares the
+      SHH-dependent recruitment mechanism (Somaiya 2022; quote_keys
+      247085323_880b2f54, 247085323_6022a467); a cross-reference may be
+      warranted when that branch merges.
+
+  - node_id: lgv_igl_sox14_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/thalamus/lgv_igl_sox14_gabaergic_neuron.yaml
+    report_sections:
+      - Molecular markers and anatomical context
+      - Connectivity and circuit function of vLGN GABAergic neurons
+      - Heterogeneity and defined subtypes of vLGN GABAergic neurons
+    reconciliation_note: >
+      Brock 2022 defines "Sox14+ neurons" as pTH-R-derived GABAergic
+      projection neurons of dorsal IGL/LGv, with defined projections (SC,
+      pretectum, SCN, SPZ, VLPO, sparse LHb). Narrower than the pooled
+      lgv_igl_gabaergic_neuron (excludes the ventral prethalamic-derived
+      component) -> NEW with subtype_of lgv_igl_gabaergic_neuron (EMPIRICAL,
+      MODERATE). Spans LGv and IGL, so not placed under vlgn_gabaergic_neuron.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Overlap (not containment) with vlgni_gabaergic_neuron (Sox14+
+          enriched in vLGNi, sparse in vLGNe) and with IGL GABAergic nodes.
+        quote_keys: [247159795_a2cf4a69, 247159795_0eefb318]
+      - finding: >
+          Brock 2022 calls these cells "dorsal IGL/LGv" in one passage and
+          describes Sox14+ neurons "in ventral LGv and IGL" with projection
+          morphology in another - location wording to check against the paper
+          in the property phase.
+        quote_keys: [247159795_d79097dc, 247159795_61ac7818]
+    follow_up: >
+      IGL Sox14+ cells overlap igl_gabaergic_neuron /
+      igl_npy_geniculohypothalamic_neuron / igl_enkephalinergic_geniculogeniculate_neuron
+      (other branch; not edited). Consider an IGL-side cross-reference after
+      merge.
+
+  - node_id: lgv_igl_lhb_projecting_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/thalamus/lgv_igl_lhb_projecting_gabaergic_neuron.yaml
+    report_sections:
+      - Connectivity and circuit function of vLGN GABAergic neurons
+      - Heterogeneity and defined subtypes of vLGN GABAergic neurons
+    reconciliation_note: >
+      Projection-defined population: vLGN/IGL GABA neurons innervated by
+      M4/sONalpha RGCs that inhibit CaMKIIa LHb neurons and mediate
+      antidepressant effects of light (Huang 2019; Kerschensteiner 2022).
+      No existing node. NEW, subtype_of lgv_igl_gabaergic_neuron
+      (DEFINITIONAL, MODERATE). Sources pool vLGN and IGL, so not placed
+      under vlgn_gabaergic_neuron.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Which transcriptomic vLGN GABAergic subtypes form the LHb-projecting
+          population is unresolved (Sabbagh 2020); Brock 2022 reports only a
+          sparse LHb projection from Sox14+ LGv/IGL neurons - overlap with
+          lgv_igl_sox14_gabaergic_neuron unknown.
+        quote_keys: [219328889_9273e4f7, 247159795_f4eefc59]
+
+  - node_id: vlgn_sc_projecting_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/thalamus/vlgn_sc_projecting_gabaergic_neuron.yaml
+    report_sections:
+      - Connectivity and circuit function of vLGN GABAergic neurons
+    reconciliation_note: >
+      Projection-defined vLGN GABAergic population sending inhibitory axons
+      to the superior colliculus (Li 2023; Salay 2021 vLGN-to-SC circuit with
+      effects on defensive behaviour opposite to the vLGN-to-Re circuit).
+      No existing node. NEW, subtype_of vlgn_gabaergic_neuron (DEFINITIONAL,
+      MODERATE).
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Sox14+ LGv/IGL neurons also project heavily to the SC (Brock 2022);
+          overlap with lgv_igl_sox14_gabaergic_neuron is unknown. Rat vLGN
+          projects to SC (Ribak 1975; transmitter not stated).
+        quote_keys: [247159795_9ed56c01, 6613291_27e29f1c]
+
+  - node_id: lgv_igl_lpbn_projecting_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/thalamus/lgv_igl_lpbn_projecting_gabaergic_neuron.yaml
+    report_sections:
+      - Connectivity and circuit function of vLGN GABAergic neurons
+    reconciliation_note: >
+      Projection-defined vLGN/IGL GABAergic population, innervated by a
+      subset of RGCs, inhibiting CaMKIIa+ LPBN neurons (Hu 2024). Single
+      study, one-sentence characterisation in the report; proposed as NEW
+      (no existing node) with subtype_of lgv_igl_gabaergic_neuron
+      (DEFINITIONAL, MODERATE). Review may merge if judged too thin.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: lgv_igl_reuniens_projecting_neuron
+    action: NEW
+    file: kb/graphs/thalamus/lgv_igl_reuniens_projecting_neuron.yaml
+    report_sections:
+      - Connectivity and circuit function of vLGN GABAergic neurons
+    reconciliation_note: >
+      Projection-defined vLGN/IGL population innervated by SMI-32+ ON RGCs
+      and projecting to nucleus reuniens, promoting spatial memory under
+      bright light (Huang 2020); Salay 2021 describes a vLGN-to-Re circuit.
+      No existing node. NEW. No subtype_of written: Huang 2020 calls these
+      CaMKIIa neurons that "activate" Re neurons, which does not support
+      containment in a GABAergic parent (see unplaced).
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Transmitter identity conflict: the report lists this channel among
+          vLGN GABAergic outputs and Salay 2021 describes a vLGN-to-Re circuit
+          of vLGN-GABA neurons, but Huang 2020 describes the Re-projecting
+          vLGN/IGL cells as CaMKIIa neurons that activate Re neurons
+          (implying excitatory). Whether this is a subtype of
+          lgv_igl_gabaergic_neuron or a vLGN/IGL excitatory population (cf.
+          Stebbins 2026: at least two excitatory vLGN types) is unresolved.
+        quote_keys: [226284065_834809d9, 238410529_5d954f1d, 286491924_d7a92ebc]

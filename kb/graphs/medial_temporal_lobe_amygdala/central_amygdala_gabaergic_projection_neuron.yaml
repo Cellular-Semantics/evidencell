@@ -18,7 +18,10 @@ nodes:
 - id: central_amygdala_gabaergic_projection_neuron
   name: Central amygdala GABAergic projection neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "mouse"
   nt_type:
     name_in_source: GABAergic
     sources:
@@ -132,7 +135,12 @@ nodes:
   - PMID:39130512
   - PMID:9364666
   is_terminal: false
-  notes: CeA further splits into medial (CeM), lateral (CeL), and central (CeC) sections.
+  notes: >-
+    CeA further splits into medial (CeM), lateral (CeL), and central (CeC) sections.
+
+    SPECIES: mouse: the defining sources are mouse studies (e.g. PMID:21068836, PMID:36425768,
+    PMID:37884748); rat, macaque and chicken sources are comparative context. Each source's species
+    is in its scope.
 - id: CS20230722_SUPT_0249
   name: 0249 NDB-SI-MA-STRv Lhx8 Gaba_6
   definition_basis: ATLAS_TRANSCRIPTOMIC

@@ -1,0 +1,121 @@
+# Lateral parabrachial nucleus-projecting vLGN/IGL GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Lateral Parabrachial Nucleus-projecting vLGN/IGL GABAergic Neuron"
+description: >
+  Evidence graph component for the lateral parabrachial nucleus
+  (LPBN)-projecting GABAergic neuron of the ventral lateral geniculate
+  nucleus and intergeniculate leaflet (vLGN/IGL), proposed from the ASTA deep
+  research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lgv_igl_lpbn_projecting_gabaergic_neuron
+    name: "Lateral parabrachial nucleus-projecting vLGN/IGL GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: GABAergic neuron
+        name_in_source: "Lateral parabrachial nucleus-projecting vLGN/IGL GABAergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / projecting terms; no
+        term describes a lateral parabrachial nucleus-projecting vLGN/IGL GABAergic
+        neuron. CL:0000617 (neuron that uses GABA as a vesicular neurotransmitter)
+        is the most specific term the node satisfies in full. EXACT would need a
+        CL term defined by location and lateral parabrachial projection.
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: lgv_igl_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:38865246"
+            method: "circuit tracing (RGC-innervated vLGN/IGL GABAergic neurons inhibit LPBN)"
+            scope: "mouse vLGN/IGL"
+            quote_key: "270412585_53f9c770"
+        notes: >
+          Defined as the LGv/IGL GABAergic neuron narrowed by projection
+          target (lateral parabrachial nucleus). Single study.
+    anatomical_location:
+      - id: UBERON:0002480
+        label: "ventral lateral geniculate nucleus"
+        name_in_source: "ventral lateral geniculate nucleus (vLGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:38865246"
+            method: "circuit study (RGC-innervated vLGN/IGL GABAergic neurons inhibit LPBN neurons); tracing method not named in quote"
+            scope: "mouse vLGN/IGL, pooled; vLGN lamina (vLGNe/vLGNi) not stated"
+            quote_key: "270412585_53f9c770"
+      - id: UBERON:0035975
+        label: "intergeniculate leaflet of the lateral geniculate complex"
+        name_in_source: "intergeniculate leaflet (IGL)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:38865246"
+            method: "circuit study (RGC-innervated vLGN/IGL GABAergic neurons inhibit LPBN neurons); tracing method not named in quote"
+            scope: "mouse vLGN/IGL, pooled"
+            quote_key: "270412585_53f9c770"
+      - id: MBA:881
+        label: "Parabrachial nucleus, lateral division"
+        name_in_source: "LPBN"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:38865246"
+            method: "circuit study; vLGN/IGL GABAergic neurons inhibit CaMKIIa+ LPBN neurons; tracing method not named in quote"
+            scope: "mouse vLGN/IGL, pooled; postsynaptic LPBN cells CaMKIIa+"
+            quote_key: "270412585_53f9c770"
+          - ref: "PMID:38865246"
+            method: "projection-specific activation of vLGN/IGL-to-LPBN terminals (behavioural readout: reduced itch-related behaviours); activation method not named in quote"
+            scope: "mouse; vLGN/IGL-to-LPBN projection, pooled; functional evidence that the projection is present and behaviourally effective"
+            quote_key: "270412585_cdb4dcac"
+    nt_type:
+      name_in_source: "GABAergic neurons"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic neurons"
+      sources:
+        - ref: "PMID:38865246"
+          method: "statement in source (RGCs innervate GABAergic neurons in vLGN/IGL that inhibit LPBN neurons)"
+          scope: "mouse vLGN/IGL"
+          quote_key: "270412585_53f9c770"
+    morphology:
+      description: >
+        Long-range GABAergic projection neuron whose axons leave the vLGN/IGL
+        and inhibit CaMKIIa-expressing neurons in the lateral parabrachial
+        nucleus (Hu et al., 2024). Somatodendritic morphology of identified
+        LPBN-projecting cells is not described in the sources.
+      sources:
+        - ref: "PMID:38865246"
+          method: "circuit study (vLGN/IGL GABAergic neurons inhibit CaMKIIa+ LPBN neurons)"
+          scope: "mouse vLGN/IGL"
+          quote_key: "270412585_53f9c770"
+    definition_references:
+      - "PMID:38865246"
+    notes: >
+      SINGLE SOURCE / POOLED REGIONS: all properties rest on one sentence
+      from Hu et al. 2024 (quote 270412585_53f9c770). The source pools vLGN
+      and IGL, so the relative contribution of each nucleus and the vLGN
+      lamina of origin are not stated. The tracing method establishing the
+      projection is not given in the quote. SUSPECTED HETEROGENEITY: which
+      transcriptomic vLGN/IGL GABAergic subtypes form the LPBN-projecting
+      population, and its overlap with other projection-defined vLGN/IGL
+      populations, are not addressed in the sources.
+edges: []

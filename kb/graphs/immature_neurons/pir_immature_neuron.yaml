@@ -22,10 +22,10 @@ nodes:
   - id: pir_immature_neuron
     name: "Piriform Cortex Layer II Immature Neuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:  # To be confirmed — studies cite mouse, rat, guinea pig
-      id: NCBITaxon:39107
-      label: Murinae
-      name_in_source: "Mice; Rats (MeSH organisms of cited primary papers; inferred, #216)"
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
     anatomical_location:
       - id: UBERON:0004725
         label: "piriform cortex"
@@ -171,6 +171,17 @@ nodes:
       cerebral cortex DCX+ cells are sparse in piriform cortex compared with
       limbic neocortex (Groen et al., 2021), contrasting with mouse/rat
       reports.
+
+      SPECIES: mouse: most cited sources and every marker gene pin are mouse (e.g. PMID:29688272,
+      PMID:34072166); the population was first characterised in rat (PMID:18245040), and guinea pig
+      studies are cited. Each source's species is in its scope. Previously the clade Murinae,
+      inferred from the MeSH organisms of the cited primary papers (#216); narrowed to the species
+      of the defining description per the schema's species rule.
+
+      Four markers have no ncbi_gene_id and are not measured against atlas expression, as none
+      names a single gene: PSA-NCAM (polysialylated NCAM, a glycoform of NCAM1), phospho-CREB (a
+      phosphorylation state of CREB), CaMKII (PMID:29688272 used an anti-CaMKII antibody naming no
+      isoform of Camk2a/b/d/g) and NMDA receptors (PMID:18245040 names no subunit).
 
   # ── Olfactory Bulb Neuroblast / Immature Interneuron ────────────
 

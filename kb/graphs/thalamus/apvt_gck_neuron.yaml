@@ -22,10 +22,28 @@ nodes:
   - id: apvt_gck_neuron
     name: "Glucokinase-expressing anterior PVT (Gck+ aPVT) glutamatergic neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:  # To be confirmed from primary literature — single source is mouse
+    species:
       id: NCBITaxon:10090
       label: Mus musculus
       name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
+    subtype_of:
+      - parent: apvt_glutamatergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:35303367"
+            method: "statement in source (Gck-defined subpopulation of PVT neurons)"
+            scope: "adult mouse anterior PVT"
+            quote_key: "247548117_93d5fc5f"
+          - ref: "PMID:34220458"
+            method: "review (PVT-wide vGLUT2 mRNA; no intrinsic GABAergic neurons)"
+            scope: "rodent PVT (whole nucleus)"
+            quote_key: "235466185_0d1595b7"
+        notes: >
+          Defined as aPVT neurons narrowed by marker (Gck). The source states
+          the cells are Gck-defined PVT neurons of the anterior PVT; that they
+          are glutamatergic is inferred from PVT-wide vGLUT2 expression, not
+          stated for Gck+ cells, hence LOW.
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
@@ -84,11 +102,6 @@ nodes:
       - "PMID:35303367"
     is_terminal: false
     notes: >
-      SUBSET OF pvt_glutamatergic_neuron: this is a marker-defined
-      subpopulation of the PVT glutamatergic projection neuron (anterior PVT).
-      The schema has no parent/subtype slot on CellTypeNode, so the
-      relationship is recorded here only.
-
       NT TYPE INFERRED: glutamatergic identity is inferred from PVT
       principal-cell context (PVT-wide vGLUT2 expression and absence of
       intrinsic GABAergic neurons), not shown directly for Gck+ cells by the
@@ -108,4 +121,7 @@ nodes:
       UNRESOLVED: relationship to Gao et al. 2023 PVT1-5 clusters (the
       anterior clusters are PVT2, PVT4, PVT5) is not addressed. Single-study
       node; species is mouse. Electrophysiology not described.
+
+      SPECIES: mouse: the single cited source (PMID:35303367) is a mouse study. Set from the MeSH
+      organisms of the cited primary papers (#216); to be confirmed from primary literature.
 edges: []

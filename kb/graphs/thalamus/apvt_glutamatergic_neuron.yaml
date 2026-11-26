@@ -1,0 +1,262 @@
+# Anterior PVT (aPVT) glutamatergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/PVT_Glut.pdf
+# Ingestion date: 2026-11-26 (continuation of the 2026-11-14 PVT report ingest)
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Anterior PVT (aPVT) Glutamatergic Neuron"
+description: >
+  Evidence graph component for the glutamatergic neuron of the anterior
+  paraventricular nucleus of the thalamus (aPVT), proposed from the ASTA deep
+  research report PVT_Glut.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-26"
+nodes:
+  - id: apvt_glutamatergic_neuron
+    name: "Anterior PVT (aPVT) glutamatergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "aPVT neuron"
+        synonym_type: ABBREVIATION
+    subtype_of:
+      - parent: pvt_glutamatergic_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:37862168"
+            method: "scRNA-seq + histology + axon projection mapping (anterior and posterior PVT subpopulations)"
+            scope: "adult mouse PVT"
+            quote_key: "264359607_d839d41e"
+          - ref: "PMID:36867023"
+            method: "statement in source (aPVT/pPVT subregion classification)"
+            scope: "adult mouse PVT"
+            quote_key: "251021326_1e273142"
+          - ref: "PMID:36867023"
+            method: "multiplex FISH (PVT2/PVT4/PVT5 most anteriorly represented; clusters from Slc17a6/Slc17a7+ neurons)"
+            scope: "adult mouse PVT"
+            quote_key: "251021326_3d4954d5"
+        notes: >
+          Defined as the PVT glutamatergic neuron narrowed to the anterior pole
+          of the antero-posterior gradient. Shima et al. report continuity and
+          an intermediate population, so the aPVT/pPVT boundary is a convention,
+          not a discrete break. The AP subdivision is stated by two sources;
+          that its cells are glutamatergic rests on Gao et al.'s
+          Slc17a6/Slc17a7 selection, hence MODERATE.
+    anatomical_location:
+      - id: MBA:149
+        label: "Paraventricular nucleus of the thalamus"
+        name_in_source: "anterior PVT (aPVT)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:36867023"
+            method: "multiplex FISH of cluster marker genes along the antero-posterior axis"
+            scope: "adult mouse PVT — PVT4, PVT2 and PVT5 most anteriorly represented (Drd3, Hcrtr1, Thy1)"
+            quote_key: "251021326_3d4954d5"
+          - ref: "PMID:37862168"
+            method: "scRNA-seq + histology"
+            scope: "adult mouse PVT — anterior subpopulation at one end of a continuous anterior-posterior axis"
+            quote_key: "264359607_d839d41e"
+          - ref: "PMID:28426970"
+            method: "site-restricted pharmacological inactivation and optogenetics (aPVT vs pPVT)"
+            scope: "rat anterior PVT"
+            quote_key: "207218608_40dbc14a"
+      - id: UBERON:0001882
+        label: "nucleus accumbens"
+        name_in_source: "nucleus accumbens"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:28426970"
+            method: "optogenetic photoinhibition of aPVT axon projections in the target"
+            scope: "rat aPVT projections to nucleus accumbens"
+            quote_key: "207218608_40dbc14a"
+      - id: UBERON:0001876
+        label: "amygdala"
+        name_in_source: "amygdala"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:28426970"
+            method: "optogenetic photoinhibition of aPVT axon projections in the target"
+            scope: "rat aPVT projections to amygdala (nucleus not specified)"
+            quote_key: "207218608_40dbc14a"
+      - id: MBA:972
+        label: "Prelimbic area"
+        name_in_source: "prelimbic"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36867023"
+            method: "inferred from correlation of cluster genes with ThalamoSeq cortical projection patterns, not traced"
+            scope: "adult mouse PVT — reported jointly for anterior clusters PVT2/PVT4"
+            quote_key: "251021326_6820b736"
+            support: WEAK
+      - id: MBA:44
+        label: "Infralimbic area"
+        name_in_source: "infralimbic"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36867023"
+            method: "inferred from correlation of cluster genes with ThalamoSeq cortical projection patterns, not traced"
+            scope: "adult mouse PVT — reported jointly for anterior clusters PVT2/PVT4"
+            quote_key: "251021326_6820b736"
+            support: WEAK
+      - id: MBA:714
+        label: "Orbital area"
+        name_in_source: "orbital"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36867023"
+            method: "inferred from correlation of cluster genes with ThalamoSeq cortical projection patterns, not traced"
+            scope: "adult mouse PVT — reported jointly for anterior clusters PVT2/PVT4"
+            quote_key: "251021326_6820b736"
+            support: WEAK
+      - id: MBA:1057
+        label: "Gustatory areas"
+        name_in_source: "gustatory"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36867023"
+            method: "inferred from correlation of cluster genes with ThalamoSeq cortical projection patterns, not traced"
+            scope: "adult mouse PVT — reported jointly for anterior clusters PVT2/PVT4"
+            quote_key: "251021326_6820b736"
+            support: WEAK
+    nt_type:
+      name_in_source: "glutamatergic (inferred)"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:36867023"
+          method: "snRNA-seq: clusters (incl. anterior PVT2/PVT4/PVT5) derived from Slc17a6/Slc17a7+, Gad1/Gad2- neurons — selection criterion, inferred for the anterior clusters"
+          scope: "adult mouse PVT"
+          quote_key: "251021326_815dcc71"
+        - ref: "PMID:34220458"
+          method: "review (PVT-wide vGLUT2 mRNA) — inference for the anterior population"
+          scope: "rodent PVT (whole nucleus)"
+          quote_key: "235466185_0d1595b7"
+        - ref: "PMID:33584216"
+          method: "review statement (PVT projection neurons primarily glutamatergic) — inference for the anterior population"
+          scope: "rodent PVT (whole nucleus)"
+          quote_key: "231597608_cf2b3bf6"
+    defining_markers:
+      - name_in_source: Drd3
+        symbol: Drd3
+        ncbi_gene_id: "NCBIGene:13490"
+        sources:
+          - ref: "PMID:36867023"
+            method: "snRNA-seq + multiplex FISH"
+            scope: "adult mouse PVT — antero-posterior gradient marker"
+            quote_key: "251021326_ecb498e7"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:36867023"
+            method: "multiplex FISH"
+            scope: "adult mouse PVT — Drd3 marks anteriorly represented PVT4 (and PVT2)"
+            quote_key: "251021326_3d4954d5"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:36867023"
+            method: "snRNA-seq"
+            scope: "adult mouse PVT — enriched in anterior PVT clusters"
+            quote_key: "251021326_19d51130"
+            marker_type: TRANSCRIPT
+      - name_in_source: Slc17a6
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
+        sources:
+          - ref: "PMID:36867023"
+            method: "snRNA-seq (selection criterion)"
+            scope: "adult mouse PVT — all clusters, including the anterior ones"
+            quote_key: "251021326_815dcc71"
+            marker_type: TRANSCRIPT
+    negative_markers:
+      - name_in_source: Gad1
+        symbol: Gad1
+        ncbi_gene_id: "NCBIGene:14415"
+        sources:
+          - ref: "PMID:36867023"
+            method: "snRNA-seq (selection criterion)"
+            scope: "adult mouse PVT — neurons selected as Gad1/Gad2-negative"
+            quote_key: "251021326_815dcc71"
+            marker_type: TRANSCRIPT
+      - name_in_source: Gad2
+        symbol: Gad2
+        ncbi_gene_id: "NCBIGene:14417"
+        sources:
+          - ref: "PMID:36867023"
+            method: "snRNA-seq (selection criterion)"
+            scope: "adult mouse PVT — neurons selected as Gad1/Gad2-negative"
+            quote_key: "251021326_815dcc71"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >
+        Projection neurons. No somatodendritic description in the sources.
+        The axon projection pattern of the anterior PVT subpopulation is
+        nearly non-overlapping with that of the posterior subpopulation, with
+        an intermediate population between them (mouse). aPVT neurons project
+        to the nucleus accumbens and the amygdala (rat). Cortical projection
+        bias of the anterior clusters PVT2/PVT4 toward prelimbic,
+        infralimbic, orbital, gustatory and insular areas is inferred from
+        correlation with a projection-labelled thalamic atlas, not traced
+        (mouse).
+      sources:
+        - ref: "PMID:37862168"
+          method: "axon projection mapping"
+          scope: "adult mouse anterior vs posterior PVT subpopulations"
+          quote_key: "264359607_d839d41e"
+        - ref: "PMID:28426970"
+          method: "optogenetic photoinhibition of aPVT projections"
+          scope: "rat aPVT"
+          quote_key: "207218608_40dbc14a"
+        - ref: "PMID:36867023"
+          method: "snRNA-seq integration with ThalamoSeq projection-labelled atlas (correlation)"
+          scope: "adult mouse PVT clusters PVT2/PVT4"
+          quote_key: "251021326_6820b736"
+    definition_references:
+      - "PMID:37862168"
+      - "PMID:36867023"
+      - "PMID:28426970"
+    notes: >
+      SUSPECTED HETEROGENEITY: three transcriptomic clusters (Gao et al.
+      2023, PMID:36867023: PVT2, PVT4, PVT5) are most anteriorly represented,
+      so this population is not molecularly uniform. Drd3 (PVT2 and PVT4)
+      is the antero-posterior gradient marker, so its expression is graded
+      rather than all-or-none. Cluster markers enriched in anterior PVT
+      (Hcrtr1 for PVT2; Tesc and Cbln2 for PVT4; Thy1 for PVT5; quote keys
+      251021326_3d4954d5, 251021326_19d51130, 251021326_6e3c6191) mark single
+      clusters, not all anterior cells, so they are not recorded as
+      defining_markers here; they belong on the deferred PVT2/PVT4/PVT5
+      nodes.
+
+      SPECIES: molecular, location and projection-pattern evidence is mouse
+      (Gao 2023; Shima 2022, PMID:37862168); the NAc and amygdala targets are
+      from rat, where aPVT is defined by injection site, not by molecular
+      identity (Do-Monte 2017, PMID:28426970).
+
+      GLUTAMATERGIC IDENTITY is inferred: shown for the PVT as a whole and
+      by Gao et al.'s Slc17a6/Slc17a7+, Gad1/Gad2- selection, not by a
+      direct test on anterior cells.
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "Anterior PVT (aPVT) glutamatergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL (OAK sqlite:obo:cl) for paraventricular / midline thalamic
+        terms; no PVT- or aPVT-specific neuron term exists. Shares its parent
+        pvt_glutamatergic_neuron's CL term as a BROAD mapping. A glutamatergic
+        thalamic neuron satisfies CL thalamic excitatory neuron in full; the
+        node would need a CL term for anterior paraventricular thalamic
+        neuron to be EXACT.
+edges: []

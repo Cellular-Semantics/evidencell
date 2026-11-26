@@ -22,7 +22,7 @@ nodes:
   - id: dg_immature_granule_neuron_imn
     name: "Dentate Gyrus Immature Granule Neuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:  # To be confirmed — studies cite mouse, rat, human
+    species:
       id: NCBITaxon:10090
       label: Mus musculus
       name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
@@ -137,6 +137,15 @@ nodes:
     is_terminal: false
     notes: >-
       Represents the stage-5 postmitotic immature granule neuron of Micheli et al. (DCX+/NeuN+), distinct from the upstream type-3 proliferative neuroblast (DCX+ only) and the downstream terminally-differentiated mature granule neuron (Calbindin+/NeuN+). Tis21 expression reappears during this maturation phase, potentially related to final functional integration. AMBIGUITY: No dedicated UBERON term for SGZ/inner GCL; dentate gyrus (UBERON:0001885) used as container. No existing CL term; proposed new term CL:9900002 (see proposed_cl_term) to resolve the gap between CL:0000031 (neuroblast) and CL:2000089 (mature granule cell). DUPLICATE RECORD, MERGE DEFERRED: this node and 'dg_immature_granule_neuron' in kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml carry the identical name and describe the same cell type, curated independently in two contexts. This record was renamed from 'dg_immature_granule_neuron' so that each file defines a distinct node id; the dentate_gyrus record is the one carried by reports/dentate_gyrus/ and is the richer of the two on literature references. Whether to merge them, and which properties survive, is a curator decision that has not been made. Do not treat the two as independent types.
+
+      SPECIES: mouse: the defining description (stage-5 immature granule neuron; PMID:16399667,
+      PMID:19482889) is mouse; cited studies also include rat and human. Each source's species is in
+      its scope. Set from the MeSH organisms of the cited primary papers (#216); to be confirmed
+      from primary literature.
+
+      PSA-NCAM is polysialylated NCAM, a glycoform of NCAM1 (polysialic acid added by
+      St8sia2/St8sia4); it names no single gene, so it has no ncbi_gene_id and is not measured
+      against atlas expression.
 
   # ── Dentate Gyrus Mature Granule Neuron ─────────────────────────
 
