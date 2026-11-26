@@ -35,4 +35,18 @@ nodes:
           - ref: "PMID:36285248"
             quote_key: "250290007_6b7445e9"
             method: "cluster label in the single-nucleus hypothalamic dataset"
+    cl_mapping:
+      cl_term:
+        id: CL:4042033
+        label: "pro-opiomelanocortin neuron"
+        name_in_source: "Pomc/Tac2 arcuate cluster"
+      mapping_type: RELATED
+      mapping_notes: >
+        Searched "Tac2 neuron", "neurokinin B neuron", "tachykinin neuron" in
+        CL — no hits; CL:4042033 (pro-opiomelanocortin neuron) is the closest
+        candidate given the Pomc component of the cluster label. Not scored
+        BROAD: the source explicitly declines to establish that this cluster
+        is contained within the classical POMC population ("may represent
+        part of" it), so containment is not established — the overlap is
+        reported here as RELATED pending resolution.
 edges: []

@@ -47,4 +47,17 @@ nodes:
           - ref: "PMID:36285248"
             quote_key: "250290007_6b7445e9"
             method: "cluster label the source states most likely consists of arcuate AgRP/NPY neurons"
+    cl_mapping:
+      cl_term:
+        id: CL:4072017
+        label: "agouti-related protein expressing neuron"
+        name_in_source: "AgRP/NPY neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "AgRP neuron" and "NPY neuron" in CL. CL:4072017 ("a
+        GABAergic neuron located in the arcuate nucleus of the hypothalamus
+        that expresses AgRP; can coexpress AgRP, GABA, and NPY in mice ...")
+        matches this node's defining criteria directly: AgRP/NPY identity,
+        arcuate location, mostly-GABAergic phenotype are all named in the CL
+        definition itself, so NPY co-expression does not narrow beyond it.
 edges: []

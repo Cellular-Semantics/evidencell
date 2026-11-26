@@ -40,4 +40,17 @@ nodes:
           - ref: "PMID:24072922"
             quote_key: "6360918_dac4855a"
             method: "name used for the population suppressed by extended-amygdala input"
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: "glutamatergic neuron"
+        name_in_source: "glutamatergic (Vglut2/Slc17a6) neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "glutamatergic neuron" and region-specific phrasings in CL.
+        CL:0000679 ("a neuron that is capable of some neurotransmission by
+        glutamate secretion") is satisfied in full: the node is defined
+        purely by Vglut2/Slc17a6-mediated glutamate release, with no
+        additional narrowing marker beyond location, which is recorded
+        separately on anatomical_location/brain_region.
 edges: []

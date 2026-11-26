@@ -46,4 +46,19 @@ nodes:
           - ref: "PMID:20338186"
             quote_key: "17296298_a326378a"
             method: "alternative peptide name given for the same neurons"
+    cl_mapping:
+      cl_term:
+        id: CL:0011109
+        label: "hypocretin-secreting neuron"
+        name_in_source: "orexin/hypocretin (Hcrt) neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "orexin"/"hypocretin" in CL. CL:0011109 ("a neuron that
+        releases hypocretin as a neurotransmitter") is satisfied in full by
+        this node's sole defining criterion (Hcrt/Ox expression), modulo
+        species and location (recorded separately). The report's finding
+        that about half these neurons carry glutamate-release and
+        GABA-synthesis transcripts without a vesicular GABA release pathway
+        does not conflict with the CL definition, which does not exclude
+        co-expressed machinery.
 edges: []

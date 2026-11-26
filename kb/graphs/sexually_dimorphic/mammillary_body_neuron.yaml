@@ -36,4 +36,17 @@ nodes:
           - ref: "https://doi.org/10.1101/2020.05.14.096818"
             quote_key: "218686941_736c21b7"
             method: "label for the genetically defined types that project topographically to the anterior thalamus"
+    cl_mapping:
+      cl_term:
+        id: CL:4023074
+        label: "mammillary body neuron"
+        name_in_source: "Mammillary body neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "mammillary body neuron" in CL. CL:4023074 ("a neuron that
+        has its soma located in the mammillary body") matches this node's
+        sole defining criterion exactly — the node is purely location-
+        defined, with the genetically-distinct internal subdivisions and
+        topographic projections recorded as heterogeneity, not as an
+        additional narrowing criterion on the node itself.
 edges: []

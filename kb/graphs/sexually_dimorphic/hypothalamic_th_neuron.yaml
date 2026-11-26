@@ -40,4 +40,21 @@ nodes:
           - ref: "PMID:31950494"
             quote_key: "210699283_819ba4a2"
             method: "immunoreactivity-based label used in the regional mapping"
+    cl_mapping:
+      cl_term:
+        id: CL:4033050
+        label: "catecholaminergic neuron"
+        name_in_source: "Hypothalamic TH neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "dopaminergic neuron", "TH neuron" and "catecholaminergic
+        neuron" in CL. CL:0000700 (dopaminergic neuron) was considered but
+        rejected as too specific: the node is defined only by TH expression
+        (the rate-limiting catecholamine-synthesis enzyme), not by confirmed
+        dopamine release, and spans multiple hypothalamic zones without a
+        stated DBH/noradrenergic exclusion. CL:4033050 (catecholaminergic
+        neuron — "a neuron that releases catecholamine as a neurotransmitter")
+        matches the node's actual defining criterion in full; the
+        "predominantly GABAergic phenotype" is a reported co-identity, not an
+        additional narrowing marker on this node.
 edges: []

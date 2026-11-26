@@ -34,4 +34,15 @@ nodes:
           - ref: "PMID:37624889"
             quote_key: "261174572_47e0f8ee"
             method: "Lepr named among the highly expressed DMH genes used to select DMH neuron types"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "DMH Lepr neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "leptin receptor neuron", "dorsomedial hypothalamic nucleus
+        neuron" in CL — no hits. CL:0012001 (neuron of the forebrain) is the
+        nearest containing term; no Lepr-specific or DMH-specific CL term
+        exists, and the source does not state a neurotransmitter identity.
 edges: []

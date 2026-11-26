@@ -40,4 +40,17 @@ nodes:
           - ref: "PMID:28462073"
             quote_key: "13728181_96ffe943"
             method: "label for the Pomc-high / Agrp-low cells in the single-cell atlas"
+    cl_mapping:
+      cl_term:
+        id: CL:4042033
+        label: "pro-opiomelanocortin neuron"
+        name_in_source: "POMC neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "POMC neuron" in CL. CL:4042033 ("a neuron of the CNS that
+        expresses POMC ... located in the arcuate nucleus of the hypothalamus
+        and in the nucleus tractus solitarius") matches this node's defining
+        criterion and location directly. The receptor-class heterogeneity and
+        Agrp-low/Pomc-low exception reported by Lam et al. do not narrow the
+        node's own definition, which remains plain POMC expression in the ARC.
 edges: []

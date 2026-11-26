@@ -45,4 +45,16 @@ nodes:
           - ref: "PMID:28355573"
             quote_key: "4572921_831cf3c9"
             method: "name used in the abstract for the newly uncovered population"
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: "GABAergic neuron"
+        name_in_source: "Arcuate Crabp1 neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        No CL term exists for a Crabp1-defined arcuate population (searched
+        "Crabp1", "retinoic acid"-style phrasings — no hits). The node is
+        GABAergic (GABA12 cluster) but narrower than plain GABAergic identity
+        (Crabp1 restriction to the ARH, negative for Kiss1/Pomc/Ghrh/Th/Agrp),
+        so CL:0000617 is the nearest containing ancestor.
 edges: []

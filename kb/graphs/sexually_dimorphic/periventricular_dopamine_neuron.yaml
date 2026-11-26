@@ -52,4 +52,18 @@ nodes:
           neurons, and the TH mapping study places TH-immunoreactive neurons
           primarily in the periventricular hypothalamus, but neither source
           asserts the containment directly.
+    cl_mapping:
+      cl_term:
+        id: CL:0000700
+        label: "dopaminergic neuron"
+        name_in_source: "Periventricular dopamine neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "dopaminergic neuron" in CL. CL:0000700 ("a neuron that
+        releases dopamine as a neurotransmitter") matches this node's
+        defining criterion in full — the node's identity is explicitly
+        dopaminergic (not merely TH-expressing like its parent
+        hypothalamic_th_neuron, EXACT CL:4033050 catecholaminergic neuron),
+        with no additional narrowing marker beyond location and
+        developmental origin, which are recorded separately.
 edges: []

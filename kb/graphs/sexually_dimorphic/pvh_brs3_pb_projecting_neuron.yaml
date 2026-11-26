@@ -35,4 +35,15 @@ nodes:
           - ref: "PMID:41282229"
             quote_key: "283140625_d486c8ab"
             method: "name given to the satiety-regulating population in the PVH atlas"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "PVH Brs3 parabrachial-projecting neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "bombesin receptor neuron" and "Brs3 neuron" in CL — no
+        hits. CL:0012001 (neuron of the forebrain) is the nearest containing
+        term; no receptor- or projection-defined CL term exists for this
+        population.
 edges: []

@@ -64,4 +64,21 @@ nodes:
           hypothalamus-wide TH-expressing class and the source names TIDA
           neurons as one of several arcuate Th-positive types. Sibling
           hypothalamic TH types are not asserted to be disjoint from this one.
+    cl_mapping:
+      cl_term:
+        id: CL:4072009
+        label: "A12 dopaminergic neuron"
+        name_in_source: "tuberoinfundibular dopaminergic (A12) neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "tuberoinfundibular" (no hit), then "dopaminergic neuron"
+        (CL:0000700) and walked its descendants, finding CL:4072009 "A12
+        dopaminergic neuron" (exact synonym "hypothalamic arcuate nucleus
+        dopaminergic neuron"), defined as "a type of dopaminergic neuron found
+        in the arcuate hypothalamic nucleus, involved in neuroendocrine
+        regulation, metabolic homeostasis and prolactin secretion." This
+        matches the node by location (arcuate), transmitter (dopamine, TH+/
+        AADC+, DBH-), and defining function (prolactin regulation) — the
+        classical A12 group and the TIDA population are the same population
+        under different naming conventions. EXACT.
 edges: []

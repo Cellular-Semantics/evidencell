@@ -34,4 +34,18 @@ nodes:
           - ref: "https://doi.org/10.1186/s12915-021-00973-x"
             quote_key: "255832704_a36375f0"
             method: "name used for the reconstructed hypothalamic CRH population"
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "PVN CRH neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "corticotropin-releasing neuron" and "CRH neuron" in CL.
+        CL:4072021 ("a specialised type of interneuron defined by the
+        secretion of corticotropin-releasing hormone (CRH) ... primarily
+        located in the paraventricular nucleus (PVN) of the hypothalamus")
+        matches this node's defining criterion and primary location
+        directly — distinct from pvn_crfr1_neuron, which is defined by the
+        CRF receptor and is RELATED (not EXACT) to this same CL term.
 edges: []

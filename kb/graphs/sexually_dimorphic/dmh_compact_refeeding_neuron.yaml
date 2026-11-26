@@ -40,4 +40,17 @@ nodes:
           - ref: "PMID:34728342"
             quote_key: "240333804_7cbfba1a"
             method: "label used for the chemogenetically manipulated population in the same paper"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "Compact DMH refeeding-activated neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "dorsomedial hypothalamic nucleus neuron" and "efferent
+        neuron" in CL — no region- or projection-specific match. This node
+        is defined by a compound of location, activity marking (TRAP after
+        fasting-refeeding), Pdyn/Grp/Cck/Trhr expression and PVN projection,
+        none of which has a dedicated CL term. CL:0012001 (neuron of the
+        forebrain) is the nearest containing term.
 edges: []

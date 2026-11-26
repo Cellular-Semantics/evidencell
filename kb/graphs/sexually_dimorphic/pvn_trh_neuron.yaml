@@ -28,4 +28,16 @@ nodes:
       id: NCBITaxon:10090
       label: Mus musculus
       name_in_source: "mouse"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "PVN TRH neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "TRH neuron", "thyrotropin-releasing hormone neuron" and
+        "thyrotropin-releasing hormone secreting cell" in CL — no hits for
+        any phrasing. CL:0012001 (neuron of the forebrain) is the nearest
+        containing term found; no TRH-specific CL term currently exists —
+        candidate for a future CL term request.
 edges: []

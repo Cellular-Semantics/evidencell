@@ -37,4 +37,16 @@ nodes:
           - ref: "PMID:22473294"
             quote_key: "23874432_009c8e5b"
             method: "Grp identified among genes highly expressed within the DMH relative to adjacent regions"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "DMH Grp neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "gastrin-releasing peptide neuron", "gastrin-releasing
+        peptide secreting cell" and "dorsomedial hypothalamic nucleus
+        neuron" in CL — no hits. CL:0012001 (neuron of the forebrain) is the
+        nearest containing term; no Grp-specific or DMH-specific CL term
+        exists, and the source does not state a neurotransmitter identity.
 edges: []

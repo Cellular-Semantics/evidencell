@@ -38,4 +38,23 @@ nodes:
           - ref: "PMID:35203663"
             quote_key: "246907354_02c7536a"
             method: "name used for the population localised to the lateral posterior arcuate nucleus"
+    cl_mapping:
+      cl_term:
+        id: CL:0000110
+        label: "peptidergic neuron"
+        name_in_source: "Neurosecretory protein GL (NPGL)-producing neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "NPGL", "neurosecretory protein GL", "arcuate", "hypothalamus",
+        "ArcLP" — no CL term for this population or for any arcuate-specific
+        neuron class. Searched "GABAergic neuron" (CL:0000617): rejected, since
+        only about half of the population is GAD67+ per the source, so it is
+        not a defining feature of the whole type. Searched "neuroendocrine
+        cell" (CL:0000165, "a neuron capable of some hormone secretion in
+        response to neuronal signals"): considered, but the defining criterion
+        here is production of the neuropeptide-like secretory protein NPGL
+        itself, which CL:0000110 ("a neuron that uses neuropeptides as
+        transmitters") captures more directly and is the nearest term the
+        whole population satisfies. No more specific term exists; a new CL
+        term for the ArcLP NPGL population would sit under CL:0000110.
 edges: []

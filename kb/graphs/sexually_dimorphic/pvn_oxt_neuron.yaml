@@ -34,4 +34,20 @@ nodes:
           - ref: "PMID:42839625"
             quote_key: "292696191_a9f5bf56"
             method: "name used for the predominant Oxt-expressing genotype among spinal-projecting PVN neurons"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "PVN oxytocin neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "oxytocin neuron", "oxytocinergic neuron" and "oxytocin
+        secreting cell" in CL — no hits. The closest candidate, CL:4023108
+        (oxytocin-secreting magnocellular cell), is too narrow: it is
+        restricted to magnocellular neuroendocrine cells, but this node
+        includes the Oxt-Foxp1 neuroendocrine subtype AND the non-endocrine,
+        spinally-projecting Oxt genotype (46.4% of spinal-projecting PVN
+        neurons per the source). CL:0012001 (neuron of the forebrain) is the
+        nearest term that contains the full population; CL:4023108 is noted
+        as a partial match for the neuroendocrine subset.
 edges: []

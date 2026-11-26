@@ -40,4 +40,21 @@ nodes:
           - ref: "PMID:30385464"
             quote_key: "53566396_7313d264"
             method: "descriptive name used for the cluster that overlaps the SDN-POA and co-expresses Cplx3 and MoxD1"
+    cl_mapping:
+      cl_term:
+        id: CL:0000540
+        label: "neuron"
+        name_in_source: "aromatase-enriched cluster I-2"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "preoptic", "aromatase", "androgen", "estrogen", "sexually
+        dimorphic", "calbindin" — no CL term for this population, for any
+        preoptic-specific neuron class, or for a sex-hormone-receptor-defined
+        neuron class. The node carries no neurotransmitter-type assertion (no
+        nt_type recorded), so no NT-based term (GABAergic/glutamatergic
+        neuron) is supported by the current evidence. Falls back to the
+        nearest general term the node fully satisfies, CL:0000540 "neuron",
+        per the rule for a node with nothing more specific. A new CL term for
+        this MERFISH cluster would need an established NT type or other
+        defining criterion before it could be placed more specifically.
 edges: []

@@ -39,4 +39,15 @@ nodes:
           - ref: "PMID:33753517"
             quote_key: "232322894_f82a28f8"
             method: "short form used for the same population in the same paper"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "DMH PPP1R17 neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "PPP1R17 neuron" and "dorsomedial hypothalamic nucleus
+        neuron" in CL — no hits. CL:0012001 (neuron of the forebrain) is the
+        nearest containing term; no PPP1R17-specific or DMH-specific CL term
+        exists, and the source does not state a neurotransmitter identity.
 edges: []

@@ -57,4 +57,16 @@ nodes:
           Siblings (GABAergic, mixed and transmitter-negative POMC cells) are
           not asserted to be disjoint from this type; the sources report cells
           co-expressing both GAD67 and vGlut2.
+    cl_mapping:
+      cl_term:
+        id: CL:4042033
+        label: "pro-opiomelanocortin neuron"
+        name_in_source: "Glutamatergic arcuate POMC neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        No CL term exists for a vGlut2/glutamatergic-defined POMC
+        subpopulation. This node is narrower than plain POMC identity
+        (additional vGlut2 co-expression, lateral/rostrocaudal spatial bias,
+        larger soma), so CL:4042033 is the nearest containing ancestor,
+        shared with its asserted parent arc_pomc_neuron (EXACT CL:4042033).
 edges: []

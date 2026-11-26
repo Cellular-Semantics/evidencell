@@ -35,4 +35,16 @@ nodes:
           - ref: "PMID:34018926"
             quote_key: "233329194_885df746"
             method: "description used in place of a short name for this class"
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: "glutamatergic neuron"
+        name_in_source: "Tuberal anterolateral VMH glutamatergic neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "ventromedial hypothalamic nucleus neuron" in CL — no
+        region-specific term exists. CL:0000679 ("a neuron that is capable
+        of some neurotransmission by glutamate secretion") is satisfied in
+        full: the node's defining criterion is glutamatergic identity plus
+        location (recorded separately), with no additional narrowing marker.
 edges: []

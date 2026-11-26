@@ -34,4 +34,18 @@ nodes:
           - ref: "PMID:28166221"
             quote_key: "24776243_6c36a7f2"
             method: "name given to the population in the Arc-ME Drop-seq census"
+    cl_mapping:
+      cl_term:
+        id: CL:0000172
+        label: "somatostatin secreting cell"
+        name_in_source: "Arc-ME somatostatin neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "somatostatin neuron", "Sst neuron", "somatostatin-expressing
+        neuron" and "somatostatin secreting cell" in CL — no somatostatin
+        neuron term exists; CL:0000172 ("any secretory cell that is capable
+        of some somatostatin secretion") is the narrowest containing term but
+        is not neuron-specific (it also covers non-neuronal endocrine cells,
+        e.g. pancreatic delta cells). This node adds neuron identity and
+        Arc-ME location on top. No more specific CL term was found.
 edges: []

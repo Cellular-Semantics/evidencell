@@ -62,4 +62,17 @@ nodes:
           inside the Vgat/Slc32a1-defined LHA GABAergic class. The report also
           cautions that LepRb, Nts and Gal only partially overlap, so this may
           be a family of related LHA inhibitory subtypes rather than one type.
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: "GABAergic neuron"
+        name_in_source: "LHA LepRb/Nts neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        No CL term exists for a LepRb/Nts/Gal-defined LHA population (searched
+        "leptin receptor neuron" and related phrasings — no hits). This node
+        is narrower than plain GABAergic identity (additional LepRb/Nts/Gal
+        marker co-expression and VTA-innervation), so CL:0000617 is the
+        nearest containing ancestor, shared with its asserted parent
+        lha_gabaergic_neuron (EXACT CL:0000617).
 edges: []

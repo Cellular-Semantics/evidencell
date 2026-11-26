@@ -61,4 +61,18 @@ nodes:
           these LH parvalbumin neurons are glutamatergic and lie in the
           ventrolateral tuberal hypothalamus, which places them inside the
           Vglut2/Slc17a6-defined LHA glutamatergic class.
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: "glutamatergic neuron"
+        name_in_source: "LH parvalbumin glutamatergic neuron (PV1)"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "parvalbumin neuron", "Pvalb" and "fast-spiking neuron" in
+        CL — no PV-specific neuron term found (only the PR protein entry for
+        parvalbumin itself). This node is narrower than plain glutamatergic
+        identity (additional PVALB expression, compact PV1 cord location,
+        fast-spiking phenotype, two soma-size classes), so CL:0000679 is the
+        nearest containing ancestor, shared with its asserted parent
+        lha_glutamatergic_neuron (EXACT CL:0000679).
 edges: []

@@ -40,4 +40,17 @@ nodes:
           - ref: "PMID:38493217"
             quote_key: "268498016_29dda5a1"
             method: "label for the subpopulation reported as expanded in male offspring"
+    cl_mapping:
+      cl_term:
+        id: CL:0011110
+        label: "histaminergic neuron"
+        name_in_source: "TMN histaminergic neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "histaminergic neuron" in CL. CL:0011110 ("neuron that
+        secretes histamine") is satisfied in full: the node is defined
+        purely by Hdc expression / histaminergic identity, with TMN location
+        recorded separately on anatomical_location/brain_region. The
+        unplaced Avp/Rorb subpopulation finding (no assigned nucleus) is not
+        part of this node's own defining criteria.
 edges: []

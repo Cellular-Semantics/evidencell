@@ -34,4 +34,16 @@ nodes:
           - ref: "PMID:37624889"
             quote_key: "261174572_47e0f8ee"
             method: "Pdyn named among the highly expressed DMH genes used to select DMH neuron types"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "DMH Pdyn neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "prodynorphin neuron", "dynorphin secreting cell" and
+        "dorsomedial hypothalamic nucleus neuron" in CL — no hits.
+        CL:0012001 (neuron of the forebrain) is the nearest containing term;
+        no Pdyn-specific or DMH-specific CL term exists, and the source does
+        not state a neurotransmitter identity.
 edges: []

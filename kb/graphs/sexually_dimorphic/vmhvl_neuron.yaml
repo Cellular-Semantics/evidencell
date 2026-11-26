@@ -40,4 +40,17 @@ nodes:
           - ref: "PMID:36598560"
             quote_key: "255457408_fb3f9236"
             method: "conventional columnar name used by the prosomeric reinterpretation"
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: "glutamatergic neuron"
+        name_in_source: "VMHvl neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "ventromedial hypothalamic nucleus neuron" in CL — no
+        region-specific term exists. CL:0000679 ("a neuron that is capable
+        of some neurotransmission by glutamate secretion") is satisfied in
+        full: the node's defining criterion is glutamatergic identity (plus
+        location, recorded separately); the 17 internal transcriptomic types
+        are not incorporated as an additional narrowing marker on this node.
 edges: []

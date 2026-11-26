@@ -51,4 +51,21 @@ nodes:
           The ZI population is one of the hypothalamic TH-immunoreactive
           subpopulations mapped by the same study; the parent is narrowed here
           by location (rostral ZI) and by GABA/dopamine co-identity.
+    cl_mapping:
+      cl_term:
+        id: CL:0000700
+        label: "dopaminergic neuron"
+        name_in_source: "Rostral ZI TH/GABA dopaminergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "dopaminergic neuron" in CL. Unlike the parent
+        hypothalamic_th_neuron (mapped EXACT to the broader CL:4033050
+        catecholaminergic neuron, since TH expression alone does not confirm
+        dopamine release), this node's sources establish dopamine
+        immunoreactivity without DBH, i.e. confirmed dopaminergic identity,
+        so the more specific CL:0000700 (dopaminergic neuron) is chosen as
+        the nearest containing ancestor. Scored BROAD rather than EXACT
+        because the node also carries a GABAergic co-identity (every ZI
+        TH-ir neuron tested was GABA-reporter positive) that CL:0000700 does
+        not capture; no CL term exists for a joint GABA/dopamine phenotype.
 edges: []

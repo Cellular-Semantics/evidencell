@@ -45,4 +45,19 @@ nodes:
           - ref: "PMID:42839625"
             quote_key: "292696191_a9f5bf56"
             method: "label for the 153 molecularly characterised PVN neurons engaging spinal autonomic circuitry"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "PVN pre-autonomic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "sympathetic premotor neuron", "preganglionic neuron" and
+        "efferent neuron" in CL. CL:0000527 (efferent neuron — "sends
+        impulses peripherally to activate muscles or secretory cells") was
+        considered but rejected: this PVN population projects to spinal
+        preganglionic autonomic neurons, not directly to muscle/secretory
+        targets, so it is a pre-autonomic relay rather than an efferent
+        neuron itself. CL:0012001 (neuron of the forebrain) is the nearest
+        containing term; no projection-defined pre-autonomic CL term exists.
 edges: []
