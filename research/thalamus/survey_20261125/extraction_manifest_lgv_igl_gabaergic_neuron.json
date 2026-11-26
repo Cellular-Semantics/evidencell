@@ -1,0 +1,36 @@
+{
+  "node_id": "lgv_igl_gabaergic_neuron",
+  "summaries_read": 12,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "entries_from_already_cited_papers": 8,
+  "skipped_low_relevance": 1,
+  "skipped_other": [
+    {"source_corpus_id": "270412585", "reason": "only quote (270412585_53f9c770) is already on the LPBN location and a synonym of this node"},
+    {"source_corpus_id": "255502436", "reason": "quotes give subtype markers (Pvalb/Penk in vLGNe, calbindin in vLGNi) that mark subsets of this pooled node, and afferent (cortical/retinal) input, which is not AXON_TARGET or intrinsic electrophysiology"},
+    {"source_corpus_id": "273180341", "reason": "LOW relevance; Pv density in LGv is not specific to this node"}
+  ],
+  "entries_written": 16,
+  "fields_populated": [
+    "anatomical_location[ventral lateral geniculate nucleus].sources",
+    "anatomical_location[intergeniculate leaflet].sources",
+    "anatomical_location[superior colliculus].sources",
+    "anatomical_location[Pretectal region].sources",
+    "anatomical_location[Lateral habenula].sources",
+    "anatomical_location[Nucleus of reuniens].sources",
+    "anatomical_location[Periaqueductal gray] (new entry, MBA:795)",
+    "nt_type.sources"
+  ],
+  "fields_with_no_evidence": [
+    "electrophysiology",
+    "morphology (no new quotes)",
+    "defining_markers (no new node-wide markers; subtype markers Pvalb, Penk, Spp1, Ecel1, Lypd1, Calb1 not added to the pooled node)",
+    "anatomical_location: Midbrain reticular nucleus (MBA:128) named in 265121419_7e369548 but not added, because that quote was used for PAG and D2 allows one entry per quote"
+  ],
+  "synonyms_found": [],
+  "conflicts": [],
+  "curator_flags": [
+    "Re AXON_TARGET now has direct Gad2-Cre anterograde evidence (238410529_c2630f38, PMID:34610302), which weakens the TRANSMITTER CAVEAT in the node notes (Re-projecting cells' transmitter called unresolved). Existing notes and the existing WEAK Re source were not edited."
+  ],
+  "reference_store": "references/thalamus"
+}
