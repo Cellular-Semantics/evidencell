@@ -1,0 +1,31 @@
+{
+  "node_id": "dlgn_direction_selective_neuron",
+  "summaries_read": 37,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "skipped_duplicate_quote": 1,
+  "skipped_low_relevance": 12,
+  "skipped_not_this_node": 19,
+  "entries_written": 5,
+  "written": [
+    {"source_corpus_id": "4601077", "field": "anatomical_location[0].sources", "quote_key": "4601077_1ff46308"},
+    {"source_corpus_id": "3598591", "field": "electrophysiology.sources", "quote_key": "3598591_37c33b69"},
+    {"source_corpus_id": "4807205", "field": "electrophysiology.sources", "quote_key": "4807205_d2302f7c"},
+    {"source_corpus_id": "257758447", "field": "electrophysiology.sources", "quote_key": "257758447_74d08653"},
+    {"source_corpus_id": "1639353", "field": "electrophysiology.sources", "quote_key": "1639353_b39d8ffc"}
+  ],
+  "fields_populated": ["anatomical_location[0].sources", "electrophysiology.sources"],
+  "fields_with_no_evidence": ["morphology", "nt_type (no new evidence)", "markers (none)", "synonyms (no new)"],
+  "synonyms_found": [],
+  "notes": [
+    "14389058 skipped_duplicate_quote: its only node-relevant quote (DS-RGC lamina coincident with calbindin-positive shell) is the sentence already cited under 14389058_e2e97d92 in anatomical_location.",
+    "36416152 skipped_not_this_node: remaining quotes concern orientation-selective LGN neurons arising from 2-3 DS RGCs (OS mechanism), not DS neurons; the paper's DS evidence is already cited (36416152_7fcc72ba).",
+    "5326680, 8247989 skipped: generic statements about feature selectivity of the dLGN population, not specific to the superficial/shell DS neurons.",
+    "264598574 skipped: shell receives DS-RGC and SC input - about inputs to the shell, not the DS neurons themselves (already covered by 26727264 for location).",
+    "267806869 skipped, but curator should note: it reports conflicting evidence that deep-layer L4 V1 neurons also receive DS and OS inputs from the dLGN, i.e. DS dLGN output may not be confined to the shell/L1 pathway.",
+    "257758447 written with caveat: the same passage reports DS interneurons (incl. horizontal-axis-preferring) are more prevalent in superficial than deep dLGN, reinforcing that the tuning-defined superficial DS population may include interneurons; this weighs against the glutamatergic nt_type inference.",
+    "4601077, 4807205, 1639353, 257758447 entries are secondary citations (reviews/introductions), scoped accordingly. 1639353 and 4601077 call the cells relay/W-like relay cells, without independent evidence.",
+    "HIGH/MODERATE entries about relay cells generally, morphology classes, development, interneurons or transcriptomics with no DS content were skipped as not_this_node."
+  ],
+  "reference_store": "references/thalamus"
+}
