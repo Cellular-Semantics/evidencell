@@ -1,0 +1,38 @@
+# Pomc/Tac2 arcuate neuronal cluster — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Pomc/Tac2 arcuate cluster"
+description: >
+  Evidence graph component for the Pomc/Tac2 neuronal cluster of the ventral
+  mediobasal (arcuate) hypothalamus, proposed from the ASTA deep research
+  report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "ventral mediobasal hypothalamus / arcuate region"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: arc_pomc_tac2_neuron
+    name: "Pomc/Tac2 arcuate neuronal cluster"
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Pomc/Tac2"
+        synonym_type: ATLAS_LABEL
+        sources:
+          - ref: "PMID:36285248"
+            quote_key: "250290007_6b7445e9"
+            method: "cluster label in the single-nucleus hypothalamic dataset"
+edges: []

@@ -1,0 +1,66 @@
+# GABAergic arcuate POMC neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "GABAergic arcuate POMC neuron"
+description: >
+  Evidence graph component for the GABAergic subpopulation of arcuate
+  proopiomelanocortin (POMC) neurons, proposed from the ASTA deep research
+  report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "arcuate nucleus (ARC/ARH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: arc_pomc_gabaergic_neuron
+    name: "GABAergic arcuate POMC neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "POMC/GABAergic neuron"
+        sources:
+          - ref: "https://doi.org/10.1101/2020.03.25.007765"
+            quote_key: "214721986_a593284a"
+            method: "label for the GAD67-positive POMC subpopulation in triple-FISH analysis"
+      - term: "GAD67–POMC neuron"
+        sources:
+          - ref: "PMID:23640796"
+            quote_key: "40860892_de4cc79f"
+            method: "label used for the GAD67 mRNA-containing POMC cells in situ"
+      - term: "GAD67–gfp-positive POMC neuron"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:19864580"
+            quote_key: "15721582_fd13c707"
+            method: "reporter-line label for the GABA-releasing POMC subpopulation"
+    subtype_of:
+      - parent: arc_pomc_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:19864580"
+            quote_key: "15721582_fd13c707"
+            method: "source states there are two subpopulations of arcuate POMC neurons distinguished by amino acid transmitter phenotype"
+          - ref: "PMID:23640796"
+            quote_key: "40860892_de4cc79f"
+            method: "source quantifies the GAD67-containing subpopulation among POMC neurons in rat and mouse"
+          - ref: "https://doi.org/10.1101/2020.03.25.007765"
+            quote_key: "214721986_a593284a"
+            method: "source resolves POMC subpopulations by GAD67 and vGlut2 expression"
+        notes: >
+          Siblings (glutamatergic, mixed and transmitter-negative POMC cells)
+          are not asserted to be disjoint from this type; the sources report
+          cells co-expressing both GAD67 and vGlut2.
+edges: []

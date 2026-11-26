@@ -1,0 +1,42 @@
+# Dorsomedial hypothalamic PPP1R17 neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "DMH PPP1R17 neuron"
+description: >
+  Evidence graph component for the PPP1R17-expressing neuron of the
+  dorsomedial hypothalamus, proposed from the ASTA deep research report
+  Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "dorsomedial hypothalamus (DMH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dmh_ppp1r17_neuron
+    name: "Dorsomedial hypothalamic PPP1R17 neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "DMHPpp1r17 neuron"
+        sources:
+          - ref: "PMID:33753517"
+            quote_key: "232322894_f82a28f8"
+            method: "primary label used for the feeding-restricting DMH population"
+      - term: "PPP1R17 neuron"
+        sources:
+          - ref: "PMID:33753517"
+            quote_key: "232322894_f82a28f8"
+            method: "short form used for the same population in the same paper"
+edges: []

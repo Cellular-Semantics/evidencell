@@ -1,0 +1,65 @@
+# LHA leptin receptor (LepRb) / neurotensin neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "LHA LepRb/Nts neuron"
+description: >
+  Evidence graph component for the LHA leptin receptor (LepRb) / neurotensin
+  neuron, proposed from the ASTA deep research report
+  Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "lateral hypothalamic area (LHA)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lha_leprb_nts_neuron
+    name: "LHA leptin receptor (LepRb) / neurotensin neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "LepRbNts neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:25143620"
+            quote_key: "17964183_cffaa782"
+            method: "compound label defined in the abstract for the LHA population"
+      - term: "LHA Nts neuron"
+        sources:
+          - ref: "PMID:25143620"
+            quote_key: "17964183_cffaa782"
+            method: "label used for the chemogenetically activated LHA population"
+      - term: "LHA LepRb neuron"
+        sources:
+          - ref: "PMID:19656487"
+            quote_key: "30792888_0b3e61eb"
+            method: "primary label for the VTA-innervating LHA population"
+    subtype_of:
+      - parent: lha_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:25143620"
+            quote_key: "17964183_cffaa782"
+            method: "source describes the LepRb/Nts LHA population as GABAergic"
+          - ref: "PMID:19656487"
+            quote_key: "30792888_0b3e61eb"
+            method: "source describes the LHA LepRb population as inhibitory"
+        notes: >
+          Inferred, not stated as a subset relation: the sources describe these
+          LHA LepRb/Nts neurons as GABAergic/inhibitory, which places them
+          inside the Vgat/Slc32a1-defined LHA GABAergic class. The report also
+          cautions that LepRb, Nts and Gal only partially overlap, so this may
+          be a family of related LHA inhibitory subtypes rather than one type.
+edges: []

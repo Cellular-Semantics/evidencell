@@ -1,0 +1,39 @@
+# Mammillary body neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Mammillary body neuron"
+description: >
+  Evidence graph component for the neuron of the mammillary bodies, whose
+  genetically defined types segregate by mammillary subdivision and project
+  topographically to the anterior thalamus; proposed from the ASTA deep
+  research report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "mammillary bodies (MB)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: mammillary_body_neuron
+    name: "Mammillary body neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "MB cell type"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "https://doi.org/10.1101/2020.05.14.096818"
+            quote_key: "218686941_736c21b7"
+            method: "label for the genetically defined types that project topographically to the anterior thalamus"
+edges: []

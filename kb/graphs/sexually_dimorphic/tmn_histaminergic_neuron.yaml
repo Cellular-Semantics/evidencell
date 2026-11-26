@@ -1,0 +1,43 @@
+# Tuberomammillary nucleus histaminergic (Hdc) neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "TMN histaminergic neuron"
+description: >
+  Evidence graph component for the histaminergic (Hdc-expressing) neuron of
+  the tuberomammillary nucleus, proposed from the ASTA deep research report
+  Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "tuberomammillary nucleus (TMN)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: tmn_histaminergic_neuron
+    name: "Tuberomammillary nucleus histaminergic (Hdc) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "histaminergic (Hdc) neuron"
+        sources:
+          - ref: "PMID:38493217"
+            quote_key: "268498016_75f21148"
+            method: "one of the high-level neuronal categories in the hypothalamic sub-clustering"
+      - term: "histaminergic (Hdc)"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:38493217"
+            quote_key: "268498016_29dda5a1"
+            method: "label for the subpopulation reported as expanded in male offspring"
+edges: []

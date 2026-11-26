@@ -1,0 +1,31 @@
+# Paraventricular hypothalamic thyrotropin-releasing hormone (TRH) neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "PVN TRH neuron"
+description: >
+  Evidence graph component for the thyrotropin-releasing hormone (TRH)
+  neuron of the paraventricular hypothalamic nucleus, proposed from the ASTA
+  deep research report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "hypothalamic paraventricular nucleus (PVN)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: pvn_trh_neuron
+    name: "Paraventricular hypothalamic thyrotropin-releasing hormone (TRH) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+edges: []

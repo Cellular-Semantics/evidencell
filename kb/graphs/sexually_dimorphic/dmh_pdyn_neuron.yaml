@@ -1,0 +1,37 @@
+# Prodynorphin (Pdyn)-expressing dorsomedial hypothalamic neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "DMH Pdyn neuron"
+description: >
+  Evidence graph component for the prodynorphin (Pdyn)-expressing neuron of
+  the dorsomedial hypothalamus, proposed from the ASTA deep research report
+  Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "dorsomedial hypothalamus (DMH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dmh_pdyn_neuron
+    name: "Prodynorphin (Pdyn)-expressing dorsomedial hypothalamic neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Pdyn DMH neuron type"
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            method: "Pdyn named among the highly expressed DMH genes used to select DMH neuron types"
+edges: []

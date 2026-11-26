@@ -1,0 +1,67 @@
+# Tuberoinfundibular dopaminergic (A12) neuron of the arcuate nucleus — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/ARC_Aromatase_Cyp19a1_neurons.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Arcuate tuberoinfundibular dopamine (TIDA) neuron"
+description: >
+  Evidence graph component for the tuberoinfundibular dopaminergic (A12) neuron
+  of the arcuate nucleus and median eminence, proposed from the ASTA deep
+  research report ARC_Aromatase_Cyp19a1_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "arcuate nucleus and median eminence"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: arc_tida_dopamine_neuron
+    name: "Tuberoinfundibular dopaminergic (A12) neuron of the arcuate nucleus"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "TIDA neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:31420539"
+            quote_key: "199668206_3768650c"
+            method: "abbreviation introduced for the tyrosine hydroxylase-positive arcuate population controlling prolactin secretion"
+      - term: "tuberoinfundibular dopamine neuron"
+        sources:
+          - ref: "PMID:31420539"
+            quote_key: "199668206_3768650c"
+            method: "full name used for the arcuate Th-positive population controlling prolactin secretion"
+      - term: "tuberoinfundibular A12 neuron"
+        sources:
+          - ref: "PMID:39919032"
+            quote_key: "276213069_0480b48f"
+            method: "name used in the review for the arcuate dopaminergic population and its genetically distinguishable subtypes"
+      - term: "tuberoinfundibular dopaminergic A12 neuron"
+        sources:
+          - ref: "PMID:39919032"
+            quote_key: "276213069_161ba639"
+            method: "name used in the review summary for the arcuate/median eminence dopaminergic population"
+    subtype_of:
+      - parent: hypothalamic_th_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:31420539"
+            quote_key: "199668206_3768650c"
+            method: "source states that TIDA neurons are one of several distinct types of tyrosine hydroxylase-positive neurons in the arcuate nucleus"
+        notes: >
+          Containment follows from the type's defining tyrosine hydroxylase /
+          dopaminergic phenotype within the hypothalamus; the parent is a
+          hypothalamus-wide TH-expressing class and the source names TIDA
+          neurons as one of several arcuate Th-positive types. Sibling
+          hypothalamic TH types are not asserted to be disjoint from this one.
+edges: []

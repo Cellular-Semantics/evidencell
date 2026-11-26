@@ -1,0 +1,64 @@
+# Parvalbumin-expressing glutamatergic neuron of the lateral hypothalamus (PV1 nucleus) — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "LH parvalbumin glutamatergic neuron (PV1)"
+description: >
+  Evidence graph component for the parvalbumin-expressing glutamatergic
+  neuron of the lateral hypothalamus (PV1 nucleus), proposed from the ASTA
+  deep research report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "ventrolateral tuberal hypothalamus (PV1-nucleus)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lh_pv_glutamatergic_neuron
+    name: "Parvalbumin-expressing glutamatergic neuron of the lateral hypothalamus (PV1 nucleus)"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "LHPV"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:29894514"
+            quote_key: "48358368_d3a84152"
+            method: "abbreviation introduced for the mouse LH PVALB cell type"
+      - term: "LH PV neuron"
+        sources:
+          - ref: "PMID:29894514"
+            quote_key: "48358368_fbcf853f"
+            method: "label used throughout the characterisation study"
+      - term: "PV1-nucleus neuron"
+        sources:
+          - ref: "PMID:22020694"
+            quote_key: "17920963_078a964a"
+            method: "name of the compact PV-immunoreactive cell cord described by the source"
+    subtype_of:
+      - parent: lha_glutamatergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:29894514"
+            quote_key: "48358368_d3a84152"
+            method: "source states the LH PVALB cell type releases glutamate"
+          - ref: "PMID:22020694"
+            quote_key: "17920963_078a964a"
+            method: "source states PV1 neurons express glutamate, not GABA"
+        notes: >
+          Inferred, not stated as a subset relation: the sources establish that
+          these LH parvalbumin neurons are glutamatergic and lie in the
+          ventrolateral tuberal hypothalamus, which places them inside the
+          Vglut2/Slc17a6-defined LHA glutamatergic class.
+edges: []

@@ -1,0 +1,40 @@
+# Gastrin-releasing peptide (Grp)-expressing dorsomedial hypothalamic neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "DMH Grp neuron"
+description: >
+  Evidence graph component for the gastrin-releasing peptide (Grp)-expressing
+  neuron of the dorsomedial hypothalamus, proposed from the ASTA deep
+  research report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "dorsomedial nucleus of the hypothalamus (DMH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dmh_grp_neuron
+    name: "Gastrin-releasing peptide (Grp)-expressing dorsomedial hypothalamic neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Grp DMH neuron type"
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            method: "Grp named among the highly expressed DMH genes used to select DMH neuron types"
+          - ref: "PMID:22473294"
+            quote_key: "23874432_009c8e5b"
+            method: "Grp identified among genes highly expressed within the DMH relative to adjacent regions"
+edges: []

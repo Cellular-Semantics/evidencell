@@ -1,0 +1,41 @@
+# Neurosecretory protein GL (NPGL) neuron of the lateral posterior arcuate nucleus — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/ARC_Aromatase_Cyp19a1_neurons.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Arcuate NPGL neuron"
+description: >
+  Evidence graph component for the neurosecretory protein GL (NPGL)-producing
+  neuron of the lateral posterior arcuate nucleus, proposed from the ASTA deep
+  research report ARC_Aromatase_Cyp19a1_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "lateral posterior part of the arcuate nucleus (ArcLP)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mice"
+creation_date: "2026-11-25"
+nodes:
+  - id: arc_npgl_neuron
+    name: "Neurosecretory protein GL (NPGL)-producing neuron of the lateral posterior arcuate nucleus"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mice"
+    synonyms:
+      - term: "NPGL neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:35203663"
+            quote_key: "246907354_0ce33067"
+            method: "label used throughout the immunohistochemical characterisation of the NPGL-producing population"
+          - ref: "PMID:35203663"
+            quote_key: "246907354_02c7536a"
+            method: "name used for the population localised to the lateral posterior arcuate nucleus"
+edges: []

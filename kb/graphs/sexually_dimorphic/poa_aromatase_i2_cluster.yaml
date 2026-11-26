@@ -1,0 +1,43 @@
+# Preoptic aromatase-enriched cluster I-2 — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/ARC_Aromatase_Cyp19a1_neurons.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Preoptic aromatase cluster I-2"
+description: >
+  Evidence graph component for the male-enriched, aromatase-enriched MERFISH
+  cluster I-2 of the hypothalamic preoptic region, proposed from the ASTA deep
+  research report ARC_Aromatase_Cyp19a1_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "hypothalamic preoptic region (overlapping the sexually dimorphic nucleus of the preoptic area, SDN-POA)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: poa_aromatase_i2_cluster
+    name: "Preoptic aromatase-enriched cluster I-2"
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "I-2"
+        synonym_type: ATLAS_LABEL
+        sources:
+          - ref: "PMID:30385464"
+            quote_key: "53566396_7313d264"
+            method: "MERFISH cluster label used as the name of the male-enriched aromatase-enriched preoptic cell population"
+      - term: "aromatase-enriched cluster I-2"
+        sources:
+          - ref: "PMID:30385464"
+            quote_key: "53566396_7313d264"
+            method: "descriptive name used for the cluster that overlaps the SDN-POA and co-expresses Cplx3 and MoxD1"
+edges: []

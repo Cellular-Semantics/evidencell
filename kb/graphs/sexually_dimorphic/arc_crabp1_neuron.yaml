@@ -1,0 +1,48 @@
+# Crabp1-expressing GABAergic arcuate neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Arcuate Crabp1 neuron"
+description: >
+  Evidence graph component for the Crabp1-expressing GABAergic neuron of the
+  arcuate nucleus, proposed from the ASTA deep research report
+  Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "arcuate nucleus of the hypothalamus (ARH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: arc_crabp1_neuron
+    name: "Crabp1-expressing GABAergic neuron of the arcuate nucleus"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Crabp1+ neuron"
+        sources:
+          - ref: "PMID:28355573"
+            quote_key: "4572921_71e313db"
+            method: "label used for the ARH-restricted neuronal subtype"
+      - term: "GABA12"
+        synonym_type: ATLAS_LABEL
+        sources:
+          - ref: "PMID:28355573"
+            quote_key: "4572921_71e313db"
+            method: "scRNA-seq cluster in which Crabp1 is highly expressed"
+      - term: "Crabp1+ neuronal population"
+        sources:
+          - ref: "PMID:28355573"
+            quote_key: "4572921_831cf3c9"
+            method: "name used in the abstract for the newly uncovered population"
+edges: []

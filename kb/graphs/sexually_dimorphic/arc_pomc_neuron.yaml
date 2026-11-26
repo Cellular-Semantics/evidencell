@@ -1,0 +1,43 @@
+# Arcuate proopiomelanocortin (POMC) neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Arcuate POMC neuron"
+description: >
+  Evidence graph component for the arcuate proopiomelanocortin (POMC) neuron,
+  proposed from the ASTA deep research report
+  Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "arcuate nucleus (ARC/ARH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: arc_pomc_neuron
+    name: "Arcuate proopiomelanocortin (POMC) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "POMC neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:28462073"
+            quote_key: "13728181_96ffe943"
+            method: "abbreviation defined in the abstract and used as the primary label"
+      - term: "canonical POMC neuron (P+)"
+        sources:
+          - ref: "PMID:28462073"
+            quote_key: "13728181_96ffe943"
+            method: "label for the Pomc-high / Agrp-low cells in the single-cell atlas"
+edges: []
