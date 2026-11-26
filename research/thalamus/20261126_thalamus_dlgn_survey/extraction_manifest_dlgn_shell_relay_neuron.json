@@ -1,0 +1,31 @@
+{
+  "node_id": "dlgn_shell_relay_neuron",
+  "summaries_read": 37,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "skipped_duplicate_quote": 3,
+  "skipped_low_relevance": 11,
+  "skipped_not_this_node": 20,
+  "entries_written": 3,
+  "written": [
+    {"source_corpus_id": "8247989", "field": "anatomical_location[MBA:593 AXON_TARGET].sources", "quote_key": "8247989_7810a2a4"},
+    {"source_corpus_id": "4601077", "field": "anatomical_location[MBA:593 AXON_TARGET].sources", "quote_key": "4601077_1ff46308"},
+    {"source_corpus_id": "16328698", "field": "anatomical_location[MBA:496345664 SOMA].sources", "quote_key": "16328698_4dcf4944"}
+  ],
+  "fields_populated": ["anatomical_location[].sources"],
+  "fields_with_no_evidence": ["electrophysiology.sources", "morphology.sources", "synonyms[].sources", "GeneDescriptor.sources (no new Calb1/Necab1 evidence)", "nt_type.sources (no new non-duplicate evidence)"],
+  "synonyms_found": [],
+  "notes": [
+    "8247989 (PMID:26691828): L1-projecting dLGN neurons located in the dorsal shell — added to the V1 L1 AXON_TARGET (second independent source beyond the PMID:37913772 review). Statement cites prior work (refs 29-31), not traced in this paper.",
+    "4601077 (PMID:28965517): Q2 (W-like shell cells -> layer I) added to L1 AXON_TARGET; Q1 (W-like shell location) is a substring of 4601077_8f3fc6a4 already cited on SOMA location — not reused.",
+    "16328698 (PMID:22131405): 'W-like cells were found along the perimeter of dLGN' — primary data; marked PARTIAL because the quote says 'perimeter' rather than 'shell' and covers W-like cells only.",
+    "14389058 (PMID:26727264) skipped_duplicate_quote: the calbindin-positive-shell quote is the same sentence (different citation formatting) as 14389058_e2e97d92, already cited on SOMA location. Not added to Calb1 marker: it says calbindin delimits the shell zone, not that shell relay cells express calbindin.",
+    "286491924 (PMID:41814933) skipped_duplicate_quote: shell-location and excitatory quotes are substrings of 286491924_f2e9799b already cited on SOMA location and nt_type.",
+    "264598574 (PMID:37913772) skipped_duplicate_quote: quotes are substrings of 264598574_32e8c9a5 already cited on L1 AXON_TARGET; the shell-receives-DS-RGC/SC-input quote is afferent input, no matching field.",
+    "267806869 (PMID:38386556) skipped: 'shell pathway dedicated to motion processing' is functional/circuit, no fitting property field; it also reports L4 V1 neurons receiving DS/OS dLGN input, implying the shell pathway may reach L4 — curator may want to check whether shell neurons also target L4.",
+    "3598591 and 257758447: superficial dLGN direction-selective neurons — 'superficial' not equated with shell in the quotes; belongs to dlgn_direction_selective_neuron. Skipped.",
+    "231615058 (PMID:34478630): dLGN neurons projecting to L4 and L1 labelled without shell attribution — skipped (low relevance). 1519009: RGC axon laminae only — skipped.",
+    "No contradictions with the node definition. Hook accepted both edits first time."
+  ],
+  "reference_store": "references/thalamus"
+}

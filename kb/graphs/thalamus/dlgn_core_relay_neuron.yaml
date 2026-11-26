@@ -1,0 +1,181 @@
+# dLGN core relay neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/dLGN_relay.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "dLGN Core Relay Neuron"
+description: >
+  Evidence graph component for thalamocortical relay neurons of the
+  ventromedial core of mouse dLGN, proposed from the ASTA deep research report
+  dLGN_relay.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dlgn_core_relay_neuron
+    name: "dLGN core relay neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: dlgn_relay_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "review statement"
+            scope: "rodent dLGN — X- and Y-like TC relay cells occupy the ventromedial core"
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "review statement"
+            scope: "mouse dLGN — X- and Y-like TRCs occupy the core"
+        notes: >
+          Defined as the dLGN relay neurons whose somata lie in the ventromedial
+          core subdivision, so containment holds by definition. The sources
+          give no positive molecular marker for core relay cells; core is
+          defined as the non-shell part of dLGN.
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "dLGN core relay neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for geniculate, relay, thalamic and thalamocortical terms;
+        no term describes dLGN core relay neurons. CL:4023068 (excitatory neuron
+        with soma in the thalamic complex) contains the type and is the most
+        specific such term. EXACT would need a CL term for dLGN core relay
+        neuron.
+    anatomical_location:
+      - id: MBA:496345668
+        label: "Dorsal part of the lateral geniculate complex, core"
+        name_in_source: "ventromedial dLGN core"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "review statement citing Krahe et al. 2011"
+            scope: "mouse dLGN — X- and Y-like TC relay cells occupy the ventromedial core"
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "review statement citing Krahe et al. 2011"
+            scope: "mouse dLGN — X- and Y-like TRCs occupy the core"
+          - ref: "PMID:22131405"
+            quote_key: "16328698_79efc008"
+            method: "dendritic reconstruction of relay cells, interpreted against rat retinogeniculate anatomy (Reese 1988)"
+            scope: "rodent dLGN — rostroventral central core vs outer caudodorsal shell domains"
+          - ref: "PMID:34473054"
+            quote_key: "237389962_45eeb70e"
+            method: "scRNA-seq (SMART-seq v4) of microdissected dLGN core and shell"
+            scope: "adult mouse dLGN — main axis of glutamatergic TC neuron gene-expression variation follows core vs shell"
+          - ref: "PMID:22131405"
+            quote_key: "16328698_4dcf4944"
+            method: "biocytin/dye-filled relay cells classified by dendritic architecture, soma position mapped against dLGN boundaries and eye-specific domains"
+            scope: "early postnatal mouse dLGN — Y-like relay cells (a core relay subtype) occupy a central core containing ipsilateral-eye projections"
+      - id: MBA:721
+        label: "Primary visual area, layer 4"
+        name_in_source: "L4 in V1"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:37913772"
+            quote_key: "264598574_32e8c9a5"
+            method: "review statement on dLGN geniculocortical axons as a whole; core-specific L4 target inferred because only the L1 projection is attributed to the shell, not traced from core neurons"
+            scope: "mouse dLGN → V1 — target reported for the broader dLGN relay population that contains core neurons"
+            support: WEAK
+          - ref: "PMID:28965517"
+            quote_key: "4601077_1ff46308"
+            method: "review statement citing Cruz-Martín et al. 2014 and Bickford et al. 2015; L4 target attributed to X- and Y-like relay cells, which the same review places in the core — core-specific L4 target inferred, not traced from core neurons"
+            scope: "mouse dLGN → V1 — X- and Y-like relay cells project to layer IV"
+            support: WEAK
+          - ref: "PMID:26691828"
+            quote_key: "8247989_7810a2a4"
+            method: "discussion statement contrasting dorsal-shell L1-projecting dLGN neurons with the main dLGN input into L4; L4 source not traced to core neurons"
+            scope: "mouse dLGN → V1 — main dLGN input is to L4, L1 input from the dorsal shell"
+            support: WEAK
+    colocated_types:
+      - neighboring_type: "dlgn_shell_relay_neuron"
+        spatial_relationship: ADJACENT
+        notes: >
+          Core (ventromedial) and shell (dorsolateral) are complementary
+          subdivisions of mouse dLGN (Monavarfeshani et al. 2017, quote
+          4601077_8f3fc6a4; Huang et al. 2023, quote 264598574_32e8c9a5).
+    defining_markers:
+      - name_in_source: Pvalb
+        symbol: Pvalb
+        ncbi_gene_id: "NCBIGene:19293"
+        modifier: ENRICHED
+        sources:
+          - ref: "PMID:34473054"
+            quote_key: "237389962_1dd0f6d1"
+            method: "scRNA-seq"
+            scope: "adult mouse dLGN — Pvalb-expressing TC neurons enriched in the core (graded, not discrete)"
+            marker_type: TRANSCRIPT
+    nt_type:
+      name_in_source: "excitatory"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "excitatory"
+      sources:
+        - ref: "PMID:28965517"
+          quote_key: "4601077_8f3fc6a4"
+          method: "review statement — TC relay cells (of which core X- and Y-like cells are a subset) are excitatory projection neurons; glutamatergic transmitter inferred, not shown directly for core neurons"
+          scope: "rodent dLGN TC relay cells"
+        - ref: "PMID:41814933"
+          quote_key: "286491924_f2e9799b"
+          method: "review statement — TRCs, including the X- and Y-like TRCs of the core, are excitatory neurons; glutamatergic transmitter inferred, not shown directly for core neurons"
+          scope: "mouse dLGN thalamocortical relay cells"
+    morphology:
+      description: >
+        Not a single morphology: the core is occupied by X-like relay cells
+        (biconical dendritic fields, tending to be smaller) and Y-like relay
+        cells (radially symmetrical dendritic fields), classified from
+        quantitative dendritic architecture (Krahe et al., 2011).
+      sources:
+        - ref: "PMID:22131405"
+          quote_key: "16328698_cc12bb7a"
+          method: "quantitative analysis of relay-cell dendritic architecture"
+          scope: "mouse dLGN relay cells from early postnatal ages"
+        - ref: "PMID:28965517"
+          quote_key: "4601077_8f3fc6a4"
+          method: "review statement citing Krahe et al. 2011"
+          scope: "mouse dLGN — X- and Y-like TC relay cells occupy the ventromedial core"
+        - ref: "PMID:41814933"
+          quote_key: "286491924_f2e9799b"
+          method: "review statement citing Krahe et al. 2011"
+          scope: "mouse dLGN — X- and Y-like TRCs occupy the core"
+    definition_references:
+      - "PMID:22131405"
+      - "PMID:34473054"
+      - "PMID:28965517"
+      - "PMID:41814933"
+      - "PMID:37913772"
+    notes: >
+      Pvalb is graded, not discrete: Bakken et al. (2021) find mouse dLGN TC
+      neurons cannot be split into discrete transcriptomic types, and core
+      neurons show opposing gradients to Calb1 and Necab1, which are enriched
+      in the shell. Calb1/Necab1 are therefore lower in core than shell but are
+      not shown to be absent, so they are not recorded as negative markers.
+      The sources give no positive marker defining core as a class; core is
+      delimited as the non-shell (calbindin-negative zone) part of dLGN.
+      SUSPECTED HETEROGENEITY: the core is enriched for, but not shown to be
+      exclusive to, X- and Y-like relay cells; Krahe et al. (2011) place X-like
+      cells "primarily" in the monocular ventral region and Y-like cells in a
+      central core that also contains ipsilateral-eye projections, and suggest
+      a possible third (posterodorsal monocular) domain, so primary-study and
+      review descriptions of core extent differ. The V1 layer-4 target is
+      reported for dLGN axons as a whole; that core neurons are the main source
+      of the dense L4 projection is inferred, not traced.
+edges: []

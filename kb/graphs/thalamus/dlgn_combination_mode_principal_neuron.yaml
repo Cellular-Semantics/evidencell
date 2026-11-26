@@ -1,0 +1,102 @@
+# dLGN combination-mode principal neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/dLGN_relay.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "dLGN Combination-Mode Principal Neuron"
+description: >
+  Evidence graph component for mouse dLGN principal neurons whose retinal
+  input comes from 6-36 ganglion cells of different types from one eye
+  (combination mode), proposed from the ASTA deep research report
+  dLGN_relay.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dlgn_combination_mode_principal_neuron
+    name: "dLGN combination-mode principal neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: dlgn_relay_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:28231464"
+            quote_key: "10004494_03dd7881"
+            method: "single-cell-initiated transsynaptic rabies tracing"
+            scope: "mouse LGN principal cells"
+        notes: >
+          Defined as dLGN principal (relay) neurons narrowed by retinal input
+          convergence mode; single primary study. Rompani et al. describe
+          "modes of integration" of individual principal cells; whether these
+          are stable cell types rather than connectivity states is not settled.
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "dLGN combination-mode principal neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for geniculate, relay, thalamic and thalamocortical terms;
+        no term describes an input-defined dLGN principal-cell class.
+        CL:4023068 (excitatory neuron with soma in the thalamic complex)
+        contains the type and is the most specific such term. EXACT would need
+        a CL term for this connectivity-defined class.
+    anatomical_location:
+      - id: MBA:170
+        label: "Dorsal part of the lateral geniculate complex"
+        name_in_source: "mouse lateral geniculate nucleus (LGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:28231464"
+            quote_key: "10004494_03dd7881"
+            method: "single-cell-initiated transsynaptic rabies tracing from targeted LGN principal cells"
+            scope: "mouse LGN principal cells; combination-mode cells are those with 6-36 RGC inputs of different types from one eye"
+          - ref: "PMID:28965524"
+            quote_key: "5326680_b82c9bc5"
+            method: "review statement — convergence of distinct RGC cell-type pathways onto single dLGN neurons"
+            scope: "mouse dLGN neurons; supports cell-type-combining retinal convergence in dLGN generally, combination mode (Rompani et al. 2017) not named in the quote"
+          - ref: "PMID:28965513"
+            quote_key: "4807205_2fdaee02"
+            method: "review statement citing Rompani et al. 2017 — convergence of multiple RGCs onto single geniculate neurons"
+            scope: "mouse, cat and primate dLGN; argument drawn from binocularly innervated neurons, so it supports multi-RGC convergence rather than the monocular combination mode specifically"
+    nt_type:
+      name_in_source: "principal cells (thalamocortical relay cells; excitatory)"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "excitatory projection neurons"
+      sources:
+        - ref: "PMID:28231464"
+          quote_key: "10004494_03dd7881"
+          method: "inferred — combination-mode cells are LGN principal cells; transmitter not examined for this subtype"
+          scope: "mouse LGN principal cells"
+        - ref: "PMID:28965517"
+          quote_key: "4601077_8f3fc6a4"
+          method: "review statement — dLGN principal (TC relay) cells are excitatory projection neurons; glutamatergic transmitter inferred, not shown directly for combination-mode cells"
+          scope: "rodent dLGN TC relay cells"
+    definition_references:
+      - "PMID:28231464"
+    notes: >
+      Single primary study (Rompani et al. 2017); no independent study in
+      the sources characterises combination-mode cells. Rompani describe
+      input "modes" of individually traced principal cells, so whether
+      combination mode marks a stable cell type or a connectivity state is
+      unsettled. No mapping between convergence modes and X/Y/W-like
+      morphology, core/shell location, markers or transcriptomic identity
+      has been established, so no morphology, marker or sub-nuclear
+      location is recorded here.
+edges: []

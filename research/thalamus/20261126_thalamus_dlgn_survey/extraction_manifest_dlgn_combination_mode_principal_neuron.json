@@ -1,0 +1,26 @@
+{
+  "node_id": "dlgn_combination_mode_principal_neuron",
+  "summaries_read": 37,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "skipped_duplicate_quote": 1,
+  "skipped_low_relevance": 12,
+  "skipped_not_this_node": 22,
+  "entries_written": 2,
+  "written": [
+    {"source_corpus_id": "5326680", "field": "anatomical_location[MBA:170].sources", "quote_key": "5326680_b82c9bc5"},
+    {"source_corpus_id": "4807205", "field": "anatomical_location[MBA:170].sources", "quote_key": "4807205_2fdaee02"}
+  ],
+  "fields_populated": ["anatomical_location[].sources"],
+  "fields_with_no_evidence": ["electrophysiology", "morphology", "markers (defining_markers/negative_markers/neuropeptides)", "synonyms", "nt_type (no new evidence)"],
+  "synonyms_found": [],
+  "notes": [
+    "10004494 (Rompani 2017, PMID:28231464): all three summary quotes are substrings of the already-cited quote 10004494_03dd7881 (anatomical_location and nt_type) -> skipped_duplicate_quote.",
+    "4524072 (Guido 2018 review, PMID:28965501): general statements about retinal convergence onto dLGN thalamocortical neurons; nothing specific to the combination mode -> skipped_not_this_node.",
+    "Both written entries are reviews (same Visual Neuroscience special issue) and support multi-type / multi-RGC convergence in dLGN generally; neither names the combination mode. No independent primary study of combination-mode cells exists in this corpus; Rompani 2017 remains the sole primary source.",
+    "Possible tension with the node definition: 36416152 (\"mature LGN neurons receive input from three or fewer RGCs\") and 15010690 / 255986294 (\"by 3 weeks of age a single relay neuron receives input from only one to three RGCs\", physiological EPSP-based convergence estimates) describe low convergence consistent with relay mode, not 6-36 RGC combination mode. Not cited here; curator may want to note the methodological discrepancy (physiology vs transsynaptic rabies tracing) in node notes.",
+    "4807205 quote's argument comes from binocularly innervated neurons; recorded in scope that it does not specifically support the monocular combination mode (cf. dlgn_binocular_combination_mode_principal_neuron).",
+    "Remaining summaries concern X/Y/W morphology, core/shell, interneurons, development, or other circuits -> skipped (LOW relevance counted under skipped_low_relevance)."
+  ],
+  "reference_store": "references/thalamus"
+}

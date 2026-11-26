@@ -1,0 +1,180 @@
+# dLGN W-like relay cell — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/dLGN_relay.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "dLGN W-like Relay Cell"
+description: >
+  Evidence graph component for the W-like (hemispheric) morphological class of
+  mouse dLGN thalamocortical relay cells, proposed from the ASTA deep research
+  report dLGN_relay.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dlgn_w_like_relay_cell
+    name: "dLGN W-like relay cell"
+    definition_basis: CLASSICAL_MORPHOLOGICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "W-like cell"
+        sources:
+          - ref: "PMID:22131405"
+            quote_key: "16328698_cc12bb7a"
+            method: "defining label (hemispheric dendritic architecture)"
+            scope: "mouse dLGN relay cells, early postnatal to adult"
+      - term: "W-like TRC"
+        sources:
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "label in introduction"
+            scope: "mouse dLGN"
+      - term: "W-like TC cell"
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "hemispheric W-like TC cells, review statement"
+            scope: "nocturnal rodent dLGN"
+    subtype_of:
+      - parent: dlgn_relay_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:22131405"
+            quote_key: "16328698_cc12bb7a"
+            method: "quantitative dendritic morphology of filled relay cells"
+            scope: "mouse dLGN — relay cells classified as X-, Y- or W-like"
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "review statement"
+            scope: "mouse dLGN — TRCs divided into W-, X- and Y-like types"
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "review statement"
+            scope: "rodent dLGN — TC progenitors differentiate into X-, Y- and W-like TC cells"
+        notes: >
+          W-like cells are one of three morphological classes into which dLGN
+          relay cells are divided. Krahe et al. 2011 classified filled relay cells
+          only, so containment holds by definition.
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "dLGN W-like relay cell"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for geniculate, relay, thalamic, thalamocortical and
+        W-cell terms; no term describes a dLGN morphological relay-cell class.
+        CL:4023068 (excitatory neuron with soma in the thalamic complex) contains
+        the type and is the most specific such term; parent type shares this
+        term. CL:4023187 koniocellular cell (LGN koniocellular-layer neuron) is
+        a possible RELATED candidate because W-like cells are often compared with
+        koniocellular cells, but it is defined by layer location and this
+        mouse type is defined by dendrite morphology, so it was not chosen.
+        EXACT would need a CL term for dLGN W-like relay cell.
+    anatomical_location:
+      - id: MBA:170
+        label: "Dorsal part of the lateral geniculate complex"
+        name_in_source: "perimeter of dLGN"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:22131405"
+            quote_key: "16328698_cc12bb7a"
+            method: "mapping of soma positions of filled, morphologically classified relay cells"
+            scope: "mouse dLGN, early postnatal to adult — W-like cells found along the perimeter of dLGN"
+          - ref: "PMID:22131405"
+            quote_key: "16328698_79efc008"
+            method: "mapping of soma positions of filled, morphologically classified relay cells"
+            scope: "mouse dLGN — W-like cells surround the perimeter of dLGN"
+      - id: MBA:496345664
+        label: "Dorsal part of the lateral geniculate complex, shell"
+        name_in_source: "dorsolateral shell of mouse dLGN"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_8f3fc6a4"
+            method: "review statement citing Krahe et al. 2011"
+            scope: "mouse dLGN — W-like cells occupy the dorsolateral shell"
+          - ref: "PMID:41814933"
+            quote_key: "286491924_f2e9799b"
+            method: "review statement citing Krahe et al. 2011"
+            scope: "mouse dLGN — W-like TRCs occupy the shell region; no clear laminar distribution"
+      - id: MBA:593
+        label: "Primary visual area, layer 1"
+        name_in_source: "layer I"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:28965517"
+            quote_key: "4601077_1ff46308"
+            method: "review statement citing Cruz-Martín et al. 2014 and Bickford et al. 2015; not traced from morphologically identified W-like cells in this source"
+            scope: "mouse dLGN — W-like relay cells in the dorsolateral shell convey direction-selective information to layer I of visual cortex"
+            support: WEAK
+    nt_type:
+      name_in_source: "excitatory"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "excitatory"
+      sources:
+        - ref: "PMID:41814933"
+          quote_key: "286491924_f2e9799b"
+          method: "review statement — TRCs (divided into W-, X- and Y-like types) described as excitatory; glutamatergic transmitter inferred from excitatory thalamocortical identity, not shown directly for W-like cells"
+          scope: "mouse dLGN thalamocortical relay cells"
+        - ref: "PMID:28965517"
+          quote_key: "4601077_8f3fc6a4"
+          method: "review statement — TC relay cells, which differentiate into X-, Y- and W-like classes, are excitatory projection neurons; glutamatergic transmitter inferred, not shown directly for W-like cells"
+          scope: "rodent dLGN TC relay cells"
+    morphology:
+      description: >
+        Hemispheric dendritic architecture, resembling cat W cells. Dendritic
+        fields show no orientation bias with respect to the optic tract or dLGN
+        boundaries. Classifiable by dendritic morphology from early postnatal
+        ages.
+      sources:
+        - ref: "PMID:22131405"
+          quote_key: "16328698_cc12bb7a"
+          method: "quantitative analysis of dendritic architecture of dye-filled relay cells"
+          scope: "mouse dLGN, early postnatal to adult"
+        - ref: "PMID:22131405"
+          quote_key: "16328698_79efc008"
+          method: "comparison of mouse relay-cell dendritic architecture with cat X, Y and W cells"
+          scope: "mouse dLGN"
+        - ref: "PMID:28965517"
+          quote_key: "4601077_8f3fc6a4"
+          method: "review statement citing Krahe et al. 2011 and Ling et al. 2012"
+          scope: "nocturnal rodent dLGN — hemispheric W-like TC cells"
+        - ref: "PMID:41814933"
+          quote_key: "286491924_2e18d254"
+          method: "review statement citing Krahe et al. 2011"
+          scope: "mouse dLGN — W-like TRCs are hemispheric in shape"
+        - ref: "PMID:26741374"
+          quote_key: "1639353_9dec09a7"
+          method: "review statement citing Krahe et al. 2011 — subgroups defined by dendritic architecture and ocular specificity"
+          scope: "mouse LGN relay neurons — W-(hemispherical) subgroup"
+    definition_references:
+      - "PMID:22131405"
+      - "PMID:28965517"
+      - "PMID:41814933"
+    notes: >
+      Location sources differ in wording: the primary study (Krahe et al. 2011)
+      places W-like cells along the perimeter of dLGN, while reviews
+      (Monavarfeshani et al. 2017; Stebbins et al. 2026) say they occupy the
+      dorsolateral shell; the source report frames this as enrichment, not
+      exclusive occupancy, and the shell may also hold relay cells of other
+      classes. Krahe et al. found no electrophysiological properties
+      distinguishing W-like from X- and Y-like relay cells, and the sources give
+      no molecular marker, so the class is defined by dendritic morphology and
+      position only.
+edges: []

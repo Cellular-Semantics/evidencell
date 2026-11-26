@@ -1,0 +1,32 @@
+{
+  "node_id": "dlgn_core_relay_neuron",
+  "summaries_read": 37,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "skipped_duplicate_quote": 2,
+  "skipped_low_relevance": 11,
+  "skipped_not_this_node": 21,
+  "entries_written": 3,
+  "written": [
+    {"source_corpus_id": "16328698", "field": "anatomical_location[MBA:496345668 SOMA].sources", "quote_key": "16328698_4dcf4944"},
+    {"source_corpus_id": "4601077", "field": "anatomical_location[MBA:721 AXON_TARGET].sources", "quote_key": "4601077_1ff46308"},
+    {"source_corpus_id": "8247989", "field": "anatomical_location[MBA:721 AXON_TARGET].sources", "quote_key": "8247989_7810a2a4"}
+  ],
+  "fields_populated": ["anatomical_location[].sources"],
+  "fields_with_no_evidence": ["electrophysiology.sources", "synonyms[].sources", "GeneDescriptor.sources (no new marker evidence)", "nt_type.sources (no new non-duplicate evidence)", "morphology.sources (no new non-duplicate evidence)"],
+  "synonyms_found": [],
+  "notes": [
+    "16328698 (PMID:22131405): quote 'Y-like cells occupied a central core...' is a substring of 16328698_cc12bb7a, but that quote is cited only under morphology on this node, not under anatomical_location; the anatomical_location field cites 16328698_79efc008, which does not contain it. Added as primary-data soma-location evidence (more specific than the rat-domain framing of 79efc008). It covers Y-like cells only; X-like cells are placed 'primarily' in the monocular ventral region by the same paper.",
+    "4601077 (PMID:28965517): the core-location quote (Q1) is a substring of 4601077_8f3fc6a4, already cited on anatomical_location/nt_type/morphology; used Q2 (X/Y-like cells project to layer IV) for the L4 AXON_TARGET, marked WEAK — review statement, core-specificity inferred via X/Y-like composition of the core.",
+    "8247989 (PMID:26691828): 'main dLGN input into L4' vs dorsal-shell L1 projectors — L4 AXON_TARGET, WEAK (not traced from core neurons).",
+    "286491924 (PMID:41814933) skipped_duplicate_quote: core-location quote 286491924_11af5437 and the excitatory/morphology quote are substrings of 286491924_f2e9799b already cited on anatomical_location, nt_type and morphology.",
+    "264598574 (PMID:37913772) skipped_duplicate_quote: all three quotes (core/shell subdivision; shell inputs; L1 from shell) are substrings of 264598574_32e8c9a5, already cited on the L4 AXON_TARGET.",
+    "267806869 (PMID:38386556) skipped as not specific: says V1 neurons could receive input 'routed through the core or shell pathways' and that L4 neurons also receive DS/OS dLGN input — implies shell pathway may also reach L4; no core-specific claim in the quotes. Curator may want to read this paper for core vs shell L4 targeting.",
+    "14389058 (PMID:26727264), 3598591, 257758447: shell / superficial DS dLGN evidence — about dlgn_shell_relay_neuron / direction-selective cells, not core.",
+    "231615058 (PMID:34478630): dLGN neurons projecting to L4 and L1 labelled, but no core/shell attribution — skipped.",
+    "44977478: LGN axons branch in layer 4 in organotypic coculture — not core-specific, in vitro; skipped.",
+    "Remaining HIGH/MODERATE entries concern dLGN relay neurons in general (parent dlgn_relay_neuron), X/Y/W classification without location, or retinal-convergence modes; not core-specific.",
+    "No contradictions with the node definition found. Hook accepted both edits first time."
+  ],
+  "reference_store": "references/thalamus"
+}
