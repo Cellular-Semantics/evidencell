@@ -1,0 +1,88 @@
+id: at_run_20261126_bakken2021_lgn_lgvigl_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE182211"
+source_cluster_label: >
+  DERIVED label scheme on Bakken et al. 2021 (PMID:34473054) mouse SMART-seq
+  v4 cells: the five published GABAergic clusters the authors place outside
+  dLGN, in IGL and LGv (GEO `cluster_label` GABA2 26, GABA3 42, GABA4 19,
+  GABA5 126, GABA6 82; Figure 4C; text "the mouse GABA2-6 types are not
+  found in dLGN but are located only in the adjacent thalamic nuclei; IGL,
+  LGv, and LP") pooled as "LGv/IGL GABA (GABA2-6)" (295 cells). Every other
+  non-"Low Quality" cell is "other (non-LGv/IGL GABA)" (1,819 cells), so
+  purity is measured against the whole dataset. The pool is chosen from the
+  paper's anatomical assignment (Figure 4C, marker genes checked against
+  Allen Brain Atlas ISH), not from the WMBv1 mapping. Figure 4C places G2,
+  G3 and G5 in LGv, G6 in IGL and G4 in both; none in LP.
+  SOURCE-LABEL PURITY: pure by anatomical class (LGv/IGL GABAergic,
+  forebrain-derived Sox14-negative branch, Npy/Nkx2-2/Dlx1/2/5/6) but
+  transcriptomically heterogeneous: five clusters. Expect F1 to peak at
+  subclass and to split across WMB subclasses.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  Same MapMyCells output as at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1
+  (mmc_results.csv lives in that run record). Labels derived from that
+  run's labels_cluster.json with scripts/build_lgvigl_labels.py. F1 scored
+  with `annotation-transfer score` at bootstrap threshold 0.8 against
+  labels_lgvigl.json.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 2187
+n_cells_after_filter: 2114
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "284638e (branch base; scored 2026-11-26)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Derived pooled label, declared as the at_source_sets correspondence
+  (SUBSET) of lgv_igl_gabaergic_neuron. Per-cluster numbers are in the
+  published-label run at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1;
+  GABA2, GABA3, GABA5 (SUBSET) and GABA4 (PARTIAL) are declared there on
+  vlgn_gabaergic_neuron.
+  (2) The pool spans three WMB subclasses, each at purity 1.0 within this
+  dataset: 203 LGv-SPFp-SPFm Nkx2-2 Tcf7l2 Gaba (143 cells; GABA3, GABA4,
+  GABA6), 109 LGv-ZI Otx2 Gaba (90; GABA5) and 101 ZI Pax6 Gaba (46; GABA2
+  and part of GABA5). They sit in two WMB classes (20 MB GABA 145, 12 HY
+  GABA 137), so best class F1 is low (0.57) and best subclass F1 0.66. Read
+  this as LGv/IGL GABAergic neurons spanning several WMB subclasses, not as
+  a mismatch.
+  (3) Dissection support is uneven. Of the 295 cells, 126 came from the LGv
+  dissection, 166 from dLGN-core/shell (mainly GABA5, GABA6, GABA2) and 3 from LP. The
+  authors say mouse microdissections are imperfect and that GABA2-6 are not
+  found in dLGN. GABA2 (3/26 from LGv) and its landing in 101 ZI Pax6 Gaba
+  leave open that some GABA2 cells are zona incerta rather than LGv; the
+  paper itself places GABA2 in LGv.
+  (4) Text vs figure: the text lists LP among the locations of GABA2-6;
+  Figure 4C shows none in LP. Only 3 of the 295 cells came from the LP
+  dissection.
+  (5) Not exhaustive for LGv/IGL GABA: Figure 4C also places Chrna2 (a
+  Sox14+ dLGN interneuron cluster) in LGv; it is excluded here (it stays in
+  the dLGN interneuron pool).
+  (6) Same platform caveats as the cluster run (SMART-seq v4 read counts vs
+  UMI reference, no gene-length correction); cells not in WMBv1 training.
+
+metadata: >
+  source_paper=PMID:34473054;
+  labels=labels_lgvigl.json (from ../at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1/labels_cluster.json via scripts/build_lgvigl_labels.py);
+  mmc_results=../at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1/mmc_results.csv;
+  mmc_results_sha256=779f37d7ef13948f55f54bd260cb0807412db1ce6cf566598d2fb2d050b2d78d;
+  label_distribution=label_distribution.tsv

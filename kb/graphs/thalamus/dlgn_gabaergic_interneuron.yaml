@@ -223,25 +223,37 @@ nodes:
             method: "manual_full_text — cross-species integration names the mouse dLGN GABAergic types as Chrna6/Sox14-expressing"
             scope: "mouse, macaque and human dLGN GABAergic types"
             quote_key: "237389962_35ac48b3"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Discussion: Sox14-positive interneurons are the mouse dLGN interneurons; Sox14-negative ones lie only in adjacent nuclei (Figures 4C, 5D)"
+            scope: "mouse, macaque and human dLGN GABAergic interneurons"
+            quote_key: "237389962_64554fbd"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — the mouse GABA2-6 types are not found in dLGN (Figure 4C), so the three Chrna clusters are the whole dLGN GABAergic set"
+            scope: "adult male mouse dLGN, LP and LGv dissections, SMART-seq v4 single cells"
+            quote_key: "237389962_6fbaf310"
         notes: >
           Pooled label over the three published mouse clusters the authors
           assign to dLGN: GEO cluster_label Chrna1 (146 cells), Chrna2 (252)
-          and Chrna3 (54); 452 cells in all. The paper text does not give the
-          three names; the link rests on the GEO names, on their marker
-          profile in the deposited counts (all three Gad1+, Sox14+, Chrna6+,
-          Otx2+, Slc17a6-; mean log2 CPM 7.5-8.0 for Sox14, 8.2-8.7 for
-          Chrna6) and on their dissection origin (310 of 452 cells from
-          dLGN-core, 114 shell, 24 LP, 4 LGv). The other six GABAergic
-          clusters (GABA1-6) lack Sox14 + Chrna6 co-expression and the authors
-          place them in adjacent nuclei (LP, LGv, IGL, RT), so they are
-          excluded even where some of their cells came from dLGN dissections
-          (imperfect microdissection). Pooled because the three clusters are subtypes of
-          this one classical type; scoring them separately dilutes each
-          label's purity with its two siblings (they share the same WMB
-          subclass). The pooled label is a derived relabel and is scored in
-          its own AT run. Caveat: GEO also carries an older label column
-          (org_cl.lab) in which the names Chrna1 and Chrna2 are swapped; the
-          pooled set is identical under both.
+          and Chrna3 (54); 452 cells in all. The paper names them Chrna1-3 in
+          Figure 4A and Chrna6_1-3 in Figure 4B, Figure 5-figure supplement 1D
+          and Supplementary file 1; Supplementary file 1 matches GEO
+          cluster_label cell for cell, and Figure 4A cluster sizes match it,
+          so cluster_label is the published naming. The GEO org_cl.lab column
+          permutes the names (Chrna1<->Chrna2) and is not; the pooled set is
+          identical under both. Marker profile in the deposited counts: all
+          three Gad1+, Sox14+, Chrna6+, Otx2+, Slc17a6- (mean log2 CPM
+          7.5-8.0 for Sox14, 8.2-8.7 for Chrna6). Dissection origin: 310 of
+          452 cells from dLGN-core, 114 shell, 24 LP, 4 LGv. The paper
+          separates the three clusters only by marker genes (Figure 4A:
+          Styk1; Pax7, Pde3a; Alyref, Dapk3). It gives no position,
+          morphology or physiology difference, and all three fall in one
+          integrated Sox14+ branch across species. So the pool stays EXACT and
+          no per-cluster entries or child nodes are proposed; the three share
+          WMB supertype 0872, so per-cluster entries would only dilute F1.
+          Caveat: Figure 4C places Chrna2 in LGv as well as dLGN, so the pool
+          may hold a few LGv Sox14+ cells. The other six GABAergic clusters
+          (GABA1-6) are excluded: the authors place them in RT, LGv and IGL.
+          Label key: planning/content-notes/thalamus_bakken2021_labels.md.
     colocated_types:
       - neighboring_type: "dlgn_relay_neuron"
         spatial_relationship: INTERSPERSED
