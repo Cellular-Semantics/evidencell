@@ -91,28 +91,6 @@ nodes:
               types reach different parts of the anterior thalamic group. The
               quote does not say which type reaches which anterior thalamic
               nucleus, so no subdivision-level target is recorded.
-    nt_type:
-      name_in_source: "not stated in source (inferred glutamatergic)"
-      cl_terms:
-        - id: CL:0000679
-          label: "glutamatergic neuron"
-          name_in_source: "not stated in source (inferred glutamatergic)"
-      sources:
-        - ref: "https://doi.org/10.1101/2020.05.14.096818"
-          method: >
-            inferred, not measured: neither the quoted passage nor the report
-            states a transmitter for MB neurons. Glutamatergic identity is
-            inferred from the well-established excitatory, Slc17a6
-            (Vglut2)-expressing phenotype of mammillary body projection
-            neurons and of the mammillothalamic tract they form
-          scope: "mouse mammillary body"
-          support: WEAK
-          notes: >
-            Recorded so that candidate retrieval has an NT value to score on.
-            No source in this run asserts it; it must be confirmed against a
-            primary paper in evidence-extraction. The inference is a
-            class-level generalisation and does not exclude a minority
-            GABAergic or dual-transmitter population among the MB clusters.
     definition_references:
       - "https://doi.org/10.1101/2020.05.14.096818"
     notes: >
@@ -128,9 +106,12 @@ nodes:
       quote lists no MB marker gene, so marker-defined MB classes are known to
       exist without any marker being citable here. Neuropeptides, morphology,
       intrinsic electrophysiology and developmental origin are not
-      characterised for MB neurons in the supplied sources, and the
-      neurotransmitter identity is inferred rather than measured (see
-      nt_type.sources). The sole source is a preprint
-      (https://doi.org/10.1101/2020.05.14.096818); its peer-reviewed version
-      should be substituted when the reference store resolves it.
+      characterised for MB neurons in the supplied sources. Neurotransmitter
+      identity (nt_type) is also not recorded: no source in this run states
+      a transmitter for MB neurons, so the field is left unset pending
+      confirmation against a primary paper in evidence-extraction, rather
+      than recording an inferred value no source asserts. The sole source is
+      a preprint (https://doi.org/10.1101/2020.05.14.096818); its
+      peer-reviewed version should be substituted when the reference store
+      resolves it.
 edges: []
