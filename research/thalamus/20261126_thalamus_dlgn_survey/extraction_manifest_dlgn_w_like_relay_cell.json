@@ -1,0 +1,26 @@
+{
+  "node_id": "dlgn_w_like_relay_cell",
+  "summaries_read": 37,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "skipped_duplicate_quote": 1,
+  "skipped_low_relevance": 10,
+  "skipped_not_this_node": 23,
+  "entries_written": 3,
+  "written": [
+    {"source_corpus_id": "4601077", "field": "anatomical_location[MBA:593 Primary visual area, layer 1, AXON_TARGET].sources", "quote_key": "4601077_1ff46308"},
+    {"source_corpus_id": "286491924", "field": "morphology.sources", "quote_key": "286491924_2e18d254"},
+    {"source_corpus_id": "1639353", "field": "morphology.sources", "quote_key": "1639353_9dec09a7"}
+  ],
+  "fields_populated": ["anatomical_location[].sources", "morphology.sources"],
+  "fields_with_no_evidence": ["electrophysiology.sources", "GeneDescriptor.sources (no markers)", "nt_type.sources (no new evidence)", "synonyms[N].sources (no new synonyms)"],
+  "synonyms_found": [],
+  "notes": [
+    "skipped_duplicate_quote: 16328698 (Krahe et al. 2011, PMID:22131405) — all three survey quotes are substrings of 16328698_cc12bb7a, already cited in morphology, anatomical_location (MBA:170) and synonyms.",
+    "286491924 (PMID:41814933): chosen quote is a substring of 286491924_f2e9799b, but that quote was not yet cited in morphology.sources, so it was added there (hemispheric shape).",
+    "4601077 (PMID:28965517): new AXON_TARGET location MBA:593 (V1 layer 1) recorded with support WEAK — review statement citing Cruz-Martín 2014 / Bickford 2015, whose tracing labelled shell dLGN neurons rather than morphologically identified W-like cells. Mirrors the V1 L4 WEAK entry on dlgn_y_like_relay_cell. It also states W-like cells convey direction-selective information (not recorded as a property; no field for it).",
+    "skipped_not_this_node: shell / L1-projection / direction-selective papers (14389058, 8247989, 3598591, 264598574, 267806869, 231615058, 1519009) describe the dLGN shell population or DS cells without identifying them as morphological W-like cells — evidence for dlgn_shell_relay_neuron / dlgn_direction_selective_neuron, not this node. 5842285 quotes discuss relay cells generically (no W-like mention). Other HIGH/MODERATE entries (4524072, 5326680, 4807205, 10004494, 13-22, 24) concern relay cells in general, interneurons or mode classes.",
+    "Reference store: 1639353 (PMID:26741374) is new to references/thalamus/papers; there is no references.json file in references/thalamus (store uses papers/ and quotes/)."
+  ],
+  "reference_store": "references/thalamus"
+}
