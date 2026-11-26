@@ -27,7 +27,7 @@ import yaml
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
-from evidencell.references import load_papers, load_quotes, save_paper, append_quote  # noqa: E402
+from evidencell.references import load_papers, load_quotes, save_paper, append_quote, _write_json  # noqa: E402
 from evidencell.validate import _collect_quote_keys, _collect_refs, _collect_flat_refs  # noqa: E402
 
 SRC_REGION = "sexually_dimorphic"
@@ -106,7 +106,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
 
-    kb_dir = ROOT / "kb" / "graphs" / SRC_REGION
+    # Node YAMLs already moved to their destination folder in a prior commit;
+    # content is unchanged by the move, so read citations from wherever the
+    # files currently live.
+    kb_dir = ROOT / "kb" / "graphs" / DST_REGION
     src_refs = ROOT / "references" / SRC_REGION
     dst_refs = ROOT / "references" / DST_REGION
 
@@ -174,9 +177,38 @@ def main(argv: list[str] | None = None) -> int:
     for qk in quote_keys:
         assert dst_quotes.get(qk) == src_quotes[qk], f"quote mismatch after write: {qk}"
 
+    # sources/ -- ASTA_REPORT quotes cite a source_document id that must have a
+    # record under references/{region}/sources/ (qc_content.check_source_documents).
+    # Copy any cited source id not yet present in the destination store, verbatim.
+    needed_source_ids = {
+        src_quotes[qk].get("source_document")
+        for qk in quote_keys
+        if isinstance(src_quotes[qk], dict) and src_quotes[qk].get("source_document")
+    }
+    sources_written = sources_skipped = 0
+    src_sources_dir = src_refs / "sources"
+    dst_sources_dir = dst_refs / "sources"
+    for sid in sorted(needed_source_ids):
+        src_file = src_sources_dir / f"{sid}.json"
+        if not src_file.exists():
+            print(f"ERROR: source_document '{sid}' cited by a migrating quote but no record at {src_file}", file=sys.stderr)
+            return 2
+        dst_file = dst_sources_dir / f"{sid}.json"
+        if dst_file.exists():
+            sources_skipped += 1
+            continue
+        _write_json(dst_file, __import__("json").loads(src_file.read_text(encoding="utf-8")))
+        sources_written += 1
+
+    for sid in needed_source_ids:
+        dst_file = dst_sources_dir / f"{sid}.json"
+        src_file = src_sources_dir / f"{sid}.json"
+        assert dst_file.read_text(encoding="utf-8") == src_file.read_text(encoding="utf-8"), f"source mismatch after write: {sid}"
+
     print(f"\npapers: {papers_written} written, {papers_skipped} already present (idempotent re-run)")
     print(f"quotes: {quotes_written} written, {quotes_skipped} already present (idempotent re-run)")
-    print(f"Verified: all {len(needed_corpus_ids)} papers and {len(quote_keys)} quotes reload byte-identical to source.")
+    print(f"sources: {sources_written} written, {sources_skipped} already present (idempotent re-run), {len(needed_source_ids)} needed: {sorted(needed_source_ids)}")
+    print(f"Verified: all {len(needed_corpus_ids)} papers, {len(quote_keys)} quotes, {len(needed_source_ids)} sources reload byte-identical to source.")
     print(f"references/{SRC_REGION}/ untouched (additive-only migration).")
     return 0
 
