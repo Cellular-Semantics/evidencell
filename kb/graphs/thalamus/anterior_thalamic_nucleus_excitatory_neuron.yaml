@@ -37,10 +37,10 @@ nodes:
         kind: DEFINITIONAL
         confidence: HIGH
         sources:
-          - ref: "PMID:40593635"
-            method: "projection-defined cell typing + molecular markers"
-            scope: "adult mouse ATN — all 13 projection-defined ATN cell types are glutamatergic"
-            quote_key: "279797062_9833fcee"
+          - ref: "PMID:38427564"
+            method: "scRNA-seq + spatial transcriptomics + multiplexed FISH"
+            scope: "adult mouse ATN — three discrete excitatory cell-type clusters"
+            quote_key: "268122794_5c2e793b"
           - ref: "PMID:22606998"
             method: "review (vGluT2 expression; GABAergic marker expression)"
             scope: "rodent anterior and mediodorsal nuclei — TC neurons are vGluT2+ and glutamatergic"
@@ -48,7 +48,10 @@ nodes:
         notes: >
           The parent's anatomical scope names the anterior nuclei among the
           exclusively excitatory nuclei of thalamus proper; this node restricts
-          it to AD, AV and AM.
+          it to AD, AV and AM. Quote 279797062_9833fcee ("all 13
+          projection-defined ATN cell types are glutamatergic") is not cited:
+          it is not in the text of PMID:40593635, the paper its corpus ID
+          resolves to.
     anatomical_location:
       - id: UBERON:0002788
         label: "anterior nuclear group"
