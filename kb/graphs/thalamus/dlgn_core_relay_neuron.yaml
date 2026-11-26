@@ -80,6 +80,10 @@ nodes:
             quote_key: "237389962_45eeb70e"
             method: "scRNA-seq (SMART-seq v4) of microdissected dLGN core and shell"
             scope: "adult mouse dLGN — main axis of glutamatergic TC neuron gene-expression variation follows core vs shell"
+          - ref: "PMID:22131405"
+            quote_key: "16328698_4dcf4944"
+            method: "biocytin/dye-filled relay cells classified by dendritic architecture, soma position mapped against dLGN boundaries and eye-specific domains"
+            scope: "early postnatal mouse dLGN — Y-like relay cells (a core relay subtype) occupy a central core containing ipsilateral-eye projections"
       - id: MBA:721
         label: "Primary visual area, layer 4"
         name_in_source: "L4 in V1"
@@ -89,6 +93,16 @@ nodes:
             quote_key: "264598574_32e8c9a5"
             method: "review statement on dLGN geniculocortical axons as a whole; core-specific L4 target inferred because only the L1 projection is attributed to the shell, not traced from core neurons"
             scope: "mouse dLGN → V1 — target reported for the broader dLGN relay population that contains core neurons"
+            support: WEAK
+          - ref: "PMID:28965517"
+            quote_key: "4601077_1ff46308"
+            method: "review statement citing Cruz-Martín et al. 2014 and Bickford et al. 2015; L4 target attributed to X- and Y-like relay cells, which the same review places in the core — core-specific L4 target inferred, not traced from core neurons"
+            scope: "mouse dLGN → V1 — X- and Y-like relay cells project to layer IV"
+            support: WEAK
+          - ref: "PMID:26691828"
+            quote_key: "8247989_7810a2a4"
+            method: "discussion statement contrasting dorsal-shell L1-projecting dLGN neurons with the main dLGN input into L4; L4 source not traced to core neurons"
+            scope: "mouse dLGN → V1 — main dLGN input is to L4, L1 input from the dorsal shell"
             support: WEAK
     colocated_types:
       - neighboring_type: "dlgn_shell_relay_neuron"
