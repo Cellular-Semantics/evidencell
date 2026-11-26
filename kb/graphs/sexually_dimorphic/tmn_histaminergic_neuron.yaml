@@ -53,4 +53,117 @@ nodes:
         recorded separately on anatomical_location/brain_region. The
         unplaced Avp/Rorb subpopulation finding (no assigned nucleus) is not
         part of this node's own defining criteria.
+    anatomical_location:
+      - id: MBA:557
+        label: "Tuberomammillary nucleus"
+        name_in_source: "tuberomammillary nucleus"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            method: >
+              snRNA-seq cluster curation: Hdc was used as the marker of the
+              tuberomammillary nucleus to exclude TMN-derived clusters from a
+              dorsomedial hypothalamus dataset, with marker assignments
+              validated against Allen Brain Atlas in situ hybridisation data
+            scope: "adult mouse hypothalamus, dorsomedial hypothalamus dissection"
+            notes: >
+              The source asserts the Hdc-to-TMN correspondence as established
+              background (citing Panula et al. 1984 and Watanabe et al. 1983)
+              rather than measuring the location of Hdc neurons itself; it is
+              the clearest statement in this run that Hdc marks the
+              tuberomammillary nucleus specifically.
+          - ref: "PMID:33633549"
+            quote_key: "231848933_f9f05f13"
+            method: >
+              review statement; the quoted passage names the TMN as the site of
+              the wake-promoting histamine neurons and names no assay
+            scope: "rodent posterior hypothalamus"
+            support: WEAK
+            notes: >
+              Secondary source, cited here only because it states the
+              histamine-neuron / TMN correspondence directly. The passage's
+              own subject is dlBNST projection anatomy.
+    defining_markers:
+      - name_in_source: "Hdc"
+        symbol: "Hdc"
+        ncbi_gene_id: "NCBIGene:15186"
+        sources:
+          - ref: "PMID:38493217"
+            quote_key: "268498016_75f21148"
+            marker_type: TRANSCRIPT
+            method: >
+              single-nucleus RNA-seq of 25,570 hypothalamic neurons; Hdc
+              separates the histaminergic group from the glutamatergic and
+              GABAergic groups at the top level of the sub-clustering
+            scope: "postnatal mouse hypothalamus (whole-hypothalamus sampling)"
+            notes: >
+              The quoted passage mis-pairs the transmitter labels with their
+              marker genes (glutamatergic is given Slc32a1/Gad1/Gad2 and
+              GABAergic is given Slc17a6, which is the wrong way round); the
+              Hdc / histaminergic pairing is unaffected.
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: >
+              snRNA-seq cluster curation with Allen Brain Atlas in situ
+              hybridisation validation; Hdc served as the tuberomammillary
+              exclusion marker when defining DMH types
+            scope: "adult mouse hypothalamus"
+    nt_type:
+      name_in_source: "histaminergic (Hdc)"
+      cl_terms:
+        - id: CL:0011110
+          label: "histaminergic neuron"
+          name_in_source: "histaminergic (Hdc)"
+      sources:
+        - ref: "PMID:38493217"
+          quote_key: "268498016_75f21148"
+          method: >
+            snRNA-seq (Hdc expression); histaminergic neurons are resolved as
+            one of the three top-level transmitter categories of the
+            hypothalamic neuronal taxonomy
+          scope: "postnatal mouse hypothalamus"
+          notes: >
+            Transmitter identity is asserted from Hdc transcript — the
+            histamine-synthesising enzyme — not from histamine
+            immunodetection. No CL term distinguishes the two lines of
+            evidence.
+        - ref: "PMID:37939194"
+          quote_key: "265065629_78eb31b0"
+          method: >
+            cross-species integration of human and mouse hypothalamic
+            sc/snRNA-seq (n = 403,176 neurons); histaminergic neurons emerge as
+            one of the major co-clustering groups alongside GABAergic and
+            glutamatergic neurons
+          scope: "human and adult/developing mouse hypothalamus, integrated atlas"
+          support: SUPPORT
+          notes: >
+            Class-level support only: the passage establishes that
+            histaminergic neurons form a reproducible high-level group across
+            species, and names neither Hdc nor the TMN.
+    definition_references:
+      - "PMID:38493217"
+      - "PMID:37624889"
+      - "PMID:37939194"
+    notes: >
+      The node rests on a transmitter identity plus a single marker, and the
+      two are not established by the same source. The source that resolves
+      histaminergic (Hdc) neurons as a top-level hypothalamic neuronal
+      category does not localise them to the tuberomammillary nucleus; the
+      TMN assignment comes from a second source that uses Hdc as the
+      tuberomammillary exclusion marker when curating DMH clusters, and which
+      itself cites earlier (1983-1984) primary work for that correspondence.
+      Neither asserts that every Hdc+ hypothalamic neuron is in the TMN, so
+      the location should be confirmed against the primary histamine
+      immunohistochemistry literature in evidence-extraction. Within-TMN
+      subdivision is unresolved: no source in this run gives finer subtype
+      labels, their spatial relations inside the TMN, or any separation of
+      the dorsal and ventral tuberomammillary parts (MBA:1126, MBA:1), so
+      this node is recorded at the whole-nucleus level and may contain
+      several molecular types. Neuropeptide co-transmitters, negative
+      markers, morphology, intrinsic electrophysiology, connectivity and
+      developmental origin are not characterised for TMN Hdc+ neurons in the
+      supplied sources. The cross-species source cited on nt_type covers
+      human as well as mouse neurons; this node's species is mouse.
 edges: []

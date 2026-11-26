@@ -49,4 +49,88 @@ nodes:
         defined, with the genetically-distinct internal subdivisions and
         topographic projections recorded as heterogeneity, not as an
         additional narrowing criterion on the node itself.
+    anatomical_location:
+      - id: MBA:331
+        label: "Mammillary body"
+        name_in_source: "mammillary bodies (MB)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2020.05.14.096818"
+            quote_key: "218686941_736c21b7"
+            method: >
+              scRNA-seq of >16,000 single cells from the ventral posterior
+              hypothalamus, with differentially expressed genes of selected
+              neuronal populations validated by fluorescence in situ
+              hybridization; MB clusters were related to the neuroanatomical
+              subdivisions of the MB
+            scope: "mouse ventral posterior hypothalamus, mammillary body"
+            notes: >
+              The source resolves the MB into several transcriptionally
+              distinct clusters that segregate by MB subdivision. MBA has
+              subdivision terms (e.g. MBA:210 lateral mammillary nucleus),
+              but the quote names no individual subdivision for any cluster,
+              so the location is recorded at the whole mammillary body level.
+      - id: MBA:239
+        label: "Anterior group of the dorsal thalamus"
+        name_in_source: "anterior thalamus"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "https://doi.org/10.1101/2020.05.14.096818"
+            quote_key: "218686941_736c21b7"
+            method: >
+              projection reported for genetically defined MB cell types; the
+              quoted passage names no tracing method, so the claim is recorded
+              as indirect rather than as traced projection evidence
+            scope: >
+              mouse; reported jointly for the genetically defined MB cell
+              types rather than for any single type, and so applied here to
+              the MB neuron class as a whole
+            support: WEAK
+            notes: >
+              The projection is topographic: different genetically defined MB
+              types reach different parts of the anterior thalamic group. The
+              quote does not say which type reaches which anterior thalamic
+              nucleus, so no subdivision-level target is recorded.
+    nt_type:
+      name_in_source: "not stated in source (inferred glutamatergic)"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "not stated in source (inferred glutamatergic)"
+      sources:
+        - ref: "https://doi.org/10.1101/2020.05.14.096818"
+          method: >
+            inferred, not measured: neither the quoted passage nor the report
+            states a transmitter for MB neurons. Glutamatergic identity is
+            inferred from the well-established excitatory, Slc17a6
+            (Vglut2)-expressing phenotype of mammillary body projection
+            neurons and of the mammillothalamic tract they form
+          scope: "mouse mammillary body"
+          support: WEAK
+          notes: >
+            Recorded so that candidate retrieval has an NT value to score on.
+            No source in this run asserts it; it must be confirmed against a
+            primary paper in evidence-extraction. The inference is a
+            class-level generalisation and does not exclude a minority
+            GABAergic or dual-transmitter population among the MB clusters.
+    definition_references:
+      - "https://doi.org/10.1101/2020.05.14.096818"
+    notes: >
+      Suspected heterogeneity is the defining caveat for this node: the one
+      source that resolves the MB finds several transcriptionally distinct
+      clusters that segregate within the neuroanatomical subdivisions of the
+      MB, so this node is a class containing multiple molecular types rather
+      than a single type. The correspondence between the classical mammillary
+      subnuclei and the atlas clusters is not recoverable from the supplied
+      material, and the clusters are not individually named. No defining
+      markers are recorded: the source states that its populations are defined
+      by suites of discriminatory markers validated by FISH, but the supplied
+      quote lists no MB marker gene, so marker-defined MB classes are known to
+      exist without any marker being citable here. Neuropeptides, morphology,
+      intrinsic electrophysiology and developmental origin are not
+      characterised for MB neurons in the supplied sources, and the
+      neurotransmitter identity is inferred rather than measured (see
+      nt_type.sources). The sole source is a preprint
+      (https://doi.org/10.1101/2020.05.14.096818); its peer-reviewed version
+      should be substituted when the reference store resolves it.
 edges: []
