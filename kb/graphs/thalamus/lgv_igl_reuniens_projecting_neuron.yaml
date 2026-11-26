@@ -65,6 +65,10 @@ nodes:
             method: "projection-defined circuit study (vLGN-to-Re circuit)"
             scope: "mouse vLGN"
             quote_key: "238410529_5d954f1d"
+          - ref: "PMID:34610302"
+            method: "projection-defined circuit study; Re-targeting vLGN neurons found in both vLGN divisions"
+            scope: "mouse vLGN; somata in both external (vLGNe) and internal (vLGNi) divisions"
+            quote_key: "238410529_d3f94584"
       - id: UBERON:0035975
         label: "intergeniculate leaflet of the lateral geniculate complex"
         name_in_source: "intergeniculate leaflet (IGL)"
@@ -119,6 +123,26 @@ nodes:
           scope: "mouse vLGN/IGL"
           support: REFUTE
           quote_key: "226284065_834809d9"
+        - ref: "PMID:34610302"
+          method: "retrograde tracing from Re; labelled vLGN→Re neurons scored for Vgat (100% Vgat+, ~half Gad2-labelled)"
+          scope: "mouse vLGN; Re-projecting population of Salay 2021 (IGL not assessed)"
+          support: SUPPORT
+          quote_key: "238410529_b4b727f3"
+        - ref: "PMID:34610302"
+          method: "anterograde labelling of vLGN GABA (Gad2-Cre) neurons; GFP+ GABA axons observed in Re"
+          scope: "mouse vLGN"
+          support: SUPPORT
+          quote_key: "238410529_c2630f38"
+        - ref: "PMID:35385673"
+          method: "review statement (citing Huang et al.) that CaMKIIa vLGN/IGL neurons provide mixed excitation and inhibition to Re; transmitter not directly measured"
+          scope: "mouse vLGN/IGL, pooled"
+          support: PARTIAL
+          quote_key: "248001630_00a39dfb"
+        - ref: "PMID:37949869"
+          method: "background statement in a research paper: vLGN long-range projections, including to Re, are inhibitory; population-level, not Re-projecting cells specifically"
+          scope: "mouse vLGN"
+          support: WEAK
+          quote_key: "265121419_3358eddc"
     morphology:
       description: >
         Long-range projection neuron whose axons leave the vLGN/IGL and reach
