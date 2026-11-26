@@ -1,0 +1,88 @@
+{
+  "node_id": "dlgn_y_like_relay_cell",
+  "summaries_read": 37,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "skipped_duplicate_quote": 1,
+  "skipped_low_relevance": 12,
+  "skipped_not_this_node": 21,
+  "entries_written": 3,
+  "written": [
+    {
+      "source_corpus_id": "4601077",
+      "field": "anatomical_location[MBA:721 AXON_TARGET].sources (new entry)",
+      "quote_key": "4601077_1ff46308"
+    },
+    {
+      "source_corpus_id": "286491924",
+      "field": "anatomical_location[MBA:496345668].sources",
+      "quote_key": "286491924_11af5437"
+    },
+    {
+      "source_corpus_id": "1639353",
+      "field": "morphology.sources",
+      "quote_key": "1639353_9dec09a7"
+    }
+  ],
+  "fields_populated": [
+    "anatomical_location[].sources",
+    "morphology.sources"
+  ],
+  "fields_with_no_evidence": [
+    "electrophysiology.sources",
+    "nt_type.sources (no new evidence)",
+    "synonyms[].sources (no new)",
+    "GeneDescriptor.sources"
+  ],
+  "synonyms_found": [],
+  "skipped_duplicate_quote_ids": [
+    "16328698"
+  ],
+  "skipped_low_relevance_ids": [
+    "73481430",
+    "271906359",
+    "277785001",
+    "54481879",
+    "264044014",
+    "26076888",
+    "231615058",
+    "3626777",
+    "17166593",
+    "44977478",
+    "249575101",
+    "1519009"
+  ],
+  "skipped_not_this_node_ids": [
+    "5842285",
+    "4524072",
+    "5326680",
+    "4807205",
+    "14389058",
+    "8247989",
+    "3598591",
+    "264598574",
+    "267806869",
+    "10004494",
+    "250147404",
+    "270555191",
+    "1225644",
+    "255985654",
+    "15010690",
+    "255986294",
+    "2891889",
+    "23985202",
+    "4792744",
+    "257758447",
+    "36416152"
+  ],
+  "notes": [
+    "4601077 (PMID:28965517): the core-location and 'symmetrical Y-like cells' quotes are substrings of 4601077_8f3fc6a4, already cited on anatomical_location and morphology; chose the new layer-IV projection quote instead and created a new anatomical_location entry MBA:721 (Primary visual area, layer 4), compartment AXON_TARGET, support WEAK (secondary review statement, target reported jointly for X- and Y-like cells; primary tracing not verified for morphologically identified Y-like cells). Curator may upgrade support after checking Bickford et al. 2015 / Cruz-Martin et al. 2014.",
+    "286491924 (PMID:41814933): 286491924_11af5437 is a substring of 286491924_f2e9799b, but f2e9799b is not cited on anatomical_location on this node (only synonyms/subtype_of/nt_type/morphology), so it was added to the core location.",
+    "16328698 (PMID:22131405): all usable quotes are substrings of 16328698_cc12bb7a, already cited on both morphology and anatomical_location \u2014 skipped as duplicate quote.",
+    "5842285 (PMID:26174426): survey tagged the node, but none of its quotes names Y-like cells \u2014 skipped as not this node.",
+    "1639353 (PMID:26741374) is a new ref on this node (secondary statement citing Krahe et al. 2011); definition_references not changed.",
+    "No electrophysiology, marker or NT-type evidence specific to Y-like cells in the survey.",
+    "at_source_sets untouched per session constraint."
+  ],
+  "reference_store": "references/thalamus"
+}
