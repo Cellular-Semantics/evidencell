@@ -17,7 +17,10 @@ nodes:
 - id: basal_amygdala_fear_neuron
   name: Basal amygdala fear neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "mouse"
   nt_type:
     name_in_source: glutamatergic
     sources:
@@ -88,7 +91,12 @@ nodes:
   definition_references:
   - PMID:25852499
   is_terminal: false
-  notes: Paired with extinction neurons as opposing functional populations within the same nucleus.
+  notes: >-
+    Paired with extinction neurons as opposing functional populations within the same nucleus.
+
+    SPECIES: mouse: the defining sources are mouse studies (e.g. PMID:27767183, PMID:37884748);
+    human and macaque transcriptomic sources (PMID:40961182) are cross-species context. Each
+    source's species is in its scope.
 - id: CS20230722_CLUS_0245
   name: 0245 LA-BLA-BMA-PA Glut_5
   definition_basis: ATLAS_TRANSCRIPTOMIC
