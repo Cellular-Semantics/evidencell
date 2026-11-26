@@ -26,6 +26,29 @@ nodes:
       id: NCBITaxon:10090
       label: Mus musculus
       name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
+    subtype_of:
+      - parent: trn_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:32699411"
+            method: "snRNA-seq of TRN Gad2+ Pvalb+ nuclei (Spp1/Ecel1 as markers for the two TRN sub-populations)"
+            scope: "adult mouse TRN"
+            quote_key: "220696191_9b59d333"
+          - ref: "PMID:39630580"
+            method: "summary of Li et al., 2020 (two TRN neuronal populations; Ecel1+ in the bordering shell)"
+            scope: "mouse TRN"
+            quote_key: "274495776_ea6ec372"
+          - ref: "PMID:41622438"
+            method: "review"
+            scope: "TRN composed of GABAergic inhibitory neurons"
+            quote_key: "285258741_6a1a977c"
+        notes: >
+          Gradient pole: the Ecel1+ end of a continuous Spp1/Ecel1 gradient
+          across TRN neurons, not a discrete cluster. Containment in the TRN
+          population is stated; the boundary with intermediate (DP/DN) cells
+          is a binarised marker call. Hartley et al. 2024 is a follow-up from
+          the same group restating Li et al. 2020, so one source.
     anatomical_location:
       - id: UBERON:0001903
         label: "thalamic reticular nucleus"
@@ -156,8 +179,7 @@ nodes:
       - "PMID:39630580"
     is_terminal: false
     notes: >
-      PARENT / GRADIENT POLE: subtype of trn_gabaergic_neuron. This node is
-      one pole of a continuous Spp1/Ecel1 transcriptomic gradient within
+      GRADIENT POLE: this node is one pole of a continuous Spp1/Ecel1 transcriptomic gradient within
       trn_gabaergic_neuron, not a discrete cluster. Li et al. 2020
       (PMID:32699411, quote 220696191_0d9ab57d) describe TRN heterogeneity as
       "a transcriptomic gradient of two negatively correlated gene-expression
