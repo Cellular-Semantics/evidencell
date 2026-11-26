@@ -1,0 +1,39 @@
+{
+  "node_id": "lgv_igl_sox14_gabaergic_neuron",
+  "summaries_read": 6,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "entries_from_already_cited_papers": 3,
+  "skipped_low_relevance": 5,
+  "skipped_detail": {
+    "4601077": "MODERATE; IGL GH projection to SCN attributed to NPY+/Enk+ IGL neurons, not shown to be Sox14+",
+    "219328889": "MODERATE; vLGN/IGL GABAergic transcriptomic types in general, no Sox14 or node-specific statement",
+    "13741105": "LOW; region-level lineage statement on IGL/vLG inhibitory nuclei",
+    "286491924": "LOW; region-level statement that most vLGN neurons are GABAergic",
+    "255502436": "LOW; retinal terminals in IGL/vLGNe (afferent input, region-level)"
+  },
+  "entries_written": 3,
+  "entries": [
+    {"field": "anatomical_location[UBERON:0001945 superior colliculus, AXON_TARGET].sources", "ref": "PMID:36280260", "quote_key": "247159795_aaf65bdf"},
+    {"field": "anatomical_location[MBA:27 IGL, SOMA].sources", "ref": "PMID:36280260", "quote_key": "247159795_543a9ee7"},
+    {"field": "nt_type.sources", "ref": "PMID:36280260", "quote_key": "247159795_fe42d942"}
+  ],
+  "fields_populated": ["anatomical_location", "nt_type"],
+  "fields_with_no_evidence": ["electrophysiology", "synonyms", "at_source_sets"],
+  "synonyms_found": [],
+  "conflicts": [
+    {
+      "field": "anatomical_location[MBA:286 Suprachiasmatic nucleus, AXON_TARGET]",
+      "existing": "247159795_f4eefc59 reports dense fibers in the SCN",
+      "new": "247159795_aaf65bdf reports few immunoreactive fibers at the ventral edge of the SCN (Fig. 1N)",
+      "action": "not edited; quote not added to SCN; curator to reconcile (likely different labelling methods: immunolabelled fibers vs anterograde tracing)"
+    },
+    {
+      "field": "node definition / anatomical_location (LGv)",
+      "existing": "247159795_d79097dc defines Sox14+ neurons as pTH-R-derived cells of dorsal IGL/LGv, distinct from a ventral prethalamic component",
+      "new": "247159795_543a9ee7 states Sox14+ neurons also contribute to the prethalamic LGv nucleus",
+      "action": "not edited; quote added only as an IGL soma source; curator to check whether 'prethalamic LGv' refers to the nucleus as a whole rather than the cells' origin"
+    }
+  ],
+  "reference_store": "references/thalamus"
+}

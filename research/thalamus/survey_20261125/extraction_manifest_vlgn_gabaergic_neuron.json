@@ -1,0 +1,52 @@
+{
+  "node_id": "vlgn_gabaergic_neuron",
+  "summaries_read": 15,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "entries_from_already_cited_papers": 2,
+  "skipped_low_relevance": 1,
+  "entries_written": 6,
+  "entries": [
+    {"corpus_id": "238410529", "ref": "PMID:34610302", "field": "anatomical_location[Nucleus of reuniens].sources", "quote_key": "238410529_b4b727f3", "fact": "retrograde tracing: all vLGN->Re neurons Vgat+ (direct support; existing Re source was WEAK)"},
+    {"corpus_id": "238410529", "ref": "PMID:34610302", "field": "anatomical_location[superior colliculus].sources", "quote_key": "238410529_2ba8c879", "fact": "retrograde tracing: ~65% of SC-projecting vLGN cells Gad2+"},
+    {"corpus_id": "271906359", "ref": "PMID:39160068", "field": "morphology.sources", "quote_key": "271906359_72e0f428", "fact": "Ecel1+ and Penk+ vLGN cells are not interneurons, may be projection neurons"},
+    {"corpus_id": "247085323", "ref": "PMID:36342840", "field": "morphology.sources", "quote_key": "247085323_f8879717", "fact": "most Gad1+ vLGN cells are principal projection cells, not local interneurons"},
+    {"corpus_id": "210870509", "ref": "PMID:31964831", "field": "morphology.sources", "quote_key": "210870509_4d64bdb2", "fact": "Gad67-GFP interneurons are present but only a fraction of vLGN GABAergic neurons"},
+    {"corpus_id": "6613291", "ref": "PMID:1174957", "field": "anatomical_location[Zona incerta].sources", "quote_key": "6613291_533d569c", "fact": "rat anterograde autoradiography: ipsilateral projection to zona incerta (WEAK: rat, cell type not identified)"}
+  ],
+  "skipped": [
+    {"corpus_id": "265121419", "reason": "Q0 already stored (265121419_b454a596) and nt_type already supported; Q1 (surround suppression via GABAergic SC projection) adds function only, SC target already supported by 265121419_e12d5dfd"},
+    {"corpus_id": "286491924", "reason": "Q0 (most vLGN neurons GABAergic incl. projection neurons) restates facts already supported on nt_type/morphology (36609305); Q1 (13 retinorecipient clusters) has no node field (afferent input)"},
+    {"corpus_id": "219328889", "reason": "Q0 subtype markers of retinorecipient subsets (already stored as 219328889_dd758f7d) do not define the pooled node; Q1 target list already on node via 219328889_9273e4f7"},
+    {"corpus_id": "255502436", "reason": "Q0 already on node (255502436_f64915a5); Q1 lamina-restricted subtype markers (Pvalb/Penk vLGNe, calbindin vLGNi) are not defining markers of the pooled node"},
+    {"corpus_id": "247159795", "reason": "Q0 describes retinal (RGC) input — afferent, no node field"},
+    {"corpus_id": "4601077", "reason": "Q0 already on node (4601077_b2845e93 / 4601077_36a26cfc); Q1 (few VGLUT neurons) already recorded in colocated_types notes from b2845e93"},
+    {"corpus_id": "270412585", "reason": "Q0 same fact as existing LPBN source 270412585_53f9c770"},
+    {"corpus_id": "248001630", "reason": "Q0 same fact as existing LHb source 248001630_8eed194e"},
+    {"corpus_id": "273180341", "reason": "LOW; Q0 does not name vLGN; nt_type already cites 273180341_cfc546fc"},
+    {"corpus_id": "199504544", "reason": "LOW; SC GABAergic input to vLGN (afferent), no evidence about the node's own properties", "counted_as": "skipped_low_relevance"}
+  ],
+  "fields_populated": [
+    "anatomical_location[superior colliculus].sources",
+    "anatomical_location[Zona incerta].sources",
+    "anatomical_location[Nucleus of reuniens].sources",
+    "morphology.sources"
+  ],
+  "fields_with_no_evidence": [
+    "electrophysiology",
+    "defining_markers (no new whole-population marker; Gata2 still from a single pooled IGL/LGv statement)",
+    "negative_markers",
+    "neuropeptides",
+    "at_source_sets"
+  ],
+  "synonyms_found": [],
+  "conflicts": [
+    {
+      "field": "anatomical_location[Nucleus of reuniens] / notes TRANSMITTER CAVEAT",
+      "new": "PMID:34610302 (quote 238410529_b4b727f3): retrograde tracing found all labelled vLGN->Re neurons Vgat+ (GABAergic)",
+      "existing": "node notes cite Huang et al. 2020 (quote 226284065_834809d9) for CaMKIIa vLGN/IGL neurons activating Re, used to justify WEAK support on the Re AXON_TARGET",
+      "action": "new direct-support source added alongside the existing WEAK one; notes not edited. Curator should revisit the Re caveat in notes."
+    }
+  ],
+  "reference_store": "references/thalamus"
+}

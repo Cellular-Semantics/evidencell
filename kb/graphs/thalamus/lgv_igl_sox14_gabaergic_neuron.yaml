@@ -91,6 +91,12 @@ nodes:
             method: "statement in source (pTH-R-derived cells occupy the dorsal region of LGv and IGL; ventral region prethalamic)"
             scope: "mouse LGv and IGL"
             quote_key: "247159795_d79097dc"
+          - ref: "PMID:36280260"
+            method: "statement in source (Sox14+ neurons a thalamic cell class prominently found in the IGL)"
+            scope: "mouse IGL and LGv — Sox14+ neurons"
+            quote_key: "247159795_543a9ee7"
+            notes: "Same passage says Sox14+ neurons also contribute to the prethalamic LGv nucleus; see manifest conflicts."
+            added_by: "evidence_extraction_lgv_igl_sox14_gabaergic_neuron_20261126"
       - id: UBERON:0001945
         label: "superior colliculus"
         name_in_source: "superior colliculus"
@@ -100,6 +106,12 @@ nodes:
             method: "anterograde tracing of Sox14+ neurons"
             scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled across LGv and IGL"
             quote_key: "247159795_9ed56c01"
+          - ref: "PMID:36280260"
+            method: "immunolabelled Sox14+ fibers (Fig. 1M; reporter/antibody not named in quote)"
+            scope: "mouse — Sox14+ IGL/LGv neurons; dense innervation of superficial gray and optic layers of SC"
+            quote_key: "247159795_aaf65bdf"
+            notes: "Locates the SC innervation to the superficial gray and optic layers (SCs)."
+            added_by: "evidence_extraction_lgv_igl_sox14_gabaergic_neuron_20261126"
       - id: MBA:1100
         label: "Pretectal region"
         name_in_source: "pretectum / pretectal nuclei"
@@ -211,6 +223,11 @@ nodes:
           method: "statement citing prior work (IGL/LGv almost entirely GABAergic)"
           scope: "mouse IGL/LGv"
           quote_key: "247159795_aeeef91c"
+        - ref: "PMID:36280260"
+          method: "statement in source (mature IGL and LGv include Sox14+ GABAergic thalamic neurons)"
+          scope: "mouse IGL and LGv — Sox14+ neurons"
+          quote_key: "247159795_fe42d942"
+          added_by: "evidence_extraction_lgv_igl_sox14_gabaergic_neuron_20261126"
     morphology:
       description: >
         Projection neuron morphology: sparse local arborization with a main

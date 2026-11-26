@@ -70,6 +70,66 @@ nodes:
             method: "statement in source (vLGN divided into retinorecipient vLGNe and nonretinorecipient vLGNi)"
             scope: "mouse vLGN"
             quote_key: "271906359_1bfec86c"
+          - ref: "PMID:32497303"
+            method: "anterograde trans-synaptic tracing from retina (no retinorecipient cells found in vLGNi)"
+            scope: "mouse vLGN"
+            quote_key: "219328889_820551ba"
+            notes: >
+              Supports the non-retinorecipient qualifier of the vLGNi location.
+              The authors leave open that vLGNi dendrites extend into vLGNe and
+              receive monosynaptic retinal input there.
+            added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
+          - ref: "PMID:39160068"
+            method: "morphometry of vLGN divisions during postnatal development"
+            scope: "mouse vLGN, P1"
+            quote_key: "271906359_f32a2d7f"
+            notes: >
+              vLGNi occupies 40% of vLGN area at P1 (vLGNe 60%).
+            added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
+          - ref: "PMID:41814933"
+            method: "statement in introduction (vLGNi is not retinorecipient)"
+            scope: "mouse vLGN"
+            quote_key: "286491924_3b5c8288"
+            added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
+          - ref: "PMID:25011644"
+            method: "immunolabelling of excitatory nerve terminals (VGluT2 per survey summary; antibody not named in quote)"
+            scope: "mouse visual thalamus"
+            quote_key: "1225644_3047ab36"
+            notes: >
+              Little terminal immunoreactivity in the non-retinorecipient
+              internal division of vLGN, consistent with the absence of retinal
+              terminals there.
+            added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
+          - ref: "PMID:36609305"
+            method: "comparison of vLGNi transcriptome and cellular organization with vLGNe and adjacent caudal prethalamic regions"
+            scope: "mouse vLGN"
+            quote_key: "255502436_b168fba5"
+            notes: >
+              vLGNi is more closely aligned with adjacent caudal prethalamic
+              regions such as zona incerta than with vLGNe.
+            added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
+      - id: UBERON:0001945
+        label: "superior colliculus"
+        name_in_source: "SC"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34610302"
+            method: "projection-defined vLGN neurons localised to vLGN divisions; tracing method not named in quote, and the quote does not state the cells are GABAergic"
+            scope: "mouse vLGN; SC-projecting neurons in both vLGNe and vLGNi"
+            quote_key: "238410529_25c6892a"
+            support: WEAK
+            added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
+      - id: MBA:181
+        label: "Nucleus of reuniens"
+        name_in_source: "Re"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34610302"
+            method: "projection-defined vLGN neurons localised to vLGN divisions; tracing method not named in quote, and the quote does not state the cells are GABAergic"
+            scope: "mouse vLGN; Re-projecting neurons in both vLGNe and vLGNi"
+            quote_key: "238410529_25c6892a"
+            support: WEAK
+            added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
     defining_markers:
       - name_in_source: "Sox14"
         ncbi_gene_id: "NCBIGene:20669"
@@ -84,6 +144,16 @@ nodes:
             notes: >
               Enrichment, not exclusivity: Sox14+ cells are also present,
               sparsely, in vLGNe and IGL.
+          - ref: "PMID:36280260"
+            marker_type: NOT_STATED
+            method: "introduction statement (Sox14+ GABAergic thalamic neurons in mature IGL and LGv); assay not named in quote"
+            scope: "mouse IGL/LGv, pooled"
+            quote_key: "247159795_fe42d942"
+            notes: >
+              Region-level (IGL and LGv), not vLGNi-specific; adds that the
+              Sox14+ cells are GABAergic. "Sox14 1" in the quote is the
+              source's rendering of "Sox14+".
+            added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
     nt_type:
       name_in_source: "GABAergic"
       cl_terms:
@@ -99,6 +169,32 @@ nodes:
           method: "statement citing prior work (virtually all vLGN neurons GABAergic, including projection neurons)"
           scope: "mouse vLGN"
           quote_key: "255502436_f64915a5"
+        - ref: "PMID:41814933"
+          method: "statement in introduction (majority of vLGN neurons GABAergic, not glutamatergic)"
+          scope: "mouse vLGN (whole nucleus, not vLGNi-specific)"
+          quote_key: "286491924_5e2fd66c"
+          added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
+        - ref: "PMID:28965517"
+          method: "review statement (vLGN has a far higher GABAergic population than dLGN)"
+          scope: "rodent vLGN (whole nucleus, not vLGNi-specific)"
+          quote_key: "4601077_36a26cfc"
+          added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
+    electrophysiology:
+      description: >
+        Receives excitatory synaptic input from layer V corticothalamic
+        terminals: optogenetic stimulation of these terminals evoked excitatory
+        postsynaptic activity in 10 of 21 vLGNi neurons tested (acute slice).
+        Firing properties not characterised in the source passages.
+      sources:
+        - ref: "PMID:36609305"
+          method: "whole-cell patch-clamp with optogenetic stimulation of layer V corticothalamic terminals"
+          scope: "mouse vLGNi, acute slice"
+          quote_key: "255502436_c6353105"
+          notes: >
+            Recorded cells are vLGNi neurons; their GABAergic identity is
+            inferred from virtually all vLGN neurons being GABAergic, not
+            tested per cell in the quote.
+          added_by: "evidence_extraction_vlgni_gabaergic_neuron_20261126"
     morphology:
       description: >
         vLGNi is the parvocellular division of vLGN, in contrast to the

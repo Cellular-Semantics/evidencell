@@ -1,0 +1,32 @@
+{
+  "node_id": "lgv_igl_reuniens_projecting_neuron",
+  "summaries_read": 4,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "entries_from_already_cited_papers": 3,
+  "skipped_low_relevance": 1,
+  "skipped_entries": [
+    {"source_corpus_id": "4601077", "reason": "LOW relevance; IGL neurochemistry background only, no mention of Re projection or CaMKIIa"}
+  ],
+  "entries_written": 5,
+  "entries": [
+    {"field": "anatomical_location[UBERON:0002480].sources", "ref": "PMID:34610302", "quote_key": "238410529_d3f94584", "new_quote": true},
+    {"field": "nt_type.sources", "ref": "PMID:34610302", "quote_key": "238410529_b4b727f3", "support": "SUPPORT", "new_quote": false, "note": "reused from store per D6 (retrograde tracing, 100% Vgat+)"},
+    {"field": "nt_type.sources", "ref": "PMID:34610302", "quote_key": "238410529_c2630f38", "support": "SUPPORT", "new_quote": false, "note": "reused from store per D6 (Gad2-Cre GABA axons in Re)"},
+    {"field": "nt_type.sources", "ref": "PMID:35385673", "quote_key": "248001630_00a39dfb", "support": "PARTIAL", "new_quote": true},
+    {"field": "nt_type.sources", "ref": "PMID:37949869", "quote_key": "265121419_3358eddc", "support": "WEAK", "new_quote": true}
+  ],
+  "fields_populated": ["anatomical_location[vLGN].sources", "nt_type.sources"],
+  "fields_with_no_evidence": ["electrophysiology", "morphology (no new quote beyond existing sources)", "synonyms (none new)"],
+  "synonyms_found": [],
+  "conflicts": [
+    "nt_type: Salay 2021 (PMID:34610302) retrograde tracing finds all vLGN->Re neurons Vgat+ (238410529_b4b727f3), while Huang 2020 (PMID:33171117, 226284065_834809d9) labels Re-projecting vLGN/IGL cells as CaMKIIa neurons that activate Re neurons, and the Kerschensteiner review (PMID:35385673, 248001630_00a39dfb) describes them as giving a mixture of excitation and inhibition to Re. Unresolved whether the CaMKIIa (likely promoter-driven viral) population and the Vgat+ population are the same cells, or whether the CaMKIIa label is non-specific. Existing nt_type (GABAergic) and notes left unedited; the GABA call is now supported by direct tracing evidence (Vgat+), the REFUTE source remains.",
+    "Huang et al. cited in PMID:35385673 as 'Huang et al. 2021' is presumably the same study as PMID:33171117 (Huang 2020); year mismatch not resolved."
+  ],
+  "not_added_for_cap": [
+    "248001630_00a39dfb also supports the CaMKIIa marker and IGL soma location, but D2 allows one entry per quote; used on nt_type",
+    "238410529_b4b727f3 would also be direct retrograde-tracing evidence for the Re AXON_TARGET location (existing Re sources say tracing method not named); not added (3-entry cap for this summary)",
+    "265121419_3358eddc also supports Re as AXON_TARGET (WEAK, population-level); used on nt_type instead"
+  ],
+  "reference_store": "references/thalamus"
+}
