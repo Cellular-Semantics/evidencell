@@ -1,0 +1,90 @@
+{
+  "node_id": "dlgn_x_like_relay_cell",
+  "summaries_read": 37,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "skipped_duplicate_quote": 0,
+  "skipped_low_relevance": 12,
+  "skipped_not_this_node": 21,
+  "entries_written": 4,
+  "written": [
+    {
+      "source_corpus_id": "4601077",
+      "field": "morphology.sources",
+      "quote_key": "4601077_32262ceb"
+    },
+    {
+      "source_corpus_id": "16328698",
+      "field": "morphology.sources",
+      "quote_key": "16328698_4fb69683"
+    },
+    {
+      "source_corpus_id": "286491924",
+      "field": "anatomical_location[MBA:496345668].sources",
+      "quote_key": "286491924_11af5437"
+    },
+    {
+      "source_corpus_id": "1639353",
+      "field": "morphology.sources",
+      "quote_key": "1639353_9dec09a7"
+    }
+  ],
+  "fields_populated": [
+    "morphology.sources",
+    "anatomical_location[].sources"
+  ],
+  "fields_with_no_evidence": [
+    "electrophysiology.sources",
+    "nt_type.sources",
+    "synonyms[].sources",
+    "GeneDescriptor.sources"
+  ],
+  "synonyms_found": [],
+  "skipped_low_relevance_ids": [
+    "73481430",
+    "271906359",
+    "277785001",
+    "54481879",
+    "264044014",
+    "26076888",
+    "231615058",
+    "3626777",
+    "17166593",
+    "44977478",
+    "249575101",
+    "1519009"
+  ],
+  "skipped_not_this_node_ids": [
+    "5842285",
+    "4524072",
+    "5326680",
+    "4807205",
+    "14389058",
+    "8247989",
+    "3598591",
+    "264598574",
+    "267806869",
+    "10004494",
+    "250147404",
+    "270555191",
+    "1225644",
+    "255985654",
+    "15010690",
+    "255986294",
+    "2891889",
+    "23985202",
+    "4792744",
+    "257758447",
+    "36416152"
+  ],
+  "notes": [
+    "5842285 (Developmental remodeling, PMID:26174426): survey tagged the node, but none of its three quotes names X-like cells (generic relay-cell statements) \u2014 skipped as not this node.",
+    "All other HIGH/MODERATE entries concern other dLGN types (core/shell, W-like, direction-selective, relay/combination mode), interneurons, or relay cells generally with no X-like mention \u2014 skipped as not this node.",
+    "16328698_4fb69683 is a shorter snippet of the same sentence already stored as 16328698_cc12bb7a (already on morphology); added because the quote_key differs (session rule: skip only identical quote_key). Curator may wish to dedupe.",
+    "286491924_11af5437 (X- and Y-like cells occupy the core) is a substring of the already-cited ASTA_REPORT quote 286491924_f2e9799b; added as a distinct key.",
+    "1639353 (PMID:26741374) is a new ref on this node; secondary statement citing Krahe et al. 2011.",
+    "No electrophysiology, marker or NT-type evidence specific to X-like cells in the survey; location disagreement (monocular ventral region vs ventromedial core) unchanged \u2014 new evidence is review-level support for 'core'.",
+    "at_source_sets untouched per session constraint."
+  ],
+  "reference_store": "references/thalamus"
+}

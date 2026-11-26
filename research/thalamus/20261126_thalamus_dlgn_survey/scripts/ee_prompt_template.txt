@@ -50,6 +50,11 @@ Fields that take this paper's evidence, as sources lists:
   again. Instead, skip only when the exact same quote_key is already present
   in the chosen field's sources list on this node (no duplicate entries).
   write_quote_to_refs() returns the existing key for an already-stored quote.
+  Also skip (as skipped_duplicate_quote) when the chosen quote text is a
+  substring or superstring of a quote already cited in that same field from
+  the same paper — unless it is clearly more specific to the claim, in which
+  case say why in the manifest notes. Check by reading the quote texts in
+  references/thalamus/quotes/{corpus_id}.json before writing.
 - Each summary carries `relevant_node_ids` (the survey agent's judgement) and
   `quote_sections` (parallel to `quotes`; use it as the section for step 3d).
   Use relevant_node_ids as a hint only; the decision in 3a is yours.
