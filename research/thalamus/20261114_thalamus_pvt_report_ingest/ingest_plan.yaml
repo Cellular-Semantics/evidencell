@@ -1,0 +1,68 @@
+# Continuation of the 2026-11-14 PVT report ingest (2026-11-26, branch
+# content/thalamus-pvt-subtypes). Identity decisions were made at the curator
+# gate on PR #253; see planning/content-notes/pvt_subtypes_to_ingest.md.
+# run_quotes.json and schema_subset.yaml in this dir were rebuilt on 2026-11-26
+# (the original run predates them): run_quotes.json = every store quote for the
+# corpus ids in pdf_corpus_ids.json.
+run_id: 20261114_thalamus_pvt_report_ingest
+continuation_date: "2026-11-26"
+types:
+  - node_id: apvt_glutamatergic_neuron
+    action: NEW
+    file: kb/graphs/thalamus/apvt_glutamatergic_neuron.yaml
+    report_sections:
+      - "Paraventricular and other midline glutamatergic neurons"
+      - "Connectivity: afferents, efferents, and pathway organization"
+      - "projection neurons"
+    reconciliation_note: >
+      Anterior pole of the PVT antero-posterior axis (Shima 2022; Gao 2023
+      aPVT/pPVT). Narrower than pvt_glutamatergic_neuron (NEW, subtype_of).
+      Broader than apvt_crh_neuron and apvt_gck_neuron, which are re-parented
+      under it. Gao PVT2/PVT4/PVT5 (anterior clusters) are deferred candidate
+      children, not nodes.
+    identity_conflicts: []
+    unplaced: []
+  - node_id: ppvt_glutamatergic_neuron
+    action: NEW
+    file: kb/graphs/thalamus/ppvt_glutamatergic_neuron.yaml
+    report_sections:
+      - "Paraventricular and other midline glutamatergic neurons"
+      - "Connectivity: afferents, efferents, and pathway organization"
+      - "projection neurons"
+    reconciliation_note: >
+      Posterior pole of the PVT antero-posterior axis (Shima 2022; Gao 2023
+      aPVT/pPVT). Narrower than pvt_glutamatergic_neuron (NEW, subtype_of).
+      Gao PVT1 and the pPVT-CeA projection population (Liang 2020; Pliota
+      2018) are deferred candidate children, not nodes.
+    identity_conflicts: []
+    unplaced: []
+  - node_id: apvt_crh_neuron
+    action: ENRICH
+    file: kb/graphs/thalamus/apvt_crh_neuron.yaml
+    report_sections: []
+    reconciliation_note: >
+      Identity only: subtype_of re-parented from pvt_glutamatergic_neuron to
+      apvt_glutamatergic_neuron (narrowest parent), on curator instruction.
+      No new property evidence in the pool; Step 5 not dispatched.
+    identity_conflicts: []
+    unplaced: []
+  - node_id: apvt_gck_neuron
+    action: ENRICH
+    file: kb/graphs/thalamus/apvt_gck_neuron.yaml
+    report_sections: []
+    reconciliation_note: >
+      Identity only: subtype_of re-parented to apvt_glutamatergic_neuron, as
+      for apvt_crh_neuron. Step 5 not dispatched.
+    identity_conflicts: []
+    unplaced: []
+  - node_id: pvt_glutamatergic_neuron
+    action: ENRICH
+    file: kb/graphs/thalamus/pvt_glutamatergic_neuron.yaml
+    report_sections: []
+    reconciliation_note: >
+      Identity: subtype_of thalamic_glutamatergic_projection_neuron added.
+      Notes: the aPVT/pPVT description moves to the new child nodes; the
+      deferred candidates stay described in the umbrella notes. Already
+      characterised from this run on 2026-11-14; Step 5 not re-dispatched.
+    identity_conflicts: []
+    unplaced: []
