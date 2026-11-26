@@ -27,6 +27,27 @@ nodes:
       id: NCBITaxon:10090
       label: Mus musculus
       name_in_source: "mouse"
+    subtype_of:
+      - parent: thalamic_glutamatergic_projection_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:33584216"
+            method: "review statement (PVT composed of glutamatergic projection neurons)"
+            scope: "rodent PVT"
+            quote_key: "231597608_cf2b3bf6"
+          - ref: "PMID:39282422"
+            method: "cross-species integration of thalamic projection (excitatory) neurons"
+            scope: "human and mouse thalamus — PVT-derived clusters among thalamic projection neurons"
+            quote_key: "272427114_60413ccc"
+          - ref: "PMID:41501055"
+            method: "snRNA-seq + spatial deconvolution"
+            scope: "human medial thalamus — putative PVT neurons (ExN_Tha_CALB) among thalamic excitatory neurons"
+            quote_key: "284543245_c5367a6e"
+        notes: >
+          Defined as the thalamic glutamatergic projection neuron narrowed by
+          nucleus (PVT). The Curtis et al. statement is hedged ("believed to
+          be"); the Nishioka et al. evidence is human only.
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
@@ -372,8 +393,8 @@ nodes:
       SPECIES: species left null — mouse and human sources pooled (rat
       sources added 2026-11-14).
 
-      Member of the thalamic_glutamatergic_projection_neuron family (tertiary
-      end of the trans-thalamic transcriptional gradient).
+      GRADIENT POSITION: tertiary end of the trans-thalamic transcriptional
+      gradient.
 
       ENRICHMENT 2026-11-14 (PVT_Glut report; run
       20261114_thalamus_pvt_report_ingest). This node is treated as an
@@ -399,10 +420,9 @@ nodes:
       Weak/scattered PVALB and CALB1 immunoreactivity, typical of
       matrix-like higher-order thalamus (PMID:22606998).
 
-      MARKER-DEFINED SUBSETS written as separate nodes: apvt_gck_neuron
-      (Gck+ anterior PVT; Gaspari et al. 2022) and apvt_crh_neuron (CRF+
-      anterior PVT; Engelke et al. 2021, rat). Relationship of either to the
-      PVT1-5 clusters is unresolved.
+      MARKER-DEFINED SUBSETS: the relationship of apvt_gck_neuron (Gaspari et
+      al. 2022) and apvt_crh_neuron (Engelke et al. 2021, rat) to the PVT1-5
+      clusters is unresolved.
 
       NOT RECORDED (insufficient direct support in the quote store): the
       report also mentions Slc17a7, Pdyn, Cartpt, Bdnf and Gck for this

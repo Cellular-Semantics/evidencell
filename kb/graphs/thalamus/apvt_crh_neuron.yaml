@@ -27,6 +27,26 @@ nodes:
       id: NCBITaxon:10116
       label: Rattus norvegicus
       name_in_source: "Rats (MeSH organisms of cited primary papers; inferred, #216)"
+    subtype_of:
+      - parent: pvt_glutamatergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:33947849"
+            method: "statement in source (CRF-expressing subpopulation of aPVT neurons)"
+            scope: "adult rat anterior PVT"
+            quote_key: "233741825_efb846f2"
+          - ref: "PMID:34220458"
+            method: "review (PVT-wide vGLUT2 mRNA; no intrinsic GABAergic neurons)"
+            scope: "rodent PVT (whole nucleus)"
+            quote_key: "235466185_0d1595b7"
+        notes: >
+          Defined as PVT neurons narrowed by AP position (anterior) and marker
+          (CRF). The source states the cells are a subpopulation of aPVT
+          neurons; that they are glutamatergic projection neurons is inferred
+          from PVT-wide vGLUT2 expression, not stated for CRF+ cells, hence LOW.
+          A narrower anterior-PVT parent is proposed but not yet a node
+          (planning/content-notes/pvt_subtypes_to_ingest.md).
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
@@ -100,11 +120,6 @@ nodes:
       - "PMID:33947849"
     is_terminal: false
     notes: >
-      SUBSET OF pvt_glutamatergic_neuron: this is a marker-defined
-      subpopulation of the PVT glutamatergic projection neuron (anterior PVT).
-      The schema has no parent/subtype slot on CellTypeNode, so the
-      relationship is recorded here only.
-
       EVIDENCE LIMITS: rat-only and connectivity/behaviour-only, from a single
       study (Engelke et al. 2021; PMID:33947849). The report mentions this
       population only in its connectivity section, not in its subtype

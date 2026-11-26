@@ -26,6 +26,26 @@ nodes:
       id: NCBITaxon:10090
       label: Mus musculus
       name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
+    subtype_of:
+      - parent: pvt_glutamatergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:35303367"
+            method: "statement in source (Gck-defined subpopulation of PVT neurons)"
+            scope: "adult mouse anterior PVT"
+            quote_key: "247548117_93d5fc5f"
+          - ref: "PMID:34220458"
+            method: "review (PVT-wide vGLUT2 mRNA; no intrinsic GABAergic neurons)"
+            scope: "rodent PVT (whole nucleus)"
+            quote_key: "235466185_0d1595b7"
+        notes: >
+          Defined as PVT neurons narrowed by AP position (anterior) and marker
+          (Gck). The source states the cells are a subpopulation of PVT
+          neurons; that they are glutamatergic projection neurons is inferred
+          from PVT-wide vGLUT2 expression, not stated for Gck+ cells, hence LOW.
+          A narrower anterior-PVT parent is proposed but not yet a node
+          (planning/content-notes/pvt_subtypes_to_ingest.md).
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
@@ -84,11 +104,6 @@ nodes:
       - "PMID:35303367"
     is_terminal: false
     notes: >
-      SUBSET OF pvt_glutamatergic_neuron: this is a marker-defined
-      subpopulation of the PVT glutamatergic projection neuron (anterior PVT).
-      The schema has no parent/subtype slot on CellTypeNode, so the
-      relationship is recorded here only.
-
       NT TYPE INFERRED: glutamatergic identity is inferred from PVT
       principal-cell context (PVT-wide vGLUT2 expression and absence of
       intrinsic GABAergic neurons), not shown directly for Gck+ cells by the
