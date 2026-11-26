@@ -1,0 +1,45 @@
+{
+  "node_id": "vlgne_gabaergic_neuron",
+  "summaries_read": 14,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "entries_from_already_cited_papers": 4,
+  "skipped_low_relevance": 3,
+  "entries_written": 4,
+  "written": [
+    {"corpus_id": "219328889", "ref": "PMID:32497303", "field": "anatomical_location[MBA:300].sources", "quote_key": "219328889_dd758f7d"},
+    {"corpus_id": "271906359", "ref": "PMID:39160068", "field": "anatomical_location[MBA:300].sources", "quote_key": "271906359_4845a0c8"},
+    {"corpus_id": "255502436", "ref": "PMID:36609305", "field": "anatomical_location[MBA:300].sources", "quote_key": "255502436_ed94c20e"},
+    {"corpus_id": "4601077", "ref": "PMID:28965517", "field": "nt_type.sources", "quote_key": "4601077_36a26cfc"}
+  ],
+  "skipped": [
+    {"corpus_id": "286491924", "reason": "No field supported; recorded as conflict/caveat (retinorecipient vLGN cells include excitatory clusters)."},
+    {"corpus_id": "238410529", "reason": "vLGN Gad2+ axons to SC and Re; pooled vLGN, no lamina or retinal-input link to attribute to vLGNe. Candidate AXON_TARGET left for curator."},
+    {"corpus_id": "270412585", "reason": "Only quote is identical to existing 270412585_53f9c770 on LPBN."},
+    {"corpus_id": "247159795", "reason": "IGL/LGv -> LHb inhibition cites Huang et al. 2019 (PMID:30795900), already on LHb; pooled IGL/LGv; Sox14 already handled in node notes."},
+    {"corpus_id": "255985654", "reason": "Layer V cortical input to vLGN; no node field for afferents."},
+    {"corpus_id": "1225644", "reason": "Inhibitory terminal abundance in vLGN; describes terminals, not the node's somata or NT identity."},
+    {"corpus_id": "265121419", "reason": "vLGN VGAT+ axons to superficial SC; pooled vLGN, not attributable to vLGNe. Candidate AXON_TARGET left for curator."},
+    {"corpus_id": "6613291", "reason": "LOW; rat vLGN projections, no lamina/GABA specificity."},
+    {"corpus_id": "210870509", "reason": "LOW; vLGN/IGL GABAergic fraction redundant with existing nt_type sources."},
+    {"corpus_id": "247085323", "reason": "LOW; region-level function statement."}
+  ],
+  "quotes_not_used_from_written_papers": [
+    {"corpus_id": "219328889", "quote": "we revealed a remarkably organized laminar architecture of vLGNe...", "reason": "same fact as existing 219328889_ea819292"},
+    {"corpus_id": "271906359", "quote": "vLGNe can be further divided into at least four subtype-specific layers...", "reason": "same fact as existing 271906359_1bfec86c"},
+    {"corpus_id": "271906359", "quote": "indicating that these markers correspond to the same GABAergic neuronal subtype.", "reason": "Lypd1/Ecel1 subtype marker; not a node-level marker"},
+    {"corpus_id": "255502436", "quote": "with Neurexophilin-1 (Nxph1) mRNA being confined to vLGNe", "reason": "region-level mRNA distribution; quote does not say Nxph1 marks vLGNe GABAergic neurons as a whole. Candidate marker for curator review."},
+    {"corpus_id": "4601077", "quote": "the magnocellular external vLGN (vLGNe)...", "reason": "substring of existing 4601077_b2845e93"}
+  ],
+  "marker_candidates_not_added": [
+    "Pvalb, Penk, Ecel1, Spp1 (PMID:32497303, PMID:36609305): each marks a vLGNe sublamina/subtype, not the pooled node; adding them as defining_markers would contradict the node's existing notes (no markers for vLGNe GABAergic neurons as a whole). Better placed on subtype child nodes.",
+    "Nxph1 (PMID:36609305): mRNA confined to vLGNe; cell-type coverage not stated."
+  ],
+  "fields_populated": ["anatomical_location[MBA:300].sources", "nt_type.sources"],
+  "fields_with_no_evidence": ["electrophysiology", "defining_markers", "negative_markers", "neuropeptides", "at_source_sets"],
+  "synonyms_found": [],
+  "conflicts": [
+    {"corpus_id": "286491924", "ref": "PMID:41814933", "quote": "Of note, these retinorecipient cells were evenly distributed among clusters and included clusters positive for excitatory markers (clusters 12 and 13).", "issue": "Retinorecipient vLGN neurons include excitatory clusters; the node's 'retinorecipient' + 'GABAergic' definition covers only part of the retinorecipient vLGN population. Does not refute nt_type of this node; not written."}
+  ],
+  "reference_store": "references/thalamus"
+}
