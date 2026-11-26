@@ -53,7 +53,10 @@ nodes:
     - id: CL:0000617
       label: GABAergic neuron
       name_in_source: GABAergic
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "mouse"
   anatomical_location:
   - id: UBERON:0002883
     sources:
@@ -81,7 +84,12 @@ nodes:
   definition_references:
   - PMID:32751957
   is_terminal: false
-  notes: Likely overlaps with fast-spiking internuncial neurons of CeA, though direct mapping not given.
+  notes: >-
+    Likely overlaps with fast-spiking internuncial neurons of CeA, though direct mapping not given.
+
+    SPECIES: mouse: the cited primary sources that state a species are mouse (PMID:20484636,
+    PMID:37884748); the remaining sources are reviews and literature syntheses without a stated
+    species. Each source's species is in its scope.
   electrophysiology:
     description: 'Electrophysiologically heterogeneous; two physiological types described: type A (75%,
       low-threshold response) and type B (25%, high-threshold), plus fast-spiking internuncial neurons

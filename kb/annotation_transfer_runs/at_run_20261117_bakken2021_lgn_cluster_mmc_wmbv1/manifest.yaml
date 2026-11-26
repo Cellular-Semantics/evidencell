@@ -1,0 +1,106 @@
+id: at_run_20261117_bakken2021_lgn_cluster_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE182211"
+source_cluster_label: >
+  Bakken et al. 2021 (PMID:34473054) mouse SMART-seq v4 single cells from
+  dLGN-core, dLGN-shell, LP and LGv microdissections, labelled by the
+  published cluster (GEO metadata column `cluster_label`): LGd (1012),
+  Chrna2 (252), LP (193), Chrna1 (146), GABA5 (126), GABA6 (82), GABA1 (54),
+  Chrna3 (54), Oligo1 (53), GABA3 (42), Oligo2 (28), GABA2 (26), GABA4 (19),
+  LGv (15), Oligo3 (12). "Low Quality" (73 cells) dropped. The paper's
+  'dLGN' glutamatergic cluster is "LGd" here. The authors assign three
+  GABAergic types to dLGN (Chrna6/Sox14-expressing; Chrna1-3 by name and by
+  marker profile in these counts) and the other GABAergic types to LP, LGv,
+  IGL and RT. Macaque and human cells in the same series are out of scope.
+  SOURCE-LABEL PURITY: LGd is one transcriptomic cluster covering a graded
+  core-shell axis (pure by type, continuous within). Chrna1-3 are
+  transcriptomic subtypes of one classical type (dLGN interneuron), so
+  per-label purity against a shared WMB target is diluted by the sibling
+  labels; see the pooled companion run.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.5, hierarchical, default
+  parameters, raw normalization, 100 bootstrap iterations) via
+  `annotation-transfer map-local`. Query counts = exon + intron read counts
+  per gene (the paper's quantification), raw integer SMART-seq v4 read
+  counts, not UMIs. Gene symbols remapped to Ensembl IDs with
+  conf/gene_mapping_CCN20230722.tsv (22,304 of 45,768 symbols mapped to
+  unique Ensembl IDs). 73 "Low Quality" cells removed -> 2,114 cells. F1
+  scored with `annotation-transfer score` at bootstrap threshold 0.8 against
+  labels_cluster.json. Cells passing the threshold: class 2112, subclass
+  2111, supertype 2024, cluster 1943.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 2187
+n_cells_after_filter: 2114
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "86bfcc0 (branch base; run 2026-11-17)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Training independence: WMBv1 was built from 10xv2, 10xv3 and 1,687
+  10x Multiome nuclei (Yao et al. 2023, PMID:38092916); these SMART-seq v4
+  cells are not in WMBv1 training, so the mapping is an independent test.
+  (2) Platform mismatch: full-length SMART-seq v4 read counts (median 1.75 M
+  reads/cell) mapped as raw counts against a UMI-based 10x reference. No
+  gene-length correction was applied (raw counts, not TPM); long genes are
+  over-weighted relative to the reference. The near-1.0 F1 for LGd, GABA1
+  and the oligodendrocyte lineage suggests this does not move assignments
+  at subclass/supertype, but cluster-level splits may be affected.
+  (3) Chrna1-3 (dLGN interneurons) share WMB subclass 213 / supertype 0872,
+  so their per-label F1 (0.21-0.71 at subclass) understates the match. The
+  pooled run at_run_20261117_bakken2021_lgn_dlgnin_mmc_wmbv1 gives the
+  node-level figure (subclass F1 0.999). WMB names this subclass "SCsg
+  Gabrr2 Gaba" (superior colliculus superficial grey); its clusters 3797,
+  3798, 3802 and 3803 carry LGd as their top thalamic MERFISH nucleus, and
+  3798 is about half thalamic. The dLGN interneurons are grouped with SC
+  GABAergic cells, consistent with their tectal origin; the target is
+  broader than dLGN interneurons.
+  (4) "LGv" (15 cells, glutamatergic) maps to cortical L4/5 IT CTX Glut; 11
+  of its cells carried the 2018 label "HIP Exc Neurod6". Treat it as
+  dissection contamination, uninformative.
+  (5) Thin labels: GABA4 (n=19), LGv (15), Oligo3 (12); Oligo3 cluster-level
+  F1 rests on 2 cells.
+  (6) Purity is within this dataset only (dLGN/LP/LGv dissections); it says
+  nothing about WMB cells from other regions in the same target.
+  (7) Label vocabulary: the GEO metadata also has `org_cl.lab`, a 1:1
+  permutation of `cluster_label` names (Chrna1<->Chrna2, GABA names
+  shuffled). `cluster_label` is used (it carries cluster_id and colours);
+  the Chrna1-3 set is identical under both. All cells male, adult;
+  tdTomato+ FACS from Snap25/Slc17a6/Slc32a1/Gad2-Cre;Ai14 mice.
+  (8) mmc_results.csv is shared with
+  at_run_20261117_bakken2021_lgn_coreshell_mmc_wmbv1 and
+  at_run_20261117_bakken2021_lgn_dlgnin_mmc_wmbv1 (derived label schemes on
+  the same mapping).
+
+metadata: >
+  source_paper=PMID:34473054; source_files=GSE182211_mouse_LGN_2021_exon-matrix.csv.gz,
+  GSE182211_mouse_LGN_2021_intron-matrix.csv.gz, GSE182211_mouse_LGN_2021_metadata.csv.gz;
+  geo_exon_sha256=fd6148767afee344aa5c169a2d0e5f271b6de0b4811df03dd9ef1182ef5423cb;
+  geo_intron_sha256=6f9ca915b441cbb2b84cab70d91211e31fdfdce55b0a79acab76aee320519ae2;
+  geo_metadata_sha256=c99ab4f2224f357b8c5a8879c53558d40d07594533fa98e388d46bc979f45eee;
+  marker_lookup=mouse_markers_230821.json;
+  marker_lookup_sha256=3e2a6a7beb9ab265ff545e9f8dc993b2c0ac6ae66b5e8825c42f8166a2f51035;
+  mmc_results=mmc_results.csv;
+  mmc_results_sha256=779f37d7ef13948f55f54bd260cb0807412db1ce6cf566598d2fb2d050b2d78d;
+  label_distribution=label_distribution.tsv

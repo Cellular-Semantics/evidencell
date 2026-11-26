@@ -18,7 +18,10 @@ nodes:
 - id: mea_glutamatergic_projection_neuron
   name: Medial amygdala glutamatergic projection neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "mouse"
   nt_type:
     name_in_source: Glutamatergic
     sources:
@@ -94,8 +97,13 @@ nodes:
   - PMID:38419794
   - PMID:39012795
   is_terminal: false
-  notes: Minority class — MeA is predominantly GABAergic but contains this distinct glutamatergic projection
-    population.
+  notes: >-
+    Minority class — MeA is predominantly GABAergic but contains this distinct glutamatergic
+    projection population.
+
+    SPECIES: mouse: the defining sources are mouse studies (PMID:20507551, PMID:22960119,
+    PMID:37884748); the zebrafish source is comparative context. Each source's species is in its
+    scope.
 - id: CS20230722_CLUS_0195
   name: 0195 MEA Slc17a7 Glut_1
   definition_basis: ATLAS_TRANSCRIPTOMIC

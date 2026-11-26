@@ -23,10 +23,10 @@ nodes:
   - id: trn_gabaergic_neuron
     name: "Thalamic reticular nucleus (TRN/RT) GABAergic neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:  # To be confirmed from primary literature — mouse primary evidence
-      id: NCBITaxon:1437010
-      label: Boreoeutheria
-      name_in_source: "Mice; Rats; Cats; Macaca mulatta (MeSH organisms of cited primary papers; inferred, #216)"
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
     anatomical_location:
       - id: UBERON:0001903
         label: "thalamic reticular nucleus"
@@ -473,4 +473,10 @@ nodes:
       negative. No quote supports either for TRN neurons (the Weil et al.
       2022 quote concerns PHb neurons and dLGN interneurons), so neither is
       asserted.
+
+      SPECIES: mouse: the defining sources are mouse studies (e.g. PMID:32699411, PMID:28591583);
+      rat, cat and primate sources are cross-species context. Each source's species is in its scope.
+      Previously the clade Boreoeutheria, inferred from the MeSH organisms of the cited primary
+      papers (#216); narrowed to the species of the defining description per the schema's species
+      rule.
 edges: []

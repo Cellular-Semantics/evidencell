@@ -22,7 +22,7 @@ nodes:
   - id: str_immature_neuron
     name: "Striatum Immature Neuron (SVZ-derived)"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:  # To be confirmed — studies cite mouse, rat
+    species:
       id: NCBITaxon:10116
       label: Rattus norvegicus
       name_in_source: "Rats (MeSH organisms of cited primary papers; inferred, #216)"
@@ -77,6 +77,11 @@ nodes:
       pulse-chase (PMID:15684031, quote 14221248_f77b1e11), i.e. newly
       generated. BrdU is a thymidine analogue, not a marker of the cell, so
       it is recorded here rather than in defining_markers (#244).
+
+      SPECIES: rat: the single cited source (Dayer et al. 2005, PMID:15684031) and the DCX gene pin
+      are rat, but that source's scope reads 'adult mouse striatum'; check the paper and correct
+      whichever is wrong. Set from the MeSH organisms of the cited primary papers (#216); to be
+      confirmed from primary literature.
 
   # ── Cerebral Cortex Layer II Immature Neuron ────────────────────
 

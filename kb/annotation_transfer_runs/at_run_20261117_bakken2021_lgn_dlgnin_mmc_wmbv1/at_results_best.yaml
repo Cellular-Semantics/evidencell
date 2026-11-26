@@ -1,0 +1,87 @@
+run_id: at_run_20261117_bakken2021_lgn_dlgnin_mmc_wmbv1
+taxonomy_id: CCN20230722
+normalisation: best
+source_csv_relpath: f1_matrix_best.csv
+generated_at: '2026-11-17T17:57:21+00:00'
+generator: src/evidencell/at_metrics.py::migrate_csv
+rows:
+- source_label: dLGN GABA (Chrna1-3)
+  taxonomy_level: CLASS
+  taxonomy_rank: 3
+  target_name: 20 MB GABA
+  target_accession: CS20230722_CLAS_20
+  n_cells: 452
+  coverage: 1.0
+  purity: 0.7571189279731994
+  f1: 0.8617731172545281
+  median_bootstrap: 1.0
+- source_label: dLGN GABA (Chrna1-3)
+  taxonomy_level: SUBCLASS
+  taxonomy_rank: 2
+  target_name: 213 SCsg Gabrr2 Gaba
+  target_accession: CS20230722_SUBC_213
+  n_cells: 452
+  coverage: 1.0
+  purity: 0.9977924944812362
+  f1: 0.9988950276243094
+  median_bootstrap: 1.0
+- source_label: dLGN GABA (Chrna1-3)
+  taxonomy_level: SUPERTYPE
+  taxonomy_rank: 1
+  target_name: 0872 SCsg Gabrr2 Gaba_1
+  target_accession: CS20230722_SUPT_0872
+  n_cells: 443
+  coverage: 0.9977477477477478
+  purity: 0.9977477477477478
+  f1: 0.9977477477477478
+  median_bootstrap: 1.0
+- source_label: dLGN GABA (Chrna1-3)
+  taxonomy_level: CLUSTER
+  taxonomy_rank: 0
+  target_name: 3798 SCsg Gabrr2 Gaba_1
+  target_accession: CS20230722_CLUS_3798
+  n_cells: 122
+  coverage: 0.3370165745856354
+  purity: 1.0
+  f1: 0.5041322314049588
+  median_bootstrap: 1.0
+- source_label: other (non-dLGN-IN)
+  taxonomy_level: CLASS
+  taxonomy_rank: 3
+  target_name: 18 TH Glut
+  target_accession: CS20230722_CLAS_18
+  n_cells: 1205
+  coverage: 0.7259036144578314
+  purity: 1.0
+  f1: 0.8411867364746946
+  median_bootstrap: 1.0
+- source_label: other (non-dLGN-IN)
+  taxonomy_level: SUBCLASS
+  taxonomy_rank: 2
+  target_name: 151 TH Prkcd Grin2c Glut
+  target_accession: CS20230722_SUBC_151
+  n_cells: 1205
+  coverage: 0.7263411693791441
+  purity: 1.0
+  f1: 0.8414804469273742
+  median_bootstrap: 1.0
+- source_label: other (non-dLGN-IN)
+  taxonomy_level: SUPERTYPE
+  taxonomy_rank: 1
+  target_name: 0655 TH Prkcd Grin2c Glut_2
+  target_accession: CS20230722_SUPT_0655
+  n_cells: 961
+  coverage: 0.6097715736040609
+  purity: 1.0
+  f1: 0.7575877020102483
+  median_bootstrap: 1.0
+- source_label: other (non-dLGN-IN)
+  taxonomy_level: CLUSTER
+  taxonomy_rank: 0
+  target_name: 2650 TH Prkcd Grin2c Glut_2
+  target_accession: CS20230722_CLUS_2650
+  n_cells: 961
+  coverage: 0.6462676529926026
+  purity: 1.0
+  f1: 0.7851307189542484
+  median_bootstrap: 1.0

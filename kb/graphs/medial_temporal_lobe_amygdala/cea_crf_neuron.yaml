@@ -29,7 +29,10 @@ nodes:
     - id: CL:0000617
       label: GABAergic neuron
       name_in_source: GABAergic
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "mouse"
   neuropeptides:
   - name_in_source: Crh
     ncbi_gene_id: null
@@ -44,8 +47,13 @@ nodes:
   definition_references:
   - PMID:38419794
   is_terminal: false
-  notes: Often partially overlaps with other neuropeptide-defined CeA populations; not exhaustively characterized
-    here.
+  notes: >-
+    Often partially overlaps with other neuropeptide-defined CeA populations; not exhaustively
+    characterized here.
+
+    SPECIES: mouse (low confidence): the only cited source (PMID:38419794) is a review of the
+    central amygdala built on mouse molecular data; no source scope states a species. Confirm from
+    primary literature.
   anatomical_location:
   - id: UBERON:0002883
     sources:

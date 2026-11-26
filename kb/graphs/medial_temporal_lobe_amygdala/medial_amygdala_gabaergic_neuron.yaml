@@ -18,7 +18,10 @@ nodes:
 - id: medial_amygdala_gabaergic_neuron
   name: Medial amygdala GABAergic principal neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: "mouse"
   nt_type:
     name_in_source: GABAergic
     sources:
@@ -104,9 +107,14 @@ nodes:
   - PMID:39012795
   - PMID:39130512
   is_terminal: false
-  notes: 'Multiple lineage-defined subpopulations: pallidal-, preoptic-, hypothalamic-, and prethalamic-eminence-derived
-    cells; TOH-domain (Otp+) and SPV core (Sim1+) lineages distribute distinctly across medial and central
-    extended amygdala.'
+  notes: >-
+    Multiple lineage-defined subpopulations: pallidal-, preoptic-, hypothalamic-, and
+    prethalamic-eminence-derived cells; TOH-domain (Otp+) and SPV core (Sim1+) lineages distribute
+    distinctly across medial and central extended amygdala.
+
+    SPECIES: mouse: the defining sources are mouse studies (PMID:20507551, PMID:37884748); macaque,
+    chicken, zebra finch and zebrafish sources are comparative context. Each source's species is in
+    its scope.
 - id: CS20230722_SUPT_0256
   name: 0256 NDB-SI-MA-STRv Lhx8 Gaba_13
   definition_basis: ATLAS_TRANSCRIPTOMIC

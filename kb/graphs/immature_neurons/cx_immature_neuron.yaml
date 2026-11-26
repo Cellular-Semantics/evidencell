@@ -22,10 +22,10 @@ nodes:
   - id: cx_immature_neuron
     name: "Cerebral Cortex Layer II Immature Neuron"
     definition_basis: CLASSICAL_NEUROCHEMICAL
-    species:  # To be confirmed — studies cite degu, guinea pig; contrasting with mouse/rat findings
-      id: NCBITaxon:10116
-      label: Rattus norvegicus
-      name_in_source: "Rats (MeSH organisms of cited primary papers; inferred, #216)"
+    species:
+      id: NCBITaxon:10141
+      label: Cavia porcellus
+      name_in_source: "guinea pig"
     anatomical_location:
       - id: UBERON:0001950
         label: "neocortex"
@@ -37,7 +37,7 @@ nodes:
     defining_markers:
       - name_in_source: DCX
         symbol: Dcx
-        ncbi_gene_id: "NCBIGene:84394"
+        ncbi_gene_id: "NCBIGene:100713827"
         sources:
           - ref: "PMID:33994960"
             method: "IHC"
@@ -52,7 +52,7 @@ nodes:
     negative_markers:
       - name_in_source: NeuN
         symbol: Rbfox3
-        ncbi_gene_id: "NCBIGene:287847"
+        ncbi_gene_id: "NCBIGene:100726916"
     neuropeptides: []
     colocated_types: []
     cl_mapping:
@@ -81,6 +81,13 @@ nodes:
       no ephys, no neuropeptides, NT type unspecified, subtypes not
       defined. No dedicated UBERON term for cortical layer II; neocortex
       (UBERON:0001950) used as container.
+
+      SPECIES: guinea pig: the defining sources are guinea pig (PMID:26321922) and degu
+      (PMID:33994960) layer II neocortex; Dayer et al. (2005, PMID:15684031) found no such cells in
+      rat. Guinea pig is used as the species; degu is equally defining. DCX and NeuN (Rbfox3) gene
+      pins moved from rat to guinea pig genes. Previously rat, inferred from the MeSH organisms of
+      the cited primary papers (#216); changed to the species of the defining description per the
+      schema's species rule.
 
 
 # ══════════════════════════════════════════════════════════════════

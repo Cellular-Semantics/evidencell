@@ -23,10 +23,10 @@ nodes:
   - id: pvt_glutamatergic_neuron
     name: "Paraventricular thalamic nucleus (PVT) glutamatergic projection neuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species:  # To be confirmed from primary literature — mouse, rat and human sources pooled
-      id: NCBITaxon:314146
-      label: Euarchontoglires
-      name_in_source: "Rats; Mice; Humans (MeSH organisms of cited primary papers; inferred, #216)"
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
@@ -414,4 +414,10 @@ nodes:
       Neuropeptide expression in PVT is graded along the antero-posterior
       axis and differs between mouse and rat (Curtis et al. 2021;
       PMID:33584216).
+
+      SPECIES: mouse: the defining description rests on mouse molecular and projection studies (e.g.
+      PMID:36867023, PMID:37862168); rat and human sources (e.g. PMID:39282422, PMID:41501055) are
+      pooled for some properties. Each source's species is in its scope. Previously the clade
+      Euarchontoglires, inferred from the MeSH organisms of the cited primary papers (#216);
+      narrowed to the species of the defining description per the schema's species rule.
 edges: []

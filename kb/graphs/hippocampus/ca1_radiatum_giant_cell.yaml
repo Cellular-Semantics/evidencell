@@ -12,6 +12,9 @@ nodes:
     name: CA1 radiatum giant cell
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+      id: NCBITaxon:10116
+      label: Rattus norvegicus
+      name_in_source: "rat"
     anatomical_location:
       - id: UBERON:0005372
         label: hippocampus stratum radiatum
@@ -95,10 +98,21 @@ nodes:
       - PMID:11153713
       - PMID:30943417
     is_terminal: false
-    notes: 'Morphology and LTP properties independently replicated in Christie et al. (2000, PMID:11153713); RGC identity confirmed in mouse and CA2 pyramidal neurons identified as a strong presynaptic input by Nasrallah et al. (2019, PMID:30943417). GAP: defining molecular markers absent; reversed HCN channel expression gradient reported (Bullis et al. 2007) but not yet entered as a source. Modern transcriptomic characterisation needed.
+    notes: >-
+      Morphology and LTP properties independently replicated in Christie et al. (2000,
+      PMID:11153713); RGC identity confirmed in mouse and CA2 pyramidal neurons identified as a
+      strong presynaptic input by Nasrallah et al. (2019, PMID:30943417). GAP: defining molecular
+      markers absent; reversed HCN channel expression gradient reported (Bullis et al. 2007) but not
+      yet entered as a source. Modern transcriptomic characterisation needed.
 
 
-      CL mapping note: No CL term found for CA1 radiatum giant cell. Rare specialised excitatory projection neuron in CA1 stratum radiatum first described by Kirson et al. (2000); potential CL contribution.'
+      CL mapping note: No CL term found for CA1 radiatum giant cell. Rare specialised excitatory
+      projection neuron in CA1 stratum radiatum first described by Kirson et al. (2000); potential
+      CL contribution.
+
+      SPECIES: rat: the defining description and all but one cited source are adult rat CA1
+      (PMID:10864941, PMID:11153713); Nasrallah et al. (2019, PMID:30943417) identify the type in
+      mouse. Each source's species is in its scope.
   - id: CS20230722_CLUS_0261
     name: 0261 CA1-ProS Glut_1
     definition_basis: ATLAS_TRANSCRIPTOMIC
