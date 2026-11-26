@@ -104,6 +104,10 @@ nodes:
             method: "statement of long-range inhibitory vLGN projection to SC (citing prior work)"
             scope: "mouse vLGN"
             quote_key: "217593649_83051103"
+          - ref: "PMID:34610302"
+            method: "retrograde tracing from SC with Gad2 labelling (~65% of SC-projecting vLGN cells Gad2+)"
+            scope: "mouse vLGN; SC-projecting cells, about two-thirds Gad2+"
+            quote_key: "238410529_2ba8c879"
       - id: MBA:186
         label: "Lateral habenula"
         name_in_source: "lateral habenula"
@@ -141,6 +145,11 @@ nodes:
             scope: "vLGN neurons, species of the cited tracing not stated in quote"
             quote_key: "219328889_9273e4f7"
             support: WEAK
+          - ref: "PMID:1174957"
+            method: "anterograde autoradiographic tracing of lateral geniculate projections; target reported for injected vLGN (and neighbouring geniculate) neurons generally, GABA identity not addressed"
+            scope: "rat (not mouse); whole vLGN injection, cell type not identified; 'Both' in quote pools vLGN with another geniculate division"
+            quote_key: "6613291_533d569c"
+            support: WEAK
       - id: MBA:881
         label: "Parabrachial nucleus, lateral division"
         name_in_source: "LPBN"
@@ -161,6 +170,10 @@ nodes:
             scope: "mouse vLGN"
             quote_key: "238410529_5d954f1d"
             support: WEAK
+          - ref: "PMID:34610302"
+            method: "retrograde tracing from Re with Vgat/Gad2 labelling (all labelled vLGN→Re neurons Vgat+)"
+            scope: "mouse vLGN; Re-projecting cells, 100% Vgat+, about half Gad2+"
+            quote_key: "238410529_b4b727f3"
     nt_type:
       name_in_source: "GABAergic"
       cl_terms:
@@ -203,6 +216,18 @@ nodes:
           method: "review of cytoarchitecture (magnocellular vLGNe, parvocellular vLGNi)"
           scope: "nocturnal rodent vLGN"
           quote_key: "4601077_b2845e93"
+        - ref: "PMID:39160068"
+          method: "inference from developmental lamination of Ecel1+ and Penk+ cells (not interneurons; may be projection neurons); no projection tracing in quote"
+          scope: "mouse vLGN, Ecel1+ and Penk+ GABAergic subtypes only"
+          quote_key: "271906359_72e0f428"
+        - ref: "PMID:36342840"
+          method: "statement in source (most Gad1+ vLGN cells are principal projection cells, not local interneurons)"
+          scope: "mouse vLGN, Gad1+ cells"
+          quote_key: "247085323_f8879717"
+        - ref: "PMID:31964831"
+          method: "Gad67-GFP reporter labelling of interneurons compared with total GABAergic neurons"
+          scope: "mouse vLGN; GFP+ interneurons are a fraction of all GABAergic neurons"
+          quote_key: "210870509_4d64bdb2"
     defining_markers:
       - name_in_source: "Gata2"
         ncbi_gene_id: "NCBIGene:14461"
