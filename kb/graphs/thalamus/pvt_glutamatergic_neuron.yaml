@@ -369,10 +369,9 @@ nodes:
     is_terminal: false
     notes: >
       SUSPECTED HETEROGENEITY (may warrant splitting later): mouse PVT
-      resolves into four continuous types along the anterior-posterior axis,
-      with aPVT and pPVT populations having nearly non-overlapping projections
-      and opposing effects on food consumption (Shima et al., 2022;
-      PMID:37862168), and into five molecularly distinct subtypes (PVT1-5)
+      resolves into four continuous types along the anterior-posterior axis
+      (Shima et al., 2022; PMID:37862168), and into five molecularly distinct
+      subtypes (PVT1-5)
       organised on combined molecular gradients with differing cortical
       projection overlap (Gao et al., 2023; PMID:36867023). Human PVT neurons
       (ExN_CALB) correspond mostly to mouse posterior PVT (Nishioka et al.,
@@ -419,6 +418,35 @@ nodes:
       neuromodulator receptor genes (Schulmann et al. 2024; PMID:39282422).
       Weak/scattered PVALB and CALB1 immunoreactivity, typical of
       matrix-like higher-order thalamus (PMID:22606998).
+
+      DEFERRED SUBTYPE CANDIDATES (2026-11-26; not nodes; full table in
+      planning/content-notes/pvt_subtypes_to_ingest.md). (a) Gao et al. 2023
+      PVT1-PVT4: candidate children of ppvt_glutamatergic_neuron (PVT1),
+      apvt_glutamatergic_neuron (PVT2, PVT4) and this node (PVT3, middle AP,
+      no AP bias). Deferred to a follow-up together with annotation transfer
+      from Gao 2023 (GEO:GSE208707), and pending primary verification of the
+      Gao quotes. Quote keys: 251021326_6e3c6191 (FISH marker sets),
+      251021326_3d4954d5 (AP position), 251021326_5ed06f40 (medio-lateral
+      position), 251021326_6820b736 and 251021326_19d51130 (cortical
+      projection bias, by correlation with ThalamoSeq, not tracing). Markers
+      overlap between clusters (Npffr1 PVT1/PVT3; Drd3 PVT2/PVT4), and Shima
+      et al. report the AP axis as continuous, so the clusters may be gradient
+      positions rather than discrete types. (b) Gao PVT5 (Thy1 only;
+      anterior): deferred, one marker and no projection data. (c) Li et al.
+      2021 projection-defined groups (NAcSh-, BSTDL-, CeL-, DMH-projecting;
+      also dmNAcSh vs vmNAcSh): not created as types. They are intermixed
+      throughout PVT and most neurons collateralise to a common set of
+      forebrain targets whatever their presumed target (235203924_e162d4d9),
+      so they overlap heavily and are unlikely to match atlas clusters; their
+      targets are recorded as AXON_TARGET entries on this node. The DMH target
+      has only a rat retrograde co-labelling source (17237721_87fea274), and
+      no Li 2021 quote in the store names DMH. (d) pPVT-CeA glutamatergic
+      projection neurons (Liang et al. 2020, 221841412_405f324a,
+      221841412_9b66a251, rat; Pliota et al. 2018, 49208529_0485207c, mouse):
+      deferred. The population is defined by a pathway in pain and stress
+      studies, has no molecular marker, and collateralises like (c). It is a
+      candidate child of ppvt_glutamatergic_neuron, with central amygdaloid
+      nucleus as an AXON_TARGET.
 
       MARKER-DEFINED SUBSETS: the relationship of apvt_gck_neuron (Gaspari et
       al. 2022) and apvt_crh_neuron (Engelke et al. 2021, rat) to the PVT1-5

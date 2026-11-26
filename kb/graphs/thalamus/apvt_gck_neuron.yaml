@@ -27,7 +27,7 @@ nodes:
       label: Mus musculus
       name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
     subtype_of:
-      - parent: pvt_glutamatergic_neuron
+      - parent: apvt_glutamatergic_neuron
         kind: DEFINITIONAL
         confidence: LOW
         sources:
@@ -40,12 +40,10 @@ nodes:
             scope: "rodent PVT (whole nucleus)"
             quote_key: "235466185_0d1595b7"
         notes: >
-          Defined as PVT neurons narrowed by AP position (anterior) and marker
-          (Gck). The source states the cells are a subpopulation of PVT
-          neurons; that they are glutamatergic projection neurons is inferred
-          from PVT-wide vGLUT2 expression, not stated for Gck+ cells, hence LOW.
-          A narrower anterior-PVT parent is proposed but not yet a node
-          (planning/content-notes/pvt_subtypes_to_ingest.md).
+          Defined as aPVT neurons narrowed by marker (Gck). The source states
+          the cells are Gck-defined PVT neurons of the anterior PVT; that they
+          are glutamatergic is inferred from PVT-wide vGLUT2 expression, not
+          stated for Gck+ cells, hence LOW.
     anatomical_location:
       - id: UBERON:0001920
         label: "paraventricular nucleus of thalamus"
