@@ -1,0 +1,158 @@
+# Internal vLGN (vLGNi) non-retinorecipient GABAergic neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Internal vLGN (vLGNi) Non-retinorecipient GABAergic Neuron"
+description: >
+  Evidence graph component for the non-retinorecipient GABAergic neuron of
+  the internal division of the ventral lateral geniculate nucleus (vLGNi),
+  proposed from the ASTA deep research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: vlgni_gabaergic_neuron
+    name: "Internal vLGN (vLGNi) non-retinorecipient GABAergic neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: GABAergic neuron
+        name_in_source: "Internal vLGN (vLGNi) non-retinorecipient GABAergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / interneuron terms; none
+        describes a non-retinorecipient vLGNi GABAergic neuron. CL:0000617 (neuron
+        that uses GABA as a vesicular neurotransmitter) is the most specific term
+        the node satisfies in full; the parent node vlgn_gabaergic_neuron shares
+        it. EXACT would need a CL term defined by vLGNi location.
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: vlgn_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:32497303"
+            method: "scRNA-seq + ISH (GABAergic types reside in vLGNe and vLGNi)"
+            scope: "mouse vLGN"
+            quote_key: "219328889_a1d23e11"
+        notes: >
+          Containment inferred from structural subdivision (vLGNi is one of
+          the two major vLGN laminae).
+    anatomical_location:
+      - id: MBA:316
+        label: "Ventral part of the lateral geniculate complex, medial zone"
+        name_in_source: "internal vLGN (vLGNi)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:32497303"
+            method: "labelling with canonical and novel cell type-specific markers; spatial distribution analysis (transcriptomically distinct GABAergic types reside in the non-retinorecipient vLGNi)"
+            scope: "mouse vLGN"
+            quote_key: "219328889_a1d23e11"
+          - ref: "PMID:28965517"
+            method: "review of cytoarchitecture (parvocellular internal vLGN, separated from vLGNe by a neuron-free neuropil)"
+            scope: "nocturnal rodent vLGN"
+            quote_key: "4601077_b2845e93"
+          - ref: "PMID:39160068"
+            method: "statement in source (vLGN divided into retinorecipient vLGNe and nonretinorecipient vLGNi)"
+            scope: "mouse vLGN"
+            quote_key: "271906359_1bfec86c"
+    defining_markers:
+      - name_in_source: "Sox14"
+        ncbi_gene_id: "NCBIGene:20669"
+        symbol: "Sox14"
+        modifier: "ENRICHED"
+        sources:
+          - ref: "PMID:36280260"
+            marker_type: NOT_STATED
+            method: "anatomical comparison of Sox14+ cell distribution with retinal innervation (Sox14+ cells enriched in vLGNi, sparse in vLGNe and IGL); detection method not named in quote"
+            scope: "mouse LGv/IGL"
+            quote_key: "247159795_a2cf4a69"
+            notes: >
+              Enrichment, not exclusivity: Sox14+ cells are also present,
+              sparsely, in vLGNe and IGL.
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:32497303"
+          method: "labelling with canonical and cell type-specific markers (transcriptomically distinct GABAergic types in vLGNi)"
+          scope: "mouse vLGN"
+          quote_key: "219328889_a1d23e11"
+        - ref: "PMID:36609305"
+          method: "statement citing prior work (virtually all vLGN neurons GABAergic, including projection neurons)"
+          scope: "mouse vLGN"
+          quote_key: "255502436_f64915a5"
+    morphology:
+      description: >
+        vLGNi is the parvocellular division of vLGN, in contrast to the
+        magnocellular vLGNe with its large cells (Monavarfeshani et al., 2017;
+        review of rodent cytoarchitecture, cell class not specified in the
+        quote).
+      sources:
+        - ref: "PMID:28965517"
+          method: "review of cytoarchitecture (parvocellular vLGNi)"
+          scope: "nocturnal rodent vLGN"
+          quote_key: "4601077_b2845e93"
+    colocated_types:
+      - neighboring_type: "vlgne_gabaergic_neuron"
+        spatial_relationship: "ADJACENT"
+        notes: >
+          vLGNi and vLGNe are separated by a small neuron-free, fibre-rich
+          neuropil (Monavarfeshani et al., 2017; PMID:28965517, quote
+          4601077_b2845e93). vLGNi GABAergic types are transcriptomically
+          distinct from those of vLGNe (Sabbagh et al., 2020; PMID:32497303,
+          quote 219328889_a1d23e11), and vLGNe is transcriptionally and
+          cytoarchitectonically distinct from vLGNi (Govindaiah et al., 2023;
+          PMID:36609305, quote 255502436_f820743a).
+      - neighboring_type: "lgv_igl_sox14_gabaergic_neuron"
+        spatial_relationship: "INTERSPERSED"
+        notes: >
+          Sox14+ cells are enriched in vLGNi and sparse in vLGNe and IGL
+          (Brock et al., 2022; PMID:36280260, quote 247159795_a2cf4a69). The
+          two populations overlap; neither is shown to contain the other.
+    definition_references:
+      - "PMID:32497303"
+      - "PMID:36609305"
+      - "PMID:28965517"
+      - "PMID:39160068"
+      - "PMID:36280260"
+    notes: >
+      SUSPECTED HETEROGENEITY: the sources say transcriptomically distinct
+      GABAergic cell types reside in vLGNi (plural; Sabbagh et al., 2020, quote
+      219328889_a1d23e11) but neither name nor count them; properties here pool
+      them.
+
+      RETINAL INPUT: sources differ in strength of wording - vLGNi receives
+      "little, if any" retinal input (Monavarfeshani et al., 2017, quote
+      4601077_b2845e93) versus "no retinal input" (Sabbagh et al., 2020, quote
+      219328889_ea819292); Brock et al. (2022, quote 247159795_a2cf4a69)
+      report fewer, not absent, retinal projections there.
+
+      SOX14: recorded as ENRICHED, not as a pan-vLGNi marker. It is not shown
+      that every vLGNi GABAergic neuron expresses Sox14, and Sox14+ cells also
+      occur in vLGNe and IGL.
+
+      LOCATION: the sources name the internal vLGN (vLGNi); MBA has no term by
+      that name. MBA:316 (LGv medial zone) is used as the Allen counterpart of
+      vLGNi, matching MBA:300 (LGv lateral zone) for vLGNe on the sibling node,
+      the lateral-medial axis being the one along which vLGN laminae are
+      stratified (quote 255502436_f64915a5); the equivalence is a curator
+      judgement, not stated in the sources.
+edges: []

@@ -21,7 +21,41 @@ nodes:
   - id: lgv_igl_gabaergic_neuron
     name: "Ventral lateral geniculate nucleus / intergeniculate leaflet (LGv/IGL) GABAergic neuron"
     definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: GABAergic neuron
+        name_in_source: "LGv/IGL GABAergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic terms (labels containing
+        "thalamic", "geniculate", "GABAergic", "interneuron", "projecting"). No CL
+        term describes a ventral lateral geniculate / intergeniculate leaflet
+        GABAergic neuron; CL:4023068 (thalamic excitatory neuron) is glutamatergic
+        and CL:0011005 (GABAergic interneuron) would wrongly exclude the
+        projection neurons that dominate this population. CL:0000617 (A neuron that
+        uses GABA as a vesicular neurotransmitter) is the most specific term the
+        node satisfies in full. A new CL term would need a nucleus-restricted
+        definition (LGv/IGL, prethalamic/pTH-R-derived) to reach EXACT.
     species:       # To be confirmed from primary literature — mouse evidence
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "vLGN/IGL GABAergic neurons"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:38865246"
+            method: "used in abstract"
+            scope: "mouse vLGN/IGL"
+            quote_key: "270412585_53f9c770"
+      - term: "vLGN/IGL GABA neurons"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:30795900"
+            method: "used in abstract (GABA neurons in the ... vLGN/IGL)"
+            scope: "mouse vLGN/IGL"
+            quote_key: "72332556_28081399"
     anatomical_location:
       - id: UBERON:0002480
         label: "ventral lateral geniculate nucleus"
@@ -49,6 +83,114 @@ nodes:
             method: "embryonic scRNA-seq lineage trajectories"
             scope: "mouse — rTh.Pro-derived GABAergic neurons in IGL"
             quote_key: "254404676_a0c5ad08"
+      - id: UBERON:0001945
+        label: "superior colliculus"
+        name_in_source: "superior colliculus (SC)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons"
+            scope: "mouse — Sox14+ (pTH-R-derived) GABAergic neurons of IGL/LGv, pooled"
+            quote_key: "247159795_9ed56c01"
+          - ref: "PMID:37949869"
+            method: "statement of vLGN GABAergic axon projection; tracing method not named in quote"
+            scope: "mouse vLGN"
+            quote_key: "265121419_e12d5dfd"
+      - id: MBA:1100
+        label: "Pretectal region"
+        name_in_source: "pretectum / pretectal nuclei"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled"
+            quote_key: "247159795_9ed56c01"
+      - id: MBA:706
+        label: "Olivary pretectal nucleus"
+        name_in_source: "olivary pretectal nucleus"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:701
+        label: "Vestibular nuclei"
+        name_in_source: "vestibular nuclei"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:797
+        label: "Zona incerta"
+        name_in_source: "zona incerta"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:286
+        label: "Suprachiasmatic nucleus"
+        name_in_source: "suprachiasmatic nucleus"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons (dense fibers)"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:347
+        label: "Subparaventricular zone"
+        name_in_source: "subparaventricular zone"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons (dense fibers)"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:689
+        label: "Ventrolateral preoptic nucleus"
+        name_in_source: "ventrolateral preoptic area"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons (dense fibers)"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:186
+        label: "Lateral habenula"
+        name_in_source: "lateral habenula (LHb)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons (sparse projection)"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled"
+            quote_key: "247159795_f4eefc59"
+          - ref: "PMID:30795900"
+            method: "circuit study of LHb-projecting vLGN/IGL GABA neurons; tracing method not named in quote"
+            scope: "mouse vLGN/IGL"
+            quote_key: "72332556_28081399"
+      - id: MBA:881
+        label: "Parabrachial nucleus, lateral division"
+        name_in_source: "LPBN"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:38865246"
+            method: "circuit study; vLGN/IGL GABAergic neurons reported to inhibit LPBN neurons (tracing method not named in quote)"
+            scope: "mouse vLGN/IGL, RGC-innervated subset"
+            quote_key: "270412585_53f9c770"
+      - id: MBA:181
+        label: "Nucleus of reuniens"
+        name_in_source: "nucleus reuniens (Re)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34610302"
+            method: "vLGN→Re circuit described in a study of vLGN GABA neurons; the quote does not state that the Re-projecting cells are GABAergic"
+            scope: "mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+            support: WEAK
     nt_type:
       name_in_source: "GABAergic"
       cl_terms:
@@ -68,6 +210,18 @@ nodes:
           method: "MERFISH (ABC Atlas)"
           scope: "adult mouse LGv — GABA classes 12 and 20"
           quote_key: "282311854_83c180d9"
+        - ref: "PMID:36280260"
+          method: "statement citing prior work (almost exclusively GABAergic projection neurons)"
+          scope: "mouse IGL and LGv, pooled"
+          quote_key: "247159795_fb7a534b"
+        - ref: "PMID:36280260"
+          method: "Sox14 reporter / pTH-R lineage fate-mapping overlap"
+          scope: "mouse LGv and IGL — pTH-R-derived cells"
+          quote_key: "247159795_0eefb318"
+        - ref: "PMID:36609305"
+          method: "statement citing prior work (virtually all vLGN neurons GABAergic, including projection neurons)"
+          scope: "mouse vLGN"
+          quote_key: "255502436_f64915a5"
     morphology:
       description: >
         Somatodendritic morphology not described in the report. GABAergic
@@ -75,15 +229,65 @@ nodes:
         described as either reciprocally connected with thalamic excitatory
         neurons or projecting to subcortical targets such as basal ganglia and
         brainstem; the quote does not separate LGv from RT on this point.
+        From the vLGN GABA report (2026-11-25): Sox14+ (pTH-R-derived)
+        neurons in ventral LGv and IGL have projection-neuron morphology,
+        with sparse local arborization and a main projection extending
+        ventrally (Brock et al., 2022). vLGN neurons have wide dendritic
+        arbors that span the length and/or width of the nucleus and are often
+        asymmetric, unlike the compact arbors of dLGN (Ciftcioglu et al.,
+        2020; recorded vLGN cells, not identified as GABAergic in the quote).
       sources:
+        - ref: "PMID:36280260"
+          method: "genetic labelling of Sox14+ neurons, single-cell morphology (Fig. 1E–G)"
+          scope: "mouse ventral LGv and IGL, Sox14+ neurons"
+          quote_key: "247159795_61ac7818"
+        - ref: "PMID:32350041"
+          method: "dendritic arbor reconstruction of recorded vLGN cells"
+          scope: "adult mouse vLGN, both sexes"
+          quote_key: "217593649_83051103"
         - ref: "https://doi.org/10.1101/2023.05.01.538832"
           method: "statement citing prior anatomy"
           scope: "adult mouse LGv and RT GABAergic neurons (pooled)"
           quote_key: "258464391_a576f421"
+    defining_markers:
+      - name_in_source: "Sox14"
+        ncbi_gene_id: "NCBIGene:20669"
+        symbol: "Sox14"
+        sources:
+          - ref: "PMID:36280260"
+            marker_type: NOT_STATED
+            method: "statement citing prior work (transcription factor absent in dLGN); assay not named in quote"
+            scope: "mouse IGL/LGv vs dLGN"
+            quote_key: "247159795_aeeef91c"
+          - ref: "PMID:36280260"
+            marker_type: TRANSGENE_REPORTER
+            method: "GFP/tdTomato reporter overlap between Sox14 and pTH-R lineage labels (lines not named in quote)"
+            scope: "mouse LGv and IGL — pTH-R-derived cells"
+            quote_key: "247159795_0eefb318"
+      - name_in_source: "Gata2"
+        ncbi_gene_id: "NCBIGene:14461"
+        symbol: "Gata2"
+        sources:
+          - ref: "PMID:36280260"
+            marker_type: NOT_STATED
+            method: "statement citing prior work (transcription factor absent in dLGN); assay not named in quote"
+            scope: "mouse IGL/LGv vs dLGN"
+            quote_key: "247159795_aeeef91c"
+    colocated_types:
+      - neighboring_type: "vLGN VGLUT-expressing glutamatergic neuron"
+        spatial_relationship: "same nucleus (vLGN); relative position not stated"
+        notes: >
+          vLGN has only a limited number of vesicular glutamate
+          transporter-expressing glutamatergic neurons (Monavarfeshani et al.,
+          2017; PMID:28965517, quote 4601077_b2845e93). A vLGN snRNA-seq atlas
+          reports 20 candidate neuron types including at least two excitatory
+          types (Stebbins et al., 2026; PMID:41814933, quote 286491924_d7a92ebc).
     definition_references:
       - "PMID:36476860"
       - "https://doi.org/10.1101/2023.05.01.538832"
       - "https://doi.org/10.1101/2025.09.30.679413"
+      - "PMID:36280260"
+      - "PMID:32497303"
     is_terminal: false
     notes: >
       CL MAPPING: no CL term found for LGv/IGL GABAergic neuron; cl_mapping
@@ -111,4 +315,24 @@ nodes:
       ELECTROPHYSIOLOGY: not described in the report.
 
       SPECIES: species left null; evidence is mouse.
+
+      MARKER COVERAGE (vLGN GABA report, 2026-11-25): Sox14 and Gata2 were
+      added from Brock et al. 2022 (PMID:36280260), superseding the MARKERS
+      note above. Sox14 marks the pTH-R-derived component; LGv and IGL each
+      also have a ventral region of prethalamic-derived cells (quote
+      247159795_d79097dc) whose Sox14/Gata2 status is not stated, so these
+      markers may not cover the whole pooled population.
+
+      TRANSMITTER CAVEAT: Huang et al. 2020 (PMID:33171117, quote
+      226284065_834809d9) describe CaMKIIα neurons in vLGN/IGL that activate
+      nucleus reuniens neurons, an excitatory output that does not fit a
+      purely GABAergic population. Salay et al. 2021 (PMID:34610302) describe
+      a vLGN→Re circuit in work on vLGN GABA neurons. Whether Re-projecting
+      vLGN/IGL neurons are GABAergic is unresolved, so the Re AXON_TARGET
+      entry is marked WEAK.
+
+      SUBDIVISION HETEROGENEITY: transcriptomically distinct GABAergic types
+      occupy both vLGNe and vLGNi, and vLGNe has four subtype-specific
+      sublaminae (Sabbagh et al., 2020; PMID:32497303, quote
+      219328889_a1d23e11). Properties recorded here pool these populations.
 edges: []

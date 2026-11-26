@@ -1,0 +1,153 @@
+# Nucleus reuniens-projecting vLGN/IGL neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Nucleus Reuniens-projecting vLGN/IGL Neuron"
+description: >
+  Evidence graph component for the nucleus reuniens (Re)-projecting neuron
+  of the ventral lateral geniculate nucleus and intergeniculate leaflet
+  (vLGN/IGL), proposed from the ASTA deep research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lgv_igl_reuniens_projecting_neuron
+    name: "Nucleus reuniens-projecting vLGN/IGL neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000540
+        label: neuron
+        name_in_source: "Nucleus reuniens-projecting vLGN/IGL neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Transmitter identity is unresolved in the sources (the report lists the
+        Re channel among vLGN GABAergic outputs, but Huang 2020 describes
+        CaMKIIa neurons that activate Re neurons), so neither CL:0000617 (GABAergic
+        neuron) nor CL:0000679 (glutamatergic neuron) nor CL:4023068 (thalamic
+        excitatory neuron) can be asserted. Searched CL for thalamic / geniculate /
+        projecting terms; none fits. CL:0000540 (neuron) is the most specific term
+        the node satisfies in full. Revise to CL:0000617 or CL:0000679 once the
+        transmitter is settled.
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Re-projecting vLGN/IGL neurons"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:33171117"
+            method: "used in abstract"
+            scope: "mouse vLGN/IGL"
+            quote_key: "226284065_834809d9"
+    anatomical_location:
+      - id: UBERON:0002480
+        label: "ventral lateral geniculate nucleus"
+        name_in_source: "thalamic ventral lateral geniculate nucleus (vLGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:33171117"
+            method: "projection-defined circuit study (Re-projecting vLGN/IGL CaMKIIa neurons)"
+            scope: "mouse vLGN/IGL, pooled; vLGN lamina (vLGNe/vLGNi) not stated"
+            quote_key: "226284065_834809d9"
+          - ref: "PMID:34610302"
+            method: "projection-defined circuit study (vLGN-to-Re circuit)"
+            scope: "mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+      - id: UBERON:0035975
+        label: "intergeniculate leaflet of the lateral geniculate complex"
+        name_in_source: "intergeniculate leaflet (IGL)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:33171117"
+            method: "projection-defined circuit study (Re-projecting vLGN/IGL CaMKIIa neurons)"
+            scope: "mouse vLGN/IGL, pooled"
+            quote_key: "226284065_834809d9"
+      - id: MBA:181
+        label: "Nucleus of reuniens"
+        name_in_source: "nucleus reuniens (Re)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:33171117"
+            method: "projection-defined circuit study; Re-projecting vLGN/IGL neurons activate CaMKIIa Re neurons; tracing method not named in quote"
+            scope: "mouse vLGN/IGL, pooled; postsynaptic Re cells CaMKIIa+"
+            quote_key: "226284065_834809d9"
+          - ref: "PMID:34610302"
+            method: "projection-defined circuit study (vLGN-to-Re circuit); tracing method not named in quote"
+            scope: "mouse vLGN"
+            quote_key: "238410529_5d954f1d"
+    defining_markers:
+      - name_in_source: "CaMKIIα"
+        ncbi_gene_id: NCBIGene:12322
+        symbol: Camk2a
+        sources:
+          - ref: "PMID:33171117"
+            marker_type: NOT_STATED
+            method: "circuit study; assay for CaMKIIa identity not named in quote (CaMKIIa is the alpha subunit, Camk2a, by field convention)"
+            scope: "mouse vLGN/IGL"
+            quote_key: "226284065_834809d9"
+    nt_type:
+      name_in_source: "vLGNGABA"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABA"
+      sources:
+        - ref: "PMID:34610302"
+          method: "inferred: vLGN-to-Re circuit described within a study of vLGN GABA neurons; transmitter of Re-projecting cells not shown in quote"
+          scope: "mouse vLGN"
+          support: WEAK
+          quote_key: "238410529_5d954f1d"
+        - ref: "PMID:41814933"
+          method: "inferred from regional prior: most vLGN neurons are GABAergic, including projection neurons"
+          scope: "mouse vLGN, snRNA-seq atlas"
+          support: WEAK
+          quote_key: "286491924_d474808b"
+        - ref: "PMID:33171117"
+          method: "Re-projecting vLGN/IGL neurons described as CaMKIIa neurons that activate Re neurons, implying excitatory output; transmitter not directly measured in quote"
+          scope: "mouse vLGN/IGL"
+          support: REFUTE
+          quote_key: "226284065_834809d9"
+    morphology:
+      description: >
+        Long-range projection neuron whose axons leave the vLGN/IGL and reach
+        the nucleus reuniens, where they activate CaMKIIa-expressing Re neurons
+        (Huang et al., 2020; Salay et al., 2021). Somatodendritic morphology of
+        identified Re-projecting cells is not described in the sources.
+      sources:
+        - ref: "PMID:33171117"
+          method: "projection-defined circuit study"
+          scope: "mouse vLGN/IGL"
+          quote_key: "226284065_834809d9"
+        - ref: "PMID:34610302"
+          method: "projection-defined circuit study (vLGN-to-Re circuit)"
+          scope: "mouse vLGN"
+          quote_key: "238410529_5d954f1d"
+    definition_references:
+      - "PMID:33171117"
+      - "PMID:34610302"
+    notes: >
+      TRANSMITTER CONFLICT: nt_type is recorded as GABAergic on weak, inferred
+      grounds (Salay et al. 2021 describe a vLGN-to-Re circuit among vLGN GABA
+      neurons, quote 238410529_5d954f1d; most vLGN neurons are GABAergic,
+      quote 286491924_d474808b), but Huang et al. 2020 describe the
+      Re-projecting vLGN/IGL cells as CaMKIIa neurons that "activate" Re
+      neurons, implying excitatory output (quote 226284065_834809d9). Stebbins
+      et al. 2026 report at least two excitatory vLGN neuron types (quote
+      286491924_d7a92ebc), so an excitatory Re-projecting population is
+      plausible. Whether the Huang 2020 and Salay 2021 Re-projecting
+      populations are the same cells is unresolved. The CaMKIIa label may
+      reflect promoter-driven viral targeting rather than measured endogenous
+      expression. POOLED REGIONS: Huang 2020 pools vLGN and IGL.
+edges: []

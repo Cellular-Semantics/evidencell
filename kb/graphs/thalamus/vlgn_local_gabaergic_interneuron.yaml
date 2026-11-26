@@ -1,0 +1,100 @@
+# vLGN local GABAergic interneuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "vLGN Local GABAergic Interneuron"
+description: >
+  Evidence graph component for the local GABAergic interneuron of the
+  ventral lateral geniculate nucleus (vLGN), proposed from the ASTA deep
+  research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: vlgn_local_gabaergic_interneuron
+    name: "vLGN local GABAergic interneuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0011005
+        label: GABAergic interneuron
+        name_in_source: "vLGN local GABAergic interneuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / interneuron terms. CL
+        has no thalamic or geniculate GABAergic interneuron term (CL:0010011
+        cerebral cortex GABAergic interneuron is cortical; CL:4042026/4042027 are
+        nigral). CL:0011005 (An interneuron that uses GABA as a vesicular
+        neurotransmitter) is the most specific term the node satisfies in full:
+        a local GABAergic interneuron of vLGN. EXACT would need a CL term defined
+        by vLGN location.
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: vlgn_gabaergic_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:31964831"
+            method: "statement in introduction (dLGN, vLGN and IGL each contain local GABAergic interneurons)"
+            scope: "rodent visual thalamus"
+            quote_key: "210870509_2b108b46"
+          - ref: "PMID:36342840"
+            method: "statement in source (presence and distribution of local interneurons in dLGN and vLGN)"
+            scope: "mouse visual thalamus"
+            quote_key: "247085323_880b2f54"
+        notes: >
+          Defined as the vLGN GABAergic neuron narrowed to locally projecting
+          (interneuron) cells; containment holds by definition.
+    anatomical_location:
+      - id: MBA:178
+        label: "Ventral part of the lateral geniculate complex"
+        name_in_source: "ventral LGN (vLGN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:31964831"
+            method: "statement in introduction citing prior work (dLGN, vLGN and IGL each contain local GABAergic interneurons)"
+            scope: "rodent visual thalamus"
+            quote_key: "210870509_2b108b46"
+          - ref: "PMID:36342840"
+            method: "statement citing prior work (presence and distribution of local interneurons in both dLGN and vLGN)"
+            scope: "mouse visual thalamus"
+            quote_key: "247085323_880b2f54"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:31964831"
+          method: "statement in introduction citing prior work (local GABAergic interneurons in vLGN); transmitter not shown directly in this source"
+          scope: "rodent visual thalamus"
+          quote_key: "210870509_2b108b46"
+        - ref: "PMID:36342840"
+          method: "statement citing prior work (local interneurons of dLGN and vLGN referred to as GABAergic neurons)"
+          scope: "mouse visual thalamus"
+          quote_key: "247085323_880b2f54"
+    definition_references:
+      - "PMID:31964831"
+      - "PMID:36342840"
+    notes: >
+      The sources assert the presence of local GABAergic interneurons in vLGN
+      only in introductory statements citing older work (Harrington 1997;
+      Moore 1994; Arcelli 1997); no quote gives markers, morphology or
+      physiology that distinguish them from vLGN GABAergic projection neurons,
+      which make up most of the nucleus. The population may not be separable
+      from vlgn_gabaergic_neuron on current evidence.
+edges: []

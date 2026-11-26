@@ -1,0 +1,263 @@
+# LGv/IGL Sox14+ pTH-R-derived GABAergic projection neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/vLGN_GABA.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "LGv/IGL Sox14+ GABAergic Projection Neuron"
+description: >
+  Evidence graph component for the Sox14-expressing, rostral thalamic
+  progenitor (pTH-R)-derived GABAergic projection neuron of the ventral
+  lateral geniculate nucleus and intergeniculate leaflet, proposed from the
+  ASTA deep research report vLGN_GABA.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: "Mus musculus"
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lgv_igl_sox14_gabaergic_neuron
+    name: "LGv/IGL Sox14+ GABAergic projection neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: GABAergic neuron
+        name_in_source: "LGv/IGL Sox14+ GABAergic projection neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for thalamic / geniculate / GABAergic / projecting terms; no
+        term describes Sox14+ pTH-R-derived LGv/IGL projection neurons. CL:0011005
+        (GABAergic interneuron) rejected: these are projection neurons. CL:0000617
+        (neuron that uses GABA as a vesicular neurotransmitter) is the most
+        specific containing term. EXACT would need a CL term defined by LGv/IGL
+        location and Sox14 expression.
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Sox14+ neurons"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:36280260"
+            method: "defined in results as the label for pTH-R-derived cells in dorsal IGL/LGv"
+            scope: "mouse IGL/LGv"
+            quote_key: "247159795_d79097dc"
+    subtype_of:
+      - parent: lgv_igl_gabaergic_neuron
+        kind: EMPIRICAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:36280260"
+            method: "Sox14 reporter + pTH-R lineage reporter overlap"
+            scope: "mouse LGv and IGL"
+            quote_key: "247159795_0eefb318"
+        notes: >
+          Defined by Sox14 reporter expression and pTH-R lineage; one source
+          (Brock et al., 2022) reports these cells are GABAergic and located
+          in LGv and IGL. LGv/IGL also contain a ventral, prethalamic-derived
+          component outside this type.
+    anatomical_location:
+      - id: MBA:178
+        label: "Ventral part of the lateral geniculate complex"
+        name_in_source: "LGv (dorsal IGL/LGv)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:36280260"
+            method: "GFP/tdTomato reporter overlap between Sox14 and pTH-R lineage labels (lines not named in quote)"
+            scope: "mouse LGv and IGL — pTH-R-derived cells"
+            quote_key: "247159795_0eefb318"
+          - ref: "PMID:36280260"
+            method: "statement in source (pTH-R-derived cells occupy the dorsal region of LGv and IGL; ventral region prethalamic)"
+            scope: "mouse LGv and IGL"
+            quote_key: "247159795_d79097dc"
+      - id: MBA:27
+        label: "Intergeniculate leaflet of the lateral geniculate complex"
+        name_in_source: "IGL (dorsal IGL/LGv)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:36280260"
+            method: "GFP/tdTomato reporter overlap between Sox14 and pTH-R lineage labels (lines not named in quote)"
+            scope: "mouse LGv and IGL — pTH-R-derived cells"
+            quote_key: "247159795_0eefb318"
+          - ref: "PMID:36280260"
+            method: "statement in source (pTH-R-derived cells occupy the dorsal region of LGv and IGL; ventral region prethalamic)"
+            scope: "mouse LGv and IGL"
+            quote_key: "247159795_d79097dc"
+      - id: UBERON:0001945
+        label: "superior colliculus"
+        name_in_source: "superior colliculus"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled across LGv and IGL"
+            quote_key: "247159795_9ed56c01"
+      - id: MBA:1100
+        label: "Pretectal region"
+        name_in_source: "pretectum / pretectal nuclei"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled across LGv and IGL"
+            quote_key: "247159795_9ed56c01"
+      - id: MBA:706
+        label: "Olivary pretectal nucleus"
+        name_in_source: "olivary pretectal nucleus"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled across LGv and IGL"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:701
+        label: "Vestibular nuclei"
+        name_in_source: "vestibular nuclei"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled across LGv and IGL"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:797
+        label: "Zona incerta"
+        name_in_source: "zona incerta"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled across LGv and IGL"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:286
+        label: "Suprachiasmatic nucleus"
+        name_in_source: "suprachiasmatic nucleus"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons (dense fibers)"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled across LGv and IGL"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:347
+        label: "Subparaventricular zone"
+        name_in_source: "subparaventricular zone"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons (dense fibers)"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled across LGv and IGL"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:689
+        label: "Ventrolateral preoptic nucleus"
+        name_in_source: "ventrolateral preoptic area"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons (dense fibers)"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled across LGv and IGL"
+            quote_key: "247159795_f4eefc59"
+      - id: MBA:186
+        label: "Lateral habenula"
+        name_in_source: "lateral habenula"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36280260"
+            method: "anterograde tracing of Sox14+ neurons (sparse projection)"
+            scope: "mouse — Sox14+ GABAergic neurons of IGL/LGv, pooled across LGv and IGL"
+            quote_key: "247159795_f4eefc59"
+    defining_markers:
+      - name_in_source: "Sox14"
+        ncbi_gene_id: "NCBIGene:20669"
+        symbol: "Sox14"
+        sources:
+          - ref: "PMID:36280260"
+            marker_type: TRANSGENE_REPORTER
+            method: "GFP/tdTomato reporter overlap between Sox14 and pTH-R lineage labels (lines not named in quote); all pTH-R-derived LGv/IGL cells express Sox14"
+            scope: "mouse LGv and IGL — pTH-R-derived cells"
+            quote_key: "247159795_0eefb318"
+          - ref: "PMID:36280260"
+            marker_type: NOT_STATED
+            method: "statement citing prior work (transcription factor expressed in IGL/LGv, absent in dLGN); assay not named in quote"
+            scope: "mouse IGL/LGv vs dLGN"
+            quote_key: "247159795_aeeef91c"
+      - name_in_source: "Gata2"
+        ncbi_gene_id: "NCBIGene:14461"
+        symbol: "Gata2"
+        sources:
+          - ref: "PMID:36280260"
+            marker_type: NOT_STATED
+            method: "statement citing prior work (transcription factor expressed in IGL/LGv, absent in dLGN); assay not named in quote"
+            scope: "mouse IGL/LGv vs dLGN — pooled LGv/IGL population, not restricted to the Sox14+ pTH-R-derived component"
+            quote_key: "247159795_aeeef91c"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:36280260"
+          method: "GFP/tdTomato reporter overlap between Sox14 and pTH-R lineage labels; source concludes pTH-R-derived LGv/IGL cells are GABAergic (GABAergic label not named in quote)"
+          scope: "mouse LGv and IGL — pTH-R-derived cells"
+          quote_key: "247159795_0eefb318"
+        - ref: "PMID:36280260"
+          method: "statement citing prior work (IGL/LGv almost entirely GABAergic)"
+          scope: "mouse IGL/LGv"
+          quote_key: "247159795_aeeef91c"
+    morphology:
+      description: >
+        Projection neuron morphology: sparse local arborization with a main
+        projection extending ventrally (Brock et al., 2022; Sox14+ neurons in
+        LGv and IGL). IGL and LGv are composed almost exclusively of GABAergic
+        projection neurons (Brock et al., 2022, pooled LGv/IGL statement).
+      sources:
+        - ref: "PMID:36280260"
+          method: "single-cell / sparse labelling of Sox14+ neurons (Fig. 1E-G; labelling method not named in quote)"
+          scope: "mouse LGv and IGL — Sox14+ neurons"
+          quote_key: "247159795_61ac7818"
+        - ref: "PMID:36280260"
+          method: "statement citing prior work (IGL/LGv composed almost exclusively of GABAergic projection neurons)"
+          scope: "mouse IGL/LGv, pooled"
+          quote_key: "247159795_fb7a534b"
+    colocated_types:
+      - neighboring_type: "vlgni_gabaergic_neuron"
+        spatial_relationship: "INTERSPERSED"
+        notes: >
+          Sox14+ cells are enriched in the internal LGv (vLGNi) (Brock et al.,
+          2022; PMID:36280260, quote 247159795_a2cf4a69). The two populations
+          overlap; neither is shown to contain the other.
+      - neighboring_type: "vlgne_gabaergic_neuron"
+        spatial_relationship: "INTERSPERSED"
+        notes: >
+          Sox14+ cells are sparse in the external LGv (vLGNe) and IGL, where
+          retinal innervation is dense (Brock et al., 2022; PMID:36280260, quote
+          247159795_a2cf4a69).
+    definition_references:
+      - "PMID:36280260"
+    notes: >
+      LOCATION WORDING: Brock et al. (2022) define "Sox14+ neurons" as cells of
+      the dorsal IGL/LGv, pTH-R-derived, as distinct from a ventral prethalamic
+      component (quote 247159795_d79097dc), yet describe the morphology of
+      "Sox14+ neurons in ventral LGv and IGL" (quote 247159795_61ac7818). Soma
+      location is therefore recorded at the level of LGv (MBA:178) and IGL
+      (MBA:27) without a dorsal/ventral restriction; check against the paper.
+
+      DISTRIBUTION WITHIN LGv: Sox14+ cells are enriched in vLGNi and sparse in
+      vLGNe and IGL (quote 247159795_a2cf4a69), so the type is not uniformly
+      distributed across LGv laminae.
+
+      SINGLE SOURCE: all properties here rest on one paper (Brock et al.,
+      2022). Projection targets were traced from Sox14+ neurons pooled across
+      LGv and IGL; which targets arise from LGv vs IGL cells is not resolved.
+
+      GATA2: recorded from a pooled IGL/LGv statement citing prior work; not
+      shown to be specific to the Sox14+ pTH-R-derived component (the
+      prethalamic-derived ventral component may also express it).
+edges: []
