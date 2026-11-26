@@ -1,0 +1,124 @@
+{
+  "node_id": "dlgn_relay_neuron",
+  "summaries_read": 37,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 0,
+  "skipped_duplicate_quote": 3,
+  "skipped_low_relevance": 9,
+  "skipped_not_this_node": 8,
+  "entries_written": 17,
+  "written": [
+    {
+      "source_corpus_id": "4601077",
+      "field": "morphology.sources",
+      "quote_key": "4601077_32262ceb"
+    },
+    {
+      "source_corpus_id": "5842285",
+      "field": "anatomical_location[UBERON:0002479 SOMA].sources",
+      "quote_key": "5842285_5d593ab1"
+    },
+    {
+      "source_corpus_id": "4524072",
+      "field": "synonyms[\"thalamocortical neuron\"].sources",
+      "quote_key": "4524072_0ce8cc85"
+    },
+    {
+      "source_corpus_id": "5326680",
+      "field": "electrophysiology.sources",
+      "quote_key": "5326680_b82c9bc5"
+    },
+    {
+      "source_corpus_id": "4807205",
+      "field": "electrophysiology.sources",
+      "quote_key": "4807205_d2302f7c"
+    },
+    {
+      "source_corpus_id": "8247989",
+      "field": "anatomical_location[UBERON:0002436 AXON_TARGET].sources",
+      "quote_key": "8247989_7810a2a4"
+    },
+    {
+      "source_corpus_id": "286491924",
+      "field": "morphology.sources",
+      "quote_key": "286491924_2e18d254"
+    },
+    {
+      "source_corpus_id": "270555191",
+      "field": "anatomical_location[UBERON:0001903 AXON_TARGET].sources",
+      "quote_key": "270555191_fd1ee051"
+    },
+    {
+      "source_corpus_id": "1225644",
+      "field": "anatomical_location[UBERON:0002436 AXON_TARGET].sources",
+      "quote_key": "1225644_cc0d1672"
+    },
+    {
+      "source_corpus_id": "255986294",
+      "field": "electrophysiology.sources",
+      "quote_key": "255986294_3197b85b"
+    },
+    {
+      "source_corpus_id": "2891889",
+      "field": "electrophysiology.sources",
+      "quote_key": "2891889_731cf0f1"
+    },
+    {
+      "source_corpus_id": "23985202",
+      "field": "electrophysiology.sources",
+      "quote_key": "23985202_cf53881d"
+    },
+    {
+      "source_corpus_id": "4792744",
+      "field": "synonyms[\"thalamocortical projection neuron\"].sources",
+      "quote_key": "4792744_67185989"
+    },
+    {
+      "source_corpus_id": "1639353",
+      "field": "morphology.sources",
+      "quote_key": "1639353_9dec09a7"
+    },
+    {
+      "source_corpus_id": "26076888",
+      "field": "anatomical_location[UBERON:0002436 AXON_TARGET].sources",
+      "quote_key": "26076888_f728831d"
+    },
+    {
+      "source_corpus_id": "231615058",
+      "field": "anatomical_location[UBERON:0002436 AXON_TARGET].sources",
+      "quote_key": "231615058_f82a793f"
+    },
+    {
+      "source_corpus_id": "17166593",
+      "field": "electrophysiology.sources",
+      "quote_key": "17166593_78a2f9c9"
+    }
+  ],
+  "fields_populated": [
+    "anatomical_location[dLGN SOMA].sources",
+    "anatomical_location[V1 AXON_TARGET].sources",
+    "anatomical_location[TRN AXON_TARGET].sources",
+    "morphology.sources",
+    "electrophysiology.sources",
+    "synonyms.sources"
+  ],
+  "fields_with_no_evidence": [
+    "nt_type.sources",
+    "defining_markers (GeneDescriptor.sources)"
+  ],
+  "synonyms_found": [
+    "thalamocortical projection neuron (new synonym, PMID:29706872)",
+    "thalamocortical neuron (additional source, PMID:28965501)"
+  ],
+  "notes": [
+    "Duplicate-content skips: 16328698 (PMID:22131405) best quote is a substring of the already-cited morphology quote 16328698_cc12bb7a; 255985654 is a second corpus record of PMID:25011644 (1225644, same quotes); 15010690 is a second corpus record of the Seabrook 2013 paper also present as 255986294 (the 255986294 entry was used because it alone carries the relay-cell 1-3 RGC convergence quote; ref is its DOI https://doi.org/10.1186/1749-8104-8-24 because that corpus record has no PMID \u2014 same paper as PMID:24359973).",
+    "Not this node (subtype- or other-cell-type evidence): 14389058 (calbindin shell / core projections), 3598591 (superficial DS neurons), 264598574 (shell L1 projection), 267806869 (core/shell DS/OS pathways), 10004494 (relay/combination/binocular integration modes), 36416152 (DS/OS feature selectivity) -> belong to the shell/core/DS/mode child nodes; 257758447 is about dLGN interneurons; 250147404 (CKAMP44) reports only a knockout dendritic phenotype, no wild-type relay-neuron property.",
+    "Low relevance skipped: 73481430, 271906359, 277785001, 54481879, 264044014, 3626777, 44977478 (organotypic LGN-cortex coculture, layer-4 branching in vitro \u2014 not used as V1 evidence), 249575101, 1519009.",
+    "TRN AXON_TARGET: the new PMID:38890758 source uses CRH-Cre reporter labelling of dLGN and VB TC neurons together; recorded as support WEAK, consistent with the existing WEAK source. Direct dLGN-specific tracing to TRN is still lacking.",
+    "V1 AXON_TARGET: PMID:34478630 adds direct anterograde (AAV in dLGN) evidence; PMID:25011644 source is nucleus-level and marked WEAK. PMID:26691828 L1 projection is attributed to dorsal-shell neurons (scope says so).",
+    "Electrophysiology: several new sources describe receptive-field/feature selectivity that applies to subsets of dLGN neurons (PMID:28965524, PMID:28965513); scopes say so. The electrophysiology description text was not edited.",
+    "26076888_f728831d reused (exact substring without trailing period) for V1 AXON_TARGET; it was previously cited only on the 'thalamocortical neuron' synonym.",
+    "No at_source_sets entries touched (session constraint)."
+  ],
+  "reference_store": "references/thalamus"
+}
