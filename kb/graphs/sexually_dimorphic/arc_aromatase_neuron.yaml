@@ -62,6 +62,24 @@ nodes:
             method: "literature description"
             scope: "adult mouse"
             quote_key: "237626479_5aec04ab"
+          - ref: "PMID:34561233"
+            method: >
+              IHC with a Cyp19a1-specific antibody plus a Cyp19a1-GFP reporter line;
+              labelled cells lie in the arcuate nucleus dorsal to the KISS1 neurons
+            scope: "mouse, E16.5 to P0 and adult"
+            quote_key: "237626479_56c5257a"
+    colocated_types:
+      - neighboring_type: "arcuate kisspeptin (KISS1 / KNDy) neuron"
+        spatial_relationship: ADJACENT
+        notes: >
+          Cyp19a1/aromatase-positive arcuate cells sit immediately dorsal to, and in
+          close apposition with, KISS1 neurons in both neonatal and adult mice, while
+          themselves being kisspeptin-negative (PMID:34561233; quotes
+          237626479_56c5257a, 237626479_0ecf1fd1). The association is functional as
+          well as spatial: letrozole (aromatase inhibitor) and 17-beta-estradiol
+          applied to arcuate KISS1 neurons alter their spontaneous firing in males but
+          not females, indicating that estradiol produced by the male arcuate Cyp19a1
+          cells acts on the neighbouring KISS1 population (quote 237626479_d61aca83).
     defining_markers:
       - name_in_source: Cyp19a1
         symbol: Cyp19a1
@@ -72,6 +90,138 @@ nodes:
             method: "aromatase expression (assay not stated)"
             scope: "adult mouse"
             quote_key: "237626479_5aec04ab"
+          - marker_type: PROTEIN
+            ref: "PMID:34561233"
+            method: "IHC with a Cyp19a1-specific antibody"
+            scope: "developing (E16.5 to P0) and adult mouse arcuate nucleus"
+            quote_key: "237626479_730d3303"
+          - marker_type: TRANSGENE_REPORTER
+            ref: "PMID:34561233"
+            method: >
+              Cyp19a1-GFP transgenic reporter line, in which GFP expression
+              recapitulates endogenous Cyp19a1 expression
+            scope: "developing (E16.5 to P0) and adult mouse arcuate nucleus"
+            quote_key: "237626479_730d3303"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34561233"
+            method: "in situ hybridisation, Cyp19a1 mRNA puncta counted per cell"
+            scope: "P0 mouse arcuate nucleus"
+            notes: >
+              Transcript is detectable in both sexes but far lower in females
+              (male 8 +/- 1.1 puncta/cell, female 1 +/- 0.1 puncta/cell), so the
+              marker is quantitatively rather than absolutely sex-restricted.
+            quote_key: "237626479_95ac2587"
+      - name_in_source: Gad67
+        symbol: Gad1
+        ncbi_gene_id: "NCBIGene:14415"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34561233"
+            method: "mRNA in situ hybridisation; all arcuate Cyp19a1 neurons coexpressed Gad67 mRNA"
+            scope: "mouse arcuate nucleus"
+            notes: >
+              Gene identity: GAD67 is the 67 kDa isoform of glutamate decarboxylase,
+              encoded by Gad1 (name lookup in Mus musculus returned Gad1 as the unique
+              synonym match for Gad67).
+            quote_key: "237626479_1a877b24"
+      - name_in_source: "ERα"
+        symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:34561233"
+            method: "immunostaining of Cyp19a1-GFP positive arcuate cells"
+            scope: "mouse arcuate nucleus"
+            notes: >
+              Partial, not population-wide: approximately one-half of GFP+ arcuate
+              cells expressed ERα. Gene identity: ERα is oestrogen receptor alpha,
+              encoded by Esr1.
+            quote_key: "237626479_a46abfa9"
+      - name_in_source: "HuC/D"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:34561233"
+            method: "IHC; about 88% of GFP+ arcuate cells coexpressed HuC/D"
+            scope: "mouse arcuate nucleus, E18.5 and P0"
+            antibody:
+              name_in_source: "HuC/D"
+            notes: >
+              Pan-neuronal identity marker, not a type-specific marker. No single gene:
+              HuC/D antibodies detect the ELAV-family paralogues Elavl3 and Elavl4
+              together, so name_in_source only.
+            quote_key: "237626479_19ad0991"
+      - name_in_source: "Tuj1"
+        symbol: Tubb3
+        ncbi_gene_id: "NCBIGene:22152"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:34561233"
+            method: "IHC; all GFP+ arcuate cells coexpressed Tuj1 at E18.5 and P0"
+            scope: "mouse arcuate nucleus, E18.5 and P0"
+            antibody:
+              name_in_source: "Tuj1"
+            notes: >
+              Pan-neuronal identity marker, not a type-specific marker. Gene identity
+              by antibody target: the Tuj1 clone detects class III beta-tubulin,
+              encoded by Tubb3.
+            quote_key: "237626479_19ad0991"
+    negative_markers:
+      - name_in_source: Vglut2
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34561233"
+            method: "mRNA in situ hybridisation; arcuate Cyp19a1 neurons did not express Vglut2 mRNA"
+            scope: "mouse arcuate nucleus"
+            notes: >
+              Gene identity: VGLUT2 is vesicular glutamate transporter 2, encoded by
+              Slc17a6. Region-specific: Cyp19a1 neurons of the BNST are glutamatergic.
+            quote_key: "237626479_1a877b24"
+      - name_in_source: kisspeptin
+        symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:34561233"
+            method: "IHC; aromatase-positive arcuate neurons do not express kisspeptin"
+            scope: "neonatal and adult mouse arcuate nucleus"
+            quote_key: "237626479_0ecf1fd1"
+      - name_in_source: "androgen receptor"
+        symbol: Ar
+        ncbi_gene_id: "NCBIGene:11835"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:34561233"
+            method: "immunostaining of Cyp19a1-GFP positive arcuate cells; none expressed androgen receptor"
+            scope: "mouse arcuate nucleus"
+            quote_key: "237626479_a46abfa9"
+      - name_in_source: "glutamine synthetase"
+        symbol: Glul
+        ncbi_gene_id: "NCBIGene:14645"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:34561233"
+            method: "IHC; no GFP+ arcuate cell colocalised with the glial marker glutamine synthetase"
+            scope: "mouse arcuate nucleus, E18.5 and P0"
+            notes: >
+              Glial marker, absent — part of the evidence that the Cyp19a1-positive
+              arcuate cells are neurons. Gene identity: glutamine synthetase is encoded
+              by Glul.
+            quote_key: "237626479_19ad0991"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:34561233"
+          method: "mRNA in situ hybridisation (Gad67 present, Vglut2 absent)"
+          scope: >
+            mouse arcuate nucleus; region-specific, since the same paper finds Cyp19a1
+            neurons of the BNST to be glutamatergic
+          quote_key: "237626479_1a877b24"
     morphology:
       description: >
         Male-biased sexually dimorphic cluster of aromatase neurons in the arcuate
@@ -79,19 +229,42 @@ nodes:
         approximately 6,000 aromatase neurons across hypothalamus and amygdala.
         Becomes sexually dimorphic by birth. Male arcuate aromatase neurons convert
         testosterone to estrogen locally to regulate kisspeptin neuron activity.
+        In brain aromatase-positive neurons generally, aromatase immunoreactivity is
+        confined to the perikaryon and to fibres, with neuronal nuclei never
+        immunostained.
       sources:
         - ref: "PMID:34561233"
           method: "literature description"
           scope: "adult mouse"
           quote_key: "237626479_5aec04ab"
+        - ref: "PMID:26231585"
+          method: "IHC with an aromatase antibody; subcellular distribution of the immunoreactivity"
+          scope: >
+            E16 male mouse embryo, aromatase-positive neurons of the paraventricular
+            hypothalamic nucleus, stria terminalis and anterior amygdala area — the
+            wider brain aromatase population, not the arcuate cluster specifically
+          quote_key: "23270140_87170dc8"
     cl_mapping:
     is_terminal: false
     definition_references:
       - "PMID:34561233"
+      - "PMID:26231585"
     notes: >
       Male-biased dimorphism. Single primary source (Wartenberg 2021) for the
       sexually dimorphic ARC aromatase cluster. Part of a broader aromatase network
       spanning hypothalamus and amygdala. No CL term — candidate for new term.
+      Suspected heterogeneity: only about one-half of Cyp19a1-GFP+ arcuate cells are
+      ERα-positive (quote 237626479_a46abfa9), and the report treats the ERα-positive
+      and ERα-negative cells as local states rather than named subtypes, so no child
+      node was minted; ERα is recorded as a partial defining marker rather than a
+      population-wide one. Possible conflict between sources over kisspeptin/aromatase
+      exclusivity: Wartenberg 2021 (PMID:34561233) reports that arcuate
+      aromatase-positive neurons do not express kisspeptin, whereas Alfaia et al. 2020
+      (PMID:31671405) detect Cyp19a1 transcripts in fetal ARC Kiss1-GFP cells (quote
+      207814896_8ba12c75). The two may be reconcilable (protein versus transcript,
+      fetal versus neonatal/adult, Cyp19a1 transcript detection in sorted cells versus
+      an aromatase-defined population), but the kisspeptin-negative assertion should
+      not be treated as settled.
 
   - id: CS20230722_SUPT_0486
     name: "0486 PVpo-VMPO-MPN Hmx2 Gaba_5"

@@ -64,6 +64,98 @@ nodes:
           hypothalamus-wide TH-expressing class and the source names TIDA
           neurons as one of several arcuate Th-positive types. Sibling
           hypothalamic TH types are not asserted to be disjoint from this one.
+    anatomical_location:
+      - id: MBA:223
+        label: "Arcuate hypothalamic nucleus"
+        name_in_source: "arcuate nucleus (ARC)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:31420539"
+            method: "literature description — population introduced as a Th-positive neuron type of the arcuate nucleus"
+            scope: "mouse arcuate nucleus"
+            quote_key: "199668206_3768650c"
+          - ref: "PMID:39919032"
+            method: "review description — A12 tuberoinfundibular dopaminergic neurons placed in the arcuate nucleus"
+            scope: "arcuate nucleus; species not stated in the quoted passage"
+            quote_key: "276213069_161ba639"
+      - id: MBA:10671
+        label: "Median eminence"
+        name_in_source: "median eminence"
+        sources:
+          - ref: "PMID:39919032"
+            method: "review description — the population is described as spanning the arcuate nucleus and median eminence"
+            scope: "median eminence; species not stated in the quoted passage"
+            quote_key: "276213069_161ba639"
+            notes: >
+              Compartment left unset: the source states only that the
+              population lies in the arcuate nucleus and median eminence and
+              does not say whether the median eminence component is somata or
+              the tuberoinfundibular axon terminals. Classically it is the
+              latter, but no tracing evidence is cited here, so no AXON_TARGET
+              compartment is asserted.
+    nt_type:
+      name_in_source: "dopaminergic"
+      cl_terms:
+        - id: CL:0000700
+          label: "dopaminergic neuron"
+          name_in_source: "dopamine"
+      sources:
+        - ref: "PMID:39919032"
+          method: >
+            literature description (review) — dopaminergic identity established
+            from the biosynthetic enzyme complement: tyrosine hydroxylase plus
+            aromatic amino acid decarboxylase, with dopamine beta hydroxylase
+            absent so that synthesis stops at dopamine
+          scope: "arcuate nucleus and median eminence; species not stated in the quoted passage"
+          quote_key: "276213069_0480b48f"
+        - ref: "PMID:31420539"
+          method: "literature description — the Th-positive arcuate population is named a tuberoinfundibular dopamine (TIDA) neuron"
+          scope: "mouse arcuate nucleus"
+          quote_key: "199668206_3768650c"
+    defining_markers:
+      - name_in_source: "TH"
+        symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:39919032"
+            method: "review statement that A12 neurons express tyrosine hydroxylase; no assay named in the passage"
+            scope: "arcuate nucleus and median eminence; species not stated in the quoted passage"
+            quote_key: "276213069_0480b48f"
+          - marker_type: NOT_STATED
+            ref: "PMID:31420539"
+            method: "introductory statement describing the population as tyrosine hydroxylase (Th)-positive; no assay named in the passage"
+            scope: "mouse arcuate nucleus"
+            quote_key: "199668206_3768650c"
+      - name_in_source: "AADC"
+        symbol: Ddc
+        ncbi_gene_id: "NCBIGene:13195"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:39919032"
+            method: "review statement that A12 neurons express aromatic amino acid decarboxylase; no assay named in the passage"
+            scope: "arcuate nucleus and median eminence; species not stated in the quoted passage"
+            quote_key: "276213069_0480b48f"
+            notes: >
+              AADC resolved to Ddc (dopa decarboxylase), the unique mouse gene
+              carrying "aromatic amino acid decarboxylase" as a synonym; the
+              source itself defines AADC as the enzyme converting l-DOPA to
+              dopamine, which is Ddc.
+    negative_markers:
+      - name_in_source: "dopamine beta hydroxylase"
+        symbol: Dbh
+        ncbi_gene_id: "NCBIGene:13166"
+        modifier: ABSENT
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:39919032"
+            method: "review statement that these neurons lack dopamine beta hydroxylase; no assay named in the passage"
+            scope: "arcuate nucleus and median eminence; species not stated in the quoted passage"
+            quote_key: "276213069_0480b48f"
+            notes: >
+              Stated by the source as a property shared by all central
+              dopaminergic neurons rather than one specific to this type; it is
+              what makes the transmitter dopamine rather than noradrenaline.
     cl_mapping:
       cl_term:
         id: CL:4072009
@@ -81,4 +173,23 @@ nodes:
         AADC+, DBH-), and defining function (prolactin regulation) — the
         classical A12 group and the TIDA population are the same population
         under different naming conventions. EXACT.
+    definition_references:
+      - "PMID:39919032"
+      - "PMID:31420539"
+    notes: >
+      Both sources are secondary descriptions rather than primary
+      characterisations of this population: PMID:39919032 is a review of A12
+      neurons and PMID:31420539 names the type only in the introduction to a
+      developing-arcuate single-cell study. Neither names an assay for any
+      marker, so every marker source is NOT_STATED and all of them need
+      primary verification at evidence-extraction. Neither quoted passage
+      states a species — the node's Mus musculus assignment comes from the
+      mouse framing of PMID:31420539 and of the report as a whole, so a
+      cross-species reading of the enzyme complement (TH+/AADC+/DBH-) is
+      possible and should be checked. The marker complement given is the
+      generic central-dopaminergic one and does not by itself separate this
+      type from other arcuate Th-positive populations, which the same source
+      says exist; no marker unique to TIDA neurons is reported here. No
+      sex-bias, electrophysiology or morphology assertion is made by either
+      source, so those fields are left absent rather than inferred.
 edges: []

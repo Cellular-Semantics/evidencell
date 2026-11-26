@@ -38,6 +38,111 @@ nodes:
           - ref: "PMID:35203663"
             quote_key: "246907354_02c7536a"
             method: "name used for the population localised to the lateral posterior arcuate nucleus"
+    anatomical_location:
+      - id: MBA:223
+        label: "Arcuate hypothalamic nucleus"
+        name_in_source: "lateral posterior part of the arcuate nucleus (ArcLP)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:35203663"
+            method: "immunohistochemical localisation of NPGL-immunoreactive cell bodies"
+            scope: "mouse hypothalamus"
+            notes: >
+              The source localises the population to a sub-part of the arcuate
+              nucleus (lateral posterior, ArcLP). MBA has no subdivision of the
+              arcuate hypothalamic nucleus, so the term is recorded at MBA:223
+              and the sub-regional detail is kept in name_in_source.
+            quote_key: "246907354_02c7536a"
+    defining_markers:
+      - name_in_source: "NPGL"
+        symbol: Fam237a
+        ncbi_gene_id: "NCBIGene:105243944"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:35203663"
+            method: "immunohistochemistry for NPGL; the marker that defines the population"
+            scope: "mouse hypothalamus, lateral posterior arcuate nucleus"
+            notes: >
+              Gene identity: NPGL is neurosecretory protein GL, encoded in mouse
+              by Fam237a (unique synonym match for "NPGL" in Mus musculus).
+            quote_key: "246907354_0ce33067"
+      - name_in_source: "glutamate decarboxylase 67"
+        symbol: Gad1
+        ncbi_gene_id: "NCBIGene:14415"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:35203663"
+            method: "immunohistochemistry; NPGL neurons co-produced glutamate decarboxylase 67"
+            scope: "mouse hypothalamus, lateral posterior arcuate nucleus"
+            notes: >
+              Partial, not population-wide: the same source states that only
+              approximately 50% of NPGL neurons were identical to GABAergic
+              neurons. Gene identity: glutamate decarboxylase 67 is the 67 kDa
+              GAD isoform, abbreviated GAD67 in the source's field and encoded
+              by Gad1 (unique synonym match for "GAD67" in Mus musculus).
+            quote_key: "246907354_0ce33067"
+    negative_markers:
+      - name_in_source: "tyrosine hydroxylase"
+        symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:35203663"
+            method: >
+              immunohistochemistry; NPGL neurons did not co-express tyrosine
+              hydroxylase, used by the source as a marker of catecholaminergic
+              neurons
+            scope: "mouse hypothalamus, lateral posterior arcuate nucleus"
+            quote_key: "246907354_0ce33067"
+      - name_in_source: "vesicular glutamate transporter-2"
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:35203663"
+            method: >
+              immunohistochemistry; NPGL neurons did not co-express vesicular
+              glutamate transporter-2, used by the source as a marker of
+              glutamatergic neurons
+            scope: "mouse hypothalamus, lateral posterior arcuate nucleus"
+            notes: >
+              Gene identity: VGLUT2 is vesicular glutamate transporter 2,
+              encoded by Slc17a6.
+            quote_key: "246907354_0ce33067"
+    neuropeptides:
+      - name_in_source: "NPGL"
+        symbol: Fam237a
+        ncbi_gene_id: "NCBIGene:105243944"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:35203663"
+            method: "immunohistochemistry for the secreted neuropeptide-like protein NPGL"
+            scope: "mouse hypothalamus, lateral posterior arcuate nucleus"
+            notes: >
+              Neurosecretory protein GL is a small secreted protein named for
+              its C-terminal Gly-Leu-amide motif; listed both as the defining
+              marker and as the population's neuropeptide product.
+            quote_key: "246907354_02c7536a"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:35203663"
+          method: >
+            immunohistochemistry (glutamate decarboxylase 67 present; tyrosine
+            hydroxylase and vesicular glutamate transporter-2 absent)
+          scope: "mouse hypothalamus, lateral posterior arcuate nucleus"
+          notes: >
+            Partial: approximately 50% of NPGL neurons were identical to
+            GABAergic neurons, so GABA is the transmitter of a substantial
+            fraction rather than a demonstrated property of every cell. The
+            transmitter of the remaining cells is not established by the
+            source; catecholaminergic and glutamatergic identities are
+            excluded.
+          quote_key: "246907354_0ce33067"
     cl_mapping:
       cl_term:
         id: CL:0000110
@@ -57,4 +162,24 @@ nodes:
         transmitters") captures more directly and is the nearest term the
         whole population satisfies. No more specific term exists; a new CL
         term for the ArcLP NPGL population would sit under CL:0000110.
+    definition_references:
+      - "PMID:35203663"
+    notes: >
+      Single-source node: every property here comes from one immunohistochemical
+      study (Naito et al. 2022, PMID:35203663), reached through the ASTA report
+      on ARC aromatase neurons, where the population is cited only as a contrast
+      case. Nothing has been checked against a second primary paper.
+      Suspected heterogeneity: the source states that NPGL neurons co-produce
+      glutamate decarboxylase 67 but that only approximately 50% of them were
+      identical to GABAergic neurons, so GAD67 and the GABAergic transmitter
+      assignment are recorded as properties of a substantial fraction, not of
+      every cell; the transmitter identity of the remainder is unknown, with
+      catecholaminergic and glutamatergic identities excluded by the absence of
+      tyrosine hydroxylase and vesicular glutamate transporter-2.
+      Anatomy granularity: the source places the population in the lateral
+      posterior part of the arcuate nucleus (ArcLP), a subdivision MBA does not
+      carry, so anatomical_location is recorded at the whole arcuate
+      hypothalamic nucleus (MBA:223) with the sub-regional wording preserved in
+      name_in_source. Sex bias is not reported for this population and is left
+      unset.
 edges: []

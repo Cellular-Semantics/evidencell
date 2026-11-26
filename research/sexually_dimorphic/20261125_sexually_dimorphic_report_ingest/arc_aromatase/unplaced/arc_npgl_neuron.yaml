@@ -1,0 +1,36 @@
+# Findings from the arc_aromatase run that no CellTypeNode property field can hold.
+# Node: arc_npgl_neuron (NEW)
+
+- finding: >
+    Physiological function. NPGL "enhances feeding behavior and fat accumulation
+    in mice" — an organism-level effect of the secreted protein, reported in the
+    same sentence that gives the population's location. CellTypeNode has no
+    function or behavioural-role field, and the claim is about the peptide
+    rather than about a property of the cell, so it is recorded here. Its only
+    trace on the node is NPGL as a neuropeptide product.
+  quote_keys: ["246907354_02c7536a"]
+  closest_field: null
+
+- finding: >
+    Partial GABAergic identity as a quantitative fraction. The source states that
+    NPGL neurons co-produce glutamate decarboxylase 67 but that only
+    approximately 50% of them "were identical to GABAergic neurons". The
+    proportion itself has no field — GeneDescriptor and NeurotransmitterType
+    carry no fraction — so it is kept in the node's notes and in the relevant
+    source notes, and recorded here as the underlying finding. Whether the
+    non-GABAergic half is a separate population or a graded state is not
+    addressed by the source, so no subtype was proposed.
+  quote_keys: ["246907354_0ce33067"]
+  closest_field: nt_type
+
+- finding: >
+    Comparative use in the report. The ASTA report cites this population solely to
+    argue that GABAergic identity alone does not distinguish ARC aromatase
+    neurons — NPGL neurons of the lateral posterior arcuate nucleus share the
+    GAD67-positive / TH-negative / VGLUT2-negative phenotype without being
+    Cyp19a1 cells. That is a contrast between two nodes, not a property of
+    either, and it is not stated as containment or colocation (no spatial
+    adjacency is asserted), so it is neither a subtype_of nor a colocated_types
+    entry. A MappingEdge or report-level comparison is its proper home.
+  quote_keys: ["246907354_0ce33067"]
+  closest_field: colocated_types

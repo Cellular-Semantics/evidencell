@@ -57,4 +57,148 @@ nodes:
         per the rule for a node with nothing more specific. A new CL term for
         this MERFISH cluster would need an established NT type or other
         defining criterion before it could be placed more specifically.
+    anatomical_location:
+      - id: MBA:515
+        label: "Medial preoptic nucleus"
+        name_in_source: "sexually dimorphic nucleus of the preoptic area (SDN-POA)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:30385464"
+            quote_key: "53566396_7313d264"
+            method: "MERFISH spatial mapping of cluster cell positions"
+            scope: "adult mouse preoptic region, male and female"
+            notes: >
+              The source states that cluster I-2 overlapped the SDN-POA and that
+              its marker gene Cplx3 was co-expressed with MoxD1, a canonical
+              SDN-POA marker. The SDN-POA is a histologically defined subnucleus
+              within the medial preoptic nucleus and has no MBA term of its own,
+              so MBA:515 (MPN) is the most specific available grounding —
+              the same convention used on sdn_poa_calbindin_neuron. "Overlapped"
+              is the source's own wording; the cluster is not asserted to be
+              confined to the SDN-POA.
+      - id: UBERON:0001928
+        label: "preoptic area"
+        name_in_source: "the preoptic region"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:30385464"
+            quote_key: "53566396_09c5aedb"
+            method: "MERFISH + scRNA-seq profiling of the preoptic region"
+            scope: "adult mouse preoptic region"
+            notes: >
+              I-2 is one of the ~70 neuronal populations resolved in this
+              preoptic-region dataset, so preoptic location follows from the
+              dataset's anatomical scope. Recorded as the broader containing
+              region for the specific SDN-POA claim above.
+    colocated_types:
+      - neighboring_type: "Esr1-enriched preoptic MERFISH clusters (Moffitt et al. 2018)"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          I-2 (with the other aromatase-enriched cluster E-12) substantially
+          overlapped in location with several Esr1-enriched clusters, which the
+          source reads as scope for paracrine action of locally synthesised
+          estrogen on nearby Esr1-enriched cells (PMID:30385464, quote
+          53566396_7313d264). The Esr1-enriched clusters are named only by
+          label in the source and are not held as KB nodes.
+    defining_markers:
+      - name_in_source: "Aromatase (Cyp19a1)"
+        symbol: Cyp19a1
+        ncbi_gene_id: "NCBIGene:13075"
+        modifier: ENRICHED
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:30385464"
+            quote_key: "53566396_7313d264"
+            method: "MERFISH"
+            scope: "adult mouse preoptic region"
+            notes: >
+              I-2 is one of the clusters the source designates
+              "Aromatase-enriched"; enrichment is relative to the other
+              preoptic clusters in the same dataset, not an absolute level.
+      - name_in_source: "Cplx3"
+        symbol: Cplx3
+        ncbi_gene_id: "NCBIGene:235415"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:30385464"
+            quote_key: "53566396_7313d264"
+            method: "MERFISH"
+            scope: "adult mouse preoptic region"
+            notes: "Named by the source as the marker gene of cluster I-2."
+      - name_in_source: "MoxD1"
+        symbol: Moxd1
+        ncbi_gene_id: "NCBIGene:59012"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:30385464"
+            quote_key: "53566396_7313d264"
+            method: "MERFISH"
+            scope: "adult mouse preoptic region"
+            notes: >
+              Co-expressed with Cplx3 in I-2; the source calls it a canonical
+              SDN-POA marker. Source spelling "MoxD1"; the current mouse
+              official symbol is Moxd1.
+      - name_in_source: "androgen receptor (Ar)"
+        symbol: Ar
+        ncbi_gene_id: "NCBIGene:11835"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:30385464"
+            quote_key: "53566396_7313d264"
+            method: "MERFISH"
+            scope: "adult mouse preoptic region"
+            notes: >
+              Sex-hormone receptor expressed by I-2. Shared with the other
+              aromatase-enriched clusters listed (I-13, I-24, I-32, E-12), so
+              it characterises the population without discriminating it from
+              them.
+      - name_in_source: "estrogen receptor alpha (Esr1)"
+        symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:30385464"
+            quote_key: "53566396_7313d264"
+            method: "MERFISH"
+            scope: "adult mouse preoptic region"
+            notes: >
+              Co-expressed with Ar in I-2, which the source reads as support
+              for cell-autonomous conversion of testosterone to estrogen.
+              Also shared with I-13, I-24, I-32 and E-12.
+    nt_type:
+      name_in_source: "I-2"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "I-2"
+      sources:
+        - ref: "PMID:30385464"
+          quote_key: "53566396_7313d264"
+          method: >
+            INFERRED, not stated for I-2 in the quoted passage. In this source
+            the preoptic neuronal clusters are named by a transmitter prefix —
+            I- for inhibitory (GABAergic) and E- for excitatory
+            (glutamatergic) — and the quoted passage uses both prefixes
+            (I-2, I-13, I-24, I-32 vs E-12). The GABAergic assignment follows
+            from the cluster label alone; no Gad1/Gad2/Slc32a1 measurement for
+            I-2 is quoted.
+          scope: "adult mouse preoptic region"
+          support: WEAK
+    prior_cluster_label: "I-2"
+    prior_reference: "PMID:30385464"
+    sex_bias: MALE_BIASED
+    definition_references:
+      - "PMID:30385464"
+    notes: >
+      Single-source node: every property here comes from one passage of
+      Moffitt et al. 2018 (PMID:30385464), and no primary verification has
+      been done. The cluster label I-2 is dataset-specific and is not stable
+      across re-analyses of the preoptic region. No dataset accession for the
+      cluster was given in the quoted material, so prior_dataset_accession is
+      absent. Male enrichment is described by the source as "more modest" than
+      the female enrichment of the Esr1 cluster I-15, and no counts or ratio
+      are given, so MALE_BIASED records direction only. The nt_type is
+      inferred from the source's I-/E- cluster-naming convention rather than
+      measured, and cl_mapping has deliberately not been revised on the
+      strength of that inference.
 edges: []
