@@ -178,6 +178,11 @@ nodes:
       inferred from the MeSH organisms of the cited primary papers (#216); narrowed to the species
       of the defining description per the schema's species rule.
 
+      Four markers have no ncbi_gene_id and are not measured against atlas expression, as none
+      names a single gene: PSA-NCAM (polysialylated NCAM, a glycoform of NCAM1), phospho-CREB (a
+      phosphorylation state of CREB), CaMKII (PMID:29688272 used an anti-CaMKII antibody naming no
+      isoform of Camk2a/b/d/g) and NMDA receptors (PMID:18245040 names no subunit).
+
   # ── Olfactory Bulb Neuroblast / Immature Interneuron ────────────
 
 edges: []
