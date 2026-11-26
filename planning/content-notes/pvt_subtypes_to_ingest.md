@@ -14,6 +14,37 @@ Source run: `research/thalamus/20261114_thalamus_pvt_report_ingest/` (PVT_Glut.p
 This file keeps the deferred and rejected candidates in enough detail to pick up later. The
 umbrella node's notes ("DEFERRED SUBTYPE CANDIDATES") carry a shorter version.
 
+## 2026-11-26 Gao AT follow-up (branch `content/thalamus-at-gao2023`): F1 gate pending
+
+**The PVT1–5 rows below (3–7) are wrong on markers and AP position. Do not ingest them as
+written.** Their quote_keys (251021326_6e3c6191, _3d4954d5, _19d51130, _6820b736, plus _815dcc71,
+_17100715, _ecb498e7 and _5ed06f40) are not in the Gao 2023 eLife version of record. No 8-word
+window of any of them matches the Europe PMC full text. They also contradict the paper's
+Supplementary file 1c (Thy1, Cxcl14, Cbln2 and Tesc are not PVT DEGs). Details:
+`research/thalamus/annotation_transfer/gao2023_pvt/README.md`.
+
+What the paper says (verified quotes 251021326_6ecf0efa, _d84aa264, _644f9bee, _1fef2fe7,
+_9034ddfa, _a12d1cda):
+
+| cluster | ISH marker | 2nd ISH marker | position | ThalamoSeq overlap (correlation) | proposed parent |
+|---|---|---|---|---|---|
+| PVT1 | Esr1 | Drd2 | pPVT, across the dorso-ventral axis | PFC projectors | ppvt_glutamatergic_neuron |
+| PVT2 | Col12a1 | Pde3a | ventral "edge" of pPVT | PFC projectors (largest overlap); PL retrobeads at the ventral edge partly co-localise with Col12a1 | ppvt_glutamatergic_neuron |
+| PVT3 | Npffr1 | Insrr | aPVT-biased, antero-lateral | prefrontal (small) | apvt_glutamatergic_neuron |
+| PVT4 | Hcrtr1 | Npsr1 | aPVT-biased, antero-medial | auditory and visual (small) | apvt_glutamatergic_neuron |
+| PVT5 | Drd3 | — | pan-PVT | visual (small) | umbrella (if created) |
+
+AT results, from derived labels (marker-set assignment; best cluster target, F1 / purity):
+- PVT1 → 2621: 0.64 / 0.64.
+- PVT2 → 2639: 0.71 / 0.80.
+- PVT3 → 2624: 0.73 / 0.94.
+- PVT4 → 2626: 0.67 / 0.87.
+- PVT5 is not clean: best 2637 at 0.42 / 0.83, and the rest scattered.
+
+The PVT1–4 nodes and the PVT5 deferral wait for curator approval at the F1 gate (PR). The
+existing aPVT / pPVT / umbrella nodes cite the unverifiable keys above. Fixing them is proposed in
+the same PR.
+
 The gate was raised because:
 1. The full split is 7 nodes (aPVT, pPVT, PVT1–5).
 2. Type vs gradient position is unresolved. Shima 2022 reports that the four scRNA-seq types are
