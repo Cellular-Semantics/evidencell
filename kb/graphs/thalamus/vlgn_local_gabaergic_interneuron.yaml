@@ -72,6 +72,55 @@ nodes:
             method: "statement citing prior work (presence and distribution of local interneurons in both dLGN and vLGN)"
             scope: "mouse visual thalamus"
             quote_key: "247085323_880b2f54"
+          - ref: "PMID:32497303"
+            method: "electrophysiological and morphological analyses of GAD67-GFP-labelled vLGN cells (authors' interpretation)"
+            scope: "mouse vLGN"
+            quote_key: "219328889_bd504821"
+            notes: >
+              Places the GAD67-GFP-labelled cells in vLGN and identifies them as
+              likely interneurons; the other GABAergic subtypes of vLGN are
+              suggested to be projection neurons.
+          - ref: "PMID:31964831"
+            method: "GFP+ interneuron counts in Gad67-GFP reporter mice"
+            scope: "mouse visual thalamus"
+            quote_key: "210870509_130a6a38"
+          - ref: "PMID:31964831"
+            method: "developmental time course of GFP+ interneuron number in Gad67-GFP mice"
+            scope: "mouse visual thalamus, first postnatal week"
+            quote_key: "210870509_fdae0585"
+            notes: >
+              Developmental: GFP+ interneuron number in vLGN falls over the first
+              postnatal week as dLGN numbers rise.
+          - ref: "PMID:39160068"
+            method: "statement citing the authors' prior work (Su et al., 2020)"
+            scope: "mouse vLGN, development"
+            quote_key: "271906359_919de50b"
+            notes: >
+              Developmental: GAD67-GFP-labelled interneurons need retinal input to
+              migrate into vLGN, unlike Ecel1+/Penk+ projection neurons.
+          - ref: "PMID:36342840"
+            method: "statement in introduction citing prior work"
+            scope: "mouse visual thalamus, perinatal"
+            quote_key: "247085323_daa6b25e"
+            notes: >
+              Developmental: recruitment of migrating interneurons into perinatal
+              vLGN requires retinal ganglion cell innervation.
+          - ref: "PMID:25011644"
+            method: "GAD67 immunolabelling of interneuron somata"
+            scope: "mouse visual thalamus"
+            quote_key: "1225644_85159fa2"
+      - id: MBA:300
+        label: "Ventral part of the lateral geniculate complex, lateral zone"
+        name_in_source: "vLGNe"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:36609305"
+            method: "statement in discussion citing prior work (Su et al., 2011); GAD67-GFP transgenic reporter"
+            scope: "mouse vLGN"
+            quote_key: "255502436_6bc6f6ca"
+            notes: >
+              GAD67-GFP-labelled interneurons populate vLGNe (mapped to MBA lateral
+              zone, as on vlgne_gabaergic_neuron) and are absent from vLGNi.
     nt_type:
       name_in_source: "GABAergic"
       cl_terms:
@@ -87,6 +136,43 @@ nodes:
           method: "statement citing prior work (local interneurons of dLGN and vLGN referred to as GABAergic neurons)"
           scope: "mouse visual thalamus"
           quote_key: "247085323_880b2f54"
+        - ref: "PMID:25011644"
+          method: "GAD67 immunolabelling of interneuron somata in vLGN"
+          scope: "mouse visual thalamus"
+          quote_key: "1225644_85159fa2"
+    defining_markers:
+      - name_in_source: "GAD67"
+        symbol: "Gad1"
+        ncbi_gene_id: "NCBIGene:14415"
+        sources:
+          - ref: "PMID:25011644"
+            marker_type: PROTEIN
+            method: "GAD67 immunolabelling"
+            scope: "mouse vLGN and dLGN"
+            quote_key: "1225644_85159fa2"
+            notes: >
+              GAD67 resolves to mouse Gad1 (synonym; just resolve-gene-names).
+              GAD67 is pan-GABAergic and does not separate interneurons from vLGN
+              GABAergic projection neurons.
+          - ref: "PMID:32497303"
+            marker_type: TRANSGENE_REPORTER
+            method: "GAD67-GFP transgenic reporter"
+            scope: "mouse vLGN"
+            quote_key: "219328889_bd504821"
+          - ref: "PMID:31964831"
+            marker_type: TRANSGENE_REPORTER
+            method: "Gad67-GFP transgenic reporter"
+            scope: "mouse visual thalamus"
+            quote_key: "210870509_130a6a38"
+            notes: >
+              Per the same paper, Gad67-GFP is a faithful interneuron reporter in
+              adult dLGN but labels only a subset of GABAergic cells elsewhere in
+              visual thalamus.
+          - ref: "PMID:36609305"
+            marker_type: TRANSGENE_REPORTER
+            method: "GAD67-GFP transgenic reporter (citing Su et al., 2011)"
+            scope: "mouse vLGN"
+            quote_key: "255502436_6bc6f6ca"
     definition_references:
       - "PMID:31964831"
       - "PMID:36342840"
