@@ -35,7 +35,8 @@ nodes:
     name_in_source: "mouse"
   neuropeptides:
   - name_in_source: Crh
-    ncbi_gene_id: null
+    symbol: Crh
+    ncbi_gene_id: NCBIGene:12918
     sources:
     - ref: PMID:38419794
       method: asta_report
@@ -49,7 +50,8 @@ nodes:
   is_terminal: false
   notes: >-
     Often partially overlaps with other neuropeptide-defined CeA populations; not exhaustively
-    characterized here.
+    characterized here. Crh gene: the source writes "CRF" (claimed by Crh and C1ql1), and the same
+    review defines it as corticotropin-releasing factor, i.e. mouse Crh (NCBIGene:12918).
 
     SPECIES: mouse (low confidence): the only cited source (PMID:38419794) is a review of the
     central amygdala built on mouse molecular data; no source scope states a species. Confirm from
