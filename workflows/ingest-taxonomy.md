@@ -560,6 +560,21 @@ just ingest-taxonomy-db inputs/taxonomies/{taxonomy_id}.json {taxonomy_id}
 Note: `just fetch-taxonomy-kg` requires the [kg] optional dep group and a running
 local neo4j KG. If the KG is not available, use Option B with a previously exported JSON.
 
+**Marker sets (#274).** When `inputs/taxonomies/{taxonomy_id}_meta.yaml` has a
+`marker_sets` block, the ingest also reads that block's `file` (the marker-set
+export) and attaches `CellTypeNode.marker_sets`. With Option A, re-fetch it too:
+```
+just fetch-taxonomy-kg {marker_sets.query} {taxonomy_id} --output {marker_sets.file}
+```
+The ingest stops if the export is missing, if gene IDs can't be looked up
+(network: Translator NodeNormalization, cached in `conf/gene_id_cache.json`), or
+if the built counts differ from `marker_sets.expected_counts`. A count change
+after a KG update is reported with the new table; review it and update
+`expected_counts` before re-running. The ingest summary (also in
+`taxonomy_meta.yaml` under `marker_sets`) lists skipped unscored sets, genes
+without a current NCBI gene ID, and author combos that differ from the node's
+metadata marker combo.
+
 ---
 
 ### Route C — Ad hoc (CSV, XLSX, non-VFB JSON)

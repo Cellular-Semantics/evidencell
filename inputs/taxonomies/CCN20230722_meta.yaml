@@ -16,3 +16,30 @@ mapmycells:
   markers_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/WMB-10X/20240831/mouse_markers_230821.json
   local_stats_path: null
   local_markers_path: null
+
+# Marker sets (#274): Yao 2023 marker combinations and NS-Forest sets with
+# F-beta / precision / recall, from brain_cell_KG. Fetch the export with:
+#   just fetch-taxonomy-kg inputs/taxonomies/CCN20230722_marker_sets.cypher CCN20230722 \
+#       --output inputs/taxonomies/CCN20230722_marker_sets.json
+# Ingest fails if the built counts drift from expected_counts: sets per level
+# and METHOD/CONTEXT, after attaching each set to its class's most specific
+# exemplar cell set (baseline 2026-11-27). Same-cell ancestors in single-child
+# chains have no sets of their own in WMBO, so e.g. Yao global sets cover 245
+# of 338 subclasses.
+marker_sets:
+  query: inputs/taxonomies/CCN20230722_marker_sets.cypher
+  file: inputs/taxonomies/CCN20230722_marker_sets.json
+  expected_counts:
+    class:
+      NS_FOREST/GLOBAL: 27
+    cluster:
+      AUTHOR_COMBO/GLOBAL: 5314
+      AUTHOR_COMBO/WITHIN_PARENT: 5314
+      NS_FOREST/GLOBAL: 29
+    subclass:
+      AUTHOR_COMBO/GLOBAL: 245
+      NS_FOREST/GLOBAL: 247
+    supertype:
+      AUTHOR_COMBO/GLOBAL: 1014
+      AUTHOR_COMBO/WITHIN_PARENT: 1015
+      NS_FOREST/GLOBAL: 61

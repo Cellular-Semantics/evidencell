@@ -6,6 +6,8 @@ Usage (CLI):
   python -m evidencell.kg_query fetch <cypher_file> <taxonomy_id>
   python -m evidencell.kg_query fetch inputs/taxonomies/CCN20230722.cypher CCN20230722 \\
       --bolt-url bolt://localhost:7687
+  python -m evidencell.kg_query fetch inputs/taxonomies/CCN20230722_marker_sets.cypher \\
+      CCN20230722 --output inputs/taxonomies/CCN20230722_marker_sets.json
 
 Requires the [kg] optional dependency group:
   uv sync --extra kg
@@ -181,13 +183,17 @@ def _cmd_fetch(
     bolt_url: str | None = None,
     user: str | None = None,
     password: str | None = None,
+    output: str | None = None,
 ) -> None:
     from evidencell.paths import repo_root
     cypher_path = Path(cypher_file)
     if not cypher_path.exists():
         print(f"ERROR: Cypher file not found: {cypher_path}")
         sys.exit(1)
-    output_path = repo_root() / "inputs" / "taxonomies" / f"{taxonomy_id}.json"
+    output_path = (
+        Path(output) if output
+        else repo_root() / "inputs" / "taxonomies" / f"{taxonomy_id}.json"
+    )
     print(f"Fetching {taxonomy_id} taxonomy from KG → {output_path}")
     n = fetch_taxonomy_json(cypher_path, output_path, endpoint=bolt_url, user=user, password=password)
     print(f"Done. {n:,} rows written to {output_path}")
@@ -208,10 +214,17 @@ if __name__ == "__main__":
     )
     fetch_p.add_argument("--user", default=None, help="Neo4j user (or NEO4J_USER env)")
     fetch_p.add_argument("--password", default=None, help="Neo4j password (or NEO4J_PASSWORD env)")
+    fetch_p.add_argument(
+        "--output", default=None,
+        help="Output JSON path (default: inputs/taxonomies/{taxonomy_id}.json)",
+    )
 
     args = parser.parse_args()
     if args.cmd == "fetch":
-        _cmd_fetch(args.cypher_file, args.taxonomy_id, args.bolt_url, args.user, args.password)
+        _cmd_fetch(
+            args.cypher_file, args.taxonomy_id, args.bolt_url, args.user, args.password,
+            args.output,
+        )
     else:
         parser.print_help()
         sys.exit(1)

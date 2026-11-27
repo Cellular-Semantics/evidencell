@@ -9,6 +9,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130868
+    genes:
+    - name_in_source: Lhx8
+      ncbi_gene_id: NCBIGene:16875
+      symbol: Lhx8
+    - name_in_source: Lhx6
+      ncbi_gene_id: NCBIGene:16874
+      symbol: Lhx6
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110008
+    performance:
+    - metric: F_BETA
+      value: 0.60092807
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.6148036
+    - metric: RECALL
+      value: 0.55117043915651
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:4023063
@@ -1710,6 +1734,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130869
+    genes:
+    - name_in_source: Rarb
+      ncbi_gene_id: NCBIGene:218772
+      symbol: Rarb
+    - name_in_source: Six3
+      ncbi_gene_id: NCBIGene:20473
+      symbol: Six3
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110009
+    performance:
+    - metric: F_BETA
+      value: 0.738888
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.9183673
+    - metric: RECALL
+      value: 0.4147021003000428
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:4023035
@@ -2924,6 +2972,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130864
+    genes:
+    - name_in_source: Tubb2b
+      ncbi_gene_id: NCBIGene:73710
+      symbol: Tubb2b
+    - name_in_source: Neurod1
+      ncbi_gene_id: NCBIGene:18012
+      symbol: Neurod1
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110004
+    performance:
+    - metric: F_BETA
+      value: 0.45272437
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.99122804
+    - metric: RECALL
+      value: 0.1426767676767676
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -3759,6 +3831,27 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130865
+    genes:
+    - name_in_source: Meis2
+      ncbi_gene_id: NCBIGene:17536
+      symbol: Meis2
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110005
+    performance:
+    - metric: F_BETA
+      value: 0.6859328
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.72872204
+    - metric: RECALL
+      value: 0.55546844374755
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -4708,6 +4801,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130866
+    genes:
+    - name_in_source: Htr3a
+      ncbi_gene_id: NCBIGene:15561
+      symbol: Htr3a
+    - name_in_source: Maf
+      ncbi_gene_id: NCBIGene:17132
+      symbol: Maf
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110006
+    performance:
+    - metric: F_BETA
+      value: 0.6401191
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.9642607
+    - metric: RECALL
+      value: 0.273015873015873
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:4023064
@@ -8439,6 +8556,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130867
+    genes:
+    - name_in_source: Rbp4
+      ncbi_gene_id: NCBIGene:19662
+      symbol: Rbp4
+    - name_in_source: Lhx6
+      ncbi_gene_id: NCBIGene:16874
+      symbol: Lhx6
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110007
+    performance:
+    - metric: F_BETA
+      value: 0.7199157
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.9756743
+    - metric: RECALL
+      value: 0.3514285714285714
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:4023069
@@ -12249,6 +12390,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130861
+    genes:
+    - name_in_source: Vxn
+      ncbi_gene_id: NCBIGene:76982
+      symbol: Vxn
+    - name_in_source: C1ql3
+      ncbi_gene_id: NCBIGene:227580
+      symbol: C1ql3
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110001
+    performance:
+    - metric: F_BETA
+      value: 0.7506463
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.95775986
+    - metric: RECALL
+      value: 0.4024931438544004
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0010012
@@ -15740,6 +15905,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130862
+    genes:
+    - name_in_source: Fezf2
+      ncbi_gene_id: NCBIGene:54713
+      symbol: Fezf2
+    - name_in_source: Nxph3
+      ncbi_gene_id: NCBIGene:104079
+      symbol: Nxph3
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110002
+    performance:
+    - metric: F_BETA
+      value: 0.73169565
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.97021544
+    - metric: RECALL
+      value: 0.3689156626506024
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0010012
@@ -18680,6 +18869,27 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130863
+    genes:
+    - name_in_source: Cdhr1
+      ncbi_gene_id: NCBIGene:170677
+      symbol: Cdhr1
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110003
+    performance:
+    - metric: F_BETA
+      value: 0.7523511
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.8767123
+    - metric: RECALL
+      value: 0.48
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0010012
@@ -19855,6 +20065,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130879
+    genes:
+    - name_in_source: Shox2
+      ncbi_gene_id: NCBIGene:20429
+      symbol: Shox2
+    - name_in_source: Lhx9
+      ncbi_gene_id: NCBIGene:16876
+      symbol: Lhx9
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110019
+    performance:
+    - metric: F_BETA
+      value: 0.73216033
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.79790217
+    - metric: RECALL
+      value: 0.5506731013462027
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -21493,6 +21727,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130870
+    genes:
+    - name_in_source: Prdm16
+      ncbi_gene_id: NCBIGene:70673
+      symbol: Prdm16
+    - name_in_source: Ankrd63
+      ncbi_gene_id: NCBIGene:383787
+      symbol: Ankrd63
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110010
+    performance:
+    - metric: F_BETA
+      value: 0.78932023
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.9666766
+    - metric: RECALL
+      value: 0.4552332912988651
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0002613
@@ -24312,6 +24570,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130876
+    genes:
+    - name_in_source: B230323A14Rik
+      ncbi_gene_id: NCBIGene:319970
+      symbol: B230323A14Rik
+    - name_in_source: Rprm
+      ncbi_gene_id: NCBIGene:67874
+      symbol: Rprm
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110016
+    performance:
+    - metric: F_BETA
+      value: 0.73619634
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.97959185
+    - metric: RECALL
+      value: 0.3692307692307692
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000679
@@ -25084,6 +25366,27 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130877
+    genes:
+    - name_in_source: Gm5741
+      ncbi_gene_id: NCBIGene:100503710
+      symbol: Gng14
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110017
+    performance:
+    - metric: F_BETA
+      value: 0.8222676
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.9351404
+    - metric: RECALL
+      value: 0.5545350172215844
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -25950,6 +26253,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130878
+    genes:
+    - name_in_source: Synpo2
+      ncbi_gene_id: NCBIGene:118449
+      symbol: Synpo2
+    - name_in_source: Shox2
+      ncbi_gene_id: NCBIGene:20429
+      symbol: Shox2
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110018
+    performance:
+    - metric: F_BETA
+      value: 0.8483773
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.9505682
+    - metric: RECALL
+      value: 0.5932624113475178
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000679
@@ -28333,6 +28660,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130871
+    genes:
+    - name_in_source: Scn5a
+      ncbi_gene_id: NCBIGene:20271
+      symbol: Scn5a
+    - name_in_source: Arx
+      ncbi_gene_id: NCBIGene:11878
+      symbol: Arx
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110011
+    performance:
+    - metric: F_BETA
+      value: 0.47699016
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.5400785
+    - metric: RECALL
+      value: 0.3250905654433769
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -30536,6 +30887,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130872
+    genes:
+    - name_in_source: Dlk1
+      ncbi_gene_id: NCBIGene:13386
+      symbol: Dlk1
+    - name_in_source: Dlx1
+      ncbi_gene_id: NCBIGene:13390
+      symbol: Dlx1
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110012
+    performance:
+    - metric: F_BETA
+      value: 0.46131113
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.59081465
+    - metric: RECALL
+      value: 0.2457993278924627
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -32546,6 +32921,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130873
+    genes:
+    - name_in_source: Tbr1
+      ncbi_gene_id: NCBIGene:21375
+      symbol: Tbr1
+    - name_in_source: Calb2
+      ncbi_gene_id: NCBIGene:12308
+      symbol: Calb2
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110013
+    performance:
+    - metric: F_BETA
+      value: 0.5795163
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.6726953
+    - metric: RECALL
+      value: 0.3729039126963002
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000679
@@ -34730,6 +35129,33 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130874
+    genes:
+    - name_in_source: Nos1
+      ncbi_gene_id: NCBIGene:18125
+      symbol: Nos1
+    - name_in_source: Prlr
+      ncbi_gene_id: NCBIGene:19116
+      symbol: Prlr
+    - name_in_source: Adcyap1
+      ncbi_gene_id: NCBIGene:11516
+      symbol: Adcyap1
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110014
+    performance:
+    - metric: F_BETA
+      value: 0.28788945
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.41892955
+    - metric: RECALL
+      value: 0.1278832292167227
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -36385,6 +36811,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130880
+    genes:
+    - name_in_source: Gata3
+      ncbi_gene_id: NCBIGene:14462
+      symbol: Gata3
+    - name_in_source: Lhx1os
+      ncbi_gene_id: NCBIGene:78365
+      symbol: Lhx1os
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110020
+    performance:
+    - metric: F_BETA
+      value: 0.78538555
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.8668801
+    - metric: RECALL
+      value: 0.5707593572867382
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000617
@@ -40062,6 +40512,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130886
+    genes:
+    - name_in_source: Otp
+      ncbi_gene_id: NCBIGene:18420
+      symbol: Otp
+    - name_in_source: Slc30a3
+      ncbi_gene_id: NCBIGene:22784
+      symbol: Slc30a3
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110026
+    performance:
+    - metric: F_BETA
+      value: 0.5047223
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.54575264
+    - metric: RECALL
+      value: 0.38803153103142
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -42016,6 +42490,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130887
+    genes:
+    - name_in_source: Lamp5
+      ncbi_gene_id: NCBIGene:76161
+      symbol: Lamp5
+    - name_in_source: Hoxb3
+      ncbi_gene_id: NCBIGene:15410
+      symbol: Hoxb3
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110027
+    performance:
+    - metric: F_BETA
+      value: 0.73667854
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.751632
+    - metric: RECALL
+      value: 0.6823761817412163
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -44206,6 +44704,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: CLM:5007648
+    genes:
+    - name_in_source: Tfap2a
+      ncbi_gene_id: NCBIGene:21418
+      symbol: Tfap2a
+    - name_in_source: Pvalb
+      ncbi_gene_id: NCBIGene:19293
+      symbol: Pvalb
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: CL:4300028
+    performance:
+    - metric: F_BETA
+      value: 0.62880975
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.9201878
+    - metric: RECALL
+      value: 0.2774239207360226
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0020088
@@ -45087,6 +45609,27 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: CLM:5007649
+    genes:
+    - name_in_source: Gabra6
+      ncbi_gene_id: NCBIGene:14399
+      symbol: Gabra6
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: CL:4300029
+    performance:
+    - metric: F_BETA
+      value: 0.7043236
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.8211382
+    - metric: RECALL
+      value: 0.4488888888888889
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0020089
@@ -47496,6 +48039,36 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130883
+    genes:
+    - name_in_source: Adcyap1
+      ncbi_gene_id: NCBIGene:11516
+      symbol: Adcyap1
+    - name_in_source: Nxph4
+      ncbi_gene_id: NCBIGene:104080
+      symbol: Nxph4
+    - name_in_source: Gm2824
+      ncbi_gene_id: NCBIGene:100040529
+      symbol: Gm2824
+    - name_in_source: Glra1
+      ncbi_gene_id: NCBIGene:14654
+      symbol: Glra1
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110023
+    performance:
+    - metric: F_BETA
+      value: 0.2742218
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.30216354
+    - metric: RECALL
+      value: 0.2001781520770912
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -49395,6 +49968,27 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130884
+    genes:
+    - name_in_source: Hoxb5
+      ncbi_gene_id: NCBIGene:15413
+      symbol: Hoxb5
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110024
+    performance:
+    - metric: F_BETA
+      value: 0.53579736
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.53882635
+    - metric: RECALL
+      value: 0.5240145132525675
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   cl_mapping:
     cl_term:
       id: CL:0000540
@@ -52406,6 +53000,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: PCL:0130890
+    genes:
+    - name_in_source: Mlc1
+      ncbi_gene_id: NCBIGene:170790
+      symbol: Mlc1
+    - name_in_source: Mt2
+      ncbi_gene_id: NCBIGene:17750
+      symbol: Mt2
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: PCL:0110030
+    performance:
+    - metric: F_BETA
+      value: 0.8917106
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.98205805
+    - metric: RECALL
+      value: 0.6518388791593696
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   anatomical_location:
   - id: MBA:767
     label: Secondary motor area, layer 5
@@ -56526,6 +57144,30 @@ nodes:
   taxonomy_level: CLASS
   definition_basis: ATLAS_TRANSCRIPTOMIC
   is_terminal: false
+  marker_sets:
+  - id: CLM:5007651
+    genes:
+    - name_in_source: Olig1
+      ncbi_gene_id: NCBIGene:50914
+      symbol: Olig1
+    - name_in_source: Pllp
+      ncbi_gene_id: NCBIGene:67801
+      symbol: Pllp
+    selection_method: NS_FOREST
+    context: GLOBAL
+    role: DEFINING
+    via_class: CL:4300031
+    performance:
+    - metric: F_BETA
+      value: 0.8972486
+      beta: 0.5
+    - metric: PRECISION
+      value: 0.9852941
+    - metric: RECALL
+      value: 0.6609865470852018
+    source:
+      ref: https://doi.org/10.1101/2020.09.23.308932
+      method: NS-Forest
   anatomical_location:
   - id: MBA:101
     label: Ventral cochlear nucleus

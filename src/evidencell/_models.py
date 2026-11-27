@@ -606,6 +606,67 @@ class MarkerCategory(str, Enum):
     """
 
 
+class MarkerSelectionMethod(str, Enum):
+    """
+    How the genes of a MarkerSet were chosen.
+    """
+    AUTHOR_COMBO = "AUTHOR_COMBO"
+    """
+    Combination chosen by the atlas authors, e.g. the WMBv1 cluster_markers_combo sets of Yao et al. 2023.
+
+    """
+    NS_FOREST = "NS_FOREST"
+    """
+    Chosen by the NS-Forest algorithm (random-forest feature selection plus a binary expression score).
+
+    """
+    LITERATURE = "LITERATURE"
+    """
+    Combination reported in the literature for this type.
+    """
+
+
+class MarkerSetContext(str, Enum):
+    """
+    The cells a marker set (or its score) separates the node's cells from.
+
+    """
+    GLOBAL = "GLOBAL"
+    """
+    All other cells of the taxonomy.
+    """
+    WITHIN_PARENT = "WITHIN_PARENT"
+    """
+    The other cells of one parent node only (e.g. the sibling clusters of the same subclass). The parent is MarkerSet.context_node.
+
+    """
+
+
+class MarkerSetMetric(str, Enum):
+    """
+    Performance metric of a marker set as a binary classifier of the node's cells against the context's other cells.
+
+    """
+    F_BETA = "F_BETA"
+    """
+    F-beta score: (1 + beta^2) * precision * recall / (beta^2 * precision + recall). beta is recorded on MarkerSetPerformance.beta (NS-Forest uses 0.5, weighting precision over recall).
+
+    """
+    PRECISION = "PRECISION"
+    """
+    Fraction of cells called positive by the set that belong to the node.
+    """
+    RECALL = "RECALL"
+    """
+    Fraction of the node's cells called positive by the set.
+    """
+    ON_TARGET = "ON_TARGET"
+    """
+    NS-Forest on-target fraction: the set's mean expression in the node as a fraction of its total mean expression across all nodes.
+
+    """
+
+
 class PropertyAlignment(str, Enum):
     """
     How well a specific property aligns between type_a and type_b on a mapping edge. Used in PropertyComparison to make the basis for confidence judgments machine-readable.
@@ -808,6 +869,7 @@ class OntologyTerm(ConfiguredBaseModel):
 
     id: str = Field(default=..., description="""Ontology CURIE from a recognised namespace. Pattern enforces a known prefix — add new prefixes here when new ontologies are adopted (e.g. HOMBA when released). Examples: CL:0000540, UBERON:0001950, NCBITaxon:10090, MBA:1031, HBA:12898, DHBA:10344.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -885,6 +947,7 @@ Stage B mapping subagents + report-time agents should caveat `lower_bound` rollu
                        'AtSourceSet']} })
     id: str = Field(default=..., description="""Ontology CURIE from a recognised namespace. Pattern enforces a known prefix — add new prefixes here when new ontologies are adopted (e.g. HOMBA when released). Examples: CL:0000540, UBERON:0001950, NCBITaxon:10090, MBA:1031, HBA:12898, DHBA:10344.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -1030,6 +1093,96 @@ class Antibody(ConfiguredBaseModel):
         return v
 
 
+class MarkerSet(ConfiguredBaseModel):
+    """
+    A combination of genes that together pick out the node's cells, with how the combination was chosen, what it separates the cells from, and how well it does so. Populated on atlas nodes at taxonomy ingest (e.g. the WMBv1 Yao 2023 marker combinations and NS-Forest sets from brain_cell_kg); the flat CellTypeNode.markers list keeps the single genes. Each member is a GeneDescriptor: name_in_source is the gene as the set's source writes it; ncbi_gene_id and symbol are set when the source names the gene by ID and the ID resolves.
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    id: str = Field(default=..., description="""CURIE of the marker set in its source, e.g. PCL:0143601 or CLM:5007969 (brain_cell_kg / WMBO).
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
+                       'CellTypeNode',
+                       'DiscoveryContext',
+                       'MappingEdge',
+                       'BulkDataset',
+                       'BulkPool',
+                       'CorrelationRun',
+                       'CorrelationContrast',
+                       'AnnotationTransferRunSummary',
+                       'AnnotationTransferRun']} })
+    genes: list[GeneDescriptor] = Field(default=..., description="""The genes of the set, in the source's order.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet', 'PrecomputedExpression']} })
+    selection_method: MarkerSelectionMethod = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet']} })
+    method_version: Optional[str] = Field(default=None, description="""Version of the selection method, when the source states it.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet']} })
+    context: MarkerSetContext = Field(default=..., description="""The cells the set was chosen to separate the node's cells from.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet']} })
+    context_node: Optional[str] = Field(default=None, description="""ID of the parent node whose other cells the set separates the node's cells from, when context is WITHIN_PARENT (e.g. the cluster's subclass, WMB:CS20230722_SUBC_001).
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet']} })
+    role: Optional[MarkerCategory] = Field(default=None, description="""The set's role among the node's markers: DEFINING for a GLOBAL set, DEFINING_SCOPED for a WITHIN_PARENT set.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet']} })
+    via_class: Optional[str] = Field(default=None, description="""The CL or PCL class the set is attached to in the source graph, whose exemplar data is this node.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet']} })
+    performance: Optional[list[MarkerSetPerformance]] = Field(default=None, description="""Scores of the set as a classifier of the node's cells.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet']} })
+    source: Optional[PropertySource] = Field(default=None, description="""The publication that defines the set (ref: DOI). Atlas marker sets carry it because two publications contribute sets to one node.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'PropertySource',
+                       'GeneDiscoveryDetail',
+                       'PrecomputedExpression']} })
+    notes: Optional[str] = Field(default=None, description="""Free-text notes.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
+                       'SubtypeAssertion',
+                       'PropertySource',
+                       'PropertyComparison',
+                       'CellTypeNode',
+                       'ManualCurationMarker',
+                       'CellTypeMappingGraph',
+                       'AtSourceSet',
+                       'BulkDataset']} })
+
+    @field_validator('id')
+    def pattern_id(cls, v):
+        pattern=re.compile(r"^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.search(element):
+                    err_msg = f"Invalid id format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.search(v):
+            err_msg = f"Invalid id format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+    @field_validator('via_class')
+    def pattern_via_class(cls, v):
+        pattern=re.compile(r"^(CL|PCL):[0-9]+$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.search(element):
+                    err_msg = f"Invalid via_class format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.search(v):
+            err_msg = f"Invalid via_class format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+
+class MarkerSetPerformance(ConfiguredBaseModel):
+    """
+    One score of a MarkerSet as a binary classifier of the node's cells against the cells of its evaluation context.
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    metric: MarkerSetMetric = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSetPerformance']} })
+    value: float = Field(default=..., ge=0, le=1, json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSetPerformance']} })
+    beta: Optional[float] = Field(default=None, description="""The beta of an F_BETA score (e.g. 0.5). Required for F_BETA.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSetPerformance']} })
+    evaluation_method: Optional[str] = Field(default=None, description="""How the score was computed, when the source states it (e.g. \"NS-Forest binary expression evaluation\").
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSetPerformance']} })
+    evaluation_context: Optional[MarkerSetContext] = Field(default=None, description="""The cells the score was computed against, when the source states it.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSetPerformance']} })
+    dataset: Optional[str] = Field(default=None, description="""The dataset the score was computed on, when the source states it.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSetPerformance']} })
+
+
 class CellTypeColocation(ConfiguredBaseModel):
     """
     A cell type that co-localises with or is spatially associated with the type being described. Used to record relative positional context separately from the absolute anatomical location.
@@ -1041,7 +1194,8 @@ class CellTypeColocation(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation']} })
     spatial_relationship: Optional[str] = Field(default=None, description="""Spatial relationship descriptor. Suggested values: ADJACENT, PROXIMAL, DISTAL, INTERSPERSED, SAME_LAYER, LAYER_BORDER. Free text also acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation']} })
-    notes: Optional[str] = Field(default=None, description="""Free-text context or citation supporting this colocation claim""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+    notes: Optional[str] = Field(default=None, description="""Free-text context or citation supporting this colocation claim""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -1073,7 +1227,8 @@ class SubtypeAssertion(ConfiguredBaseModel):
                        'NeurotransmitterType',
                        'AtSourceSet']} })
     notes: Optional[str] = Field(default=None, description="""Caveats on this assertion: gradient pole, single study, subset claim inferred from a structural subdivision, partial overlap with a sibling, and similar.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -1135,7 +1290,8 @@ class PropertySource(ConfiguredBaseModel):
     quote_key: Optional[str] = Field(default=None, description="""Content-hashed key into the region's references.json quote store. Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars of SHA-256 of the normalised quote text. Allows quote lookup without embedding full text in the KB YAML. Reports dereference it to include the quote text.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     notes: Optional[str] = Field(default=None, description="""Curator-derived analysis notes for this source: computed statistics, re-analysis observations, cross-subtype comparisons. Distinct from snippet (which must be a verbatim quote from the cited source). Examples: \"Detected in 46/46 cells (100%); mean counts 305273\", \"Htr3a-OLM 43% vs Sst-OLM 26% — subtype-specific expression\".
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -1147,7 +1303,8 @@ class PropertySource(ConfiguredBaseModel):
     support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     source: Optional[str] = Field(default=None, description="""Workflow provenance tag identifying when/how this source was added. E.g. \"cite_traverse_2026_04_10\", \"asta_survey_2026_03\". Machine-set; not for human editing.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'PropertySource',
                        'GeneDiscoveryDetail',
                        'PrecomputedExpression']} })
     added_by: Optional[str] = Field(default=None, description="""Identifier of the agent or workflow run that wrote this entry. E.g. \"evidence_extraction_olm_cell_ca1_2026-04-22\". Machine-set; not for human editing.
@@ -1195,7 +1352,8 @@ class SubtypeSource(PropertySource):
     quote_key: Optional[str] = Field(default=None, description="""Content-hashed key into the region's references.json quote store. Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars of SHA-256 of the normalised quote text. Allows quote lookup without embedding full text in the KB YAML. Reports dereference it to include the quote text.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     notes: Optional[str] = Field(default=None, description="""Curator-derived analysis notes for this source: computed statistics, re-analysis observations, cross-subtype comparisons. Distinct from snippet (which must be a verbatim quote from the cited source). Examples: \"Detected in 46/46 cells (100%); mean counts 305273\", \"Htr3a-OLM 43% vs Sst-OLM 26% — subtype-specific expression\".
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -1207,7 +1365,8 @@ class SubtypeSource(PropertySource):
     support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     source: Optional[str] = Field(default=None, description="""Workflow provenance tag identifying when/how this source was added. E.g. \"cite_traverse_2026_04_10\", \"asta_survey_2026_03\". Machine-set; not for human editing.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'PropertySource',
                        'GeneDiscoveryDetail',
                        'PrecomputedExpression']} })
     added_by: Optional[str] = Field(default=None, description="""Identifier of the agent or workflow run that wrote this entry. E.g. \"evidence_extraction_olm_cell_ca1_2026-04-22\". Machine-set; not for human editing.
@@ -1306,7 +1465,8 @@ class MarkerSource(PropertySource, HasMarkerType):
     quote_key: Optional[str] = Field(default=None, description="""Content-hashed key into the region's references.json quote store. Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars of SHA-256 of the normalised quote text. Allows quote lookup without embedding full text in the KB YAML. Reports dereference it to include the quote text.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     notes: Optional[str] = Field(default=None, description="""Curator-derived analysis notes for this source: computed statistics, re-analysis observations, cross-subtype comparisons. Distinct from snippet (which must be a verbatim quote from the cited source). Examples: \"Detected in 46/46 cells (100%); mean counts 305273\", \"Htr3a-OLM 43% vs Sst-OLM 26% — subtype-specific expression\".
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -1318,7 +1478,8 @@ class MarkerSource(PropertySource, HasMarkerType):
     support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     source: Optional[str] = Field(default=None, description="""Workflow provenance tag identifying when/how this source was added. E.g. \"cite_traverse_2026_04_10\", \"asta_survey_2026_03\". Machine-set; not for human editing.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'PropertySource',
                        'GeneDiscoveryDetail',
                        'PrecomputedExpression']} })
     added_by: Optional[str] = Field(default=None, description="""Identifier of the agent or workflow run that wrote this entry. E.g. \"evidence_extraction_olm_cell_ca1_2026-04-22\". Machine-set; not for human editing.
@@ -1446,7 +1607,8 @@ class PropertyComparison(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertyComparison']} })
     alignment: PropertyAlignment = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['PropertyComparison']} })
     notes: Optional[str] = Field(default=None, description="""Brief explanation of the alignment call. Required for APPROXIMATE and DISCORDANT. E.g. \"Same biology; WMBv1 orders dual NT with dominant first (Glut-GABA vs GABA-Glut), convention difference only.\"
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -1504,6 +1666,7 @@ class CellTypeNode(ConfiguredBaseModel):
 
     id: str = Field(default=..., description="""Node ID. A non-atlas node's ID is lowercase_underscored and unique across the KB, e.g. \"lugaro\", \"pli3_osorno\". An atlas node (definition_basis ATLAS_TRANSCRIPTOMIC) MUST use its cell_set_accession verbatim as its ID, e.g. \"CS20230722_SUPT_1145\", never a local alias: the accession is the atlas node's identity across every file that references it.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -1614,6 +1777,8 @@ For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only
     merfish_markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""MERFISH panel markers distinguishing this type (merfish.markers.combo)""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""Unified marker list for atlas taxonomy nodes. Replaces the separate defining_markers / neuropeptides / merfish_markers fields for atlas nodes; use GeneDescriptor.category to distinguish marker roles (DEFINING, DEFINING_SCOPED, TF, NEUROPEPTIDE, NT_MARKER, MERFISH). Negative markers use modifier: ABSENT. The legacy separate fields are retained for backward compatibility with existing draft KB YAML.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
+    marker_sets: Optional[list[MarkerSet]] = Field(default=None, description="""Marker gene combinations for the node, each with its selection method, comparison context and performance scores (#274). Atlas nodes, from taxonomy ingest. The DEFINING / DEFINING_SCOPED entries of markers are the single-gene view of the same atlas metadata; marker_sets keeps the combinations and their scores.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     neighborhood: Optional[str] = Field(default=None, description="""Atlas-assigned neighborhood or supergroup label (e.g. \"Subpallium-GABA\"). Populated from atlas metadata; provides coarser grouping above taxonomy class level. Leave absent for non-atlas nodes.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     male_female_ratio: Optional[float] = Field(default=None, description="""Male/Female cell count ratio from source taxonomy (>1 = male-biased, <1 = female-biased). Stored to 2 dp. Null when balanced or data unavailable. Computed from Male and Female fraction properties in the source taxonomy metadata.
@@ -1635,7 +1800,8 @@ For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only
     notes: Optional[str] = Field(default=None, description="""Caveats that no other field can hold: contradictions between sources, claims that differ by species, suspected heterogeneity. A finding that fits another field belongs in that field, not here.
 """, json_schema_extra = { "linkml_meta": {'annotations': {'ingest_phase': {'tag': 'ingest_phase',
                                           'value': 'properties'}},
-         'domain_of': ['CellTypeColocation',
+         'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -2273,7 +2439,8 @@ class ManualCurationMarker(ConfiguredBaseModel):
     committed_date: date = Field(default=..., description="""Date the manual edit was committed. (Renamed from `date` to avoid a Python name/type collision in the generated Pydantic models — a slot named `date` with `range: date` renders as the non-importable `date: date`.)
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['ManualCurationMarker']} })
     notes: Optional[str] = Field(default=None, description="""Optional free-text rationale for the manual override. Useful when the manual entry contradicts what a mechanical re-emit would produce.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -2293,6 +2460,7 @@ class DiscoveryContext(ConfiguredBaseModel):
 
     id: str = Field(default=..., description="""Local identifier (e.g. 'cohort', 'universal', 'anat_hippocampus') referenced by GenePercentile.context_id. Stable within one discovery_score block; not a global ID.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -2347,7 +2515,8 @@ class GeneDiscoveryDetail(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDiscoveryDetail']} })
     applied_score: Optional[float] = Field(default=None, description="""Score actually contributed to DiscoveryScore.score after modifiers. At rank ≥ 1 the rank-0 coverage dampener (sqrt(coverage)) shrinks raw_tier proportionally, so applied_score = raw_tier × sqrt(coverage) when coverage is populated. At rank 0, applied_score == raw_tier. When applied_score differs from raw_tier, the gap is the modifier signal — investigate `coverage` next.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDiscoveryDetail']} })
-    source: GeneDiscoverySource = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+    source: GeneDiscoverySource = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'PropertySource',
                        'GeneDiscoveryDetail',
                        'PrecomputedExpression']} })
     coverage: Optional[float] = Field(default=None, description="""AT RANK ≥ 1 ONLY (null at rank 0). Fraction of this candidate's rank-0 descendants that express the gene at ≥ MIN_DETECTABLE. Reveals whether a supertype-mean is broadly supported (coverage ≈ 0.75 — most children carry the signal) or driven by a minority (coverage ≈ 0.25 — the supertype-mean is misleading; the signal probably belongs to one child cluster). Low coverage at rank ≥ 1 is a HIDDEN-1:1 signal — see §1.2 of the confidence review.
@@ -2426,6 +2595,7 @@ class MappingEdge(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
     id: str = Field(default=..., description="""Unique edge ID, e.g. \"edge_lugaro_to_pli3\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -2505,7 +2675,8 @@ class CellTypeMappingGraph(ConfiguredBaseModel):
     edges: list[MappingEdge] = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeMappingGraph']} })
     creation_date: Optional[date] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge', 'CellTypeMappingGraph']} })
     updated_date: Optional[date] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge', 'CellTypeMappingGraph']} })
-    notes: Optional[str] = Field(default=None, description="""Free-text notes about scope, limitations, or outstanding issues""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+    notes: Optional[str] = Field(default=None, description="""Free-text notes about scope, limitations, or outstanding issues""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -2584,7 +2755,8 @@ class AtSourceSet(ConfiguredBaseModel):
                        'NeurotransmitterType',
                        'AtSourceSet']} })
     notes: Optional[str] = Field(default=None, description="""Free-text colour (heterogeneity observations, cross-references). Not the load-bearing justification — that belongs in sources.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -2603,13 +2775,14 @@ class PrecomputedExpression(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
     source: str = Field(default=..., description="""Source file or dataset for the precomputed stats. E.g. \"precomputed_stats_ABC_revision_230821.h5\"
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'PropertySource',
                        'GeneDiscoveryDetail',
                        'PrecomputedExpression']} })
     level: Optional[str] = Field(default=None, description="""Taxonomy level these stats correspond to. E.g. \"cluster\", \"supertype\"
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['HierarchyNode', 'PrecomputedExpression']} })
     genes: Optional[list[GeneExpression]] = Field(default=None, description="""Per-gene expression statistics for this node.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['PrecomputedExpression']} })
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet', 'PrecomputedExpression']} })
     child_cluster_expression: Optional[list[ChildClusterExpression]] = Field(default=None, description="""Per-child-cluster expression breakdown (supertype nodes only). Enables scoring to inspect cluster-level heterogeneity.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PrecomputedExpression']} })
 
@@ -2674,6 +2847,7 @@ class BulkDataset(ConfiguredBaseModel):
          'tree_root': True})
 
     id: str = Field(default=..., description="""Stable dataset identifier, e.g. dataset_GSE183092""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -2703,7 +2877,8 @@ class BulkDataset(ConfiguredBaseModel):
                        'BulkDataset']} })
     data_files: Optional[list[BulkDataFile]] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['BulkDataset']} })
     pools: Optional[list[BulkPool]] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['BulkDataset']} })
-    notes: Optional[str] = Field(default=None, description="""Free-text notes (caveats, related datasets, scope limitations)""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+    notes: Optional[str] = Field(default=None, description="""Free-text notes (caveats, related datasets, scope limitations)""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerSet',
+                       'CellTypeColocation',
                        'SubtypeAssertion',
                        'PropertySource',
                        'PropertyComparison',
@@ -2759,6 +2934,7 @@ class BulkPool(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
     id: str = Field(default=..., description="""Stable pool identifier, e.g. knoedler_VMH_FR""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -2789,6 +2965,7 @@ class CorrelationRun(ConfiguredBaseModel):
          'tree_root': True})
 
     id: str = Field(default=..., description="""Stable run identifier, e.g. corr_run_20260428_knoedler_wmbv1""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -2859,6 +3036,7 @@ class CorrelationContrast(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
     id: str = Field(default=..., description="""Stable contrast identifier, e.g. corr_VMH_FR_vs_BNST_FR""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -2919,6 +3097,7 @@ class AnnotationTransferRunSummary(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
     id: str = Field(default=..., description="""Run identifier — matches AnnotationTransferRun.id""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -2956,6 +3135,7 @@ class AnnotationTransferRun(ConfiguredBaseModel):
          'tree_root': True})
 
     id: str = Field(default=..., description="""Stable run identifier, e.g. at_run_20260408_winterer_olm_mmc_wmbv1""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'MarkerSet',
                        'CellTypeNode',
                        'DiscoveryContext',
                        'MappingEdge',
@@ -3017,6 +3197,8 @@ AnatomicalLocation.model_rebuild()
 CLMapping.model_rebuild()
 GeneDescriptor.model_rebuild()
 Antibody.model_rebuild()
+MarkerSet.model_rebuild()
+MarkerSetPerformance.model_rebuild()
 CellTypeColocation.model_rebuild()
 SubtypeAssertion.model_rebuild()
 HasMarkerType.model_rebuild()

@@ -112,7 +112,8 @@ ncbi_gene_id: "NCBIGene:12307"     # species-specific NCBI Gene CURIE
 ```
 
 **Check** (`gene_identity.check_marker_gene_ids`, hook step 3c), for every
-GeneDescriptor on a node (`nodes[*]`) in a `kb/graphs` file. Markers on edge
+GeneDescriptor on a node (`nodes[*]`, including `marker_sets[*].genes`, #274)
+in a `kb/graphs` file. Markers on edge
 evidence (`edges[*].evidence[*]`) are **not checked**: a gene on an edge
 should be checked for consistency with the two nodes it links (taxonomy DB
 node and graph node), which — with cross-species mapping — is future work.

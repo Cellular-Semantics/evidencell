@@ -51,6 +51,7 @@ INGEST_FIELDS: frozenset[str] = frozenset({
     "parent_hierarchy",
     "nt_type",
     "markers",
+    "marker_sets",
     "cl_mapping",
     "anatomical_location",
     "neighborhood",

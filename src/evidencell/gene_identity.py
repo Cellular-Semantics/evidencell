@@ -876,6 +876,26 @@ class _GeneRecordCache:
             pass
 
 
+def lookup_gene_records(
+    ids: set[str], *, cache_path: Path | None = None, taxonomy_root: Path | None = None
+) -> tuple[dict[str, dict], list[str]]:
+    """NCBIGene IDs → records, as the hook check sees them: ``({id: {label,
+    taxon, names} | {missing: True, replaced_by}}, unreachable IDs)``.
+
+    ``label`` is the gene's official symbol. Same cache and Translator
+    lookups as :func:`check_marker_gene_ids`, so an ID written with this
+    symbol passes the pre-edit hook."""
+    from evidencell.paths import repo_root
+
+    cache = _GeneRecordCache(
+        cache_path or gene_id_cache_path(),
+        taxonomy_root if taxonomy_root is not None else repo_root() / "kb" / "taxonomy",
+    )
+    out = cache.get(ids)
+    cache.save()
+    return out
+
+
 GENE_DESCRIPTOR_FIELDS = (*MARKER_FIELDS, "merfish_markers", "markers")
 
 
@@ -883,9 +903,10 @@ def iter_gene_descriptors(
     doc: dict, *, edges: bool = True
 ) -> Iterator[tuple[str, dict, str | None]]:
     """(holder id, marker, species) for every GeneDescriptor in a KB graph:
-    the marker lists of ``nodes[*]`` and, with ``edges``, of
-    ``edges[*].evidence[*]`` (atlas metadata evidence). Species is the
-    node's, else the graph's; edge evidence takes the graph's."""
+    the marker lists of ``nodes[*]`` (including ``marker_sets[*].genes``)
+    and, with ``edges``, of ``edges[*].evidence[*]`` (atlas metadata
+    evidence). Species is the node's, else the graph's; edge evidence takes
+    the graph's."""
     def sid(x: Any) -> str | None:
         return x.get("id") if isinstance(x, dict) else x
 
@@ -907,6 +928,12 @@ def iter_gene_descriptors(
             for m in holder.get(key) or []:
                 if isinstance(m, dict):
                     yield holder_id, m, species
+        for ms in holder.get("marker_sets") or []:
+            if not isinstance(ms, dict):
+                continue
+            for m in ms.get("genes") or []:
+                if isinstance(m, dict):
+                    yield f"{holder_id} marker_set {ms.get('id', '?')}", m, species
 
 
 def _iter_marker_ids(doc: dict) -> Iterator[tuple[str, dict, str | None]]:

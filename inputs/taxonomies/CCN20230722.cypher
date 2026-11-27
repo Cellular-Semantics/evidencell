@@ -5,9 +5,12 @@
 // Notes on KG schema (post-2026-04 rebuild):
 //   - WMB nodes are labelled (Cell_cluster:Individual); previous (WMB) label removed.
 //     Filter by curie pattern instead of label for robustness.
-//   - Taxonomy level is now exposed via -[:has_labelset]->(labelset) — old labels
-//     like "CCN20230722_supertype" are gone. Filter on has_labelset to drop the
-//     5 labelset meta-nodes and 2 duplicate NEUR_* nodes lacking the edge.
+//   - Taxonomy level is exposed via -[:has_labelset]->(labelset). The level
+//     labels (CCN20230722_class / _subclass / _supertype / _cluster /
+//     _neurotransmitter) were dropped in the April rebuild but are back (checked
+//     2026-11-27; they agree with has_labelset on all 6,905 nodes). Filter on
+//     has_labelset to drop the 5 labelset meta-nodes and 2 duplicate NEUR_*
+//     nodes lacking the edge.
 //   - Parent edge renamed: subclass_of → subcluster_of.
 //   - Anatomy edge renamed: was unspecified rel type → obsolete_some_soma_located_in.
 //   - r.cell_ratio → r.obsolete_cell_ratio (aliased back to cell_ratio for ingest).
