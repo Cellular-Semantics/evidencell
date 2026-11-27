@@ -137,6 +137,51 @@ nodes:
           quote_key: "286491924_f2e9799b"
           method: "review statement — TRCs, including the X- and Y-like TRCs of the core, are excitatory neurons; glutamatergic transmitter inferred, not shown directly for core neurons"
           scope: "mouse dLGN thalamocortical relay cells"
+    at_source_sets:
+      - dataset_accession: GEO:GSE182211
+        source_label: LGd core
+        correspondence: PARTIAL
+        sources:
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Bakken et al. 2021 dissected mouse dLGN into core- and shell-enriched samples and state the microdissections are imperfect enrichments, not clean separations"
+            scope: "adult male mouse dLGN core and shell dissections, SMART-seq v4 single cells"
+            quote_key: "237389962_7f2e4fd0"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — Methods: core/shell dissection boundaries drawn against the matched Allen CCFv3 plane"
+            scope: "adult mouse dLGN core vs shell dissection"
+            quote_key: "237389962_63fa365f"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — all glutamatergic dLGN cells form one cluster ('dLGN'), whose main axis of variation follows core vs shell"
+            scope: "adult male mouse dLGN, SMART-seq v4 single cells"
+            quote_key: "237389962_45eeb70e"
+          - ref: "PMID:34473054"
+            method: "manual_full_text — RNAscope confirms core Pvalb/Scnn1a vs shell Necab1/Calb1, with intermediate Pvalb+Necab1 cells"
+            scope: "adult mouse dLGN"
+            quote_key: "237389962_8e66b523"
+        notes: >
+          Derived label: the 682 cells of the published glutamatergic dLGN
+          cluster (GEO cluster_label "LGd") that came from the dLGN-core
+          dissection (GEO dissection_roi), scored in run
+          at_run_20261117_bakken2021_lgn_coreshell_mmc_wmbv1. The paper
+          places every dLGN glutamatergic cell in that cluster, so these
+          cells are dLGN relay neurons. The label is a DISSECTION
+          ENRICHMENT, not a transcriptomic type. PARTIAL, not SUBSET: the
+          authors call the microdissections enrichments, and core/shell is a
+          graded axis with intermediate cells, so shell relay cells in the
+          core dissection cannot be excluded. The same dissection also holds
+          cells of neighbouring nuclei (RT, LP, LGv/IGL GABAergic types),
+          which sit in other clusters and are excluded from this label.
+          Boundaries were drawn against CCFv3, the same core subdivision as
+          this node's anatomical_location (MBA:496345668).
+          NEGATIVE RESULT: WMBv1 does not resolve core from shell. 97.2% of
+          the label's cells land in cluster 2650 TH Prkcd Grin2c Glut_2,
+          which also receives 99.7% of "LGd shell". Purity of 2650 within
+          Bakken LGd cells is 0.67 (core) vs 0.33 (shell), which only
+          reflects the 2:1 core:shell cell ratio; F1 (0.80 at cluster)
+          is not evidence of a core-specific WMB type. This matches the
+          paper's finding that mouse dLGN relay neurons form one graded type,
+          not discrete core and shell types. Label key:
+          planning/content-notes/thalamus_bakken2021_labels.md (Q5).
     morphology:
       description: >
         Not a single morphology: the core is occupied by X-like relay cells

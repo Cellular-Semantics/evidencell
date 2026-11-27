@@ -2,7 +2,13 @@
 
 Status: outputs complete, manifest written, run registered (`index.yaml`).
 `at_results.yaml` / `at_results_best.yaml` generated with `at_metrics migrate`.
-Not yet attached to any KB node (pending F1 gate review).
+The per-system labels here, and the per-cluster labels of
+`at_run_20261115_phillips2019_syscluster_mmc_wmbv1`, are not declared on any
+KB node, because the nuclei dissected per system are not recorded. The KB
+uses them through a pooled relabel of the same `mmc_results.csv`:
+`../at_run_20261127_phillips2019_pooled_mmc_wmbv1/` (all five systems as one
+label). That run is declared SUBSET on
+`thalamic_glutamatergic_projection_neuron`.
 
 ## Purpose
 

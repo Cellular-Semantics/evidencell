@@ -1,0 +1,47 @@
+run_id: at_run_20261127_phillips2019_pooled_mmc_wmbv1
+taxonomy_id: CCN20230722
+normalisation: best
+source_csv_relpath: f1_matrix_best.csv
+generated_at: '2026-11-27T12:01:49+00:00'
+generator: src/evidencell/at_metrics.py::migrate_csv
+rows:
+- source_label: cortex-projecting TC (all 5 systems)
+  taxonomy_level: CLASS
+  taxonomy_rank: 3
+  target_name: 18 TH Glut
+  target_accession: CS20230722_CLAS_18
+  n_cells: 1915
+  coverage: 0.9912008281573499
+  purity: 1.0
+  f1: 0.9955809721861191
+  median_bootstrap: 1.0
+- source_label: cortex-projecting TC (all 5 systems)
+  taxonomy_level: SUBCLASS
+  taxonomy_rank: 2
+  target_name: 151 TH Prkcd Grin2c Glut
+  target_accession: CS20230722_SUBC_151
+  n_cells: 1573
+  coverage: 0.8652365236523653
+  purity: 1.0
+  f1: 0.927749926275435
+  median_bootstrap: 1.0
+- source_label: cortex-projecting TC (all 5 systems)
+  taxonomy_level: SUPERTYPE
+  taxonomy_rank: 1
+  target_name: 0659 TH Prkcd Grin2c Glut_6
+  target_accession: CS20230722_SUPT_0659
+  n_cells: 350
+  coverage: 0.2197112366603892
+  purity: 1.0
+  f1: 0.36026762738033963
+  median_bootstrap: 0.99
+- source_label: cortex-projecting TC (all 5 systems)
+  taxonomy_level: CLUSTER
+  taxonomy_rank: 0
+  target_name: 2663 TH Prkcd Grin2c Glut_6
+  target_accession: CS20230722_CLUS_2663
+  n_cells: 145
+  coverage: 0.12003311258278146
+  purity: 1.0
+  f1: 0.21433850702143387
+  median_bootstrap: 1.0

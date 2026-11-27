@@ -46,8 +46,11 @@ output:
 
 caveats: >
   (1) Derived relabel, scored apart from the published labels by design.
-  It is not declared as an at_source_sets correspondence on any node; it
-  answers whether WMBv1 resolves the dLGN core/shell axis.
+  It answers whether WMBv1 resolves the dLGN core/shell axis. Declared
+  (2026-11-27) as PARTIAL at_source_sets entries: "LGd core" on
+  dlgn_core_relay_neuron and "LGd shell" on dlgn_shell_relay_neuron. Each
+  label is a dissection enrichment, and each entry records the negative
+  result below.
   (2) Result: it does not. Core cells (97.2%) and shell cells (99.7%) land in
   the same WMB cluster, 2650 TH Prkcd Grin2c Glut_2. F1 for each label
   (0.80 core, 0.51 shell) only reflects the 2:1 core:shell cell ratio,
