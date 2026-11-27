@@ -52,6 +52,175 @@ nodes:
           - ref: "PMID:25543145"
             quote_key: "27794167_2fbf51e0"
             method: "uppercase abbreviation defined in the abstract for the ventrolateral region of the ventromedial hypothalamus"
+    anatomical_location:
+      - id: MBA:785
+        label: "Ventromedial hypothalamic nucleus, ventrolateral part"
+        name_in_source: "ventrolateral subdivision of the ventromedial hypothalamus (VMHvl)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:31626771"
+            quote_key: "204741414_5d4657e2"
+            method: "anatomical definition of the population profiled by SMART-seq / 10x scRNA-seq and seqFISH; the subdivision is given as ~4,000 neurons"
+            scope: "adult mouse VMHvl"
+          - ref: "PMID:36598560"
+            quote_key: "255457408_2e1ebc41"
+            method: "consensus columnar partition of the VMH — VMHdm and VMHvl subnuclei separated by an intermediate or central (VMHc) population"
+            scope: "mouse VMH, genoarchitectonic analysis"
+    colocated_types:
+      - neighboring_type: "VMHc neuron (central / intermediate VMH)"
+        spatial_relationship: ADJACENT
+        notes: >
+          In the consensus columnar partition of the VMH the intermediate or
+          central (VMHc) population lies between VMHvl and VMHdm
+          (Lopez-Gonzalez et al. 2023, PMID:36598560).
+      - neighboring_type: "VMHdm neuron (dorsomedial VMH)"
+        spatial_relationship: DISTAL
+        notes: >
+          The dorsomedial subnucleus is the other consensus VMH partition,
+          separated from VMHvl by VMHc (Lopez-Gonzalez et al. 2023,
+          PMID:36598560). In the VMH-wide parcellation of Affinati et al. 2021
+          (PMID:34018926) the two major ventrolateral classes are distinct from
+          the three dorsomedial classes, one of which is the Lepr-expressing
+          class.
+    defining_markers:
+      - name_in_source: "vesicular glutamate transporter 2 (Vglut2)"
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:26629409"
+            quote_key: "6881112_017e3b13"
+            method: "statement that nearly all VMH neurons, including those of the ventrolateral VMH, release glutamate and use Vglut2; the quote names no assay"
+            scope: "adult mouse VMH including the VMHvl subregion"
+          - marker_type: TRANSGENE_REPORTER
+            ref: "PMID:18495877"
+            quote_key: "14673789_04f5929a"
+            method: "GFP expressed under control of the vesicular glutamate transporter 2 (vGluT2) promoter; 370 GFP-labelled VMH neurons recorded and imaged"
+            scope: "mouse VMH, hypothalamic slices — whole nucleus, not restricted to VMHvl"
+          - marker_type: NOT_STATED
+            ref: "PMID:26629409"
+            quote_key: "6881112_d719dc7d"
+            method: "statement that nearly all VMH neurons express Vglut2, citing Ziegler 2002 and Fremeau 2001; the quote names no assay of its own"
+            scope: "mouse VMH"
+            notes: >
+              This is also the quote that settles the gene behind both marker
+              names used on this node: it writes them as "steroidogenic factor
+              1 (SF-1 encoded by Nr5a1)" and "the vesicular glutamate
+              transporter 2 (VGLUT2 encoded by Slc17a6)".
+      - name_in_source: "ERα"
+        symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        modifier: ENRICHED
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "ERα neurons of the ventrolateral region of the ventromedial hypothalamus are the population the study defines and manipulates; the quote names no detection assay"
+            scope: "adult mouse VMHvl"
+            notes: >
+              Marks a major VMHvl-enriched subpopulation, not every VMHvl
+              neuron — hence modifier ENRICHED.
+          - marker_type: NOT_STATED
+            ref: "PMID:27209204"
+            quote_key: "9550590_e5547345"
+            method: "ERα-labelled cells scored against Dbx1-lineage reporter cells in the ventrolateral part of the VMH (57.3 ± 7.0% of the total ERα population overlapped the lineage); the quote names no detection method"
+            scope: "postnatal mouse VMHvl"
+      - name_in_source: "aromatase"
+        symbol: Cyp19a1
+        ncbi_gene_id: "NCBIGene:13075"
+        modifier: ENRICHED
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:27209204"
+            quote_key: "9550590_e5547345"
+            method: "aromatase-labelled cells scored in VMHvl of both sexes (58.2 ± 5.6% of the male and 60.7 ± 5.6% of the female aromatase population overlapped the Dbx1 lineage); the quote names no detection method"
+            scope: "postnatal mouse VMHvl, males and females"
+            notes: >
+              A prominent VMHvl subset marker rather than a property of the
+              whole population — hence modifier ENRICHED.
+    negative_markers:
+      - name_in_source: "SF-1"
+        symbol: Nr5a1
+        ncbi_gene_id: "NCBIGene:26423"
+        modifier: ABSENT
+        sources:
+          - marker_type: TRANSGENE_REPORTER
+            ref: "PMID:22987798"
+            quote_key: "34645292_a858712b"
+            method: "comparison of the Z/EG Sf1:Cre lineage reporter with the contemporaneous Sf-1TauGFP expression reporter — VMHvl cells keep the lineage label but are virtually absent from the TauGFP reporter, i.e. the subdivision differentiates into a cluster devoid of SF-1"
+            scope: "E14.5 mouse ventrolateral VMH"
+            notes: >
+              Gene settled by the companion quote from the same paper, which
+              writes the marker as "steroidogenic factor-1 (SF-1, NR5A1)".
+              The bare string SF1 resolves to the splicing factor Sf1, which
+              is not what the source means.
+          - marker_type: NOT_STATED
+            ref: "PMID:27656404"
+            quote_key: "16580098_b68e7549"
+            method: "statement citing Cheung 2013 that transient developmental SF1 expression is absent in vlVMH of adult mice; the quote names no assay"
+            scope: "adult mouse vlVMH"
+          - marker_type: NOT_STATED
+            ref: "PMID:26629409"
+            quote_key: "6881112_d719dc7d"
+            support: REFUTE
+            method: "statement that nearly all VMH neurons express steroidogenic factor 1 (SF-1, encoded by Nr5a1); the quote names no assay"
+            scope: "mouse VMH as a whole, not resolved by subdivision"
+            notes: >
+              Recorded as REFUTE because the claim is VMH-wide: it does not
+              distinguish VMHvl from VMHdm/VMHc, and the two VMHvl-scoped
+              sources above show the ventrolateral subdivision losing SF-1.
+              See the node's notes.
+    nt_type:
+      name_in_source: "excitatory neurotransmitter glutamate (vesicular glutamate transporter 2, Vglut2)"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamate"
+      sources:
+        - ref: "PMID:26629409"
+          quote_key: "6881112_017e3b13"
+          method: "statement that nearly all VMH neurons, including those of the sexually dimorphic ventrolateral VMH, release glutamate and use Vglut2; assay not named in the quote"
+          scope: "adult mouse VMH including VMHvl"
+        - ref: "PMID:18495877"
+          quote_key: "14673789_04f5929a"
+          method: "vGluT2-promoter-GFP transgenic labelling of VMH glutamatergic neurons followed by whole-cell recording"
+          scope: "mouse VMH, hypothalamic slices"
+        - ref: "PMID:32868762"
+          quote_key: "221402501_8fccf414"
+          method: "scRNA-seq of the adult VMH: the core VMH population is glutamatergic, with GABAergic clusters lying outside the core (VMH-out)"
+          scope: "adult mouse VMH"
+    electrophysiology:
+      description: >
+        Spontaneously active in hypothalamic slice. α-MSH, melanotan II (MTII)
+        and selective MC3R or MC4R agonists are all inhibitory, reducing the
+        spontaneous firing rate and hyperpolarising the cells, while the
+        MC3/4R antagonist SHU9119 is excitatory. The melanocortin effects are
+        indirect: with synaptic activity blocked neither MTII nor AgRP evoked
+        any hyperpolarisation or change in input resistance; MTII instead
+        increased spontaneous and miniature IPSC frequency, and AgRP acted by
+        presynaptic, Gi/Go-dependent inhibition of EPSCs. AgRP and MTII were
+        additive rather than mutually antagonistic.
+      sources:
+        - ref: "PMID:18495877"
+          quote_key: "14673789_04f5929a"
+          method: "whole-cell recording of 370 VMH glutamatergic neurons in hypothalamic slices from a vGluT2-promoter-GFP mouse"
+          scope: >
+            Mouse VMH glutamatergic (vGluT2-GFP) neurons, acute hypothalamic
+            slices; recorded across the nucleus and not restricted to the
+            ventrolateral subdivision.
+    morphology:
+      description: >
+        Large numbers of dendrites extend out of the core of the nucleus into
+        the surrounding cell-poor shell; these shell dendrites, but not the
+        core, receive frequent appositions from AgRP-immunoreactive axons.
+      sources:
+        - ref: "PMID:18495877"
+          quote_key: "14673789_04f5929a"
+          method: "vGluT2-promoter-GFP labelling of VMH neurons with AgRP immunohistochemistry"
+          scope: >
+            Mouse VMH, whole nucleus — the dendritic core/shell arrangement is
+            reported for VMH glutamatergic neurons generally, not specifically
+            for VMHvl.
     cl_mapping:
       cl_term:
         id: CL:0000679
@@ -65,4 +234,53 @@ nodes:
         full: the node's defining criterion is glutamatergic identity (plus
         location, recorded separately); the 17 internal transcriptomic types
         are not incorporated as an additional narrowing marker on this node.
+    definition_references:
+      - "PMID:31626771"
+      - "PMID:26629409"
+      - "PMID:22987798"
+      - "PMID:34018926"
+      - "PMID:31605642"
+    notes: >
+      HETEROGENEITY. This is an anatomically defined population and no single
+      marker captures all of it. Kim et al. 2019 (PMID:31626771) resolve 17
+      transcriptomic types within VMHvl, several of them sexually dimorphic,
+      and report that many of those types contain neurons with different
+      projection-target preferences, so transcriptomic identity does not map
+      cleanly onto connectivity or behaviour. Affinati et al. 2021
+      (PMID:34018926) reach a coarser VMH-wide scheme — 24 clusters simplified
+      to 6 classes — in which the ventrolateral VMH still splits into two
+      major classes rather than forming one molecular compartment. Kammel et
+      al. 2019 (PMID:31605642) review the same point from the sex-difference
+      side.
+
+      MARKER SCOPE. Esr1 (ERα) and Cyp19a1 (aromatase) are recorded with
+      modifier ENRICHED, not as properties of every VMHvl neuron: Sokolowski
+      et al. 2016 (PMID:27209204) score them as substantial VMHvl
+      subpopulations, and the supporting sources treat ERα as a marker for a
+      socially and metabolically relevant subset. Slc17a6 (Vglut2) is the only
+      marker here asserted of the population as a whole, and even that is
+      stated as "nearly all" VMH neurons.
+
+      SF-1 CONFLICT. Cheung et al. 2015 (PMID:26629409) state that nearly all
+      VMH neurons express both SF-1 (Nr5a1) and Vglut2, but that claim is
+      VMH-wide; Cheung et al. 2013 (PMID:22987798) and Sohn et al. 2016
+      (PMID:27656404) show that VMHvl specifically retains Sf1-lineage history
+      while losing ongoing SF-1 expression (virtually absent from the
+      Sf-1TauGFP reporter by E14.5, absent in adult vlVMH). The negative
+      marker entry is therefore scoped to VMHvl, and SF-1 should be read as a
+      VMH-wide developmental lineage marker rather than an adult VMHvl marker.
+
+      LEPTIN RECEPTOR — NOT RECORDED AS A NEGATIVE MARKER. Affinati et al.
+      2021 (PMID:34018926) find Lepr marking a single dorsomedial class, and
+      Higgins et al. 2024 (PMID:38279680) place the majority of Leprb puncta
+      in the dorsomedial and central subregions, but Higgins also notes that
+      Caron et al. reported greater Leprb expression in the dorsomedial AND
+      ventrolateral subregions at P10. "Relatively weak in adult VMHvl" is not
+      the same as shown absent, so no negative_markers entry was written.
+
+      CROSS-SPECIES / PREPARATION SCOPE. The electrophysiology and morphology
+      entries come from vGluT2-GFP recordings and imaging across the whole VMH
+      (Fu et al. 2008, PMID:18495877) and are not VMHvl-specific; the
+      melanocortin responses described are synaptically mediated rather than
+      intrinsic membrane properties.
 edges: []
