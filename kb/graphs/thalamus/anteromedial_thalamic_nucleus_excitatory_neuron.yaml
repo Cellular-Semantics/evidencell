@@ -26,6 +26,19 @@ nodes:
       id: NCBITaxon:10090
       label: Mus musculus
       name_in_source: "mouse"
+    subtype_of:
+      - parent: anterior_thalamic_nucleus_excitatory_neuron
+        kind: DEFINITIONAL
+        confidence: HIGH
+        sources:
+          - ref: "PMID:38427564"
+            method: "scRNA-seq + spatial transcriptomics + multiplexed FISH"
+            scope: "adult mouse ATN — three discrete excitatory clusters corresponding to AD, AV, AM"
+            quote_key: "268122794_e9176ba6"
+          - ref: "PMID:40593635"
+            method: "statement in source (introduction)"
+            scope: "adult mouse — ATN encompass AD, AV and AM"
+            quote_key: "279797062_33751aaa"
     anatomical_location:
       - id: UBERON:0002681
         label: "anteromedial nucleus of thalamus"
@@ -130,9 +143,9 @@ nodes:
       - "PMID:33069688"
     is_terminal: false
     notes: >
-      HIERARCHY: subtype of anterior_thalamic_nucleus_excitatory_neuron
-      (ATN); shared ATN properties (Slc17a6, glutamatergic identity, relay-cell
-      morphology, Papez-circuit placement) are recorded on the parent.
+      HIERARCHY: shared ATN properties (Slc17a6, glutamatergic identity,
+      relay-cell morphology, Papez-circuit placement) are recorded on the
+      parent.
       Slc17a6 applies here by inheritance.
 
       SUSPECTED HETEROGENEITY / SUBTYPES NOTED (not separate nodes): AM is
@@ -149,7 +162,11 @@ nodes:
       Cacna2d1 and Calb1 are subtype markers and are not asserted as
       defining markers of the whole AM node. THALMANAC (Turner et al., 2025)
       also resolves discrete transcriptomic subdomains within AM. May warrant
-      splitting if transcriptomic correspondence is established.
+      splitting if transcriptomic correspondence is established. Not split
+      into nodes (2026-11-26): the AM type and marker quotes
+      (279797062_79c8b7ec, _049553b3, _289edc65) are not in the text of
+      PMID:40593635, so their source is unverified; see
+      planning/content-notes/thalamus_atn_igl_subtypes_to_ingest.md.
 
       CONNECTIVITY: inputs from the ipsilateral medial mammillary nucleus
       (pars medialis; earliest mammillothalamic target, E20-21 in rat;

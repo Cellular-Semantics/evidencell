@@ -32,6 +32,23 @@ nodes:
       id: NCBITaxon:10090
       label: Mus musculus
       name_in_source: "Mice (MeSH organisms of cited primary papers; inferred, #216)"
+    subtype_of:
+      - parent: thalamic_glutamatergic_projection_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:38427564"
+            method: "scRNA-seq + spatial transcriptomics + multiplexed FISH"
+            scope: "adult mouse ATN — three discrete excitatory cell-type clusters"
+            quote_key: "268122794_5c2e793b"
+        notes: >
+          The parent's anatomical scope names the anterior nuclei among the
+          exclusively excitatory nuclei of thalamus proper; this node restricts
+          it to AD, AV and AM. One verified source, hence MODERATE. Not cited
+          because their text is not in the paper their corpus ID resolves to:
+          279797062_9833fcee ("all 13 projection-defined ATN cell types are
+          glutamatergic"; not in PMID:40593635) and 23594973_a7fbdba3 (vGluT2+
+          TC neurons in the anterior nuclei; not in PMID:22606998).
     anatomical_location:
       - id: UBERON:0002788
         label: "anterior nuclear group"
@@ -240,8 +257,6 @@ nodes:
 
       SPECIES: species left null pending primary verification; cited
       evidence is mouse and rat.
-
-      Member of the thalamic_glutamatergic_projection_neuron family.
 
       SPECIES: mouse: the defining sources are mouse studies; some cited evidence is rat. Each
       source's species is in its scope. Set from the MeSH organisms of the cited primary papers
