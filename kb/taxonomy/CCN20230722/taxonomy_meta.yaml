@@ -5,9 +5,9 @@ species_label: Mus musculus
 tissue_id: UBERON:0000955
 tissue_label: brain
 anatomy_ontology: MBA
-source_query: inputs/taxonomies/CCN20230722.cypher
+source_query: inputs/taxonomies/wmbv1_full.cypher
 source_file: CCN20230722.json
-ingest_date: '2026-06-02'
+ingest_date: '2026-11-27'
 level_hierarchy:
 - level_name: CLUSTER
   rank: 0
@@ -28,6 +28,104 @@ level_counts:
   neurotransmitter: 10
   subclass: 338
   supertype: 1201
+marker_sets:
+  source_file: inputs/taxonomies/CCN20230722_marker_sets.json
+  counts:
+    class:
+      NS_FOREST/GLOBAL: 27
+    cluster:
+      AUTHOR_COMBO/GLOBAL: 5314
+      AUTHOR_COMBO/WITHIN_PARENT: 5314
+      NS_FOREST/GLOBAL: 29
+    subclass:
+      AUTHOR_COMBO/GLOBAL: 245
+      NS_FOREST/GLOBAL: 247
+    supertype:
+      AUTHOR_COMBO/GLOBAL: 1014
+      AUTHOR_COMBO/WITHIN_PARENT: 1015
+      NS_FOREST/GLOBAL: 61
+  skipped_unscored:
+    (CAS evidence).: 10
+  genes_without_id:
+  - 'CLM:5007668: Gm49906 (ensembl:ENSMUSG00000117222: not an NCBI gene ID)'
+  - 'CLM:5007685: Gm43154 (ensembl:ENSMUSG00000086804: not an NCBI gene ID)'
+  - 'CLM:5007972: Gm45459 (ensembl:ENSMUSG00000109994: not an NCBI gene ID)'
+  - 'PCL:0120565: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0121088: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0121095: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0121180: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0121184: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0121195: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0121714: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0121717: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0121719: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0121720: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0121723: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0121907: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0122904: Ighg2c (NCBIGene:404711: not a current NCBI gene)'
+  - 'PCL:0122918: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0122921: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0122922: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0122923: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0122974: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0123301: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0123305: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0123306: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0123316: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0123319: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0123321: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0123356: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0124758: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0125010: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0125274: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0125499: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125500: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125501: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125502: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125503: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125510: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125511: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125513: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125514: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125517: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125518: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125526: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125527: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0125550: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0126329: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0126395: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0126537: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0126933: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0127337: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0127588: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0128024: Ighg3 (NCBIGene:380795: not a current NCBI gene)'
+  - 'PCL:0130925: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0130950: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0131170: Gm43154 (ensembl:ENSMUSG00000086804: not an NCBI gene ID)'
+  - 'PCL:0131188: Gm47757 (ensembl:ENSMUSG00000110929: not an NCBI gene ID)'
+  - 'PCL:0141804: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0142627: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0143633: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0143641: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0143642: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0143643: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0143670: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0143694: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0143971: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0144026: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0144029: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0144037: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0144041: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0144072: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0145480: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0145714: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0145730: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0145994: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0146270: Igkc (NCBIGene:16071: not a current NCBI gene)'
+  - 'PCL:0147115: Ighm (NCBIGene:16019: not a current NCBI gene)'
+  - 'PCL:0148304: Trbc2 (NCBIGene:100125263: not a current NCBI gene)'
+  - 'PCL:0148744: Ighg3 (NCBIGene:380795: not a current NCBI gene)'
+  differ_from_metadata_combo: []
 mapmycells:
   at_taxonomy_id: CCN20230722
   stats_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/WMB-10X/20240831/precomputed_stats_ABC_revision_230821.h5

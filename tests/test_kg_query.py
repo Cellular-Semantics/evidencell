@@ -144,3 +144,17 @@ def test_cypher_comment_stripping(tmp_path, patch_neo4j):
 
     assert "//" not in sent_cypher
     assert "MATCH (n) RETURN n" in sent_cypher
+
+
+def test_cmd_fetch_output_overrides_default_path(tmp_path, patch_neo4j):
+    """--output writes the export where asked (e.g. the marker-set export,
+    #274) instead of inputs/taxonomies/{taxonomy_id}.json."""
+    from evidencell import kg_query
+
+    cypher_path = tmp_path / "q.cypher"
+    cypher_path.write_text("MATCH (n) RETURN n\n", encoding="utf-8")
+    output_path = tmp_path / "sets.json"
+
+    with patch.object(kg_query, "fetch_taxonomy_json", return_value=0) as fetch:
+        kg_query._cmd_fetch(str(cypher_path), "TEST_TAX", output=str(output_path))
+    assert fetch.call_args[0][1] == output_path

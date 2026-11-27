@@ -328,6 +328,116 @@ def test_anat_sqlite_roundtrip_populates_all_columns(tmp_path):
     assert row["ratio_in_or_near_100um"] == 0.68
 
 
+def _marker_set_ingest(tmp_path, monkeypatch, expected_counts):
+    """Ingest a subclass + cluster with one KG marker-set row declared in the
+    metadata input (#274). Gene lookups are stubbed (no network)."""
+    from evidencell import gene_identity
+    from evidencell import taxonomy_db as tdb
+
+    yao = "https://doi.org/10.1038/s41586-023-06812-z"
+
+    def node(curie, level, parent, combo):
+        return {
+            "cl": None,
+            "node": {"labels": [f"CCN20230722_{level}", "Individual"], "properties": {
+                "curie": curie, "short_form": curie.split(":")[1], "label": curie,
+                "cluster_markers_combo_4within_subclass4": combo,
+            }},
+            "parent_curie": parent, "level": level, "anat": [],
+        }
+
+    src = tmp_path / "ms.json"
+    src.write_text(json.dumps([
+        node("WMB:CS20230722_SUBC_001", "subclass", None, None),
+        node("WMB:CS20230722_CLUS_0001", "cluster", "WMB:CS20230722_SUBC_001", "Lgr5"),
+    ]))
+    sets_file = tmp_path / "ms_sets.json"
+    sets_file.write_text(json.dumps([{
+        "via_class": "PCL:0112381",
+        "exemplars": ["WMB:CS20230722_CLUS_0001"],
+        "finest": ["WMB:CS20230722_CLUS_0001"],
+        "ancestors_ok": True,
+        "set_id": "PCL:0143601",
+        "set_label": "Lgr5 (Yao - within subclass).",
+        "xref": [yao],
+        "algorithm": None,
+        "precision": [0.7368421],
+        "recall": ["0.28"],
+        "f_beta": [0.5555556],
+        "genes": [{"curie": "NCBIGene:14160", "label": "Lgr5 (Mmus)"}],
+    }]))
+    monkeypatch.setattr(tdb, "_read_meta_input", lambda _tid: {
+        "species_id": "NCBITaxon:10090", "species_label": "Mus musculus",
+        "marker_sets": {"file": str(sets_file), "expected_counts": expected_counts},
+    })
+    monkeypatch.setattr(
+        gene_identity, "lookup_gene_records",
+        lambda ids: ({"NCBIGene:14160": {"label": "Lgr5"}}, []),
+    )
+    out = tmp_path / "out"
+    out.mkdir()
+    ingest_to_yaml(src, "TEST_MS", out)
+    return out
+
+
+def test_marker_sets_ingest_and_db_roundtrip(tmp_path, monkeypatch):
+    """KG marker-set row → CellTypeNode.marker_sets (schema-valid YAML) →
+    marker_set tables → TaxonomyDB.get_marker_sets (#274)."""
+    out = _marker_set_ingest(
+        tmp_path, monkeypatch, {"cluster": {"AUTHOR_COMBO/WITHIN_PARENT": 1}}
+    )
+    cluster = yaml.safe_load((out / "cluster.yaml").read_text())["nodes"][0]
+    (ms,) = cluster["marker_sets"]
+    assert ms["context_node"] == "WMB:CS20230722_SUBC_001"
+    assert ms["genes"] == [
+        {"name_in_source": "Lgr5", "ncbi_gene_id": "NCBIGene:14160", "symbol": "Lgr5"}
+    ]
+    meta = yaml.safe_load((out / "taxonomy_meta.yaml").read_text())
+    assert meta["marker_sets"]["counts"] == {"cluster": {"AUTHOR_COMBO/WITHIN_PARENT": 1}}
+    assert meta["marker_sets"]["differ_from_metadata_combo"] == []
+
+    from evidencell._models import TaxonomyNodeList
+
+    TaxonomyNodeList(**yaml.safe_load((out / "cluster.yaml").read_text()))
+
+    db = TaxonomyDB(out / "TEST_MS.db")
+    db.build_from_yaml(out)
+    assert db.get_marker_sets("CS20230722_CLUS_0001") == [{
+        "id": "PCL:0143601",
+        "selection_method": "AUTHOR_COMBO",
+        "context": "WITHIN_PARENT",
+        "context_node": "CS20230722_SUBC_001",
+        "role": "DEFINING_SCOPED",
+        "via_class": "PCL:0112381",
+        "source_ref": "https://doi.org/10.1038/s41586-023-06812-z",
+        "genes": [{"name_in_source": "Lgr5", "ncbi_gene_id": "NCBIGene:14160", "symbol": "Lgr5"}],
+        "performance": [
+            {"metric": "F_BETA", "value": 0.5555556, "beta": 0.5},
+            {"metric": "PRECISION", "value": 0.7368421},
+            {"metric": "RECALL", "value": 0.28},
+        ],
+    }]
+    assert db.get_marker_sets("CS20230722_SUBC_001") == []
+
+
+def test_marker_sets_count_drift_fails(tmp_path, monkeypatch):
+    from evidencell.marker_sets import MarkerSetError
+
+    with pytest.raises(MarkerSetError, match="built 1, expected 2"):
+        _marker_set_ingest(tmp_path, monkeypatch, {"cluster": {"AUTHOR_COMBO/WITHIN_PARENT": 2}})
+
+
+def test_marker_sets_declared_but_missing_export_fails(tmp_path, monkeypatch):
+    from evidencell import taxonomy_db as tdb
+    from evidencell.marker_sets import MarkerSetError
+
+    monkeypatch.setattr(tdb, "_read_meta_input", lambda _tid: {
+        "marker_sets": {"file": str(tmp_path / "absent.json"), "query": "q.cypher"},
+    })
+    with pytest.raises(MarkerSetError, match="just fetch-taxonomy-kg q.cypher TEST_TAX"):
+        ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)
+
+
 def test_ingest_to_yaml_idempotent(tmp_path):
     counts1 = ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)
     counts2 = ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)

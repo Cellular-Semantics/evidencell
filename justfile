@@ -350,7 +350,9 @@ ingest-report region pdf_file:
 # Fetch taxonomy JSON from local brain_cell_KG via Cypher query
 # Requires: [kg] optional deps — run once: uv sync --extra kg
 # Requires: local neo4j KG running at bolt://localhost:7687
-# Usage: just fetch-taxonomy-kg inputs/taxonomies/CCN20230722.cypher CCN20230722
+# Usage: just fetch-taxonomy-kg inputs/taxonomies/wmbv1_full.cypher CCN20230722
+# Marker sets (#274): just fetch-taxonomy-kg inputs/taxonomies/CCN20230722_marker_sets.cypher \
+#     CCN20230722 --output inputs/taxonomies/CCN20230722_marker_sets.json
 [group('workflows')]
 fetch-taxonomy-kg cypher_file taxonomy_id *ARGS:
     uv run python -m evidencell.kg_query fetch {{cypher_file}} {{taxonomy_id}} {{ARGS}}

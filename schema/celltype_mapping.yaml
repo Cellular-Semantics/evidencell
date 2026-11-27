@@ -8,6 +8,13 @@
 # Non-terminal nodes = classical types, prior transcriptomic types, or intermediate types.
 # Edges = evidenced mapping assertions between nodes; can be chained transitively.
 #
+# Version: 0.10.0 (2026-11-27) — ADDITIVE: CellTypeNode.marker_sets (#274). MarkerSet = a gene
+#                               combination with selection method (MarkerSelectionMethod),
+#                               comparison context (MarkerSetContext, context_node), role,
+#                               source class (via_class), publication (source) and scores
+#                               (MarkerSetPerformance: metric F_BETA / PRECISION / RECALL /
+#                               ON_TARGET, value, beta). Atlas marker-set genes carry the
+#                               source's NCBI gene ID + official symbol.
 # Version: 0.9.0 (2026-11-24) — BREAKING: GeneDescriptor splits wording from identity (#244).
 #                               name_in_source (required) = the marker as the source writes it;
 #                               symbol (now optional) = official symbol of the ncbi_gene_id gene,
@@ -161,7 +168,9 @@ default_range: string
 #                   ncbi_gene_id = id; symbol = label (the gene's official symbol).
 #                   symbol and ncbi_gene_id are set together or not at all; the
 #                   pre-edit hook checks both. Atlas metadata markers carry
-#                   name_in_source only — identity is resolved in the taxonomy DB.
+#                   name_in_source only — identity is resolved in the taxonomy DB;
+#                   atlas marker-set genes (MarkerSet.genes) carry the gene ID the
+#                   source gives, with its official symbol.
 #
 #   Regions:        anatomical_location = OntologyTerm (id + label + name_in_source);
 #                   name_in_source = region name as in the source paper or atlas;
@@ -761,6 +770,50 @@ enums:
           MERFISH spatial transcriptomics panel markers — distinguish this type
           in the spatial panel (e.g. merfish_markers_combo in WMBv1).
 
+  MarkerSelectionMethod:
+    description: How the genes of a MarkerSet were chosen.
+    permissible_values:
+      AUTHOR_COMBO:
+        description: >
+          Combination chosen by the atlas authors, e.g. the WMBv1
+          cluster_markers_combo sets of Yao et al. 2023.
+      NS_FOREST:
+        description: >
+          Chosen by the NS-Forest algorithm (random-forest feature selection
+          plus a binary expression score).
+      LITERATURE:
+        description: Combination reported in the literature for this type.
+
+  MarkerSetContext:
+    description: >
+      The cells a marker set (or its score) separates the node's cells from.
+    permissible_values:
+      GLOBAL:
+        description: All other cells of the taxonomy.
+      WITHIN_PARENT:
+        description: >
+          The other cells of one parent node only (e.g. the sibling clusters
+          of the same subclass). The parent is MarkerSet.context_node.
+
+  MarkerSetMetric:
+    description: >
+      Performance metric of a marker set as a binary classifier of the node's
+      cells against the context's other cells.
+    permissible_values:
+      F_BETA:
+        description: >
+          F-beta score: (1 + beta^2) * precision * recall / (beta^2 * precision + recall).
+          beta is recorded on MarkerSetPerformance.beta (NS-Forest uses 0.5,
+          weighting precision over recall).
+      PRECISION:
+        description: Fraction of cells called positive by the set that belong to the node.
+      RECALL:
+        description: Fraction of the node's cells called positive by the set.
+      ON_TARGET:
+        description: >
+          NS-Forest on-target fraction: the set's mean expression in the node
+          as a fraction of its total mean expression across all nodes.
+
   # ── Property alignment ──────────────────────────────────────────
   PropertyAlignment:
     description: >
@@ -1107,7 +1160,9 @@ classes:
       antibody's target), say how in the source's notes. Exogenous labels (BrdU,
       tracers) and region names are not markers: say what a label shows in the
       node's notes, and put a region in anatomical_location. Atlas metadata markers
-      carry name_in_source only; their gene is resolved in the taxonomy DB.
+      carry name_in_source only; their gene is resolved in the taxonomy DB. Atlas
+      marker-set genes (MarkerSet.genes) carry the NCBI gene ID their source gives,
+      with its official symbol.
       Evidence sources for the marker assertion are recorded in the sources list.
     attributes:
       name_in_source:
@@ -1176,6 +1231,94 @@ classes:
           Antibody Registry RRID, e.g. RRID:AB_2298772. Only when the source
           states it or its catalogue entry identifies it unambiguously. The
           pre-edit hook checks it resolves (SciCrunch resolver).
+
+  MarkerSet:
+    description: >
+      A combination of genes that together pick out the node's cells, with how
+      the combination was chosen, what it separates the cells from, and how
+      well it does so. Populated on atlas nodes at taxonomy ingest (e.g. the
+      WMBv1 Yao 2023 marker combinations and NS-Forest sets from
+      brain_cell_kg); the flat CellTypeNode.markers list keeps the single
+      genes. Each member is a GeneDescriptor: name_in_source is the gene as
+      the set's source writes it; ncbi_gene_id and symbol are set when the
+      source names the gene by ID and the ID resolves.
+    attributes:
+      id:
+        required: true
+        pattern: "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$"
+        description: >
+          CURIE of the marker set in its source, e.g. PCL:0143601 or
+          CLM:5007969 (brain_cell_kg / WMBO).
+      genes:
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: GeneDescriptor
+        description: The genes of the set, in the source's order.
+      selection_method:
+        required: true
+        range: MarkerSelectionMethod
+      method_version:
+        description: Version of the selection method, when the source states it.
+      context:
+        required: true
+        range: MarkerSetContext
+        description: The cells the set was chosen to separate the node's cells from.
+      context_node:
+        description: >
+          ID of the parent node whose other cells the set separates the node's
+          cells from, when context is WITHIN_PARENT (e.g. the cluster's
+          subclass, WMB:CS20230722_SUBC_001).
+      role:
+        range: MarkerCategory
+        description: >
+          The set's role among the node's markers: DEFINING for a GLOBAL set,
+          DEFINING_SCOPED for a WITHIN_PARENT set.
+      via_class:
+        pattern: "^(CL|PCL):[0-9]+$"
+        description: >
+          The CL or PCL class the set is attached to in the source graph, whose
+          exemplar data is this node.
+      performance:
+        multivalued: true
+        inlined_as_list: true
+        range: MarkerSetPerformance
+        description: Scores of the set as a classifier of the node's cells.
+      source:
+        range: PropertySource
+        inlined: true
+        description: >
+          The publication that defines the set (ref: DOI). Atlas marker sets
+          carry it because two publications contribute sets to one node.
+      notes:
+        description: Free-text notes.
+
+  MarkerSetPerformance:
+    description: >
+      One score of a MarkerSet as a binary classifier of the node's cells
+      against the cells of its evaluation context.
+    attributes:
+      metric:
+        required: true
+        range: MarkerSetMetric
+      value:
+        required: true
+        range: float
+        minimum_value: 0
+        maximum_value: 1
+      beta:
+        range: float
+        description: The beta of an F_BETA score (e.g. 0.5). Required for F_BETA.
+      evaluation_method:
+        description: >
+          How the score was computed, when the source states it
+          (e.g. "NS-Forest binary expression evaluation").
+      evaluation_context:
+        range: MarkerSetContext
+        description: >
+          The cells the score was computed against, when the source states it.
+      dataset:
+        description: The dataset the score was computed on, when the source states it.
 
   CellTypeColocation:
     description: >
@@ -1951,6 +2094,16 @@ classes:
           DEFINING_SCOPED, TF, NEUROPEPTIDE, NT_MARKER, MERFISH). Negative markers
           use modifier: ABSENT. The legacy separate fields are retained for backward
           compatibility with existing draft KB YAML.
+      marker_sets:
+        multivalued: true
+        inlined_as_list: true
+        range: MarkerSet
+        description: >
+          Marker gene combinations for the node, each with its selection method,
+          comparison context and performance scores (#274). Atlas nodes, from
+          taxonomy ingest. The DEFINING / DEFINING_SCOPED entries of markers are
+          the single-gene view of the same atlas metadata; marker_sets keeps the
+          combinations and their scores.
       neighborhood:
         description: >
           Atlas-assigned neighborhood or supergroup label (e.g. "Subpallium-GABA").

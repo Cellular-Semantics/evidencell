@@ -84,6 +84,8 @@ class TaxonomyMeta:
     level_counts: dict[str, int] = field(default_factory=dict)
     level_hierarchy: list[dict] = field(default_factory=list)  # [{level_name, rank, count, is_terminal}]
     mapmycells: MapMyCellsMeta = field(default_factory=MapMyCellsMeta)
+    # Marker-set ingest summary (#274): source_file, counts, skipped, genes_without_id
+    marker_sets: dict[str, Any] = field(default_factory=dict)
 
 
 def _read_meta_input(taxonomy_id: str) -> dict[str, Any]:
@@ -129,6 +131,7 @@ def read_taxonomy_meta(taxonomy_id: str) -> TaxonomyMeta:
         ingest_date=d.get("ingest_date"),
         level_counts=d.get("level_counts", {}),
         level_hierarchy=d.get("level_hierarchy", []),
+        marker_sets=d.get("marker_sets") or {},
         mapmycells=MapMyCellsMeta(
             at_taxonomy_id=mmc_raw.get("at_taxonomy_id"),
             stats_s3_url=mmc_raw.get("stats_s3_url"),
@@ -159,6 +162,8 @@ def _meta_to_dict(meta: TaxonomyMeta) -> dict[str, Any]:
         d["level_hierarchy"] = meta.level_hierarchy
     if meta.level_counts:
         d["level_counts"] = meta.level_counts
+    if meta.marker_sets:
+        d["marker_sets"] = meta.marker_sets
     if mmc_dict:
         d["mapmycells"] = mmc_dict
     return d
@@ -679,6 +684,13 @@ _ACCESSION_LEVEL_MAP: dict[str, str] = {
 }
 
 
+def _bare_accession(curie: str | None) -> str | None:
+    """"WMB:CS20230722_SUBC_001" → "CS20230722_SUBC_001" (as nodes.node_id)."""
+    if not curie:
+        return curie
+    return curie.split(":", 1)[-1] if ":" in curie else curie
+
+
 def _strip_accession_from_label(label: str, short_form: str) -> str:
     """Strip embedded accession suffix from atlas label.
 
@@ -743,11 +755,17 @@ def _parse_json_list(value: str | None) -> list[str]:
     return [str(x) for x in out if x]
 
 
-def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, str]) -> dict:
+def _node_to_dict(
+    n: TaxonomyNode,
+    meta: TaxonomyMeta,
+    name_lookup: dict[str, str],
+    marker_sets: list[dict] | None = None,
+) -> dict:
     """Convert a TaxonomyNode to a schema-compliant CellTypeNode dict.
 
     meta  — used for species fields
     name_lookup — accession/CURIE → clean name, for parent_hierarchy.name
+    marker_sets — the node's MarkerSet dicts (#274), from _ingest_marker_sets
     """
     name = _strip_accession_from_label(n.label, n.short_form)
     tax_level = n.taxonomy_level.upper()
@@ -852,6 +870,8 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         d["nt_type"] = nt_type_obj
     if markers:
         d["markers"] = markers
+    if marker_sets:
+        d["marker_sets"] = marker_sets
     if cl_mapping:
         d["cl_mapping"] = cl_mapping
     if anat_locs:
@@ -865,6 +885,100 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
     if species:
         d["species"] = species
     return d
+
+
+def _ingest_marker_sets(
+    cfg: Mapping[str, Any], all_nodes: list[TaxonomyNode], taxonomy_id: str
+) -> tuple[dict[str, list[dict]], dict[str, Any]]:
+    """Build the nodes' MarkerSets from the declared KG export (#274).
+
+    ``cfg`` is the ``marker_sets`` block of the metadata input: ``file`` (the
+    export JSON, repo-relative), ``query`` (the .cypher that makes it) and
+    ``expected_counts`` (``{level: {"METHOD/CONTEXT": n}}``). Fails on a
+    missing export, an unreachable gene lookup, or counts that drift from
+    ``expected_counts``. Returns ``({node CURIE: [MarkerSet]}, summary)``.
+    """
+    from evidencell.gene_identity import gene_ids_path, lookup_gene_records, read_gene_ids
+    from evidencell.marker_sets import (
+        MarkerSetError,
+        NodeInfo,
+        build_marker_sets,
+        check_counts,
+        load_rows,
+    )
+    from evidencell.paths import repo_root
+
+    path = repo_root() / cfg["file"]
+    if not path.is_file():
+        raise MarkerSetError(
+            f"marker-set export {cfg['file']} not found. Fetch it with: just "
+            f"fetch-taxonomy-kg {cfg.get('query', '<query>.cypher')} {taxonomy_id} "
+            f"--output {cfg['file']}"
+        )
+    nodes = {
+        n.node_id: NodeInfo(level=n.taxonomy_level, parent_id=n.parent_id)
+        for n in all_nodes if n.node_id
+    }
+    # Other names a gene goes by in this taxonomy (pairing only).
+    names: dict[str, set[str]] = defaultdict(set)
+    gpath = gene_ids_path(taxonomy_id)
+    if gpath.is_file():
+        for r in read_gene_ids(gpath)[1]:
+            if r["ncbi_gene_id"]:
+                names[r["ncbi_gene_id"]].update(x for x in (r["label"], r["stats_symbol"]) if x)
+
+    def gene_records(ids: set[str]) -> dict[str, dict]:
+        records, unreachable = lookup_gene_records(ids)
+        if unreachable:
+            raise MarkerSetError(
+                f"{len(unreachable)} marker-set gene IDs could not be looked up "
+                f"(Translator NodeNormalization unreachable), e.g. {unreachable[:5]}. "
+                "Re-run with network access."
+            )
+        return records
+
+    sets_by_node, report = build_marker_sets(
+        load_rows(path), nodes, gene_records, lambda c: names.get(c, set())
+    )
+    # Cross-check: an author combo's genes are the node's metadata combo of
+    # the same role (WMBv1: every one matches). Disagreements are reported,
+    # not fatal. NS-Forest sets have no metadata counterpart.
+    flat = {
+        n.node_id: {"DEFINING": n.defining_markers, "DEFINING_SCOPED": n.defining_markers_scoped}
+        for n in all_nodes
+    }
+    disagree = sorted(
+        f"{node_id} {ms['id']}: set {[g['name_in_source'] for g in ms['genes']]} vs "
+        f"{ms['role']} {flat[node_id][ms['role']]}"
+        for node_id, sets in sets_by_node.items() for ms in sets
+        if ms["selection_method"] == "AUTHOR_COMBO"
+        and sorted(g["name_in_source"] for g in ms["genes"]) != sorted(flat[node_id][ms["role"]])
+    )
+    drift = check_counts(report, cfg.get("expected_counts"))
+    if drift:
+        raise MarkerSetError(
+            "marker-set counts differ from expected_counts in "
+            f"inputs/taxonomies/{taxonomy_id}_meta.yaml:\n  " + "\n  ".join(drift)
+            + "\nIf the change is expected, update expected_counts to:\n"
+            + yaml.dump(report.count_table(), sort_keys=True, default_flow_style=False)
+        )
+    print(
+        f"  Marker sets: {report.attached:,} attached from {report.rows:,} rows; "
+        f"skipped (unscored) {dict(report.skipped_unscored)}; "
+        f"{report.multi_exemplar_classes} classes resolved to their most specific "
+        f"exemplar; {len(report.genes_without_id)} of {report.genes:,} genes without "
+        f"a current NCBI gene ID; {len(disagree)} author combos differ from the "
+        "node's metadata marker combo",
+        file=sys.stderr,
+    )
+    summary: dict[str, Any] = {
+        "source_file": cfg["file"],
+        "counts": report.count_table(),
+        "skipped_unscored": dict(sorted(report.skipped_unscored.items())),
+        "genes_without_id": sorted(report.genes_without_id),
+        "differ_from_metadata_combo": disagree,
+    }
+    return sets_by_node, summary
 
 
 def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str, int]:
@@ -934,10 +1048,17 @@ def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str
     # Compute level hierarchy and assign ranks to nodes
     level_hierarchy, level_to_rank = _compute_level_hierarchy(all_nodes)
 
+    # Marker sets (#274), when the metadata input declares an export
+    sets_by_node: dict[str, list[dict]] = {}
+    if meta_input.get("marker_sets"):
+        sets_by_node, meta.marker_sets = _ingest_marker_sets(
+            meta_input["marker_sets"], all_nodes, taxonomy_id
+        )
+
     # Second pass: convert to CellTypeNode dicts grouped by level
     by_level: dict[str, list[dict]] = {}
     for n in all_nodes:
-        d = _node_to_dict(n, meta, name_lookup)
+        d = _node_to_dict(n, meta, name_lookup, sets_by_node.get(n.node_id))
         lev_upper = n.taxonomy_level.upper()
         rank = level_to_rank.get(lev_upper)
         if rank is not None:
@@ -1232,6 +1353,37 @@ CREATE TABLE IF NOT EXISTS anat (
   cell_count_completeness  TEXT
 );
 
+-- Marker sets (#274): gene combinations with selection method, context and
+-- scores, from CellTypeNode.marker_sets. node_id / context_node are bare
+-- accessions, as in nodes.
+CREATE TABLE IF NOT EXISTS marker_set (
+  set_id            TEXT PRIMARY KEY,
+  node_id           TEXT NOT NULL REFERENCES nodes(node_id),
+  selection_method  TEXT NOT NULL,
+  context           TEXT NOT NULL,
+  context_node      TEXT,
+  role              TEXT,
+  via_class         TEXT,
+  source_ref        TEXT
+);
+
+CREATE TABLE IF NOT EXISTS marker_set_gene (
+  set_id          TEXT NOT NULL REFERENCES marker_set(set_id),
+  position        INTEGER NOT NULL,
+  name_in_source  TEXT NOT NULL,
+  ncbi_gene_id    TEXT,
+  symbol          TEXT,
+  PRIMARY KEY (set_id, position)
+);
+
+CREATE TABLE IF NOT EXISTS marker_set_performance (
+  set_id  TEXT NOT NULL REFERENCES marker_set(set_id),
+  metric  TEXT NOT NULL,
+  value   REAL NOT NULL,
+  beta    REAL,
+  PRIMARY KEY (set_id, metric)
+);
+
 -- Expression cache (#189): empty after a build, filled on demand from the
 -- MapMyCells stats HDF5 by evidencell.expression_cache. Keyed by Ensembl ID:
 -- marker names resolve to genes through the genes / gene_synonyms tables
@@ -1258,6 +1410,8 @@ CREATE INDEX IF NOT EXISTS idx_anat_node    ON anat(node_id);
 CREATE INDEX IF NOT EXISTS idx_anat_region  ON anat(anat_id);
 CREATE INDEX IF NOT EXISTS idx_node_expr_node    ON node_expression(node_id);
 CREATE INDEX IF NOT EXISTS idx_node_expr_gene    ON node_expression(ensembl_id);
+CREATE INDEX IF NOT EXISTS idx_marker_set_node   ON marker_set(node_id);
+CREATE INDEX IF NOT EXISTS idx_marker_set_gene   ON marker_set_gene(ncbi_gene_id);
 """
 
 _CLOSURE_DDL = """\
@@ -1989,6 +2143,9 @@ class TaxonomyDB:
             con.executescript(
                 "DROP TABLE IF EXISTS node_expression;"
                 "DROP TABLE IF EXISTS expression_genes;"
+                "DROP TABLE IF EXISTS marker_set_performance;"
+                "DROP TABLE IF EXISTS marker_set_gene;"
+                "DROP TABLE IF EXISTS marker_set;"
                 "DROP TABLE IF EXISTS anat;"
                 "DROP TABLE IF EXISTS nodes;"
             )
@@ -2138,6 +2295,36 @@ class TaxonomyDB:
                     a.get("ratio_in_or_near_100um"),
                     a.get("cell_count_completeness"),
                 ),
+            )
+        for ms in nd.get("marker_sets") or []:
+            set_id = ms["id"]
+            src = ms.get("source") or {}
+            con.execute(
+                "INSERT INTO marker_set VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    set_id,
+                    node_id,
+                    ms["selection_method"],
+                    ms["context"],
+                    _bare_accession(ms.get("context_node")),
+                    ms.get("role"),
+                    ms.get("via_class"),
+                    src.get("ref"),
+                ),
+            )
+            con.executemany(
+                "INSERT INTO marker_set_gene VALUES (?, ?, ?, ?, ?)",
+                [
+                    (set_id, i, g["name_in_source"], g.get("ncbi_gene_id"), g.get("symbol"))
+                    for i, g in enumerate(ms.get("genes") or [])
+                ],
+            )
+            con.executemany(
+                "INSERT INTO marker_set_performance VALUES (?, ?, ?, ?)",
+                [
+                    (set_id, p["metric"], p["value"], p.get("beta"))
+                    for p in ms.get("performance") or []
+                ],
             )
 
     def _connect(self) -> sqlite3.Connection:
@@ -2371,6 +2558,42 @@ class TaxonomyDB:
         for sym in _parse_json_list(node.get("defining_markers")):
             out[sym] = "DEFINING"
         return out
+
+    def get_marker_sets(self, accession: str) -> list[dict]:
+        """An atlas node's marker sets (#274), as MarkerSet-shaped dicts:
+        ``{id, genes: [{name_in_source, ncbi_gene_id?, symbol?}],
+        selection_method, context, context_node?, role, via_class,
+        performance: [{metric, value, beta?}], source_ref}``.
+        ``context_node`` is a bare accession. Empty for a node with none."""
+        node_id = _bare_accession(accession)
+        con = self._connect()
+        try:
+            sets = [
+                {k: v for k, v in dict(r).items() if v is not None}
+                for r in con.execute(
+                    "SELECT * FROM marker_set WHERE node_id = ? ORDER BY set_id", (node_id,)
+                )
+            ]
+            for ms in sets:
+                ms["id"] = ms.pop("set_id")
+                del ms["node_id"]
+                ms["genes"] = [
+                    {k: v for k, v in dict(g).items() if v is not None}
+                    for g in con.execute(
+                        "SELECT name_in_source, ncbi_gene_id, symbol FROM marker_set_gene "
+                        "WHERE set_id = ? ORDER BY position", (ms["id"],)
+                    )
+                ]
+                ms["performance"] = [
+                    {k: v for k, v in dict(p).items() if v is not None}
+                    for p in con.execute(
+                        "SELECT metric, value, beta FROM marker_set_performance "
+                        "WHERE set_id = ? ORDER BY metric", (ms["id"],)
+                    )
+                ]
+            return sets
+        finally:
+            con.close()
 
     def get_node_anat_rows(self, accession: str) -> list[dict]:
         """Return per-(anat_term) rows for an atlas node.

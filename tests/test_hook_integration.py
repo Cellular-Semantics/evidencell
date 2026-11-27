@@ -586,6 +586,47 @@ def test_symbol_without_gene_id_blocked(tmp_path: Path):
     assert "marker 'SST' has symbol but no ncbi_gene_id" in r.stderr
 
 
+def _fixture_with_marker_set_gene(gene_id: str, symbol: str) -> str:
+    """Valid fixture with a MarkerSet (#274) on the first node, one gene."""
+    import yaml
+
+    data = yaml.safe_load(VALID_KB_FIXTURE.read_text())
+    data["nodes"][0]["marker_sets"] = [{
+        "id": "PCL:0143601",
+        "genes": [{"name_in_source": symbol, "ncbi_gene_id": gene_id, "symbol": symbol}],
+        "selection_method": "AUTHOR_COMBO",
+        "context": "GLOBAL",
+        "performance": [{"metric": "F_BETA", "value": 0.5, "beta": 0.5}],
+    }]
+    return yaml.safe_dump(data, sort_keys=False)
+
+
+def test_marker_set_gene_id_naming_another_gene_blocked(tmp_path: Path):
+    """Marker-set genes get the same gene ID check as node markers (#274)."""
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = _offline_gene_env(tmp_path, {
+        "NCBIGene:5816": {"label": "PVALB", "taxon": "NCBITaxon:9606", "names": ["PV"]},
+    })
+    r = _run_hook(
+        _write_payload(_fixture_with_marker_set_gene("NCBIGene:5816", "SST")), env_extra=env
+    )
+    assert r.returncode == 2, r.stderr
+    assert "marker_set PCL:0143601: marker 'SST' ncbi_gene_id NCBIGene:5816 is PVALB" in r.stderr
+
+
+def test_marker_set_gene_with_official_symbol_passes_gene_check(tmp_path: Path):
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    env = _offline_gene_env(tmp_path, {
+        "NCBIGene:5816": {"label": "PVALB", "taxon": "NCBITaxon:9606", "names": ["PV"]},
+    })
+    r = _run_hook(
+        _write_payload(_fixture_with_marker_set_gene("NCBIGene:5816", "PVALB")), env_extra=env
+    )
+    assert "Gene ID errors" not in r.stderr, r.stderr
+
+
 def test_gene_id_that_does_not_exist_blocked(tmp_path: Path, not_found_server: str):
     """Blocked on NodeNorm's answer, and not cached: a later edit asks again
     (review #6 — a passing Translator gap must not become a lasting block)."""
