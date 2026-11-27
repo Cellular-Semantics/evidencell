@@ -59,4 +59,18 @@ nodes:
           converse set is not contained — about 10% of 26RFa-positive cells
           lack orexin mRNA and roughly a third of 26RFa-expressing cells in
           the LHA are non-neuronal.
+    cl_mapping:
+      cl_term:
+        id: CL:0011109
+        label: "hypocretin-secreting neuron"
+        name_in_source: "26RFa/orexin neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for "26RFa", "QRFP" and "Qrfp neuron": no hits. No CL
+        term exists for a 26RFa/Qrfp-coexpressing orexin subpopulation.
+        Shares the parent node's (lha_orexin_neuron) EXACT term CL:0011109
+        ("hypocretin-secreting neuron") as BROAD, per the usual rule for a
+        subtype_of node. An EXACT match would need a CL term defined by
+        26RFa/Qrfp co-expression narrowing the hypocretin-secreting class;
+        none exists yet.
 edges: []

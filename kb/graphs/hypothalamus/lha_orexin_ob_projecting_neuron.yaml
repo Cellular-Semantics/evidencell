@@ -54,4 +54,22 @@ nodes:
           overlapping and spatially distributed rather than segregated: these
           cells spatially overlap the orexin-A neurons that do not innervate
           the bulb, and are distinguished from them only by cell body area.
+    cl_mapping:
+      cl_term:
+        id: CL:0011109
+        label: "hypocretin-secreting neuron"
+        name_in_source: "olfactory bulb-projecting orexin neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for "olfactory bulb projecting", "centrifugal",
+        "afferent neuron" and "orexin": no CL term exists for a
+        projection-target-defined orexin/hypocretin subpopulation (the only
+        olfactory-bulb-related CL terms are intrinsic OB cell types —
+        CL:1001434 olfactory bulb interneuron, CL:1001503 olfactory bulb
+        tufted cell — not afferent populations). Shares the parent node's
+        (lha_orexin_neuron) EXACT term CL:0011109 ("hypocretin-secreting
+        neuron") as BROAD, per the usual rule for a subtype_of node. An
+        EXACT match would need a CL term defined by projection to the main
+        olfactory bulb narrowing the hypocretin-secreting class; none exists
+        yet.
 edges: []
