@@ -1,0 +1,41 @@
+# Findings for vmhvl_esr1_nkx2_1_tac1_neuron that no CellTypeNode property
+# field can hold. Written by the node-characterisation step of
+# asta-report-ingest, 2026-11-27.
+
+- finding: >
+    Functional role — a dedicated locomotor module. Correa et al. 2014
+    (PMID:25543145) report that pharmacogenetic activation of Nkx2-1-expressing
+    VMHVL neurons elicits a burst of spontaneous movement, that the response
+    requires ERα and Tac1 signalling, and that disrupting development of the
+    population causes obesity and inactivity while leaving fertility and brown
+    adipose tissue thermogenesis intact. They conclude the subset "constitutes
+    one of several neuroendocrine modules that drive sex-specific responses".
+    Massa et al. 2023 (PMID:36747631) restate the locomotor role for
+    estrogen-sensitive VMHvl populations. CellTypeNode has no field for
+    behavioural or physiological function, and the dissociation from
+    thermogenesis and fertility is a functional result rather than a property
+    assertion, so none of it is recorded on the node.
+  quote_keys:
+    - 27794167_2fbf51e0
+    - 263827506_1ac410b7
+  closest_field: null
+
+- finding: >
+    Every phenotype attributed to this population is female-specific: a
+    female-specific burst of spontaneous movement on activation, and
+    female-specific obesity and inactivity after developmental disruption
+    (Correa et al. 2014, PMID:25543145). The locomotor effect is further
+    described as hormone-dependent / estrogen-dependent. Not written to
+    sex_bias: that field records the expected direction of sexual dimorphism
+    in cell number or defining-marker expression, whereas Correa reports
+    dimorphism in the behavioural and metabolic consequences of manipulating
+    the population — not in how many such cells each sex has, nor in how
+    strongly they express ERα, Nkx2-1 or Tac1 — so FEMALE_BIASED would
+    overstate the evidence. Left unset pending full-text verification, which
+    may supply cell-count or expression-level data. (van Veen et al. 2020,
+    PMID:32377634, do report female-biased Tac1 expression in VMH, but for
+    their own ERα-enriched populations rather than for this subset; see the
+    node's notes.)
+  quote_keys:
+    - 27794167_2fbf51e0
+  closest_field: sex_bias
