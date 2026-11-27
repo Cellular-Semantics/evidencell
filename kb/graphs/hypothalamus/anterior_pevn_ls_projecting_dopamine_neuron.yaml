@@ -1,0 +1,53 @@
+# Anterior periventricular nucleus (A14) lateral septum-projecting dopamine neuron — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/Periventricular_Dopamine_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "Anterior PeVN lateral septum-projecting A14 dopamine neuron"
+description: >
+  Evidence graph component for the anterior periventricular nucleus (A14)
+  dopamine neuron that projects extrahypothalamically to the lateral septum,
+  proposed from the ASTA deep research report
+  Periventricular_Dopamine_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "anterior subdivision of the periventricular nucleus (PeVN)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: anterior_pevn_ls_projecting_dopamine_neuron
+    name: "Anterior periventricular nucleus (A14) lateral septum-projecting dopamine neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "dopaminergic cells of the periventricular alar (anterior) hypothalamus (Pe)"
+        sources:
+          - ref: "PMID:40177299"
+            quote_key: "277180255_3296e936"
+            method: "name used for the suprachiasmatic-innervated catecholaminergic population of the anterior periventricular hypothalamus that projects to the lateral septum"
+    subtype_of:
+      - parent: periventricular_dopamine_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:36209152"
+            quote_key: "252760439_338fb0d7"
+            method: "source identifies these cells as Th+/Dat1+ cells of the anterior subdivision of the periventricular nucleus (PeVN; A14 catecholaminergic group)"
+        notes: >
+          The type is the periventricular hypothalamic dopamine population
+          narrowed by an anterior position within the periventricular nucleus
+          and an extrahypothalamic projection to the lateral septum, so
+          containment holds by definition. Stated explicitly by one primary
+          source (Korchynska et al. 2022); Morales et al. 2025 restates it
+          citing that study and is therefore not independent.
+edges: []

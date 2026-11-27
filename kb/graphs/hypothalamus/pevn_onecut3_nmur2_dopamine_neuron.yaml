@@ -1,0 +1,57 @@
+# Onecut3/Nmur2-expressing medio-posterior periventricular (A14) dopamine neuron — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/Periventricular_Dopamine_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "Onecut3/Nmur2 periventricular A14 dopamine neuron"
+description: >
+  Evidence graph component for the Onecut3/Nmur2-expressing medio-posterior
+  periventricular (A14) dopamine neuron, proposed from the ASTA deep
+  research report Periventricular_Dopamine_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "periventricular nucleus of the hypothalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: pevn_onecut3_nmur2_dopamine_neuron
+    name: "Onecut3/Nmur2-expressing medio-posterior periventricular (A14) dopamine neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "onecut-3 + A14 dopamine neurons"
+        sources:
+          - ref: "PMID:27991900"
+            quote_key: "205439542_97445aba"
+            method: "name used throughout for the medio-posterior periventricular population the study distinguishes from the dorsomedial A12 dopamine group"
+      - term: "Onecut3 and Nmur2 co-expressing dopamine neurons"
+        sources:
+          - ref: "PMID:27991900"
+            quote_key: "205439542_ee40b322"
+            method: "name introduced for the periventricular nucleus population defined by unique Onecut3/Nmur2 coexpression"
+    subtype_of:
+      - parent: periventricular_dopamine_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:27991900"
+            quote_key: "205439542_96d0708f"
+            method: "source states that onecut-3+ dopamine neurons populate the periventricular nucleus of the hypothalamus and form a cell continuum qualifying as A14 dopamine neurons"
+        notes: >
+          The type is the periventricular hypothalamic dopamine population
+          narrowed by Onecut3/Nmur2 coexpression together with a
+          medio-posterior position in the periventricular area, so containment
+          holds by definition. Stated explicitly by one source (Romanov et al.
+          2016), which places the onecut-3+ cells in the periventricular
+          nucleus and states they qualify as A14 dopamine neurons.
+edges: []
