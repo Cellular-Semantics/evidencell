@@ -201,6 +201,49 @@ nodes:
           method: "transcriptomics integrated with anatomy and physiology"
           scope: "adult mouse thalamus — transcriptional identity tied to membrane properties"
           quote_key: "202579938_b1d68316"
+    at_source_sets:
+      - dataset_accession: GEO:GSE133912
+        source_label: cortex-projecting TC (all 5 systems)
+        correspondence: SUBSET
+        sources:
+          - ref: "PMID:31527803"
+            method: "manual_full_text — Methods: cells were labelled for manual dissection by retrograde viral or tracer injection into the projection field"
+            scope: "adult mouse thalamus, retrograde labelling from cortex"
+            quote_key: "202579938_fb2109fd"
+          - ref: "PMID:31527803"
+            method: "manual_full_text — Methods: only retrogradely labelled cells were collected for single-cell RNA-seq"
+            scope: "adult mouse thalamus, Smart-Seq2 single sorted cells"
+            quote_key: "202579938_717ed27e"
+          - ref: "PMID:31527803"
+            method: "manual_full_text — single-cell RNA-seq profiled thalamic neurons projecting to motor, somatosensory and visual cortex"
+            scope: "adult mouse thalamocortical projection systems"
+            quote_key: "202579938_7a08d6ac"
+          - ref: "PMID:31527803"
+            method: "manual_full_text — the single-cell set also covers the auditory and prefrontal projection systems"
+            scope: "adult mouse thalamocortical projection systems"
+            quote_key: "202579938_0401b688"
+          - ref: "PMID:31527803"
+            method: "manual_full_text — Figure 5 legend: only the major projection complex was collected per target; sparsely labelled midline cells avoided"
+            scope: "adult mouse thalamus, single-cell sampling"
+            quote_key: "202579938_9ec9148a"
+        notes: >
+          Derived label pooling all five published projection systems of
+          GSE133912 (metadata column Projection: Visual 429, Motor 477,
+          Prefrontal 388, Auditory 376, Somatosensory 282; 1,952 cells after
+          dropping 20 is_ODC cells), scored in run
+          at_run_20261127_phillips2019_pooled_mmc_wmbv1. Every cell was
+          retrogradely labelled from cortex and sorted, so every cell is a
+          thalamocortical projection neuron by design. SUBSET, not EXACT:
+          only the major projection complex for five cortical targets was
+          sampled, and sparse midline (tertiary) cells were avoided. The pool
+          therefore under-represents midline/intralaminar nuclei and omits
+          other cortical targets. The per-system labels are not declared on
+          nucleus-level nodes, because the nuclei dissected per system are
+          not recorded. Purity is 1.0 at every WMB target by construction,
+          since one label covers the whole dataset, so read coverage: 0.991
+          in class 18 TH Glut and 0.865 in subclass 151 TH Prkcd Grin2c Glut.
+          The rest of the confident subclass calls fall in other thalamic
+          glutamatergic subclasses.
     cl_mapping:
       cl_term:
         id: CL:4023068
