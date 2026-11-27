@@ -1,0 +1,214 @@
+# MC4R/ERα VMHvl neuron — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/VMHvl_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "MC4R/ERα VMHvl neuron"
+description: >
+  Evidence graph component for the MC4R/ERα VMHvl neuron, proposed from the
+  ASTA deep research report VMHvl_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "ventrolateral ventromedial hypothalamic nucleus (VMHvl)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "female mice"
+creation_date: "2026-11-27"
+nodes:
+  - id: vmhvl_mc4r_esr1_neuron
+    name: "MC4R/ERα VMHvl neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "female mice"
+    synonyms:
+      - term: "VMHvl neurons expressing both MC4R and ERα"
+        sources:
+          - ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "name used in the abstract for the chemogenetically stimulated population"
+      - term: "oestrogen-sensitive neurons in the ventrolateral ventromedial hypothalamic nucleus (VMHvl)"
+        sources:
+          - ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "descriptive name used in the abstract for the arousal-projecting subset in which MC4R signalling is recruited"
+    subtype_of:
+      - parent: vmhvl_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "abstract defines the type as a subset of VMHvl neurons expressing both MC4R and ERα"
+            scope: "adult female mouse VMHvl"
+        notes: >
+          Defined as VMHvl neurons narrowed by MC4R and ERα co-expression, so
+          containment in the VMHvl population holds by definition. Krause 2021
+          is the only source in this run that names the marker combination.
+    anatomical_location:
+      - id: MBA:785
+        label: "Ventromedial hypothalamic nucleus, ventrolateral part"
+        name_in_source: "ventrolateral ventromedial hypothalamic nucleus (VMHvl)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "the population is defined, chemogenetically stimulated and CRISPR-activated within the VMHvl; the quote names no registration or mapping method"
+            scope: "adult female mouse VMHvl"
+      - id: MBA:1089
+        label: "Hippocampal formation"
+        name_in_source: "arousal centres in the hippocampus"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "projection reported in the abstract for this subset itself ('a subset of oestrogen-sensitive neurons in the ... VMHvl ... projects to arousal centres in the hippocampus and hindbrain'); the quote names no tracing method"
+            scope: "adult female mouse"
+            notes: >
+              The target is given only as "arousal centres in the
+              hippocampus"; neither the quote nor the report resolves which
+              hippocampal subfield or nucleus receives the projection, so the
+              coarsest containing Allen term is used.
+      - id: MBA:1065
+        label: "Hindbrain"
+        name_in_source: "arousal centres in the ... hindbrain"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "projection reported in the abstract for this subset itself; the quote names no tracing method"
+            scope: "adult female mouse"
+            notes: >
+              "Hindbrain" is as specific as the source gets — no hindbrain
+              nucleus is named — so the coarsest containing Allen term is
+              used.
+    colocated_types:
+      - neighboring_type: "vmhvl_esr1_nkx2_1_tac1_neuron (ERα/NKX2-1/Tac1 VMHvl neuron)"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          Correa et al. 2014 (PMID:25543145, quote 27794167_2fbf51e0) describe
+          a separate subset of ERα VMHvl neurons, marked by NKX2-1 and Tac1,
+          that drives hormone-dependent female locomotion; Krause et al. 2021
+          (PMID:34646010, quote 238858345_1d8aa140) place this node's
+          MC4R+/ERα+ cells in the same ERα-rich VMHvl population. Both subsets
+          are therefore at least interspersed within one small nucleus. No
+          source reports whether they overlap at the cell level: Krause says
+          nothing about Nkx2-1 or Tac1 and Correa says nothing about Mc4r.
+    defining_markers:
+      - name_in_source: "MC4R"
+        symbol: Mc4r
+        ncbi_gene_id: "NCBIGene:17202"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "the subset is named as 'VMHvl neurons expressing both MC4R and ERα' and is accessed chemogenetically on that basis; oestradiol surges are reported to increase MC4R signalling in these cells; the quote names no detection assay"
+            scope: "adult female mouse VMHvl"
+            notes: >
+              Gene settled from the source's own expansion of the
+              abbreviation, "melanocortin-4 receptor (MC4R)", and from its
+              naming of "the Mc4r gene" in the same sentence.
+      - name_in_source: "ERα"
+        symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "the subset is named as 'VMHvl neurons expressing both MC4R and ERα', and oestradiol is reported to recruit ERα directly to the Mc4r gene in these cells; the quote names no detection assay"
+            scope: "adult female mouse VMHvl"
+            notes: >
+              Gene settled from the source's own expansion of the
+              abbreviation, "oestrogen receptor-α (ERα)"; the bare string ERα
+              matches no mouse gene name.
+    nt_type:
+      name_in_source: "the excitatory neurotransmitter glutamate"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamate"
+      sources:
+        - ref: "PMID:26629409"
+          quote_key: "6881112_017e3b13"
+          method: "inferred, not measured for this subset: the cited statement is that nearly all VMH neurons, including those of the ventrolateral VMH, release glutamate and use Vglut2. No source in this run states a transmitter for the MC4R/ERα subset itself, so the assertion is inherited from the VMHvl population it is contained in (vmhvl_neuron, glutamatergic). The quote names no assay"
+          scope: "adult mouse VMH including the VMHvl subregion; not resolved to the MC4R/ERα subset"
+          support: WEAK
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: "glutamatergic neuron"
+        name_in_source: "MC4R/ERα VMHvl neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for "melanocortin", "estrogen receptor neuron",
+        "hypothalamic neuron" and "ventromedial hypothalamic neuron" — no CL
+        term for an MC4R/ERα-defined or VMH-region-defined neuron exists (CL
+        has no hypothalamus-region-specific neuron terms). The node is
+        subtype_of vmhvl_neuron by definition (MC4R+ERα co-expression narrows
+        the VMHvl population), and vmhvl_neuron itself is EXACT-mapped to
+        CL:0000679 ("a neuron that is capable of some neurotransmission by
+        glutamate secretion") on the grounds that glutamatergic identity is
+        its defining criterion. Checked CL:0000679's children — none is a
+        melanocortin-receptor or VMH-specific term. CL:0000679 is therefore
+        the nearest term this node fully satisfies, inherited as BROAD from
+        the parent mapping. An EXACT match would need a CL term for VMHvl
+        neurons co-expressing MC4R and ERα.
+    definition_references:
+      - "PMID:34646010"
+      - "PMID:37817932"
+    notes: >
+      SINGLE DEFINING SOURCE. Krause et al. 2021 (PMID:34646010) is the only
+      source in this run that describes the type; both markers, the
+      anatomical location, the projection targets and the synonyms rest on
+      one abstract-level quote. Massa et al. 2023 (PMID:37817932, and the
+      duplicate record PMID:36747631) cite that paper for estrogen-sensitive
+      VMHvl control of locomotion without adding independent
+      characterisation of the MC4R/ERα combination. Primary verification
+      against the full text is still outstanding.
+
+      MARKER EVIDENCE IS LARGELY FUNCTIONAL AND REGULATORY. The available
+      quote names no detection assay for either marker, so both MarkerSource
+      entries are marker_type NOT_STATED. MC4R enters as the receptor whose
+      signalling oestradiol increases and as one half of the chemogenetic
+      targeting criterion; ERα enters as the receptor recruited to the Mc4r
+      gene and as the other half of that criterion. Only the phrase "VMHvl
+      neurons expressing both MC4R and ERα" is a direct co-expression
+      statement, and it describes the cells that were stimulated rather than
+      a quantified expression measurement.
+
+      PROJECTION TARGETS ARE COARSE. "Arousal centres in the hippocampus and
+      hindbrain" is as specific as the source gets, and no tracing method is
+      named in the quote, so the two AXON_TARGET entries use the coarsest
+      containing Allen terms (MBA:1089 Hippocampal formation, MBA:1065
+      Hindbrain). Full-text verification should replace them with the
+      specific nuclei and record the method.
+
+      NEUROTRANSMITTER INFERRED. No source characterises the transmitter of
+      this subset. The glutamatergic assertion is carried over from the VMHvl
+      population it is contained in, via Cheung et al. 2015 (PMID:26629409),
+      whose statement is VMH-wide ("nearly all VMH neurons, including those in
+      the ... VMHvl subregion") and is recorded here with support WEAK.
+
+      FEMALE-ONLY CHARACTERISATION. Every observation about this type is made
+      in female mice — oestrogen-depleted or across the oestrous cycle. No
+      source in this run reports whether MC4R+/ERα+ VMHvl neurons exist in
+      males or how many there are in either sex, so sex_bias is left unset.
+
+      RELATION TO THE OTHER ERα-DEFINED VMHvl NODES. The report presents the
+      MC4R+/ERα+ cells as a projection-defined layer "within the broader ERα
+      VMHvl pool". How they intersect vmhvl_esr1_pr_neuron (ERα/PR) or
+      vmhvl_esr1_nkx2_1_tac1_neuron (ERα/NKX2-1/Tac1) is not stated by any
+      source, so only a colocated_types entry is recorded and no subtype_of
+      relation to either.
+
+      NO NEGATIVE MARKERS RECORDED. No source in this run reports a marker
+      shown to be absent from this subset. The Nr5a1 (SF-1) absence recorded
+      on vmhvl_neuron is scoped to the VMHvl population as a whole and is not
+      tested in this subset, so it is not restated here.
+edges: []

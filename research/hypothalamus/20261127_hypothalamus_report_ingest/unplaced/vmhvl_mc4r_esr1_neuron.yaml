@@ -1,0 +1,59 @@
+# Findings for vmhvl_mc4r_esr1_neuron that no CellTypeNode property
+# field can hold. Written by the node-characterisation step of
+# asta-report-ingest, 2026-11-27.
+
+- finding: >
+    Functional role — a hormone-dependent arousal / energy-allocation node.
+    Krause et al. 2021 (PMID:34646010) report that chemogenetic stimulation
+    of VMHvl neurons expressing both MC4R and ERα reverses sedentary
+    behaviour and obesity in oestrogen-depleted female mice, and that
+    CRISPR-mediated activation of the same node produces a long-term
+    increase in physical activity. Massa et al. 2023 (PMID:37817932) restate
+    that estrogen-sensitive VMHvl populations contribute to locomotion,
+    citing Krause. CellTypeNode has no field for behavioural, metabolic or
+    circuit-level function, so none of this is recorded on the node.
+  quote_keys:
+    - 238858345_1d8aa140
+    - 256305361_809df957
+  closest_field: null
+
+- finding: >
+    Regulatory relation between the two defining markers. Krause et al. 2021
+    (PMID:34646010) report that surges in 17β-oestradiol increase MC4R
+    signalling in these VMHvl neurons "by directly recruiting oestrogen
+    receptor-α (ERα) to the Mc4r gene" — i.e. one defining marker
+    transcriptionally regulates the other in a hormone-dependent way. The
+    GeneDescriptor model records which markers a type expresses, not
+    regulatory relations between them, so this is captured only as free text
+    in each marker source's method and cannot be queried as a property.
+  quote_keys:
+    - 238858345_1d8aa140
+  closest_field: defining_markers
+
+- finding: >
+    Relation to the other two ERα-defined VMHvl nodes is overlap of unknown
+    extent, not containment. The report presents the MC4R+/ERα+ cells as a
+    projection-defined layer "within the broader ERα VMHvl pool" without
+    stating how they intersect the PR+ subset (vmhvl_esr1_pr_neuron) or the
+    NKX2-1+/Tac1+ locomotor subset (vmhvl_esr1_nkx2_1_tac1_neuron). Recorded
+    on the node only as a colocated_types entry (INTERSPERSED) against the
+    NKX2-1/Tac1 node; no subtype_of relation to either. A later MappingEdge
+    (evidencell:CrossCuttingMatch) between the three ERα VMHvl nodes is the
+    natural place for this once primary full texts are read.
+  quote_keys:
+    - 238858345_1d8aa140
+    - 256305361_809df957
+    - 27794167_2fbf51e0
+  closest_field: subtype_of
+
+- finding: >
+    Cross-species / disease relevance. Krause et al. 2021 (PMID:34646010)
+    extend the effect of MC4R signalling "beyond the regulation of food
+    intake" and rationalise reported sex differences in melanocortin
+    signalling, including the greater disease severity of MC4R insufficiency
+    in women. This is a statement about human MC4R haploinsufficiency
+    inferred from the mouse node, not a property of the mouse cell type, and
+    CellTypeNode has no disease-association field.
+  quote_keys:
+    - 238858345_1d8aa140
+  closest_field: null

@@ -1,0 +1,107 @@
+# Findings from the VMHvl_neurons.pdf ingest that no CellTypeNode property
+# field on vmhvl_neuron can hold. Node: vmhvl_neuron (ENRICH).
+
+- finding: >
+    van Veen et al. 2020 (PMID:32377634) resolve six VMH neuronal populations
+    in which ERα is enriched and which show sex-biased expression of reprimo
+    (Rprm, female-biased, implicated in temperature regulation), tachykinin 1
+    (Tac1, female-biased) and prodynorphin (Pdyn, male-biased); Massa et al.
+    2023 (PMID:36747631) summarise the same estrogen-sensitive VMHvl
+    populations as contributing to locomotion and thermoregulation. These are
+    named genes attached to named populations, but the quoted scope is the
+    whole VMH rather than VMHvl, and the populations are not individually
+    named or restricted to the ventrolateral subdivision. Asserting Tac1 or
+    Pdyn as neuropeptides of the broad vmhvl_neuron population would
+    over-generalise a subpopulation property, so nothing was written.
+    evidence-extraction should settle the VMHvl restriction against the
+    primary paper; if it holds, Tac1 / Pdyn belong on a narrower node (Tac1
+    is already a defining marker and neuropeptide on vmhvl_esr1_pr_neuron and
+    vmhvl_esr1_nkx2_1_tac1_neuron).
+  quote_keys:
+    - "216282476_c601e044"
+    - "263827506_1ac410b7"
+  closest_field: neuropeptides
+
+- finding: >
+    Littleton et al. 2025 (PMID:41148441) report that midbrain-projecting
+    neurons are enriched in the lateral hypothalamic area and the VMH, and
+    that VMH neurons with midbrain projections are enriched for Pdyn, Adcyap1
+    and Tac2. Two reasons nothing was written: the claim is for the VMH as a
+    whole and does not isolate VMHvl (the report itself says so), and
+    "midbrain" is the only target named, with no indication that the
+    projecting cells lie in the ventrolateral subdivision. An AXON_TARGET
+    anatomical_location entry would need at least a VMHvl-scoped source; a
+    neuropeptide entry would need the projection subset to be a property of
+    this node rather than of a projection-defined slice of VMH.
+  quote_keys:
+    - "282570630_c074630f"
+  closest_field: anatomical_location
+
+- finding: >
+    Kim et al. 2019 (PMID:31626771) give the size of the population: VMHvl
+    contains ~4,000 neurons in mouse. CellTypeNode has no cell-count field for
+    a classical node — n_cells and AnatomicalLocation.cell_count /
+    count_in_or_near_100um are documented as atlas-node fields populated from
+    MERFISH registration data and are to be left absent on non-atlas nodes.
+    The quote is cited on the node's anatomical_location for the location
+    claim; the count itself is recorded only here. It is a useful sanity check
+    for any future mapping to a WMBv1 supertype.
+  quote_keys:
+    - "204741414_5d4657e2"
+  closest_field: null
+
+- finding: >
+    Functional roles of the population. VMHvl neurons project to multiple
+    targets and control innate social behaviours including aggression and
+    mounting (Kim et al. 2019, PMID:31626771); the subdivision supports a
+    diversity of sex-typical behaviours and physiological responses from
+    mating to metabolism (Kammel et al. 2019, PMID:31605642), and distinct
+    estrogen-sensitive populations within it contribute to locomotion and
+    thermoregulation (Massa et al. 2023, PMID:36747631). CellTypeNode has no
+    field for behavioural or circuit function, and these claims are not
+    morphology, electrophysiology or marker assertions, so none of them were
+    written into the node. They are the main reason the type is studied and
+    should reach a report through the edge/report layer.
+  quote_keys:
+    - "204741414_5d4657e2"
+    - "204459842_984ddb1b"
+    - "263827506_1ac410b7"
+  closest_field: null
+
+- finding: >
+    Developmental origin of the population. The whole VMH including VMHvl
+    passes through a common SF1-positive stage before VMHvl differentiates
+    into an SF-1-negative cluster (Cheung et al. 2013, PMID:22987798); core
+    glutamatergic VMH neurons arise from distinct anterior and posterior
+    embryonic VMH domains with a later tangential-migration phase from ~E16
+    (Kim et al. 2019 HyDD, PMID:32868762); Nkx2.2-, Nr2f1- and Six3-positive
+    subpopulations enter the VMH dorsoventrally from separate neuroepithelial
+    origins (Lopez-Gonzalez et al. 2023, PMID:36598560); and glutamatergic VMH
+    neurons and GABAergic tuberal nucleus neurons are generated sequentially
+    from common embryonic VMH progenitors (Ma et al. 2021, PMID:33600763).
+    CellTypeNode has no developmental-origin or lineage field. Only the
+    SF-1 consequence (adult VMHvl is SF-1-negative) could be written, as a
+    negative marker; the lineage story itself is recorded here. The Dbx1
+    stream is carried by the separate vmhvl_dbx1_lineage_neuron node.
+  quote_keys:
+    - "34645292_a858712b"
+    - "221402501_8fccf414"
+    - "255457408_aac2ff08"
+    - "231947713_2a3ec67e"
+  closest_field: null
+
+- finding: >
+    Sex dimorphism. Kim et al. 2019 (PMID:31626771) report that several of the
+    17 VMHvl transcriptomic types are sexually dimorphic, and Kammel et al.
+    2019 (PMID:31605642) review VMHvl as a site of phenotypically distinct,
+    sexually differentiated neuron populations. The sex_bias field takes a
+    single expected direction of dimorphism in cell number or defining-marker
+    expression for the whole node, and the sources support dimorphism within
+    subpopulations in both directions (female-biased Tac1 / Rprm,
+    male-biased Pdyn) rather than one direction for the population as a whole.
+    No value was written. sex_bias is also outside the properties ingest phase
+    this step covers.
+  quote_keys:
+    - "204741414_18032d94"
+    - "204459842_984ddb1b"
+  closest_field: sex_bias

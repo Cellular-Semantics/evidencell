@@ -1,0 +1,209 @@
+# ERα/NKX2-1/Tac1 VMHvl neuron — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/VMHvl_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "ERα/NKX2-1/Tac1 VMHvl neuron"
+description: >
+  Evidence graph component for the ERα/NKX2-1/Tac1 VMHvl neuron, proposed from
+  the ASTA deep research report VMHvl_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "ventrolateral region of the ventromedial hypothalamus (VMHVL)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: vmhvl_esr1_nkx2_1_tac1_neuron
+    name: "ERα/NKX2-1/Tac1 VMHvl neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Nkx2-1+ VMHVL neurons"
+        sources:
+          - ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "name used in the abstract for the population whose developmental disruption causes female-specific obesity"
+      - term: "VMHVL neurons co-expressing ERα and Tac1"
+        sources:
+          - ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "descriptive name used in the abstract for the same subset"
+    subtype_of:
+      - parent: vmhvl_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "abstract defines the type as a subset of VMHVL neurons marked by ERα, NKX2-1 and Tac1"
+            scope: "adult mouse VMHvl"
+        notes: >
+          Defined as VMHvl neurons narrowed by co-expression of ERα, NKX2-1 and
+          Tac1, so containment in the VMHvl population holds by definition.
+          Correa 2014 is the single source that states the subset relation
+          explicitly; Massa 2023 refers to the same estrogen-sensitive VMHvl
+          populations without naming the marker combination.
+    anatomical_location:
+      - id: MBA:785
+        label: "Ventromedial hypothalamic nucleus, ventrolateral part"
+        name_in_source: "ventrolateral region of the ventromedial hypothalamus (VMHVL)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "the population is defined, targeted pharmacogenetically and developmentally disrupted within the VMHVL; the quote names no registration or mapping method"
+            scope: "adult mouse VMHvl"
+    colocated_types:
+      - neighboring_type: "vmhvl_mc4r_esr1_neuron (MC4R+/ERα+ VMHvl neuron)"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          Krause et al. 2021 (PMID:34646010, quote 238858345_1d8aa140) describe
+          a separate subset of oestrogen-sensitive VMHvl neurons, marked by
+          MC4R together with ERα and projecting to hippocampal and hindbrain
+          arousal centres, that also drives oestrogen-dependent physical
+          activity. Both subsets lie inside the same ERα-rich VMHvl
+          population, so they are at least interspersed; no source reports
+          whether they overlap at the cell level, and Correa 2014 says nothing
+          about Mc4r.
+    defining_markers:
+      - name_in_source: "ERα"
+        symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "the subset is identified among ERα VMHVL neurons, the locomotor response requires ERα signalling, and the cells lost after developmental disruption are those co-expressing ERα and Tac1; the quote names no detection assay"
+            scope: "adult mouse VMHvl"
+            notes: >
+              Gene settled from the source's own expansion of the
+              abbreviation, "Estrogen-receptor alpha (ERα)"; the bare string
+              ERα matches no mouse gene name.
+      - name_in_source: "NKX2-1"
+        symbol: Nkx2-1
+        ncbi_gene_id: "NCBIGene:21869"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "Nkx2-1 expression provides the genetic access used for pharmacogenetic activation and for developmental disruption of the population, and NKX2-1 is named as one of the three markers of the subset; the quote names no detection assay"
+            scope: "adult mouse VMHvl"
+      - name_in_source: "Tac1"
+        symbol: Tac1
+        ncbi_gene_id: "NCBIGene:21333"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "Tac1 signalling is required for the locomotor response and the neurons lost after developmental disruption are those co-expressing ERα and Tac1; the quote names no detection assay"
+            scope: "adult mouse VMHvl"
+    neuropeptides:
+      - name_in_source: "Tac1"
+        symbol: Tac1
+        ncbi_gene_id: "NCBIGene:21333"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "Tac1 signalling is named as a requirement for the pharmacogenetically evoked locomotor burst, i.e. the gene is treated as the subset's peptide transmitter rather than only a label; the quote names no detection assay"
+            scope: "adult mouse VMHvl"
+          - marker_type: NOT_STATED
+            ref: "PMID:32377634"
+            quote_key: "216282476_c601e044"
+            method: "single-cell RNA transcriptomics plus in situ hybridization of six mouse VMH neuronal populations; the quote writes the gene out as 'tachykinin 1 (Tac1)', establishing its neuropeptide identity"
+            scope: "mouse VMH as a whole, ERα-enriched sex-biased populations — not resolved to the ERα/NKX2-1/Tac1 locomotor subset"
+            support: PARTIAL
+            notes: >
+              Cited for the neuropeptide identity of the gene, not as evidence
+              that van Veen's Tac1 population is this subset. See the node's
+              notes.
+    nt_type:
+      name_in_source: "the excitatory neurotransmitter glutamate"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamate"
+      sources:
+        - ref: "PMID:26629409"
+          quote_key: "6881112_017e3b13"
+          method: "inferred, not measured for this subset: the cited statement is that nearly all VMH neurons, including those of the ventrolateral VMH, release glutamate and use Vglut2. No source in this run states a transmitter for the ERα/NKX2-1/Tac1 subset itself, so the assertion is inherited from the VMHvl population it is contained in (vmhvl_neuron, glutamatergic). The quote names no assay"
+          scope: "adult mouse VMH including the VMHvl subregion; not resolved to the ERα/NKX2-1/Tac1 subset"
+          support: WEAK
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: "glutamatergic neuron"
+        name_in_source: "ERα/NKX2-1/Tac1 VMHvl neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for "estrogen receptor neuron", "progesterone receptor
+        neuron", "hypothalamic neuron", "ventromedial hypothalamic neuron",
+        "Tac1" and "Esr1" as neuron-defining terms — no CL term for an
+        ERα/NKX2-1/Tac1-defined or VMH-region-defined neuron exists (CL has no
+        hypothalamus-region-specific neuron terms at all). The node is
+        subtype_of vmhvl_neuron by definition (ERα/NKX2-1/Tac1 narrows the
+        VMHvl population), and vmhvl_neuron itself is EXACT-mapped to
+        CL:0000679 ("a neuron that is capable of some neurotransmission by
+        glutamate secretion") on the grounds that glutamatergic identity is
+        its defining criterion. Checked CL:0000679's children (e.g. thalamic
+        excitatory neuron, amygdala excitatory neuron, cerebellum
+        glutamatergic neuron, hypothalamic GnRH neuron) — none matches this
+        marker combination. CL:0000679 is therefore the nearest term this
+        node fully satisfies, inherited as BROAD from the parent mapping. An
+        EXACT match would need a CL term for VMHvl neurons co-expressing ERα,
+        NKX2-1 and Tac1.
+    definition_references:
+      - "PMID:25543145"
+      - "PMID:36747631"
+    notes: >
+      SINGLE DEFINING SOURCE. Correa et al. 2014 (PMID:25543145) is the only
+      source in this run that describes the type; every marker, the anatomical
+      location and the synonyms rest on one abstract-level quote. Massa et al.
+      2023 (PMID:36747631, and the duplicate record PMID:37817932) cite that
+      paper for estrogen-sensitive VMHvl control of locomotion without adding
+      independent characterisation of the marker combination. Primary
+      verification against the full text is still outstanding.
+
+      MARKER EVIDENCE IS LARGELY FUNCTIONAL. The available quote names no
+      detection assay for any of the three markers, so all MarkerSource
+      entries are marker_type NOT_STATED. Nkx2-1 enters as the driver used for
+      pharmacogenetic activation and developmental disruption, and Tac1 as a
+      signalling requirement; only "loss of VMHVL neurons co-expressing ERα
+      and Tac1" is a direct co-expression statement, and it is about ERα and
+      Tac1 rather than all three markers together. Whether NKX2-1 protein or
+      transcript persists in the adult cells, as opposed to marking their
+      developmental history, is not established by this evidence.
+
+      NEUROTRANSMITTER INFERRED. No source characterises the transmitter of
+      this subset. The glutamatergic assertion is carried over from the VMHvl
+      population it is contained in, via Cheung et al. 2015 (PMID:26629409),
+      whose statement is VMH-wide ("nearly all VMH neurons, including those in
+      the ... VMHvl subregion") and is recorded here with support WEAK.
+
+      RELATION TO THE ERα/Rprm/Tac1/Pdyn POPULATIONS. van Veen et al. 2020
+      (PMID:32377634) resolve six VMH populations and find ERα enriched in
+      populations with sex-biased Rprm, Tac1 and Pdyn expression, with Tac1
+      female-biased. That is a second ERα-plus-Tac1 population in the same
+      nucleus, reached by a different method and not defined by Nkx2-1. No
+      source states whether it is the same population as Correa's locomotor
+      subset, a superset of it, or a partly overlapping one, so the van Veen
+      quote is used only for the neuropeptide identity of Tac1 and not as
+      evidence about this node's identity.
+
+      NO NEGATIVE MARKERS RECORDED. Correa 2014 reports that fertility and
+      brown adipose tissue thermogenesis are unaffected by disrupting this
+      population, but those are functional dissociations, not absent markers.
+      The Nr5a1 (SF-1) absence recorded on vmhvl_neuron is scoped to the VMHvl
+      population as a whole and no source tests it in this subset, so it is
+      not restated here.
+edges: []
