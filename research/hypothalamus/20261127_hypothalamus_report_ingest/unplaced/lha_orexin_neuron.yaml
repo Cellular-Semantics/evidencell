@@ -1,0 +1,104 @@
+# Findings from the LHA_Orexin_Hypocretin_neurons.pdf report that bear on
+# lha_orexin_neuron but fit no CellTypeNode property field.
+# Written by Step 5 (node characterisation) of 20261127_hypothalamus_report_ingest.
+
+- finding: >
+    Behavioural and physiological role of the population: orexin/HCRT neurons
+    promote and stabilise wakefulness and also regulate feeding, energy
+    homeostasis, emotion, stress responses, motivation and reward, and
+    autonomic/thermoregulatory output. The schema has no function field; the
+    projection anatomy that underlies these roles is recorded as AXON_TARGET
+    entries on anatomical_location.
+  quote_keys:
+    - 235256007_60b3db67
+    - 12253466_d2cf76d0
+    - 5208806_83645e21
+  closest_field: null
+
+- finding: >
+    Receptors expressed by orexin neurons themselves, making them targets of
+    humoral and peptidergic input: leptin receptor immunoreactivity on
+    hypocretin neurons (Horvath 1999; Moriguchi 2002 adds that prepro-orexin
+    expression is leptin-regulated), neurotensin receptor-2 but not
+    receptor-1 mRNA in most orexin neurons (Furutani 2013), and CRF-R1/R2 on
+    numerous hypocretinergic neurons (Winsky-Sommerer 2004). These are
+    expressed genes but not markers "used to define this type", so they were
+    not written into defining_markers.
+  quote_keys:
+    - 9376271_ad0fdd7d
+    - 27944524_2d46f3d7
+    - 716183_12e8d658
+    - 5553865_026c544d
+  closest_field: defining_markers
+
+- finding: >
+    Postnatal maturation timeline: the first orexin-immunoreactive cells
+    appear in the lateral hypothalamus at postnatal day 11 and the number of
+    positive neurons increases progressively until adulthood. No field holds a
+    developmental timeline; the embryonic fate-determination transcription
+    factors from the same report section were placed in defining_markers with
+    a late-embryonic scope.
+  quote_keys:
+    - 11144953_43561383
+  closest_field: null
+
+- finding: >
+    Afferent inputs onto orexin neurons: abundant Crf-expressing BNST input
+    and sparse Cck-BNST input (Giardino 2018); CRF-immunoreactive terminals
+    making direct contact, with CRF depolarising a subpopulation
+    (Winsky-Sommerer 2004); NPY/AgRP input from the arcuate nucleus, raphe
+    serotonergic and VLPO GABAergic input (Cruz 2018); neurotensin-
+    immunoreactive fibres apposing orexin neurons (Furutani 2013).
+    AnatomicalLocation explicitly excludes afferent inputs to the type, and no
+    other field records them.
+  quote_keys:
+    - 49903082_39bb269b
+    - 5553865_026c544d
+    - 92373234_cd391071
+    - 716183_12e8d658
+  closest_field: null
+
+- finding: >
+    VTA-projecting versus LC-projecting orexin ensembles are functionally
+    separable (VTA-projecting but not LC-projecting cells are activated during
+    morphine conditioned place preference) yet are distributed across the whole
+    orexin field with similar projection probabilities, so they are overlapping
+    ensembles rather than distinguishable populations. The negative part of
+    this finding is carried in electrophysiology.description; the
+    functional-ensemble claim itself has no field, and no subtype node was
+    proposed for it.
+  quote_keys:
+    - 33319988_7e2741ab
+    - 41564004_45c6d87b
+  closest_field: electrophysiology
+
+- finding: >
+    Disease and ablation phenotypes: hypocretin is undetectable in most people
+    with narcolepsy, and selective loss of HCRT neurons in Hcrt-ataxin-3 mice
+    produces a specific ~50% decrease in QRFP, implying that part of the local
+    orexigenic network depends on intact orexin neurons. No node field holds
+    loss-of-function or disease phenotypes.
+  quote_keys:
+    - 43725707_55211e88
+    - 262941947_a33db9a6
+  closest_field: null
+
+- finding: >
+    26RFa/QRFP co-expression — 86% of orexin-expressing LHA cells co-express
+    26RFa mRNA and 90% of 26RFa-positive cells express orexin. Deliberately
+    not written as a neuropeptide on this node: the report warns that
+    Qrfp/26RFa is "not a pan-orexin marker", and the ingest plan assigns this
+    finding to the narrower node lha_26rfa_orexin_neuron.
+  quote_keys:
+    - 293858017_3ea21a90
+  closest_field: neuropeptides
+
+- finding: >
+    Reference transcriptomic resource: droplet-based scRNA-seq of the mouse
+    LHA defines 15 glutamatergic and 15 GABAergic neuronal populations
+    (Mickelsen 2019). A dataset-level resource rather than a property of this
+    node; relevant later for at_source_sets or mapping, which are out of scope
+    for this step.
+  quote_keys:
+    - 73728732_90e89595
+  closest_field: null
