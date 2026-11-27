@@ -50,6 +50,153 @@ nodes:
           containment holds by definition. Stated explicitly by one primary
           source (Korchynska et al. 2022); Morales et al. 2025 restates it
           citing that study and is therefore not independent.
+    anatomical_location:
+      - id: UBERON:0014667
+        label: "periventricular nucleus of hypothalamus"
+        name_in_source: "anterior subdivision [of the] periventricular nucleus (PeVN; A14 catecholaminergic group)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:36209152"
+            method: >
+              interrogation of the molecular, anatomical and physiological
+              heterogeneity of PeVN dopamine neurons — the Th+/Dat1+ cells that
+              innervate the lateral septum are placed in the anterior
+              subdivision of the periventricular nucleus
+            scope: "adult mouse periventricular nucleus (PeVN), anterior subdivision"
+            quote_key: "252760439_338fb0d7"
+            notes: >
+              UBERON rather than MBA because the Allen mouse atlas splits the
+              periventricular hypothalamic nucleus into PVpo (MBA:133), PVa
+              (MBA:30), PVi (MBA:118) and PVp (MBA:126) under two different
+              parents, and the source does not say which of them its "anterior
+              subdivision" of the PeVN corresponds to; UBERON:0014667 is the
+              whole-nucleus term the sources mean, with the anterior
+              restriction carried in name_in_source. Same convention as the
+              parent node and as the medio-posterior sibling
+              pevn_onecut3_nmur2_dopamine_neuron.
+          - ref: "PMID:40177299"
+            method: >
+              review restating Korchynska et al. 2022 — the catecholaminergic
+              cells of the periventricular alar (anterior) hypothalamus (Pe)
+              are the ones receiving suprachiasmatic input and projecting to
+              the lateral septum
+            scope: "mouse periventricular alar (anterior) hypothalamus, described in a prosomeric framework"
+            quote_key: "277180255_3296e936"
+            notes: >
+              Not independent: the passage cites PMID:36209152 for the claim.
+              "Periventricular alar (anterior) hypothalamus (Pe)" is the
+              prosomeric naming of the same anterior periventricular territory;
+              the prosomeric Pe domain has no separate MBA or UBERON term, so
+              this source is attached to the whole-nucleus term rather than
+              grounded separately.
+      - id: MBA:242
+        label: "Lateral septal nucleus"
+        name_in_source: "LS"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:36209152"
+            method: >
+              reciprocal viral tracing combined with optogenetic stimulation
+              ex vivo — Th+/Dat1+ cells of the anterior PeVN subdivision shown
+              to innervate the LS, with somatostatin-containing LS neurons
+              identified as the preferred synaptic targets of these
+              extrahypothalamic A14 efferents
+            scope: "adult mouse lateral septum"
+            quote_key: "252760439_338fb0d7"
+            notes: >
+              MBA:242 (Lateral septal nucleus; exact synonym "LS" in the Allen
+              ontology) rather than MBA:275 (Lateral septal complex, which also
+              contains the septofimbrial and septohippocampal nuclei), because
+              the source writes "LS" / "lateral septum" and does not name the
+              wider complex. The source does not say which of the rostral,
+              caudal or ventral parts of the nucleus receives the projection.
+              The somatostatin-containing LS neurons are the postsynaptic
+              partners of this projection, not a property of these cells — no
+              source shows that these dopamine neurons themselves make
+              somatostatin.
+          - ref: "PMID:40177299"
+            method: >
+              review restating Korchynska et al. 2022 — the catecholaminergic
+              cells of the anterior (alar) Pe project to the lateral septum to
+              regulate locomotion
+            scope: "mouse lateral septum"
+            quote_key: "277180255_3296e936"
+            notes: >
+              Not independent: a review citing PMID:36209152, with no tracing
+              of its own. Recorded because it is the second source naming the
+              same target for the same population.
+    nt_type:
+      name_in_source: "dopamine"
+      cl_terms:
+        - id: CL:0000700
+          label: "dopaminergic neuron"
+          name_in_source: "dopamine neurons"
+      sources:
+        - ref: "PMID:36209152"
+          method: >
+            literature description — the cells are studied as dopamine neurons
+            of the periventricular nucleus (PeVN; A14 catecholaminergic group)
+            and the lateral-septum-innervating cells of its anterior
+            subdivision are Th+/Dat1+ (tyrosine hydroxylase plus dopamine
+            transporter); no direct dopamine measurement is reported in the
+            quoted passage
+          scope: "adult mouse PeVN, anterior subdivision"
+          quote_key: "252760439_338fb0d7"
+          notes: >
+            Asserted for this subtype specifically, not merely inherited from
+            the parent: the same sentence that defines the subtype (anterior
+            subdivision, LS projection) calls its cells dopamine neurons and
+            gives Th+/Dat1+. The assignment still rests on the Th/Dat1 marker
+            pair rather than on a transmitter measurement.
+        - ref: "PMID:40177299"
+          method: >
+            review — the same population is introduced as the "dopaminergic
+            cells of the periventricular alar (anterior) hypothalamus (Pe)" and
+            then referred to as CA (catecholaminergic) neurons
+          scope: "mouse periventricular alar (anterior) hypothalamus"
+          quote_key: "277180255_3296e936"
+          notes: >
+            Not independent (cites Korchynska et al. 2022), and the passage
+            slides between "dopaminergic" and the broader "CA neurons". The
+            same review raises the possibility that the alar Pe holds both Otp
+            and non-Otp catecholaminergic subtypes with different transmitter
+            programmes — see the node notes.
+    defining_markers:
+      - name_in_source: "Th"
+        symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:36209152"
+            method: >
+              abstract statement that the cells of the anterior PeVN
+              subdivision that innervate the LS are Th+/Dat1+; no assay is
+              named in the quoted passage
+            scope: "adult mouse PeVN, anterior subdivision"
+            quote_key: "252760439_338fb0d7"
+            notes: >
+              Th and Dat1 are the parent population's markers, stated here for
+              the anterior-subdivision cells. They do not separate this subtype
+              from the medio-posterior Onecut3+/Nmur2+ sibling, which is also
+              TH+ and Slc6a3+; the distinguishing criteria of this node are
+              subregional position and projection target.
+      - name_in_source: "Dat1"
+        symbol: Slc6a3
+        ncbi_gene_id: "NCBIGene:13162"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:36209152"
+            method: >
+              abstract statement that the cells of the anterior PeVN
+              subdivision that innervate the LS are Th+/Dat1+; no assay is
+              named in the quoted passage
+            scope: "adult mouse PeVN, anterior subdivision"
+            quote_key: "252760439_338fb0d7"
+            notes: >
+              "Dat1" is the mouse dopamine transporter gene Slc6a3 (unique
+              synonym match). Same caveat as Th: a general dopaminergic
+              transporter gene and a parent-population marker, not a
+              subtype-selective one.
     cl_mapping:
       cl_term:
         id: CL:4072011
@@ -77,4 +224,69 @@ nodes:
         under CL:4072011. Would need a term keyed to anterior position
         and/or lateral-septum projection, distinguishing it from the
         median-eminence-projecting sibling, for an EXACT match.
+    definition_references:
+      - "PMID:36209152"
+      - "PMID:40177299"
+    notes: >
+      Single-study basis. Every property on this node comes from one primary
+      paper (Korchynska et al. 2022, PMID:36209152), and from a single
+      sentence of it at that. Morales et al. 2025 (PMID:40177299) is the only
+      other source naming this population, and it cites Korchynska for every
+      claim it makes about it, so it is corroboration of reading rather than
+      independent replication. Only two refs are listed in
+      definition_references because no third source in the available
+      literature characterises this type. Treat the whole property set as
+      needing primary verification.
+
+      Markers are not diagnostic. Th and Dat1/Slc6a3 are the markers of the
+      parent periventricular (A14) dopamine population and are shared with the
+      medio-posterior Onecut3+/Nmur2+ sibling. Nothing in the available
+      literature gives a marker selective for this subtype; it is picked out
+      only by position (anterior subdivision of the PeVN) and projection
+      target (lateral septum). No assay is named for the Th+/Dat1+ labelling
+      in the quoted passage, so both markers carry marker_type NOT_STATED.
+
+      Transmitter caveat. nt_type is recorded as dopamine on the strength of
+      the Th/Dat1 pair and the sources' own naming, not a dopamine
+      measurement. Morales et al. 2025 propose that the periventricular alar
+      (anterior) hypothalamus contains both Otp and non-Otp catecholaminergic
+      cells and that, on single-cell transcriptomics, one of these may be
+      glutamatergic and the other GABAergic (quote 277180255_3296e936) — and
+      they explicitly flag that it is unknown which of the two is the
+      lateral-septum-projecting subtype described here. No GABAergic or
+      glutamatergic cl_term is therefore asserted, and the possibility that
+      this node as currently defined spans two transmitter programmes is open.
+
+      Position. "Anterior subdivision of the PeVN" is the source's own
+      wording and is not resolved to an Allen (MBA) subdivision; see the soma
+      location's source notes for why the whole-nucleus UBERON term is used
+      instead. Note the tension with the parent node's framing, where
+      Korchynska describes A14 neurons generally as "dispersed in the medial
+      subdivision of the periventricular nucleus" — medial and anterior are
+      used in the same paper for, respectively, the whole A14 group and this
+      subtype within it.
+
+      Projection. The lateral-septum target is directly traced (reciprocal
+      viral tracing plus ex vivo optogenetics), but the source does not report
+      how many of the anterior-subdivision cells project there, nor which part
+      of the lateral septal nucleus is innervated. Whether this subtype also
+      has the parent population's neuroendocrine outputs is untested — the
+      sources contrast it with the median-eminence-projecting sibling but do
+      not show that it lacks such a projection.
+
+      Not recorded. No morphology, electrophysiology, cell count, sex bias or
+      neuropeptide is reported for this subtype. Romanov et al. 2020
+      (PMID:32499648) resolve four morphologically and electrophysiologically
+      distinct parvocellular dopamine subtypes in the A14/PeVN territory but
+      do not say which, if any, is this one, so none of those profiles is
+      carried here. The somatostatin of this literature belongs to the
+      lateral-septum neurons these cells synapse onto, and the neuromedin S to
+      the suprachiasmatic neurons that innervate them — neither is a peptide
+      of these cells.
+
+      Afferents and function. The dense suprachiasmatic neuropeptidergic
+      innervation of this subtype, its dark-phase activity increase, and its
+      proposed role in locomotion have no schema field and are not asserted
+      here; they are recorded in
+      research/hypothalamus/20261127_hypothalamus_report_ingest/unplaced/anterior_pevn_ls_projecting_dopamine_neuron.yaml.
 edges: []
