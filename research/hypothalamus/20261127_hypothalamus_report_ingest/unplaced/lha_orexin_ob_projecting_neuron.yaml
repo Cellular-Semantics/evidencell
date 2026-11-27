@@ -1,0 +1,39 @@
+# Findings from the LHA_Orexin_Hypocretin_neurons.pdf report that bear on
+# lha_orexin_ob_projecting_neuron but fit no CellTypeNode property field.
+# Written by Step 5 (node characterisation) of 20261127_hypothalamus_report_ingest.
+
+- finding: >
+    No source coins a compact name for this population. Qi et al. 2023 refer
+    to it only descriptively ("the proportion of the orexin-A population that
+    innervates the main olfactory bulb", "an anatomically distinct
+    subpopulation of orexin neurons"), and the later papers name the pathway
+    rather than the cell type. No synonyms were therefore written; the node
+    name is descriptive.
+  quote_keys:
+    - 259832148_069c0887
+  closest_field: synonyms
+
+- finding: >
+    22% of the hypothalamic neurons retrogradely labelled from the main
+    olfactory bulb express orexin-A. This is a composition statement about
+    the OB-projecting hypothalamic input as a whole — it says what fraction
+    of that input is orexinergic — not a property of this orexin
+    subpopulation. It is carried only as context in the scope of the
+    defining_markers source; the reciprocal figure (7% of all orexin-A
+    neurons are retrogradely labelled), which does size this node relative
+    to its parent, is held in the subtype_of notes.
+  quote_keys:
+    - 259832148_069c0887
+  closest_field: null
+
+- finding: >
+    Functional interpretation: the authors read the direct LH-to-OB orexin-A
+    projection as a route by which olfactory sensory processing is influenced
+    by orexinergic feedback at the first synapse of the olfactory pathway,
+    linking physiological state to odour processing. The schema has no
+    function or circuit-role field, and the claim is a model rather than a
+    measured property.
+  quote_keys:
+    - 259832148_069c0887
+    - 276421085_8971af22
+  closest_field: null

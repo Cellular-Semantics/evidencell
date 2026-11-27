@@ -46,6 +46,182 @@ nodes:
           - ref: "PMID:20338186"
             quote_key: "17296298_a326378a"
             method: "alternative peptide name given for the same neurons"
+      - term: "orexin neuron"
+        sources:
+          - ref: "PMID:23162437"
+            quote_key: "11144953_10cab52a"
+            method: "primary label for the LHA peptidergic population throughout the paper"
+      - term: "HCRT neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:34052814"
+            quote_key: "235256007_60b3db67"
+            method: "primary label used in the abstract and throughout the review"
+      - term: "orexinergic neuron"
+        sources:
+          - ref: "PMID:22590628"
+            quote_key: "9442233_a304919c"
+            method: "name used when stating the population's LH/PFA/DMH location"
+      - term: "hypocretinergic neuron"
+        sources:
+          - ref: "PMID:30377299"
+            quote_key: "53110676_376f4009"
+            method: "given parenthetically as an equivalent of 'orexinergic neurons in the LHA'"
+      - term: "orx/hcrt neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:22099463"
+            quote_key: "9385304_d68c1060"
+            method: "abbreviation defined in the abstract and used throughout"
+      - term: "OHN"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:24767990"
+            quote_key: "19431099_861d1778"
+            method: "abbreviation defined in the summary as 'orexin/hypocretin neurons (OHNs)'"
+    anatomical_location:
+      - id: MBA:194
+        label: "Lateral hypothalamic area"
+        name_in_source: "lateral hypothalamic area (LHA)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:23544265"
+            method: "review of orexin-system anatomy; assay not named in quote"
+            scope: "mouse — orexins expressed exclusively by neurons of the LHA"
+            quote_key: "15583017_0e0205b2"
+          - ref: "PMID:23162437"
+            method: "orexin-A immunohistochemistry"
+            scope: "adult mouse, Bregma -1.22 to -2.54"
+            quote_key: "11144953_cf7c60f4"
+          - ref: "PMID:36357614"
+            method: "in situ hybridization (Hcrt) with prosomeric genoarchitectonic mapping"
+            scope: "mouse hypothalamus — Hcrt cells in the terminal LH5 subregion, extending caudally into the peduncular hypothalamus"
+            quote_key: "253458103_ddcdf45f"
+      - id: MBA:576073704
+        label: "Perifornical nucleus"
+        name_in_source: "perifornical area (PFA)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:34052814"
+            method: "review; assay not named in quote"
+            scope: "mouse — LHA and the adjacent perifornical area (PeFLH)"
+            quote_key: "235256007_60b3db67"
+          - ref: "PMID:23997653"
+            method: "review; assay not named in quote"
+            scope: "rodent — LH plus adjacent perifornical area and dorsomedial hypothalamus"
+            quote_key: "7344848_3c723dca"
+          - ref: "PMID:9822755"
+            method: "preprohypocretin immunohistochemistry"
+            scope: "adult rat brain — perifornical nucleus and the dorsal and lateral hypothalamic areas"
+            quote_key: "16724939_8b46f5b9"
+      - id: MBA:830
+        label: "Dorsomedial nucleus of the hypothalamus"
+        name_in_source: "dorsomedial hypothalamic nucleus"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:23162437"
+            method: "orexin-A immunohistochemistry"
+            scope: "adult mouse — orexin-A-positive somata in the dorsomedial hypothalamic nucleus"
+            quote_key: "11144953_cf7c60f4"
+          - ref: "PMID:32373062"
+            method: "review; assay not named in quote"
+            scope: "rodent — LHA plus perifornical area, DMH and posterior hypothalamus"
+            quote_key: "215769524_bd23340f"
+      - id: MBA:946
+        label: "Posterior hypothalamic nucleus"
+        name_in_source: "posterior hypothalamic nucleus"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:23162437"
+            method: "orexin-A immunohistochemistry"
+            scope: "adult mouse — orexin-A-positive somata in the posterior hypothalamic nucleus"
+            quote_key: "11144953_cf7c60f4"
+          - ref: "PMID:36148653"
+            method: "review; assay not named in quote"
+            scope: "rodent — lateral, dorsomedial, posterior and perifornical hypothalamus"
+            quote_key: "252465346_6f956193"
+      - id: MBA:147
+        label: "Locus ceruleus"
+        name_in_source: "locus coeruleus (LC)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:9822755"
+            method: "preprohypocretin immunohistochemistry (fibre distribution)"
+            scope: "adult rat — densest extrahypothalamic projection of the hypocretin field"
+            quote_key: "16724939_8b46f5b9"
+          - ref: "PMID:23508038"
+            method: "review of orexin projection anatomy; assay not named in quote"
+            scope: "rodent — dense orexin projections to LC"
+            quote_key: "12253466_d0aab2ef"
+      - id: MBA:872
+        label: "Dorsal nucleus raphe"
+        name_in_source: "dorsal raphe nucleus (DR)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:23508038"
+            method: "review of orexin projection anatomy; assay not named in quote"
+            scope: "rodent — dense orexin projections to the serotonergic DR"
+            quote_key: "12253466_d0aab2ef"
+          - ref: "PMID:23707248"
+            method: "review of orexin projection anatomy; assay not named in quote"
+            scope: "mouse — orexin neurons densely innervate monoaminergic nuclei including DR"
+            quote_key: "551928_8fa3fdef"
+      - id: MBA:557
+        label: "Tuberomammillary nucleus"
+        name_in_source: "tuberomammillary nucleus (TMN)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:23508038"
+            method: "review of orexin projection anatomy; assay not named in quote"
+            scope: "rodent — dense orexin projections to the histaminergic TMN"
+            quote_key: "12253466_d0aab2ef"
+          - ref: "PMID:34052814"
+            method: "review; assay not named in quote"
+            scope: "mouse — HCRT neurons project to TMN among other targets"
+            quote_key: "235256007_60b3db67"
+      - id: MBA:507
+        label: "Main olfactory bulb"
+        name_in_source: "mouse OB"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:39990441"
+            method: "anterograde tracing from the lateral hypothalamus + orexin-A immunohistochemistry"
+            scope: "mouse — direct LH-to-OB orexin-A projection, innervating all OB layers"
+            quote_key: "276421085_8971af22"
+          - ref: "PMID:37434469"
+            method: "retrograde tract tracing from the main olfactory bulb + orexin-A immunohistochemistry"
+            scope: "mouse — only 7% of orexin-A neurons are retrogradely labelled from the MOB"
+            quote_key: "259832148_069c0887"
+      - id: UBERON:0002240
+        label: "spinal cord"
+        name_in_source: "spinal cord"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "https://doi.org/10.1523/JNEUROSCI.19-08-03171.1999"
+            method: "hypocretin immunocytochemistry + retrograde tracing (diamidino yellow) from spinal cord"
+            scope: "mouse, rat and human spinal cord — descending hypocretin fibres at all levels, densest in lamina 1 and the intermediolateral column"
+            quote_key: "15726654_0a134f9d"
+    colocated_types:
+      - neighboring_type: "lha_mch_neuron"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          MCH (Pmch) neurons are spatially intermingled with orexin/Hcrt
+          neurons in the LHA while the two peptides are not co-localised
+          (Seifinejad et al. 2019, PMID:31375626, quote_key
+          262941947_c99ee5db; Kodani et al. 2022, PMID:35437265, quote_key
+          248240881_668f30b7). Prosomeric mapping separates them further:
+          Hcrt and Pmch occupy distinct LH5 subdivisions, terminal Hcrt cells
+          lie lateral to the ventral terminal Pmch population, and in the
+          peduncular hypothalamus Hcrt cells lie dorsal to Pmch cells (Diaz
+          et al. 2022, PMID:36357614, quote_key 253458103_ddcdf45f).
+      - neighboring_type: "lha_leprb_nts_neuron"
+        spatial_relationship: ADJACENT
+        notes: >
+          GABAergic LHA LepRb/neurotensin neurons lie in close apposition with
+          orexin neurons; chemogenetic activation of LHA Nts neurons
+          hyperpolarises and silences orexin neurons in mouse hypothalamic
+          slices (Goforth et al. 2014, PMID:25143620, quote_key
+          17964183_cffaa782).
     cl_mapping:
       cl_term:
         id: CL:0011109
@@ -61,4 +237,320 @@ nodes:
         GABA-synthesis transcripts without a vesicular GABA release pathway
         does not conflict with the CL definition, which does not exclude
         co-expressed machinery.
+    defining_markers:
+      - name_in_source: "prepro-orexin"
+        symbol: Hcrt
+        ncbi_gene_id: "NCBIGene:15171"
+        sources:
+          - ref: "PMID:23162437"
+            marker_type: PROTEIN
+            method: "orexin-A immunohistochemistry"
+            scope: "adult mouse lateral hypothalamus"
+            quote_key: "11144953_10cab52a"
+            notes: >
+              The source names the peptides orexin A and orexin B and their
+              common precursor prepro-orexin; all three are products of the
+              single gene Hcrt, so the marker is pinned to Hcrt.
+          - ref: "PMID:36357614"
+            marker_type: TRANSCRIPT
+            method: "in situ hybridization (Hcrt probe)"
+            scope: "mouse hypothalamus"
+            quote_key: "253458103_a4c3e9ae"
+          - ref: "PMID:23544265"
+            marker_type: NOT_STATED
+            method: "review statement; assay not named in quote"
+            scope: "mouse LHA"
+            quote_key: "15583017_0e0205b2"
+      - name_in_source: "Slc17a6"
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
+        sources:
+          - ref: "PMID:36357614"
+            marker_type: TRANSCRIPT
+            method: "in situ hybridization"
+            scope: "mouse hypothalamus — Hcrt-positive cells are mostly glutamatergic by concurrent Slc17a6 expression"
+            quote_key: "253458103_ddcdf45f"
+          - ref: "PMID:28966976"
+            marker_type: TRANSCRIPT
+            method: "single-cell qPCR, 48-gene panel"
+            scope: "adult mouse LHA, Hcrt/Ox transgenic reporter line"
+            quote_key: "10721050_b89af494"
+            notes: >
+              About half the Hcrt/Ox cells sampled carry both glutamate-release
+              and GABA-synthesis machinery; the glutamate-release arm is the
+              vesicular glutamate transporter.
+          - ref: "PMID:39990441"
+            marker_type: PROTEIN
+            method: "confocal co-localisation of orexin-A axon terminals with VGLUT2"
+            scope: "mouse main olfactory bulb — 57% of putative orexin-A terminals overlap VGLUT2"
+            quote_key: "276421085_36eb8888"
+      - name_in_source: "VGLUT1"
+        symbol: Slc17a7
+        ncbi_gene_id: "NCBIGene:72961"
+        sources:
+          - ref: "PMID:41480926"
+            marker_type: PROTEIN
+            method: "confocal imaging of putative orexin-A axon terminals"
+            scope: >
+              mouse olfactory bulb — a minority fraction of orexin-A terminals
+              co-expresses VGLUT1; a further fraction overlaps neither VGLUT1
+              nor VGLUT2. A terminal-field measurement, not a soma count.
+            quote_key: "284373767_17b115a2"
+      - name_in_source: "Lhx9"
+        symbol: Lhx9
+        ncbi_gene_id: "NCBIGene:16876"
+        sources:
+          - ref: "PMID:36357614"
+            marker_type: TRANSCRIPT
+            method: "in situ hybridization"
+            scope: "mouse hypothalamus — Lhx9 concurrent with Slc17a6 in Hcrt-positive cells"
+            quote_key: "253458103_ddcdf45f"
+      - name_in_source: "Nkx2.2"
+        symbol: Nkx2-2
+        ncbi_gene_id: "NCBIGene:18088"
+        sources:
+          - ref: "PMID:36357614"
+            marker_type: TRANSCRIPT
+            method: "in situ hybridization"
+            scope: >
+              mouse hypothalamus — shared with the neighbouring Pmch
+              population, so not discriminative between the two.
+            quote_key: "253458103_ddcdf45f"
+      - name_in_source: "Peg3"
+        symbol: Peg3
+        ncbi_gene_id: "NCBIGene:18616"
+        sources:
+          - ref: "PMID:31375626"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of FACS-purified HCRT neurons"
+            scope: "mouse late embryonic hypothalamus — named as a candidate HCRT fate-determination factor"
+            quote_key: "262941947_85d608ec"
+      - name_in_source: "Six6"
+        symbol: Six6
+        ncbi_gene_id: "NCBIGene:20476"
+        sources:
+          - ref: "PMID:31375626"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of FACS-purified HCRT neurons"
+            scope: "mouse late embryonic hypothalamus — named as a candidate HCRT fate-determination factor"
+            quote_key: "262941947_85d608ec"
+      - name_in_source: "Nr2f2"
+        symbol: Nr2f2
+        ncbi_gene_id: "NCBIGene:11819"
+        sources:
+          - ref: "PMID:31375626"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of FACS-purified HCRT neurons"
+            scope: "mouse late embryonic hypothalamus — named as a candidate HCRT fate-determination factor"
+            quote_key: "262941947_85d608ec"
+      - name_in_source: "Prrx1"
+        symbol: Prrx1
+        ncbi_gene_id: "NCBIGene:18933"
+        sources:
+          - ref: "PMID:31375626"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of FACS-purified HCRT neurons"
+            scope: "mouse late embryonic hypothalamus — named as a candidate HCRT fate-determination factor"
+            quote_key: "262941947_85d608ec"
+      - name_in_source: "Ahr1"
+        sources:
+          - ref: "PMID:31375626"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of FACS-purified HCRT neurons"
+            scope: >
+              mouse late embryonic hypothalamus — named as a candidate HCRT
+              fate-determination factor. Gene left unsettled; see the node's
+              notes.
+            quote_key: "262941947_85d608ec"
+    negative_markers:
+      - name_in_source: "melanin-concentrating hormone"
+        symbol: Pmch
+        ncbi_gene_id: "NCBIGene:110312"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:9822755"
+            marker_type: PROTEIN
+            method: "immunohistochemistry for preprohypocretin and for MCH"
+            scope: "adult rat hypothalamus — hypocretin cells distinct from MCH cells"
+            quote_key: "16724939_8b46f5b9"
+          - ref: "PMID:31375626"
+            marker_type: NOT_STATED
+            method: "review statement; assay not named in quote"
+            scope: "mouse lateral and posterior hypothalamus — HCRT and MCH peptides not colocalised although the cells are intermingled"
+            quote_key: "262941947_c99ee5db"
+      - name_in_source: "vesicular GABA release pathway"
+        symbol: Slc32a1
+        ncbi_gene_id: "NCBIGene:22348"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:28966976"
+            marker_type: TRANSCRIPT
+            method: "single-cell qPCR, 48-gene panel"
+            scope: "adult mouse LHA, Hcrt/Ox transgenic reporter line"
+            quote_key: "10721050_b89af494"
+            notes: >
+              The quote's "vesicular GABA release pathway" is the vesicular
+              GABA transporter Slc32a1 (Vgat), the fast-neurotransmitter
+              component assayed in the paper's panel; GABA-synthesis
+              transcripts are present in about half the cells but the
+              vesicular transporter is not.
+    neuropeptides:
+      - name_in_source: "orexin A"
+        symbol: Hcrt
+        ncbi_gene_id: "NCBIGene:15171"
+        sources:
+          - ref: "PMID:23162437"
+            marker_type: PROTEIN
+            method: "orexin-A immunohistochemistry"
+            scope: "adult mouse lateral hypothalamus"
+            quote_key: "11144953_10cab52a"
+          - ref: "PMID:36148653"
+            marker_type: NOT_STATED
+            method: "review statement; assay not named in quote"
+            scope: "rodent — orexin-A and -B produced from the prepro-orexin precursor"
+            quote_key: "252465346_6f956193"
+      - name_in_source: "orexin B"
+        symbol: Hcrt
+        ncbi_gene_id: "NCBIGene:15171"
+        sources:
+          - ref: "PMID:23162437"
+            marker_type: NOT_STATED
+            method: "review statement; assay named in the quote is for orexin A only"
+            scope: "adult mouse lateral hypothalamus"
+            quote_key: "11144953_10cab52a"
+          - ref: "PMID:36148653"
+            marker_type: NOT_STATED
+            method: "review statement; assay not named in quote"
+            scope: "rodent — orexin-A and -B produced from the prepro-orexin precursor"
+            quote_key: "252465346_6f956193"
+      - name_in_source: "dynorphin"
+        symbol: Pdyn
+        ncbi_gene_id: "NCBIGene:18610"
+        sources:
+          - ref: "PMID:30377299"
+            marker_type: NOT_STATED
+            method: "review of Chou et al. 2001; assay not named in quote"
+            scope: >
+              mouse and rat LHA — nearly all orexinergic neurons contain
+              dynorphin, and in the LHA only orexinergic neurons co-express it
+            quote_key: "53110676_376f4009"
+          - ref: "PMID:32373062"
+            marker_type: NOT_STATED
+            method: "review statement; assay not named in quote"
+            scope: "rodent — orexin neurons also release glutamate, dynorphin and NARP"
+            quote_key: "215769524_bd23340f"
+      - name_in_source: "neuronal activity-regulated pentraxin (NARP)"
+        symbol: Nptx2
+        ncbi_gene_id: "NCBIGene:53324"
+        sources:
+          - ref: "PMID:32373062"
+            marker_type: NOT_STATED
+            method: "review statement; assay not named in quote"
+            scope: "rodent — listed among the neuromodulators released by orexin-producing neurons"
+            quote_key: "215769524_bd23340f"
+      - name_in_source: "neurotensin"
+        symbol: Nts
+        ncbi_gene_id: "NCBIGene:67405"
+        sources:
+          - ref: "PMID:23620827"
+            marker_type: PROTEIN
+            method: "double-label immunofluorescence and in situ hybridization"
+            scope: "mouse LHA — neurotensin colocalises with orexin"
+            quote_key: "716183_e261d05e"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:36357614"
+          method: "in situ hybridization (Slc17a6, Lhx9)"
+          scope: "mouse hypothalamus — Hcrt-positive cells are mostly glutamatergic"
+          quote_key: "253458103_ddcdf45f"
+        - ref: "PMID:24767990"
+          method: "optogenetic stimulation of orexin neurons with patch-clamp of postsynaptic histamine neurons (glutamate currents)"
+          scope: "mouse tuberomammillary nucleus slice — orexin peptide and glutamate co-released onto the same target"
+          quote_key: "19431099_861d1778"
+        - ref: "PMID:28966976"
+          method: "single-cell qPCR, 48-gene panel"
+          scope: "adult mouse LHA — about half of Hcrt/Ox cells carry both glutamate-release and GABA-synthesis machinery"
+          quote_key: "10721050_b89af494"
+          notes: >
+            GABA-synthesis transcripts without a vesicular GABA release
+            pathway do not support a GABAergic assignment, so the node is
+            recorded as glutamatergic with the GABA-synthesis finding noted.
+    electrophysiology:
+      description: >
+        Wake-active: orexin neurons fire mainly during active wakefulness and
+        are largely silent through NREM and REM sleep. Two electrical classes
+        have been resolved from intrinsic and input-driven single-cell
+        activity, and a parallel two-way split pairs medial versus lateral
+        position with transient versus persistent inhibitory responses to
+        glucose in vitro; both electrical classes, and both medial and
+        lateral cells, project to locus coeruleus and ventral tegmental area,
+        so the split is a partial subdivision rather than a taxonomy.
+        Activity is lowered by glucose and raised by physiological mixtures
+        of amino acids, which act through inhibition of K-ATP channels and
+        activation of system-A amino acid transporters.
+      sources:
+        - ref: "PMID:22507526"
+          method: "whole-cell patch-clamp of retrogradely traced orexin cells in hypothalamic slices"
+          scope: "adult mouse — VTA or LC retrograde tracer injected in vivo, recording in slice"
+          quote_key: "41564004_45c6d87b"
+        - ref: "PMID:28012090"
+          method: "review; the two physiological classes are from Williams et al. 2008 slice recordings"
+          scope: "rodent LH/PFA — transient versus persistent inhibitory glucose responses paired with medial versus lateral location"
+          quote_key: "33319988_7e2741ab"
+        - ref: "PMID:22099463"
+          method: "brain-slice patch-clamp with in vivo c-Fos confirmation"
+          scope: "mouse orexin/hypocretin cells — amino-acid excitation via K-ATP inhibition and system-A transporters; glucose lowers activity"
+          quote_key: "9385304_d68c1060"
+        - ref: "https://doi.org/10.5772/INTECHOPEN.79899"
+          method: "review of unit recordings (Mileykovskiy et al. 2005); assay not named in quote"
+          scope: "rodent LH across the sleep-wake cycle"
+          quote_key: "92373234_cc3a6749"
+    morphology:
+      description: >
+        Orexin-A-immunoreactive somata are bipolar, fusiform or multipolar and
+        bear orexin-A-positive dendrites, forming a restricted cell group in
+        the postero-lateral hypothalamus. The morphological subclasses
+        described to date do not segregate by projection target.
+      sources:
+        - ref: "PMID:23162437"
+          method: "orexin-A immunohistochemistry"
+          scope: "adult mouse postero-lateral hypothalamus, Bregma -1.22 to -2.54"
+          quote_key: "11144953_cf7c60f4"
+        - ref: "PMID:22507526"
+          method: "retrograde tracing with patch-clamp in hypothalamic slices"
+          scope: "adult mouse — morphological subclasses project to both LC and VTA"
+          quote_key: "41564004_45c6d87b"
+    definition_references:
+      - "PMID:9822755"
+      - "PMID:28966976"
+      - "PMID:23162437"
+      - "PMID:22507526"
+      - "PMID:31375626"
+    notes: >
+      Population-size estimates differ between sources: approximately 4,000
+      orexin neurons in the mouse brain (PMID:23544265) versus approximately
+      5,000 in mouse (PMID:34052814), while PMID:30377299 quotes
+      approximately 70,000 orexinergic neurons without naming a species, and
+      PMID:38517280 gives them instead as about 20% of all LH neurons. No
+      single count is adopted here. Several foundational distribution and
+      projection sources are rat (PMID:9822755) or pooled across mouse, rat
+      and human (the spinal-cord projection,
+      https://doi.org/10.1523/JNEUROSCI.19-08-03171.1999), whereas this node
+      is scoped to mouse. The class is neurochemically graded rather than
+      cleanly subdivided: roughly half of Hcrt/Ox cells carry both
+      glutamate-release and GABA-synthesis transcripts without a vesicular
+      GABA release pathway (PMID:28966976), and orexin-A axon terminals
+      divide into VGLUT2-positive, VGLUT1-positive and VGLUT-negative
+      fractions (PMID:41480926). "Ahr1", listed among the candidate
+      fate-determining transcription factors of late-embryonic HCRT neurons
+      (PMID:31375626), matches no current mouse gene symbol — the only
+      claimant of the string in the mouse gene tables is Akr1b1, an aldo-keto
+      reductase that does not fit a list of transcription factors — so it is
+      recorded by name_in_source only and left for evidence-extraction to
+      settle from the primary paper.
 edges: []

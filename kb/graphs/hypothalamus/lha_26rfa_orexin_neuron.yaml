@@ -1,0 +1,204 @@
+# 26RFa/orexin neuron of the lateral hypothalamic area — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/LHA_Orexin_Hypocretin_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "LHA 26RFa/orexin neuron"
+description: >
+  Evidence graph component for the 26RFa/orexin neuron of the lateral
+  hypothalamic area, proposed from the ASTA deep research report
+  LHA_Orexin_Hypocretin_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "lateral hypothalamic area (LHA)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: lha_26rfa_orexin_neuron
+    name: "26RFa/orexin neuron of the lateral hypothalamic area"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "26RFa/orexin neuron"
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            quote_key: "293858017_fbe3074b"
+            method: "name coined in the discussion for this double-positive LHA population"
+      - term: "LHA 26RFa/orexin neuron"
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            quote_key: "293858017_a30a10c5"
+            method: "region-qualified form used when describing chemogenetic activation"
+    subtype_of:
+      - parent: lha_orexin_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            quote_key: "293858017_3ea21a90"
+            method: "RNAscope double-labelling and 26RFa-tdTomato/orexin-A immunohistochemistry"
+            scope: "adult mouse LHA, Bregma -1.06 to -1.70 mm"
+            notes: >
+              The type is the orexin population narrowed by 26RFa/Qrfp
+              co-expression, so containment holds by definition.
+        notes: >
+          A single source names and characterises this population. It is a
+          large but not complete subset of the orexin class: 86% of
+          orexin-mRNA-expressing LHA cells co-express 26RFa mRNA, and 62% of
+          orexin-immunostained cells are 26RFa-tdTomato positive. The
+          converse set is not contained — about 10% of 26RFa-positive cells
+          lack orexin mRNA and roughly a third of 26RFa-expressing cells in
+          the LHA are non-neuronal.
+    anatomical_location:
+      - id: MBA:194
+        label: "Lateral hypothalamic area"
+        name_in_source: "lateral hypothalamic area (LHA)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            method: "RNAscope in situ hybridization for 26RFa and orexin mRNA, with 26RFa-tdTomato/orexin-A immunohistochemistry"
+            scope: "adult mouse hypothalamus, Bregma -1.06 to -1.70 mm — the double-positive cells lie in the LHA"
+            quote_key: "293858017_3ea21a90"
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            method: "NeuN immunolabelling of the 26RFa/orexin double-positive cells"
+            scope: "adult mouse LHA"
+            quote_key: "293858017_ed72744c"
+    cl_mapping:
+      cl_term:
+        id: CL:0011109
+        label: "hypocretin-secreting neuron"
+        name_in_source: "26RFa/orexin neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for "26RFa", "QRFP" and "Qrfp neuron": no hits. No CL
+        term exists for a 26RFa/Qrfp-coexpressing orexin subpopulation.
+        Shares the parent node's (lha_orexin_neuron) EXACT term CL:0011109
+        ("hypocretin-secreting neuron") as BROAD, per the usual rule for a
+        subtype_of node. An EXACT match would need a CL term defined by
+        26RFa/Qrfp co-expression narrowing the hypocretin-secreting class;
+        none exists yet.
+    defining_markers:
+      - name_in_source: "26RFa"
+        symbol: Qrfp
+        ncbi_gene_id: "NCBIGene:227717"
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            marker_type: TRANSCRIPT
+            method: "RNAscope in situ hybridization (26RFa probe), double-labelled with orexin mRNA"
+            scope: "adult mouse LHA, Bregma -1.06 to -1.70 mm — 86% of orexin-expressing cells co-express 26RFa mRNA and 90% of 26RFa-positive cells express orexin mRNA"
+            quote_key: "293858017_3ea21a90"
+            notes: >
+              The source's "26RFa" is the peptide encoded by Qrfp; the report's
+              marker section writes the pair as "26RFa / Qrfp". The same
+              passage also reports a transgene/reporter measurement in
+              26RFa-tdTomato mice (86% of tdTomato cells orexin-A positive,
+              62% of orexin-immunostained cells tdTomato positive).
+      - name_in_source: "orexin"
+        symbol: Hcrt
+        ncbi_gene_id: "NCBIGene:15171"
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            marker_type: TRANSCRIPT
+            method: "RNAscope in situ hybridization (orexin probe), double-labelled with 26RFa mRNA; confirmed by orexin-A immunohistochemistry in 26RFa-tdTomato mice"
+            scope: "adult mouse LHA, Bregma -1.06 to -1.70 mm"
+            quote_key: "293858017_3ea21a90"
+            notes: >
+              Orexin A, orexin B and prepro-orexin are all products of Hcrt,
+              so the marker is pinned to that gene.
+      - name_in_source: "NeuN"
+        symbol: Rbfox3
+        ncbi_gene_id: "NCBIGene:52897"
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            marker_type: PROTEIN
+            method: "NeuN immunolabelling of 26RFa/orexin double-positive LHA cells"
+            scope: >
+              adult mouse LHA — 66% of 26RFa/orexin-expressing cells are
+              NeuN-labelled. NeuN is a neuronal-identity validation marker,
+              not a selector for this type; it delimits the neuronal fraction
+              that this node is scoped to, and the remaining third of
+              26RFa-expressing cells is outside the node.
+            quote_key: "293858017_ed72744c"
+            notes: >
+              NeuN is the antibody name; its target is the gene Rbfox3
+              (ANTIBODY_TARGET resolution).
+    neuropeptides:
+      - name_in_source: "26RFa"
+        symbol: Qrfp
+        ncbi_gene_id: "NCBIGene:227717"
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            marker_type: TRANSCRIPT
+            method: "RNAscope in situ hybridization"
+            scope: "adult mouse LHA — 26RFa is one of the two neuropeptides the type contains"
+            quote_key: "293858017_3ea21a90"
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            marker_type: NOT_STATED
+            method: "summary statement; assay not named in quote"
+            scope: "mouse — 26RFa/orexin neurons contain two neuropeptides with convergent central actions on glucose regulation"
+            quote_key: "293858017_2a9fab34"
+      - name_in_source: "orexin A"
+        symbol: Hcrt
+        ncbi_gene_id: "NCBIGene:15171"
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            marker_type: PROTEIN
+            method: "orexin-A immunohistochemistry on hypothalamic slices from 26RFa-tdTomato mice"
+            scope: "adult mouse LHA"
+            quote_key: "293858017_3ea21a90"
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            marker_type: NOT_STATED
+            method: "summary statement; assay not named in quote"
+            scope: "mouse — orexin is the second of the type's two neuropeptides"
+            quote_key: "293858017_2a9fab34"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "https://doi.org/10.64898/2026.10.13.758728"
+          method: >
+            inferred, by containment: the source defines this type as the
+            orexin population narrowed by 26RFa co-expression and does not
+            report a fast transmitter for it separately, so the parent's
+            (lha_orexin_neuron) glutamatergic assignment is taken to apply.
+          scope: "adult mouse LHA — 86% of orexin-expressing LHA cells co-express 26RFa mRNA"
+          quote_key: "293858017_3ea21a90"
+        - ref: "PMID:36357614"
+          method: "in situ hybridization (Slc17a6, Lhx9) — evidence for the parent class, not measured in 26RFa-positive cells"
+          scope: "mouse hypothalamus — Hcrt-positive cells are mostly glutamatergic"
+          quote_key: "253458103_ddcdf45f"
+    definition_references:
+      - "https://doi.org/10.64898/2026.10.13.758728"
+      - "PMID:31375626"
+    notes: >
+      A single source (Devere et al. 2026, a preprint,
+      https://doi.org/10.64898/2026.10.13.758728) names and characterises this
+      type; Seifinejad et al. 2019 (PMID:31375626) is supporting context only,
+      reporting that selective loss of HCRT neurons halves QRFP expression
+      rather than characterising the double-positive population. The
+      population is defined by graded co-expression, not a clean boundary, and
+      the two assays disagree on how much of the orexin class it covers: 86%
+      of orexin-mRNA-expressing LHA cells co-express 26RFa mRNA by RNAscope,
+      but only 62% of orexin-immunostained cells are 26RFa-tdTomato positive.
+      The report explicitly warns that Qrfp/26RFa "is not a pan-orexin
+      marker", so the node is the 26RFa-positive subset and not a relabelling
+      of the orexin class. Cell-class scope is likewise partial: NeuN labels
+      only 66% of 26RFa/orexin-expressing LHA cells, so a third of them are
+      non-neuronal and fall outside this node. nt_type is not measured in
+      26RFa-positive cells; it is inherited from lha_orexin_neuron. No
+      electrophysiological or morphological characterisation of this subtype
+      is reported.
+edges: []

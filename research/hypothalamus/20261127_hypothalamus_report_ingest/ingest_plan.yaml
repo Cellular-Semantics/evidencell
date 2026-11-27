@@ -1,0 +1,159 @@
+run_id: 20261127_hypothalamus_report_ingest
+types:
+  - node_id: lha_orexin_neuron
+    action: ENRICH
+    file: kb/graphs/hypothalamus/lha_orexin_neuron.yaml
+    report_sections:
+      - Background
+      - Structure, location, and abundance
+      - Developmental origin and maturation
+      - Neurotransmitters, neuropeptides, and molecular phenotype
+      - Markers and their anatomical/modal context
+      - Connectivity and function
+      - Heterogeneity and subtype organization
+      - Transcriptomics and related datasets
+    reconciliation_note: >
+      The report's subject population is the mouse LHA orexin/hypocretin
+      (Hcrt) neuron, defined throughout by expression of prepro-orexin/Hcrt
+      and its orexin-A/orexin-B products in the lateral hypothalamic and
+      adjacent perifornical/dorsomedial/posterior hypothalamic field. This is
+      the same population as the existing node lha_orexin_neuron
+      (CLASSICAL_NEUROCHEMICAL, Mus musculus, cl_mapping CL:0011109 EXACT):
+      the sources swap the names freely. Other LHA nodes in
+      existing_nodes.yaml were considered and rejected — lha_mch_neuron is
+      explicitly the distinct, spatially intermingled but non-colocalised MCH
+      population; lha_glutamatergic_neuron and lha_gabaergic_neuron are the
+      fast-transmitter-defined LH classes that orexin neurons sit inside
+      rather than equal; lha_leprb_nts_neuron is the LepRb/Nts population
+      that inhibits orexin neurons, not the orexin neurons themselves. The
+      report adds six name forms not already carried on the node
+      ("orexin neuron", "HCRT neuron", "orexinergic neuron",
+      "hypocretinergic neuron", "orx/hcrt neuron", "OHN"), each quote-backed.
+      species was already present and unchanged.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Medial versus lateral positional classes of orexin neuron, paired
+          with transient versus persistent inhibitory responses to glucose
+          (Williams et al. 2008, summarised by James et al. 2016). The report
+          explicitly calls this "a partial subdivision rather than a full
+          taxonomy", and Gonzalez et al. 2012 found that both medial and
+          lateral cells, and both electrical classes, project to both LC and
+          VTA. Not proposed as nodes; belongs as electrophysiology /
+          anatomical-heterogeneity properties on lha_orexin_neuron.
+        quote_keys:
+          - 33319988_7e2741ab
+          - 41564004_45c6d87b
+      - finding: >
+          VTA-projecting versus LC-projecting orexin ensembles. Functionally
+          separable (VTA-projecting but not LC-projecting cells are activated
+          during morphine conditioned place preference) but the report's own
+          cited tracing study shows them distributed across the entire orexin
+          field with similar projection probabilities, i.e. overlapping
+          ensembles rather than distinguishable populations. Not proposed as
+          nodes.
+        quote_keys:
+          - 33319988_7e2741ab
+          - 41564004_45c6d87b
+      - finding: >
+          Cotransmitter-defined variation within the orexin class — nearly
+          all orexin neurons contain dynorphin, about half carry transcripts
+          for both glutamate-release and GABA-synthesis machinery without a
+          vesicular GABA pathway, and orexin-A terminals differ in VGLUT1 /
+          VGLUT2 / neither overlap. Described as graded variation across the
+          class, not as named populations. Belongs as marker / nt_type /
+          neuropeptide properties on lha_orexin_neuron.
+        quote_keys:
+          - 53110676_376f4009
+          - 10721050_b89af494
+          - 284373767_17b115a2
+      - finding: >
+          Candidate orexin-fate transcription factors from purified late
+          embryonic mouse HCRT neurons (Peg3, Ahr1, Six6, Nr2f2, Prrx1), and
+          the postnatal appearance of orexin immunoreactivity from P11. A
+          developmental property of lha_orexin_neuron with no identity field.
+        quote_keys:
+          - 262941947_85d608ec
+          - 11144953_43561383
+
+  - node_id: lha_26rfa_orexin_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/lha_26rfa_orexin_neuron.yaml
+    report_sections:
+      - Neurotransmitters, neuropeptides, and molecular phenotype
+      - Markers and their anatomical/modal context
+    reconciliation_note: >
+      Devere et al. 2026 names and characterises a "discrete lateral
+      hypothalamic peptidergic population within the LHA, referred to here as
+      26RFa/orexin neurons": RNAscope shows 90% of 26RFa-positive LHA cells
+      express orexin mRNA and 86% of orexin-expressing cells co-express
+      26RFa; 26RFa-tdTomato/orexin-A immunohistochemistry gives 86% and 62%
+      reciprocally; NeuN shows 66% are neurons; chemogenetic activation
+      produces a specific glucose-regulatory phenotype. Name plus several
+      defining properties, so it is proposed. No existing node describes it —
+      checked against lha_orexin_neuron (the parent, broader: it includes the
+      orexin cells that lack 26RFa), lha_mch_neuron, lha_leprb_nts_neuron and
+      the remaining hypothalamus nodes; none mentions 26RFa/Qrfp. It is a
+      narrower population inside lha_orexin_neuron, so NEW with subtype_of
+      rather than ENRICH. Note the report separately warns that Qrfp/26RFa is
+      "not a pan-orexin marker".
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          About a third of 26RFa-expressing LHA cells are non-neuronal, and
+          ~10% of 26RFa-positive cells lack orexin. This "additional cellular
+          complexity" is not a named type and is recorded in the subtype_of
+          notes instead.
+        quote_keys:
+          - 293858017_fbe3074b
+          - 293858017_ed72744c
+      - finding: >
+          Selective loss of HCRT neurons in Hcrt-ataxin-3 mice causes a ~50%
+          decrease in QRFP expression, implying developmental or trophic
+          dependence of part of the local orexigenic network on intact orexin
+          neurons. Relevant context for this node but not an identity field.
+        quote_keys:
+          - 262941947_a33db9a6
+
+  - node_id: lha_orexin_ob_projecting_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/lha_orexin_ob_projecting_neuron.yaml
+    report_sections:
+      - Markers and their anatomical/modal context
+      - Structure, location, and abundance
+      - Heterogeneity and subtype organization
+    reconciliation_note: >
+      Qi et al. 2023 set out specifically to test "whether the proportion
+      that innervates the main olfactory bulb reflects a distinct
+      subpopulation of the orexin population" and report a positive
+      distinctness finding: only 7% of all orexin-A neurons are retrogradely
+      labelled from the main olfactory bulb, and although they spatially
+      overlap the non-projecting orexin-A neurons, "the two cell populations
+      were differentiated based on cell body area". Qi et al. 2025 and 2026
+      confirm the direct LH-to-OB orexin-A projection and characterise its
+      terminals. Name plus defining properties (projection target, soma
+      area), so it is proposed. No existing node covers it — checked against
+      lha_orexin_neuron (the parent) and the projection-defined nodes
+      elsewhere in the region (pvn_preautonomic_neuron,
+      pvh_brs3_pb_projecting_neuron), none of which concerns the LH-to-OB
+      pathway. Narrower than lha_orexin_neuron, so NEW with subtype_of.
+      Deliberately distinguished from the VTA/LC-projecting ensembles left
+      unplaced above: for those the report's cited tracing evidence argues
+      against distinguishable populations, whereas here the dedicated source
+      asserts anatomical distinctness. Flagged for review: the delineating
+      property is a soma-area difference between spatially overlapping
+      populations from a single group, so a reviewer may prefer to merge this
+      into lha_orexin_neuron as a projection property.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          No source coins a compact name for this population, so no synonyms
+          were written; the node name is descriptive.
+        quote_keys:
+          - 259832148_069c0887
+      - finding: >
+          22% of hypothalamic neurons retrogradely labelled from the main
+          olfactory bulb express orexin-A — a property of the OB-projecting
+          hypothalamic input as a whole, not of this orexin subpopulation.
+        quote_keys:
+          - 259832148_069c0887

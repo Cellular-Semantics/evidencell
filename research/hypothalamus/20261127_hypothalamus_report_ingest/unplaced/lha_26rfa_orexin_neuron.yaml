@@ -1,0 +1,43 @@
+# Findings from the LHA_Orexin_Hypocretin_neurons.pdf report that bear on
+# lha_26rfa_orexin_neuron but fit no CellTypeNode property field.
+# Written by Step 5 (node characterisation) of 20261127_hypothalamus_report_ingest.
+
+- finding: >
+    Cellular complexity of the 26RFa-expressing field beyond this node: about
+    a third of 26RFa-expressing LHA cells are non-neuronal (only 66% are
+    NeuN-labelled), and ~10% of 26RFa-positive cells lack orexin mRNA. The
+    RNAscope survey also shows a smaller, separate population of
+    26RFa-positive cells ventral to the LHA. None of these is a named type;
+    the boundary they draw around this node is carried in the subtype_of
+    notes and in the node's notes, and the NeuN measurement itself is
+    recorded as a defining marker with a scope that states the 66%.
+  quote_keys:
+    - 293858017_fbe3074b
+    - 293858017_ed72744c
+    - 293858017_3ea21a90
+  closest_field: null
+
+- finding: >
+    Functional/metabolic phenotype: chemogenetic activation of LHA
+    26RFa/orexin neurons enhances the hyperglycemic response to a peripheral
+    glucose load while stimulating pancreatic insulin secretion, with no
+    detectable effect on basal glycemia, insulin sensitivity or hepatic
+    glucose production; central administration of orexin A produces
+    convergent metabolic effects, so the type's two neuropeptides act on the
+    same axis. The schema has no function or perturbation-phenotype field;
+    only the "contains two neuropeptides" part of this material was usable,
+    as neuropeptides.
+  quote_keys:
+    - 293858017_a30a10c5
+    - 293858017_2a9fab34
+  closest_field: null
+
+- finding: >
+    Selective loss of HCRT neurons in Hcrt-ataxin-3 mice causes a specific
+    ~50% decrease in QRFP expression, implying developmental or trophic
+    dependence of part of the local orexigenic network on intact orexin
+    neurons. Context for this node's QRFP/orexin co-dependence but an
+    ablation phenotype, which no node field holds.
+  quote_keys:
+    - 262941947_a33db9a6
+  closest_field: null
