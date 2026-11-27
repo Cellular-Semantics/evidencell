@@ -54,6 +54,230 @@ nodes:
           holds by definition. Stated explicitly by one source (Romanov et al.
           2016), which places the onecut-3+ cells in the periventricular
           nucleus and states they qualify as A14 dopamine neurons.
+    anatomical_location:
+      - id: UBERON:0014667
+        label: "periventricular nucleus of hypothalamus"
+        name_in_source: "medio-posterior subdivision of the periventricular area"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:27991900"
+            method: >
+              coincident immunohistochemistry for onecut-3 and enzymatically
+              active TH phosphorylated at Ser40 on a Th-GFP background, with
+              serial sections and reconstructive histochemistry in optically
+              cleared tissue (lightsheet microscopy)
+            scope: "adult mouse periventricular nucleus of the hypothalamus"
+            quote_key: "205439542_96d0708f"
+            notes: >
+              The onecut-3+ cells form a cell continuum spanning the SCN-Arc
+              domain with an increasing cell gradient caudally. Lightsheet
+              reconstruction counted 474 cells in one adult mouse brain, while
+              conventional neuroanatomy in serial sections projected 500-1,000
+              cells per brain. UBERON rather than MBA because the Allen mouse
+              atlas splits the periventricular hypothalamic nucleus into PVpo
+              (MBA:133), PVa (MBA:30), PVi (MBA:118) and PVp (MBA:126) under two
+              different parents, and none of them corresponds to the
+              "medio-posterior subdivision of the periventricular area" the
+              source names; UBERON:0014667 is the whole-nucleus term the sources
+              mean, with this subtype's restriction to its medio-posterior part
+              carried in name_in_source and in the node notes.
+          - ref: "PMID:27991900"
+            method: >
+              anatomical description in the discussion — the newly distinguished
+              onecut-3+ A14 neurons are stated to be exclusively situated at the
+              medio-posterior subdivision of the periventricular area
+            scope: "adult mouse periventricular area"
+            quote_key: "205439542_97445aba"
+      - id: MBA:10671
+        label: "Median eminence"
+        name_in_source: "median eminence"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:27991900"
+            method: >
+              histochemistry — onecut-3+ A14 dopamine neurons shown to terminate
+              at the median eminence
+            scope: "adult mouse median eminence"
+            quote_key: "205439542_97445aba"
+            notes: >
+              The source states the neurons "can terminate" at the median
+              eminence, i.e. termination is shown but not quantified as a
+              property of every cell of the type.
+      - id: UBERON:0002432
+        label: "pars intermedia of adenohypophysis"
+        name_in_source: "intermediate lobe of the pituitary"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:27991900"
+            method: >
+              Evans blue loading experiments, reported as being in agreement with
+              a previously documented parallel projection to the intermediate
+              lobe of the pituitary; the projection was not traced from the
+              onecut-3+ population itself
+            scope: "adult mouse pituitary intermediate lobe"
+            quote_key: "205439542_97445aba"
+            support: WEAK
+            notes: >
+              Indirect: the source reports consistency with an earlier report
+              rather than a tracing result for this population, so the target is
+              recorded as weakly supported.
+    nt_type:
+      name_in_source: "dopamine"
+      cl_terms:
+        - id: CL:0000700
+          label: "dopaminergic neuron"
+          name_in_source: "dopamine neurons"
+      sources:
+        - ref: "PMID:27991900"
+          method: >
+            single-cell RNA-seq — dopamine neurons uniquely coexpressing the
+            Onecut3 and Nmur2 genes, placed in the periventricular nucleus
+          scope: "adult mouse hypothalamic central column"
+          quote_key: "205439542_ee40b322"
+        - ref: "PMID:27991900"
+          method: >
+            immunohistochemistry for enzymatically active TH phosphorylated at
+            Ser40 together with onecut-3 on a Th-GFP background, with Slc6a3/DAT
+            (dopamine transporter) predominantly restricted to the same
+            population
+          scope: "adult mouse periventricular nucleus"
+          quote_key: "205439542_96d0708f"
+          notes: >
+            Dopaminergic rather than merely catecholaminergic for this subtype
+            rests on the coincidence of phospho-Ser40 TH with Slc6a3/DAT
+            restriction to the same cells, not on a direct dopamine measurement.
+    defining_markers:
+      - name_in_source: "Onecut3"
+        symbol: Onecut3
+        ncbi_gene_id: "NCBIGene:246086"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:27991900"
+            method: >
+              single-cell RNA-seq of dissociated neurons from a central column of
+              the mouse hypothalamus — unique coexpression of Onecut3 with Nmur2
+              defines this dopamine population
+            scope: "adult mouse hypothalamic central column"
+            quote_key: "205439542_ee40b322"
+          - marker_type: PROTEIN
+            ref: "PMID:27991900"
+            method: >
+              immunohistochemistry for onecut-3, detected coincidentally with
+              phospho-Ser40 TH on a Th-GFP background and with DAT in
+              Dat1-Cre::ROSA26Sor CAG-tdTomato mice; no antibody named in the
+              quoted passage
+            scope: "adult mouse periventricular nucleus"
+            quote_key: "205439542_96d0708f"
+            notes: >
+              The source writes the gene as "Onecut3" in the transcriptomic
+              analysis and the protein as "onecut-3" in the histology; both name
+              the same gene. Onecut3 is described as predominantly restricted to
+              this cell population, which is what makes it the subtype's
+              selective marker rather than a periventricular dopamine marker in
+              general.
+      - name_in_source: "Nmur2"
+        symbol: Nmur2
+        ncbi_gene_id: "NCBIGene:216749"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:27991900"
+            method: >
+              single-cell RNA-seq — Nmur2 is the second member of the unique
+              coexpression pair (with Onecut3) that defines this dopamine
+              population
+            scope: "adult mouse hypothalamic central column"
+            quote_key: "205439542_ee40b322"
+            notes: >
+              Transcriptomic only in the available literature; the histological
+              anchoring of the subtype used Onecut3, DAT and phospho-TH, not
+              Nmur2. Nmur2 is the neuromedin U receptor 2 gene, so it is a
+              receptor marker, not a neuropeptide of these cells.
+      - name_in_source: "Slc6a3"
+        symbol: Slc6a3
+        ncbi_gene_id: "NCBIGene:13162"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:27991900"
+            method: >
+              single-cell RNA-seq — both Slc6a3 and Onecut3 reported as
+              predominantly restricted to this particular cell population
+            scope: "adult mouse hypothalamic central column"
+            quote_key: "205439542_96d0708f"
+          - marker_type: TRANSGENE_REPORTER
+            ref: "PMID:27991900"
+            method: >
+              Dat1-Cre::ROSA26Sor CAG-tdTomato mice, giving life-long expression
+              profiling of DAT-expressing cells; coincident DAT and onecut-3
+              localisation used to place the population anatomically
+            scope: "adult mouse periventricular nucleus"
+            quote_key: "205439542_96d0708f"
+            notes: >
+              The source writes the protein/driver as "DAT" and "Dat1" and the
+              gene as "Slc6a3"; these name the same mouse dopamine transporter
+              gene.
+      - name_in_source: "TH"
+        symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
+        modifier: LOW
+        sources:
+          - marker_type: TRANSGENE_REPORTER
+            ref: "PMID:27991900"
+            method: >
+              Th-GFP reporter mice; GFP intensity quantified in these TH+ cells
+              and compared with other TH+ cell groups
+            scope: "adult mouse periventricular nucleus"
+            quote_key: "205439542_96d0708f"
+            notes: >
+              LOW is relative, and is a reporter measurement: GFP signal in these
+              cells was significantly (P < 0.001) lower than in other TH+ cell
+              groups of the same Th-GFP mice. It is not a direct quantification
+              of Th mRNA or TH protein, and the comparison group is "other TH+
+              cell groups" rather than a named type.
+      - name_in_source: "enzymatically active TH phosphorylated at residue Ser40"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:27991900"
+            method: >
+              immunohistochemistry for TH phosphorylated at Ser40, detected
+              coincidentally with onecut-3 on a Th-GFP background; the
+              phospho-Ser40 detection follows Tekin et al. 2014 as cited by the
+              source, and no antibody is named in the quoted passage
+            scope: "adult mouse periventricular nucleus"
+            quote_key: "205439542_96d0708f"
+            notes: >
+              Recorded with name_in_source only: this is a post-translational
+              modification state of the TH protein, not a gene product in its own
+              right, so it carries no symbol or gene ID (the Th gene is recorded
+              separately above, and Th mRNA is not a proxy for the
+              phosphorylation state). The phospho-Ser40 signal is what the source
+              treats as the readout of enzymatically active, dopamine-synthesising
+              TH, and the same study reports that TH phosphorylation in these
+              cells is regulated in a circadian fashion.
+    morphology:
+      description: >
+        Dendritic trees primarily oriented vertically.
+      sources:
+        - ref: "PMID:27991900"
+          method: >
+            immunohistochemistry for onecut-3 and phospho-Ser40 TH on a Th-GFP
+            background, with dendritic orientation read from serial sections and
+            reconstructive histochemistry in optically cleared tissue
+          scope: "adult mouse periventricular nucleus"
+          quote_key: "205439542_96d0708f"
+          notes: >
+            Dendritic orientation is the only somatodendritic feature the source
+            gives for this subtype; soma size, dendritic extent and axonal
+            morphology are not described.
+    colocated_types:
+      - neighboring_type: "arcuate (A12) dopamine neurons (arc_tida_dopamine_neuron)"
+        spatial_relationship: ADJACENT
+        notes: >
+          The onecut-3+ periventricular cells segregate dorsally from the other
+          dopamine cells residing in the arcuate nucleus (PMID:27991900, quote
+          205439542_96d0708f), and the same study recognises them as distinctly
+          different, in molecular makeup and connectivity, from the dorsomedial
+          A12 dopamine group (quote 205439542_97445aba). The dorsal offset is
+          what separates the two populations in tissue; TH alone does not.
     cl_mapping:
       cl_term:
         id: CL:4072011
@@ -83,4 +307,71 @@ nodes:
         CL:4072011. Would need a term keyed to Onecut3/Nmur2 coexpression
         and/or median-eminence projection, distinguishing it from the
         lateral-septum-projecting sibling, for an EXACT match.
+    definition_references:
+      - "PMID:27991900"
+      - "PMID:32499648"
+      - "PMID:36209152"
+    notes: >
+      Single-study basis. Every property on this node comes from one paper
+      (Romanov et al. 2016, PMID:27991900). No independent study in the
+      available literature has replicated the Onecut3/Nmur2 coexpression, the
+      medio-posterior siting, the vertical dendrites or the median
+      eminence/pituitary output for this population. Treat the whole property
+      set as needing primary verification and independent replication.
+
+      Position. The two statements the source makes about where these cells
+      are do not sit together comfortably: the onecut-3+ cells are described
+      as a continuum spanning the SCN-Arc domain with a caudally increasing
+      cell gradient, and also as "exclusively situated at the medio-posterior
+      subdivision of the periventricular area". The first extends rostrally to
+      the SCN level, the second does not. The reading taken here is that the
+      population spans the column with its density, and the cells themselves,
+      concentrated medio-posteriorly. Only the whole-nucleus UBERON term is
+      asserted; no Allen (MBA) periventricular subdivision is claimed, because
+      none corresponds to "medio-posterior subdivision of the periventricular
+      area".
+
+      Cell number. The source gives two counts for the same population: 474
+      cells in one adult mouse brain by lightsheet microscopy of optically
+      cleared tissue, and 500-1,000 cells per brain projected from conventional
+      serial-section neuroanatomy. Both are recorded in the notes of the soma
+      anatomical_location source rather than in a field, since cell_count on
+      AnatomicalLocation is reserved for atlas MERFISH registration data. The
+      lightsheet figure is n = 1 brain.
+
+      Markers. Onecut3 and Slc6a3 are reported as "predominantly restricted"
+      to this population, not as exclusive to it, and the restriction is within
+      the hypothalamic column that was sampled, not brain-wide — Slc6a3 in
+      particular is a general dopaminergic transporter gene. Nmur2 appears only
+      in the single-cell transcriptomic data: it was not used in the
+      histological anchoring of the subtype and has no in situ or protein
+      confirmation here. The practical marker set the report gives for this
+      subtype is Onecut3 + DAT/Slc6a3 + TH, with Nmur2 as a transcriptomic
+      feature. The phospho-Ser40 TH entry is a modification state of the TH
+      protein and carries no gene ID by design (see its source notes); it is
+      not a second Th marker.
+
+      Projections. Median eminence termination is direct (histochemistry) but
+      phrased by the source as what these neurons "can" do, and the pituitary
+      intermediate lobe entry is indirect — Evans blue loading reported as
+      agreeing with an earlier published projection, not traced from the
+      onecut-3+ cells. Neither target is quantified per cell.
+
+      Neuropeptides. None recorded. Nmur2 is the neuromedin U receptor 2 gene,
+      a receptor on these cells; the neuromedin S (Nms) in this literature
+      belongs to the SCN neurons that innervate them, not to the cells
+      themselves. The source's suggestion that these cells act as neurosecretory
+      "hubs" tuning the release of other hypothalamic neuropeptides is about
+      their afferents, not about peptides they make.
+
+      Electrophysiology. Not recorded: no intrinsic physiology is reported for
+      the Onecut3+/Nmur2+ population specifically. Romanov et al. 2020
+      (PMID:32499648) resolve four morphologically and electrophysiologically
+      distinct parvocellular dopamine subtypes in the A14/PeVN territory but do
+      not say which, if any, corresponds to this one, so none of those profiles
+      is carried here.
+
+      Afferents and circadian context. Afferent input and circadian function
+      have no schema field and are not asserted here; they are recorded in
+      research/hypothalamus/20261127_hypothalamus_report_ingest/unplaced/pevn_onecut3_nmur2_dopamine_neuron.yaml.
 edges: []
