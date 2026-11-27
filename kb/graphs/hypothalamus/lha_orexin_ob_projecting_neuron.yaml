@@ -54,6 +54,44 @@ nodes:
           overlapping and spatially distributed rather than segregated: these
           cells spatially overlap the orexin-A neurons that do not innervate
           the bulb, and are distinguished from them only by cell body area.
+    anatomical_location:
+      - id: MBA:194
+        label: "Lateral hypothalamic area"
+        name_in_source: "lateral hypothalamus"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:37434469"
+            method: "retrograde tract tracing from the main olfactory bulb + orexin-A immunohistochemistry, with somata counted and positioned in sequential sections through the hypothalamus"
+            scope: "adult mouse — retrogradely labelled cells confined to the hypothalamus ipsilateral to the injected bulb"
+            quote_key: "259832148_069c0887"
+          - ref: "PMID:39990441"
+            method: "anterograde tracing from the lateral hypothalamus + orexin-A immunohistochemistry"
+            scope: "mouse — the cells of origin of the direct LH-to-OB orexin-A projection lie in the lateral hypothalamus"
+            quote_key: "276421085_8971af22"
+          - ref: "PMID:41480926"
+            method: "confocal imaging of the LH-to-OB pathway"
+            scope: "mouse — the direct lateral hypothalamus-to-OB pathway includes orexin-A-expressing neurons"
+            quote_key: "284373767_8bec5901"
+      - id: MBA:507
+        label: "Main olfactory bulb"
+        name_in_source: "main olfactory bulb (OB)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:37434469"
+            method: "retrograde tract tracing from the main olfactory bulb + orexin-A immunohistochemistry"
+            scope: >
+              adult mouse — the defining property of this node: the orexin-A
+              neurons retrogradely labelled from the main olfactory bulb, about
+              7% of all orexin-A neurons
+            quote_key: "259832148_069c0887"
+          - ref: "PMID:39990441"
+            method: "anterograde tracing from the lateral hypothalamus + orexin-A immunohistochemistry"
+            scope: "mouse — direct, confirmed anterograde orexin-A projection from the lateral hypothalamus to the OB"
+            quote_key: "276421085_8971af22"
+          - ref: "PMID:39990441"
+            method: "confocal imaging of orexin-A-immunoreactive axon terminals across OB layers"
+            scope: "mouse OB — orexin-A fibres innervate all anatomical layers of the bulb"
+            quote_key: "276421085_d966c336"
     cl_mapping:
       cl_term:
         id: CL:0011109
@@ -72,4 +110,90 @@ nodes:
         EXACT match would need a CL term defined by projection to the main
         olfactory bulb narrowing the hypocretin-secreting class; none exists
         yet.
+    defining_markers:
+      - name_in_source: "orexin-A"
+        symbol: Hcrt
+        ncbi_gene_id: "NCBIGene:15171"
+        sources:
+          - ref: "PMID:37434469"
+            marker_type: PROTEIN
+            method: "orexin-A immunohistochemistry on sections containing retrogradely labelled cells"
+            scope: >
+              adult mouse hypothalamus — orexin-A immunoreactivity is the
+              marker used to pick this population out of the hypothalamic
+              input to the main olfactory bulb; 22% of the retrogradely
+              labelled hypothalamic neurons expressed it.
+            quote_key: "259832148_069c0887"
+            notes: >
+              The source assays the orexin-A peptide; orexin-A, orexin-B and
+              their prepro-orexin precursor are all products of the single
+              gene Hcrt, so the marker is pinned to Hcrt. No marker beyond
+              orexin-A is asserted for this subpopulation: it is delineated by
+              projection target and cell body area, not by a distinct
+              molecular profile.
+          - ref: "PMID:41480926"
+            marker_type: PROTEIN
+            method: "confocal imaging of the LH-to-OB pathway with orexin-A labelling"
+            scope: "mouse — the direct LH-to-OB pathway includes orexin-A-expressing neurons"
+            quote_key: "284373767_8bec5901"
+    nt_type:
+      name_in_source: "mostly glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:39990441"
+          method: "confocal co-localisation of putative orexin-A axon terminals with VGLUT2 and VGLUT1"
+          scope: >
+            mouse main olfactory bulb — 57% of putative orexin-A terminals
+            overlap VGLUT2. A terminal-field measurement in the target region,
+            not a soma-level assay in the hypothalamus.
+          quote_key: "276421085_36eb8888"
+        - ref: "PMID:41480926"
+          method: "confocal imaging of putative orexin-A axon terminals in the OB"
+          scope: >
+            mouse OB — the majority of orexin-A terminals overlap VGLUT2,
+            smaller fractions overlap VGLUT1 or neither, so the glutamatergic
+            phenotype is graded within this projection rather than uniform.
+          quote_key: "284373767_17b115a2"
+          notes: >
+            No source assigns a neurotransmitter to the OB-projecting
+            orexin-A somata directly. The assignment also follows by
+            containment from the parent node lha_orexin_neuron, which is
+            recorded as glutamatergic.
+    morphology:
+      description: >
+        The orexin-A neurons that innervate the main olfactory bulb spatially
+        overlap the orexin-A neurons that do not, and the two are separated
+        only by cell body area; this soma-area difference is the single
+        morphological property that delineates this population. Retrogradely
+        labelled hypothalamic neurons that did and did not express orexin-A
+        were likewise anatomically distinguishable by spatial position and
+        cell body area. The direction and magnitude of the soma-area
+        difference are not given in the available text.
+      sources:
+        - ref: "PMID:37434469"
+          method: "cell body area measured on retrogradely labelled and orexin-A-immunoreactive somata in sequential hypothalamic sections"
+          scope: "adult mouse hypothalamus, retrograde tracer injected into the main olfactory bulb"
+          quote_key: "259832148_069c0887"
+    definition_references:
+      - "PMID:37434469"
+      - "PMID:39990441"
+      - "PMID:41480926"
+      - "PMID:23162437"
+    notes: >
+      Single-group evidence: all three sources that delineate this population
+      (PMID:37434469, PMID:39990441, PMID:41480926) come from the same
+      laboratory, so the distinctness claim has not been independently
+      replicated. The delineating property is weak: the OB-projecting and
+      non-projecting orexin-A neurons are spatially intermingled and differ
+      only in cell body area, with the direction and effect size of that
+      difference not stated in the available text; a reviewer has flagged the
+      node for possible merger back into lha_orexin_neuron as a projection
+      property rather than a population, and that question is left open here.
+      The glutamatergic co-transmitter fractions recorded under nt_type are
+      measurements of orexin-A axon terminals in the olfactory bulb, not of
+      the somata, and the terminal field may contain contributions from
+      orexin-A fibres whose cells of origin were not individually traced.
 edges: []
