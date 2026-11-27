@@ -1,0 +1,22 @@
+{
+  "_note": "ols4 MCP server was not connected in this session; OAK CLI (runoak -i sqlite:obo:cl) was used instead for all CL search/info/ancestors/descendants lookups, against the same cached CL semsql DB ols4 would query.",
+  "pevn_onecut3_nmur2_dopamine_neuron": {
+    "cl_term_id": "CL:4072011",
+    "label": "A14 dopaminergic neuron",
+    "mapping_type": "BROAD",
+    "definition_references": []
+  },
+  "anterior_pevn_ls_projecting_dopamine_neuron": {
+    "cl_term_id": "CL:4072011",
+    "label": "A14 dopaminergic neuron",
+    "mapping_type": "BROAD",
+    "definition_references": []
+  },
+  "periventricular_dopamine_neuron": {
+    "cl_term_id": "CL:0000700",
+    "label": "dopaminergic neuron",
+    "mapping_type": "EXACT",
+    "definition_references": [],
+    "disagreement": "File left unchanged (existing cl_mapping, read-only per policy). Independent lookup for this node ('A14 dopamine neuron group of the periventricular nucleus (PeVN)') surfaced CL:4072011 'A14 dopaminergic neuron', defined as 'A type of dopaminergic neuron located in the periventricular nucleus of the hypothalamus and projecting to the lateral septum and the median eminence. It is contributing to neuroendocrine functions, locomotion and stress regulation.' This location (periventricular nucleus of the hypothalamus) and the pair of projection targets (lateral septum, median eminence) match this node's identity in full -- the two now-characterized A14 subtypes in this run (anterior/LS-projecting, medio-posterior/ME-projecting) are exactly the two projection targets named in CL:4072011's definition, so CL:4072011 describes the same population as periventricular_dopamine_neuron, not a subset of it. I would have mapped EXACT to CL:4072011 rather than (or in addition to, as a more specific EXACT) the current EXACT to CL:0000700, which is a correct but less specific ancestor (dopaminergic neuron in general, with no location or projection-target restriction). No xrefs on CL:4072011 to add as definition_references."
+  }
+}

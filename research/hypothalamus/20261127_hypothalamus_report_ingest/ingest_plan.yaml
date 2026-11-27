@@ -1,0 +1,136 @@
+run_id: 20261127_hypothalamus_report_ingest
+types:
+  - node_id: periventricular_dopamine_neuron
+    action: ENRICH
+    file: kb/graphs/hypothalamus/periventricular_dopamine_neuron.yaml
+    report_sections:
+      - "Introduction and nomenclature of periventricular hypothalamic dopaminergic neurons"
+      - "Location, structure, and anatomical organization"
+      - "Developmental origin and differentiation"
+      - "Connectivity and functions"
+      - "Neurotransmitters, neuropeptides, and neurochemical phenotype"
+      - "Markers and anatomical context of marker use"
+      - "Transcriptomic and related omics/mapping datasets"
+      - "Heterogeneity and characterized subtypes"
+    reconciliation_note: >
+      The report's subject population is the mouse periventricular hypothalamic
+      dopaminergic neuron, for which it states the main name in current mouse
+      literature is the "A14 dopamine neuron group of the periventricular
+      nucleus (PeVN)". The existing node periventricular_dopamine_neuron
+      (created from Hypothalamus_general_survey.pdf on the Romanov 2020
+      SLIT-ROBO statement about "periventricular dopamine neurons") describes
+      that same population: Romanov et al. 2020 itself uses "A14 territories
+      (PeVN)" for the periventricular dopamine neurons it studies, so the names
+      are interchangeable within the sources. ENRICH rather than NEW, to avoid
+      minting a near-duplicate "A14" node. Other hypothalamic TH/dopamine nodes
+      were considered and rejected as the home for this report: hypothalamic_th_neuron
+      is the broader TH-expressing parent (already the existing node's
+      subtype_of parent, and broader than a dopaminergic-only type);
+      arc_tida_dopamine_neuron is the arcuate A12 group, which the report
+      explicitly separates from A14 ("we recognize onecut-3 + A14 dopamine
+      neurons as distinctly different ... from the dorsomedial A12 dopamine
+      group", and "these neurons segregated dorsally from other dopamine cells
+      residing in the Arc"); rostral_zi_th_gabaergic_neuron is the A13 zona
+      incerta group, likewise listed as a separate territory. Added two
+      source-grounded synonyms ("A14 dopamine neurons", "A14 catecholaminergic
+      group") and nothing else; species and the subtype_of parent were already
+      present and unchanged.
+    identity_conflicts:
+      - >
+        Scope-of-name caveat, not a value conflict: the report notes that older
+        catecholamine mapping (Baker et al. 1983) used "periventricular
+        dopaminergic neurons" as a wider topographic label spanning three
+        clusters (rostral preoptic periventricular, midtuberal periventricular,
+        caudal posterior hypothalamic) than the modern PeVN/A14 usage this node
+        now carries. No existing identity value was changed; the existing name
+        and synonym are compatible with both readings. Flagged for review in
+        case the node should later be split into a broad periventricular system
+        and a narrow PeVN/A14 type. Quote keys: 8743092_0452ff39,
+        252760439_76467ecc.
+    unplaced:
+      - finding: >
+          Romanov et al. 2020 report four morphologically and
+          electrophysiologically distinct parvocellular dopamine subtypes in the
+          A14 (PeVN) territory, of which the report says only two are
+          characterised in the available literature. Internal heterogeneity
+          statement with no identity field; belongs in notes at the properties
+          phase.
+        quote_keys:
+          - "218528429_cb5dea70"
+      - finding: >
+          Morales et al. 2025 propose that the periventricular alar (Pe)
+          hypothalamus contains both Otp and non-Otp catecholaminergic cells and
+          that, on single-cell transcriptomics, one subtype may be glutamatergic
+          and the other GABAergic. Speculative subtype structure with no name or
+          defining criterion settled, so no type proposed; belongs in notes.
+        quote_keys:
+          - "277180255_3296e936"
+      - finding: >
+          Baker et al. 1983 describe the older "intermediate group" framing in
+          which hypothalamic periventricular dopamine neurons form three major
+          rostrocaudal clusters. Anatomical/historical scoping evidence with no
+          identity field; belongs in anatomical_location and notes at the
+          properties phase.
+        quote_keys:
+          - "8743092_0452ff39"
+
+  - node_id: pevn_onecut3_nmur2_dopamine_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/pevn_onecut3_nmur2_dopamine_neuron.yaml
+    report_sections:
+      - "Heterogeneity and characterized subtypes"
+      - "Location, structure, and anatomical organization"
+      - "Connectivity and functions"
+      - "Markers and anatomical context of marker use"
+      - "Transcriptomic and related omics/mapping datasets"
+    reconciliation_note: >
+      The report characterises this as "the best-characterized A14 subtype ...
+      the medio-posterior PeVN Onecut3+/Nmur2+ population", with its own
+      defining criteria: unique Onecut3/Nmur2 coexpression, coincident
+      DAT/Slc6a3 and phospho-TH(Ser40) labelling, exclusive siting in the
+      medio-posterior subdivision of the periventricular area, dorsal
+      segregation from arcuate dopamine cells, primarily vertical dendrites,
+      ~474 cells per adult brain, Nms+ SCN afferents, and median
+      eminence / pituitary intermediate lobe output. That is a narrower
+      population inside periventricular_dopamine_neuron, so NEW with
+      subtype_of, not ENRICH (workflow rule: a narrower population inside an
+      existing node is NEW). Checked against periventricular_dopamine_neuron
+      (the parent), arc_tida_dopamine_neuron (A12 arcuate — Romanov et al.
+      explicitly recognise this type as distinctly different from the
+      dorsomedial A12 group), hypothalamic_th_neuron (broader TH parent) and
+      rostral_zi_th_gabaergic_neuron (A13 zona incerta); no existing node
+      describes it. definition_basis CLASSICAL_MULTIMODAL: identity rests
+      jointly on molecular markers, subregional position, and dendritic
+      morphology.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: anterior_pevn_ls_projecting_dopamine_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/anterior_pevn_ls_projecting_dopamine_neuron.yaml
+    report_sections:
+      - "Heterogeneity and characterized subtypes"
+      - "Connectivity and functions"
+      - "Transcriptomic and related omics/mapping datasets"
+      - "Introduction and nomenclature of periventricular hypothalamic dopaminergic neurons"
+    reconciliation_note: >
+      The report characterises "a second characterized branch ... the anterior
+      PeVN Th+/Dat1+ subtype described by Korchynska et al.", defined by
+      position in the anterior subdivision of the PeVN, extrahypothalamic
+      projection to the lateral septum with somatostatin-containing LS neurons
+      as preferred synaptic targets, and dense SCN neuropeptidergic input. The
+      report states the clearest A14 subtype split is between this anterior,
+      lateral-septum-projecting type and the medio-posterior Onecut3+/Nmur2+
+      neuroendocrine type, so the two are distinct narrower populations inside
+      periventricular_dopamine_neuron: NEW with subtype_of. Checked against
+      periventricular_dopamine_neuron (parent), pevn_onecut3_nmur2_dopamine_neuron
+      (its sibling, which the sources place medio-posteriorly and in a
+      neuroendocrine rather than septal circuit), hypothalamic_th_neuron,
+      arc_tida_dopamine_neuron and rostral_zi_th_gabaergic_neuron; no existing
+      node describes it. definition_basis CLASSICAL_ANATOMICAL: the
+      distinguishing criteria are subregional position and projection target,
+      the Th/Dat1 markers being those of the parent population.
+    identity_conflicts: []
+    unplaced: []   # see unplaced/anterior_pevn_ls_projecting_dopamine_neuron.yaml
+                    # (written at Step 5, after identity/reconciliation; this
+                    # entry predates it and is not updated retroactively)

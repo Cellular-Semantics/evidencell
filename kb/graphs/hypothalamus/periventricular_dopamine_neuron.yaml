@@ -35,6 +35,16 @@ nodes:
           - ref: "PMID:32499648"
             quote_key: "218528429_24a15387"
             method: "name used for the population whose production and positioning SLIT-ROBO signalling controls"
+      - term: "A14 dopamine neurons"
+        sources:
+          - ref: "PMID:36209152"
+            quote_key: "252760439_76467ecc"
+            method: "principal name used for the dopamine neurons dispersed in the medial subdivision of the periventricular nucleus (PeVN) along the third ventricle"
+      - term: "A14 catecholaminergic group"
+        sources:
+          - ref: "PMID:36209152"
+            quote_key: "252760439_338fb0d7"
+            method: "name given in apposition to 'dopamine neurons of the periventricular nucleus (PeVN)' for the same population"
     subtype_of:
       - parent: hypothalamic_th_neuron
         kind: DEFINITIONAL
@@ -52,6 +62,282 @@ nodes:
           neurons, and the TH mapping study places TH-immunoreactive neurons
           primarily in the periventricular hypothalamus, but neither source
           asserts the containment directly.
+    anatomical_location:
+      - id: UBERON:0014667
+        label: "periventricular nucleus of hypothalamus"
+        name_in_source: "medial subdivision of the periventricular nucleus (PeVN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:36209152"
+            method: >
+              literature description — A14 dopamine neurons described as
+              dispersed in the medial subdivision of the periventricular
+              nucleus, stretching along the third ventricle
+            scope: "adult mouse periventricular nucleus (PeVN)"
+            quote_key: "252760439_76467ecc"
+            notes: >
+              UBERON rather than MBA because the Allen mouse atlas has no
+              single term for the periventricular hypothalamic nucleus as a
+              rostrocaudal column: it is split into PVpo (MBA:133), PVa
+              (MBA:30), PVi (MBA:118) and PVp (MBA:126), which sit under two
+              different parents (Periventricular region, Periventricular
+              zone). UBERON:0014667 (BAMS:Pe) is the whole-nucleus term the
+              sources mean.
+          - ref: "PMID:35601999"
+            method: >
+              review of published mouse TH mapping (Rasuli et al. 2008,
+              sagittal sections) — periventricular A14 TH-positive cells
+              reported across the alar preoptic (PA) and
+              supraopto-paraventricular (SPa) prosomeric domains
+            scope: "mouse hypothalamus, described in a prosomeric framework"
+            quote_key: "248530111_b598af95"
+            notes: >
+              Describes the A14 cells as a widespread alar periventricular
+              stratum rather than a sharply bounded nucleus. The prosomeric PA
+              and SPa domains have no direct MBA or UBERON equivalent, so this
+              source is attached to the whole-nucleus term rather than
+              grounded as a separate location.
+      - id: MBA:133
+        label: "Periventricular hypothalamic nucleus, preoptic part"
+        name_in_source: "preoptic periventricular gray"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:6131950"
+            method: >
+              catecholamine / tyrosine hydroxylase cell mapping — most rostral
+              of three periventricular dopamine clusters, extending from the
+              decussation of the anterior commissure to the retrochiasmatic
+              area
+            scope: "mouse hypothalamus (two inbred strains)"
+            quote_key: "8743092_0452ff39"
+            notes: >
+              From the older, broader use of "periventricular dopaminergic
+              neurons" as a topographic label (see node notes), which spans
+              more than the modern PeVN/A14 usage. Recorded because the
+              cluster is periventricular and continuous with the population
+              this node describes.
+      - id: MBA:118
+        label: "Periventricular hypothalamic nucleus, intermediate part"
+        name_in_source: "periventricular neurons ... [of] the midtuberal region"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:6131950"
+            method: >
+              catecholamine / tyrosine hydroxylase cell mapping — middle of
+              three periventricular dopamine clusters, in the midtuberal
+              region and contiguous with labelled cells of the dorsomedial
+              hypothalamic nucleus
+            scope: "mouse hypothalamus (two inbred strains)"
+            quote_key: "8743092_0452ff39"
+            notes: >
+              Same older broad-scope usage as the preoptic entry. The source
+              places this cluster "approximately [in] the middle third of the
+              hypothalamus", which corresponds to the intermediate part of the
+              periventricular hypothalamic nucleus; the contiguous dorsomedial
+              hypothalamic cells it also labels are a separate population and
+              are not recorded here.
+      - id: MBA:946
+        label: "Posterior hypothalamic nucleus"
+        name_in_source: "posterior hypothalamic nucleus"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:6131950"
+            method: >
+              catecholamine / tyrosine hydroxylase cell mapping — most caudal
+              of three clusters, in the posterior hypothalamus, including
+              labelled cells in the posterior hypothalamic nucleus and the bed
+              nucleus of the supramammillary commissure
+            scope: "mouse hypothalamus (two inbred strains)"
+            quote_key: "8743092_0452ff39"
+            notes: >
+              The weakest of the three Baker entries for this node: the source
+              does not call this cluster periventricular, and the posterior
+              hypothalamic nucleus lies outside the PeVN column. Recorded
+              because the source groups it with the other two as part of one
+              rostrocaudal periventricular dopamine system under the older
+              naming. The co-labelled bed nucleus of the supramammillary
+              commissure is not grounded separately.
+    nt_type:
+      name_in_source: "dopamine"
+      cl_terms:
+        - id: CL:0000700
+          label: "dopaminergic neuron"
+          name_in_source: "dopamine neurons"
+      sources:
+        - ref: "PMID:36209152"
+          method: >
+            literature description — the population of the periventricular
+            nucleus (PeVN; A14 catecholaminergic group) is named and studied
+            as dopamine neurons, carrying Th and Dat1 (dopamine transporter)
+          scope: "adult mouse PeVN"
+          quote_key: "252760439_338fb0d7"
+        - ref: "PMID:31704726"
+          method: >
+            whole-brain tyrosine hydroxylase immunolabelling cross-referenced
+            against Allen Mouse Brain Atlas in situ mRNA for dopaminergic (Th,
+            dopamine transporter) versus noradrenergic (dopamine
+            beta-hydroxylase, noradrenaline transporter) markers
+          scope: "adult mouse; hypothalamic preoptic/periventricular A14-A15 region"
+          quote_key: "207950119_dadc8575"
+          notes: >
+            The quoted passage states the cross-referencing method rather than
+            the A14 result. That the periventricular A14-A15 TH-positive cells
+            come out dopaminergic rather than noradrenergic is the report's
+            reading of this comparison, and needs primary verification. The
+            quote also lumps A14 with A15.
+        - ref: "PMID:32499648"
+          method: >
+            scRNA-seq — hypothalamic dopamine neurons co-express the full
+            dopamine synthesis and vesicular loading complement Th, Ddc and
+            Slc18a2
+          scope: >
+            developing mouse hypothalamus; the hypothalamic dopamine class as
+            a whole, which includes but is not limited to the A14/PeVN
+            territory
+          quote_key: "218528429_41a6410b"
+    defining_markers:
+      - name_in_source: "TH"
+        symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:31704726"
+            method: "whole-brain 3D imaging of tyrosine hydroxylase immunolabelling"
+            scope: "adult mouse; hypothalamic preoptic/periventricular A14-A15 region"
+            quote_key: "207950119_7237df17"
+            notes: >
+              The quote reports TH staining for the "hypothalamic preoptic
+              area (A14-A15)" as one territory, so it does not separate A14
+              from A15.
+          - marker_type: PROTEIN
+            ref: "PMID:35601999"
+            method: >
+              review of published mouse TH immunolabelling mapping (Rasuli
+              et al. 2008) — widespread periventricular A14 TH-positive cells
+            scope: "mouse hypothalamus, alar PA and SPa prosomeric domains"
+            quote_key: "248530111_b598af95"
+      - name_in_source: "Dat1"
+        symbol: Slc6a3
+        ncbi_gene_id: "NCBIGene:13162"
+        sources:
+          - marker_type: NOT_STATED
+            ref: "PMID:36209152"
+            method: >
+              abstract statement that the PeVN (A14) population comprises
+              Th+/Dat1+ cells; no assay named in the quoted passage
+            scope: "adult mouse PeVN, anterior subdivision"
+            quote_key: "252760439_338fb0d7"
+            notes: >
+              The quote applies Th+/Dat1+ specifically to cells of the
+              anterior subdivision of the PeVN, the ones that innervate the
+              lateral septum. Recorded here because Th and Dat1 are the
+              parent population's markers in this source's framing rather than
+              the distinguishing criteria of that subtype (its subtype node
+              carries the projection phenotype); but coverage across the whole
+              A14 column is not established by this passage.
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31704726"
+            method: >
+              Allen Mouse Brain Atlas in situ hybridisation for the dopamine
+              transporter, used together with Th as the dopaminergic
+              transcript pair against noradrenergic markers
+            scope: "adult mouse; TH-expressing nuclei including the preoptic/periventricular A14-A15 region"
+            quote_key: "207950119_dadc8575"
+            notes: >
+              The passage names the dopamine transporter as a dopaminergic
+              marker in the cross-reference, not a measured value for A14. It
+              does not use the symbol Slc6a3 or Dat1; the gene is the mouse
+              dopamine transporter either way.
+      - name_in_source: "dopa decarboxylase (Ddc)"
+        symbol: Ddc
+        ncbi_gene_id: "NCBIGene:13195"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:32499648"
+            method: "scRNA-seq — co-expression with Th and Slc18a2 across hypothalamic dopamine neurons"
+            scope: >
+              developing mouse hypothalamus; the hypothalamic dopamine class,
+              not A14/PeVN specifically
+            quote_key: "218528429_41a6410b"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:40177299"
+            method: >
+              review of developmental single-cell transcriptomes — at least
+              ten hypothalamic dopaminergic clusters co-express TH, AADC (Ddc)
+              and VMAT2 (Slc18a2) mRNA
+            scope: "mouse hypothalamus across development; all dopaminergic clusters"
+            quote_key: "277180255_1f79ae17"
+            notes: >
+              AADC resolved to Ddc, the unique mouse gene carrying "aromatic
+              amino acid decarboxylase" as a synonym; the source itself writes
+              "AADC (Ddc)".
+      - name_in_source: "vesicular monoamine transporter 2 (Slc18a2)"
+        symbol: Slc18a2
+        ncbi_gene_id: "NCBIGene:214084"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:32499648"
+            method: "scRNA-seq — co-expression with Th and Ddc across hypothalamic dopamine neurons"
+            scope: >
+              developing mouse hypothalamus; the hypothalamic dopamine class,
+              not A14/PeVN specifically
+            quote_key: "218528429_41a6410b"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:40177299"
+            method: >
+              review of developmental single-cell transcriptomes — at least
+              ten hypothalamic dopaminergic clusters co-express TH, AADC (Ddc)
+              and VMAT2 (Slc18a2) mRNA
+            scope: "mouse hypothalamus across development; all dopaminergic clusters"
+            quote_key: "277180255_1f79ae17"
+    negative_markers:
+      - name_in_source: "dopamine beta-hydroxylase"
+        symbol: Dbh
+        ncbi_gene_id: "NCBIGene:13166"
+        modifier: ABSENT
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31704726"
+            method: >
+              Allen Mouse Brain Atlas in situ hybridisation, cross-referenced
+              against whole-brain TH immunolabelling: dopamine beta-hydroxylase
+              and the noradrenaline transporter serve as the noradrenergic
+              contrast to Th and the dopamine transporter
+            scope: "adult mouse; hypothalamic preoptic/periventricular A14-A15 region"
+            quote_key: "207950119_dadc8575"
+            notes: >
+              Absence is inferred, not stated: the quoted passage names
+              dopamine beta-hydroxylase as the noradrenergic comparator used
+              to settle the catecholaminergic phenotype of TH-expressing
+              nuclei, and the dopaminergic (not noradrenergic) outcome for the
+              periventricular A14-A15 cells is the report's reading of that
+              comparison. Needs primary verification.
+    morphology:
+      description: >
+        Parvocellular (small-bodied) dopamine neurons. The A14/PeVN territory
+        is not morphologically uniform — four morphologically and
+        electrophysiologically distinct parvocellular dopamine subtypes have
+        been resolved within it — so no single somatodendritic description
+        holds for the population as a whole.
+      sources:
+        - ref: "PMID:32499648"
+          method: >
+            morphological and electrophysiological classification of
+            parvocellular dopamine neurons in Th-GFP and
+            Slc6a3-Ires-cre::Ai14 mice
+          scope: "mouse A14 territory (PeVN)"
+          quote_key: "218528429_cb5dea70"
+    colocated_types:
+      - neighboring_type: "peptidergic neurons of the medial hypothalamic stratum"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          Periventricular TH-positive neurons are described as intermixed with
+          neighbouring peptidergic populations in the medial hypothalamic
+          stratum at both the alar preoptic (PA) and supraopto-paraventricular
+          (SPa) levels (PMID:35601999, quote 248530111_06dc7635). That
+          analysis is in adolescent rat rather than mouse, so the colocation
+          is carried as cross-species context and the peptidergic partners are
+          not identified by type.
     cl_mapping:
       cl_term:
         id: CL:0000700
@@ -66,4 +352,74 @@ nodes:
         hypothalamic_th_neuron, EXACT CL:4033050 catecholaminergic neuron),
         with no additional narrowing marker beyond location and
         developmental origin, which are recorded separately.
+    definition_references:
+      - "PMID:36209152"
+      - "PMID:32499648"
+      - "PMID:6131950"
+      - "PMID:35601999"
+      - "PMID:31704726"
+    notes: >
+      Scope of the name. The modern mouse usage this node follows is the A14
+      dopamine group of the periventricular nucleus (PeVN) along the third
+      ventricle (PMID:36209152). Older catecholamine mapping used
+      "periventricular dopaminergic neurons" as a wider topographic label for
+      three rostrocaudal clusters — preoptic periventricular, midtuberal
+      periventricular, and caudal posterior hypothalamic including the bed
+      nucleus of the supramammillary commissure (PMID:6131950, quote
+      8743092_0452ff39). All three are recorded in anatomical_location, so
+      this node currently carries the broad reading; if it is later split into
+      a broad periventricular system and a narrow PeVN/A14 type, the MBA:133,
+      MBA:118 and MBA:946 entries are the ones that move. Prosomeric mapping
+      likewise describes A14 as an extensive alar periventricular stratum
+      rather than a sharply bounded nucleus (PMID:35601999).
+
+      Internal heterogeneity. This is not one cell type. Four morphologically
+      and electrophysiologically distinct parvocellular dopamine subtypes have
+      been resolved in the A14 (PeVN) territory (PMID:32499648, quote
+      218528429_cb5dea70), of which only two are characterised in the
+      available literature — a medio-posterior Onecut3+/Nmur2+ neuroendocrine
+      type and an anterior Th+/Dat1+ lateral-septum-projecting type. The
+      remaining two have no markers, projections or physiology reported, so
+      the properties on this node are the population-level ones and may not
+      hold uniformly across all four.
+
+      Transmitter caveats. nt_type is recorded as dopamine only, but the
+      population is probably not a pure monoaminergic class: many hypothalamic
+      TH+ cells arising from Ascl1+ progenitors retain GAD1 and/or GAD2 and
+      other GABAergic markers at the mRNA level, and the degree of TH/GABA
+      marker co-expression varies by hypothalamic subdivision (PMID:40177299,
+      quote 277180255_1f79ae17). More specifically for this territory, the
+      periventricular alar (anterior) hypothalamus (Pe) is proposed to contain
+      both Otp and non-Otp catecholaminergic cells, with single-cell
+      transcriptomics raising the possibility that one of these subtypes is
+      glutamatergic and the other GABAergic (PMID:40177299, quote
+      277180255_3296e936). That is a working model, not a settled subtype map,
+      so no GABAergic or glutamatergic cl_term is asserted here; it should be
+      revisited at evidence-extraction.
+
+      Marker caveats. No marker on this node is specific to A14/PeVN. TH marks
+      catecholaminergic rather than dopaminergic cells, and Ddc and Slc18a2
+      are reported for the hypothalamic dopamine class as a whole rather than
+      for A14; Dat1/Slc6a3 is reported for the anterior PeVN subdivision in
+      PMID:36209152 and as a generic dopaminergic transcript in PMID:31704726.
+      The selective markers in this literature (Onecut3, Nmur2) belong to a
+      subtype, not to the whole population. Separating A14 cells from
+      neighbouring arcuate A12 cells therefore requires exact position plus a
+      marker combination, not TH alone.
+
+      Neuropeptides. No neuropeptide is recorded: the report finds no direct
+      evidence that A14/PeVN dopamine neurons synthesise a peptide. The
+      peptides associated with this population in the sources (neuromedin S,
+      somatostatin) belong to its afferent and target partners, not to the
+      cells themselves.
+
+      Development. Not a schema field, kept here for the record: hypothalamic
+      dopamine neurons including the A14/PeVN territory arise through a
+      cascading Ascl1 → Isl1 programme from Ascl1+ intermediate progenitors
+      and pass through a GABA-progenitor intermediate state (PMID:32499648,
+      quotes 218528429_19fbe10c and 218528429_daa2121c), and loss of
+      SLIT-ROBO signalling impairs both the production and the positioning of
+      periventricular dopamine neurons (quote 218528429_bc262f2b). Ascl1 and
+      Isl1 are lineage markers, not mature cell-type markers, so they are
+      deliberately not in defining_markers.
 edges: []

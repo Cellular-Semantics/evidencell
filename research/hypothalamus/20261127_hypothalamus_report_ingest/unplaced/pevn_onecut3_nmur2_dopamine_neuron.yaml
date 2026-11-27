@@ -1,0 +1,47 @@
+# Findings for pevn_onecut3_nmur2_dopamine_neuron that no CellTypeNode field holds.
+# Run: 20261127_hypothalamus_report_ingest
+
+- finding: >
+    The population receives many synaptic afferents from neuromedin S (Nms)+
+    neurons of the suprachiasmatic nucleus — stated as a defining connectivity
+    feature of the Onecut3+/Nmur2+ cells ("These newly distinguished neurons
+    are exclusively situated at the medio-posterior subdivision of the
+    periventricular area and receive Nms+ synaptic afferents from SCN neurons
+    regulating the circadian clock"). The schema has no afferent/input field:
+    AnatomicalLocation.compartment AXON_TARGET is explicitly for regions where
+    this type's axons terminate and explicitly excludes afferent inputs to the
+    type.
+  quote_keys: [205439542_ee40b322, 205439542_97445aba]
+  closest_field: anatomical_location (AXON_TARGET — excluded by definition)
+
+- finding: >
+    Circadian/neuroendocrine function. The Nms+ SCN inputs originate from
+    neurons expressing Per2 and Per3, and tyrosine hydroxylase phosphorylation
+    in these dopamine cells is regulated in a circadian fashion; the authors
+    propose the cells contribute to the dopaminergic inhibition of prolactin
+    secretion diurnally, via dopamine release into the hypophyseal portal
+    system and/or the pituitary intermediate lobe. Function is not a
+    CellTypeNode field. (The phospho-Ser40 TH labelling itself IS recorded, as
+    a defining_markers entry; it is only the circadian regulation of that
+    signal, and the prolactin role, that have nowhere to go.)
+  quote_keys: [205439542_ee40b322, 205439542_97445aba]
+  closest_field: null
+
+- finding: >
+    Proposed neurosecretory "hub" role — the authors suggest these onecut-3+
+    TH+ neurons can serve as neurosecretory hubs to tune the release of many
+    other hypothalamic neuropeptides through their synaptic afferents. This is
+    an interpretive proposal about network role, not a property of the cells,
+    and is explicitly NOT evidence that the cells themselves make a
+    neuropeptide (see the node's notes).
+  quote_keys: [205439542_97445aba]
+  closest_field: null
+
+- finding: >
+    Clock-gene expression in the cells themselves — the source notes
+    expression of clock genes in the periventricular and Arc dopamine cells
+    (citing Sellix et al. 2006), i.e. a secondary citation rather than a result
+    of this study, and not resolved to named genes. Not recorded as a marker
+    for that reason.
+  quote_keys: [205439542_97445aba]
+  closest_field: defining_markers

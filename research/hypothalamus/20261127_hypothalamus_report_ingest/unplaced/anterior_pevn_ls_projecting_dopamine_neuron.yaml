@@ -1,0 +1,52 @@
+# Findings for anterior_pevn_ls_projecting_dopamine_neuron that no CellTypeNode field holds.
+# Run: 20261127_hypothalamus_report_ingest
+
+- finding: >
+    Dense neuropeptidergic afferent innervation from the suprachiasmatic
+    nucleus, stated for this subtype specifically ("These dopamine neurons
+    receive dense neuropeptidergic innervation from the SCN", of the Th+/Dat1+
+    anterior-subdivision cells that innervate the LS). Distinct from the Nms+
+    SCN afferents recorded for the medio-posterior Onecut3+/Nmur2+ sibling:
+    Korchynska et al. do not name the peptide here. The schema has no
+    afferent/input field — AnatomicalLocation.compartment AXON_TARGET is for
+    regions where this type's axons terminate and explicitly excludes afferent
+    inputs to the type.
+  quote_keys: [252760439_338fb0d7, 277180255_3296e936]
+  closest_field: anatomical_location (AXON_TARGET — excluded by definition)
+
+- finding: >
+    Somatostatin-containing lateral septal neurons are the preferred
+    postsynaptic partners of these cells' extrahypothalamic efferents,
+    established by reciprocal viral tracing plus ex vivo optogenetic
+    stimulation. Recorded on the node inside the AXON_TARGET source's notes,
+    since it qualifies the projection; listed here because the schema has no
+    field for a named postsynaptic partner type (colocated_types is for
+    spatial co-localisation of neighbouring types, and these LS neurons are in
+    a different region).
+  quote_keys: [252760439_338fb0d7]
+  closest_field: colocated_types
+
+- finding: >
+    Circadian and behavioural function. The suprachiasmatic inputs are
+    reported to regulate the circadian cycle of activation of these cells;
+    the activity of both the SCN neurons and their target catecholaminergic
+    Pe neurons increases during the dark hours in mice; and the projection to
+    the lateral septum is described as regulating locomotion. Korchynska et
+    al. 2022 is titled "A hypothalamic dopamine locus for psychostimulant-
+    induced hyperlocomotion in mice", and the report frames this subtype as
+    the behaviour-linked, forebrain-projecting branch of A14, contrasted with
+    the endocrine-facing branch. Function is not a CellTypeNode field.
+  quote_keys: [277180255_3296e936, 252760439_76467ecc]
+  closest_field: null
+
+- finding: >
+    It is unknown whether this lateral-septum-projecting population is the Otp
+    or the non-Otp catecholaminergic subtype of the alar Pe — Morales et al.
+    2025 raise the question explicitly and suggest, from single-cell
+    transcriptomics, that the two may differ in transmitter programme
+    (glutamatergic versus GABAergic). Carried as a transmitter caveat in the
+    node's notes rather than as a property; recorded here because it is also
+    an open question about this node's extension (whether it is one population
+    or two).
+  quote_keys: [277180255_3296e936]
+  closest_field: nt_type
