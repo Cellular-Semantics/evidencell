@@ -1,0 +1,63 @@
+# Findings for pvn_crh_neuron that no CellTypeNode property field can hold.
+# Written by the property phase of 20261127_hypothalamus_report_ingest.
+
+- finding: >
+    Extra-hypophysiotropic projections. Beyond the median eminence, PVN CRH
+    neurons are reported to project to the cerebral cortex, subcortical regions
+    and the locus coeruleus (Mccann et al. 2000), and to form functional
+    projections to diverse brain regions and pre-sympathetic circuits using
+    fast transmitters alongside CRH co-transmission (Zheng et al. 2026). A
+    PVN-CRH to lateral hypothalamic area inhibitory pathway is proposed in a
+    high-fat-diet anxiety model (Wang et al. 2026). None of these is supported
+    by tract tracing of the CRH population in the quoted text, and no single
+    target region is named with enough specificity to ground an
+    AXON_TARGET entry, so they are not written to anatomical_location.
+  quote_keys: ["10960688_ab072ca4", "287124783_6e2163da", "292113836_e488522e"]
+  closest_field: anatomical_location
+
+- finding: >
+    Afferent connectivity — the largest body of evidence in the report, and the
+    one with no home in CellTypeNode. PVN CRH neurons receive direct synaptic
+    input from neurons in 31 brain areas (Lee et al. 2019); GABAergic input
+    from the arcuate nucleus whose withdrawal during prolonged high-intensity
+    stress disinhibits them (Cao et al. 2026); direct glutamatergic input from
+    restraint-activated arcuate POMC neurons (Junaid et al. 2025);
+    predator-odour-driven input from the amygdalo-piriform transition area
+    (Kondoh et al. 2016); and noradrenergic input from the locus coeruleus and
+    nucleus of the solitary tract (Ono et al. 2026). CellTypeNode has no
+    afferent-input field; the summarised consequence for excitability is
+    recorded in electrophysiology.description instead.
+  quote_keys: ["204384743_ef54f39a", "289908119_e16827f4", "279958172_ff8df625", "4406530_77389589", "290696127_2caba1f5"]
+  closest_field: null
+
+- finding: >
+    Functional role. The type sits at the apex of the HPA axis: it releases CRH
+    into the hypophyseal portal circulation to drive ACTH and then glucocorticoid
+    secretion, is subject to glucocorticoid negative feedback, and organises an
+    environmentally flexible behavioural repertoire after acute stress
+    (optical silencing disrupts it; activation blunts environmental
+    sensitivity). CellTypeNode has no function field.
+  quote_keys: ["8197728_c0a132d1", "229341625_0da82e5b", "15489453_f4e1ac98"]
+  closest_field: null
+
+- finding: >
+    Developmental origin. PVH neurons are generated between E10.5 and E12.5 and
+    differentiate largely before birth, specified by a transcription-factor
+    cascade including Sim1 (Son et al. 2021); PVN neuroendocrine cells share a
+    developmental origin, with CRH-containing parvocellular and magnocellular
+    cells the most similar (Cusulin et al. 2013); Fgf8 hypomorphy does not
+    eliminate PVN CRH neurons but disrupts the postnatal timing of neuropeptide
+    expression onset (Rodriguez et al. 2015). CellTypeNode has no developmental
+    field; Sim1 is recorded as a defining marker, the rest has no home.
+  quote_keys: ["240072675_c5e4d87e", "17422230_2e85bd0e", "255955325_e30adb3b"]
+  closest_field: null
+
+- finding: >
+    Stress-evoked activation marker. A large majority of Crh-reporter PVN
+    neurons express c-Fos after acute stress, and acute psychological (swim)
+    and pharmacological (yohimbine) stress drive Fos expression in PVN CRF
+    neurons, whereas repeated restraint followed by a novel stressor does not
+    further recruit them. c-Fos is an activity-dependent immediate-early gene
+    rather than a cell-type marker, so it is not written to defining_markers.
+  quote_keys: ["17422230_7b738f29", "52881652_6fa07676"]
+  closest_field: defining_markers

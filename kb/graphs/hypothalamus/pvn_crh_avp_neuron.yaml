@@ -1,0 +1,223 @@
+# CRH-AVP neuron of the paraventricular hypothalamic nucleus — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/PVN_CRH_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "PVN CRH-AVP neuron"
+description: >
+  Evidence graph component for the CRH-AVP (arginine vasopressin
+  co-expressing) neuron of the paraventricular hypothalamic nucleus, proposed
+  from the ASTA deep research report PVN_CRH_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "hypothalamic paraventricular nucleus (PVN/PVH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: pvn_crh_avp_neuron
+    name: "CRH-AVP neuron of the paraventricular hypothalamic nucleus"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "CRH-AVP neuron"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "name used for the Avp-defined subgroup of glutamatergic PVN CRH neurons"
+    subtype_of:
+      - parent: pvn_crh_glutamatergic_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "single-cell RNA-seq of Crh-reporter PVN neurons plus CRH-tdTomato IHC and Slc17a6/Gad2 ISH"
+            scope: "neonatal male mouse PVN"
+        notes: >
+          The source resolves two distinct populations within the glutamatergic
+          Crh+ class on the basis of Avp versus Ntng1 expression, so containment
+          in the glutamatergic PVN CRH neuron class follows from the definition
+          used. Stated by one source (Short et al. 2021), in neonatal male mouse.
+          Coexpression of AVP by a subset of parvocellular CRH neurons is
+          reported more widely, but the Avp-defined cluster here is the specific
+          population this node names.
+    anatomical_location:
+      - id: MBA:38
+        label: "Paraventricular hypothalamic nucleus"
+        name_in_source: "PVN"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "CRH-tdTomato immunohistochemistry with in situ hybridization for Slc17a6 and Gad2; Avp- and Ntng1-defined glutamatergic subgroups scored by position within PVN"
+            scope: "neonatal male mouse PVN"
+            notes: >
+              The source reports this population as distributed sparsely
+              throughout the PVN, with no concentration in any one subdivision,
+              so no sub-nuclear MBA term is asserted. Note that the parent
+              glutamatergic Crh+ class is reported in the same passage as
+              concentrated in the dorsal parvocellular subdivision; the two
+              statements are not reconciled by the source.
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "https://doi.org/10.1101/2021.08.31.458231"
+          quote_key: "237393232_d3cd021e"
+          method: "in situ hybridization for Slc17a6 and Gad2 on CRH-tdTomato-labelled cells; the Avp-defined population is resolved within the glutamatergic CRH+ cells"
+          scope: "neonatal male mouse PVN"
+        - ref: "PMID:24009552"
+          quote_key: "4940077_fa9dc37b"
+          method: "dual-immunofluorescence, single-cell RT-PCR and electrophysiology comparing PVN with BNST CRF neurons"
+          scope: "PVN CRF neurons as a whole, not the Avp-expressing subset; species not stated in the quoted passage"
+    defining_markers:
+      - name_in_source: "Avp"
+        symbol: Avp
+        ncbi_gene_id: "NCBIGene:11998"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "single-cell RNA-seq of Crh-reporter PVN neurons; the glutamatergic CRH+ cells split into Avp- and Ntng1-expressing populations"
+            scope: "neonatal male mouse PVN"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_7fc15258"
+            method: "single-cell RNA-seq cluster marker analysis; Avp preferential in clusters 1 and 5"
+            scope: "neonatal male mouse PVN"
+      - name_in_source: "Crh"
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: TRANSGENE_REPORTER
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "immunohistochemistry for CRH-tdTomato in a Crh reporter line; tdTomato+ cells scored for Slc17a6, Gad2 and subgroup identity"
+            scope: "neonatal male mouse PVN"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_b75d4d85"
+            method: "single-cell RNA-seq of PVN CRH-expressing neurons"
+            scope: "neonatal male mouse PVN"
+      - name_in_source: "Slc17a6"
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "in situ hybridization for Slc17a6 on CRH-tdTomato-labelled cells"
+            scope: >
+              neonatal male mouse PVN; asserted for this type because the source
+              places it inside the glutamatergic CRH+ class, which is defined by
+              Slc17a6 — Slc17a6 is not scored on the Avp-expressing cells
+              separately in the quoted passage
+      - name_in_source: "steroid hormone receptors"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_7fc15258"
+            method: "single-cell RNA-seq cluster marker analysis; the Avp-expressing clusters (1 and 5) are reported as preferentially expressing steroid hormone receptors"
+            scope: "neonatal male mouse PVN"
+            notes: >
+              The source names a receptor family, not a gene: no individual
+              steroid hormone receptor is identified in the report or in any
+              quoted passage, so no gene can be assigned. Carried as
+              name_in_source only, pending the paper's differential-expression
+              tables.
+    neuropeptides:
+      - name_in_source: "arginine vasopressin (AVP)"
+        symbol: Avp
+        ncbi_gene_id: "NCBIGene:11998"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_7fc15258"
+            method: "single-cell RNA-seq cluster marker analysis"
+            scope: "neonatal male mouse PVN"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "single-cell RNA-seq of Crh-reporter PVN neurons; the Avp-expressing subgroup is named CRH-AVP"
+            scope: "neonatal male mouse PVN"
+      - name_in_source: "CRH"
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: TRANSGENE_REPORTER
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "CRH-tdTomato immunohistochemistry identifying the Crh-expressing population from which the Avp-defined subgroup is drawn"
+            scope: "neonatal male mouse PVN"
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "PVN CRH-AVP neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched (OAK CL semsql DB, ols4 unavailable): "CRH neuron" (only
+        CL:4072021), "vasopressin" (no CL hit), "glutamatergic neuron"
+        (CL:0000679), "paraventricular", "parvocellular", "hypothalamic
+        neuron" — no CL term exists for an Avp-coexpressing subset of CRH
+        neurons, and CL:4072021 has no child terms. This node is a subset of
+        the parent pvn_crh_glutamatergic_neuron (itself BROAD to CL:4072021,
+        no more specific CL term available), per its subtype_of assertion, so
+        CL:4072021 remains the nearest and most specific containing CL term.
+        Would need a CL term for "CRH-AVP neuron" or equivalent for EXACT.
+    is_terminal: false
+    definition_references:
+      - "https://doi.org/10.1101/2021.08.31.458231"
+      - "PMID:10377355"
+      - "PMID:33060330"
+      - "PMID:24009552"
+    notes: >
+      This node is NOT the existing pvn_avp_neuron. pvn_avp_neuron is the
+      AVP neuron of the PVN — chiefly the magnocellular, posterior-pituitary
+      projecting class — defined by vasopressin without reference to CRH.
+      This node is a CRH neuron that also expresses Avp, resolved inside the
+      glutamatergic Crh+ population by single-cell RNA-seq. Mistaking one for
+      the other would merge a neurosecretory AVP class with a CRH subtype.
+
+      The relationship between this Avp-defined transcriptomic cluster and
+      the "classical" CRH/AVP co-secreting parvocellular subset described
+      elsewhere in the same report is unsettled. That classical subset
+      (AVP colocalized with CRH in parvocellular PVN, the two peptides
+      co-secreted under some stress conditions and acting synergistically at
+      the corticotroph — Itoi et al. 1999, Lightman et al. 2020) is defined
+      by peptide colocalization and co-secretion in adult rodents, whereas
+      this node is defined by an Avp-high cluster in neonatal male mouse
+      scRNA-seq. No source tested whether they are the same cells, so the
+      two have deliberately not been merged; see
+      research/hypothalamus/20261127_hypothalamus_report_ingest/unplaced/pvn_crh_neuron.yaml.
+
+      All property assertions here rest on a single source (Short et al.
+      2021, a preprint), in neonatal male mice. Nothing has been reproduced
+      in adult or female animals, and the report gives no dataset accession
+      for the single-cell data, so the cluster cannot be re-identified
+      computationally.
+
+      "Steroid hormone receptors" is recorded as a defining marker with
+      name_in_source only: the source names the receptor family and no
+      individual gene, so there is no gene to assign. Which receptor (or
+      receptors) is meant — oestrogen, androgen, glucocorticoid,
+      mineralocorticoid — is not recoverable from the report.
+
+      Crh and Slc17a6 are inherited from this node's defining context rather
+      than scored on the Avp-expressing cells in isolation: the quoted
+      passage establishes them for the glutamatergic Crh+ class and then
+      subdivides that class by Avp versus Ntng1.
+edges: []

@@ -34,6 +34,283 @@ nodes:
           - ref: "https://doi.org/10.1186/s12915-021-00973-x"
             quote_key: "255832704_a36375f0"
             method: "name used for the reconstructed hypothalamic CRH population"
+      - term: "CRHN"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:37524867"
+            quote_key: "260348712_5074822c"
+            method: "abbreviation introduced for CRH neurons of the PVN"
+      - term: "PVN-CRH neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:30408488"
+            quote_key: "53236858_79024921"
+            method: "primary label used throughout the review of afferent modulation"
+      - term: "PVNCRH neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:41935803"
+            quote_key: "287124783_6e2163da"
+            method: "subscript-style abbreviation used as the primary label"
+      - term: "PVHCRH neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:42427777"
+            quote_key: "289908119_e16827f4"
+            method: "abbreviation defined for CRH neurons of the paraventricular nucleus (PVH)"
+      - term: "CRHPVN neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:38498811"
+            quote_key: "268520959_e1d3a7f2"
+            method: "abbreviation defined for CRH-producing hypothalamic paraventricular nucleus neurons"
+      - term: "PVN CRF neuron"
+        sources:
+          - ref: "PMID:26874559"
+            quote_key: "288285502_fbb0eef2"
+            method: "CRF naming of the same population, used as the primary label"
+      - term: "hypophysiotropic CRF neuron"
+        sources:
+          - ref: "PMID:22363652"
+            quote_key: "1112079_6d827df1"
+            method: "name for the median-eminence-projecting CRF population of the PVN"
+      - term: "parvocellular CRH neuron"
+        sources:
+          - ref: "PMID:42293083"
+            quote_key: "288785158_0bed7d98"
+            method: "name used for the neuroendocrine CRH neurons of the parvocellular PVN"
+      - term: "CRH-synthesizing parvocellular neuroendocrine neuron"
+        sources:
+          - ref: "https://doi.org/10.5604/01.3001.0013.1937"
+            quote_key: "164434715_d3781077"
+            method: "long-form designation used for the PVN population at the apex of the HPA axis"
+    anatomical_location:
+      - id: MBA:38
+        label: Paraventricular hypothalamic nucleus
+        name_in_source: "paraventricular nucleus of the hypothalamus (PVN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:27540587"
+            quote_key: "12248106_1079e8fc"
+            method: "review; cell bodies localised to the PVN"
+            scope: "rodent PVN"
+          - ref: "PMID:23724107"
+            quote_key: "17422230_702bfb30"
+            method: "CRH IHC in Crh-IRES-Cre;Ai14 tdTomato reporter mice; 80.5% of reporter-positive somata CRH-immunoreactive, 96.0% of CRH-immunoreactive somata reporter-positive"
+            scope: "adult mouse PVN"
+      - id: MBA:94
+        label: Paraventricular hypothalamic nucleus, parvicellular division
+        name_in_source: "parvocellular division of the paraventricular nucleus (PVN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:37511494"
+            quote_key: "260146994_c1b46006"
+            method: "review; parvocellular PVH neurons supply CRH to the hypophyseal portal circulation"
+            scope: "mouse PVH"
+          - ref: "PMID:40497964"
+            quote_key: "279024393_5ad42b00"
+            method: "review; CRH is contained in the parvocellular (small-bodied) neurosecretory subdivision"
+            scope: "mouse PVN"
+          - ref: "PMID:10377355"
+            quote_key: "14456500_cf2f0994"
+            method: "review; CRH synthesised in the parvocellular division of the PVN"
+            scope: "rodent PVN"
+      - id: MBA:10671
+        label: Median eminence
+        name_in_source: "median eminence (ME)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:23724107"
+            quote_key: "17422230_702bfb30"
+            method: "Crh-IRES-Cre;Ai14 reporter colocalised with CRH protein at the external lamina of the ME; peripherally delivered fluorogold taken up by 85.9% of reporter-positive PVN somata, confirming terminals outside the blood-brain barrier"
+            scope: "adult mouse"
+          - ref: "PMID:27540587"
+            quote_key: "12248106_1079e8fc"
+            method: "review; axons project to the median eminence and release CRH from its external layer"
+            scope: "rodent"
+          - ref: "PMID:32060528"
+            quote_key: "211122949_af8cd8d5"
+            method: "review; parvocellular neurosecretory cells project to the capillaries of the median eminence"
+            scope: "rodent PVN"
+    colocated_types:
+      - neighboring_type: "PVN oxytocin, vasopressin, thyrotropin-releasing hormone and somatostatin neurons"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          The PVN contains several intermixed peptidergic neurosecretory
+          populations alongside the CRH neurons (PMID:40119815). The nucleus is
+          compartmental, with topographically segregated cellular units
+          specified by combinations of neuromediators whose composition varies
+          with physiological state (PMID:3044519).
+      - neighboring_type: "PVN CRFR1 neuron"
+        spatial_relationship: ADJACENT
+        notes: >
+          PVN CRF neurons form synapses on neighbouring CRFR1-expressing PVN
+          neurons and activate them by releasing CRF (PMID:29352046); the CRFR1
+          population is a local postsynaptic partner, not a subset of this type.
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:24009552"
+          quote_key: "4940077_fa9dc37b"
+          method: "dual immunofluorescence + single-cell RT-PCR + electrophysiology; PVN CRF neurons glutamatergic, contrasted with GABAergic BNST CRF neurons"
+          scope: "rat PVN vs BNST"
+        - ref: "PMID:33060330"
+          quote_key: "222410534_1c3af551"
+          method: "scRNA-seq; all PVH clusters contain Vglut2 (Slc17a6) and lack Vgat (Slc32a1)"
+          scope: "adult mouse PVH"
+        - ref: "PMID:37599997"
+          quote_key: "260663339_44a813eb"
+          method: "review; parvocellular CRH neurons described as excitatory and VGLUT2-co-expressing"
+          scope: "mouse PVN"
+    defining_markers:
+      - name_in_source: "CRH"
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - ref: "PMID:23724107"
+            quote_key: "17422230_702bfb30"
+            method: "immunohistochemistry for CRH combined with Crh-IRES-Cre;Ai14 tdTomato"
+            scope: "adult mouse PVN and median eminence"
+            notes: "CRH immunoreactivity in 80.5% of tdTomato neurons; 96.0% of CRH-containing somata tdTomato-positive"
+            marker_type: PROTEIN
+          - ref: "PMID:33060330"
+            quote_key: "222410534_1c3af551"
+            method: "scRNA-seq; Crh among the differentially expressed canonical PVH neuropeptide marker genes"
+            scope: "adult mouse PVH"
+            marker_type: TRANSCRIPT
+      - name_in_source: "Vglut2 (Slc17a6)"
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
+        sources:
+          - ref: "PMID:33060330"
+            quote_key: "222410534_1c3af551"
+            method: "scRNA-seq; excitatory marker Vglut2 present in all PVH clusters"
+            scope: "adult mouse PVH"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:37599997"
+            quote_key: "260663339_44a813eb"
+            method: "review statement; assay not named in the quote"
+            scope: "mouse PVN parvocellular CRH neurons"
+            marker_type: NOT_STATED
+      - name_in_source: "SIM1"
+        symbol: Sim1
+        ncbi_gene_id: "NCBIGene:20464"
+        sources:
+          - ref: "PMID:33060330"
+            quote_key: "222410534_1c3af551"
+            method: "scRNA-seq; Sim1 expressed by all PVH clusters"
+            scope: "adult mouse PVH"
+            notes: "Sim1 marks PVH neurons as a class, not the CRH population specifically"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:34705510"
+            quote_key: "240072675_c5e4d87e"
+            method: "review; SIM1 used as a specific marker of PVH neurons, persisting in most adult PVH neurons"
+            scope: "mouse PVH"
+            marker_type: NOT_STATED
+      - name_in_source: "connexin 36"
+        symbol: Gjd2
+        ncbi_gene_id: "NCBIGene:14617"
+        sources:
+          - ref: "PMID:19405960"
+            quote_key: "6980175_c0ee3a3f"
+            method: "EGFP/connexin36 reporter expression scored against CRH immunoreactivity; reporter line not named in the quote"
+            scope: "mouse PVN"
+            notes: "Reported for subsets of CRH neurons only, not the whole population; no reporter seen in oxytocin or vasopressin neurons"
+            marker_type: TRANSGENE_REPORTER
+          - ref: "PMID:19405960"
+            quote_key: "6980175_4a715bc7"
+            method: "summary statement of the same reporter study"
+            scope: "mouse hypothalamus and brainstem"
+            notes: "Subset marker: connexin 36 expressed in subsets of neuroendocrine and CRH neurons"
+            marker_type: TRANSGENE_REPORTER
+    negative_markers:
+      - name_in_source: "Vgat (Slc32a1)"
+        symbol: Slc32a1
+        ncbi_gene_id: "NCBIGene:22348"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:33060330"
+            quote_key: "222410534_1c3af551"
+            method: "scRNA-seq; inhibitory marker Vgat absent from all PVH clusters"
+            scope: "adult mouse PVH"
+            marker_type: TRANSCRIPT
+    neuropeptides:
+      - name_in_source: "CRH"
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - ref: "PMID:37511494"
+            quote_key: "260146994_c1b46006"
+            method: "review; CRH described as a 41-amino-acid neuropeptide released by parvocellular PVH neurons into the hypophyseal portal circulation"
+            scope: "mouse PVH"
+            marker_type: NOT_STATED
+          - ref: "PMID:23724107"
+            quote_key: "17422230_702bfb30"
+            method: "CRH immunohistochemistry in PVN somata and at the median eminence"
+            scope: "adult mouse"
+            marker_type: PROTEIN
+      - name_in_source: "AVP (arginine vasopressin)"
+        symbol: Avp
+        ncbi_gene_id: "NCBIGene:11998"
+        sources:
+          - ref: "PMID:10377355"
+            quote_key: "14456500_cf2f0994"
+            method: "review; parvocellular AVP colocalised with CRH and co-secreted under certain stressful stimuli"
+            scope: "rodent PVN parvocellular division"
+            notes: "Co-expression reported for a subset of parvocellular CRH neurons, not the whole population"
+            marker_type: NOT_STATED
+          - ref: "PMID:22593735"
+            quote_key: "8197728_c0a132d1"
+            method: "review; CRH cells can synthesise and release vasopressin in addition to CRH"
+            scope: "rodent PVN neuroendocrine CRH cells"
+            marker_type: NOT_STATED
+    electrophysiology:
+      description: >
+        Intrinsic biophysical and synaptic properties are homogeneous across
+        the Crh-reporter-defined PVN population. Excitability is set by a
+        balance of glutamatergic excitation, noradrenergic drive and strong
+        GABAergic inhibition, the latter delivered in both phasic and tonic
+        forms; no distinct e-type label has been assigned.
+      sources:
+        - ref: "PMID:23724107"
+          quote_key: "17422230_7b738f29"
+          method: "whole-cell recording of tdTomato-labelled PVN neurons; optogenetic manipulation via viral Cre-driven channelrhodopsin"
+          scope: "Crh-IRES-Cre;Ai14 mouse, PVN"
+        - ref: "PMID:22593735"
+          quote_key: "8197728_39d59cd0"
+          method: "review of synaptic regulation; GABA, glutamate and norepinephrine named as the three orchestrating transmitters"
+          scope: "rodent PVN neuroendocrine CRH neurons"
+        - ref: "PMID:24495609"
+          quote_key: "22774749_3ac5ba2b"
+          method: "review; phasic and tonic GABAergic inhibition onto CRH neurons, the tonic component carried by the GABA-A receptor delta subunit"
+          scope: "mouse PVN"
+    morphology:
+      description: >
+        Small-bodied (parvocellular) neurosecretory neurons. Among CRH
+        populations reconstructed brain-wide, hypothalamic CRH neurons have the
+        smallest somatic volumes and the simplest dendritic branching. Two
+        morphological groups are distinguished by somatic location and
+        dendritic varicosities: rostral-projecting cells of the anterior
+        parvicellular area with fewer and smaller varicosities, and cells of
+        the periventricular area with more and larger varicosities on dendrites
+        directed toward the third ventricle.
+      sources:
+        - ref: "PMID:33722214"
+          quote_key: "232240856_f5066bcf"
+          method: "CRH-IRES-Cre;Ai32 line + fMOST whole-brain imaging with single-neuron dendritic reconstruction"
+          scope: "adult mouse, hypothalamic CRH neurons compared with other brain-wide CRH populations"
+        - ref: "PMID:33722214"
+          quote_key: "232240856_88d14a13"
+          method: "fMOST reconstruction; classification by somatic location and dendritic varicosity number and size"
+          scope: "adult mouse hypothalamus"
+        - ref: "PMID:40497964"
+          quote_key: "279024393_5ad42b00"
+          method: "review; parvocellular neurosecretory neurons described as small-bodied, contrasted with large-bodied magnocellular cells"
+          scope: "mouse PVN"
     cl_mapping:
       cl_term:
         id: CL:4072021
@@ -48,4 +325,39 @@ nodes:
         matches this node's defining criterion and primary location
         directly — distinct from pvn_crfr1_neuron, which is defined by the
         CRF receptor and is RELATED (not EXACT) to this same CL term.
+    definition_references:
+      - PMID:23724107
+      - PMID:24009552
+      - PMID:33060330
+      - PMID:22593735
+      - PMID:33722214
+    notes: >
+      Reporter-line dependence: most marker, morphology and electrophysiology
+      evidence for this type comes from Crh-IRES-Cre reporter mice rather than
+      from endogenous CRH detection. Concordance in the PVN is good but not
+      complete (PMID:23724107: 80.5% of reporter-positive somata are
+      CRH-immunoreactive), and PMID:30266597 reports reporter/peptide
+      discrepancies in other regions, so reporter-defined counts should not be
+      read as CRH-expressing-cell counts.
+      Neurotransmitter discrepancy: the glutamatergic assertion follows
+      PMID:24009552, PMID:33060330 and PMID:37599997, and PMID:33060330
+      specifically finds no Vgat in any PVH cluster; a single-cell study of
+      neonatal PVN (https://doi.org/10.1101/2021.08.31.458231) nevertheless
+      resolves a sparse Gad2-expressing Crh+ group. Whether that group is a
+      developmental feature, a dissection artefact or a genuine adult minority
+      is unresolved by the sources here.
+      Neuropeptide discrepancy: PMID:23724107 reports that Crh-reporter PVN
+      neurons abundantly express CRH protein but not the other PVN phenotypic
+      neuropeptides, whereas PMID:10377355 and PMID:22593735 describe a
+      parvocellular subset that co-expresses and co-secretes AVP with CRH. Avp
+      is therefore recorded as a subset neuropeptide, not a property of the
+      whole population.
+      Subset markers: connexin 36 (Gjd2) is reported only for subsets of PVN
+      CRH neurons and only through an EGFP reporter (PMID:19405960). Sim1 is a
+      marker of PVH neurons as a class (PMID:33060330, PMID:34705510), not a
+      discriminating marker for the CRH population.
+      Compartmental caveat: PMID:3044519 describes the PVN as a dynamic mosaic
+      in which the neuromediator combination of individual neurons varies with
+      physiological state, so the marker set recorded here should be read as a
+      typical rather than an invariant phenotype.
 edges: []

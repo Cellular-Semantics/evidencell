@@ -1,0 +1,189 @@
+run_id: 20261127_hypothalamus_report_ingest
+types:
+  - node_id: pvn_crh_neuron
+    action: ENRICH
+    file: kb/graphs/hypothalamus/pvn_crh_neuron.yaml
+    report_sections:
+      - Introduction and background
+      - Anatomical location, structure, and developmental origin
+      - Core function in HPA-axis and stress physiology
+      - Neurotransmitter, neuropeptides, and molecular markers
+      - Connectivity and circuit regulation
+      - Heterogeneity and subtype organization
+    reconciliation_note: >
+      The report's primary subject is the mouse PVN CRH neuron — the
+      parvocellular neurosecretory population that releases CRH at the median
+      eminence to drive the HPA axis. This is the same population as the
+      existing node pvn_crh_neuron (CLASSICAL_NEUROCHEMICAL, Mus musculus, CL
+      corticotropin-releasing neuron EXACT): the sources would let either name
+      be swapped for the other. Other PVN nodes were considered and rejected as
+      the subject: pvn_avp_neuron, pvn_oxt_neuron and pvn_trh_neuron are the
+      intermixed peptidergic classes the report explicitly distinguishes from
+      CRH neurons; pvn_preautonomic_neuron is the brainstem/spinal-projecting
+      parvocellular class the report contrasts with the median-eminence
+      projecting CRH cells; pvn_brs3_pb_projecting_neuron is unrelated; and
+      pvn_crfr1_neuron is the postsynaptic CRF-receptor partner the report
+      mentions only as a local target of CRH release, not as its subject.
+      Enrichment is limited to eight quote-backed alternative names for the same
+      population (CRHN, PVN-CRH, PVNCRH, PVHCRH, CRHPVN, PVN CRF neuron,
+      hypophysiotropic CRF neuron, parvocellular CRH neuron, CRH-synthesizing
+      parvocellular neuroendocrine neuron). species was already present and
+      unchanged; no subtype parent applies.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          A connexin 36 (Gjd2)-expressing subset of PVN CRH neurons is reported,
+          framed in the report as a subset marker rather than a named type; too
+          thinly characterised to propose as a node, and belongs on
+          pvn_crh_neuron as a marker/heterogeneity property in the property
+          phase.
+        quote_keys: ["6980175_c0ee3a3f", "6980175_4a715bc7"]
+      - finding: >
+          A subset of parvocellular PVN neurons coexpresses AVP with CRH and
+          cosecretes both under some stress conditions. Whether this classical
+          CRH/AVP subset is the same population as the Avp-defined scRNA-seq
+          cluster captured by the new node pvn_crh_avp_neuron is not settled by
+          the report; recorded here rather than merged.
+        quote_keys: ["14456500_cf2f0994", "211122949_af8cd8d5"]
+      - finding: >
+          The report characterises several circuit-partner populations that are
+          not the subject of this ingest and were therefore not proposed as
+          nodes: PVH-projecting arcuate GABA neurons (ArcGABA), restraint-
+          activated arcuate POMC neurons providing direct glutamatergic input,
+          amygdalo-piriform transition area (AmPir) neurons driving predator-odour
+          stress responses, and PVN CRFR1 neurons (already in the KB as
+          pvn_crfr1_neuron) as a local postsynaptic target. These are afferent/
+          efferent partners of the subject, and belong in connectivity evidence
+          rather than new identity nodes.
+        quote_keys: ["289908119_e16827f4", "279958172_ff8df625", "4406530_77389589", "3500412_8887c99a"]
+
+  - node_id: pvn_crh_glutamatergic_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/pvn_crh_glutamatergic_neuron.yaml
+    report_sections:
+      - Heterogeneity and subtype organization
+      - Transcriptomic and related datasets
+      - Neurotransmitter, neuropeptides, and molecular markers
+    reconciliation_note: >
+      A narrower population inside pvn_crh_neuron, not the same population:
+      Short et al. resolve PVN Crh-expressing neurons into a glutamatergic
+      (Crh+/Slc17a6+) majority and a smaller GABAergic (Crh+/Gad2+) group, and
+      report the glutamatergic cells concentrated in the dorsal parvocellular
+      subdivision. No existing hypothalamus node describes it — checked against
+      pvn_crh_neuron (the parent), pvn_crfr1_neuron, pvn_avp_neuron,
+      pvn_oxt_neuron, pvn_trh_neuron, pvn_preautonomic_neuron, and the generic
+      lha_glutamatergic_neuron (different nucleus). Recorded as NEW with
+      subtype_of pvn_crh_neuron.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: pvn_crh_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/pvn_crh_gabaergic_neuron.yaml
+    report_sections:
+      - Heterogeneity and subtype organization
+      - Transcriptomic and related datasets
+    reconciliation_note: >
+      A narrower population inside pvn_crh_neuron: the smaller GABAergic
+      (Crh+/Gad2+) group resolved by Short et al., sparse and without obvious
+      spatial pattern in PVN, contrasted in the same source with the
+      glutamatergic Crh+ class. No existing node covers it — checked against
+      pvn_crh_neuron, lha_gabaergic_neuron (different nucleus) and the other PVN
+      nodes. Note the tension with Xu et al., who report that all PVH clusters
+      contain Vglut2 and lack Vgat; the report presents both, so this node is
+      proposed as the source states it and the discrepancy is left for the
+      property phase.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          The corresponding scRNA-seq cluster (cluster 2) is described as
+          "GABAergic and neurotensinergic"; the neurotensin character is a
+          marker property for the property phase, not an identity field.
+        quote_keys: ["237393232_7fc15258"]
+
+  - node_id: pvn_crh_avp_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/pvn_crh_avp_neuron.yaml
+    report_sections:
+      - Heterogeneity and subtype organization
+      - Transcriptomic and related datasets
+    reconciliation_note: >
+      A narrower population inside pvn_crh_glutamatergic_neuron: one of the two
+      populations Short et al. resolve within glutamatergic Crh+ neurons, named
+      CRH-AVP and distributed sparsely throughout PVN. Distinct from the
+      existing pvn_avp_neuron, which is the AVP neuron of the PVN (chiefly the
+      magnocellular AVP class) and is not defined by CRH expression; these are
+      CRH neurons that also express Avp, so ENRICH on pvn_avp_neuron would not
+      be a name swap. Recorded as NEW with subtype_of
+      pvn_crh_glutamatergic_neuron.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Short et al. report two of the five Crh+ clusters (clusters 1 and 5)
+          as Avp- and steroid-hormone-receptor-expressing. The report does not
+          name a separate steroid-receptor-enriched type, so the
+          steroid-hormone-receptor signature is folded into this node as a
+          marker property for the property phase rather than a further node.
+        quote_keys: ["237393232_7fc15258"]
+      - finding: >
+          No dataset accession is given for the Short et al. single-cell RNA-seq
+          dataset in the report, so prior_dataset_accession / prior_cluster_label
+          cannot be set for any of the four molecularly defined subtypes; they
+          are recorded as CLASSICAL_NEUROCHEMICAL (marker-defined) instead of
+          PRIOR_TRANSCRIPTOMIC.
+        quote_keys: ["237393232_b75d4d85"]
+
+  - node_id: pvn_crh_ntng1_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/pvn_crh_ntng1_neuron.yaml
+    report_sections:
+      - Heterogeneity and subtype organization
+      - Transcriptomic and related datasets
+    reconciliation_note: >
+      A narrower population inside pvn_crh_glutamatergic_neuron: the second of
+      the two populations Short et al. resolve within glutamatergic Crh+
+      neurons, named CRH-Ntng1 and concentrated in the middle PVN, matching
+      cluster 4 (Ntng1-positive glutamatergic cells). No existing node describes
+      an Ntng1-defined PVN population — checked against all pvn_*/pvh_* nodes in
+      existing_nodes.yaml. Recorded as NEW with subtype_of
+      pvn_crh_glutamatergic_neuron.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: pvn_crh_anterior_parvicellular_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/pvn_crh_anterior_parvicellular_neuron.yaml
+    report_sections:
+      - Anatomical location, structure, and developmental origin
+    reconciliation_note: >
+      One of the two morphological types into which Wang et al. classify
+      hypothalamic (PVN-region) CRH neurons by somatic location and dendritic
+      varicosities: rostral-projecting cells of the anterior parvicellular area
+      with fewer and smaller varicosities. A narrower population inside
+      pvn_crh_neuron rather than the same population, so NEW rather than ENRICH.
+      No existing node covers it. Evidence is a single source (present twice in
+      the report's reference list, as Wang et al. 2021 PMID:33722214 and
+      Wang et al._1 2021 DOI 10.1186/s12915-021-00973-x — the same paper);
+      reviewers may prefer to hold the split as a morphology property on
+      pvn_crh_neuron instead.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: pvn_crh_periventricular_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/pvn_crh_periventricular_neuron.yaml
+    report_sections:
+      - Anatomical location, structure, and developmental origin
+    reconciliation_note: >
+      The second of Wang et al.'s two morphological CRH types: cells of the
+      periventricular area with more and larger dendritic varicosities on
+      dendrites directed toward the third ventricle. NEW rather than ENRICH for
+      the same reason as its anterior parvicellular counterpart. Checked against
+      periventricular_dopamine_neuron (a dopaminergic, not CRH, periventricular
+      population) and the PVN nodes — none describes it. The subtype_of
+      assertion is LOW confidence: it rests on reading "the periventricular
+      area" as the periventricular subdivision of PVN; if the source means the
+      separate periventricular hypothalamic nucleus, the relation is overlap,
+      not containment, and should be withdrawn.
+    identity_conflicts: []
+    unplaced: []

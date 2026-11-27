@@ -1,0 +1,155 @@
+# CRH neuron of the periventricular area of the paraventricular hypothalamus — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/PVN_CRH_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "Periventricular-area PVN CRH neuron"
+description: >
+  Evidence graph component for the CRH neuron of the periventricular area of
+  the paraventricular hypothalamus, whose dendrites carry numerous large
+  varicosities and project towards the third ventricle, proposed from the ASTA
+  deep research report PVN_CRH_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "hypothalamic paraventricular nucleus (PVN/PVH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: pvn_crh_periventricular_neuron
+    name: "CRH neuron of the periventricular area of the paraventricular hypothalamus"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "CRH neuron in the periventricular area"
+        sources:
+          - ref: "PMID:33722214"
+            quote_key: "232240856_88d14a13"
+            method: "name given to one of the two morphological types of hypothalamic CRH neuron resolved by whole-brain single-cell reconstruction"
+    subtype_of:
+      - parent: pvn_crh_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:33722214"
+            quote_key: "232240856_88d14a13"
+            method: "single-cell morphological reconstruction (CRH-IRES-Cre;Ai32, fMOST imaging)"
+            scope: "mouse, whole-brain; hypothalamic CRH neurons of the PVN region"
+        notes: >
+          Containment is inferred rather than stated. The source classifies
+          "hypothalamic CRH neurons" by somatic location and reports this type
+          in "the periventricular area", read here as the periventricular
+          subdivision of the paraventricular hypothalamic nucleus. If that
+          wording instead denotes the separate periventricular hypothalamic
+          nucleus, the relation to the PVN CRH neuron class would be overlap
+          rather than containment and this assertion should be withdrawn.
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "Periventricular-area PVN CRH neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched (OAK CL semsql DB, ols4 unavailable): "CRH neuron" (only
+        CL:4072021), "periventricular", "parvocellular", "paraventricular",
+        "hypothalamic neuron" — no CL term exists for a morphologically
+        defined, periventricular-area subset of CRH neurons, and CL:4072021
+        has no child terms. Checked also against periventricular_dopamine_neuron
+        in the KB (a dopaminergic, not CRH, population — not a CL mapping
+        candidate here). This node is a subset of the parent pvn_crh_neuron
+        (cl_mapping EXACT to CL:4072021) by somatic location, per its
+        subtype_of assertion (confidence LOW, with the withdrawal caveat noted
+        there), so CL:4072021 is the nearest and most specific containing
+        term. Would need a CL term for this morphological subtype for EXACT.
+    anatomical_location:
+      - id: MBA:110
+        label: "Paraventricular hypothalamic nucleus, parvicellular division, periventricular part"
+        name_in_source: "periventricular area"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:33722214"
+            quote_key: "232240856_88d14a13"
+            method: "single-cell morphological reconstruction from fMOST whole-brain imaging (CRH-IRES-Cre;Ai32)"
+            scope: "mouse, whole brain; hypothalamic (PVN-region) CRH neurons"
+            notes: >
+              Somatic location — the source classifies the two types by "somatic
+              locations" — but the grounding is ambiguous. The source writes
+              only "the periventricular area", without naming an atlas, while
+              describing hypothalamic CRH neurons of the PVN region; it is read
+              here as the periventricular part of the parvicellular division of
+              the PVN (MBA:110, PVHpv), the structure of that name inside the
+              nucleus under description. The wording could instead denote the
+              separate periventricular hypothalamic nucleus (MBA:30 / MBA:118 /
+              MBA:126 anterior, intermediate and posterior parts), which lies
+              outside the PVN; in that case this term should be replaced. This
+              is the same ambiguity flagged on the node's subtype_of assertion.
+    morphology:
+      description: >
+        CRH neuron with more numerous and larger dendritic varicosities than the
+        anterior parvicellular CRH type, the other of the two morphological
+        types resolved in the same reconstruction; the varicosities are present
+        within dendrites projecting to the third ventricle, and the soma lies in
+        the periventricular area. One of the hypothalamic CRH neurons, which as
+        a group had the smallest somatic volumes and simplest dendritic branches
+        among the CRH populations reconstructed brain-wide.
+      sources:
+        - ref: "PMID:33722214"
+          quote_key: "232240856_88d14a13"
+          method: "single-cell dendritic reconstruction; dendritic varicosity number and size compared between the two somatic-location groups"
+          scope: "mouse, whole brain; hypothalamic (PVN-region) CRH neurons"
+          notes: >
+            Varicosity number and size are given comparatively (more/larger than
+            the anterior parvicellular type), not as absolute measurements, and
+            no counts or dimensions are quoted. The dendritic orientation toward
+            the third ventricle is stated for the varicosity-bearing dendrites
+            only; no separate DENDRITE anatomical_location entry is recorded,
+            since the source says the dendrites project towards the ventricle,
+            not that they occupy a named structure.
+        - ref: "PMID:33722214"
+          quote_key: "232240856_f5066bcf"
+          method: "single-cell morphological reconstruction (somatic volume, dendritic branching)"
+          scope: "mouse, whole brain; hypothalamic CRH neurons as a group, compared with CRH neurons of other brain regions"
+          notes: >
+            Class-level: stated for hypothalamic CRH neurons as a whole, not
+            specifically for the periventricular type.
+        - ref: "PMID:33722214"
+          quote_key: "232240856_85a8e756"
+          method: "CRH-IRES-Cre;Ai32 mouse line, fMOST whole-brain imaging, dendrite-level reconstruction"
+          scope: "mouse, whole brain"
+          notes: >
+            Cited for the method behind the morphological characterisation, not
+            for a property of this type.
+    definition_references:
+      - "PMID:33722214"
+    notes: >
+      Thin evidence: every property on this node comes from one study (Wang et
+      al. 2021), which appears twice in the ingest report's reference list — as
+      Wang et al., 2021 (PMID:33722214, corpus 232240856) and Wang et al._1,
+      2021 (DOI 10.1186/s12915-021-00973-x, corpus 255832704) — for the same
+      paper, so the apparent double support is a single source. Quotes are
+      cited from the PMID-bearing corpus only. A reviewer may prefer to withdraw
+      this node and hold the anterior-parvicellular / periventricular split as a
+      morphology property on pvn_crh_neuron instead of as separate nodes (see
+      the reconciliation note in the ingest plan).
+      What "the periventricular area" denotes is not settled by the source. It
+      is grounded here to the periventricular part of the PVN parvicellular
+      division (MBA:110); if the source means the separate periventricular
+      hypothalamic nucleus, the anatomical_location term is wrong and the node's
+      relation to the PVN CRH neuron class is overlap rather than containment.
+      The source characterises these cells by somatic location and dendritic
+      varicosities only. No nt_type is asserted: the source does not report
+      transmitter identity for either morphological type, and the parent's
+      transmitter identity was deliberately not inherited down. No markers are
+      asserted for the same reason — this type is defined morphologically and
+      anatomically, not by a marker profile. No electrophysiology, connectivity
+      or function is reported for this type.
+edges: []
