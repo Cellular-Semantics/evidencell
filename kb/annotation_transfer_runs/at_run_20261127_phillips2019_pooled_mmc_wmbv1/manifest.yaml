@@ -1,0 +1,91 @@
+id: at_run_20261127_phillips2019_pooled_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE133912"
+source_cluster_label: >
+  DERIVED label scheme on Phillips et al. 2019 (PMID:31527803) single-cell
+  RNA-seq of retrogradely labelled thalamic neurons: all five published
+  projection systems (metadata column `Projection`: Visual 429, Motor 477,
+  Prefrontal 388, Auditory 376, Somatosensory 282) pooled as one label,
+  "cortex-projecting TC (all 5 systems)" (1,952 cells; the 20 is_ODC cells
+  are dropped as in the paper and in the projection run). Every cell was
+  retrogradely labelled from one of five cortical areas, then manually
+  dissected and sorted, so every cell is a thalamocortical projection neuron
+  by experimental design. The pool follows from the experiment, not from the
+  WMBv1 mapping. Which nuclei were dissected per system is not recorded (see
+  at_run_20261115_phillips2019_projection_mmc_wmbv1).
+  SOURCE-LABEL PURITY: pure by anatomical class (cortex-projecting thalamic
+  neuron) but mixed across nuclei, projection systems and the
+  primary/secondary/tertiary profile axis. Expect F1 near 1 at class, high at
+  subclass, and low at supertype and cluster.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  Re-scoring of the MapMyCells output of
+  at_run_20261115_phillips2019_projection_mmc_wmbv1 (cell_type_mapper
+  v1.7.5, local, raw normalization, 100 bootstrap iterations; 1,952 cells)
+  against labels_pooled.json, which is derived from that run's
+  labels_projection.json with scripts/build_pooled_labels.py. F1 scored with
+  `annotation-transfer score` at bootstrap threshold 0.8. No separate
+  mapping run.
+tool_version: "cell_type_mapper v1.7.5"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 1972
+n_cells_after_filter: 1952
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "7641aab (branch base; scored 2026-11-27)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+caveats: >
+  (1) Derived pooled label, declared as the at_source_sets correspondence
+  (SUBSET) of thalamic_glutamatergic_projection_neuron. The per-system and
+  per-cluster numbers are in the published-label runs
+  at_run_20261115_phillips2019_projection_mmc_wmbv1 and
+  at_run_20261115_phillips2019_syscluster_mmc_wmbv1.
+  (2) One label covers the whole scored dataset, so PURITY IS 1.0 AT EVERY
+  TARGET BY CONSTRUCTION and carries no information. F1 here is a function
+  of coverage only (F1 = 2c/(1+c)). Read coverage: 0.991 at class (1,915
+  cells in 18 TH Glut; the remaining ~18 confident cells in 19 MB Glut) and
+  0.865 at subclass (1,573 cells in 151 TH Prkcd Grin2c Glut). The other
+  confident subclass calls are other thalamic glutamatergic subclasses (150
+  CM-IAD-CL-PCN Sema5b ~77, 149 PVT-PT Ntrk1 ~60, 153 MG-POL-SGN Nts ~54, 152
+  RE-Xi Nox4 ~28, 168 SPA-SPFm-SPFp-POL-PIL-PoT Sp9 ~23, 154 PF Fzd5 ~4;
+  counted directly from mmc_results.csv at bootstrap >= 0.8).
+  Supertype and cluster F1 are low because the pool spreads over many
+  nuclei, not because the mapping is poor.
+  (3) Sampling bias: only the major projection complex for each cortical
+  target was collected, and sparsely labelled midline cells were avoided
+  (paper, Fig. 5 legend). The pool therefore under-represents tertiary
+  (midline/intralaminar) nuclei, and its subclass distribution is not the
+  distribution of the whole thalamocortical population.
+  (4) Retrograde label means the cell projects to at least the injected
+  area. Uptake by fibres of passage (DiI) and spread to adjacent cortex
+  cannot be excluded for single cells. Neither affects pool membership,
+  since every target is cortical.
+  (5) Same sample caveats as the projection run: all cells male, adult
+  (~P55-P160); pronase dissociation may induce stress genes.
+
+metadata: >
+  source_paper=PMID:31527803;
+  labels=labels_pooled.json (from ../at_run_20261115_phillips2019_projection_mmc_wmbv1/labels_projection.json via scripts/build_pooled_labels.py);
+  mmc_results=../at_run_20261115_phillips2019_projection_mmc_wmbv1/mmc_results.csv;
+  mmc_results_sha256=53cb7a8a3e36021280604bd8bf34699f6786809d4cd34bbe4654238a0dbd8cf3;
+  label_distribution=label_distribution.tsv
