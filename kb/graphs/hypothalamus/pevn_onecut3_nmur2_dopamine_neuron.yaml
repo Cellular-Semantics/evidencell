@@ -54,4 +54,33 @@ nodes:
           holds by definition. Stated explicitly by one source (Romanov et al.
           2016), which places the onecut-3+ cells in the periventricular
           nucleus and states they qualify as A14 dopamine neurons.
+    cl_mapping:
+      cl_term:
+        id: CL:4072011
+        label: "A14 dopaminergic neuron"
+        name_in_source: "Onecut3/Nmur2 periventricular A14 dopamine neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "Onecut3" and "Nmur2" (no CL hits), "periventricular
+        dopaminergic neuron" and "neuroendocrine dopaminergic neuron" (no
+        hits), then "A14 dopaminergic neuron" (hit: CL:4072011). Read
+        CL:4072011's definition: "A type of dopaminergic neuron located in
+        the periventricular nucleus of the hypothalamus and projecting to
+        the lateral septum and the median eminence. It is contributing to
+        neuroendocrine functions, locomotion and stress regulation." This
+        spans both characterized A14 projection subtypes — this node's
+        medio-posterior, median-eminence-projecting population AND its
+        sibling anterior_pevn_ls_projecting_dopamine_neuron's
+        lateral-septum-projecting population — so it does not describe this
+        node's population alone; it is the containing class, not an exact
+        match. CL:4072011 has no descendants (checked), and no CL term for
+        Onecut3, Nmur2, median-eminence-projecting dopamine neuron, or
+        tuberoinfundibular dopamine neuron matches this narrower,
+        marker-defined subtype, so CL:4072011 is the most specific
+        containing term available. BROAD: a new CL term for this subtype
+        (Onecut3+/Nmur2+, medio-posterior PeVN, median
+        eminence/pituitary-intermediate-lobe projecting) would sit under
+        CL:4072011. Would need a term keyed to Onecut3/Nmur2 coexpression
+        and/or median-eminence projection, distinguishing it from the
+        lateral-septum-projecting sibling, for an EXACT match.
 edges: []

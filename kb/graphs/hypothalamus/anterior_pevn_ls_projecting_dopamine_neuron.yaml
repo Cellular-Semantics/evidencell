@@ -50,4 +50,31 @@ nodes:
           containment holds by definition. Stated explicitly by one primary
           source (Korchynska et al. 2022); Morales et al. 2025 restates it
           citing that study and is therefore not independent.
+    cl_mapping:
+      cl_term:
+        id: CL:4072011
+        label: "A14 dopaminergic neuron"
+        name_in_source: "Anterior periventricular nucleus (A14) lateral septum-projecting dopamine neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "lateral septum" (CL hits were anatomy terms, not cell
+        types), "septum-projecting neuron" and "anterior periventricular"
+        (no hits), then "A14 dopaminergic neuron" (hit: CL:4072011). Read
+        CL:4072011's definition: "A type of dopaminergic neuron located in
+        the periventricular nucleus of the hypothalamus and projecting to
+        the lateral septum and the median eminence. It is contributing to
+        neuroendocrine functions, locomotion and stress regulation." This
+        spans both characterized A14 projection subtypes — this node's
+        anterior, lateral-septum-projecting population AND its sibling
+        pevn_onecut3_nmur2_dopamine_neuron's medio-posterior,
+        median-eminence-projecting population — so it does not describe
+        this node's population alone; it is the containing class, not an
+        exact match. CL:4072011 has no descendants (checked), and no CL
+        term specific to a lateral-septum-projecting PeVN/A14 subtype
+        exists, so CL:4072011 is the most specific containing term
+        available. BROAD: a new CL term for this subtype (anterior PeVN
+        position, Th+/Dat1+, lateral septum projection target) would sit
+        under CL:4072011. Would need a term keyed to anterior position
+        and/or lateral-septum projection, distinguishing it from the
+        median-eminence-projecting sibling, for an EXACT match.
 edges: []
