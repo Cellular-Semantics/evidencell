@@ -30,6 +30,28 @@ nodes:
       id: NCBITaxon:10116
       label: "Rattus norvegicus"
       name_in_source: "rat"
+    subtype_of:
+      - parent: igl_gabaergic_neuron
+        kind: EMPIRICAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:27916729"
+            method: "statement in source (background; NPY cells as one of two main GABAergic subpopulations of the IGL)"
+            scope: "rat IGL"
+            quote_key: "27232578_7306b2da"
+          - ref: "PMID:23103793"
+            method: "statement in source (background; IGL GABAergic population divides into NPY+ and ENK+ populations)"
+            scope: "rat IGL"
+            quote_key: "25997395_d6b35c15"
+          - ref: "PMID:30803080"
+            method: "statement in source citing Moore et al., 1994"
+            scope: "rat IGL"
+            quote_key: "73460105_a5d177e9"
+        notes: >
+          All three sources are background statements from one group
+          (Lewandowski lab) tracing to Moore et al. 1994, so they count as one
+          source. The enkephalinergic geniculogeniculate neuron is the other
+          main GABAergic subpopulation.
     anatomical_location:
       - id: UBERON:0035975
         label: "intergeniculate leaflet of the lateral geniculate complex"
@@ -178,9 +200,6 @@ nodes:
       - "PMID:27208616"
     is_terminal: false
     notes: >
-      PARENT TYPE: one of the two main GABAergic subpopulations of the IGL;
-      subtype of igl_gabaergic_neuron (see edge below).
-
       HETEROGENEITY / THANKACHAN CLASSES: Thankachan & Rusak 2005
       (PMID:16207879, quote 9130790_8fa09d39) describe Type II IGL/VLG
       neurons (large amounts of NPY throughout the soma; light responses of
