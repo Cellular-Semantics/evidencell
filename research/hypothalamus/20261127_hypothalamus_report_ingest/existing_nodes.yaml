@@ -1,0 +1,345 @@
+warning: `VIRTUAL_ENV=/Users/ct31/Documents/GitHub/evidencell_content/.venv` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+- id: arc_agrp_npy_neuron
+  name: Arcuate agouti-related peptide / neuropeptide Y (AgRP/NPY) neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/arc_agrp_npy_neuron.yaml
+  synonyms:
+  - AgRP/NPY neuron
+  - AgRP neuron
+  - Sst/Npy (29)
+  species: Mus musculus
+  cl_mapping: CL:4072017 agouti-related protein expressing neuron (EXACT)
+- id: arc_aromatase_neuron
+  name: Arcuate aromatase neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/arc_aromatase_neuron.yaml
+  synonyms:
+  - arcuate aromatase neuron
+  - aromatase-positive arcuate neuron
+  - Cyp19a1 neuron
+  - aromatase-positive arcuate cell
+  species: Mus musculus
+- id: arc_crabp1_neuron
+  name: Crabp1-expressing GABAergic neuron of the arcuate nucleus
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/arc_crabp1_neuron.yaml
+  synonyms:
+  - Crabp1+ neuron
+  - GABA12
+  - Crabp1+ neuronal population
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+- id: arc_me_sst_neuron
+  name: Orexigenic somatostatin (Sst) neuron of the arcuate–median eminence complex
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/arc_me_sst_neuron.yaml
+  synonyms:
+  - orexigenic somatostatin neuron population
+  species: Mus musculus
+  cl_mapping: CL:0000172 somatostatin secreting cell (BROAD)
+- id: arc_npgl_neuron
+  name: Neurosecretory protein GL (NPGL)-producing neuron of the lateral posterior arcuate nucleus
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/arc_npgl_neuron.yaml
+  synonyms:
+  - NPGL neuron
+  species: Mus musculus
+  cl_mapping: CL:0000110 peptidergic neuron (BROAD)
+- id: arc_pomc_gabaergic_neuron
+  name: GABAergic arcuate POMC neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/arc_pomc_gabaergic_neuron.yaml
+  synonyms:
+  - POMC/GABAergic neuron
+  - GAD67–POMC neuron
+  - GAD67–gfp-positive POMC neuron
+  species: Mus musculus
+  cl_mapping: CL:4042033 pro-opiomelanocortin neuron (BROAD)
+  subtype_of:
+  - arc_pomc_neuron
+- id: arc_pomc_glutamatergic_neuron
+  name: Glutamatergic arcuate POMC neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/arc_pomc_glutamatergic_neuron.yaml
+  synonyms:
+  - POMC/glutamatergic neuron
+  - VGLUT2–POMC neuron
+  species: Mus musculus
+  cl_mapping: CL:4042033 pro-opiomelanocortin neuron (BROAD)
+  subtype_of:
+  - arc_pomc_neuron
+- id: arc_pomc_neuron
+  name: Arcuate proopiomelanocortin (POMC) neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/arc_pomc_neuron.yaml
+  synonyms:
+  - POMC neuron
+  - canonical POMC neuron (P+)
+  species: Mus musculus
+  cl_mapping: CL:4042033 pro-opiomelanocortin neuron (EXACT)
+- id: arc_pomc_tac2_neuron
+  name: Pomc/Tac2 arcuate neuronal cluster
+  definition_basis: PRIOR_TRANSCRIPTOMIC
+  file: kb/graphs/hypothalamus/arc_pomc_tac2_neuron.yaml
+  synonyms:
+  - Pomc/Tac2
+  species: Mus musculus
+  cl_mapping: CL:4042033 pro-opiomelanocortin neuron (RELATED)
+- id: arc_tida_dopamine_neuron
+  name: Tuberoinfundibular dopaminergic (A12) neuron of the arcuate nucleus
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/arc_tida_dopamine_neuron.yaml
+  synonyms:
+  - TIDA neuron
+  - tuberoinfundibular dopamine neuron
+  - tuberoinfundibular A12 neuron
+  - tuberoinfundibular dopaminergic A12 neuron
+  species: Mus musculus
+  cl_mapping: CL:4072009 A12 dopaminergic neuron (EXACT)
+  subtype_of:
+  - hypothalamic_th_neuron
+- id: dmh_cck_neuron
+  name: Cholecystokinin (Cck)-expressing dorsomedial hypothalamic neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/dmh_cck_neuron.yaml
+  synonyms:
+  - Cck DMH neuron type
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: dmh_compact_refeeding_neuron
+  name: Refeeding-activated neuron of the compact part of the dorsomedial hypothalamus
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/hypothalamus/dmh_compact_refeeding_neuron.yaml
+  synonyms:
+  - TRAPed DMH neuron
+  - labeled DMH neurons
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: dmh_grp_neuron
+  name: Gastrin-releasing peptide (Grp)-expressing dorsomedial hypothalamic neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/dmh_grp_neuron.yaml
+  synonyms:
+  - Grp DMH neuron type
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: dmh_lepr_neuron
+  name: Leptin receptor (Lepr)-expressing dorsomedial hypothalamic neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/dmh_lepr_neuron.yaml
+  synonyms:
+  - Lepr DMH neuron type
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: dmh_pdyn_neuron
+  name: Prodynorphin (Pdyn)-expressing dorsomedial hypothalamic neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/dmh_pdyn_neuron.yaml
+  synonyms:
+  - Pdyn DMH neuron type
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: dmh_ppp1r17_neuron
+  name: Dorsomedial hypothalamic PPP1R17 neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/dmh_ppp1r17_neuron.yaml
+  synonyms:
+  - DMHPpp1r17 neuron
+  - PPP1R17 neuron
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: hypothalamic_th_neuron
+  name: Tyrosine hydroxylase (TH)-expressing hypothalamic neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/hypothalamic_th_neuron.yaml
+  synonyms:
+  - hypothalamic TH-expressing neurons
+  - hypothalamic TH-ir neuron
+  species: Mus musculus
+  cl_mapping: CL:4033050 catecholaminergic neuron (EXACT)
+- id: lh_pv_glutamatergic_neuron
+  name: Parvalbumin-expressing glutamatergic neuron of the lateral hypothalamus (PV1 nucleus)
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/hypothalamus/lh_pv_glutamatergic_neuron.yaml
+  synonyms:
+  - LHPV
+  - LH PV neuron
+  - PV1-nucleus neuron
+  species: Mus musculus
+  cl_mapping: CL:0000679 glutamatergic neuron (BROAD)
+  subtype_of:
+  - lha_glutamatergic_neuron
+- id: lha_gabaergic_neuron
+  name: GABAergic (Vgat/Slc32a1) neuron of the lateral hypothalamic area
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/lha_gabaergic_neuron.yaml
+  synonyms:
+  - LH VGAT neuron
+  - SLC32A1-expressing LH neuron
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (EXACT)
+- id: lha_glutamatergic_neuron
+  name: Glutamatergic (Vglut2/Slc17a6) neuron of the lateral hypothalamic area
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/lha_glutamatergic_neuron.yaml
+  synonyms:
+  - LH VGLUT2 neuron
+  - LH glutamatergic neuron
+  species: Mus musculus
+  cl_mapping: CL:0000679 glutamatergic neuron (EXACT)
+- id: lha_leprb_nts_neuron
+  name: LHA leptin receptor (LepRb) / neurotensin neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/lha_leprb_nts_neuron.yaml
+  synonyms:
+  - LepRbNts neuron
+  - LHA Nts neuron
+  - LHA LepRb neuron
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+  subtype_of:
+  - lha_gabaergic_neuron
+- id: lha_mch_neuron
+  name: Melanin-concentrating hormone (MCH) neuron of the lateral hypothalamic area
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/lha_mch_neuron.yaml
+  synonyms:
+  - MCH neuron
+  - MCH-expressing LH neuron
+  species: Mus musculus
+  cl_mapping: CL:4042036 melanin-concentrating hormone neuron (EXACT)
+- id: lha_orexin_neuron
+  name: Orexin/hypocretin (Hcrt) neuron of the lateral hypothalamic area
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/lha_orexin_neuron.yaml
+  synonyms:
+  - Hcrt/Ox neuron
+  - OX neuron
+  - hypocretin neuron
+  species: Mus musculus
+  cl_mapping: CL:0011109 hypocretin-secreting neuron (EXACT)
+- id: mammillary_body_neuron
+  name: Mammillary body neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/hypothalamus/mammillary_body_neuron.yaml
+  synonyms:
+  - MB cell type
+  species: Mus musculus
+  cl_mapping: CL:4023074 mammillary body neuron (EXACT)
+- id: mpoa_esr1_neuron
+  name: MPOA estrogen receptor 1 (Esr1) neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/mpoa_esr1_neuron.yaml
+  species: Mus musculus
+- id: periventricular_dopamine_neuron
+  name: Periventricular hypothalamic dopamine neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/periventricular_dopamine_neuron.yaml
+  synonyms:
+  - periventricular dopamine neurons
+  species: Mus musculus
+  cl_mapping: CL:0000700 dopaminergic neuron (EXACT)
+  subtype_of:
+  - hypothalamic_th_neuron
+- id: pvh_brs3_pb_projecting_neuron
+  name: Parabrachial-projecting Brs3-expressing PVH neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/hypothalamus/pvh_brs3_pb_projecting_neuron.yaml
+  synonyms:
+  - PB-projecting PVH neurons expressing bombesin-like receptor 3 (Brs3)
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: pvn_avp_neuron
+  name: Paraventricular hypothalamic arginine vasopressin (AVP) neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/pvn_avp_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: pvn_crfr1_neuron
+  name: PVN corticotropin-releasing factor receptor 1 (CRFR1) neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/pvn_crfr1_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4072021 corticotropin-releasing neuron (RELATED)
+- id: pvn_crh_neuron
+  name: Paraventricular hypothalamic corticotropin-releasing hormone (CRH) neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/pvn_crh_neuron.yaml
+  synonyms:
+  - hypothalamic CRH neuron
+  species: Mus musculus
+  cl_mapping: CL:4072021 corticotropin-releasing neuron (EXACT)
+- id: pvn_oxt_neuron
+  name: Paraventricular hypothalamic oxytocin (OXT) neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/pvn_oxt_neuron.yaml
+  synonyms:
+  - oxytocinergic neuron
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: pvn_preautonomic_neuron
+  name: Spinally projecting pre-autonomic (pre-sympathetic) PVN neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/hypothalamus/pvn_preautonomic_neuron.yaml
+  synonyms:
+  - spinally-projecting pre-autonomic neuron
+  - pre-sympathetic neuron
+  - spinal-projecting neuron
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: pvn_trh_neuron
+  name: Paraventricular hypothalamic thyrotropin-releasing hormone (TRH) neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/pvn_trh_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: rostral_zi_th_gabaergic_neuron
+  name: Rostral zona incerta TH-expressing GABAergic dopaminergic neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/rostral_zi_th_gabaergic_neuron.yaml
+  synonyms:
+  - ZI GABAergic THir neuron
+  - novel hypothalamic population in the mouse that may signal through the release of GABA and/or dopamine
+  species: Mus musculus
+  cl_mapping: CL:0000700 dopaminergic neuron (BROAD)
+  subtype_of:
+  - hypothalamic_th_neuron
+- id: tmn_histaminergic_neuron
+  name: Tuberomammillary nucleus histaminergic (Hdc) neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/tmn_histaminergic_neuron.yaml
+  synonyms:
+  - histaminergic (Hdc) neuron
+  - histaminergic (Hdc)
+  species: Mus musculus
+  cl_mapping: CL:0011110 histaminergic neuron (EXACT)
+- id: vmh_dorsomedial_lepr_neuron
+  name: Leptin receptor (Lepr)-expressing dorsomedial VMH neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/vmh_dorsomedial_lepr_neuron.yaml
+  synonyms:
+  - leptin receptor (Lepr)-expressing VMH neurons
+  species: Mus musculus
+  cl_mapping: CL:0012001 neuron of the forebrain (BROAD)
+- id: vmh_tuberal_anterolateral_glut_neuron
+  name: Tuberal anterolateral glutamatergic VMH neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/hypothalamus/vmh_tuberal_anterolateral_glut_neuron.yaml
+  synonyms:
+  - class of glutamatergic VMH neurons that resides in the tuberal region
+  species: Mus musculus
+  cl_mapping: CL:0000679 glutamatergic neuron (EXACT)
+- id: vmhvl_esr1_pr_neuron
+  name: VMHvl estrogen-receptor alpha / progesterone receptor neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/hypothalamus/vmhvl_esr1_pr_neuron.yaml
+  species: Mus musculus
+- id: vmhvl_neuron
+  name: Ventrolateral ventromedial hypothalamic (VMHvl) neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/hypothalamus/vmhvl_neuron.yaml
+  synonyms:
+  - VMHvl
+  - '''ventrolateral'' VMH'
+  species: Mus musculus
+  cl_mapping: CL:0000679 glutamatergic neuron (EXACT)
