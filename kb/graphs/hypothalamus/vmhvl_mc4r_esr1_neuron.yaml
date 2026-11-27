@@ -51,4 +51,24 @@ nodes:
           Defined as VMHvl neurons narrowed by MC4R and ERα co-expression, so
           containment in the VMHvl population holds by definition. Krause 2021
           is the only source in this run that names the marker combination.
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: "glutamatergic neuron"
+        name_in_source: "MC4R/ERα VMHvl neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for "melanocortin", "estrogen receptor neuron",
+        "hypothalamic neuron" and "ventromedial hypothalamic neuron" — no CL
+        term for an MC4R/ERα-defined or VMH-region-defined neuron exists (CL
+        has no hypothalamus-region-specific neuron terms). The node is
+        subtype_of vmhvl_neuron by definition (MC4R+ERα co-expression narrows
+        the VMHvl population), and vmhvl_neuron itself is EXACT-mapped to
+        CL:0000679 ("a neuron that is capable of some neurotransmission by
+        glutamate secretion") on the grounds that glutamatergic identity is
+        its defining criterion. Checked CL:0000679's children — none is a
+        melanocortin-receptor or VMH-specific term. CL:0000679 is therefore
+        the nearest term this node fully satisfies, inherited as BROAD from
+        the parent mapping. An EXACT match would need a CL term for VMHvl
+        neurons co-expressing MC4R and ERα.
 edges: []

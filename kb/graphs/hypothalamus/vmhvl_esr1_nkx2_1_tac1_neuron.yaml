@@ -53,4 +53,27 @@ nodes:
           Correa 2014 is the single source that states the subset relation
           explicitly; Massa 2023 refers to the same estrogen-sensitive VMHvl
           populations without naming the marker combination.
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: "glutamatergic neuron"
+        name_in_source: "ERα/NKX2-1/Tac1 VMHvl neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for "estrogen receptor neuron", "progesterone receptor
+        neuron", "hypothalamic neuron", "ventromedial hypothalamic neuron",
+        "Tac1" and "Esr1" as neuron-defining terms — no CL term for an
+        ERα/NKX2-1/Tac1-defined or VMH-region-defined neuron exists (CL has no
+        hypothalamus-region-specific neuron terms at all). The node is
+        subtype_of vmhvl_neuron by definition (ERα/NKX2-1/Tac1 narrows the
+        VMHvl population), and vmhvl_neuron itself is EXACT-mapped to
+        CL:0000679 ("a neuron that is capable of some neurotransmission by
+        glutamate secretion") on the grounds that glutamatergic identity is
+        its defining criterion. Checked CL:0000679's children (e.g. thalamic
+        excitatory neuron, amygdala excitatory neuron, cerebellum
+        glutamatergic neuron, hypothalamic GnRH neuron) — none matches this
+        marker combination. CL:0000679 is therefore the nearest term this
+        node fully satisfies, inherited as BROAD from the parent mapping. An
+        EXACT match would need a CL term for VMHvl neurons co-expressing ERα,
+        NKX2-1 and Tac1.
 edges: []

@@ -54,4 +54,25 @@ nodes:
           VMHvl, with some overlap with SF1-positive cells in VMHdm — the
           broader name "Dbx1-derived neurons in the VMH" therefore extends
           beyond this node.
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: "glutamatergic neuron"
+        name_in_source: "Dbx1-lineage VMHvl neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL for "lineage", "Dbx1", "hypothalamic neuron" and
+        "ventromedial hypothalamic neuron" — no CL term for a
+        lineage-of-origin-defined or VMH-region-defined neuron exists (CL has
+        no developmental-lineage-based neuron terms of this kind, and no
+        hypothalamus-region-specific neuron terms at all). The node is
+        subtype_of vmhvl_neuron by definition (scoped to the VMHvl fraction of
+        the Dbx1 lineage), and vmhvl_neuron itself is EXACT-mapped to
+        CL:0000679 ("a neuron that is capable of some neurotransmission by
+        glutamate secretion") on the grounds that glutamatergic identity is
+        its defining criterion. Checked CL:0000679's children — none is a
+        lineage-defined or VMH-specific term. CL:0000679 is therefore the
+        nearest term this node fully satisfies, inherited as BROAD from the
+        parent mapping. An EXACT match would need a CL term for
+        Dbx1-lineage-derived VMHvl neurons.
 edges: []

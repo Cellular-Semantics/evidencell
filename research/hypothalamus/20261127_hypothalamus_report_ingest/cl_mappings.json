@@ -1,0 +1,27 @@
+{
+  "vmhvl_esr1_pr_neuron": {
+    "cl_term_id": "CL:0000679",
+    "label": "glutamatergic neuron",
+    "mapping_type": "BROAD",
+    "definition_references": [],
+    "disagreement": "WRITE BLOCKED by issue #269 (same pre-existing bug as the pending subtype_of edit on this file): the pre-edit hook rejects every edit to kb/graphs/hypothalamus/vmhvl_esr1_pr_neuron.yaml because its BULK_CORRELATION evidence entries carry run_ref 'corr_run_20260428_knoedler_esr1_wmbv1', which is not found in kb/annotation_transfer_runs/index.yaml. Reproduces on a no-op edit, so it is not caused by this cl_mapping addition. Intended content: cl_mapping.cl_term = {id: CL:0000679, label: \"glutamatergic neuron\", name_in_source: \"VMHvl estrogen-receptor alpha / progesterone receptor neuron\"}, mapping_type: BROAD. Rationale: searched CL for 'estrogen receptor neuron', 'progesterone receptor neuron', 'hypothalamic neuron', 'ventromedial hypothalamic neuron' — no term exists for an ERα/PR-defined or VMH-region-defined neuron. Correa 2014 (PMID:25543145) defines this population as ERα neurons of the VMHvl, placing it inside vmhvl_neuron by definition; vmhvl_neuron is itself EXACT-mapped to CL:0000679 on the grounds that glutamatergic identity is its defining criterion. CL:0000679's children were checked and none is ERα/PR- or VMH-specific, so BROAD inheritance from the parent mapping is the nearest fit. Not applied to the file; file left untouched."
+  },
+  "vmhvl_esr1_nkx2_1_tac1_neuron": {
+    "cl_term_id": "CL:0000679",
+    "label": "glutamatergic neuron",
+    "mapping_type": "BROAD",
+    "definition_references": []
+  },
+  "vmhvl_mc4r_esr1_neuron": {
+    "cl_term_id": "CL:0000679",
+    "label": "glutamatergic neuron",
+    "mapping_type": "BROAD",
+    "definition_references": []
+  },
+  "vmhvl_dbx1_lineage_neuron": {
+    "cl_term_id": "CL:0000679",
+    "label": "glutamatergic neuron",
+    "mapping_type": "BROAD",
+    "definition_references": []
+  }
+}
