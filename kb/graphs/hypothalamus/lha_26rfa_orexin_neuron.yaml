@@ -1,0 +1,62 @@
+# 26RFa/orexin neuron of the lateral hypothalamic area — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/LHA_Orexin_Hypocretin_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "LHA 26RFa/orexin neuron"
+description: >
+  Evidence graph component for the 26RFa/orexin neuron of the lateral
+  hypothalamic area, proposed from the ASTA deep research report
+  LHA_Orexin_Hypocretin_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "lateral hypothalamic area (LHA)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: lha_26rfa_orexin_neuron
+    name: "26RFa/orexin neuron of the lateral hypothalamic area"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "26RFa/orexin neuron"
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            quote_key: "293858017_fbe3074b"
+            method: "name coined in the discussion for this double-positive LHA population"
+      - term: "LHA 26RFa/orexin neuron"
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            quote_key: "293858017_a30a10c5"
+            method: "region-qualified form used when describing chemogenetic activation"
+    subtype_of:
+      - parent: lha_orexin_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "https://doi.org/10.64898/2026.10.13.758728"
+            quote_key: "293858017_3ea21a90"
+            method: "RNAscope double-labelling and 26RFa-tdTomato/orexin-A immunohistochemistry"
+            scope: "adult mouse LHA, Bregma -1.06 to -1.70 mm"
+            notes: >
+              The type is the orexin population narrowed by 26RFa/Qrfp
+              co-expression, so containment holds by definition.
+        notes: >
+          A single source names and characterises this population. It is a
+          large but not complete subset of the orexin class: 86% of
+          orexin-mRNA-expressing LHA cells co-express 26RFa mRNA, and 62% of
+          orexin-immunostained cells are 26RFa-tdTomato positive. The
+          converse set is not contained — about 10% of 26RFa-positive cells
+          lack orexin mRNA and roughly a third of 26RFa-expressing cells in
+          the LHA are non-neuronal.
+edges: []

@@ -1,0 +1,57 @@
+# Olfactory bulb-projecting orexin neuron of the lateral hypothalamus — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/LHA_Orexin_Hypocretin_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "OB-projecting LHA orexin neuron"
+description: >
+  Evidence graph component for the olfactory bulb-projecting orexin neuron of
+  the lateral hypothalamus, proposed from the ASTA deep research report
+  LHA_Orexin_Hypocretin_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "lateral hypothalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: lha_orexin_ob_projecting_neuron
+    name: "Olfactory bulb-projecting orexin neuron of the lateral hypothalamus"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: lha_orexin_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:37434469"
+            quote_key: "259832148_069c0887"
+            method: "retrograde tract tracing from the main olfactory bulb combined with orexin-A immunohistochemistry"
+            scope: "adult mouse hypothalamus"
+            notes: >
+              Defined as the orexin-A population narrowed by a direct
+              projection to the main olfactory bulb; about 7% of all
+              orexin-A neurons were retrogradely labelled.
+          - ref: "PMID:41480926"
+            quote_key: "284373767_8bec5901"
+            method: "confocal imaging of the LH-to-OB pathway"
+            scope: "adult mouse"
+            notes: >
+              States that the direct LH-to-OB pathway includes orexin-A
+              expressing neurons.
+        notes: >
+          Containment is definitional, but the sources are from one group.
+          The report treats projection-defined orexin ensembles as
+          overlapping and spatially distributed rather than segregated: these
+          cells spatially overlap the orexin-A neurons that do not innervate
+          the bulb, and are distinguished from them only by cell body area.
+edges: []
