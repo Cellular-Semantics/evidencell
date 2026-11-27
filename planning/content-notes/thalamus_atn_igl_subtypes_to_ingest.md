@@ -31,9 +31,19 @@ Source runs:
    has no molecular data. All ten quotes carry one section label ("Shared cellular properties of
    excitatory projection neurons across ATN"), which is not a section of the paper. So the ASTA
    report probably attributed text from another source to this corpus ID. That source is
-   unidentified; Europe PMC searches on Tnnt1 / Col5a1 / Cacna2d1 / AMdc + ATN found nothing. A
-   Research Square preprint with the same title (doi 10.21203/rs.3.rs-4356188/v1) has no full
-   text in Europe PMC and could not be checked.
+   unidentified; Europe PMC searches on Tnnt1 / Col5a1 / Cacna2d1 / AMdc + ATN found nothing.
+   Later checks (2026-11-27) also failed to find them in:
+   - the Research Square preprint with the same title (doi 10.21203/rs.3.rs-4356188/v1);
+   - ASTA's own index of corpus 279797062, which holds the same Nat Commun text as PMC;
+   - any other paper in the thalamus corpus, or the open ASTA snippet index;
+   - the papers citing Hintiryan 2025.
+
+   The ingest copied the quotes verbatim from the ASTA report PDF, so the error is upstream, in
+   the report. Its source is either an unindexed paper or the report's own generation.
+   Of the 81 quotes this report ingest added, 79 match at sentence level. The failures are these
+   nine and the three ATN-ingest quotes filed under Clascá 2012 (corpus 23594973; PMID:22606998
+   confirmed). Sentence splicing alone does not explain them: the individual sentences are
+   missing too.
 
    **Part 3 requires verified quotes for both the criterion and the containment. No ATN
    candidate below meets that.**
@@ -47,7 +57,8 @@ Source runs:
 **Effect on Part 1 (fixed in this PR).** Part 1 had cited 279797062_9833fcee (ATN →
 thalamic_glutamatergic_projection_neuron) and 279797062_79c8b7ec (AD/AV/AM → ATN). Both sources
 are removed:
-- ATN → parent now cites Kapustina 268122794_5c2e793b and the Clascá review 23594973_a7fbdba3.
+- ATN → parent now cites only Kapustina 268122794_5c2e793b, at MODERATE confidence. The Clascá
+  review quote 23594973_a7fbdba3 was also dropped, because its text is not in PMID:22606998.
 - AD/AV/AM → ATN cite Kapustina 268122794_e9176ba6 and the verified Hintiryan abstract sentence
   279797062_33751aaa.
 
@@ -57,7 +68,9 @@ are removed:
 - the ATN morphology (`_6369b05f`);
 - ATN / AD / AV / AM nt_type sources (`_9833fcee`);
 - several anatomy and morphology sources (`_79c8b7ec`, `_049553b3`);
-- the "SUBTYPES NOTED" paragraphs.
+- the "SUBTYPES NOTED" paragraphs;
+- the ATN nt_type source and the ATN Slc17a6 defining-marker source, which cite
+  23594973_a7fbdba3 (not in PMID:22606998).
 
 They need a follow-up: find the true source of these quotes, or replace and remove them. This
 PR is scoped to subtype_of, and the reference store is additive-only while other thalamus
@@ -130,8 +143,9 @@ SC-projecting, local interneuron, Sox14, and LHb-, LPBN- and reuniens-projecting
 
 ## Decisions for the curator (the gate)
 
-1. **Provenance of corpus 279797062's quotes.** Find where the nine unsupported quotes come
-   from. They could be the Research Square preprint, or another paper misattributed by ASTA.
+1. **Provenance of corpus 279797062's quotes (and the three ATN-ingest quotes under corpus
+   23594973).** Find where the unsupported quotes come from. The preprint has been ruled out;
+   they may come from another paper that ASTA misattributed, or from none.
    - Is the source a different paper? Then file its quotes under the right corpus ID and repoint
      the KB citations.
    - Is there no source? Then remove the dependent marker, NT, morphology and SUBTYPES NOTED
@@ -146,7 +160,9 @@ SC-projecting, local interneuron, Sox14, and LHb-, LPBN- and reuniens-projecting
 
 ## Follow-up checklist
 
-1. Resolve decision 1 before any ATN subtype work.
+1. Resolve decision 1 before any ATN subtype work. Tracked in content issue
+   Cellular-Semantics/evidencell#267 (ASTA search for verified ATN subtypes, plus repair of the
+   unverified citations). The ingest-time quote check is dev request #266.
 2. If subtype nodes are approved later, follow `workflows/asta-report-ingest.md` from Step 3
    in `research/thalamus/20261115_thalamus_atn_report_ingest/`. First rebuild
    `run_quotes.json` and `ingest_plan.yaml` there; they predate the current workflow.
