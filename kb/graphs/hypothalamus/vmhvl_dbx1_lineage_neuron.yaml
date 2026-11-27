@@ -1,0 +1,57 @@
+# Dbx1-lineage VMHvl neuron — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/VMHvl_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "Dbx1-lineage VMHvl neuron"
+description: >
+  Evidence graph component for the Dbx1-lineage VMHvl neuron, proposed from the
+  ASTA deep research report VMHvl_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "ventrolateral part of the ventromedial hypothalamus (VMHvl)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: vmhvl_dbx1_lineage_neuron
+    name: "Dbx1-lineage VMHvl neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Dbx1-derived neurons in the VMH"
+        sources:
+          - ref: "PMID:27209204"
+            quote_key: "9550590_0bdb13aa"
+            method: "name used in the discussion for the VMH Dbx1-lineage population, the majority of which lies in VMHvl"
+      - term: "Dbx1-lineage cells"
+        sources:
+          - ref: "PMID:27209204"
+            quote_key: "9550590_e5547345"
+            method: "name used in the results for the fate-mapped cells scored in the ventrolateral part of the nucleus"
+    subtype_of:
+      - parent: vmhvl_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:27209204"
+            quote_key: "9550590_e5547345"
+            method: "Dbx1-Cre fate mapping; the majority of VMH Dbx1-lineage cells are scored in the ventrolateral part of the nucleus (VMHvl), overlapping ERα- and aromatase-positive cells there"
+            scope: "postnatal mouse VMH, both sexes"
+        notes: >
+          This node is scoped to the VMHvl fraction of the Dbx1 lineage, so
+          containment in the VMHvl population holds by definition. Sokolowski
+          2016 reports only that the majority of VMH Dbx1-lineage cells lie in
+          VMHvl, with some overlap with SF1-positive cells in VMHdm — the
+          broader name "Dbx1-derived neurons in the VMH" therefore extends
+          beyond this node.
+edges: []

@@ -1,0 +1,54 @@
+# MC4R/ERα VMHvl neuron — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/VMHvl_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "MC4R/ERα VMHvl neuron"
+description: >
+  Evidence graph component for the MC4R/ERα VMHvl neuron, proposed from the
+  ASTA deep research report VMHvl_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "ventrolateral ventromedial hypothalamic nucleus (VMHvl)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "female mice"
+creation_date: "2026-11-27"
+nodes:
+  - id: vmhvl_mc4r_esr1_neuron
+    name: "MC4R/ERα VMHvl neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "female mice"
+    synonyms:
+      - term: "VMHvl neurons expressing both MC4R and ERα"
+        sources:
+          - ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "name used in the abstract for the chemogenetically stimulated population"
+      - term: "oestrogen-sensitive neurons in the ventrolateral ventromedial hypothalamic nucleus (VMHvl)"
+        sources:
+          - ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "descriptive name used in the abstract for the arousal-projecting subset in which MC4R signalling is recruited"
+    subtype_of:
+      - parent: vmhvl_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:34646010"
+            quote_key: "238858345_1d8aa140"
+            method: "abstract defines the type as a subset of VMHvl neurons expressing both MC4R and ERα"
+            scope: "adult female mouse VMHvl"
+        notes: >
+          Defined as VMHvl neurons narrowed by MC4R and ERα co-expression, so
+          containment in the VMHvl population holds by definition. Krause 2021
+          is the only source in this run that names the marker combination.
+edges: []

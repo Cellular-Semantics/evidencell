@@ -1,0 +1,56 @@
+# ERα/NKX2-1/Tac1 VMHvl neuron — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/VMHvl_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "ERα/NKX2-1/Tac1 VMHvl neuron"
+description: >
+  Evidence graph component for the ERα/NKX2-1/Tac1 VMHvl neuron, proposed from
+  the ASTA deep research report VMHvl_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "ventrolateral region of the ventromedial hypothalamus (VMHVL)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: vmhvl_esr1_nkx2_1_tac1_neuron
+    name: "ERα/NKX2-1/Tac1 VMHvl neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Nkx2-1+ VMHVL neurons"
+        sources:
+          - ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "name used in the abstract for the population whose developmental disruption causes female-specific obesity"
+      - term: "VMHVL neurons co-expressing ERα and Tac1"
+        sources:
+          - ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "descriptive name used in the abstract for the same subset"
+    subtype_of:
+      - parent: vmhvl_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:25543145"
+            quote_key: "27794167_2fbf51e0"
+            method: "abstract defines the type as a subset of VMHVL neurons marked by ERα, NKX2-1 and Tac1"
+            scope: "adult mouse VMHvl"
+        notes: >
+          Defined as VMHvl neurons narrowed by co-expression of ERα, NKX2-1 and
+          Tac1, so containment in the VMHvl population holds by definition.
+          Correa 2014 is the single source that states the subset relation
+          explicitly; Massa 2023 refers to the same estrogen-sensitive VMHvl
+          populations without naming the marker combination.
+edges: []

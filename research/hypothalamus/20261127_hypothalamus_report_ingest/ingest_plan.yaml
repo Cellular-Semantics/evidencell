@@ -1,0 +1,190 @@
+run_id: 20261127_hypothalamus_report_ingest
+types:
+  - node_id: vmhvl_neuron
+    action: ENRICH
+    file: kb/graphs/hypothalamus/vmhvl_neuron.yaml
+    report_sections:
+      - "Introduction"
+      - "Anatomical location and structural organization of VMHvl"
+      - "Developmental origin and lineage"
+      - "Neurotransmitter phenotype, neuropeptides, and molecular markers"
+      - "Connectivity and functional roles"
+      - "Heterogeneity and defined subtypes within VMHvl"
+      - "Transcriptomics and other cell-type-mapping datasets relevant to VMHvl"
+    reconciliation_note: >
+      The report's subject is the broad VMHvl population — "the ventrolateral
+      subdivision of the ventromedial hypothalamic nucleus (VMHvl)", ~4,000
+      neurons, mostly glutamatergic/VGLUT2+, internally heterogeneous. This is
+      the same population as the existing vmhvl_neuron node (definition_basis
+      CLASSICAL_ANATOMICAL, synonyms "VMHvl" and "'ventrolateral' VMH"): the
+      names are interchangeable in the sources. Considered and rejected
+      vmhvl_esr1_pr_neuron, which is the narrower sex-steroid-receptor
+      subpopulation. ENRICH rather than DUPLICATE because the report supplies
+      two abbreviation forms the node did not carry: "vlVMH" (Sohn 2016, used
+      as a type name in "adult vlVMH neurons") and "VMHVL" (Correa 2014). Both
+      were added as synonyms; nothing existing was changed. Species
+      (NCBITaxon:10090) and definition_basis already matched.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Kim 2019 resolves 17 VMHvl transcriptomic types (T-types), several
+          sexually dimorphic, and Affinati 2021 resolves two major ventrolateral
+          VMH classes within a 24-cluster / 6-class VMH parcellation. Neither
+          set of subdivisions is given stable type names or individual defining
+          properties in the report, so no nodes were minted; they are
+          heterogeneity structure to be recorded as properties/mappings, not
+          identity.
+        quote_keys:
+          - "204741414_18032d94"
+          - "233329194_f180d86a"
+      - finding: >
+          Veen 2020 describes six VMH neuronal populations with ERα enrichment
+          and sex-biased expression of Rprm (female-biased, thermoregulation),
+          Tac1 (female-biased) and Pdyn (male-biased). Each carries a marker
+          name plus a property, but the quoted scope is the whole VMH rather
+          than VMHvl and the populations are not named as types, so no node was
+          minted. Candidate for a later NEW decision once VMHvl restriction is
+          confirmed against the primary paper.
+        quote_keys:
+          - "216282476_c601e044"
+          - "263827506_1ac410b7"
+      - finding: >
+          Affinati 2021 / Higgins 2024 place the Lepr-marked class in
+          dorsomedial and central VMH, i.e. the report cites it as a negative
+          control for VMHvl markers rather than characterising it. Existing
+          node vmh_dorsomedial_lepr_neuron already covers it; no action taken.
+        quote_keys:
+          - "233329194_f180d86a"
+          - "267268245_d86b709e"
+
+  - node_id: vmhvl_esr1_pr_neuron
+    action: ENRICH
+    file: kb/graphs/hypothalamus/vmhvl_esr1_pr_neuron.yaml
+    report_sections:
+      - "Connectivity and functional roles"
+      - "Heterogeneity and defined subtypes within VMHvl"
+    reconciliation_note: >
+      The report's ERα-positive VMHvl population corresponds to the existing
+      vmhvl_esr1_pr_neuron node (Esr1/Pgr/Nkx2-1/Tac1, VMHvl). The report adds
+      no new name for it and no progesterone-receptor evidence, so the only
+      identity addition available is the parent relation: Correa 2014 defines
+      the type as "Estrogen-receptor alpha (ERα) neurons in the ventrolateral
+      region of the ventromedial hypothalamus (VMHVL)", which places it inside
+      vmhvl_neuron by definition. WRITE BLOCKED — the pre-edit validation hook
+      refuses every edit to this file because of a pre-existing failure
+      unrelated to this run: the two BULK_CORRELATION evidence entries in its
+      edges carry run_ref "corr_run_20260428_knoedler_esr1_wmbv1", a
+      bulk-correlation run that the hook looks up in the annotation-transfer
+      index (kb/annotation_transfer_runs/index.yaml) and does not find. The
+      failure reproduces on the committed file with a no-op edit, so it is not
+      caused by the intended addition. The hook was not bypassed; the
+      subtype_of block below is the pending content.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          PENDING WRITE (blocked, see reconciliation_note) — add to node
+          vmhvl_esr1_pr_neuron, leaving all existing values untouched:
+          subtype_of: [{parent: vmhvl_neuron, kind: DEFINITIONAL, confidence:
+          MODERATE, sources: [{ref: "PMID:25543145", quote_key:
+          "27794167_2fbf51e0", method: "abstract defines the type as the ERα
+          neurons of the ventrolateral region of the ventromedial hypothalamus
+          (VMHVL)", scope: "adult mouse VMHvl"}], notes: "Defined as VMHvl
+          neurons narrowed by sex-steroid receptor expression, so containment
+          holds by definition."}]
+        quote_keys:
+          - "27794167_2fbf51e0"
+
+  - node_id: vmhvl_esr1_nkx2_1_tac1_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/vmhvl_esr1_nkx2_1_tac1_neuron.yaml
+    report_sections:
+      - "Connectivity and functional roles"
+      - "Heterogeneity and defined subtypes within VMHvl"
+    reconciliation_note: >
+      Correa 2014 defines "a dedicated subset of VMHVL neurons marked by ERα,
+      NKX2-1, and Tac1" that drives hormone-dependent female locomotion — a
+      name plus defining markers plus a function, so it qualifies as a proposed
+      type. NEW, not ENRICH: it is narrower than vmhvl_neuron (markers added to
+      the anatomical population), and it is not the same population as
+      vmhvl_esr1_pr_neuron — that node is defined by ERα + progesterone
+      receptor, and its own notes already describe the ERα/Nkx2-1/Tac1 cells as
+      a subpopulation within it rather than as itself. Its defining_markers
+      list happens to include Nkx2-1 and Tac1, which is why the two were
+      compared carefully; the sources would not let one name be swapped for the
+      other (Correa says nothing about Pgr). subtype_of vmhvl_neuron was used
+      rather than vmhvl_esr1_pr_neuron because containment in the ERα/PR
+      population is not stated by any source in this run.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Overlap, not containment, with vmhvl_esr1_pr_neuron: both are ERα+
+          VMHvl populations and the existing node lists Nkx2-1 and Tac1 among
+          its defining markers, but neither source states that the locomotor
+          subset is Pgr-positive or that it exhausts the ERα/PR population.
+          Left for review as a possible MappingEdge
+          (evidencell:CrossCuttingMatch) or a node merge.
+        quote_keys:
+          - "27794167_2fbf51e0"
+
+  - node_id: vmhvl_mc4r_esr1_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/vmhvl_mc4r_esr1_neuron.yaml
+    report_sections:
+      - "Connectivity and functional roles"
+      - "Heterogeneity and defined subtypes within VMHvl"
+    reconciliation_note: >
+      Krause 2021 characterises "VMHvl neurons expressing both MC4R and ERα" —
+      oestrogen-sensitive VMHvl cells that project to arousal centres in the
+      hippocampus and hindbrain and whose chemogenetic stimulation reverses
+      sedentary behaviour and obesity in oestrogen-depleted females. Name plus
+      markers plus a projection phenotype, so it qualifies. NEW: no existing
+      hypothalamus node mentions Mc4r; it is narrower than vmhvl_neuron
+      (subtype_of recorded) and is a projection-defined slice of the ERα pool
+      distinct from both vmhvl_esr1_pr_neuron (ERα/PR) and
+      vmhvl_esr1_nkx2_1_tac1_neuron (locomotor ERα/NKX2-1/Tac1 module).
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Relation to the other two ERα-defined VMHvl nodes is overlap of
+          unknown extent, not containment — the report presents MC4R+/ERα+
+          cells as a projection-defined layer "within the broader ERα VMHvl
+          pool" without stating how they intersect the PR+ or NKX2-1+/Tac1+
+          subsets. No subtype_of between them.
+        quote_keys:
+          - "238858345_1d8aa140"
+          - "256305361_809df957"
+
+  - node_id: vmhvl_dbx1_lineage_neuron
+    action: NEW
+    file: kb/graphs/hypothalamus/vmhvl_dbx1_lineage_neuron.yaml
+    report_sections:
+      - "Anatomical location and structural organization of VMHvl"
+      - "Developmental origin and lineage"
+      - "Neurotransmitter phenotype, neuropeptides, and molecular markers"
+      - "Connectivity and functional roles"
+      - "Heterogeneity and defined subtypes within VMHvl"
+    reconciliation_note: >
+      Sokolowski 2016 characterises the Dbx1-derived VMH population: the
+      majority of Dbx1-lineage cells sit in VMHvl, where they account for
+      57.3% of ERα-positive cells and ~58-61% of aromatase-positive cells, and
+      are proposed to serve social behaviour and predator-threat responses.
+      Name (Dbx1 lineage) plus defining lineage/location properties, so it
+      qualifies. NEW: no existing node is defined by developmental lineage —
+      arc_aromatase_neuron is a different nucleus, and vmhvl_neuron /
+      vmhvl_esr1_pr_neuron are defined anatomically and neurochemically, so no
+      name swap is possible. definition_basis CLASSICAL_MULTIMODAL because the
+      type is fixed by location plus Dbx1-Cre lineage labelling rather than by
+      any single adult marker.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          The node is scoped to the VMHvl fraction of the Dbx1 lineage so that
+          subtype_of vmhvl_neuron holds by definition, but Sokolowski's own
+          name, "Dbx1-derived neurons in the VMH", is broader — some
+          Dbx1-lineage cells overlap SF1+ cells in VMHdm (15.1% of the SF1
+          population). Recorded as a synonym with that caveat in the
+          SubtypeAssertion notes; flagged here in case review prefers a
+          VMH-level node with a VMHvl-restricted child.
+        quote_keys:
+          - "9550590_e5547345"
+          - "9550590_0bdb13aa"
