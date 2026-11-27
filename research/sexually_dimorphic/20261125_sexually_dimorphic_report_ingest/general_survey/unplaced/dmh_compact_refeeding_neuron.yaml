@@ -1,0 +1,63 @@
+# Findings for dmh_compact_refeeding_neuron that fit no CellTypeNode property field.
+# Run: 20261125_sexually_dimorphic_report_ingest_general_survey
+
+- finding: >
+    Defining activity state. This population was identified and labelled
+    because it is activated by fasting followed by refeeding: Arc/Arg3.1-driven
+    TRAP in transgenic mice fasted overnight, re-fed with normal diet and
+    injected with 4-hydroxytamoxifen 1 h after refeeding. The
+    stimulus-dependent activity signature is not an incidental property here —
+    it is the operational definition of the type, and the marker set and
+    projection are properties of the cells that signature selected. The schema
+    has no field for a stimulus-dependent activity state, so the node's
+    identity rests on name, description and definition_basis plus the
+    method text on each source. Unlike the sibling Pdyn, Grp and Cck DMH
+    nodes, where the same finding was indirect, the attribution is direct.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: null
+
+- finding: >
+    Causal behavioural role, established by perturbation of this exact
+    population: chemogenetic activation of the TRAP-labelled refeeding-activated
+    compact DMH neurons (excitatory DREADD) decreased food intake and developed
+    a conditioned place preference, an indicator of positive valence; neither
+    chemogenetic activation nor inhibition influenced whole-body glucose
+    metabolism. The authors conclude that this is a novel DMH cell type that
+    inhibits food intake and promotes feeding-induced positive valence. The
+    schema has no field for a perturbation-based functional role, for a
+    behavioural valence effect, or for a reported null result. This is the
+    direct version of the finding that the sibling Pdyn, Grp and Cck DMH nodes
+    could only record indirectly.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: null
+
+- finding: >
+    Relation to the broader marker-defined DMH classes is unresolved. The
+    report states that this population likely overlaps one or more of the
+    Pdyn, Cck and Grp DMH clusters of PMID:37624889, and that it is a key open
+    question whether Pdyn, Grp, Cck and Ppp1r17 name separate DMH types or
+    partly overlapping states or subtypes of related neurons; the supplied
+    quotes do not resolve it. Overlap, not containment — no subtype_of
+    assertion is warranted, and the schema has no field for an unresolved
+    overlap relation between types. Recording it as colocated_types was
+    considered and rejected: the claim is about type identity and marker
+    overlap, not about spatial neighbourhood.
+  quote_keys:
+    - "240333804_7cbfba1a"
+    - "261174572_47e0f8ee"
+  closest_field: null
+
+- finding: >
+    Anatomical granularity lost on write. The source localises the population
+    to the compact part of the DMH, which is the single most discriminating
+    anatomical fact about this node relative to its DMH siblings. MBA:830
+    subdivides only into anterior, posterior and ventral parts, with no compact
+    part, so the grounded CURIE is the whole DMH and the compact-part
+    restriction survives only in name_in_source and in the source notes. A
+    compact-part term in a mouse anatomy ontology, or a sub-nucleus qualifier
+    on AnatomicalLocation, would let this be asserted rather than annotated.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: anatomical_location

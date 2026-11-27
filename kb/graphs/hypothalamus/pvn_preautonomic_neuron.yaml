@@ -1,0 +1,63 @@
+# Spinally projecting pre-autonomic (pre-sympathetic) PVN neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "PVN pre-autonomic neuron"
+description: >
+  Evidence graph component for the spinally projecting pre-autonomic
+  (pre-sympathetic) neuron of the paraventricular hypothalamic nucleus,
+  proposed from the ASTA deep research report
+  Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "hypothalamic paraventricular nucleus (PVN/PVH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: pvn_preautonomic_neuron
+    name: "Spinally projecting pre-autonomic (pre-sympathetic) PVN neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "spinally-projecting pre-autonomic neuron"
+        sources:
+          - ref: "PMID:38281730"
+            quote_key: "260000227_14a1df5a"
+            method: "name used for the retrogradely traced population integrated into the PVN atlas"
+      - term: "pre-sympathetic neuron"
+        sources:
+          - ref: "PMID:38281730"
+            quote_key: "260000227_14a1df5a"
+            method: "functional label used for the same population in the same sentence"
+      - term: "spinal-projecting neuron"
+        sources:
+          - ref: "PMID:42839625"
+            quote_key: "292696191_a9f5bf56"
+            method: "label for the 153 molecularly characterised PVN neurons engaging spinal autonomic circuitry"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "PVN pre-autonomic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "sympathetic premotor neuron", "preganglionic neuron" and
+        "efferent neuron" in CL. CL:0000527 (efferent neuron — "sends
+        impulses peripherally to activate muscles or secretory cells") was
+        considered but rejected: this PVN population projects to spinal
+        preganglionic autonomic neurons, not directly to muscle/secretory
+        targets, so it is a pre-autonomic relay rather than an efferent
+        neuron itself. CL:0012001 (neuron of the forebrain) is the nearest
+        containing term; no projection-defined pre-autonomic CL term exists.
+edges: []

@@ -1,0 +1,47 @@
+# Paraventricular hypothalamic arginine vasopressin (AVP) neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "PVN AVP neuron"
+description: >
+  Evidence graph component for the arginine vasopressin (AVP) neuron of the
+  paraventricular hypothalamic nucleus, proposed from the ASTA deep research
+  report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "hypothalamic paraventricular nucleus (PVN)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: pvn_avp_neuron
+    name: "Paraventricular hypothalamic arginine vasopressin (AVP) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "PVN AVP neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "vasopressin neuron", "vasopressinergic neuron" and
+        "vasopressin secreting cell" in CL — no hits. The closest candidate,
+        CL:4023109 (vasopressin-secreting magnocellular cell), is too narrow:
+        it is restricted to magnocellular neuroendocrine cells, but this node
+        covers all Avp-expressing PVN neurons, resolved into at least
+        Avp-Tac1 and Avp-Th subtypes whose magno/parvocellular identity is
+        not stated. CL:0012001 (neuron of the forebrain) is the nearest term
+        that contains the full population; CL:4023109 is noted as a partial
+        match and a candidate parent if the node is later split by cell class.
+edges: []

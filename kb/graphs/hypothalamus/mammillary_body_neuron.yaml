@@ -1,0 +1,117 @@
+# Mammillary body neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Mammillary body neuron"
+description: >
+  Evidence graph component for the neuron of the mammillary bodies, whose
+  genetically defined types segregate by mammillary subdivision and project
+  topographically to the anterior thalamus; proposed from the ASTA deep
+  research report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "mammillary bodies (MB)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: mammillary_body_neuron
+    name: "Mammillary body neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "MB cell type"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "https://doi.org/10.1101/2020.05.14.096818"
+            quote_key: "218686941_736c21b7"
+            method: "label for the genetically defined types that project topographically to the anterior thalamus"
+    cl_mapping:
+      cl_term:
+        id: CL:4023074
+        label: "mammillary body neuron"
+        name_in_source: "Mammillary body neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "mammillary body neuron" in CL. CL:4023074 ("a neuron that
+        has its soma located in the mammillary body") matches this node's
+        sole defining criterion exactly — the node is purely location-
+        defined, with the genetically-distinct internal subdivisions and
+        topographic projections recorded as heterogeneity, not as an
+        additional narrowing criterion on the node itself.
+    anatomical_location:
+      - id: MBA:331
+        label: "Mammillary body"
+        name_in_source: "mammillary bodies (MB)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2020.05.14.096818"
+            quote_key: "218686941_736c21b7"
+            method: >
+              scRNA-seq of >16,000 single cells from the ventral posterior
+              hypothalamus, with differentially expressed genes of selected
+              neuronal populations validated by fluorescence in situ
+              hybridization; MB clusters were related to the neuroanatomical
+              subdivisions of the MB
+            scope: "mouse ventral posterior hypothalamus, mammillary body"
+            notes: >
+              The source resolves the MB into several transcriptionally
+              distinct clusters that segregate by MB subdivision. MBA has
+              subdivision terms (e.g. MBA:210 lateral mammillary nucleus),
+              but the quote names no individual subdivision for any cluster,
+              so the location is recorded at the whole mammillary body level.
+      - id: MBA:239
+        label: "Anterior group of the dorsal thalamus"
+        name_in_source: "anterior thalamus"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "https://doi.org/10.1101/2020.05.14.096818"
+            quote_key: "218686941_736c21b7"
+            method: >
+              projection reported for genetically defined MB cell types; the
+              quoted passage names no tracing method, so the claim is recorded
+              as indirect rather than as traced projection evidence
+            scope: >
+              mouse; reported jointly for the genetically defined MB cell
+              types rather than for any single type, and so applied here to
+              the MB neuron class as a whole
+            support: WEAK
+            notes: >
+              The projection is topographic: different genetically defined MB
+              types reach different parts of the anterior thalamic group. The
+              quote does not say which type reaches which anterior thalamic
+              nucleus, so no subdivision-level target is recorded.
+    definition_references:
+      - "https://doi.org/10.1101/2020.05.14.096818"
+    notes: >
+      Suspected heterogeneity is the defining caveat for this node: the one
+      source that resolves the MB finds several transcriptionally distinct
+      clusters that segregate within the neuroanatomical subdivisions of the
+      MB, so this node is a class containing multiple molecular types rather
+      than a single type. The correspondence between the classical mammillary
+      subnuclei and the atlas clusters is not recoverable from the supplied
+      material, and the clusters are not individually named. No defining
+      markers are recorded: the source states that its populations are defined
+      by suites of discriminatory markers validated by FISH, but the supplied
+      quote lists no MB marker gene, so marker-defined MB classes are known to
+      exist without any marker being citable here. Neuropeptides, morphology,
+      intrinsic electrophysiology and developmental origin are not
+      characterised for MB neurons in the supplied sources. Neurotransmitter
+      identity (nt_type) is also not recorded: no source in this run states
+      a transmitter for MB neurons, so the field is left unset pending
+      confirmation against a primary paper in evidence-extraction, rather
+      than recording an inferred value no source asserts. The sole source is
+      a preprint (https://doi.org/10.1101/2020.05.14.096818); its
+      peer-reviewed version should be substituted when the reference store
+      resolves it.
+edges: []

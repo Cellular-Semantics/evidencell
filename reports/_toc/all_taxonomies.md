@@ -71,6 +71,29 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 
 - [mea_esr1_neuron](../sexually_dimorphic/mea_esr1_neuron_summary.md) — skos:closeMatch · verdict pending
 
+###### Cluster — 0195 MEA Slc17a7 Glut_1
+
+- [mea_glutamatergic_projection_neuron](../medial_temporal_lobe_amygdala/mea_glutamatergic_projection_neuron_summary.md) — skos:broadMatch · MODERATE
+
+#### Subclass — 014 LA-BLA-BMA-PA Glut
+
+##### Supertype — 0061 LA-BLA-BMA-PA Glut_2
+
+- [bla_glutamatergic_principal_neuron](../medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md) — skos:closeMatch · MODERATE
+
+##### Supertype — 0064 LA-BLA-BMA-PA Glut_5
+
+- [basal_amygdala_fear_neuron](../medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md) — skos:broadMatch · HIGH
+- [bla_glutamatergic_principal_neuron](../medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md) — skos:closeMatch · MODERATE
+
+###### Cluster — 0245 LA-BLA-BMA-PA Glut_5
+
+- [basal_amygdala_fear_neuron](../medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md) — skos:closeMatch · MODERATE
+
+##### Supertype — 0065 LA-BLA-BMA-PA Glut_6
+
+- [bla_glutamatergic_principal_neuron](../medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md) — skos:closeMatch · MODERATE
+
 #### Subclass — 016 CA1-ProS Glut
 
 ##### Supertype — 0069 CA1-ProS Glut_1
@@ -242,6 +265,10 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 - [axo_axonic_cell_hippocampus](../hippocampus/axo_axonic_cell_hippocampus_summary.md) — skos:exactMatch · MODERATE
 - [bistratified_cell_hippocampus](../hippocampus/bistratified_cell_hippocampus_summary.md) — evidencell:UncertainRelationship · verdict pending
 
+###### Cluster — 0733 Pvalb chandelier Gaba_1
+
+- [bla_axo_axonic_cell](../medial_temporal_lobe_amygdala/bla_axo_axonic_cell_summary.md) — skos:closeMatch · MODERATE
+
 #### Subclass — 052 Pvalb Gaba
 
 - [sst_tac1_subfamily_chamberland](../hippocampus/sst_tac1_subfamily_chamberland_summary.md) — skos:broadMatch · MODERATE
@@ -272,7 +299,6 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 - [chrna2_olm_subfamily_chamberland](../hippocampus/chrna2_olm_subfamily_chamberland_summary.md) — skos:broadMatch · MODERATE
 - [hippocampo_septal_cell_ca1](../hippocampus/hippocampo_septal_cell_ca1_summary.md) — skos:broadMatch · MODERATE
 - [olm_cell_ca1](../hippocampus/olm_cell_ca1_summary.md) — skos:broadMatch · MODERATE
-- olm_hippocampus — skos:broadMatch · MODERATE _(no report file)_
 
 ###### Cluster — 0768 Sst Gaba_3
 
@@ -309,6 +335,22 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 
 - [avpv_kiss1_neuron](../sexually_dimorphic/avpv_kiss1_neuron_summary.md) — evidencell:UncertainRelationship · verdict pending
 
+### Class — 09 CNU-LGE GABA
+
+#### Subclass — 064 STR-PAL Chst9 Gaba
+
+##### Supertype — 0286 STR-PAL Chst9 Gaba_2
+
+- [amygdala_intercalated_cell](../medial_temporal_lobe_amygdala/amygdala_intercalated_cell_summary.md) — skos:closeMatch · MODERATE
+
+#### Subclass — 065 IA Mgp Gaba
+
+- [amygdala_intercalated_cell](../medial_temporal_lobe_amygdala/amygdala_intercalated_cell_summary.md) — skos:broadMatch · MODERATE
+
+##### Supertype — 0292 IA Mgp Gaba_3
+
+- [amygdala_intercalated_cell](../medial_temporal_lobe_amygdala/amygdala_intercalated_cell_summary.md) — skos:closeMatch · MODERATE
+
 ### Class — 11 CNU-HYa GABA
 
 #### Subclass — 076 MEA-BST Lhx6 Nfib Gaba
@@ -322,6 +364,22 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 ###### Cluster — 1301 MEA-BST Lhx6 Nfib Gaba_4
 
 - [avpv_kiss1_neuron](../sexually_dimorphic/avpv_kiss1_neuron_summary.md) — evidencell:UncertainRelationship · verdict pending
+
+#### Subclass — 079 CEA-BST Six3 Cyp26b1 Gaba
+
+##### Supertype — 0368 CEA-BST Six3 Cyp26b1 Gaba_2
+
+###### Cluster — 1333 CEA-BST Six3 Cyp26b1 Gaba_2
+
+- [cea_pkc_delta_neuron](../medial_temporal_lobe_amygdala/cea_pkc_delta_neuron_summary.md) — skos:broadMatch · MODERATE
+
+#### Subclass — 082 CEA-BST Ebf1 Pdyn Gaba
+
+##### Supertype — 0384 CEA-BST Ebf1 Pdyn Gaba_1
+
+###### Cluster — 1385 CEA-BST Ebf1 Pdyn Gaba_1
+
+- [cea_isl1_projection_neuron](../medial_temporal_lobe_amygdala/cea_isl1_projection_neuron_summary.md) — skos:broadMatch · MODERATE
 
 #### Subclass — 083 CEA-BST Rai14 Pdyn Crh Gaba
 
@@ -371,10 +429,10 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 
 ##### Supertype — 0486 PVpo-VMPO-MPN Hmx2 Gaba_5
 
-- [arc_aromatase_neuron](../sexually_dimorphic/arc_aromatase_neuron_summary.md) — evidencell:UncertainRelationship · verdict pending
+- [arc_aromatase_neuron](../hypothalamus/arc_aromatase_neuron_summary.md) — evidencell:UncertainRelationship · verdict pending
 - [avpv_kiss1_neuron](../sexually_dimorphic/avpv_kiss1_neuron_summary.md) — evidencell:UncertainRelationship · verdict pending
 - [avpv_th_neuron](../sexually_dimorphic/avpv_th_neuron_summary.md) — skos:closeMatch · verdict pending
-- [mpoa_esr1_neuron](../sexually_dimorphic/mpoa_esr1_neuron_summary.md) — evidencell:CrossCuttingMatch · verdict pending
+- [mpoa_esr1_neuron](../hypothalamus/mpoa_esr1_neuron_summary.md) — evidencell:CrossCuttingMatch · verdict pending
 
 ###### Cluster — 1915 PVpo-VMPO-MPN Hmx2 Gaba_5
 
@@ -389,11 +447,17 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 
 ### Class — 13 CNU-HYa Glut
 
+#### Subclass — 112 GPi Tbr1 Cngb3 Gaba-Glut
+
+##### Supertype — 0504 GPi Tbr1 Cngb3 Gaba-Glut_1
+
+- classical_gpi_shell_mmus — skos:exactMatch · verdict pending _(no report file)_
+
 #### Subclass — 116 AVPV-MEPO-SFO Tbr1 Glut
 
 ##### Supertype — 0521 AVPV-MEPO-SFO Tbr1 Glut_3
 
-- [mpoa_esr1_neuron](../sexually_dimorphic/mpoa_esr1_neuron_summary.md) — evidencell:CrossCuttingMatch · verdict pending
+- [mpoa_esr1_neuron](../hypothalamus/mpoa_esr1_neuron_summary.md) — evidencell:CrossCuttingMatch · verdict pending
 
 ### Class — 14 HY Glut
 
@@ -407,17 +471,17 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 
 ##### Supertype — 0563 VMH Fezf1 Glut_1
 
-- [vmhvl_esr1_pr_neuron](../sexually_dimorphic/vmhvl_esr1_pr_neuron_summary.md) — evidencell:CrossCuttingMatch · verdict pending
+- [vmhvl_esr1_pr_neuron](../hypothalamus/vmhvl_esr1_pr_neuron_summary.md) — evidencell:CrossCuttingMatch · verdict pending
 
 ##### Supertype — 0564 VMH Fezf1 Glut_2
 
-- [vmhvl_esr1_pr_neuron](../sexually_dimorphic/vmhvl_esr1_pr_neuron_summary.md) — evidencell:CrossCuttingMatch · verdict pending
+- [vmhvl_esr1_pr_neuron](../hypothalamus/vmhvl_esr1_pr_neuron_summary.md) — evidencell:CrossCuttingMatch · verdict pending
 
 #### Subclass — 133 PVH-SO-PVa Otp Glut
 
 ##### Supertype — 0585 PVH-SO-PVa Otp Glut_1
 
-- [pvn_crfr1_neuron](../sexually_dimorphic/pvn_crfr1_neuron_summary.md) — skos:closeMatch · verdict pending
+- [pvn_crfr1_neuron](../hypothalamus/pvn_crfr1_neuron_summary.md) — skos:closeMatch · verdict pending
 
 #### Subclass — 136 PMv-TMv Pitx2 Glut
 
@@ -428,3 +492,199 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 ###### Cluster — 2470 PMv-TMv Pitx2 Glut_3
 
 - [pmv_otr_neuron](../sexually_dimorphic/pmv_otr_neuron_summary.md) — skos:closeMatch · verdict pending
+
+### Class — 24 MY Glut
+
+#### Subclass — 251 NTS Dbh Glut
+
+##### Supertype — 1007 NTS Dbh Glut_4
+
+###### Cluster — 4548 NTS Dbh Glut_4
+
+- lc_noradrenergic_neuron — skos:closeMatch · MODERATE _(no report file)_
+
+### Class — 28 CB GABA
+
+#### Subclass — 309 CB PLI Gly-Gaba
+
+##### Supertype — 1144 CB PLI Gly-Gaba_1
+
+###### Cluster — 5177 CB PLI Gly-Gaba_1
+
+- pli2_osorno — skos:closeMatch · verdict pending _(no report file)_
+
+###### Cluster — 5178 CB PLI Gly-Gaba_1
+
+- pli1_osorno — skos:exactMatch · verdict pending _(no report file)_
+
+##### Supertype — 1145 CB PLI Gly-Gaba_2
+
+- pli3_osorno — skos:exactMatch · verdict pending _(no report file)_
+
+#### Subclass — 311 CBX MLI Megf11 Gaba
+
+##### Supertype — 1149 CBX MLI Megf11 Gaba_1
+
+###### Cluster — 5188 CBX MLI Megf11 Gaba_1
+
+- mli1_kozareva — skos:exactMatch · verdict pending _(no report file)_
+
+#### Subclass — 312 CBX MLI Cdh22 Gaba
+
+##### Supertype — 1151 CBX MLI Cdh22 Gaba_1
+
+###### Cluster — 5192 CBX MLI Cdh22 Gaba_1
+
+- mli2_kozareva — skos:exactMatch · verdict pending _(no report file)_
+
+## CTX-HPF (Mouse Cortex + Hippocampal Formation, Yao 2021)
+
+`CS202106160` · Mus musculus
+
+### Class — GABAergic
+
+#### Subclass — Lamp5
+
+##### Cluster — 5_Lamp5 Lhx6
+
+- CS20230722_CLUS_0730 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0731 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 6_Lamp5 Lhx6
+
+- CS20230722_CLUS_0724 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 7_Lamp5 Lhx6
+
+- CS20230722_CLUS_0725 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0726 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 8_Lamp5 Lhx6
+
+- CS20230722_CLUS_0727 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0729 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 9_Lamp5 Lhx6
+
+- CS20230722_CLUS_0728 — skos:closeMatch · verdict pending _(no report file)_
+
+#### Subclass — Pvalb
+
+##### Cluster — 110_Pvalb
+
+- CS20230722_CLUS_0755 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 114_Pvalb
+
+- CS20230722_CLUS_0737 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0738 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0739 — skos:closeMatch · verdict pending _(no report file)_
+
+#### Subclass — Sncg
+
+##### Cluster — 21_Sncg
+
+- CS20230722_CLUS_0680 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 25_Sncg
+
+- CS20230722_CLUS_0679 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0702 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 26_Ntng1 HPF
+
+- CS20230722_CLUS_0700 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0701 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0703 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 29_Ntng1 HPF
+
+- CS20230722_CLUS_0698 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0699 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 30_Ntng1 HPF
+
+- CS20230722_CLUS_0697 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 34_Sncg
+
+- CS20230722_CLUS_0681 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 4_Meis2 HPF
+
+- CS20230722_CLUS_0704 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0705 — skos:closeMatch · verdict pending _(no report file)_
+
+#### Subclass — Sst
+
+##### Cluster — 102_Sst HPF
+
+- CS20230722_CLUS_0787 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0790 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 103_Sst HPF
+
+- CS20230722_CLUS_0788 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0791 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 104_Sst HPF
+
+- CS20230722_CLUS_0785 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0786 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 105_Sst HPF
+
+- CS20230722_CLUS_0789 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 77_Sst HPF
+
+- CS20230722_CLUS_0775 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 78_Sst HPF
+
+- CS20230722_CLUS_0767 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0768 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0772 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 79_Sst
+
+- CS20230722_CLUS_0771 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 80_Sst
+
+- CS20230722_CLUS_0769 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0770 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0773 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 87_Sst
+
+- CS20230722_CLUS_0774 — skos:closeMatch · verdict pending _(no report file)_
+
+#### Subclass — Vip
+
+##### Cluster — 49_Vip
+
+- CS20230722_CLUS_0649 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 55_Vip HPF
+
+- CS20230722_CLUS_0651 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 56_Vip HPF
+
+- CS20230722_CLUS_0650 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0654 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0655 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 59_Vip Igfbp6
+
+- CS20230722_CLUS_0658 — skos:closeMatch · verdict pending _(no report file)_
+- CS20230722_CLUS_0659 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 60_Vip Igfbp6
+
+- CS20230722_CLUS_0656 — skos:closeMatch · verdict pending _(no report file)_
+
+##### Cluster — 61_Vip Igfbp6
+
+- CS20230722_CLUS_0657 — skos:closeMatch · verdict pending _(no report file)_

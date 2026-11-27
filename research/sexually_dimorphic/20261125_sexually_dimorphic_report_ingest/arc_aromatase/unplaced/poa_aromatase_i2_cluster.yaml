@@ -1,0 +1,48 @@
+# Findings from the arc_aromatase run that no CellTypeNode property field can hold.
+# Node: poa_aromatase_i2_cluster (NEW)
+
+- finding: >
+    Cluster I-2 overlaps the sexually dimorphic nucleus of the preoptic area and
+    shares the canonical SDN-POA marker MoxD1 with it (co-expressed with the I-2
+    marker gene Cplx3). The region part of this is held as anatomical_location
+    (MBA:515, name_in_source "sexually dimorphic nucleus of the preoptic area
+    (SDN-POA)"), but the implied relation to the existing
+    sdn_poa_calbindin_neuron node is not stated as containment, so it is not a
+    subtype_of; a MappingEdge (cross-cutting match) is the right home for it.
+    Carried forward from the ingest plan's unplaced list.
+  quote_keys: ["53566396_7313d264"]
+  closest_field: subtype_of
+
+- finding: >
+    Other aromatase-enriched preoptic clusters with distinct sex-hormone receptor
+    repertoires are listed by label only (I-13, I-24, I-32 and E-12), with no
+    per-cluster characterisation beyond Ar and Esr1 co-expression, so no nodes
+    were minted for them. They matter to this node only as the comparison set
+    against which "aromatase-enriched" and the Ar/Esr1 repertoire are not
+    discriminative; that caveat is recorded on the Ar and Esr1 marker sources.
+    Carried forward from the ingest plan's unplaced list.
+  quote_keys: ["53566396_7313d264"]
+  closest_field: null
+
+- finding: >
+    Proposed steroid-signalling modes for the cluster. Co-expression of Ar and
+    Esr1 with aromatase is read by the source as scope for a cell-autonomous
+    (autocrine) route in which circulating testosterone is converted locally to
+    estrogen and acts on the same cell through Esr1; the spatial overlap with
+    Esr1-enriched clusters is read as scope for a paracrine route onto
+    neighbouring cells. Both are the authors' inferences from expression and
+    position, not measured signalling. CellTypeNode has no function or
+    signalling field; the underlying expression and colocation facts are held in
+    defining_markers and colocated_types, but the mechanistic reading is not.
+  quote_keys: ["53566396_7313d264"]
+  closest_field: null
+
+- finding: >
+    The sex difference in I-2 is given only as a qualitative comparison — "a more
+    modest male enrichment" than the "appreciable" female enrichment of the
+    Esr1-enriched cluster I-15 — with no cell counts, male/female ratio or
+    statistics in the quoted material. sex_bias on the node therefore records
+    direction (MALE_BIASED) but not magnitude, and male_female_ratio is an
+    atlas-node field that cannot take a qualitative statement.
+  quote_keys: ["53566396_7313d264"]
+  closest_field: male_female_ratio

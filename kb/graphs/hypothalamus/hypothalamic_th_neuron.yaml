@@ -1,0 +1,60 @@
+# Tyrosine hydroxylase (TH)-expressing hypothalamic neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Hypothalamic TH neuron"
+description: >
+  Evidence graph component for the tyrosine hydroxylase (TH)-expressing
+  hypothalamic neuron, a cross-nuclear transmitter-defined class, proposed
+  from the ASTA deep research report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "periventricular hypothalamic zone, periventricular hypothalamic region, and lateral hypothalamic zone"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: hypothalamic_th_neuron
+    name: "Tyrosine hydroxylase (TH)-expressing hypothalamic neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "hypothalamic TH-expressing neurons"
+        sources:
+          - ref: "PMID:31950494"
+            quote_key: "210699283_6928801a"
+            method: "name used for the neurochemically defined population that single-cell work subdivides"
+      - term: "hypothalamic TH-ir neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:31950494"
+            quote_key: "210699283_819ba4a2"
+            method: "immunoreactivity-based label used in the regional mapping"
+    cl_mapping:
+      cl_term:
+        id: CL:4033050
+        label: "catecholaminergic neuron"
+        name_in_source: "Hypothalamic TH neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "dopaminergic neuron", "TH neuron" and "catecholaminergic
+        neuron" in CL. CL:0000700 (dopaminergic neuron) was considered but
+        rejected as too specific: the node is defined only by TH expression
+        (the rate-limiting catecholamine-synthesis enzyme), not by confirmed
+        dopamine release, and spans multiple hypothalamic zones without a
+        stated DBH/noradrenergic exclusion. CL:4033050 (catecholaminergic
+        neuron — "a neuron that releases catecholamine as a neurotransmitter")
+        matches the node's actual defining criterion in full; the
+        "predominantly GABAergic phenotype" is a reported co-identity, not an
+        additional narrowing marker on this node.
+edges: []

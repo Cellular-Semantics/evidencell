@@ -1,0 +1,682 @@
+run_id: 20261125_sexually_dimorphic_report_ingest_general_survey
+types:
+
+  # ── Lateral hypothalamic area ───────────────────────────────────────────────
+
+  - node_id: lha_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/lha_gabaergic_neuron.yaml
+    report_sections:
+      - "Lateral hypothalamic area neuron types"
+    reconciliation_note: >
+      No existing node in kb/graphs/sexually_dimorphic/ describes any LHA
+      population; the 12 existing nodes cover VMHvl, MPOA, ARC, AVPV, PVN,
+      MeA, PMv, SDN-POA and BNST only. The report characterises this as a
+      broad Vgat/Slc32a1-defined class intermingled through the LH and linked
+      to feeding and motivation circuits. Proposed as a parent for the LHA
+      inhibitory subtypes the report describes.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: lha_glutamatergic_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/lha_glutamatergic_neuron.yaml
+    report_sections:
+      - "Lateral hypothalamic area neuron types"
+    reconciliation_note: >
+      No existing node describes an LHA population (see lha_gabaergic_neuron).
+      The report characterises a broad Vglut2/Slc17a6-defined class
+      preferentially innervated and suppressed by extended-amygdala inhibitory
+      input to control food intake.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: lha_orexin_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/lha_orexin_neuron.yaml
+    report_sections:
+      - "Lateral hypothalamic area neuron types"
+    reconciliation_note: >
+      No existing node describes orexin/hypocretin neurons; checked against all
+      12 existing nodes, none of which is LHA or peptide-matched. Characterised
+      by Hcrt/Ox expression, LH location, and a mixed glutamate-release /
+      GABA-synthesis transcript profile.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          About half of Hcrt/Ox neurons express transcripts for both glutamate
+          release machinery and GABA synthesis without a vesicular GABA release
+          pathway, so the report explicitly declines to place orexin neurons
+          inside either broad LHA transmitter class. Recorded here rather than
+          as subtype_of (overlap, not containment).
+        quote_keys:
+          - "10721050_86edee47"
+
+  - node_id: lha_mch_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/lha_mch_neuron.yaml
+    report_sections:
+      - "Lateral hypothalamic area neuron types"
+    reconciliation_note: >
+      No existing node describes MCH neurons; none of the 12 existing nodes is
+      LHA or MCH-defined. Characterised by MCH transcript/protein in the LHA.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Virtually all MCH neurons express both glutamate release machinery and
+          GABA synthesis transcripts without a vesicular GABA release pathway;
+          the report treats the class as not fitting either broad LHA
+          transmitter class cleanly, so no subtype_of is asserted.
+        quote_keys:
+          - "10721050_86edee47"
+
+  - node_id: lha_leprb_nts_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/lha_leprb_nts_neuron.yaml
+    report_sections:
+      - "Lateral hypothalamic area neuron types"
+    reconciliation_note: >
+      No existing node describes an LHA LepRb/Nts/Gal population. Characterised
+      by LepRb/Nts/Gal marker overlap, GABAergic/inhibitory identity, VTA
+      innervation and local inhibition of orexin neurons. Written as a subtype
+      of lha_gabaergic_neuron (DEFINITIONAL, LOW — inferred from the sources'
+      statement that the population is GABAergic/inhibitory).
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          The report states LepRb, Nts and Gal only partially overlap, so this
+          is probably a family of related local inhibitory LHA subtypes rather
+          than one type; a Gal-defined sibling is implied but not separately
+          characterised.
+        quote_keys:
+          - "195878681_8363d433"
+
+  - node_id: lh_pv_glutamatergic_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/lh_pv_glutamatergic_neuron.yaml
+    report_sections:
+      - "Lateral hypothalamic area neuron types"
+    reconciliation_note: >
+      No existing node describes the LH PV1 population. The best-characterised
+      LHA type in the report: PVALB protein, compact PV1 cord in the
+      ventrolateral tuberal hypothalamus within the medial forebrain bundle,
+      glutamatergic (not GABAergic), fast-spiking, two soma size classes,
+      long-range projections. Subtype of lha_glutamatergic_neuron
+      (DEFINITIONAL, LOW — inferred, the sources state glutamate release and LH
+      location but not the containment).
+    identity_conflicts: []
+    unplaced: []
+
+  # ── Arcuate and mediobasal hypothalamus ─────────────────────────────────────
+
+  - node_id: arc_pomc_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/arc_pomc_neuron.yaml
+    report_sections:
+      - "Arcuate and mediobasal hypothalamic neuron types"
+    reconciliation_note: >
+      Checked against arc_aromatase_neuron (the only existing ARC node): that
+      node is aromatase/Cyp19a1-defined and the report's ARC section does not
+      mention aromatase, so they are not the same population. POMC neurons are
+      characterised by Pomc transcript/peptide, arcuate location, and
+      documented internal transmitter heterogeneity.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Lam et al. resolve canonical POMC neurons into four classes with
+          distinct cell-surface receptor profiles, and report that 45/163
+          Pomc-lineage cells are Agrp-high/Pomc-low; these receptor classes are
+          not separately named and are not proposed as nodes.
+        quote_keys:
+          - "13728181_96ffe943"
+
+  - node_id: arc_pomc_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/arc_pomc_gabaergic_neuron.yaml
+    report_sections:
+      - "Arcuate and mediobasal hypothalamic neuron types"
+    reconciliation_note: >
+      A narrower population inside arc_pomc_neuron, so NEW rather than ENRICH.
+      Characterised by Pomc + GAD67/Gad1/Gad2, position closer to the third
+      ventricle with a rostrocaudal increase and a medial bias, smaller soma,
+      higher input resistance, and uniformly GABAergic autapses. subtype_of
+      arc_pomc_neuron (DEFINITIONAL, HIGH — three independent sources).
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: arc_pomc_glutamatergic_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/arc_pomc_glutamatergic_neuron.yaml
+    report_sections:
+      - "Arcuate and mediobasal hypothalamic neuron types"
+    reconciliation_note: >
+      A narrower population inside arc_pomc_neuron, so NEW rather than ENRICH.
+      Characterised by Pomc + Slc17a6/VGLUT2, position farther from the third
+      ventricle with a rostrocaudal decrease and a lateral bias, larger soma,
+      and exclusively glutamatergic autapses. subtype_of arc_pomc_neuron
+      (DEFINITIONAL, HIGH).
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          The sources also describe POMC cells positive for both GAD67 and
+          vGlut2 and cells negative for both; these mixed and
+          transmitter-negative POMC subpopulations are characterised only by
+          their intermediate spatial position and are not proposed as nodes.
+        quote_keys:
+          - "214721986_a593284a"
+
+  - node_id: arc_agrp_npy_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/arc_agrp_npy_neuron.yaml
+    report_sections:
+      - "Arcuate and mediobasal hypothalamic neuron types"
+    reconciliation_note: >
+      Checked against arc_aromatase_neuron and avpv_kiss1_neuron: neither is
+      AgRP/NPY-defined and the report's only mention of Kiss1 is as a gene
+      absent from Crabp1+ ARC neurons. Characterised by Agrp/Npy
+      transcript/peptide, arcuate location, mostly GABAergic identity, and
+      local inhibition of POMC neurons.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Campbell et al. report multiple AgRP subtypes in Arc-ME with cell
+          type-specific responses to energy status; the individual subtypes are
+          not named in the supplied quotes and are not proposed as nodes.
+        quote_keys:
+          - "24776243_6c36a7f2"
+
+  - node_id: arc_me_sst_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/arc_me_sst_neuron.yaml
+    report_sections:
+      - "Arcuate and mediobasal hypothalamic neuron types"
+    reconciliation_note: >
+      No existing node is Sst-defined or Arc-ME-located. Characterised as an
+      orexigenic somatostatin neuron population in the arcuate–median eminence
+      complex, distinct from the canonical AgRP/POMC split.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Hajdarovic et al. interpret an Sst/Npy cluster that also expresses
+          Agrp as most likely representing arcuate AgRP/NPY neurons, so Sst
+          expression partly cuts across the AgRP/NPY definition. Overlap, not
+          containment — not written as subtype_of.
+        quote_keys:
+          - "250290007_6b7445e9"
+
+  - node_id: arc_crabp1_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/arc_crabp1_neuron.yaml
+    report_sections:
+      - "Arcuate and mediobasal hypothalamic neuron types"
+    reconciliation_note: >
+      Explicitly distinct from every peptide-defined ARC node: the source shows
+      Crabp1+ neurons are negative for Kiss1, Pomc, Ghrh, Th and Agrp, which
+      separates them from avpv_kiss1_neuron, arc_aromatase_neuron and the POMC
+      and AgRP types proposed in this run. Characterised by Crabp1 transcript
+      restricted to the ARH, in the GABA12 GABAergic cluster.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: arc_pomc_tac2_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/arc_pomc_tac2_neuron.yaml
+    report_sections:
+      - "Arcuate and mediobasal hypothalamic neuron types"
+    reconciliation_note: >
+      A transcriptomic cluster with its own markers and spatial anchor (most
+      ventral portion of the coronal section); the report treats it as a
+      subdivision of arcuate POMC-region neurons but explicitly not a settled
+      classical type, so it is NEW rather than ENRICH on arc_pomc_neuron.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          The report says this cluster "may represent part of the classical
+          POMC population" but does not establish containment; recorded here
+          rather than as subtype_of arc_pomc_neuron.
+        quote_keys:
+          - "250290007_6b7445e9"
+
+  # ── Paraventricular nucleus / hypothalamus ──────────────────────────────────
+
+  - node_id: pvn_avp_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/pvn_avp_neuron.yaml
+    report_sections:
+      - "Paraventricular nucleus/hypothalamus neuron types"
+    reconciliation_note: >
+      Checked against pvn_crfr1_neuron, the only existing PVN node: that node
+      is defined by the CRF receptor CRFR1, not by Avp, so they are different
+      populations. Characterised by Avp transcript/protein in the PVN, resolved
+      into at least Avp-Tac1 and Avp-Th subtypes.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Avp-Tac1 and Avp-Th are named transcriptomic subtypes of this class
+          in the Berkhout PVN atlas; only their subtype marker names are given,
+          so they are not proposed as separate nodes.
+        quote_keys:
+          - "260000227_14a1df5a"
+
+  - node_id: pvn_oxt_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/pvn_oxt_neuron.yaml
+    report_sections:
+      - "Paraventricular nucleus/hypothalamus neuron types"
+    reconciliation_note: >
+      Checked against pvn_crfr1_neuron and pmv_otr_neuron: the latter is an
+      oxytocin RECEPTOR (Oxtr) population in the PMv, not an oxytocin-producing
+      PVN population — different marker and different nucleus. Characterised by
+      Oxt transcript/protein in the PVN, including the Oxt-Foxp1 neuroendocrine
+      subtype, and as the predominant genotype (46.4%) among spinally
+      projecting PVN neurons.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Oxt-Foxp1 is a named neuroendocrine subtype of this class; its
+          relation to the Oxt-enriched spinal-projecting clusters is not
+          resolved by the supplied quotes.
+        quote_keys:
+          - "260000227_14a1df5a"
+          - "292696191_a9f5bf56"
+
+  - node_id: pvn_crh_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/pvn_crh_neuron.yaml
+    report_sections:
+      - "Paraventricular nucleus/hypothalamus neuron types"
+    reconciliation_note: >
+      NEW, not ENRICH on pvn_crfr1_neuron: that node is defined by expression
+      of the CRF RECEPTOR CRFR1, whereas this type is defined by production of
+      CRH itself — the names would not be interchangeable in the sources. Also
+      checked against bnst_crf_neuron, bnstalg_type_iii_crf_neuron and
+      anterior_bnst_crf_glutamatergic_neuron: all three are BNST, not PVN.
+      Characterised by Crh expression, the Crh-Nr3c1 atlas subtype, smallest
+      somatic volumes and simplest dendritic branching among reconstructed CRH
+      neurons, and two morphological forms by location.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Hypothalamic CRH neurons split into two morphological types —
+          anterior parvicellular area neurons with fewer, smaller dendritic
+          varicosities and periventricular neurons with more, larger
+          varicosities — with no stated one-to-one transcriptomic match. Named
+          but not separately proposed.
+        quote_keys:
+          - "255832704_94008ff1"
+
+  - node_id: pvn_trh_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/pvn_trh_neuron.yaml
+    report_sections:
+      - "Paraventricular nucleus/hypothalamus neuron types"
+    reconciliation_note: >
+      No existing node is TRH-defined; pvn_crfr1_neuron is the only PVN node
+      and is receptor-defined. Characterised by Trh as a PVN neuroendocrine
+      class with the Trh-Nfib subtype.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Trh-Nfib is a named transcriptomic subtype of this class; only the
+          subtype marker is given, so it is not proposed as a separate node.
+        quote_keys:
+          - "260000227_14a1df5a"
+
+  - node_id: pvn_preautonomic_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/pvn_preautonomic_neuron.yaml
+    report_sections:
+      - "Paraventricular nucleus/hypothalamus neuron types"
+    reconciliation_note: >
+      No existing node is projection-defined or PVN pre-autonomic. Defined by
+      spinal projection and autonomic function, with Adarb2 co-clustering as a
+      molecular handle and clusters biased to medial/posterior, anterior or
+      broad rostrocaudal positions.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          The report notes this projection-defined class cuts across
+          peptide-defined categories (strong Oxt representation among
+          spinal-projecting neurons), i.e. overlap with pvn_oxt_neuron that is
+          not containment in either direction.
+        quote_keys:
+          - "292696191_a9f5bf56"
+          - "260000227_14a1df5a"
+
+  - node_id: pvh_brs3_pb_projecting_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/pvh_brs3_pb_projecting_neuron.yaml
+    report_sections:
+      - "Paraventricular nucleus/hypothalamus neuron types"
+    reconciliation_note: >
+      No existing node is Brs3-defined or parabrachial-projecting. Defined by
+      parabrachial projection plus Brs3 expression, with activation reducing
+      food intake and silencing causing obesity.
+    identity_conflicts: []
+    unplaced: []
+
+  # ── Ventromedial hypothalamus ───────────────────────────────────────────────
+
+  - node_id: vmhvl_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/vmhvl_neuron.yaml
+    report_sections:
+      - "Ventromedial hypothalamus neuron types"
+    reconciliation_note: >
+      NEW, not ENRICH on vmhvl_esr1_pr_neuron: this is the BROADER
+      subdivision-level population (~4,000 VMHvl neurons resolved into 17
+      transcriptomic types), whereas the existing node is the narrower
+      Esr1/PR-defined population within it — the names are not
+      interchangeable. Characterised by location, cell number, glutamatergic
+      identity, projection to multiple targets, and roles in aggression and
+      mounting. Proposed as the parent of vmhvl_esr1_pr_neuron.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          A Six3-expressing cluster (Satb2_Six3) mapped to the conventional
+          "ventrolateral" VMH is argued in a revised prosomeric model to belong
+          to a distinct VMHvi subdivision; the disagreement is about
+          anatomical parcellation rather than a characterised cell type, so no
+          node is proposed.
+        quote_keys:
+          - "255457408_fb3f9236"
+          - "204741414_2ad203f0"
+      - finding: >
+          Six principal VMH clusters named only by a marker (Tac1, Rprm, Pdyn,
+          Sst and others) and the developmental marker populations Nr5a1,
+          Nkx2.2 and Nr2f1 are described as transcriptomic/developmental class
+          labels rather than worked-out cell types; not proposed as nodes.
+        quote_keys:
+          - "255457408_fb3f9236"
+          - "255457408_371ea78a"
+
+  - node_id: vmhvl_esr1_pr_neuron
+    action: ENRICH
+    file: kb/graphs/sexually_dimorphic/vmhvl_esr1_pr_neuron.yaml
+    report_sections:
+      - "Ventromedial hypothalamus neuron types"
+    reconciliation_note: >
+      BLOCKED — NOT WRITTEN. The intended additive edit was a single
+      subtype_of entry naming the NEW parent vmhvl_neuron (kind: DEFINITIONAL,
+      confidence: LOW, source PMID:31626771 / quote 204741414_2ad203f0, with a
+      note that the relation is inferred from the structural subdivision). No
+      existing value would have been changed. The pre-edit hook rejects every
+      write to this file because of a PRE-EXISTING failure unrelated to this
+      run: `check_run_refs` resolves run_ref values only against
+      kb/annotation_transfer_runs/index.yaml, but this file's two
+      BULK_CORRELATION evidence items carry
+      run_ref: corr_run_20260428_knoedler_esr1_wmbv1, a correlation run that
+      lives at kb/correlation_runs/20260428_knoedler_esr1_wmbv1/. Verified
+      against the unmodified file (clean git status). Needs a dev-request
+      issue; re-apply this subtype_of once the file can be written.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Containment of this Esr1/PR population within the proposed
+          vmhvl_neuron parent could not be recorded on the node; see
+          reconciliation_note.
+        quote_keys:
+          - "204741414_2ad203f0"
+
+  - node_id: vmh_dorsomedial_lepr_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/vmh_dorsomedial_lepr_neuron.yaml
+    report_sections:
+      - "Ventromedial hypothalamus neuron types"
+    reconciliation_note: >
+      Checked against vmhvl_esr1_pr_neuron: that is the ventrolateral
+      Esr1/PR population, whereas this is one of three dorsomedial VMH classes
+      and is marked by Lepr. Different subdivision and different marker.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          The source identifies three distinct dorsomedial VMH classes but
+          names a marker for only one of them (Lepr); the other two are not
+          characterised and are not proposed.
+        quote_keys:
+          - "233329194_885df746"
+
+  - node_id: vmh_tuberal_anterolateral_glut_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/vmh_tuberal_anterolateral_glut_neuron.yaml
+    report_sections:
+      - "Ventromedial hypothalamus neuron types"
+    reconciliation_note: >
+      No existing node covers the tuberal region anterolateral to the VMH
+      core. Characterised by that position plus explicit glutamatergic
+      identity; the report stresses that it sits at or partly outside the
+      classical VMH borders, so it is not the same population as
+      vmhvl_esr1_pr_neuron.
+    identity_conflicts: []
+    unplaced: []
+
+  # ── Dorsomedial hypothalamus (curator-flagged NEW territory) ────────────────
+
+  - node_id: dmh_lepr_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/dmh_lepr_neuron.yaml
+    report_sections:
+      - "Dorsomedial hypothalamus neuron types"
+      - "Evidence gaps and poorly characterized types"
+    reconciliation_note: >
+      No existing node is DMH-located; all 12 were checked. Lepr is one of the
+      core genes used to define DMH neuron types after Allen in situ
+      validation, with explicit exclusion of PVH, VMH, ARC, LH and TMN
+      signatures. Distinct from vmh_dorsomedial_lepr_neuron proposed in this
+      run: that is a dorsomedial class of the VMH, this is the DMH proper.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: dmh_ppp1r17_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/dmh_ppp1r17_neuron.yaml
+    report_sections:
+      - "Dorsomedial hypothalamus neuron types"
+      - "Evidence gaps and poorly characterized types"
+    reconciliation_note: >
+      No existing node is DMH-located or PPP1R17-defined. The
+      best-characterised DMH type in the report: PPP1R17 expression in the
+      DMH, constitutive cFos in ob/ob mice suppressed by leptin, no leptin
+      receptor expression, and bidirectional chemogenetic control of food
+      intake and body weight.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: dmh_pdyn_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/dmh_pdyn_neuron.yaml
+    report_sections:
+      - "Dorsomedial hypothalamus neuron types"
+    reconciliation_note: >
+      No existing node is DMH-located. Pdyn is one of the core DMH-defining
+      genes and is also recovered in the refeeding-responsive compact DMH
+      population.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: dmh_grp_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/dmh_grp_neuron.yaml
+    report_sections:
+      - "Dorsomedial hypothalamus neuron types"
+      - "Evidence gaps and poorly characterized types"
+    reconciliation_note: >
+      No existing node is DMH-located. Grp is both an older DMH-enriched
+      regional marker validated by PCR and in situ hybridisation and one of the
+      core genes reused to define DMH neuron types.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: dmh_cck_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/dmh_cck_neuron.yaml
+    report_sections:
+      - "Dorsomedial hypothalamus neuron types"
+    reconciliation_note: >
+      No existing node is DMH-located. Cck is one of the core DMH-defining
+      genes and part of the compact refeeding-responsive marker set.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: dmh_compact_refeeding_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/dmh_compact_refeeding_neuron.yaml
+    report_sections:
+      - "Dorsomedial hypothalamus neuron types"
+      - "Evidence gaps and poorly characterized types"
+    reconciliation_note: >
+      No existing node is DMH-located. Defined by location in the compact part
+      of the DMH, TRAP labelling after fasting-refeeding, Pdyn/Grp/Cck/Trhr
+      transcript expression, projection to the PVN, and chemogenetic reduction
+      of food intake with place preference.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          The report states this population likely overlaps the broader Pdyn,
+          Cck and Grp DMH classes but leaves unresolved whether those markers
+          name one stable type, several overlapping subtypes, or a
+          physiological state layered on a broader class. Overlap, not
+          containment — no subtype_of written.
+        quote_keys:
+          - "240333804_7cbfba1a"
+          - "261174572_47e0f8ee"
+
+  # ── Mammillary, tuberomammillary and ventral premammillary region ───────────
+
+  - node_id: mammillary_body_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/mammillary_body_neuron.yaml
+    report_sections:
+      - "Mammillary, tuberomammillary, and ventral premammillary region neuron types"
+      - "Evidence gaps and poorly characterized types"
+    reconciliation_note: >
+      Checked against pmv_otr_neuron, the only existing posterior-hypothalamic
+      node: that is a PMv Oxtr population, not a mammillary body population.
+      Characterised by MB location, transcriptionally distinct clusters that
+      segregate within MB neuroanatomical subdivisions, and topographic
+      projection to the anterior thalamus.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          PMv — flagged by the curator as a NEW-node candidate — yields no
+          proposable type. The only PMv evidence in the report is that the VPH
+          atlas (>16,000 cells) resolves 20 neuronal and 18 non-neuronal
+          populations defined by discriminatory marker suites; the report
+          states the supplied quotes name no PMv-specific markers and give no
+          stable list of classical PMv neuron types. Nothing is added to the
+          existing pmv_otr_neuron either, so no ENRICH. The 20 VPH neuronal
+          populations and the MB subdivision-level clusters remain unnamed.
+        quote_keys:
+          - "218686941_736c21b7"
+
+  - node_id: tmn_histaminergic_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/tmn_histaminergic_neuron.yaml
+    report_sections:
+      - "Mammillary, tuberomammillary, and ventral premammillary region neuron types"
+    reconciliation_note: >
+      No existing node is TMN-located or histaminergic. Characterised by Hdc
+      expression and histaminergic identity, forming one of the high-level
+      neuronal categories in hypothalamic single-cell taxonomies; Hdc is used
+      as the tuberomammillary exclusion marker when defining DMH types.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          An Avp/Rorb neuronal subpopulation is reported as expanded in male
+          offspring of high-fat-diet dams, but the quote assigns it to no
+          nucleus, so it cannot be placed in MB, TMN or PMv and is not
+          proposed.
+        quote_keys:
+          - "268498016_29dda5a1"
+
+  # ── Cross-nuclear TH / dopaminergic populations ─────────────────────────────
+
+  - node_id: hypothalamic_th_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/hypothalamic_th_neuron.yaml
+    report_sections:
+      - "Dopaminergic/TH and other cross-nuclear neurotransmitter-defined populations"
+    reconciliation_note: >
+      NEW, not ENRICH on avpv_th_neuron: this is the broad cross-nuclear
+      TH-expressing class spanning the periventricular hypothalamic zone and
+      region and the lateral hypothalamic zone, whereas the existing node is
+      the AVPV TH population specifically. The report never mentions the AVPV,
+      so the names are not interchangeable. Characterised by TH
+      immunoreactivity/transcript, regional distribution, and a predominantly
+      GABAergic phenotype.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: rostral_zi_th_gabaergic_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/rostral_zi_th_gabaergic_neuron.yaml
+    report_sections:
+      - "Dopaminergic/TH and other cross-nuclear neurotransmitter-defined populations"
+    reconciliation_note: >
+      NEW, not ENRICH on avpv_th_neuron: the population is in the rostral zona
+      incerta, not the AVPV. Characterised by every TH-ir neuron there being
+      GABA-reporter positive, dopamine immunoreactivity without dopamine
+      beta-hydroxylase, and no colocalisation with the known peptide classes
+      tested. subtype_of hypothalamic_th_neuron (DEFINITIONAL, MODERATE).
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: periventricular_dopamine_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/periventricular_dopamine_neuron.yaml
+    report_sections:
+      - "Dopaminergic/TH and other cross-nuclear neurotransmitter-defined populations"
+      - "Developmental origin and migration principles"
+    reconciliation_note: >
+      NEW rather than ENRICH on avpv_th_neuron: the sources name a
+      developmental periventricular dopamine class and never mention the AVPV,
+      so a swap of names is not licensed; per the rule, unsure cases go to NEW.
+      Characterised by periventricular hypothalamic location, dopaminergic
+      identity, derivation from a pool of GABA progenitors via quasi-stable
+      intermediate states, and dependence on SLIT-ROBO signalling for
+      production and positioning. subtype_of hypothalamic_th_neuron
+      (DEFINITIONAL, LOW — inferred).
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          The existing node avpv_th_neuron is an AVPV/PeN TH population and may
+          well fall inside this type, but neither source states the relation,
+          so no subtype_of was written on either node. Review merge candidate.
+        quote_keys:
+          - "210699283_819ba4a2"
+          - "218528429_24a15387"
+
+  # ── Preoptic and anterior hypothalamic region ───────────────────────────────
+
+  - node_id: avpv_th_neuron
+    action: DUPLICATE
+    file: null
+    report_sections:
+      - "Preoptic and anterior hypothalamic region neuron types"
+    reconciliation_note: >
+      The report's "Th+ preoptic/anterior neurons" come from a single
+      marker-list sentence (Galanin, Th, Adcyap1, Nts, Crh, Tac1, Cck, Agtr1a,
+      Nos1, Aromatase) and the report states the quote does not specify
+      transmitter release or an exact nucleus. It adds no name and no property
+      beyond Th expression in the preoptic region, which the existing
+      avpv_th_neuron already covers. Nothing written. The other nine markers in
+      that list were each given a sub-section that explicitly says no further
+      property is supplied, so they count as mentions in passing and are not
+      proposed as types — including aromatase (checked against
+      arc_aromatase_neuron, a different nucleus) and Galanin (a
+      mpoa_galanin_neuron was already considered and excluded by the earlier
+      sexually_dimorphic ingest). Also checked: mpoa_esr1_neuron,
+      avpv_kiss1_neuron and sdn_poa_calbindin_neuron — the report mentions
+      neither Esr1, Kiss1, calbindin nor the SDN-POA.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Moffitt et al. report ~70 preoptic neuronal populations, many
+          nucleus-enriched and some dispersed across nuclei, and state that
+          populations previously thought functionally unitary resolve into
+          multiple molecular populations. No individual preoptic type is
+          characterised beyond a marker name.
+        quote_keys:
+          - "53566396_d15c5a8b"
+          - "53566396_4b1079d7"
+          - "53566396_66f381aa"

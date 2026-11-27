@@ -1,0 +1,71 @@
+# Rostral zona incerta TH-expressing GABAergic dopaminergic neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Rostral ZI TH/GABA dopaminergic neuron"
+description: >
+  Evidence graph component for the tyrosine hydroxylase-immunoreactive,
+  GABAergic dopaminergic neuron of the rostral zona incerta, proposed from
+  the ASTA deep research report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "zona incerta (ZI) — a region assigned to the hypothalamus in the ARA"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: rostral_zi_th_gabaergic_neuron
+    name: "Rostral zona incerta TH-expressing GABAergic dopaminergic neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "ZI GABAergic THir neuron"
+        sources:
+          - ref: "PMID:31950494"
+            quote_key: "210699283_5e01b81d"
+            method: "label used for the population whose neurochemical identity was characterised"
+      - term: "novel hypothalamic population in the mouse that may signal through the release of GABA and/or dopamine"
+        sources:
+          - ref: "PMID:31950494"
+            quote_key: "210699283_819ba4a2"
+            method: "description used in place of a short name in the source's conclusion"
+    subtype_of:
+      - parent: hypothalamic_th_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "PMID:31950494"
+            quote_key: "210699283_819ba4a2"
+            method: "source maps hypothalamic TH-ir neurons across regions and reports that every TH-ir neuron in the ZI was EGFP-positive in the GABA reporter"
+        notes: >
+          The ZI population is one of the hypothalamic TH-immunoreactive
+          subpopulations mapped by the same study; the parent is narrowed here
+          by location (rostral ZI) and by GABA/dopamine co-identity.
+    cl_mapping:
+      cl_term:
+        id: CL:0000700
+        label: "dopaminergic neuron"
+        name_in_source: "Rostral ZI TH/GABA dopaminergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "dopaminergic neuron" in CL. Unlike the parent
+        hypothalamic_th_neuron (mapped EXACT to the broader CL:4033050
+        catecholaminergic neuron, since TH expression alone does not confirm
+        dopamine release), this node's sources establish dopamine
+        immunoreactivity without DBH, i.e. confirmed dopaminergic identity,
+        so the more specific CL:0000700 (dopaminergic neuron) is chosen as
+        the nearest containing ancestor. Scored BROAD rather than EXACT
+        because the node also carries a GABAergic co-identity (every ZI
+        TH-ir neuron tested was GABA-reporter positive) that CL:0000700 does
+        not capture; no CL term exists for a joint GABA/dopamine phenotype.
+edges: []

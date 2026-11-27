@@ -1,0 +1,63 @@
+# Findings for dmh_cck_neuron that fit no CellTypeNode property field.
+# Run: 20261125_sexually_dimorphic_report_ingest_general_survey
+
+- finding: >
+    Causal behavioural role attributed to the Cck-expressing compact DMH
+    population: chemogenetic activation of the TRAP-labelled
+    refeeding-activated DMH neurons decreased food intake and produced a
+    conditioned place preference (an indicator of positive valence), while
+    activation or inhibition had no influence on whole-body glucose
+    metabolism. The authors interpret the population as a satiety-linked DMH
+    cell type. The schema has no field for a perturbation-based functional
+    role or for a behavioural valence effect. The attribution to this node is
+    indirect: the manipulated population was defined by activity-dependent
+    labelling, Cck was one of four transcripts recovered from it, and the
+    report states only that at least some Cck+ DMH neurons are likely within
+    that PVN-projecting group.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: null
+
+- finding: >
+    Activity state: the Cck-expressing compact DMH neurons were labelled
+    because they are activated by fasting followed by refeeding (Arc/Arg3.1
+    TRAP after an overnight fast and re-feeding). A subset of Cck+ DMH neurons
+    therefore carries a stimulus-dependent activity signature tied to
+    refeeding. No property field holds a stimulus-dependent activity state.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: null
+
+- finding: >
+    Co-expression partners: the same TRAP-labelled compact DMH population
+    expressed prodynorphin (Pdyn), gastrin-releasing peptide (Grp) and
+    thyrotropin-releasing hormone receptor (Trhr) alongside cholecystokinin.
+    These were recovered from one RNA-seq profile of a population, so they are
+    a marker set for that population rather than established co-expression
+    within Cck+ cells; they are recorded on dmh_compact_refeeding_neuron
+    rather than asserted as markers or neuropeptides of this node.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: neuropeptides
+
+- finding: >
+    Independent support for this node, checked per the dispatch note. The two
+    Cck sources are not the same evidence: PMID:37624889 (Tang et al., 2023)
+    names Cck among the known highly expressed DMH genes used to select DMH
+    neuron types, with Allen Brain Atlas in situ validation, independently of
+    the compact refeeding population; PMID:34728342 (Imoto et al., 2021)
+    supplies the compact-refeeding co-expression set. The node therefore has
+    the same evidence structure as the sibling dmh_pdyn_neuron — one
+    marker-panel source plus one activity-labelled population source — and is
+    not reducible to the compact-refeeding co-expression alone. No Cck-only
+    DMH population is characterised in its own right in the supplied sources:
+    the report's Cck+ DMH section asserts no property beyond the marker, the
+    anatomical location and the indirect PVN projection, all of which are
+    recorded on the node. Three further run quotes mention Cck (PMID:30385464
+    Moffitt 2018, PMID:38493217 Huang 2024, PMID:36285248 Hajdarovic 2022) but
+    name it only in brain-wide or preoptic neuropeptide lists, not as a DMH
+    cell-type marker, so they were discarded as tangential.
+  quote_keys:
+    - "261174572_47e0f8ee"
+    - "240333804_7cbfba1a"
+  closest_field: null

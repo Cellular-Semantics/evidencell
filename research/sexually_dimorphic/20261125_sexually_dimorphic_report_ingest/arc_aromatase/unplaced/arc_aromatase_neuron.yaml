@@ -1,0 +1,56 @@
+# Findings from the arc_aromatase run that no CellTypeNode property field can hold.
+# Node: arc_aromatase_neuron (ENRICH)
+
+- finding: >
+    Abundance and its sex difference. GFP+ (Cyp19a1) arcuate neurons are far more
+    numerous in males than females in adults (male 166 +/- 41, female 23 +/- 3,
+    p = 0.01, n = 3), and the dimorphism is already present at P0. The population is
+    generated in both sexes at the same time, so the dimorphism is in the ability to
+    produce Cyp19a1 rather than in the birth of the cells. Classical nodes have no
+    cell-count or sex-ratio field (male_female_ratio / sex_bias are atlas-node
+    fields), and the counts are a population property rather than a property of the
+    cell type, so they are recorded here.
+  quote_keys: ["237626479_56c5257a", "237626479_8509fe52"]
+  closest_field: null
+
+- finding: >
+    Developmental timing. Cyp19a1 immunoreactivity and Cyp19a1-GFP signal are absent
+    from the arcuate nucleus at E16.5, first appear at E18.5 in males but not females,
+    and increase in males by P0; KISS1 neurons become visible from E17.5, i.e. just
+    before the aromatase cells. The schema has no developmental-timing field on
+    CellTypeNode.
+  quote_keys: ["237626479_56c5257a"]
+  closest_field: null
+
+- finding: >
+    The arcuate cluster is part of a wider aromatase neuronal network of about 6000
+    neurons spanning hypothalamus and amygdala. Aromatase-positive fibres and
+    terminals seen in hypothalamic nuclei (medial preoptic, premammillary, medial
+    tuberal, supraoptic) are suspected to originate from the BST and medial amygdala
+    rather than from the arcuate cells, so they are not evidence of an arcuate
+    AXON_TARGET location. The network is not itself a cell type, so it is neither a
+    parent node nor an anatomical_location entry.
+  quote_keys: ["237626479_190509bc", "10328660_68b9dda4"]
+  closest_field: anatomical_location
+
+- finding: >
+    No single-cell, spatial or projection-barcoding study has resolved ARC Cyp19a1
+    neurons as a dedicated transcriptomic class, and no dataset accession for an
+    ARC-specific Cyp19a1 cluster is given. The aromatase-enriched MERFISH clusters
+    that do exist (I-2, I-13, I-24, I-32, E-12 of Moffitt et al. 2018) were assigned
+    to preoptic, not arcuate, locations; several co-express Ar and Esr1, and I-2
+    overlaps the SDN-POA. This bears on the existing UNCERTAIN mapping edge to
+    CS20230722_SUPT_0486 rather than on any property field.
+  quote_keys: ["53566396_7313d264"]
+  closest_field: null
+
+- finding: >
+    Functional output onto the neighbouring population: letrozole (aromatase
+    inhibitor) increased, and 17-beta-estradiol decreased, spontaneous firing of
+    arcuate KISS1 neurons in males but not females, indicating that male arcuate
+    Cyp19a1 neurons make estradiol that acts on the adjacent KISS1 cells. The firing
+    measurements are of KISS1 neurons, not of this node, so they are not an
+    electrophysiology profile for arc_aromatase_neuron; the spatial/functional
+    relation itself is recorded in colocated_types.
+  quote_keys: ["237626479_d61aca83"]
+  closest_field: electrophysiology

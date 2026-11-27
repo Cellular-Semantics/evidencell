@@ -1,0 +1,46 @@
+# Findings for mammillary_body_neuron that fit no CellTypeNode property field.
+# Run: 20261125_sexually_dimorphic_report_ingest_general_survey
+
+- finding: >
+    Dataset-scale composition of the source atlas. The one source resolving
+    the mammillary body profiled >16,000 single cells of the ventral
+    posterior hypothalamus (VPH) and recovered 20 neuronal and 18
+    non-neuronal populations overall, each defined by a suite of
+    discriminatory markers, with selected differentially expressed genes
+    validated by FISH. These counts describe the dataset, not this cell type:
+    an unknown subset of the 20 neuronal populations is mammillary, and the
+    quote assigns no population to a named MB subdivision. There is no field
+    for the size or composition of a source dataset, and the node is a
+    classical, location-defined class with no prior_dataset_accession, so the
+    numbers cannot be recorded as a transcriptomic correspondence either.
+  quote_keys:
+    - "218686941_736c21b7"
+  closest_field: null
+
+- finding: >
+    The ventral premammillary nucleus (PMv), flagged by the curator as a
+    NEW-node candidate alongside the MB, yields no proposable type from this
+    report. The only PMv evidence is that the same VPH atlas resolves 20
+    neuronal and 18 non-neuronal populations defined by discriminatory marker
+    suites; the supplied quotes name no PMv-specific marker and give no
+    stable list of classical PMv neuron types comparable to the POMC, orexin
+    or AVP classes elsewhere in the hypothalamus. Nothing is added to the
+    existing pmv_otr_neuron node either. Recorded here because the finding is
+    about a sibling territory sampled by this node's sole source, and fits no
+    field on any node.
+  quote_keys:
+    - "218686941_736c21b7"
+  closest_field: null
+
+- finding: >
+    Markers are known to exist for the MB populations but none is citable.
+    The source states that its populations are defined by suites of
+    discriminatory markers and that selected ones were validated by FISH, yet
+    the supplied quote lists no MB marker gene. defining_markers therefore
+    stays empty although marker-defined MB classes demonstrably exist — an
+    evidence gap that a primary-paper pass (evidence-extraction) should close
+    rather than a property of the type. Carried as a caveat in the node's
+    notes as well.
+  quote_keys:
+    - "218686941_736c21b7"
+  closest_field: defining_markers

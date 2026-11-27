@@ -1,0 +1,37 @@
+# Findings from the arc_aromatase run that no CellTypeNode property field can hold.
+# Node: arc_tida_dopamine_neuron (NEW)
+
+- finding: >
+    At least two genetically distinguishable subtypes of tuberoinfundibular A12
+    neurons are reported — one expressing the dopamine transporter (DAT), one
+    the prolactin receptor (PRLR). Each has a single marker and no further
+    characterisation (no location, transmitter, morphology or function of its
+    own), so no child node was minted and the two markers were not written as
+    defining_markers of the parent: they are stated to divide the population,
+    not to hold across it. If the primary source behind this claim is read at
+    evidence-extraction, Slc6a3 and Prlr become the natural defining markers of
+    two new child nodes.
+  quote_keys: ["276213069_0480b48f"]
+  closest_field: defining_markers
+
+- finding: >
+    Developmental timing of the dopaminergic phenotype: the DA phenotype in A12
+    neurons emerges early and these are among the first hypothalamic neurons to
+    express TH and AADC. CellTypeNode has no developmental-trajectory or
+    birthdate field, and this is a statement about when the markers appear
+    rather than about their presence in the adult, so it is recorded here
+    rather than in the marker sources.
+  quote_keys: ["276213069_0480b48f"]
+  closest_field: null
+
+- finding: >
+    Physiological function: an essential role in prolactin regulation, with
+    broader influences on growth hormone, metabolism and hypothalamic
+    development; control of prolactin secretion from the pituitary is also the
+    defining functional description in the second source. This is the property
+    that actually individuates TIDA neurons among arcuate Th-positive types, but
+    CellTypeNode has no function field and the pituitary is a target organ
+    reached by neurosecretion rather than a traced axonal projection, so no
+    AXON_TARGET anatomical_location entry was written for it.
+  quote_keys: ["276213069_161ba639", "199668206_3768650c"]
+  closest_field: null

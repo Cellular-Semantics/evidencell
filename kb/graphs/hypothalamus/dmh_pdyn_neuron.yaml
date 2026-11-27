@@ -1,0 +1,249 @@
+# Prodynorphin (Pdyn)-expressing dorsomedial hypothalamic neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "DMH Pdyn neuron"
+description: >
+  Evidence graph component for the prodynorphin (Pdyn)-expressing neuron of
+  the dorsomedial hypothalamus, proposed from the ASTA deep research report
+  Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "dorsomedial hypothalamus (DMH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: dmh_pdyn_neuron
+    name: "Prodynorphin (Pdyn)-expressing dorsomedial hypothalamic neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "Pdyn DMH neuron type"
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            method: "Pdyn named among the highly expressed DMH genes used to select DMH neuron types"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "DMH Pdyn neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "prodynorphin neuron", "dynorphin secreting cell" and
+        "dorsomedial hypothalamic nucleus neuron" in CL — no hits.
+        CL:0012001 (neuron of the forebrain) is the nearest containing term;
+        no Pdyn-specific or DMH-specific CL term exists, and the source does
+        not state a neurotransmitter identity.
+    anatomical_location:
+      - id: MBA:830
+        label: "Dorsomedial nucleus of the hypothalamus"
+        name_in_source: "dorsomedial hypothalamus (DMH)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            method: "snRNA-seq cluster selection restricted to the DMH; marker expression validated against Allen Brain Atlas mouse in situ hybridization data, and clusters enriched for neighbouring-nucleus signatures excluded"
+            scope: "mouse dorsomedial hypothalamus"
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            method: "Arc/Arg3.1-driven TRAP labelling of fasting-refeeding-activated neurons followed by RNA sequencing of the labelled cells"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "The Pdyn-expressing cells profiled in this source lie in the compact part of the DMH. MBA has no compact-part term (only anterior, posterior and ventral parts of MBA:830), so the location is recorded at the whole-DMH level."
+      - id: MBA:38
+        label: "Paraventricular hypothalamic nucleus"
+        name_in_source: "paraventricular hypothalamic nucleus (PVN)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            method: "projection to the PVN reported for the TRAP-labelled refeeding-activated compact DMH population, which was separately shown to express Pdyn; inferred for Pdyn+ DMH neurons from membership of that population, not traced from Pdyn-expressing cells"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            support: WEAK
+            notes: "Indirect: the target is reported for a population that contains, but is not identical to, the Pdyn+ DMH class. The report states only that at least a subset of Pdyn+ DMH neurons likely belongs to this PVN-projecting population."
+    defining_markers:
+      - name_in_source: "Pdyn"
+        symbol: Pdyn
+        ncbi_gene_id: "NCBIGene:18610"
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster marker expression; marker validated via Allen Brain Atlas mouse in situ hybridization"
+            scope: "mouse dorsomedial hypothalamus"
+            notes: "Pdyn is named among the known highly expressed DMH genes used to select DMH neuron types; it is a DMH marker in local anatomical context, not a DMH-exclusive marker — Pdyn is also expressed by arcuate KNDy neurons and other hypothalamic and extrahypothalamic populations."
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of TRAP-labelled refeeding-activated compact DMH neurons"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "The source writes the marker as 'prodynorphin (pdyn)', which names the one mouse gene Pdyn. Pdyn was recovered from the same RNA-seq profile as Grp, Cck and Trhr, so in this source it is one member of a marker set for a population rather than an independently validated single-gene definition."
+    neuropeptides:
+      - name_in_source: "prodynorphin (pdyn)"
+        symbol: Pdyn
+        ncbi_gene_id: "NCBIGene:18610"
+        sources:
+          - ref: "PMID:34728342"
+            quote_key: "240333804_7cbfba1a"
+            marker_type: TRANSCRIPT
+            method: "RNA sequencing of TRAP-labelled refeeding-activated compact DMH neurons"
+            scope: "adult mouse, compact part of the dorsomedial hypothalamus"
+            notes: "Pdyn encodes the dynorphin precursor prodynorphin, so transcript expression implies a dynorphin-peptidergic identity; the supplied sources report the transcript only and do not characterise peptide processing, storage or release in these neurons."
+    negative_markers:
+      - name_in_source: "Sim1"
+        symbol: Sim1
+        ncbi_gene_id: "NCBIGene:20464"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as paraventricular nucleus (PVH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Slit3"
+        symbol: Slit3
+        ncbi_gene_id: "NCBIGene:20564"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Qrfpr"
+        symbol: Qrfpr
+        ncbi_gene_id: "NCBIGene:229214"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Arpp21"
+        symbol: Arpp21
+        ncbi_gene_id: "NCBIGene:74100"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Nr5a1"
+        symbol: Nr5a1
+        ncbi_gene_id: "NCBIGene:26423"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Fezf1"
+        symbol: Fezf1
+        ncbi_gene_id: "NCBIGene:73191"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as ventromedial hypothalamus (VMH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Prlr"
+        symbol: Prlr
+        ncbi_gene_id: "NCBIGene:19116"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as arcuate nucleus (ARC) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Nr5a2"
+        symbol: Nr5a2
+        ncbi_gene_id: "NCBIGene:26424"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as arcuate nucleus (ARC) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Pvalb"
+        symbol: Pvalb
+        ncbi_gene_id: "NCBIGene:19293"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as lateral hypothalamus (LH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Klk6"
+        symbol: Klk6
+        ncbi_gene_id: "NCBIGene:19144"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as lateral hypothalamus (LH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Nts"
+        symbol: Nts
+        ncbi_gene_id: "NCBIGene:67405"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as lateral hypothalamus (LH) signature"
+            scope: "mouse dorsomedial hypothalamus"
+      - name_in_source: "Hdc"
+        symbol: Hdc
+        ncbi_gene_id: "NCBIGene:15186"
+        modifier: ABSENT
+        sources:
+          - ref: "PMID:37624889"
+            quote_key: "261174572_47e0f8ee"
+            marker_type: TRANSCRIPT
+            method: "snRNA-seq cluster exclusion criterion: clusters enriched for this gene were discarded as tuberomammillary nucleus signature"
+            scope: "mouse dorsomedial hypothalamus"
+    definition_references:
+      - "PMID:37624889"
+      - "PMID:34728342"
+    notes: >
+      No neurotransmitter identity is recorded: neither source states the fast
+      transmitter of Pdyn+ DMH neurons, and the DMH contains both GABAergic
+      and glutamatergic neurons, so none can be inferred safely. Prodynorphin
+      expression constrains the peptide output only, not the fast transmitter.
+      Morphology, intrinsic electrophysiology and developmental origin are
+      likewise undefined in the supplied sources. Pdyn is a DMH marker in
+      local anatomical context rather than a brain-wide exclusive marker, so
+      assignment of a Pdyn-expressing neuron to this type depends on
+      anatomical context; the sources do not establish whether all DMH Pdyn+
+      neurons form one transcriptomic cluster or whether Pdyn marks several
+      related DMH subtypes. The negative markers are cluster-level exclusion
+      criteria applied when DMH neuron types were selected (clusters enriched
+      for a neighbouring-nucleus gene were discarded), not direct per-cell
+      absence measurements in this population. The two sources characterise
+      overlapping but non-identical populations: PMID:37624889 selects DMH
+      clusters by marker panel, while PMID:34728342 profiles a
+      refeeding-activated compact-DMH population that expresses Pdyn together
+      with Grp, Cck and Trhr; the PVN projection is therefore recorded as weak,
+      inferred evidence. The relation of this type to the neighbouring Grp,
+      Cck and Ppp1r17 DMH classes is unresolved in the supplied material and
+      may involve substantial overlap.
+edges: []

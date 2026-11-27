@@ -1,0 +1,69 @@
+# Periventricular hypothalamic dopamine neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "Periventricular dopamine neuron"
+description: >
+  Evidence graph component for the periventricular hypothalamic dopamine
+  neuron, whose production and positioning depend on SLIT-ROBO signalling,
+  proposed from the ASTA deep research report
+  Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "periventricular hypothalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: periventricular_dopamine_neuron
+    name: "Periventricular hypothalamic dopamine neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "periventricular dopamine neurons"
+        sources:
+          - ref: "PMID:32499648"
+            quote_key: "218528429_24a15387"
+            method: "name used for the population whose production and positioning SLIT-ROBO signalling controls"
+    subtype_of:
+      - parent: hypothalamic_th_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:31950494"
+            quote_key: "210699283_819ba4a2"
+            method: "source reports hypothalamic TH-immunoreactive neurons localised primarily to the periventricular hypothalamic zone and region"
+          - ref: "PMID:32499648"
+            quote_key: "218528429_24a15387"
+            method: "source names the periventricular dopamine neuron population"
+        notes: >
+          Inferred, not stated as a subset relation: the parent's defining
+          criterion (tyrosine hydroxylase expression) holds for dopamine
+          neurons, and the TH mapping study places TH-immunoreactive neurons
+          primarily in the periventricular hypothalamus, but neither source
+          asserts the containment directly.
+    cl_mapping:
+      cl_term:
+        id: CL:0000700
+        label: "dopaminergic neuron"
+        name_in_source: "Periventricular dopamine neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "dopaminergic neuron" in CL. CL:0000700 ("a neuron that
+        releases dopamine as a neurotransmitter") matches this node's
+        defining criterion in full — the node's identity is explicitly
+        dopaminergic (not merely TH-expressing like its parent
+        hypothalamic_th_neuron, EXACT CL:4033050 catecholaminergic neuron),
+        with no additional narrowing marker beyond location and
+        developmental origin, which are recorded separately.
+edges: []

@@ -1,0 +1,210 @@
+run_id: 20261125_sexually_dimorphic_report_ingest_arc_aromatase
+types:
+  - node_id: arc_aromatase_neuron
+    action: ENRICH
+    file: kb/graphs/sexually_dimorphic/arc_aromatase_neuron.yaml
+    report_sections:
+      - "Introduction/Background"
+      - "Location, abundance, and anatomical organization of ARC Cyp19a1 neurons"
+      - "Cell identity, neurotransmitter phenotype, and neurochemical features"
+      - "Developmental origin and developmental timing"
+      - "Connectivity and functional interactions"
+      - "Markers and distinguishing features"
+      - "Heterogeneity and transcriptomics/spatial datasets"
+    reconciliation_note: >
+      The report is a targeted deep-dive on exactly the population already held
+      as arc_aromatase_neuron (Wartenberg 2021, PMID:34561233, the single source
+      behind the existing node): the dorsal, peri-Kiss1, male-biased
+      Cyp19a1/aromatase cluster of the mouse arcuate nucleus. Names are
+      interchangeable with the existing node's, so this is ENRICH, not NEW.
+      Checked against every ARC node in the refreshed snapshot — arc_pomc_neuron
+      and its GABAergic/glutamatergic/Tac2 subtypes, arc_agrp_npy_neuron,
+      arc_me_sst_neuron, arc_crabp1_neuron — and against avpv_kiss1_neuron,
+      mea_esr1_neuron and sdn_poa_calbindin_neuron. None is an
+      aromatase/Cyp19a1 population and the report describes no POMC- or
+      AgRP-coexpressing aromatase subtype, so no overlap with the sibling run's
+      nodes. Four synonyms added (arcuate aromatase neuron, aromatase-positive
+      arcuate neuron, Cyp19a1 neuron, aromatase-positive arcuate cell); species
+      and definition_basis already present and unchanged.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Partial ERα/Esr1 protein positivity splits the population into
+          ERα-positive and ERα-negative Cyp19a1 neurons (about half of GFP+
+          cells), described by the report as "local states" rather than
+          established subtypes; no name, no transmitter or projection
+          distinction, so no child node was minted.
+        quote_keys: ["237626479_a46abfa9"]
+      - finding: >
+          Sex is a second axis of variation within the population (male:
+          166 ± 41 cells vs female: 23 ± 3; P0 Cyp19a1 puncta/cell male 8 ± 1.1
+          vs female 1 ± 0.1), which the report says may reflect either
+          sex-biased subtype composition or graded expression state. No
+          sex-defined subtype is named.
+        quote_keys: ["237626479_56c5257a", "237626479_95ac2587", "237626479_8509fe52"]
+      - finding: >
+          No single-cell, spatial or projection-barcoding study has resolved ARC
+          Cyp19a1 neurons as a dedicated transcriptomic class, and no dataset
+          accession for an ARC-specific Cyp19a1 cluster is given; the aromatase-
+          enriched MERFISH clusters that do exist were assigned to preoptic, not
+          arcuate, locations.
+        quote_keys: ["53566396_7313d264"]
+      - finding: >
+          The population sits within a wider aromatase network of about 6000
+          neurons spanning hypothalamus and amygdala, and local aromatase-
+          positive fibres in hypothalamic targets may originate from BST and
+          medial amygdala rather than from the ARC cells themselves. The network
+          is not a cell type, so it is recorded here rather than as a parent.
+        quote_keys: ["237626479_190509bc", "10328660_68b9dda4"]
+
+  - node_id: arc_kiss1_kndy_neuron
+    action: EXCLUDE
+    file: null
+    report_sections:
+      - "Cell identity, neurotransmitter phenotype, and neurochemical features"
+      - "Connectivity and functional interactions"
+      - "Markers and distinguishing features"
+    reconciliation_note: >
+      Characterised throughout the report as the adjacent comparison population
+      with its own defining properties: Kiss1 plus Tac2 and Pdyn coexpression,
+      Slc17a6 but not Slc32a1 (glutamatergic, not GABAergic), high Esr1 with
+      partial Ar, and an axonal pattern reaching the median eminence and the
+      ependymal layer of the third ventricle — well beyond a passing mention.
+      No existing node covers it: avpv_kiss1_neuron is the AVPV/PeN kisspeptin
+      population, which Clarkson et al. distinguish from the arcuate one, and
+      arc_aromatase_neuron is explicitly kisspeptin-negative and GABAergic.
+      INITIALLY minted as NEW (reasoning that the region's "clear sex bias"
+      qualifying filter from the 2026-04-25 ingest no longer bounds the region
+      post sibling-run). On curator review this was REVERSED and the file
+      deleted: planning/asta_ingest_lessons_sexually_dimorphic.md §4 documents
+      this exact population (arc_kndy_neuron) as a deliberate, evidence-based
+      exclusion — "the report itself states it is NOT sexually dimorphic in
+      cell number" — not an incidental scope boundary. That is a specific,
+      reasoned prior decision about this population, distinct from the
+      sibling run's broader (curator-approved) scope expansion to general
+      hypothalamic content, and it was not superseded by it. No node written;
+      no subtype_of concerns since nothing else referenced this id.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Close apposition to, but separateness from, ARC Cyp19a1 neurons in
+          both neonatal and adult mice, with aromatase-dependent estradiol from
+          the Cyp19a1 cells suppressing KNDy firing in males. This is a
+          colocation/functional relation between two nodes, not containment, so
+          it is not a subtype_of; it belongs in colocated_types at the
+          properties stage. Moot for now since the KNDy node itself was
+          excluded (see reconciliation_note), but kept here as a record in
+          case ARC KNDy is revisited.
+        quote_keys: ["237626479_0ecf1fd1", "237626479_d61aca83"]
+
+  - node_id: arc_npgl_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/arc_npgl_neuron.yaml
+    report_sections:
+      - "Cell identity, neurotransmitter phenotype, and neurochemical features"
+    reconciliation_note: >
+      The report gives this population a name and defining properties — located
+      in the lateral posterior arcuate nucleus (ArcLP), co-produces GAD67 with
+      about half being GABAergic, lacks TH and VGLUT2 — and uses it to argue
+      that GABAergic identity alone does not distinguish ARC aromatase neurons.
+      No existing node matches: arc_crabp1_neuron is a Crabp1 GABAergic ARH
+      population from a different dataset, arc_me_sst_neuron is the
+      somatostatin orexigenic population, and neither the POMC nor the AgRP/NPY
+      nodes mention NPGL. NEW rather than ENRICH of any of those, per the rule
+      to prefer NEW when identity is not clearly shared.
+    identity_conflicts: []
+    unplaced: []
+
+  - node_id: arc_tida_dopamine_neuron
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/arc_tida_dopamine_neuron.yaml
+    report_sections:
+      - "Introduction/Background"
+      - "Heterogeneity and transcriptomics/spatial datasets"
+    reconciliation_note: >
+      Named and characterised as a Th-positive arcuate/median-eminence
+      population controlling prolactin secretion, expressing TH and AADC and
+      lacking dopamine beta hydroxylase. Existing hypothalamic dopaminergic
+      nodes are different populations — periventricular_dopamine_neuron is the
+      periventricular (A14) group and rostral_zi_th_gabaergic_neuron is a zona
+      incerta population — so NEW. Recorded as subtype_of hypothalamic_th_neuron
+      (DEFINITIONAL, MODERATE), matching how those two sibling nodes are placed;
+      the source states TIDA neurons are one of several distinct Th-positive
+      arcuate types. Species is set to Mus musculus from the mouse framing of
+      the sources (PMID:31420539 is a mouse developing-arcuate single-cell
+      study; the report treats the whole ARC landscape as mouse) rather than
+      from wording inside the quoted passages — worth a reviewer's eye.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          At least two genetically distinguishable TIDA subtypes are reported,
+          one expressing the dopamine transporter (DAT) and one the prolactin
+          receptor (PRLR). Each has a name fragment and one marker but no
+          further characterisation in the report, so no child nodes were minted.
+        quote_keys: ["276213069_0480b48f"]
+
+  - node_id: poa_aromatase_i2_cluster
+    action: NEW
+    file: kb/graphs/sexually_dimorphic/poa_aromatase_i2_cluster.yaml
+    report_sections:
+      - "Heterogeneity and transcriptomics/spatial datasets"
+    reconciliation_note: >
+      A named MERFISH cluster (I-2) with several defining properties:
+      aromatase-enriched, co-expressing androgen receptor and Esr1, modestly
+      male-enriched, overlapping the SDN-POA, with Cplx3 co-expressed with the
+      canonical SDN-POA marker MoxD1. PRIOR_TRANSCRIPTOMIC, since it is a
+      cluster label from Moffitt et al. 2018 rather than the target atlas. The
+      report uses it precisely to say it is NOT the arcuate Cyp19a1 population,
+      so it is not an ENRICH of arc_aromatase_neuron. Kept separate from
+      sdn_poa_calbindin_neuron, which is a calbindin-defined classical type;
+      the reported relation is anatomical overlap, not containment. Species set
+      to Mus musculus from the mouse MERFISH study rather than from the quoted
+      wording.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Cluster I-2 overlaps the sexually dimorphic nucleus of the preoptic
+          area and shares the SDN-POA marker MoxD1 with it. Overlap with the
+          existing sdn_poa_calbindin_neuron node is not stated as containment,
+          so no subtype_of was written; a MappingEdge (cross-cutting match) is
+          the right home for it later.
+        quote_keys: ["53566396_7313d264"]
+      - finding: >
+          Other aromatase-enriched preoptic clusters with distinct sex-hormone
+          receptor repertoires are listed by label only (I-13, I-24, I-32,
+          E-12), with no per-cluster characterisation beyond Ar and Esr1
+          co-expression, so no nodes were minted for them.
+        quote_keys: ["53566396_7313d264"]
+
+  - node_id: arc_pomc_neuron
+    action: DUPLICATE
+    file: null
+    report_sections:
+      - "Introduction/Background"
+      - "Heterogeneity and transcriptomics/spatial datasets"
+    reconciliation_note: >
+      The report's POMC material (Rubinstein 2017, Lam 2017, Jarvie 2012,
+      Yu 2022) is used as an analogy for arcuate heterogeneity and names no
+      identity feature that arc_pomc_neuron and its already-ingested subtypes
+      (arc_pomc_gabaergic_neuron, arc_pomc_glutamatergic_neuron,
+      arc_pomc_tac2_neuron) do not already carry from the sibling run — which
+      ingested the same Lam "canonical POMC neuron (P+)" framing. Likewise
+      Agrp/NPY neurons are covered by arc_agrp_npy_neuron. Nothing written.
+    identity_conflicts: []
+    unplaced: []
+
+not_proposed:
+  - name: "Ghrh neuron"
+    reason: >
+      Appears only inside the background list of arcuate populations, with a
+      single clause on GHRH release and no further treatment anywhere in the
+      report — a passing mention, not a characterisation.
+    quote_keys: ["199668206_3768650c"]
+  - name: "Medial amygdala posterodorsal (MeApd) aromatase neuron"
+    reason: >
+      Cited to contrast aromatase density in MeApd with the sparse ARC
+      population; no marker, transmitter or morphology assertion about an MeApd
+      cell type is made. mea_esr1_neuron already holds the region's medial
+      amygdala node and was not enriched because the report adds no identity
+      name or property for it.
+    quote_keys: ["3669452_7dfc8e0f", "721771_e4af8789"]

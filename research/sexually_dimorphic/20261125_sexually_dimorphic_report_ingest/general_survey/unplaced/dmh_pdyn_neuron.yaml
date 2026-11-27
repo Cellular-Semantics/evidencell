@@ -1,0 +1,40 @@
+# Findings for dmh_pdyn_neuron that fit no CellTypeNode property field.
+# Run: 20261125_sexually_dimorphic_report_ingest_general_survey
+
+- finding: >
+    Causal behavioural role of the Pdyn-expressing compact DMH population:
+    chemogenetic activation of the TRAP-labelled refeeding-activated DMH
+    neurons decreased food intake and produced a conditioned place preference
+    (an indicator of positive valence), while activation or inhibition had no
+    influence on whole-body glucose metabolism. The authors interpret the
+    population as a satiety-linked DMH cell type that inhibits food intake and
+    promotes feeding-induced positive valence. The schema has no field for a
+    perturbation-based functional role or for a behavioural valence effect.
+    The attribution to this node is indirect: the manipulated population was
+    defined by activity-dependent labelling, and Pdyn was one of the
+    transcripts recovered from it.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: null
+
+- finding: >
+    Activity state: the Pdyn-expressing compact DMH neurons were labelled
+    because they are activated by fasting followed by refeeding (Arc/Arg3.1
+    TRAP after overnight fast and re-feeding). Pdyn+ DMH neurons therefore
+    carry a stimulus-dependent activity signature tied to refeeding. No
+    property field holds a stimulus-dependent activity state.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: null
+
+- finding: >
+    Co-expression partners: the same TRAP-labelled compact DMH population
+    expressed gastrin-releasing peptide (Grp), cholecystokinin (Cck) and
+    thyrotropin-releasing hormone receptor (Trhr) alongside prodynorphin.
+    These were recovered from one RNA-seq profile of a population, so they are
+    a marker set for that population rather than established co-expression
+    within Pdyn+ cells; they are recorded on dmh_compact_refeeding_neuron
+    rather than asserted as neuropeptides of this node.
+  quote_keys:
+    - "240333804_7cbfba1a"
+  closest_field: neuropeptides

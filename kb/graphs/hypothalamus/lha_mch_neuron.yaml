@@ -1,0 +1,58 @@
+# Melanin-concentrating hormone (MCH) neuron of the lateral hypothalamic area — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "LHA MCH neuron"
+description: >
+  Evidence graph component for the melanin-concentrating hormone (MCH) neuron
+  of the lateral hypothalamic area, proposed from the ASTA deep research
+  report Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "lateral hypothalamic area (LHA)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: lha_mch_neuron
+    name: "Melanin-concentrating hormone (MCH) neuron of the lateral hypothalamic area"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "MCH neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:28966976"
+            quote_key: "10721050_6668992e"
+            method: "primary label for the LHA cell type throughout the paper"
+      - term: "MCH-expressing LH neuron"
+        sources:
+          - ref: "PMID:31291348"
+            quote_key: "195878681_8363d433"
+            method: "neuropeptide-based naming of intermingled LH populations"
+    cl_mapping:
+      cl_term:
+        id: CL:4042036
+        label: "melanin-concentrating hormone neuron"
+        name_in_source: "MCH neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        Searched "melanin-concentrating hormone neuron" in CL. CL:4042036
+        ("a neuron of the CNS with its soma primarily located in the lateral
+        hypothalamic area and surrounding regions, including the zona
+        incerta ... expresses melanin-concentrating hormone") matches this
+        node's defining criterion and location directly. The report's
+        finding that virtually all MCH neurons carry glutamate-release and
+        GABA-synthesis transcripts without a vesicular GABA release pathway
+        does not conflict with the CL definition.
+edges: []

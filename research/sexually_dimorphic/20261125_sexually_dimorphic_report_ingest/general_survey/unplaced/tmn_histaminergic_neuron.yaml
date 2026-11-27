@@ -1,0 +1,21 @@
+# Findings for tmn_histaminergic_neuron that fit no CellTypeNode property field.
+# Run: 20261125_sexually_dimorphic_report_ingest_general_survey
+
+- finding: >
+    Sex-conditional abundance under a maternal dietary challenge. The
+    histaminergic (Hdc) subpopulation is reported as significantly expanded in
+    male offspring whose mothers were fed a high-fat diet during lactation,
+    alongside Avp/Rorb and AgRP/Npy subpopulations. This is a male-biased
+    difference in cell number, so sex_bias (MALE_BIASED) is the field it comes
+    nearest to — but sex_bias is defined as the expected direction of sexual
+    dimorphism for the type, and the finding is conditional on an experimental
+    perinatal diet challenge rather than a baseline sex difference. The source
+    gives no male/female comparison for the histaminergic subpopulation in
+    control-diet offspring, so setting sex_bias here would assert more than the
+    evidence supports. Left unset pending a baseline comparison from the
+    primary paper in evidence-extraction. Note also that the quote assigns the
+    expanded subpopulation to no nucleus; its identification as this node rests
+    on the Hdc/histaminergic label alone.
+  quote_keys:
+    - "268498016_29dda5a1"
+  closest_field: sex_bias

@@ -1,0 +1,49 @@
+# Parabrachial-projecting Brs3-expressing PVH neuron — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Hypothalamus_general_survey.pdf
+# Ingestion date: 2026-11-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/
+# Proposed by: asta-report-ingest
+
+name: "PVH Brs3 parabrachial-projecting neuron"
+description: >
+  Evidence graph component for the parabrachial-projecting, bombesin-like
+  receptor 3 (Brs3)-expressing neuron of the paraventricular hypothalamus,
+  proposed from the ASTA deep research report
+  Hypothalamus_general_survey.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "paraventricular hypothalamus (PVH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-25"
+nodes:
+  - id: pvh_brs3_pb_projecting_neuron
+    name: "Parabrachial-projecting Brs3-expressing PVH neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "PB-projecting PVH neurons expressing bombesin-like receptor 3 (Brs3)"
+        sources:
+          - ref: "PMID:41282229"
+            quote_key: "283140625_d486c8ab"
+            method: "name given to the satiety-regulating population in the PVH atlas"
+    cl_mapping:
+      cl_term:
+        id: CL:0012001
+        label: "neuron of the forebrain"
+        name_in_source: "PVH Brs3 parabrachial-projecting neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched "bombesin receptor neuron" and "Brs3 neuron" in CL — no
+        hits. CL:0012001 (neuron of the forebrain) is the nearest containing
+        term; no receptor- or projection-defined CL term exists for this
+        population.
+edges: []
