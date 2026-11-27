@@ -1,0 +1,45 @@
+# Findings for pvn_crh_ntng1_neuron that no CellTypeNode property field can hold.
+# Written by the property phase of 20261127_hypothalamus_report_ingest.
+
+- finding: >
+    The node corresponds to a named scRNA-seq cluster that cannot be cited as
+    one. Short et al. identify "cluster 4 Ntng1-positive glutamatergic cells"
+    among five Crh+ clusters, and elsewhere name the same population CRH-Ntng1
+    when subdividing the glutamatergic Crh+ class. The report gives no dataset
+    accession for the single-cell data, so prior_dataset_accession cannot be
+    set, and prior_cluster_label requires it; the node is therefore recorded as
+    CLASSICAL_NEUROCHEMICAL rather than PRIOR_TRANSCRIPTOMIC, and the cluster
+    cannot be re-identified computationally. This matters for mapping: the one
+    piece of evidence that would let an atlas candidate be checked against the
+    source clustering is unavailable.
+  quote_keys: ["237393232_7fc15258", "237393232_d3cd021e", "237393232_b75d4d85"]
+  closest_field: prior_cluster_label
+
+- finding: >
+    Early-life adversity altered gene expression selectively within
+    glutamatergic Crh+ cells, "with changes specific to one glutamatergic
+    neuronal phenotype". The glutamatergic class contains exactly two
+    phenotypes in this source — the Avp-defined and the Ntng1-defined — so the
+    statement implicates one of them, but the report does not say which, and
+    the differentially enriched genes are not named in any quoted passage.
+    CellTypeNode has no field for a condition-dependent transcriptional
+    response, and nothing specific enough to write to defining_markers. The
+    same finding is recorded on the sibling pvn_crh_avp_neuron, since it
+    applies to whichever of the two the source meant.
+  quote_keys: ["237393232_ea63d46d", "237393232_b75d4d85"]
+  closest_field: null
+
+- finding: >
+    The source's "middle region of the PVN" is a rostrocaudal coordinate with
+    no Allen atlas counterpart: MBA partitions PVH by division and part
+    (magnocellular, parvicellular, descending), not by rostrocaudal level, so
+    the position could not be grounded below MBA:38 and the node's most
+    discriminative spatial feature is lost for atlas candidate scoring. Xu et
+    al. 2020 do use a rostrocaudal framing of PVH — anterior (aPVH), middle
+    (mPVH) and posterior (pPVH) subregions 280 µm apart, mapped by multiplexed
+    FISH — but they do not localise the Ntng1-expressing CRH population, so the
+    two cannot be joined from the report alone. Recovering the coordinate would
+    need the Short et al. figures, or an MBA extension carrying rostrocaudal
+    PVH levels.
+  quote_keys: ["237393232_d3cd021e", "222410534_daea8c58"]
+  closest_field: anatomical_location

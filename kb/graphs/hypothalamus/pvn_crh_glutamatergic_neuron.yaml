@@ -1,0 +1,227 @@
+# Glutamatergic (Slc17a6+) CRH neuron of the paraventricular hypothalamic nucleus — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/PVN_CRH_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "Glutamatergic PVN CRH neuron"
+description: >
+  Evidence graph component for the glutamatergic (Slc17a6+) CRH neuron of the
+  paraventricular hypothalamic nucleus, proposed from the ASTA deep research
+  report PVN_CRH_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "hypothalamic paraventricular nucleus (PVN/PVH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: pvn_crh_glutamatergic_neuron
+    name: "Glutamatergic (Slc17a6+) CRH neuron of the paraventricular hypothalamic nucleus"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "glutamatergic Crh+ neuron"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "name used for the Crh/Slc17a6 co-expressing PVN population in the single-cell and ISH analysis"
+      - term: "glutamatergic CRH+ neuron"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "name used when subdividing the population into Avp- and Ntng1-defined subgroups"
+      - term: "glutamatergic Crh+ cell"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_ea63d46d"
+            method: "name used in the summary of early-life-adversity effects on this population"
+    subtype_of:
+      - parent: pvn_crh_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "single-cell RNA-seq of Crh-reporter PVN neurons plus CRH-tdTomato IHC and Slc17a6/Gad2 ISH"
+            scope: "neonatal male mouse PVN"
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_7fc15258"
+            method: "single-cell RNA-seq clustering of PVN Crh-expressing neurons"
+            scope: "neonatal male mouse PVN"
+        notes: >
+          The population is the subset of PVN Crh-expressing neurons carrying a
+          glutamatergic (Slc17a6) molecular signature, so containment in the PVN
+          CRH neuron class follows from its definition. Stated by one source
+          (Short et al. 2021), in neonatal male mouse.
+    anatomical_location:
+      - id: MBA:38
+        label: "Paraventricular hypothalamic nucleus"
+        name_in_source: "paraventricular nucleus of the hypothalamus (PVN)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "CRH-tdTomato immunohistochemistry with in situ hybridization for Slc17a6 and Gad2"
+            scope: "neonatal male mouse PVN"
+          - ref: "PMID:37599997"
+            quote_key: "260663339_44a813eb"
+            method: "review statement placing the VGLUT2-coexpressing parvocellular CRH population in the PVN"
+            scope: "mouse PVN"
+      - id: MBA:439
+        label: "Paraventricular hypothalamic nucleus, descending division, dorsal parvicellular part"
+        name_in_source: "dorsal parvocellular subdivision of the PVN"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "CRH-tdTomato immunohistochemistry with in situ hybridization for Slc17a6 and Gad2; Crh/Slc17a6 co-expressing cells scored by PVN subdivision"
+            scope: "neonatal male mouse PVN"
+            notes: >
+              The source writes "dorsal parvocellular subdivision of the PVN"
+              without an atlas term; MBA:439 (PVHdp) is the closest Allen
+              structure by name. See the node notes for why this grounding is
+              provisional.
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "https://doi.org/10.1101/2021.08.31.458231"
+          quote_key: "237393232_d3cd021e"
+          method: "in situ hybridization for Slc17a6 and Gad2 on CRH-tdTomato-labelled cells; single-cell RNA-seq separating glutamatergic from GABAergic Crh+ signatures"
+          scope: "neonatal male mouse PVN"
+        - ref: "PMID:24009552"
+          quote_key: "4940077_fa9dc37b"
+          method: "dual-immunofluorescence, single-cell RT-PCR and electrophysiology comparing PVN with BNST CRF neurons"
+          scope: "PVN CRF neurons versus BNST CRF neurons; species not stated in the quoted passage"
+        - ref: "PMID:33060330"
+          quote_key: "222410534_1c3af551"
+          method: "single-cell RNA-seq of PVH neurons (Vglut2/Slc17a6 present, Vgat/Slc32a1 absent in all clusters)"
+          scope: "mouse PVH; statement covers all PVH clusters, not the Crh+ clusters alone"
+    defining_markers:
+      - name_in_source: "Crh"
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: TRANSGENE_REPORTER
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "immunohistochemistry for CRH-tdTomato in a Crh reporter line; tdTomato+ cells scored for Slc17a6 by in situ hybridization"
+            scope: "neonatal male mouse PVN"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_b75d4d85"
+            method: "single-cell RNA-seq of PVN CRH-expressing neurons"
+            scope: "neonatal male mouse PVN"
+      - name_in_source: "Slc17a6"
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "in situ hybridization for Slc17a6 on CRH-tdTomato-labelled cells"
+            scope: "neonatal male mouse PVN"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33060330"
+            quote_key: "222410534_1c3af551"
+            method: "single-cell RNA-seq of PVH neurons; Vglut2 (Slc17a6) reported in all PVH clusters"
+            scope: "mouse PVH; written by the source as \"Vglut2 (Slc17a6)\""
+      - name_in_source: "Sim1"
+        symbol: Sim1
+        ncbi_gene_id: "NCBIGene:20464"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33060330"
+            quote_key: "222410534_1c3af551"
+            method: "single-cell RNA-seq of PVH neurons"
+            scope: "mouse PVH; reported for all PVH clusters, so not specific to the CRH class"
+    negative_markers:
+      - name_in_source: "Vgat (Slc32a1)"
+        symbol: Slc32a1
+        ncbi_gene_id: "NCBIGene:22348"
+        modifier: ABSENT
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33060330"
+            quote_key: "222410534_1c3af551"
+            method: "single-cell RNA-seq of PVH neurons; the inhibitory marker Vgat (Slc32a1) was absent from all clusters"
+            scope: "mouse PVH; reported for all PVH clusters"
+    neuropeptides:
+      - name_in_source: "CRH"
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: TRANSGENE_REPORTER
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "CRH-tdTomato immunohistochemistry identifying the Crh-expressing population from which the Slc17a6+ subset is drawn"
+            scope: "neonatal male mouse PVN"
+          - marker_type: NOT_STATED
+            ref: "PMID:37599997"
+            quote_key: "260663339_44a813eb"
+            method: "review statement; the quoted passage names no assay"
+            scope: "mouse PVN parvocellular CRH neurons"
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "Glutamatergic PVN CRH neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched (OAK CL semsql DB, ols4 unavailable): "CRH neuron" (returns only
+        CL:4072021), "glutamatergic neuron" (CL:0000679), "paraventricular",
+        "parvocellular", "parvicellular", "vasopressin", "hypothalamic neuron" —
+        no CL term exists for a glutamatergic- or Slc17a6-defined subset of CRH
+        neurons, and CL:4072021 has no child terms. This node is the subset of
+        the parent pvn_crh_neuron (cl_mapping EXACT to CL:4072021) carrying a
+        glutamatergic molecular signature, per its subtype_of assertion, so
+        CL:4072021 is the nearest and most specific containing term — more
+        specific than CL:0000679 (glutamatergic neuron), which does not capture
+        the CRH-defining criterion. Would need a CL term combining "CRH neuron"
+        and "glutamatergic" for EXACT.
+    is_terminal: false
+    definition_references:
+      - "https://doi.org/10.1101/2021.08.31.458231"
+      - "PMID:33060330"
+      - "PMID:24009552"
+      - "PMID:37599997"
+    notes: >
+      The Slc17a6-defined split of PVN Crh neurons, and the concentration of
+      the Crh+/Slc17a6+ cells in the dorsal parvocellular subdivision, rest on
+      a single source (Short et al. 2021, a preprint) in neonatal male mice;
+      neither has been reproduced in adult or female animals.
+
+      The anatomical grounding of that subdivision is provisional. Short et al.
+      write "dorsal parvocellular subdivision of the PVN"; MBA:439 (PVHdp) is
+      the closest Allen structure by name, but it sits in the descending
+      (preautonomic) division, whereas the classical hypophysiotropic CRH
+      population is placed in the medial parvocellular region (Keller et al.
+      2021). Whether the source means PVHdp or a dorsal part of the
+      parvicellular division is not settled by the quoted passage, so the
+      MBA:439 entry should be re-checked against the paper's figures before
+      being used for mapping.
+
+      Sources disagree on whether a non-glutamatergic Crh population exists in
+      PVN at all. Xu et al. 2020 report that every PVH cluster carries
+      Slc17a6 and lacks Slc32a1, which leaves no room for the sparse
+      Crh+/Gad2+ group Short et al. describe; that disagreement is what makes
+      the glutamatergic qualifier in this node's definition a claim rather
+      than a formality.
+
+      Slc17a6 and Sim1 are reported for PVH neurons broadly, not for this type
+      specifically; they support the node's transmitter and regional identity
+      but do not discriminate it from neighbouring PVH classes. Crh is the
+      only marker here that is specific to the parent class.
+edges: []

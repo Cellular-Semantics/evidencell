@@ -1,0 +1,139 @@
+# Rostral-projecting CRH neuron of the anterior parvicellular paraventricular hypothalamus — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/PVN_CRH_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "Anterior parvicellular PVN CRH neuron"
+description: >
+  Evidence graph component for the rostral-projecting CRH neuron of the
+  anterior parvicellular area of the paraventricular hypothalamus, proposed
+  from the ASTA deep research report PVN_CRH_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "hypothalamic paraventricular nucleus (PVN/PVH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: pvn_crh_anterior_parvicellular_neuron
+    name: "Rostral-projecting CRH neuron of the anterior parvicellular paraventricular hypothalamus"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "rostral-projecting CRH neuron in the anterior parvicellular area"
+        sources:
+          - ref: "PMID:33722214"
+            quote_key: "232240856_88d14a13"
+            method: "name given to one of the two morphological types of hypothalamic CRH neuron resolved by whole-brain single-cell reconstruction"
+    subtype_of:
+      - parent: pvn_crh_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:33722214"
+            quote_key: "232240856_88d14a13"
+            method: "single-cell morphological reconstruction (CRH-IRES-Cre;Ai32, fMOST imaging)"
+            scope: "mouse, whole-brain; hypothalamic CRH neurons of the PVN region"
+        notes: >
+          Containment is inferred rather than stated: the source classifies
+          "hypothalamic CRH neurons" by somatic location, and the anterior
+          parvicellular area is a subdivision of the paraventricular
+          hypothalamic nucleus, so CRH neurons sited there fall within the PVN
+          CRH neuron class. The source does not itself use the parent's name.
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "Anterior parvicellular PVN CRH neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched (OAK CL semsql DB, ols4 unavailable): "CRH neuron" (only
+        CL:4072021), "parvicellular", "parvocellular", "paraventricular",
+        "hypothalamic neuron" — no CL term exists for a morphologically
+        defined, anterior-parvicellular subset of CRH neurons, and CL:4072021
+        has no child terms. This node is a subset of the parent pvn_crh_neuron
+        (cl_mapping EXACT to CL:4072021) by somatic location, per its
+        subtype_of assertion (confidence LOW), so CL:4072021 is the nearest
+        and most specific containing term. Would need a CL term for this
+        morphological subtype for EXACT.
+    anatomical_location:
+      - id: MBA:55
+        label: "Paraventricular hypothalamic nucleus, parvicellular division, anterior parvicellular part"
+        name_in_source: "anterior parvicellular area"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:33722214"
+            quote_key: "232240856_88d14a13"
+            method: "single-cell morphological reconstruction from fMOST whole-brain imaging (CRH-IRES-Cre;Ai32)"
+            scope: "mouse, whole brain; hypothalamic (PVN-region) CRH neurons"
+            notes: >
+              The source writes "the anterior parvicellular area" without naming
+              an atlas; it is read here as the anterior parvicellular part of
+              the parvicellular division of the PVN (MBA:55), the structure of
+              that name in the nucleus the source is describing. This is the
+              somatic location — the source classifies the two types by
+              "somatic locations".
+    morphology:
+      description: >
+        Rostral-projecting CRH neuron with fewer and smaller dendritic
+        varicosities than the periventricular CRH type, the other of the two
+        morphological types resolved in the same reconstruction; soma in the
+        anterior parvicellular area. One of the hypothalamic CRH neurons, which
+        as a group had the smallest somatic volumes and simplest dendritic
+        branches among the CRH populations reconstructed brain-wide.
+      sources:
+        - ref: "PMID:33722214"
+          quote_key: "232240856_88d14a13"
+          method: "single-cell dendritic reconstruction; dendritic varicosity number and size compared between the two somatic-location groups"
+          scope: "mouse, whole brain; hypothalamic (PVN-region) CRH neurons"
+          notes: >
+            Varicosity number and size are given comparatively (fewer/smaller
+            than the periventricular type), not as absolute measurements, and
+            no counts or dimensions are quoted. "Rostral-projecting" is not
+            glossed in the quote as axonal or dendritic.
+        - ref: "PMID:33722214"
+          quote_key: "232240856_f5066bcf"
+          method: "single-cell morphological reconstruction (somatic volume, dendritic branching)"
+          scope: "mouse, whole brain; hypothalamic CRH neurons as a group, compared with CRH neurons of other brain regions"
+          notes: >
+            Class-level: stated for hypothalamic CRH neurons as a whole, not
+            specifically for the anterior parvicellular type.
+        - ref: "PMID:33722214"
+          quote_key: "232240856_85a8e756"
+          method: "CRH-IRES-Cre;Ai32 mouse line, fMOST whole-brain imaging, dendrite-level reconstruction"
+          scope: "mouse, whole brain"
+          notes: >
+            Cited for the method behind the morphological characterisation, not
+            for a property of this type.
+    definition_references:
+      - "PMID:33722214"
+    notes: >
+      Thin evidence: every property on this node comes from one study (Wang et
+      al. 2021), which appears twice in the ingest report's reference list — as
+      Wang et al., 2021 (PMID:33722214, corpus 232240856) and Wang et al._1,
+      2021 (DOI 10.1186/s12915-021-00973-x, corpus 255832704) — for the same
+      paper, so the apparent double support is a single source. Quotes are
+      cited from the PMID-bearing corpus only. A reviewer may prefer to withdraw
+      this node and hold the anterior-parvicellular / periventricular split as a
+      morphology property on pvn_crh_neuron instead of as separate nodes (see
+      the reconciliation note in the ingest plan).
+      The source characterises these cells by somatic location and dendritic
+      varicosities only. No nt_type is asserted: the source does not report
+      transmitter identity for either morphological type, and the parent's
+      transmitter identity was deliberately not inherited down. No markers are
+      asserted for the same reason — this type is defined morphologically and
+      anatomically, not by a marker profile.
+      "Rostral-projecting" is the source's own wording and is left
+      uninterpreted; the ingest report's prose glosses it as rostrally
+      projecting dendrites, but the quoted source text does not say whether
+      axons or dendrites are meant.
+edges: []

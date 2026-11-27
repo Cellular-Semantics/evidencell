@@ -1,0 +1,25 @@
+# Findings for pvn_crh_gabaergic_neuron that no CellTypeNode property field can hold.
+# Written by the property phase of 20261127_hypothalamus_report_ingest.
+
+- finding: >
+    This population is the one spared by experience-dependent plasticity. In
+    single-cell RNA-seq of neonatal male mouse PVN Crh neurons, early-life
+    adversity augmented the number and extent of differentially enriched genes
+    selectively in glutamatergic Crh+ cells, with changes specific to one
+    glutamatergic phenotype; by implication the GABAergic Crh+ cluster showed
+    no comparable response (Short et al. 2021). CellTypeNode has no field for a
+    condition-dependent transcriptional response, and the finding here is a
+    reported absence of one, so nothing can be written to defining_markers or
+    notes as a property of the cells.
+  quote_keys: ["237393232_ea63d46d"]
+  closest_field: null
+
+- finding: >
+    The GABAergic Crh+ group is described only as "sparse" and "smaller" than
+    the glutamatergic group; the report gives no cell count, no proportion of
+    the Crh+ population, and no cluster size for cluster 2. Relative abundance
+    is the property that would most distinguish this node from its parent and
+    its glutamatergic sibling, and CellTypeNode has no field for it on a
+    classical node (n_cells and cell_count are atlas-node fields).
+  quote_keys: ["237393232_d3cd021e", "237393232_7fc15258"]
+  closest_field: null

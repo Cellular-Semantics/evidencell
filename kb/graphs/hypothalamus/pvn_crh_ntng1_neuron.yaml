@@ -1,0 +1,230 @@
+# CRH-Ntng1 neuron of the paraventricular hypothalamic nucleus — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/PVN_CRH_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "PVN CRH-Ntng1 neuron"
+description: >
+  Evidence graph component for the CRH-Ntng1 (netrin G1-expressing
+  glutamatergic) neuron of the paraventricular hypothalamic nucleus, proposed
+  from the ASTA deep research report PVN_CRH_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "hypothalamic paraventricular nucleus (PVN/PVH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: pvn_crh_ntng1_neuron
+    name: "CRH-Ntng1 neuron of the paraventricular hypothalamic nucleus"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "CRH-Ntng1 neuron"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "name used for the Ntng1-defined subgroup of glutamatergic PVN CRH neurons"
+      - term: "Ntng1-positive glutamatergic cell"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_7fc15258"
+            method: "description of the corresponding single-cell RNA-seq cluster (cluster 4)"
+    subtype_of:
+      - parent: pvn_crh_glutamatergic_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "single-cell RNA-seq of Crh-reporter PVN neurons plus CRH-tdTomato IHC and Slc17a6/Gad2 ISH"
+            scope: "neonatal male mouse PVN"
+        notes: >
+          The source resolves two distinct populations within the glutamatergic
+          Crh+ class on the basis of Avp versus Ntng1 expression, so containment
+          in the glutamatergic PVN CRH neuron class follows from the definition
+          used. Stated by one source (Short et al. 2021), in neonatal male mouse.
+    anatomical_location:
+      - id: MBA:38
+        label: "Paraventricular hypothalamic nucleus"
+        name_in_source: "middle region of the PVN"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "CRH-tdTomato immunohistochemistry with in situ hybridization for Slc17a6 and Gad2; the Avp- and Ntng1-defined glutamatergic subgroups scored by position within PVN"
+            scope: "neonatal male mouse PVN"
+            notes: >
+              The source localises this population to "the middle region of
+              the PVN". That is a rostrocaudal level, not one of the Allen
+              atlas PVH subdivisions, which partition the nucleus by
+              magnocellular/parvicellular/descending division and part; no MBA
+              term denotes a middle rostrocaudal third. The whole-nucleus term
+              MBA:38 is therefore the most specific grounding the source
+              supports, and the sub-nuclear position is left in
+              name_in_source. Contrast the sibling CRH-AVP population, which
+              the same passage reports as distributed sparsely throughout the
+              PVN, and the parent glutamatergic Crh+ class, reported in the
+              same passage as concentrated in the dorsal parvocellular
+              subdivision — the three statements are not reconciled by the
+              source.
+          - ref: "PMID:33060330"
+            quote_key: "222410534_daea8c58"
+            method: "multiplexed FISH mapping of PVH marker genes in rostrocaudally separated subregions"
+            scope: >
+              mouse PVH; this source does not localise the Ntng1-expressing
+              CRH population. It is cited only because it uses the same
+              rostrocaudal framing — anterior (aPVH), middle (mPVH) and
+              posterior (pPVH) PVH, 280 µm apart — that makes Short et al.'s
+              "middle region of the PVN" an interpretable coordinate rather
+              than an atlas subdivision.
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "https://doi.org/10.1101/2021.08.31.458231"
+          quote_key: "237393232_d3cd021e"
+          method: "in situ hybridization for Slc17a6 and Gad2 on CRH-tdTomato-labelled cells; the Ntng1-defined population is one of two resolved within the glutamatergic CRH+ cells"
+          scope: "neonatal male mouse PVN"
+        - ref: "https://doi.org/10.1101/2021.08.31.458231"
+          quote_key: "237393232_7fc15258"
+          method: "single-cell RNA-seq cluster marker analysis; cluster 4 described as Ntng1-positive glutamatergic cells"
+          scope: "neonatal male mouse PVN"
+        - ref: "PMID:33060330"
+          quote_key: "222410534_1c3af551"
+          method: "single-cell RNA-seq of PVH neurons; Vglut2 (Slc17a6) present and Vgat (Slc32a1) absent in all clusters"
+          scope: "mouse PVH; statement covers all PVH clusters, not the Ntng1-expressing CRH cells specifically"
+    defining_markers:
+      - name_in_source: "Ntng1"
+        symbol: Ntng1
+        ncbi_gene_id: "NCBIGene:80883"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "single-cell RNA-seq of Crh-reporter PVN neurons; the glutamatergic CRH+ cells split into Avp- and Ntng1-expressing populations"
+            scope: "neonatal male mouse PVN"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_7fc15258"
+            method: "single-cell RNA-seq cluster marker analysis; cluster 4 identified as Ntng1-positive glutamatergic cells"
+            scope: "neonatal male mouse PVN"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33060330"
+            quote_key: "222410534_1c3af551"
+            method: "single-cell RNA-seq of PVH neurons; Ntng1 named among the genes that subdivide the broad peptidergic PVH classes into subgroups"
+            scope: >
+              mouse PVH; written by the source as "netrin G1 (Ntng1)". This
+              source establishes Ntng1 as a subgroup marker across PVH
+              clusters generally, not for the Crh-expressing cells
+              specifically, so it corroborates the marker's discriminative
+              role in PVH without independently defining this type.
+      - name_in_source: "Crh"
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: TRANSGENE_REPORTER
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "immunohistochemistry for CRH-tdTomato in a Crh reporter line; tdTomato+ cells scored for Slc17a6, Gad2 and subgroup identity"
+            scope: "neonatal male mouse PVN"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_b75d4d85"
+            method: "single-cell RNA-seq of PVN CRH-expressing neurons"
+            scope: "neonatal male mouse PVN"
+      - name_in_source: "Slc17a6"
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "in situ hybridization for Slc17a6 on CRH-tdTomato-labelled cells"
+            scope: >
+              neonatal male mouse PVN; asserted for this type because the
+              source places it inside the glutamatergic CRH+ class, which is
+              defined by Slc17a6 — Slc17a6 is not scored on the
+              Ntng1-expressing cells separately in the quoted passage
+    neuropeptides:
+      - name_in_source: "CRH"
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: TRANSGENE_REPORTER
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "CRH-tdTomato immunohistochemistry identifying the Crh-expressing population from which the Ntng1-defined subgroup is drawn"
+            scope: "neonatal male mouse PVN"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_b75d4d85"
+            method: "single-cell RNA-seq of PVN CRH-expressing neurons"
+            scope: "neonatal male mouse PVN"
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "PVN CRH-Ntng1 neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched (OAK CL semsql DB, ols4 unavailable): "CRH neuron" (only
+        CL:4072021), "Ntng1" (only a Protein Ontology hit for netrin-G1
+        protein, not a CL term), "netrin", "glutamatergic neuron"
+        (CL:0000679), "paraventricular", "parvocellular", "hypothalamic
+        neuron" — no CL term exists for an Ntng1-defined subset of CRH
+        neurons, and CL:4072021 has no child terms. This node is a subset of
+        the parent pvn_crh_glutamatergic_neuron (itself BROAD to CL:4072021,
+        no more specific CL term available), per its subtype_of assertion, so
+        CL:4072021 remains the nearest and most specific containing CL term.
+        Would need a CL term for "CRH-Ntng1 neuron" or equivalent for EXACT.
+    is_terminal: false
+    definition_references:
+      - "https://doi.org/10.1101/2021.08.31.458231"
+      - "PMID:33060330"
+      - "PMID:24009552"
+    notes: >
+      Every type-specific property here rests on a single source (Short et al.
+      2021, a preprint), in neonatal male mice. The Ntng1-versus-Avp split of
+      glutamatergic PVN Crh neurons, and the concentration of the Ntng1 cells
+      in the middle PVN, have not been reproduced in adult or female animals,
+      and the preprint has not been through peer review.
+
+      The anatomical grounding is coarse by necessity. The source gives a
+      rostrocaudal position ("the middle region of the PVN"), while the Allen
+      mouse atlas divides PVH by magnocellular/parvicellular/descending
+      division and part; the two schemes do not intersect, so MBA:38 (the
+      whole nucleus) is all that can be asserted. This costs the node its
+      most discriminative spatial feature for atlas mapping: a candidate
+      cluster cannot be scored on middle-PVN position against MBA:38. Xu et
+      al. 2020 use an explicitly rostrocaudal framing of PVH (aPVH / mPVH /
+      pPVH, 280 µm apart) and could in principle supply the missing
+      coordinate, but they do not localise the Ntng1-expressing CRH cells.
+
+      Crh and Slc17a6 are inherited from this node's defining context rather
+      than scored on the Ntng1-expressing cells in isolation: the quoted
+      passage establishes them for the glutamatergic Crh+ class and then
+      subdivides that class by Avp versus Ntng1. Ntng1 is the only marker
+      here that distinguishes this node from its sibling pvn_crh_avp_neuron.
+
+      Xu et al. 2020 report that all PVH clusters carry Slc17a6 and lack
+      Slc32a1; that is a class-wide PVH statement and was not written to
+      negative_markers on this node, which no source has scored for Slc32a1.
+
+      The report gives no dataset accession for the Short et al. single-cell
+      data, so cluster 4 cannot be recorded as prior_cluster_label and the
+      cluster cannot be re-identified computationally. See
+      research/hypothalamus/20261127_hypothalamus_report_ingest/unplaced/pvn_crh_ntng1_neuron.yaml.
+edges: []

@@ -1,0 +1,45 @@
+# Findings for pvn_crh_avp_neuron that no CellTypeNode property field can hold.
+# Written by the property phase of 20261127_hypothalamus_report_ingest.
+
+- finding: >
+    The node may correspond to two scRNA-seq clusters, not one. Short et al.
+    report five Crh+ clusters, of which cluster 1 "preferentially expressed
+    Avp and steroid hormone receptors" and cluster 5 "expressed arginine
+    vasopressin (AVP), or steroid hormone receptors" — two separate clusters
+    with the same Avp/steroid signature. Elsewhere the same source collapses
+    the glutamatergic Crh+ population into exactly two subgroups, CRH-AVP and
+    CRH-Ntng1. Whether CRH-AVP is one cluster, the union of clusters 1 and 5,
+    or a population cutting across them is not stated, and the report gives no
+    dataset accession with which to check. CellTypeNode has no field for a
+    one-to-many correspondence with a prior clustering
+    (prior_cluster_label takes a single label and would in any case need
+    prior_dataset_accession, which is unavailable), so this is recorded here.
+    It matters for mapping: an atlas candidate matching only one of the two
+    clusters would still be a partial match for this node.
+  quote_keys: ["237393232_7fc15258", "237393232_d3cd021e", "237393232_b75d4d85"]
+  closest_field: prior_cluster_label
+
+- finding: >
+    The steroid-hormone-receptor signature is a receptor-family statement
+    with no gene behind it. Both Avp-expressing clusters are reported as
+    preferentially expressing "steroid hormone receptors", and the report's
+    narrative reads this as suggesting "that some CRH neurons may be more
+    tuned than others to hormonal state and feedback". No individual
+    receptor is named anywhere in the report, so the signature has been
+    written to defining_markers as name_in_source only, with no
+    ncbi_gene_id. Resolving it needs the paper's differential-expression
+    tables, not the report; until then the node carries a marker that
+    cannot be measured against an atlas.
+  quote_keys: ["237393232_7fc15258"]
+  closest_field: defining_markers
+
+- finding: >
+    Early-life adversity altered gene expression selectively within
+    glutamatergic Crh+ cells, "with changes specific to one glutamatergic
+    neuronal phenotype". The report does not say whether that phenotype is
+    the Avp-defined subgroup or the Ntng1-defined one, and the
+    differentially enriched genes are not named in any quoted passage.
+    CellTypeNode has no field for a condition-dependent transcriptional
+    response, and nothing specific enough to write to defining_markers.
+  quote_keys: ["237393232_ea63d46d"]
+  closest_field: null

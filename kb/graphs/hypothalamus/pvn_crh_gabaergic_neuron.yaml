@@ -1,0 +1,222 @@
+# GABAergic (Gad2+) CRH neuron of the paraventricular hypothalamic nucleus — hypothalamus
+# Source: ASTA deep research report — inputs/deepsearch/PVN_CRH_neurons.pdf
+# Ingestion date: 2026-11-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hypothalamus/
+# Proposed by: asta-report-ingest
+
+name: "GABAergic PVN CRH neuron"
+description: >
+  Evidence graph component for the GABAergic (Gad2+) CRH neuron of the
+  paraventricular hypothalamic nucleus, proposed from the ASTA deep research
+  report PVN_CRH_neurons.pdf.
+brain_region:
+  id: MBA:1097
+  label: Hypothalamus
+  name_in_source: "hypothalamic paraventricular nucleus (PVN/PVH)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "mouse"
+creation_date: "2026-11-27"
+nodes:
+  - id: pvn_crh_gabaergic_neuron
+    name: "GABAergic (Gad2+) CRH neuron of the paraventricular hypothalamic nucleus"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    synonyms:
+      - term: "GABAergic Crh+ neuron"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "name used for the Crh/Gad2 co-expressing PVN population in the single-cell and ISH analysis"
+      - term: "Crh and Gad2-expressing cell"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "wording used when describing the population's sparse, spatially unpatterned distribution in PVN"
+    subtype_of:
+      - parent: pvn_crh_neuron
+        kind: DEFINITIONAL
+        confidence: MODERATE
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "single-cell RNA-seq of Crh-reporter PVN neurons plus CRH-tdTomato IHC and Slc17a6/Gad2 ISH"
+            scope: "neonatal male mouse PVN"
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_7fc15258"
+            method: "single-cell RNA-seq clustering of PVN Crh-expressing neurons"
+            scope: "neonatal male mouse PVN"
+        notes: >
+          The population is the subset of PVN Crh-expressing neurons carrying a
+          GABAergic (Gad2) molecular signature, so containment in the PVN CRH
+          neuron class follows from its definition. Stated by one source
+          (Short et al. 2021), in neonatal male mouse; the source reports these
+          cells as sparse and without obvious spatial pattern within PVN.
+    anatomical_location:
+      - id: MBA:38
+        label: Paraventricular hypothalamic nucleus
+        name_in_source: "PVN"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "immunohistochemistry for CRH-tdTomato combined with in situ hybridization for Gad2; Crh and Gad2 co-expressing cells scored across the PVN"
+            scope: "neonatal male mouse PVN"
+            notes: >
+              No PVN subdivision is assigned: these cells are reported as
+              sparse and without obvious spatial pattern, in contrast to the
+              Crh/Slc17a6 cells of the same population, which concentrate in
+              the dorsal parvocellular subdivision.
+    colocated_types:
+      - neighboring_type: "Glutamatergic (Slc17a6+) PVN CRH neuron"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          Within the Crh-reporter-labelled PVN population, Crh/Slc17a6 cells
+          are concentrated in the dorsal parvocellular subdivision while the
+          Crh/Gad2 cells are sparse and show no obvious spatial pattern, so
+          the two are intermingled across the nucleus rather than occupying
+          separate territories (https://doi.org/10.1101/2021.08.31.458231).
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "https://doi.org/10.1101/2021.08.31.458231"
+          quote_key: "237393232_d3cd021e"
+          method: "in situ hybridization for Gad2 in CRH-tdTomato-labelled PVN neurons; inferred from Gad2 transcript, GABA release not assayed"
+          scope: "neonatal male mouse PVN"
+        - ref: "https://doi.org/10.1101/2021.08.31.458231"
+          quote_key: "237393232_7fc15258"
+          method: "single-cell RNA-seq; of five Crh+ clusters, cluster 2 carries a GABAergic molecular signature, the strongest high-level split in the dataset being glutamatergic versus GABAergic"
+          scope: "neonatal male mouse PVN"
+          notes: >
+            The assertion rests on a GABAergic molecular signature (Gad2) only.
+            Slc32a1 (Vgat) was not reported for these cells, and a separate
+            adult-mouse PVH single-cell dataset finds no Vgat in any PVH
+            cluster — see the node notes.
+    defining_markers:
+      - name_in_source: "Crh"
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "CRH-tdTomato reporter immunohistochemistry; the Gad2 in situ signal scored within tdTomato-labelled cells"
+            scope: "neonatal male mouse PVN"
+            marker_type: TRANSGENE_REPORTER
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_b75d4d85"
+            method: "single-cell RNA-seq of Crh-expressing PVN neurons; the sequenced population is Crh-defined"
+            scope: "neonatal male mouse PVN"
+            marker_type: TRANSCRIPT
+      - name_in_source: "Gad2"
+        symbol: Gad2
+        ncbi_gene_id: "NCBIGene:14417"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_d3cd021e"
+            method: "in situ hybridization for Gad2, scored in CRH-tdTomato-labelled PVN cells"
+            scope: "neonatal male mouse PVN"
+            notes: "Gad2 is the marker that distinguishes this population from the Slc17a6-expressing Crh+ majority."
+            marker_type: TRANSCRIPT
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_7fc15258"
+            method: "single-cell RNA-seq; GABAergic molecular signature of cluster 2 among the differentially expressed genes separating the five Crh+ clusters"
+            scope: "neonatal male mouse PVN"
+            marker_type: TRANSCRIPT
+      - name_in_source: "neurotensinergic"
+        symbol: Nts
+        ncbi_gene_id: "NCBIGene:67405"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_7fc15258"
+            method: "single-cell RNA-seq; cluster 2, the GABAergic cluster, described as 'GABAergic and neurotensinergic'"
+            scope: "neonatal male mouse PVN"
+            notes: >
+              The source writes the adjectival form rather than a transcript
+              name; "neurotensinergic" was read as naming neurotensin, which
+              resolves to one mouse gene, Nts. The specific differentially
+              expressed transcript is not named in the quote.
+            marker_type: TRANSCRIPT
+    neuropeptides:
+      - name_in_source: "neurotensinergic"
+        symbol: Nts
+        ncbi_gene_id: "NCBIGene:67405"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_7fc15258"
+            method: "single-cell RNA-seq; the GABAergic Crh+ cluster is additionally characterised as neurotensinergic"
+            scope: "neonatal male mouse PVN"
+            marker_type: TRANSCRIPT
+      - name_in_source: "CRH"
+        symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - ref: "https://doi.org/10.1101/2021.08.31.458231"
+            quote_key: "237393232_b75d4d85"
+            method: "single-cell RNA-seq of CRH-expressing PVN neurons; CRH is the defining peptide of the sequenced population"
+            scope: "neonatal male mouse PVN"
+            notes: "Inherited from the Crh-defined parent population; no peptide measurement specific to the Gad2+ subset is reported."
+            marker_type: TRANSCRIPT
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "GABAergic PVN CRH neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched (OAK CL semsql DB, ols4 unavailable): "CRH neuron" (returns only
+        CL:4072021), "GABAergic neuron" (CL:0000617), "paraventricular",
+        "parvocellular", "parvicellular", "vasopressin", "hypothalamic neuron" —
+        no CL term exists for a GABAergic- or Gad2-defined subset of CRH
+        neurons, and CL:4072021 has no child terms. This node is the subset of
+        the parent pvn_crh_neuron (cl_mapping EXACT to CL:4072021) carrying a
+        GABAergic molecular signature, per its subtype_of assertion, so
+        CL:4072021 is the nearest and most specific containing term — more
+        specific than CL:0000617 (GABAergic neuron), which does not capture
+        the CRH-defining criterion. Would need a CL term combining "CRH neuron"
+        and "GABAergic" for EXACT.
+    definition_references:
+      - https://doi.org/10.1101/2021.08.31.458231
+      - PMID:33060330
+      - PMID:24009552
+      - PMID:37599997
+    notes: >
+      Contradicted by the adult PVH single-cell dataset: PMID:33060330 reports
+      that all PVH clusters expressed Sim1, contained the excitatory marker
+      Vglut2 (Slc17a6) and lacked the inhibitory marker Vgat (Slc32a1), while
+      still using Gad2 as one of the genes subdividing those clusters. That
+      source therefore treats Gad2 as a transcriptomic subclass marker inside
+      an entirely glutamatergic PVH, not as evidence of a GABAergic PVH
+      population. PMID:24009552 and PMID:37599997 likewise describe PVN CRH
+      neurons as glutamatergic, the former contrasting them with GABAergic CRH
+      neurons of the BNST. The whole of this node's positive evidence is one
+      preprint (https://doi.org/10.1101/2021.08.31.458231) in neonatal male
+      mice, and whether its Gad2-expressing Crh+ group is a developmental
+      feature, a dissection or ambient-RNA artefact, or a genuine adult
+      minority is unresolved by the sources here. The node is recorded as that
+      source states it; a reviewer may prefer to hold it as a heterogeneity
+      note on pvn_crh_neuron instead.
+      Transmitter evidence is molecular only: Gad2 transcript and a "GABAergic
+      molecular signature", with no demonstration of GABA release and no
+      report of Slc32a1 in these cells. Slc17a6 is not recorded as a negative
+      marker because no source shows it absent from the Gad2-expressing cells;
+      the contrast drawn is between cell groups, not an explicit absence.
+      Species, age and sex scope: all primary evidence is from neonatal male
+      mice, so the properties here should not be read as established for adult
+      or female PVN.
+      Marker wording: "neurotensinergic" is the source's adjective for cluster
+      2, not a named transcript; it is recorded as Nts because neurotensin
+      names a single mouse gene. No cell-count, proportion or dataset
+      accession is given for the GABAergic cluster in the sources available,
+      so prior_dataset_accession and prior_cluster_label are left unset
+      despite the population being cluster-defined.
+edges: []

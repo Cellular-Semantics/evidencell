@@ -1,0 +1,17 @@
+# Findings for pvn_crh_glutamatergic_neuron that no CellTypeNode property field can hold.
+# Written by the property phase of 20261127_hypothalamus_report_ingest.
+
+- finding: >
+    Experience-dependent plasticity is selective for this population. In
+    single-cell RNA-seq of neonatal male mouse PVN Crh neurons, early-life
+    adversity created no new Crh cell class and did not segregate cells by
+    rearing history; instead it augmented the number and extent of
+    differentially enriched genes selectively in glutamatergic Crh+ cells,
+    with the changes specific to one glutamatergic phenotype (Short et al.
+    2021). This is the clearest functional distinction the report draws
+    between this node and its GABAergic sibling, but CellTypeNode has no
+    field for a condition-dependent transcriptional response, and the
+    differentially enriched genes are not named in the quoted text, so
+    nothing can be written to defining_markers either.
+  quote_keys: ["237393232_ea63d46d", "237393232_b75d4d85"]
+  closest_field: null
