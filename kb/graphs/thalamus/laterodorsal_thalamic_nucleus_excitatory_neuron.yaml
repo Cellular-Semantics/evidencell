@@ -65,4 +65,117 @@ nodes:
         BROAD, not EXACT. Subclasses of CL:4023068 are none that fit LD. An
         EXACT match would need a CL term for excitatory neurons of the
         laterodorsal nucleus.
+    anatomical_location:
+      - id: MBA:155
+        label: "Lateral dorsal nucleus of thalamus"
+        name_in_source: "lateral dorsal nucleus of the thalamus (LD)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:31265129"
+            quote_key: "195771773_2251c6d3"
+            method: "nucleus identity (type defined by soma in LD); tracing"
+            scope: "mouse LD, a higher-order dorsal thalamic nucleus"
+      - id: MBA:669
+        label: "Visual areas"
+        name_in_source: "all visual cortical areas"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:31265129"
+            quote_key: "195771773_2251c6d3"
+            method: "retrograde tracing from visual cortical areas"
+            scope: "adult mouse — LD, like LP, projects to all visual cortical areas"
+            support: SUPPORT
+      - id: MBA:262
+        label: "Reticular nucleus of the thalamus"
+        name_in_source: "reticular nucleus"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:39956708"
+            quote_key: "276403731_be403f5d"
+            method: "review statement for thalamic projection neurons generally; inferred for LD, not traced"
+            scope: "thalamic projection neurons (LD not named) — collaterals to specific subsections of the reticular nucleus"
+            support: WEAK
+    colocated_types:
+      - neighboring_type: anterior_thalamic_nucleus_excitatory_neuron
+        spatial_relationship: ADJACENT
+        notes: >
+          LD lies adjacent to the anterior thalamic nuclei and is described as
+          closely related to them in connectivity (PMID:30833890, quote_key
+          67007873_77302731; PMID:31333412, quote_key 195769026_571ce35a —
+          LD interconnected with retrosplenial cortex and the visual system).
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:39956708"
+          quote_key: "276403731_be403f5d"
+          method: "review statement for thalamic projection neurons; inferred for LD"
+          scope: "thalamic projection neurons generally (LD not named)"
+        - ref: "PMID:35687680"
+          quote_key: "249575101_ea195978"
+          method: "ISH (Slc17a6/Vglut2) — class-level; inferred for LD"
+          scope: "mouse dorsal thalamus — Slc17a6+ excitatory-relay neurons distributed throughout (LD not named)"
+        - ref: "https://doi.org/10.64898/2026.08.31.748331"
+          quote_key: "291827425_2f1b3cff"
+          method: "VGluT2 labelling of projection terminals — class-level; inferred for LD"
+          scope: "mouse visual circuits — thalamocortical projections almost exclusively VGluT2-positive (LD not named)"
+    defining_markers:
+      - name_in_source: "Slc17a6 (Vglut2)"
+        symbol: Slc17a6
+        ncbi_gene_id: "NCBIGene:140919"
+        sources:
+          - ref: "PMID:35687680"
+            quote_key: "249575101_ea195978"
+            marker_type: TRANSCRIPT
+            method: "in situ hybridization"
+            scope: "mouse dorsal thalamus — class-level marker of excitatory-relay neurons, not LD-specific (LD not named)"
+          - ref: "https://doi.org/10.64898/2026.08.31.748331"
+            quote_key: "291827425_2f1b3cff"
+            marker_type: NOT_STATED
+            method: "VGluT2 labelling of axon terminals (assay not named in quote)"
+            scope: "mouse — thalamocortical projection terminals, class-level (LD not named)"
+            notes: "Source writes VGluT2; resolved to Slc17a6 (unique synonym)."
+    morphology:
+      description: >
+        Class-level plan of a thalamic projection neuron: a long-range axon
+        that leaves the thalamus toward cortex (LD projects to all visual
+        cortical areas in mouse), giving collaterals to the reticular nucleus
+        on exit, with no recurrent intrathalamic excitatory connections.
+        Dendrites and axons are elaborated after migration from the thalamic
+        ventricular zone to the mantle zone. No LD-specific somatodendritic
+        morphology is reported.
+      sources:
+        - ref: "PMID:39956708"
+          quote_key: "276403731_be403f5d"
+          method: "review statement"
+          scope: "thalamic projection neurons generally (LD not named)"
+        - ref: "PMID:36817644"
+          quote_key: "256505257_9adf1766"
+          method: "developmental review"
+          scope: "developing mouse thalamus, excitatory neurons generally (LD not named)"
+        - ref: "PMID:31265129"
+          quote_key: "195771773_2251c6d3"
+          method: "retrograde tracing"
+          scope: "adult mouse LD — cortical projection field"
+    definition_references:
+      - "PMID:31265129"
+      - "PMID:31333412"
+      - "PMID:39956708"
+      - "PMID:35687680"
+    notes: >
+      Almost all property evidence here is class-level (thalamic or dorsal
+      thalamic glutamatergic projection neurons) applied to LD by inference;
+      the only LD-specific statement is its mouse cortical projection to all
+      visual areas (PMID:31265129). Slc17a6/VGluT2 marks the class and does
+      not distinguish LD from other dorsal thalamic nuclei; no LD-specific
+      marker or neuropeptide is reported. Parcellation caveat: many authors
+      have regarded the lateral dorsal nucleus as part of the anterior
+      thalamic nuclei because of its limbic associations (PMID:24009563,
+      quote_key 8320008_654be176); here it is treated as a separate nucleus.
+      Suspected heterogeneity: in rat, ventrolateral LD (LDVL) receives
+      visual cortical input while medial LD does not (PMID:31265129), not
+      resolved into mouse cell populations.
 edges: []
