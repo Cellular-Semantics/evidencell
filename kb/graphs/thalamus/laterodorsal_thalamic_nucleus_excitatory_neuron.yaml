@@ -49,4 +49,20 @@ nodes:
           inferred from LD being a cortex-projecting dorsal thalamic nucleus
           (Juavinett et al. 2019) together with class-level statements for
           thalamic projection neurons.
+    cl_mapping:
+      cl_term:
+        id: CL:4023068
+        label: "thalamic excitatory neuron"
+        name_in_source: "Laterodorsal thalamic nucleus (LD) excitatory projection neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Searched CL (local OAK cl.db; OLS unavailable) for laterodorsal,
+        thalamic, thalamocortical and thalamus-related labels and synonyms; no
+        LD-specific or nucleus-level thalamic neuron term exists. Candidate
+        CL:4023068 thalamic excitatory neuron is defined as an excitatory
+        neuron with its soma in the thalamic complex, which LD projection
+        neurons satisfy in full; its definition does not name LD, so it is
+        BROAD, not EXACT. Subclasses of CL:4023068 are none that fit LD. An
+        EXACT match would need a CL term for excitatory neurons of the
+        laterodorsal nucleus.
 edges: []
