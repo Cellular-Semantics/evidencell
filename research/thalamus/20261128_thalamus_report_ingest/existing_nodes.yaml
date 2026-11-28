@@ -1,0 +1,310 @@
+- id: anterior_thalamic_nucleus_excitatory_neuron
+  name: Anterior thalamic nuclei (ATN) excitatory projection neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/anterior_thalamic_nucleus_excitatory_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+- id: anterodorsal_thalamic_nucleus_excitatory_neuron
+  name: Anterodorsal thalamic nucleus (AD) excitatory projection neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/anterodorsal_thalamic_nucleus_excitatory_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+- id: anteromedial_thalamic_nucleus_excitatory_neuron
+  name: Anteromedial thalamic nucleus (AM) excitatory projection neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/anteromedial_thalamic_nucleus_excitatory_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+- id: anteroventral_thalamic_nucleus_excitatory_neuron
+  name: Anteroventral thalamic nucleus (AV) excitatory projection neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/anteroventral_thalamic_nucleus_excitatory_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+- id: apvt_crh_neuron
+  name: Corticotropin-releasing factor-expressing anterior PVT (aPVT CRF+) neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/thalamus/apvt_crh_neuron.yaml
+  species: Rattus norvegicus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - apvt_glutamatergic_neuron
+- id: apvt_gck_neuron
+  name: Glucokinase-expressing anterior PVT (Gck+ aPVT) glutamatergic neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/thalamus/apvt_gck_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - apvt_glutamatergic_neuron
+- id: apvt_glutamatergic_neuron
+  name: Anterior PVT (aPVT) glutamatergic neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/apvt_glutamatergic_neuron.yaml
+  synonyms:
+  - aPVT neuron
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - pvt_glutamatergic_neuron
+- id: dlgn_binocular_combination_mode_principal_neuron
+  name: dLGN binocular combination-mode principal neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/dlgn_binocular_combination_mode_principal_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - dlgn_relay_neuron
+- id: dlgn_combination_mode_principal_neuron
+  name: dLGN combination-mode principal neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/dlgn_combination_mode_principal_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - dlgn_relay_neuron
+- id: dlgn_core_relay_neuron
+  name: dLGN core relay neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/dlgn_core_relay_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - dlgn_relay_neuron
+- id: dlgn_direction_selective_neuron
+  name: dLGN direction-selective neuron
+  definition_basis: CLASSICAL_ELECTROPHYSIOLOGICAL
+  file: kb/graphs/thalamus/dlgn_direction_selective_neuron.yaml
+  synonyms:
+  - DSLGN
+  - direction-selective neuron
+  species: Mus musculus
+  cl_mapping: CL:0000540 neuron (BROAD)
+- id: dlgn_gabaergic_interneuron
+  name: Dorsal lateral geniculate nucleus (dLGN) local GABAergic interneuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/thalamus/dlgn_gabaergic_interneuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:0011005 GABAergic interneuron (BROAD)
+- id: dlgn_relay_mode_principal_neuron
+  name: dLGN relay-mode principal neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/dlgn_relay_mode_principal_neuron.yaml
+  synonyms:
+  - relay-mode neuron
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - dlgn_relay_neuron
+- id: dlgn_relay_neuron
+  name: Dorsal lateral geniculate nucleus (dLGN) principal thalamocortical relay neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/thalamus/dlgn_relay_neuron.yaml
+  synonyms:
+  - thalamocortical relay cell
+  - TRC
+  - TC relay cell
+  - principal neuron
+  - thalamocortical (TC) relay neuron
+  - relay cell
+  - RC
+  - relay neuron
+  - thalamocortical neuron
+  - TCN
+  - thalamocortical projection neuron
+  species: Euarchontoglires
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - thalamic_glutamatergic_projection_neuron
+- id: dlgn_shell_relay_neuron
+  name: dLGN shell relay neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/dlgn_shell_relay_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - dlgn_relay_neuron
+- id: dlgn_w_like_relay_cell
+  name: dLGN W-like relay cell
+  definition_basis: CLASSICAL_MORPHOLOGICAL
+  file: kb/graphs/thalamus/dlgn_w_like_relay_cell.yaml
+  synonyms:
+  - W-like cell
+  - W-like TRC
+  - W-like TC cell
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - dlgn_relay_neuron
+- id: dlgn_x_like_relay_cell
+  name: dLGN X-like relay cell
+  definition_basis: CLASSICAL_MORPHOLOGICAL
+  file: kb/graphs/thalamus/dlgn_x_like_relay_cell.yaml
+  synonyms:
+  - X-like cell
+  - X-like TRC
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - dlgn_relay_neuron
+- id: dlgn_y_like_relay_cell
+  name: dLGN Y-like relay cell
+  definition_basis: CLASSICAL_MORPHOLOGICAL
+  file: kb/graphs/thalamus/dlgn_y_like_relay_cell.yaml
+  synonyms:
+  - Y-like cell
+  - Y-like TRC
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - dlgn_relay_neuron
+- id: igl_enkephalinergic_geniculogeniculate_neuron
+  name: Intergeniculate leaflet enkephalinergic geniculo-geniculate neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/thalamus/igl_enkephalinergic_geniculogeniculate_neuron.yaml
+  species: Rattus norvegicus
+- id: igl_gabaergic_neuron
+  name: Intergeniculate leaflet (IGL) GABAergic neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/igl_gabaergic_neuron.yaml
+  species: Rattus norvegicus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+- id: igl_npy_geniculohypothalamic_neuron
+  name: Intergeniculate leaflet NPY-positive geniculohypothalamic neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/thalamus/igl_npy_geniculohypothalamic_neuron.yaml
+  species: Rattus norvegicus
+  cl_mapping: CL:4072016 NPY interneuron (RELATED)
+- id: lgv_igl_gabaergic_neuron
+  name: Ventral lateral geniculate nucleus / intergeniculate leaflet (LGv/IGL) GABAergic neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/lgv_igl_gabaergic_neuron.yaml
+  synonyms:
+  - vLGN/IGL GABAergic neurons
+  - vLGN/IGL GABA neurons
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+- id: lgv_igl_lhb_projecting_gabaergic_neuron
+  name: Lateral habenula-projecting vLGN/IGL GABAergic neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/lgv_igl_lhb_projecting_gabaergic_neuron.yaml
+  synonyms:
+  - LHb-projecting vLGN/IGL neurons
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+  subtype_of:
+  - lgv_igl_gabaergic_neuron
+- id: lgv_igl_lpbn_projecting_gabaergic_neuron
+  name: Lateral parabrachial nucleus-projecting vLGN/IGL GABAergic neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/lgv_igl_lpbn_projecting_gabaergic_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+  subtype_of:
+  - lgv_igl_gabaergic_neuron
+- id: lgv_igl_reuniens_projecting_neuron
+  name: Nucleus reuniens-projecting vLGN/IGL neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/lgv_igl_reuniens_projecting_neuron.yaml
+  synonyms:
+  - Re-projecting vLGN/IGL neurons
+  species: Mus musculus
+  cl_mapping: CL:0000540 neuron (BROAD)
+- id: lgv_igl_sox14_gabaergic_neuron
+  name: LGv/IGL Sox14+ GABAergic projection neuron
+  definition_basis: CLASSICAL_NEUROCHEMICAL
+  file: kb/graphs/thalamus/lgv_igl_sox14_gabaergic_neuron.yaml
+  synonyms:
+  - Sox14+ neurons
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+  subtype_of:
+  - lgv_igl_gabaergic_neuron
+- id: ppvt_glutamatergic_neuron
+  name: Posterior PVT (pPVT) glutamatergic neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/ppvt_glutamatergic_neuron.yaml
+  synonyms:
+  - pPVT neuron
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - pvt_glutamatergic_neuron
+- id: pvt_glutamatergic_neuron
+  name: Paraventricular thalamic nucleus (PVT) glutamatergic projection neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/thalamus/pvt_glutamatergic_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+  subtype_of:
+  - thalamic_glutamatergic_projection_neuron
+- id: thalamic_glutamatergic_projection_neuron
+  name: Thalamic glutamatergic projection (thalamocortical relay) neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/thalamus/thalamic_glutamatergic_projection_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:4023068 thalamic excitatory neuron (BROAD)
+- id: trn_ecel1_shell_neuron
+  name: TRN Ecel1+ shell (edge) GABAergic neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/thalamus/trn_ecel1_shell_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+- id: trn_gabaergic_neuron
+  name: Thalamic reticular nucleus (TRN/RT) GABAergic neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/thalamus/trn_gabaergic_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+- id: trn_spp1_core_neuron
+  name: TRN Spp1+ core GABAergic neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  file: kb/graphs/thalamus/trn_spp1_core_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+- id: vlgn_gabaergic_neuron
+  name: Ventral lateral geniculate nucleus (vLGN) GABAergic neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/vlgn_gabaergic_neuron.yaml
+  synonyms:
+  - vLGNGABA neuron
+  - LGv GABAergic projection neuron
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+  subtype_of:
+  - lgv_igl_gabaergic_neuron
+- id: vlgn_local_gabaergic_interneuron
+  name: vLGN local GABAergic interneuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/vlgn_local_gabaergic_interneuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:0011005 GABAergic interneuron (BROAD)
+  subtype_of:
+  - vlgn_gabaergic_neuron
+- id: vlgn_sc_projecting_gabaergic_neuron
+  name: Superior colliculus-projecting vLGN GABAergic neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/vlgn_sc_projecting_gabaergic_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+  subtype_of:
+  - vlgn_gabaergic_neuron
+- id: vlgne_gabaergic_neuron
+  name: External vLGN (vLGNe) retinorecipient GABAergic neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/vlgne_gabaergic_neuron.yaml
+  synonyms:
+  - retinorecipient neurons in vLGNe
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+  subtype_of:
+  - vlgn_gabaergic_neuron
+- id: vlgni_gabaergic_neuron
+  name: Internal vLGN (vLGNi) non-retinorecipient GABAergic neuron
+  definition_basis: CLASSICAL_ANATOMICAL
+  file: kb/graphs/thalamus/vlgni_gabaergic_neuron.yaml
+  species: Mus musculus
+  cl_mapping: CL:0000617 GABAergic neuron (BROAD)
+  subtype_of:
+  - vlgn_gabaergic_neuron
