@@ -1,0 +1,52 @@
+run_id: 20261128_thalamus_report_ingest
+types:
+  - node_id: laterodorsal_thalamic_nucleus_excitatory_neuron
+    action: NEW
+    file: kb/graphs/thalamus/laterodorsal_thalamic_nucleus_excitatory_neuron.yaml
+    report_sections:
+      - "Background and scope"
+      - "Location, anatomical identity, and functional context of LD"
+      - "Developmental origin of LD glutamatergic projection neurons"
+      - "Core cellular phenotype: excitatory projection-neuron structure, neurotransmitter, and general connectivity"
+      - "LD connectivity in mouse and related circuit specializations"
+      - "Heterogeneity and candidate projection-neuron classes within LD"
+      - "Markers, neuropeptides, and transcriptomic evidence"
+    reconciliation_note: >
+      The report's single subject is the mouse LD glutamatergic (excitatory
+      thalamocortical) projection neuron. No existing thalamus node has its soma
+      in LD. Considered: thalamic_glutamatergic_projection_neuron (parent class;
+      LD neurons are a narrower population inside it, so NEW with subtype_of,
+      not ENRICH); anterior_thalamic_nucleus_excitatory_neuron and its AD/AM/AV
+      children (LD is a separate nucleus; it is sometimes grouped with the
+      anterior nuclei in older parcellations, but none of this run's sources
+      place LD inside ATN, so no subtype_of to ATN); dlgn_relay_neuron and
+      dlgn_* children (different nucleus). Modelled on the ATN nucleus-level
+      nodes (CLASSICAL_ANATOMICAL, mouse). No synonyms recorded: the report's
+      wording "LD glutamatergic projection neurons" does not appear in any
+      quoted passage, and no source passage gives another name for the type.
+      Parent-class findings in the report (Slc17a6/VGluT2, NEUROG1/2 cTh lineage,
+      Otx2, TRN collaterals, no recurrent intrathalamic excitation) are
+      class-level statements already applicable to
+      thalamic_glutamatergic_projection_neuron; any ENRICH of that node is
+      deferred (operator: no edits to existing node files this run) and left
+      for evidence-extraction on the new node.
+    identity_conflicts: []
+    unplaced:
+      - finding: >
+          Possible LD subregional heterogeneity: in rat, ventrolateral LD (LDVL)
+          receives input from primary and secondary visual cortex while medial
+          LD does not. Input-defined, rat-only, and not resolved into a mouse
+          cell population; the report states no LD subtype is established. No
+          subtype node created.
+        quote_keys: ["195771773_2251c6d3"]
+      - finding: >
+          Thalamocortical neurons within single nuclei divide into axon-defined
+          C-type, M-type (wide vs. local) and IL-type classes in varying
+          proportions; the report treats these as candidate LD classes only, with
+          no LD-specific data. Not a subtype criterion for LD; no node created.
+        quote_keys: ["23594973_79abbfeb"]
+      - finding: >
+          Two early glutamatergic thalamic lineages (sensory-related vs
+          motor-associative); the report's placement of LD on the associative
+          side is its own extrapolation, not stated by the source.
+        quote_keys: ["293845523_fec32106"]

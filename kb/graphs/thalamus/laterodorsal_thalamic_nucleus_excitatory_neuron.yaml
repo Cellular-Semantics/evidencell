@@ -1,0 +1,52 @@
+# Laterodorsal thalamic nucleus (LD) excitatory projection neuron — thalamus
+# Source: ASTA deep research report — inputs/deepsearch/LD_excitatory.pdf
+# Ingestion date: 2026-11-28
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/thalamus/
+# Proposed by: asta-report-ingest
+
+name: "Laterodorsal Thalamic Nucleus (LD) Excitatory Projection Neuron"
+description: >
+  Evidence graph component for the laterodorsal thalamic nucleus (LD)
+  excitatory projection neuron, proposed from the ASTA deep research report
+  LD_excitatory.pdf.
+brain_region:
+  id: UBERON:0001897
+  label: "dorsal plus ventral thalamus"
+  name_in_source: "thalamus"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-11-28"
+nodes:
+  - id: laterodorsal_thalamic_nucleus_excitatory_neuron
+    name: "Laterodorsal thalamic nucleus (LD) excitatory projection neuron"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: "mouse"
+    subtype_of:
+      - parent: thalamic_glutamatergic_projection_neuron
+        kind: DEFINITIONAL
+        confidence: LOW
+        sources:
+          - ref: "PMID:31265129"
+            quote_key: "195771773_2251c6d3"
+            method: "anterograde tracing / review statement"
+            scope: "mouse LD — a higher-order thalamic nucleus that projects to all visual cortical areas"
+          - ref: "PMID:29684005"
+            quote_key: "13741105_2713bed9"
+            method: "review statement in clonal-analysis paper"
+            scope: "mouse thalamus — most thalamic nuclei populated by cortex-projecting excitatory neurons (LD not named)"
+          - ref: "PMID:39956708"
+            quote_key: "276403731_be403f5d"
+            method: "review statement"
+            scope: "thalamus generally — projection neurons are excitatory and glutamatergic (LD not named)"
+        notes: >
+          The type is the parent class narrowed to somata in LD, so containment
+          holds by definition. Confidence LOW: no source states explicitly that
+          LD principal neurons are glutamatergic projection neurons; this is
+          inferred from LD being a cortex-projecting dorsal thalamic nucleus
+          (Juavinett et al. 2019) together with class-level statements for
+          thalamic projection neurons.
+edges: []
